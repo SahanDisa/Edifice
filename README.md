@@ -1,2 +1,2 @@
 # Debrix
-home waste community app
+home waste managing community app
