@@ -1,2 +1,2 @@
 # Debrix
-home waste managing community app
+construction project management system
