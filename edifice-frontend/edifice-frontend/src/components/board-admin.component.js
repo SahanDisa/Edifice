@@ -37,6 +37,7 @@ export default class BoardUser extends Component {
         <header className="jumbotron">
           {/* <h3>{this.state.content}</h3> */}
           <h3>Admin Content</h3>
+          <h5>Hello Admin, These are your core tools</h5>
         </header>
       </div>
     );
