@@ -1,5 +1,5 @@
 import axios from "axios";
-
+//main endpoint of the backend
 const API_URL = "http://localhost:8080/api/auth/";
 
 class AuthService {

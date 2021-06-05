@@ -34,6 +34,7 @@ export default class Home extends Component {
       <div className="container">
         <header className="jumbotron">
           <h3>{this.state.content}</h3>
+          <h5>This is the homepage</h5>
         </header>
       </div>
     );

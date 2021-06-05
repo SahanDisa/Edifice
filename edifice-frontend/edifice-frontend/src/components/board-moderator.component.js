@@ -30,7 +30,7 @@ export default class BoardUser extends Component {
       }
     );
   }
-
+  //UI component
   render() {
     return (
       <div className="container">
