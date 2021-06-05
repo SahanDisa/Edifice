@@ -12,6 +12,7 @@ import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
+import AddProject from './components/add-project.component';
 
 class App extends Component {
   constructor(props) {
@@ -86,6 +87,12 @@ class App extends Component {
           {currentUser ? (
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
+                <Link to={"/add"} className="nav-link">
+                  {/* Profile {currentUser.username} */}
+                  Add Project
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
                   {/* Profile {currentUser.username} */}
                   ✅ Profile
@@ -123,6 +130,7 @@ class App extends Component {
             <Route path="/user" component={BoardUser} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
+            <Route path="/add" component={AddProject} />
           </Switch>
         </div>
       </div>

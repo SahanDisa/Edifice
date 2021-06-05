@@ -3,7 +3,7 @@ package com.example.edifice.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "project")
+@Table(name = "projects")
 
 public class Project {
 
@@ -58,6 +58,6 @@ public class Project {
 
 	@Override
 	public String toString() {
-		return "Tutorial [id=" + id + ", title=" + title + ", desc=" + description + ", published=" + published + "]";
+		return "Project [id=" + id + ", title=" + title + ", desc=" + description + ", published=" + published + "]";
 	}
 }

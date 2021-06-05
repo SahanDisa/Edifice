@@ -8,7 +8,7 @@ import com.example.edifice.models.Project;
 
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
-	List<Project> findbyPublished(boolean published);
+	List<Project> findByPublished(boolean published);
 	
 	List<Project> findByTitleContaining(String title);
 }

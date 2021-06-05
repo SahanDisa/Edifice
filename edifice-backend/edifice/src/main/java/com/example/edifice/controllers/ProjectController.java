@@ -114,7 +114,7 @@ public class ProjectController {
 	@GetMapping("/projects/published")
 	public ResponseEntity<List<Project>> findByPublished() {
 		try {
-			List<Project> projects = projectRepository.findbyPublished(true);
+			List<Project> projects = projectRepository.findByPublished(true);
 
 			if (projects.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
