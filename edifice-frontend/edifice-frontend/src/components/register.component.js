@@ -124,6 +124,7 @@ export default class Register extends Component {
     return (
       <div className="col-md-12">
         <div className="card card-container">
+        <h2><center>Welcome User</center></h2>
           <img
             src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
             alt="profile-img"
