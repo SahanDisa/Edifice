@@ -85,7 +85,12 @@ class App extends Component {
           </div>
          
           {currentUser ? (
-            <div className="navbar-nav ml-auto">
+            <div className="navbar-nav mr-auto">
+              <li className="nav-item">
+                <Link to={"/projects"} className="nav-link">
+                  Tutorials
+                </Link>
+              </li>
               <li className="nav-item">
                 <Link to={"/add"} className="nav-link">
                   {/* Profile {currentUser.username} */}
@@ -130,7 +135,9 @@ class App extends Component {
             <Route path="/user" component={BoardUser} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
+            <Route exact path={["/", "/projects"]} component={ProjectList} />
             <Route path="/add" component={AddProject} />
+            <Route path="/projects/:id" component={Project} />
           </Switch>
         </div>
       </div>

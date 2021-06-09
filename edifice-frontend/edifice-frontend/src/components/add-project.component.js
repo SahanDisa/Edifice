@@ -6,8 +6,8 @@ export default class AddProject extends Component{
         super(props);
         this.onChangeTitle = this.onChangeTitle.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
-        this.saveTutorial = this.saveTutorial.bind(this);
-        this.newTutorial = this.newTutorial.bind(this);
+        this.saveProject = this.saveProject.bind(this);
+        this.newProject = this.newProject.bind(this);
     
         this.state = {
           id: null,
@@ -31,7 +31,7 @@ export default class AddProject extends Component{
         });
       }
     
-      saveTutorial() {
+      saveProject() {
         var data = {
           title: this.state.title,
           description: this.state.description
@@ -54,7 +54,7 @@ export default class AddProject extends Component{
           });
       }
     
-      newTutorial() {
+      newProject() {
         this.setState({
           id: null,
           title: "",
@@ -71,7 +71,7 @@ export default class AddProject extends Component{
                 {this.state.submitted ? (
                 <div>
                     <h4>You submitted successfully!</h4>
-                    <button className="btn btn-success" onClick={this.newTutorial}>
+                    <button className="btn btn-success" onClick={this.newProject}>
                     Add
                     </button>
                 </div>
@@ -103,7 +103,7 @@ export default class AddProject extends Component{
                     />
                     </div>
 
-                    <button onClick={this.saveTutorial} className="btn btn-success">
+                    <button onClick={this.saveProject} className="btn btn-success">
                     Submit
                     </button>
                 </div>
