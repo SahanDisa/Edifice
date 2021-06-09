@@ -13,6 +13,8 @@ import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
 import AddProject from './components/add-project.component';
+import ProjectsList from './components/project-list.component';
+import Project from './components/project.component';
 
 class App extends Component {
   constructor(props) {
@@ -135,7 +137,7 @@ class App extends Component {
             <Route path="/user" component={BoardUser} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
-            <Route exact path={["/", "/projects"]} component={ProjectList} />
+            <Route exact path={["/", "/projects"]} component={ProjectsList} />
             <Route path="/add" component={AddProject} />
             <Route path="/projects/:id" component={Project} />
           </Switch>

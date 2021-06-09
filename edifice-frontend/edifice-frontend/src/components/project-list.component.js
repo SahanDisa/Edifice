@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ProjectDataService from "../services/project.service";
 import { Link } from "react-router-dom";
 
-export default class TutorialsList extends Component {
+export default class ProjectsList extends Component {
   constructor(props) {
     super(props);
     this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
