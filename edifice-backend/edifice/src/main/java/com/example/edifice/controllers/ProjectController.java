@@ -36,18 +36,18 @@ public class ProjectController {
 	@GetMapping("/projects")
 	public ResponseEntity<List<Project>> getAllProjects(@RequestParam(required = false) String title) {
 		try {
-			List<Project> Projects = new ArrayList<Project>();
+			List<Project> projects = new ArrayList<Project>();
 
 			if (title == null)
-				projectRepository.findAll().forEach(Projects::add);
+				projectRepository.findAll().forEach(projects::add);
 			else
-				projectRepository.findByTitleContaining(title).forEach(Projects::add);
+				projectRepository.findByTitleContaining(title).forEach(projects::add);
 
-			if (Projects.isEmpty()) {
+			if (projects.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 
-			return new ResponseEntity<>(Projects, HttpStatus.OK);
+			return new ResponseEntity<>(projects, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -55,10 +55,10 @@ public class ProjectController {
 
 	@GetMapping("/projects/{id}")
 	public ResponseEntity<Project> getProjectById(@PathVariable("id") long id) {
-		Optional<Project> ProjectData = projectRepository.findById(id);
+		Optional<Project> projectData = projectRepository.findById(id);
 
-		if (ProjectData.isPresent()) {
-			return new ResponseEntity<>(ProjectData.get(), HttpStatus.OK);
+		if (projectData.isPresent()) {
+			return new ResponseEntity<>(projectData.get(), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -77,14 +77,14 @@ public class ProjectController {
 
 	@PutMapping("/projects/{id}")
 	public ResponseEntity<Project> updateProject(@PathVariable("id") long id, @RequestBody Project project) {
-		Optional<Project> ProjectData = projectRepository.findById(id);
+		Optional<Project> projectData = projectRepository.findById(id);
 
-		if (ProjectData.isPresent()) {
-			Project _Project = ProjectData.get();
-			_Project.setTitle(project.getTitle());
-			_Project.setDescription(project.getDescription());
-			_Project.setPublished(project.isPublished());
-			return new ResponseEntity<>(projectRepository.save(_Project), HttpStatus.OK);
+		if (projectData.isPresent()) {
+			Project _project = projectData.get();
+			_project.setTitle(project.getTitle());
+			_project.setDescription(project.getDescription());
+			_project.setPublished(project.isPublished());
+			return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
