@@ -21,7 +21,7 @@ export default class ProjectsList extends Component {
   }
 
   componentDidMount() {
-    this.retrieveTutorials();
+    this.retrieveProjects();
   }
 
   onChangeSearchTitle(e) {
@@ -60,7 +60,7 @@ export default class ProjectsList extends Component {
     });
   }
 
-  removeAllTutorials() {
+  removeAllProjects() {
     ProjectDataService.deleteAll()
       .then(response => {
         console.log(response.data);
@@ -120,7 +120,7 @@ export default class ProjectsList extends Component {
                     "list-group-item " +
                     (index === currentIndex ? "active" : "")
                   }
-                  onClick={() => this.setActiveTutorial(project, index)}
+                  onClick={() => this.setActiveProject(project, index)}
                   key={index}
                 >
                   {project.title}
