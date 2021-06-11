@@ -14,7 +14,6 @@ export default class AddProject extends Component{
           title: "",
           description: "", 
           published: false,
-    
           submitted: false
         };
       }
@@ -37,14 +36,15 @@ export default class AddProject extends Component{
           description: this.state.description
         };
     
-        ProjectDataService.create(data)
+        ProjectDataService.create(
+          this.title,this.description
+        )
           .then(response => {
             this.setState({
               id: response.data.id,
               title: response.data.title,
               description: response.data.description,
               published: response.data.published,
-    
               submitted: true
             });
             console.log(response.data);

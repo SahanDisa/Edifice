@@ -12,10 +12,10 @@ class ProjectDataService{
         return axios.get(API_URL+ "/projects/${id}");
     }
     //write
-    create(data){
+    create(title,description){
         // return http.post("/projects",data);
         return axios.post(API_URL + "projects", {
-            data
+            title,description
           },{ headers: authHeader() });
     }
     update(id,data){
