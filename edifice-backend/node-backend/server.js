@@ -16,14 +16,18 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const db = require("./app/models");
-const Role = db.role;
+const db = require("./app/models/index.js");
+const Role = db.roles;
 
 // db.sequelize.sync({force: true}).then(() => {
 //   console.log('Drop and Resync Db');
 //   initial();
 // });
 db.sequelize.sync();
+
+// include routes for listening for requests
+require('./app/routes/auth.routes')(app);
+require('./app/routes/user.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {
@@ -34,7 +38,7 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`-------------------Welcome to Edifice Backend--------------------`)  
-  console.log(`---------------Server is running on port ${PORT} 101-----------------`);
+  console.log(`---------------Server is running on port ${PORT}-----------------`);
 });
 
 

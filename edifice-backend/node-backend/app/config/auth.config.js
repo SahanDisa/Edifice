@@ -1,3 +1,3 @@
 module.exports = {
-    secret: "edifice-backend-api"
+    secret: "bezkoder-secret-key"
 };

@@ -38,11 +38,6 @@ db.users.belongsToMany(db.roles, {
   foreignKey: "userId",
   otherKey: "roleId"
 });
-// db.users.hasMany(db.subjects, {as : "subjects"});
-// db.subjects.belongsTo(db.users,{
-//   foreignKey: "userId",
-//   as : "user",
-// });
 
 db.ROLES = ["user", "admin", "moderator"];
 
