@@ -83,22 +83,10 @@ class App extends Component {
                 </Link>
               </li>
             )}
-            
           </div>
          
           {currentUser ? (
-            <div className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link to={"/projects"} className="nav-link">
-                  Projects
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to={"/add"} className="nav-link">
-                  {/* Profile {currentUser.username} */}
-                  Add Project
-                </Link>
-              </li>
+            <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
                   {/* Profile {currentUser.username} */}
