@@ -28,6 +28,7 @@ db.sequelize.sync();
 // include routes for listening for requests
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
+require("./app/routes/project.routes")(app);
 
 // simple route
 app.get("/", (req, res) => {

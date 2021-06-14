@@ -1,35 +1,33 @@
-import http from "./../http-common.js";
-import authHeader from './auth-header';
-import axios from "axios";
+import http from "../http-common";
 
-const API_URL = "http://localhost:8080/api/";
+class TutorialDataService {
+  getAll() {
+    return http.get("/tutorials");
+  }
 
-class ProjectDataService{
-    getAll(){
-        return axios.get(API_URL + "projects");
-    }
-    get(id) {
-        return axios.get(API_URL+ "/projects/${id}");
-    }
-    //write
-    create(title,description){
-        // return http.post("/projects",data);
-        return axios.post(API_URL + "projects", {
-            title,description
-          },{ headers: authHeader() });
-    }
-    update(id,data){
-        return http.put(`/projects/{id}`,data,{ headers: authHeader() });
-    }
-    delete(id){
-        return http.delete(`/projects/{id}`,{ headers: authHeader() });
-    }
-    deleteAll(){
-        return http.delete(`/projects`,{ headers: authHeader() });
-    }
-    findByTitle(title) {
-        return http.get(`/projects?title=${title}`,{ headers: authHeader() });
-    }
+  get(id) {
+    return http.get(`/tutorials/${id}`);
+  }
+
+  create(data) {
+    return http.post("/tutorials", data);
+  }
+
+  update(id, data) {
+    return http.put(`/tutorials/${id}`, data);
+  }
+
+  delete(id) {
+    return http.delete(`/tutorials/${id}`);
+  }
+
+  deleteAll() {
+    return http.delete(`/tutorials`);
+  }
+
+  findByTitle(title) {
+    return http.get(`/tutorials?title=${title}`);
+  }
 }
 
-export default new ProjectDataService();
+export default new TutorialDataService();
