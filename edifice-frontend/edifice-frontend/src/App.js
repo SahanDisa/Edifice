@@ -79,8 +79,8 @@ class App extends Component {
                   Engineering
                 </Link>
               </li>
+              
             )}
-
             {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
@@ -88,6 +88,23 @@ class App extends Component {
                 </Link>
               </li>
             )}
+            {showModeratorBoard && (
+              <li className="nav-item">
+                <Link to={"/projects"} className="nav-link">
+                  Projects
+                </Link>
+              </li>
+              
+            )}
+            {showModeratorBoard && (
+              <li className="nav-item">
+                <Link to={"/addproject"} className="nav-link">
+                  Add
+                </Link>
+              </li> 
+            )}
+
+            
           </div>
          
           {currentUser ? (
@@ -131,7 +148,7 @@ class App extends Component {
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
             <Route exact path={["/", "/projects"]} component={ProjectsList} />
-            <Route path="/add" component={AddProject} />
+            <Route path="/addproject" component={AddProject} />
             <Route path="/projects/:id" component={Project} />
           </Switch>
         </div>

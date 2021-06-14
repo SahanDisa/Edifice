@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ProjectDataService from "../services/project.service";
+import ProjectDataService from "./../services/project.service";
 import { Link } from "react-router-dom";
 
 export default class ProjectsList extends Component {
@@ -85,7 +85,7 @@ export default class ProjectsList extends Component {
   }
 
   render() {
-    const { searchTitle, projects , currentProject, currentIndex } = this.state;
+    const { searchTitle, projects, currentProject, currentIndex } = this.state;
 
     return (
       <div className="list row">
@@ -138,7 +138,7 @@ export default class ProjectsList extends Component {
         <div className="col-md-6">
           {currentProject ? (
             <div>
-              <h4>Projects</h4>
+              <h4>Project</h4>
               <div>
                 <label>
                   <strong>Title:</strong>
@@ -150,6 +150,12 @@ export default class ProjectsList extends Component {
                   <strong>Description:</strong>
                 </label>{" "}
                 {currentProject.description}
+              </div>
+              <div>
+                <label>
+                  <strong>Location:</strong>
+                </label>{" "}
+                {currentProject.location}
               </div>
               <div>
                 <label>
