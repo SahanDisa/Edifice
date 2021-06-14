@@ -13,6 +13,7 @@ import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
+import BoardResource from "./components/board-resource.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
 import AddProject from './components/add-project.component';
@@ -68,23 +69,31 @@ class App extends Component {
             {currentUser && (
               <li className="nav-item">
                 <Link to={"/user"} className="nav-link">
-                  User
+                  Project Management
                 </Link>
               </li>
             )}
+            
 
             {showModeratorBoard && (
               <li className="nav-item">
                 <Link to={"/mod"} className="nav-link">
-                  Engineering
+                  Financial Management
                 </Link>
               </li>
               
             )}
             {showAdminBoard && (
               <li className="nav-item">
+                <Link to={"/resource"} className="nav-link">
+                  Resource Management
+                </Link>
+              </li>
+            )}
+            {showAdminBoard && (
+              <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
-                  Admin
+                  Core Tools
                 </Link>
               </li>
             )}
@@ -145,6 +154,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
             <Route path="/user" component={BoardUser} />
+            <Route path="/resource" component={BoardResource} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
             <Route exact path={["/", "/projects"]} component={ProjectsList} />

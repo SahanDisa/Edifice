@@ -2,12 +2,12 @@ import React, { Component } from "react";
 
 import UserService from "./../services/user.service";
 
-export default class BoardUser extends Component {
+export default class BoardResource extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      content: "Moderator content"
+      content: ""
     };
   }
 
@@ -30,12 +30,12 @@ export default class BoardUser extends Component {
       }
     );
   }
-  //UI component
+
   render() {
     return (
       <div className="container">
         <header className="jumbotron">
-          <h3>Financial Management</h3>
+          <h3>Resource Management</h3>
         </header>
       </div>
     );
