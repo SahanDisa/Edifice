@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import $ from 'jquery';
+import Popper from 'popper.js';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import "./App.css";
 
 import AuthService from "./services/auth.service";
@@ -53,13 +56,15 @@ class App extends Component {
           <Link to={"/"} className="navbar-brand">
             Edifice
           </Link>
+          
           <div className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link to={"/home"} className="nav-link">
-                Home
-              </Link>
-            </li>
-
+            {currentUser && (
+              <li className="nav-item">
+                <Link to={"/home"} className="nav-link">
+                  Home
+                </Link>
+              </li>
+            )}
             {currentUser && (
               <li className="nav-item">
                 <Link to={"/user"} className="nav-link">
@@ -74,8 +79,8 @@ class App extends Component {
                   Engineering
                 </Link>
               </li>
+              
             )}
-
             {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
@@ -83,6 +88,23 @@ class App extends Component {
                 </Link>
               </li>
             )}
+            {showModeratorBoard && (
+              <li className="nav-item">
+                <Link to={"/projects"} className="nav-link">
+                  Projects
+                </Link>
+              </li>
+              
+            )}
+            {showModeratorBoard && (
+              <li className="nav-item">
+                <Link to={"/addproject"} className="nav-link">
+                  Add
+                </Link>
+              </li> 
+            )}
+
+            
           </div>
          
           {currentUser ? (
@@ -126,7 +148,7 @@ class App extends Component {
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
             <Route exact path={["/", "/projects"]} component={ProjectsList} />
-            <Route path="/add" component={AddProject} />
+            <Route path="/addproject" component={AddProject} />
             <Route path="/projects/:id" component={Project} />
           </Switch>
         </div>
