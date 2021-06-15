@@ -47,8 +47,9 @@ export default class BoardUser extends Component {
               <a className="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Home</a>
               <a className="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-directory" role="tab" aria-controls="profile">Directory</a>
               <a className="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-document" role="tab" aria-controls="messages">Document</a>
-              <a className="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-report" role="tab" aria-controls="settings">Reports</a>
+              
               <a className="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-tasks" role="tab" aria-controls="settings">Task</a>
+              <a className="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-report" role="tab" aria-controls="settings">Reports</a>
             </div>
           </div>
           <div className="col-8">
@@ -56,9 +57,12 @@ export default class BoardUser extends Component {
               <div className="tab-pane fade show active" id="list-admin" role="tabpanel" aria-labelledby="list-home-list">This is Admin</div>
               <div className="tab-pane fade" id="list-home" role="tabpanel" aria-labelledby="list-profile-list">This is Home</div>
               <div className="tab-pane fade" id="list-directory" role="tabpanel" aria-labelledby="list-messages-list">This is directory</div>
-              <div className="tab-pane fade" id="list-document" role="tabpanel" aria-labelledby="list-settings-list">This is document</div>
-              <div className="tab-pane fade" id="list-report" role="tabpanel" aria-labelledby="list-settings-list">This is report</div>
+              <div className="tab-pane fade" id="list-document" role="tabpanel" aria-labelledby="list-settings-list">
+                <h5>This is document</h5>
+                <a href="/document" className="btn btn-primary"> Go To a Document</a>
+              </div>
               <div className="tab-pane fade" id="list-tasks" role="tabpanel" aria-labelledby="list-settings-list">This is task</div>
+              <div className="tab-pane fade" id="list-report" role="tabpanel" aria-labelledby="list-settings-list">This is report</div>
             </div>
           </div>
         </div>

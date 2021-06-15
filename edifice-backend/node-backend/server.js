@@ -4,6 +4,8 @@ const cors = require("cors");
 
 const app = express();
 
+global.__basedir = __dirname;
+
 var corsOptions = {
   origin: "http://localhost:8081"
 };
@@ -29,6 +31,7 @@ db.sequelize.sync();
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require("./app/routes/project.routes")(app);
+require('./app/routes/file.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {
