@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import Dates from './core_tools/admin/dates.component'
+import Defaults from './core_tools/admin/defaults.component'
+import Roles from './core_tools/admin/roles.component'
 
 import UserService from "../services/user.service";
 
@@ -54,7 +57,7 @@ export default class BoardUser extends Component {
           </div>
           <div className="col-8">
             <div className="tab-content" id="nav-tabContent">
-              <div className="tab-pane fade show active" id="list-admin" role="tabpanel" aria-labelledby="list-home-list">This is Admin</div>
+              <div className="tab-pane fade show active" id="list-admin" role="tabpanel" aria-labelledby="list-home-list"><Defaults /><Dates /><Roles /></div>
               <div className="tab-pane fade" id="list-home" role="tabpanel" aria-labelledby="list-profile-list">This is Home</div>
               <div className="tab-pane fade" id="list-directory" role="tabpanel" aria-labelledby="list-messages-list">This is directory</div>
               <div className="tab-pane fade" id="list-document" role="tabpanel" aria-labelledby="list-settings-list">
@@ -65,7 +68,9 @@ export default class BoardUser extends Component {
               <div className="tab-pane fade" id="list-report" role="tabpanel" aria-labelledby="list-settings-list">This is report</div>
             </div>
           </div>
+          
         </div>
+       
       </div>
     );
   }
