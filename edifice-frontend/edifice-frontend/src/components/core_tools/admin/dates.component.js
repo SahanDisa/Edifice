@@ -12,9 +12,9 @@ const options = {
   };
 
 const data = [
-    {id: 1, name: 'Bid Day', check:'' ,delete:''},
-    {id: 2, name: 'Breaking Ground', check: '',delete:''},
-    {id: 3, name: 'Contract Awarded', check: '',delete:''}
+    {id: 1, name: 'Bid Day', check:<input type='checkbox' /> ,delete:''},
+    {id: 2, name: 'Breaking Ground', check: <input type='checkbox' />,delete:''},
+    {id: 3, name: 'Contract Awarded', check: <input type='checkbox' />,delete:''}
   ];
   const columns = [{
     dataField: 'id',

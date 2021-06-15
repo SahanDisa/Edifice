@@ -13,9 +13,9 @@ const options = {
   };
 
 const data = [
-    {name: 'Bidding', bid:'' ,project:'',delete:''},
-    {name: 'Course of Construction', bid:'' ,project:'',delete:''},
-    {name: 'Post Construction', bid:'' ,project:'',delete:''}
+    {name: 'Bidding', bid:'Yes' ,project:'2',delete:<button>Delete</button>},
+    {name: 'Course of Construction', bid:'No' ,project:'3',delete:<button>Delete</button>},
+    {name: 'Post Construction', bid:'No' ,project:'4',delete:<button>Delete</button>}
   ];
   const columns = [{
     dataField: 'name',
@@ -49,9 +49,9 @@ class Defaults extends Component {
             <hr />
             <p><b>Default Project Settings</b></p>
             <hr />
-            <p>Include store number and designated market area</p>
+            <p>Include store number and designated market area <input type='checkbox' /></p>
             <hr />
-            <p>Prevent overbilling on all projects</p>
+            <p>Prevent overbilling on all projects <input type='checkbox' /></p>
             <hr />
             <p></p>
             <hr />
@@ -78,14 +78,32 @@ class Defaults extends Component {
             />
 
             <p><b>Project Types</b></p>
-            <p>Civil</p>
+            <p><button>Edit</button> Civil</p>
             <hr />
-            <p>Commercial</p>
+            <p><button>Edit</button> Commercial</p>
             <hr />
-            <p>Education</p>
+            <p><button>Edit</button> Education</p>
             <hr />
-            <p>Healthcare</p>
+            <p><button>Edit</button> Healthcare</p>
             <hr />
+            <form>
+                            <input type='text' placeholder='Add Type'/>
+                            <button>Add Type</button>
+            </form><br />
+
+            <p><b>Departments</b></p>
+            <p><button>Edit</button> Technology Services</p>
+            <hr />
+            <p><button>Edit</button> Sales and Marketing</p>
+            <hr />
+            <p><button>Edit</button> Purchasing</p>
+            <hr />
+            <p><button>Edit</button> Finance</p>
+            <hr />
+            <form>
+                            <input type='text' placeholder='Add Departments'/>
+                            <button>Add Departments</button>
+            </form><br />
 
 
           </div>
