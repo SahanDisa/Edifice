@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 
 import UserService from "../services/user.service";
+import myIcon from "../assets/066-bulldozer.png";
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
 
 export default class Home extends Component {
   constructor(props) {
@@ -33,8 +36,8 @@ export default class Home extends Component {
     return (
       <div className="container">
         <header className="jumbotron">
-          <h3>Home</h3>
-          <h5>Projects that you involved in</h5>
+          <h3> <img src={myIcon} width="36" height="36" /> Home</h3>
+          <h5>Projects that you are involved in</h5>
           {/* Display involved Project of a particular user */}
 
           <div class="card">
@@ -42,10 +45,12 @@ export default class Home extends Component {
             <div class="card-body">
               <h5 class="card-title">Port City: Apartment Section 01</h5>
               <p class="card-text">Random description.</p>
-              <a href="/projext" className="btn btn-primary"> Go to the project</a>
+              <a href="/project" className="btn btn-primary"> Go to the project</a>
             </div>
           </div>
-          <a href="/addproject" className="btn btn-outline-success">Add Project</a>
+          <Fab color="primary" aria-label="add">
+            <AddIcon />
+          </Fab>
         </header>
         
       </div>
