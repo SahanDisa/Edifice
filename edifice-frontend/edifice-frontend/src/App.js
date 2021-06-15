@@ -20,6 +20,9 @@ import AddProject from './components/add-project.component';
 import ProjectsList from './components/project-list.component';
 import Project from './components/project.component';
 
+import FileUpload from "./components/project_component/document.component";
+
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -55,6 +58,7 @@ class App extends Component {
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
+          
             Edifice
           </Link>
           
@@ -108,7 +112,7 @@ class App extends Component {
             {showModeratorBoard && (
               <li className="nav-item">
                 <Link to={"/addproject"} className="nav-link">
-                  Add
+                  Add Project
                 </Link>
               </li> 
             )}
@@ -158,6 +162,7 @@ class App extends Component {
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
             <Route exact path={["/", "/projects"]} component={ProjectsList} />
+            <Route path="/document" component={FileUpload} />
             <Route path="/addproject" component={AddProject} />
             <Route path="/projects/:id" component={Project} />
           </Switch>
