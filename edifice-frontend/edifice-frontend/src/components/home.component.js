@@ -36,23 +36,16 @@ export default class Home extends Component {
           <h3>Home</h3>
           <h5>Projects that you involved in</h5>
           {/* Display involved Project of a particular user */}
-          <div class="card">
-            <h5 class="card-header">Project XX1</h5>
-            <div class="card-body">
-              <h5 class="card-title">Port City: Apartment Section 01</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="/addproject" className="btn btn-primary"> Go to the project</a>
-            </div>
-          </div>
+
           <div class="card">
             <h5 class="card-header">Project XX2</h5>
             <div class="card-body">
               <h5 class="card-title">Port City: Apartment Section 01</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="/addproject" className="btn btn-primary"> Go to the project</a>
+              <p class="card-text">Random description.</p>
+              <a href="/projext" className="btn btn-primary"> Go to the project</a>
             </div>
           </div>
-
+          <a href="/addproject" className="btn btn-outline-success">Add Project</a>
         </header>
         
       </div>
