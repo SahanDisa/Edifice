@@ -40,11 +40,35 @@ export default class Home extends Component {
             <h5 class="card-header">Project XXX</h5>
             <div class="card-body">
               <h5 class="card-title">Port City: Apartment Section 01</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="/addproject" className="btn btn-primary"> Go to the project</a>
+              <p class="card-text">Random description.</p>
+              {/* Table of people involved in project */}
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Office</th>
+                    <th scope="col">Mobile</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>{/* Role here */}</td>
+                    <td>{/* Name here */}</td>
+                    <td>{/* Email here */}</td>
+                    <td>{/* Office here */}</td>
+                    <td>{/* Mobile here */}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <a href="/projext" className="btn btn-primary"> Go to the project</a>
             </div>
           </div>
-
+          <a href="/addproject" className="btn btn-outline-success">Add Project</a>
         </header>
         
       </div>
