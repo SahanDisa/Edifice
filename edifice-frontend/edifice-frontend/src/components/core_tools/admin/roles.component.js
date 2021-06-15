@@ -12,9 +12,11 @@ const options = {
   };
 
 const data = [
-    {id: 1, name: 'Bid Day', check:'' ,delete:''},
-    {id: 2, name: 'Breaking Ground', check: '',delete:''},
-    {id: 3, name: 'Contract Awarded', check: '',delete:''}
+    {id: 1, role: 'Project Manager', type:'' ,group:'',check:'',portfolio:'',delete:''},
+    {id: 2, role: 'Project Engineer', type:'' ,group:'',check:'',portfolio:'',delete:''},
+    {id: 3, role: 'Architect', type:'' ,group:'',check:'',portfolio:'',delete:''},
+    {id: 4, role: 'Asistant Project Manager', type:'' ,group:'',check:'',portfolio:'',delete:''}
+   
   ];
   const columns = [{
     dataField: 'id',
@@ -22,29 +24,47 @@ const data = [
     headerStyle: (column, colIndex) => {
         return { width: '10%', textAlign: 'center' };}
   }, {
-    dataField: 'name',
-    text: 'Name',
+    dataField: 'role',
+    text: 'Role',
     headerStyle: (column, colIndex) => {
         return { width: '70%', textAlign: 'center' };}
   }, {
+    dataField: 'type',
+    text: 'Type',
+    headerStyle: (column, colIndex) => {
+        return { width: '20%', textAlign: 'center' };}
+  },
+  {
+    dataField: 'group',
+    text: 'Group',
+    headerStyle: (column, colIndex) => {
+        return { width: '20%', textAlign: 'center' };}
+  },
+  {
     dataField: 'check',
     text: 'Add to Project Dashboard',
     headerStyle: (column, colIndex) => {
         return { width: '20%', textAlign: 'center' };}
   },
   {
+    dataField: 'portfolio',
+    text: 'Portfolio Filter',
+    headerStyle: (column, colIndex) => {
+        return { width: '20%', textAlign: 'center' };}
+  },
+  {
     dataField: 'delete',
-    text: 'Remove',
+    text: '',
     headerStyle: (column, colIndex) => {
         return { width: '20%', textAlign: 'center' };}
   }];
 
 
-class Dates extends Component {
+class Roles extends Component {
     render() {
         return (
-          <div className="Dates">
-            <h2 className="Table-header">Dates</h2>
+          <div className="Roles">
+            <h2 className="Table-header">Roles</h2>
             <hr />
              
             <BootstrapTable 
@@ -61,4 +81,4 @@ class Dates extends Component {
       }
     }
 
-export default Dates;
+export default Roles;
