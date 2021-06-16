@@ -15,7 +15,7 @@ class TaskConfiguration extends Component {
           </tr>
         </table>
         <input type="text" placeholder="Task category" />
-        <button>Create</button>
+        <a href="" className="btn btn-success">Create</a>
       </div>
     );
   }
