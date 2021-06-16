@@ -19,7 +19,10 @@ import BoardAdmin from "./components/board-admin.component";
 import AddProject from './components/add-project.component';
 import ProjectsList from './components/project-list.component';
 import Project from './components/project.component';
-
+import TaskConfiguration from "./components/core_tools/tasks/confirguration.component";
+import ManageTasks from "./components/core_tools/tasks/manage.component";
+import UpdateTasks from "./components/core_tools/tasks/update.component";
+import ViewTasks from "./components/core_tools/tasks/view.component";
 import FileUpload from "./components/project_component/document.component";
 import Dates from "./components/core_tools/admin/dates.component";
 import Defaults from "./components/core_tools/admin/defaults.component";
@@ -172,6 +175,10 @@ class App extends Component {
             <Route path="/dates" component={Dates} />
             <Route path="/defaults" component={Defaults} />
             <Route path="/roles" component={Roles} />
+            <Route path="/tasksconfiguration" component={TaskConfiguration} />
+            <Route path="/managetasks" component={ManageTasks} />
+            <Route path="/managestasks/update" component={UpdateTasks} />
+            <Route path="/managestasks/view" component={ViewTasks} />
           </Switch>
         </div>
       </div>
