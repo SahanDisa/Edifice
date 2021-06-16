@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from "react";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory from 'react-bootstrap-table2-editor';
+
+const Dates = () => {
 
 const options = {
     page: 1,
@@ -38,12 +40,8 @@ const data = [
     headerStyle: (column, colIndex) => {
         return { width: '20%', textAlign: 'center' };}
   }];
-
-
-class Dates extends Component {
-    render() {
         return (
-          <div className="Dates">
+          <div>
             <h2 className="Table-header">Dates</h2>
             <hr />
              
@@ -58,7 +56,7 @@ class Dates extends Component {
             />
           </div>
         );
-      }
-    }
+      };
+    
 
 export default Dates;

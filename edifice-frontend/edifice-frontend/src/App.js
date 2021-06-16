@@ -21,6 +21,9 @@ import ProjectsList from './components/project-list.component';
 import Project from './components/project.component';
 
 import FileUpload from "./components/project_component/document.component";
+import Dates from "./components/core_tools/admin/dates.component";
+import Defaults from "./components/core_tools/admin/defaults.component";
+import Roles from "./components/core_tools/admin/roles.component";
 
 
 class App extends Component {
@@ -166,6 +169,9 @@ class App extends Component {
             <Route path="/document" component={FileUpload} />
             <Route path="/addproject" component={AddProject} />
             <Route path="/projects/:id" component={Project} />
+            <Route path="/dates" component={Dates} />
+            <Route path="/defaults" component={Defaults} />
+            <Route path="/roles" component={Roles} />
           </Switch>
         </div>
       </div>

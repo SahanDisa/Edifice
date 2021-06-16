@@ -105,6 +105,25 @@ class Defaults extends Component {
                             <button>Add Departments</button>
             </form><br />
 
+            <p><b>Bid Type Settings</b></p>
+            <p><button>Edit</button> Competitive</p>
+            <hr />
+            <p><button>Edit</button> Negotiated</p>
+            <hr />
+            <p><button>Edit</button> Not Applicable</p>
+            <hr />
+            <form>
+                            <input type='text' placeholder='Add Departments'/>
+                            <button>Add Departments</button>
+            </form><br />
+
+            <p><b>Owner Type Settings</b></p>
+            <form>
+                            <input type='text' placeholder='Add Owner Type'/>
+                            <button>Add Owner Type</button>
+            </form><br />
+
+            <button>Save Changes</button>
 
           </div>
         );
