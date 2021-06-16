@@ -19,7 +19,7 @@ import BoardAdmin from "./components/board-admin.component";
 import AddProject from './components/add-project.component';
 import ProjectsList from './components/project-list.component';
 import Project from './components/project.component';
-
+import TaskConfiguration from "./components/core_tools/tasks/confirguration.component";
 import FileUpload from "./components/project_component/document.component";
 
 
@@ -166,6 +166,7 @@ class App extends Component {
             <Route path="/document" component={FileUpload} />
             <Route path="/addproject" component={AddProject} />
             <Route path="/projects/:id" component={Project} />
+            <Route path="/tasksconfiguration" component={TaskConfiguration} />
           </Switch>
         </div>
       </div>
