@@ -20,6 +20,7 @@ import AddProject from './components/add-project.component';
 import ProjectsList from './components/project-list.component';
 import Project from './components/project.component';
 import TaskConfiguration from "./components/core_tools/tasks/confirguration.component";
+import ManageTasks from "./components/core_tools/tasks/manage.component";
 import FileUpload from "./components/project_component/document.component";
 
 
@@ -167,6 +168,7 @@ class App extends Component {
             <Route path="/addproject" component={AddProject} />
             <Route path="/projects/:id" component={Project} />
             <Route path="/tasksconfiguration" component={TaskConfiguration} />
+            <Route path="/managetasks" component={ManageTasks} />
           </Switch>
         </div>
       </div>
