@@ -19,6 +19,7 @@ import BoardAdmin from "./components/board-admin.component";
 import AddProject from './components/add-project.component';
 import ProjectsList from './components/project-list.component';
 import Project from './components/project.component';
+import Sidebar from "./components/sidebar.component";
 
 import FileUpload from "./components/project_component/document.component";
 
