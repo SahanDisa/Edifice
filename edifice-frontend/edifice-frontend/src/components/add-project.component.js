@@ -85,7 +85,7 @@ export default class AddProject extends Component {
             </button>
           </div>
         ) : (
-          <div>
+          <div class="card">
             <div className="form-group">
               <label htmlFor="title">Title</label>
               <input
