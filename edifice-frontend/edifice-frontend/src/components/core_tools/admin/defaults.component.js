@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory from 'react-bootstrap-table2-editor';
 
+
+const Defaults = () => {
 
 const options = {
     page: 1,
@@ -40,11 +41,8 @@ const data = [
         return { width: '10%', textAlign: 'center' };}
   }];
 
-
-class Defaults extends Component {
-    render() {
         return (
-          <div className="Defaults">
+          <div>
             <h2 className="Table-header">Defaults</h2>
             <hr />
             <p><b>Default Project Settings</b></p>
@@ -127,7 +125,7 @@ class Defaults extends Component {
 
           </div>
         );
-      }
-    }
+      
+    };
 
 export default Defaults;
