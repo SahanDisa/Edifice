@@ -3,6 +3,8 @@ import Dates from './core_tools/admin/dates.component'
 import Defaults from './core_tools/admin/defaults.component'
 import Roles from './core_tools/admin/roles.component'
 
+import Users from './core_tools/edifice-directory/employees.component'
+
 import UserService from "../services/user.service";
 
 export default class BoardUser extends Component {
@@ -63,7 +65,7 @@ export default class BoardUser extends Component {
                 <a href="/roles" className="btn btn-primary"> Go To Roles</a>
               </div>
               <div className="tab-pane fade" id="list-home" role="tabpanel" aria-labelledby="list-profile-list">This is Home</div>
-              <div className="tab-pane fade" id="list-directory" role="tabpanel" aria-labelledby="list-messages-list">This is directory</div>
+              <div className="tab-pane fade" id="list-directory" role="tabpanel" aria-labelledby="list-messages-list"><Users /></div>
               <div className="tab-pane fade" id="list-document" role="tabpanel" aria-labelledby="list-settings-list">
                 <h5>This is document</h5>
                 <a href="/document" className="btn btn-primary"> Go To a Document</a>

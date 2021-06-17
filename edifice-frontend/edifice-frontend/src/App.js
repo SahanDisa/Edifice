@@ -28,7 +28,8 @@ import FileUpload from "./components/project_component/document.component";
 import Dates from "./components/core_tools/admin/dates.component";
 import Defaults from "./components/core_tools/admin/defaults.component";
 import Roles from "./components/core_tools/admin/roles.component";
-
+import AddUser from "./components/core_tools/edifice-directory/add.component";
+import EditUser from "./components/core_tools/edifice-directory/edit.component";
 
 class App extends Component {
   constructor(props) {
@@ -180,6 +181,10 @@ class App extends Component {
             <Route path="/managetasks" component={ManageTasks} />
             <Route path="/managestasks/update" component={UpdateTasks} />
             <Route path="/managestasks/view" component={ViewTasks} />
+
+            <Route path="/addUser" component={AddUser} />
+            <Route path="/editUder" component={EditUser} />
+          
           </Switch>
         </div>
       </div>
