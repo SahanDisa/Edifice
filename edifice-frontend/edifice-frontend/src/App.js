@@ -6,6 +6,7 @@ import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import "./App.css";
 
+
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
@@ -24,6 +25,9 @@ import ManageTasks from "./components/core_tools/tasks/manage.component";
 import UpdateTasks from "./components/core_tools/tasks/update.component";
 import ViewTasks from "./components/core_tools/tasks/view.component";
 import FileUpload from "./components/project_component/document.component";
+import Dates from "./components/core_tools/admin/dates.component";
+import Defaults from "./components/core_tools/admin/defaults.component";
+import Roles from "./components/core_tools/admin/roles.component";
 
 
 class App extends Component {
@@ -169,6 +173,9 @@ class App extends Component {
             <Route path="/document" component={FileUpload} />
             <Route path="/addproject" component={AddProject} />
             <Route path="/projects/:id" component={Project} />
+            <Route path="/dates" component={Dates} />
+            <Route path="/defaults" component={Defaults} />
+            <Route path="/roles" component={Roles} />
             <Route path="/tasksconfiguration" component={TaskConfiguration} />
             <Route path="/managetasks" component={ManageTasks} />
             <Route path="/managestasks/update" component={UpdateTasks} />

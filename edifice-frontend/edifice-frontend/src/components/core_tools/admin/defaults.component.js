@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory from 'react-bootstrap-table2-editor';
 
+
+const Defaults = () => {
 
 const options = {
     page: 1,
@@ -40,11 +41,8 @@ const data = [
         return { width: '10%', textAlign: 'center' };}
   }];
 
-
-class Defaults extends Component {
-    render() {
         return (
-          <div className="Defaults">
+          <div>
             <h2 className="Table-header">Defaults</h2>
             <hr />
             <p><b>Default Project Settings</b></p>
@@ -105,10 +103,29 @@ class Defaults extends Component {
                             <button>Add Departments</button>
             </form><br />
 
+            <p><b>Bid Type Settings</b></p>
+            <p><button>Edit</button> Competitive</p>
+            <hr />
+            <p><button>Edit</button> Negotiated</p>
+            <hr />
+            <p><button>Edit</button> Not Applicable</p>
+            <hr />
+            <form>
+                            <input type='text' placeholder='Add Departments'/>
+                            <button>Add Departments</button>
+            </form><br />
+
+            <p><b>Owner Type Settings</b></p>
+            <form>
+                            <input type='text' placeholder='Add Owner Type'/>
+                            <button>Add Owner Type</button>
+            </form><br />
+
+            <button>Save Changes</button>
 
           </div>
         );
-      }
-    }
+      
+    };
 
 export default Defaults;
