@@ -23,8 +23,10 @@ import TaskConfiguration from "./components/core_tools/tasks/confirguration.comp
 import ManageTasks from "./components/core_tools/tasks/manage.component";
 import UpdateTasks from "./components/core_tools/tasks/update.component";
 import ViewTasks from "./components/core_tools/tasks/view.component";
-import FileUpload from "./components/project_component/document.component";
+import FileUpload from "./components/project_component/document.component"
 
+import AddUser from "./components/core_tools/edifice-directory/add.component";
+import EditUser from "./components/core_tools/edifice-directory/edit.component";
 
 class App extends Component {
   constructor(props) {
@@ -173,6 +175,10 @@ class App extends Component {
             <Route path="/managetasks" component={ManageTasks} />
             <Route path="/managestasks/update" component={UpdateTasks} />
             <Route path="/managestasks/view" component={ViewTasks} />
+
+            <Route path="/addUser" component={AddUser} />
+            <Route path="/editUder" component={EditUser} />
+          
           </Switch>
         </div>
       </div>
