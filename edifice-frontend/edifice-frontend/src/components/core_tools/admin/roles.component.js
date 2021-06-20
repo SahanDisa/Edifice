@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory from 'react-bootstrap-table2-editor';
+
+const Roles = () => {
 
 const options = {
     page: 1,
@@ -59,11 +60,8 @@ const data = [
         return { width: '20%', textAlign: 'center' };}
   }];
 
-
-class Roles extends Component {
-    render() {
         return (
-          <div className="Roles">
+          <div>
             <h2 className="Table-header">Roles</h2>
             <hr />
              
@@ -78,7 +76,6 @@ class Roles extends Component {
             />
           </div>
         );
-      }
-    }
+    };
 
 export default Roles;

@@ -7,3 +7,13 @@
 [0m2021.06.14 08:15:59 INFO  time: initialize in 7.72s[0m
 [0m2021.06.14 08:15:59 WARN  Build server is not auto-connectable.[0m
 [0m2021.06.14 08:15:59 WARN  no build tool detected in workspace 'E:\GitHub\Edifice\edifice-backend\node-backend'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.06.15 22:18:05 INFO  Started: Metals version 0.10.4 in workspace 'D:\Academic\3rd year\1st semester\SCS3214 - Group Project\Project\Edifice\edifice-backend\node-backend' for client Visual Studio Code 1.57.0.[0m
+[0m2021.06.15 22:18:12 INFO  time: initialize in 8.02s[0m
+[0m2021.06.15 22:18:13 WARN  Build server is not auto-connectable.[0m
+[0m2021.06.15 22:18:13 WARN  no build tool detected in workspace 'D:\Academic\3rd year\1st semester\SCS3214 - Group Project\Project\Edifice\edifice-backend\node-backend'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.06.16 00:08:00 INFO  shutting down Metals[0m
+[0m2021.06.16 18:36:42 INFO  Started: Metals version 0.10.4 in workspace 'D:\Academic\3rd year\1st semester\SCS3214 - Group Project\Project\Edifice\edifice-backend\node-backend' for client Visual Studio Code 1.57.0.[0m
+[0m2021.06.16 18:37:06 INFO  time: initialize in 24s[0m
+[0m2021.06.16 18:37:06 WARN  Build server is not auto-connectable.[0m
+[0m2021.06.16 18:37:06 WARN  no build tool detected in workspace 'D:\Academic\3rd year\1st semester\SCS3214 - Group Project\Project\Edifice\edifice-backend\node-backend'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.06.16 19:14:07 INFO  shutting down Metals[0m
