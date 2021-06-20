@@ -6,6 +6,7 @@ import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import "./App.css";
 
+
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
@@ -20,9 +21,16 @@ import AddProject from './components/add-project.component';
 import ProjectsList from './components/project-list.component';
 import Project from './components/project.component';
 import Sidebar from "./components/sidebar.component";
-
+import TaskConfiguration from "./components/core_tools/tasks/confirguration.component";
+import ManageTasks from "./components/core_tools/tasks/manage.component";
+import UpdateTasks from "./components/core_tools/tasks/update.component";
+import ViewTasks from "./components/core_tools/tasks/view.component";
 import FileUpload from "./components/project_component/document.component";
-
+import Dates from "./components/core_tools/admin/dates.component";
+import Defaults from "./components/core_tools/admin/defaults.component";
+import Roles from "./components/core_tools/admin/roles.component";
+import AddUser from "./components/core_tools/edifice-directory/add.component";
+import EditUser from "./components/core_tools/edifice-directory/edit.component";
 
 class App extends Component {
   constructor(props) {
@@ -57,12 +65,13 @@ class App extends Component {
 
     return (
       <div>
+        <link rel="\public\icons\051-dumper truck.png" href=".\public\icons\051-dumper truck.png" type="image/x-icon" />
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
           
             Edifice
           </Link>
-          
+
           <div className="navbar-nav mr-auto">
             {currentUser && (
               <li className="nav-item">
@@ -166,6 +175,17 @@ class App extends Component {
             <Route path="/document" component={FileUpload} />
             <Route path="/addproject" component={AddProject} />
             <Route path="/projects/:id" component={Project} />
+            <Route path="/dates" component={Dates} />
+            <Route path="/defaults" component={Defaults} />
+            <Route path="/roles" component={Roles} />
+            <Route path="/tasksconfiguration" component={TaskConfiguration} />
+            <Route path="/managetasks" component={ManageTasks} />
+            <Route path="/managestasks/update" component={UpdateTasks} />
+            <Route path="/managestasks/view" component={ViewTasks} />
+
+            <Route path="/addUser" component={AddUser} />
+            <Route path="/editUder" component={EditUser} />
+          
           </Switch>
         </div>
       </div>
