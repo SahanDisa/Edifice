@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ProjectDataService from "./../services/project.service";
+import ProjectDataService from "./../../../services/project.service";
 import { Link } from "react-router-dom";
 
 export default class ProjectsList extends Component {
@@ -89,7 +89,8 @@ export default class ProjectsList extends Component {
 
     return (
       <div className="list row">
-        <div className="col-md-8">
+      <h2>Project Dashboard</h2>
+        <div className="col-md-10">
           <div className="input-group mb-3">
             <input
               type="text"
