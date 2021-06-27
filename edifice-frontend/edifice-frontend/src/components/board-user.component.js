@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { Switch, Route } from "react-router-dom";
+import UserService from "./../services/user.service";
+
 import portfolioIcon from "././../assets/portfolio.png";
 import rfiIcon from "././../assets/rfi.png";
 import dailylogIcon from "././../assets/dailylog.png";
@@ -8,7 +11,9 @@ import actionplanIcon from "././../assets/actionplan.png";
 import drawingsIcon from "././../assets/drawings.png";
 import photosIcon from "././../assets/photos.png";
 import punchlistIcon from "././../assets/punchlist.png";
-import UserService from "./../services/user.service";
+
+import MeetingsConfig from "./project_management/meetings/configuration.component";
+import ManageMeetings from "./project_management/meetings/manage.component";
 
 export default class BoardUser extends Component {
   constructor(props) {
@@ -45,88 +50,117 @@ export default class BoardUser extends Component {
         <header className="jumbotron">
           <h3>Project Management</h3>
         </header>
-        <div class="row">
-            <div class="col-lg-4 col-sm-6 mb-grid-gutter pb-3">
-              <a class="d-block nav-heading text-center" href="#">
-                <div class="card card-hover border-0 shadow-lg mb-4">
-                  <img className="card-img" src="{portfolioIcon}" alt="" width="50" height="50"/>
-                </div>
-                <h3 class="h5 nav-heading-title mb-0">Portfolio</h3>
-                <span class="fs-sm fw-normal text-muted">Small Detail</span>
+        <div className="row">
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mt-2 mb-2" href="#">
+                <img src={portfolioIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Portfolio</h3>
+                <span className="fs-sm fw-normal text-muted">Small Detail</span>
               </a>
+              </div>
             </div>
-            <div class="col-lg-4 col-sm-6 mb-grid-gutter pb-3">
-              <a class="d-block nav-heading text-center" href="#">
-                <div class="card card-hover border-0 shadow-lg mb-4">
-                  <img className="card-img" src="{rfiIcon}" alt="" width="50" height="50"/>
-                </div>
-                <h3 class="h5 nav-heading-title mb-0">RFI</h3>
-                <span class="fs-sm fw-normal text-muted">Small Detail</span>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mt-2 mb-2" href="#">
+                <img src={rfiIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">RFI</h3>
+                <span className="fs-sm fw-normal text-muted">Small Detail</span>
               </a>
+              </div>
             </div>
-            <div class="col-lg-4 col-sm-6 mb-grid-gutter pb-3">
-              <a class="d-block nav-heading text-center" href="#">
-                <div class="card card-hover border-0 shadow-lg mb-4">
-                  <img className="card-img" src="{dailylogIcon}" alt="" width="50" height="50"/>
-                </div>
-                <h3 class="h5 nav-heading-title mb-0">Daily Log</h3>
-                <span class="fs-sm fw-normal text-muted">Small Detail</span>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mt-2 mb-2" href="#">
+                <img src={dailylogIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Daily Log</h3>
+                <span className="fs-sm fw-normal text-muted">Small Detail</span>
               </a>
+              </div>
             </div>
-            <div class="col-lg-4 col-sm-6 mb-grid-gutter pb-3">
-              <a class="d-block nav-heading text-center" href="#">
-                <div class="card card-hover border-0 shadow-lg mb-4">
-                  <img className="card-img" src="{meetingIcon}" alt="" width="50" height="50"/>
-                </div>
-                <h3 class="h5 nav-heading-title mb-0">Meetings</h3>                
-                <span class="fs-sm fw-normal text-muted">Small Detail</span>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mt-2 mb-2" data-toggle="modal" data-target="#meetingModal" href="#">
+                <img src={meetingIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Meetings</h3>                
+                <span className="fs-sm fw-normal text-muted">Manage all aspects of your project meetings from agenda distribution</span>
               </a>
+              </div>
             </div>
-            <div class="col-lg-4 col-sm-6 mb-grid-gutter pb-3">
-              <a class="d-block nav-heading text-center" href="#">
-                <div class="card card-hover border-0 shadow-lg mb-4">
-                  <img className="card-img" src="{biddingIcon}" alt="" width="50" height="50"/>
-                </div>
-                <h3 class="h5 nav-heading-title mb-0">Biddings</h3>
-                <span class="fs-sm fw-normal text-muted">Small Detail</span>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mt-2 mb-2" href="#">
+                <img src={biddingIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Biddings</h3>
+                <span className="fs-sm fw-normal text-muted">Small Detail</span>
               </a>
+              </div>
             </div>
-            <div class="col-lg-4 col-sm-6 mb-grid-gutter pb-3">
-              <a class="d-block nav-heading text-center" href="#">
-                <div class="card card-hover border-0 shadow-lg mb-4">
-                  <img className="card-img" src="{actionplanIcon}" alt="" width="50" height="50"/>
-                </div>
-                <h3 class="h5 nav-heading-title mb-0">Action Plan</h3>
-                <span class="fs-sm fw-normal text-muted">Small Detail</span>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mt-2 mb-2" href="#">
+                <img src={actionplanIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Action Plan</h3>
+                <span className="fs-sm fw-normal text-muted">Small Detail</span>
               </a>
+              </div>
             </div>
-            <div class="col-lg-4 col-sm-6 mb-grid-gutter pb-3">
-              <a class="d-block nav-heading text-center" href="#">
-                <div class="card card-hover border-0 shadow-lg mb-4">
-                  <img className="card-img" src="{drawingsIcon}" alt="" width="50" height="50"/>
-                </div>
-                <h3 class="h5 nav-heading-title mb-0">Drawings</h3>
-                <span class="fs-sm fw-normal text-muted">Small Detail</span>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mt-2 mb-2" href="#">
+                <img src={drawingsIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Drawings</h3>
+                <span className="fs-sm fw-normal text-muted">Small Detail</span>
               </a>
+              </div>
             </div>
-            <div class="col-lg-4 col-sm-6 mb-grid-gutter pb-3">
-              <a class="d-block nav-heading text-center" href="#">
-                <div class="card card-hover border-0 shadow-lg mb-4">
-                  <img className="card-img" src="{photosIcon}" alt="" width="50" height="50"/>
-                </div>
-                <h3 class="h5 nav-heading-title mb-0">Photos</h3>
-                <span class="fs-sm fw-normal text-muted">Small Detail</span>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mt-2 mb-2" href="#">
+                <img src={photosIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Photos</h3>
+                <span className="fs-sm fw-normal text-muted">Small Detail</span>
               </a>
+              </div>
             </div>
-            <div class="col-lg-4 col-sm-6 mb-grid-gutter pb-3">
-              <a class="d-block nav-heading text-center" href="#">
-                <div class="card card-hover border-0 shadow-lg mb-4">
-                  <img className="card-img" src="{punchlistIcon}" alt="" width="50" height="50"/>
-                </div>
-                <h3 class="h5 nav-heading-title mb-0">Punch List</h3>
-                <span class="fs-sm fw-normal text-muted">Small Detail</span>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mt-2 mb-2" href="#">
+                <img src={punchlistIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Punch List</h3>
+                <span className="fs-sm fw-normal text-muted">Small Detail</span>
               </a>
+              </div>
             </div>
+          </div>
+
+          {/* Metting Model Starts */}
+          <div className="modal fade" id="meetingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalCenterTitle">Choose what you want to do?</h5>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <a href="/meetingsconfiguration" className="btn btn-primary ml-5 mr-3"> Meeting Configuration</a>
+                  <a href="/managemeetings" className="btn btn-primary mr-6"> Manage Meetings</a>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Metting Model Ends */}
+
+          <div>
+            <Switch>
+              <Route path="/meetingsconfiguration" component={MeetingsConfig} />
+              <Route path="/managemeetings" component={ManageMeetings} />
+            </Switch>
           </div>
       </div>
     );

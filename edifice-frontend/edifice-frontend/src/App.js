@@ -6,7 +6,6 @@ import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import "./App.css";
 
-
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
@@ -17,6 +16,7 @@ import BoardUser from "./components/board-user.component";
 import BoardResource from "./components/board-resource.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
+
 import AddProject from './components/core_tools/admin/add-project.component';
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
