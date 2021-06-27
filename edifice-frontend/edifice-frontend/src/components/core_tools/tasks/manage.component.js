@@ -6,7 +6,7 @@ import UpdateTasks from "./update.component";
 import ViewTasks from "./view.component";
 
 const data = [
-  {edit:<a href="/managestasks/update" className="btn btn-outline-success">Edit</a>, view:<a href="/managestasks/view" className="btn btn-outline-primary">View</a>, no: 1, title:"", description:"Collect all the biddings", category:"Bidding"}
+  {edit:<a href={"/managestasks/update"} className="btn btn-outline-success">Edit</a>, view:<a href="/managestasks/view" className="btn btn-outline-primary">View</a>, no: 1, title:"", description:"Collect all the biddings", category:"Bidding"}
 ];
 const columns = [
   {
