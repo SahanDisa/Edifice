@@ -10,24 +10,27 @@ class AddUser extends Component {
           <h5>Enter user details</h5>
 
           <label htmlFor="">Id</label>
-          <input type="number" required/>
+          <input className="form-control" type="number" required/>
+          <br/>
 
           <label htmlFor="">Name</label>
-          <input type="text" required/>
+          <input className="form-control" type="text" required/>
+          <br/>
 
           <label htmlFor="">Role</label>
 
-          <select name="" id="">
+          <select className="form-control" name="" id="">
             <option value="role1">civil engineer</option>
             <option value="role2">Project manager</option>
             <option value="role3">Site supervisor</option>
           </select><br />
 
           <label htmlFor="">Email</label>
-          <input type="text" required/>
+          <input className="form-control" type="text" required/>
+          <br/>
 
           <label htmlFor="">Mobile</label>
-          <input type="number" required/>
+          <input className="form-control" type="number" required/>
           <br/>
           <br/>
 
