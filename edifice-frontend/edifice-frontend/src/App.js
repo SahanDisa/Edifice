@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import $ from 'jquery';
 import Popper from 'popper.js';
@@ -30,6 +31,7 @@ import Defaults from "./components/core_tools/admin/defaults.component";
 import Roles from "./components/core_tools/admin/roles.component";
 import AddUser from "./components/core_tools/edifice-directory/add.component";
 import EditUser from "./components/core_tools/edifice-directory/edit.component";
+import Budget from "./components/financial_component/budget.component";
 
 class App extends Component {
   constructor(props) {
@@ -184,9 +186,11 @@ class App extends Component {
 
             <Route path="/addUser" component={AddUser} />
             <Route path="/editUder" component={EditUser} />
+            <Route path="/budget" component={Budget} />
+            
           
           </Switch>
-        </div>
+            </div>        
       </div>
     );
   }
