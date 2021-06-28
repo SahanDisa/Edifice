@@ -171,6 +171,18 @@ export default class ProjectsList extends Component {
               >
                 Edit
               </Link>
+              <Link
+                to={"#"}
+                className="badge badge-success"
+                >
+                Department
+              </Link>
+              <Link
+                to={"#"}
+                className="badge badge-primary"
+                >
+                Connect Users
+              </Link>
             </div>
           ) : (
             <div>
