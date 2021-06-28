@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ProjectDataService from "./../services/project.service";
+import ProjectDataService from "./../../../services/project.service";
 
 export default class AddProject extends Component {
   constructor(props) {
@@ -85,7 +85,8 @@ export default class AddProject extends Component {
             </button>
           </div>
         ) : (
-          <div class="card">
+          <div class="jumbotron">
+            <h2>Add New Project</h2>
             <div className="form-group">
               <label htmlFor="title">Title</label>
               <input

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ProjectDataService from "./../services/project.service";
+import ProjectDataService from "./../../../services/project.service";
 
 export default class Project extends Component {
   constructor(props) {
@@ -134,7 +134,7 @@ export default class Project extends Component {
         <div>
           {currentProject ? (
             <div className="edit-form">
-              <h4>Project</h4>
+              <h2>Update a Project</h2>
               <form>
                 <div className="form-group">
                   <label htmlFor="title">Title</label>
