@@ -26,8 +26,14 @@ import FileUpload from "./components/project_component/document.component";
 import Dates from "./components/core_tools/admin/dates.component";
 import Defaults from "./components/core_tools/admin/defaults.component";
 import Roles from "./components/core_tools/admin/roles.component";
-import AddUser from "./components/core_tools/edifice-directory/add.component";
-import EditUser from "./components/core_tools/edifice-directory/edit.component";
+
+import AddUser from "./components/core_tools/edifice-directory/add-emp.component";
+import EditUser from "./components/core_tools/edifice-directory/edit-emp.component";
+import Vendors from "./components/core_tools/edifice-directory/vendors.component";
+import Emp from "./components/core_tools/edifice-directory/employees.component";
+import AddVendor from "./components/core_tools/edifice-directory/add-vendor.component";
+import EditVendor from "./components/core_tools/edifice-directory/edit-vendor.component";
+
 
 class App extends Component {
   constructor(props) {
@@ -160,7 +166,11 @@ class App extends Component {
             <Route path="/tasksconfiguration" component={TaskConfiguration} />
             <Route path="/managetasks" component={ManageTasks} />
             <Route path="/addUser" component={AddUser} />
-            <Route path="/editUder" component={EditUser} />
+            <Route path="/editUser" component={EditUser} />
+            <Route path="/vendors" component={Vendors} />
+            <Route path="/employees" component={Emp} />
+            <Route path="/addVendor" component={AddVendor} />
+            <Route path="/editVendor" component={EditVendor} />
           </Switch>
         </div>
       </div>
