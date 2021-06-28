@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import $ from 'jquery';
-import Popper from 'popper.js';
+
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import "./App.css";
 
@@ -20,6 +19,8 @@ import BoardAdmin from "./components/board-admin.component";
 import AddProject from './components/core_tools/admin/add-project.component';
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
+import DrawingHome from "./components/project_management/drawings/drawings.component";
+
 import TaskConfiguration from "./components/core_tools/tasks/confirguration.component";
 import ManageTasks from "./components/core_tools/tasks/manage.component";
 import FileUpload from "./components/project_management/document/document.component";
@@ -171,6 +172,7 @@ class App extends Component {
             <Route path="/employees" component={Emp} />
             <Route path="/addVendor" component={AddVendor} />
             <Route path="/editVendor" component={EditVendor} />
+            <Route path="/drawing" component={DrawingHome} />
           </Switch>
         </div>
       </div>
