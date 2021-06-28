@@ -6,7 +6,6 @@ import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import "./App.css";
 
-
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
@@ -17,19 +16,24 @@ import BoardUser from "./components/board-user.component";
 import BoardResource from "./components/board-resource.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
+
 import AddProject from './components/core_tools/admin/add-project.component';
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
 import TaskConfiguration from "./components/core_tools/tasks/confirguration.component";
 import ManageTasks from "./components/core_tools/tasks/manage.component";
-import UpdateTasks from "./components/core_tools/tasks/update.component";
-import ViewTasks from "./components/core_tools/tasks/view.component";
 import FileUpload from "./components/project_component/document.component";
 import Dates from "./components/core_tools/admin/dates.component";
 import Defaults from "./components/core_tools/admin/defaults.component";
 import Roles from "./components/core_tools/admin/roles.component";
-import AddUser from "./components/core_tools/edifice-directory/add.component";
-import EditUser from "./components/core_tools/edifice-directory/edit.component";
+
+import AddUser from "./components/core_tools/edifice-directory/add-emp.component";
+import EditUser from "./components/core_tools/edifice-directory/edit-emp.component";
+import Vendors from "./components/core_tools/edifice-directory/vendors.component";
+import Emp from "./components/core_tools/edifice-directory/employees.component";
+import AddVendor from "./components/core_tools/edifice-directory/add-vendor.component";
+import EditVendor from "./components/core_tools/edifice-directory/edit-vendor.component";
+
 
 class App extends Component {
   constructor(props) {
@@ -161,11 +165,12 @@ class App extends Component {
             <Route path="/roles" component={Roles} />
             <Route path="/tasksconfiguration" component={TaskConfiguration} />
             <Route path="/managetasks" component={ManageTasks} />
-            <Route path="/managestasks/update" component={UpdateTasks} />
-            <Route path="/managestasks/view" component={ViewTasks} />
             <Route path="/addUser" component={AddUser} />
-            <Route path="/editUder" component={EditUser} />
-          
+            <Route path="/editUser" component={EditUser} />
+            <Route path="/vendors" component={Vendors} />
+            <Route path="/employees" component={Emp} />
+            <Route path="/addVendor" component={AddVendor} />
+            <Route path="/editVendor" component={EditVendor} />
           </Switch>
         </div>
       </div>
