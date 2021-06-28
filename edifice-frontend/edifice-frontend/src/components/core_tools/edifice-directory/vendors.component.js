@@ -4,13 +4,13 @@ import cellEditFactory from 'react-bootstrap-table2-editor';
 
 
 const data = [
-    {id: 1, companyName: 'pathirage',type:'', edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 2, companyName: 'liyanage', type:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 3, companyName: 'abliyanage', type:'',  edit:<a href="/editUser" className="btn btn-primary">edit</a>},
-    {id: 4, companyName: 'ldgrefiyanage', type:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 5, companyName: 'rte', type:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 6, companyName: 'conctr',type:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 7, companyName: 'conctr',type:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>}
+    {id: 1, companyName: 'pathirage',type:'', edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
+    {id: 2, companyName: 'liyanage', type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
+    {id: 3, companyName: 'abliyanage', type:'',  edit:<a href="/editVendor" className="btn btn-primary">edit</a>},
+    {id: 4, companyName: 'ldgrefiyanage', type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
+    {id: 5, companyName: 'rte', type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
+    {id: 6, companyName: 'conctr',type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
+    {id: 7, companyName: 'conctr',type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>}
   ];
   const columns = [{
     dataField: 'id',
@@ -21,7 +21,7 @@ const data = [
     dataField: 'companyName',
     text: 'Company Name',
     headerStyle: (column, colIndex) => {
-        return { width: '50%', textAlign: 'center' };}
+        return { width: '20%', textAlign: 'center' };}
   }, {
     dataField: 'type',
     text: 'Type',
@@ -35,10 +35,16 @@ const data = [
         return { width: '20%', textAlign: 'center' };}
   },
   {
+  dataField: '',
+  text: 'Email',
+  headerStyle: (column, colIndex) => {
+      return { width: '20%', textAlign: 'center' };}
+  },
+  {
     dataField: '',
     text: 'contact person name',
     headerStyle: (column, colIndex) => {
-        return { width: '40%', textAlign: 'center' };}
+        return { width: '50%', textAlign: 'center' };}
   },
   {
     dataField: 'edit',
@@ -87,7 +93,7 @@ class Vendors extends Component {
               </div>
 
               <div>
-                <a href="/addUser" className="btn btn-primary"> +add vendor</a>
+                <a href="/addVendor" className="btn btn-primary"> +add vendor</a>
               </div>
             </form>
 

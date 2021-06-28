@@ -33,8 +33,13 @@ class EditUser extends Component {
           <br/>
           <br/>
 
-
-          <a href="#" className="btn btn-success">Add</a>
+          <div>
+          <a href="#" className="btn btn-success">Update</a>
+          </div>
+          <div>
+          <a href="/employees" className="btn btn-success">Cancel</a>
+          </div>
+          
         </div>
         
 
