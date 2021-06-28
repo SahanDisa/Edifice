@@ -76,7 +76,13 @@ export default class BoardUser extends Component {
                 <p>List All Project</p>
                 <a href="/projects" className="btn btn-outline-primary">Project Home</a>
               </div>
-              <div className="tab-pane fade" id="list-directory" role="tabpanel" aria-labelledby="list-messages-list"><Employees /></div>
+              <div className="tab-pane fade" id="list-directory" role="tabpanel" aria-labelledby="list-messages-list">
+              <h5>Directory</h5><hr/>
+                <a href="/employees" className="btn btn-primary"> Employees</a>
+                <a href="/vendors" className="btn btn-primary"> Vendors</a>
+                <a href="/projects" className="btn btn-primary"> Projects</a>
+              </div>
+
               <div className="tab-pane fade" id="list-document" role="tabpanel" aria-labelledby="list-settings-list">
                 <h5>This is document</h5>
                 <a href="/document" className="btn btn-primary"> Go To a Document</a>

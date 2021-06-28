@@ -4,12 +4,13 @@ import cellEditFactory from 'react-bootstrap-table2-editor';
 
 
 const data = [
-    {id: 1, name: 'randie pathirage',role:'', edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 2, name: 'abc liyanage', role:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 3, name: 'abc liyanage', role:'',  edit:<a href="/editUser" className="btn btn-primary">edit</a>},
-    {id: 4, name: 'abc liyanage', role:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 5, name: 'abc liyanage', role:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 6, name: 'jhk kumara',role:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>}
+    {id: 1, companyName: 'pathirage',type:'', edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
+    {id: 2, companyName: 'liyanage', type:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
+    {id: 3, companyName: 'abliyanage', type:'',  edit:<a href="/editUser" className="btn btn-primary">edit</a>},
+    {id: 4, companyName: 'ldgrefiyanage', type:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
+    {id: 5, companyName: 'rte', type:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
+    {id: 6, companyName: 'conctr',type:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
+    {id: 7, companyName: 'conctr',type:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>}
   ];
   const columns = [{
     dataField: 'id',
@@ -17,27 +18,27 @@ const data = [
     headerStyle: (column, colIndex) => {
         return { width: '10%', textAlign: 'center' };}
   }, {
-    dataField: 'name',
-    text: 'Name',
+    dataField: 'companyName',
+    text: 'Company Name',
     headerStyle: (column, colIndex) => {
-        return { width: '70%', textAlign: 'center' };}
+        return { width: '50%', textAlign: 'center' };}
   }, {
-    dataField: 'role',
-    text: 'Role',
+    dataField: 'type',
+    text: 'Type',
     headerStyle: (column, colIndex) => {
         return { width: '20%', textAlign: 'center' };}
   },
   {
     dataField: '',
-    text: 'Email',
+    text: 'Contact No',
     headerStyle: (column, colIndex) => {
         return { width: '20%', textAlign: 'center' };}
   },
   {
-    dataField: 'delete',
-    text: 'Mobile',
+    dataField: '',
+    text: 'contact person name',
     headerStyle: (column, colIndex) => {
-        return { width: '20%', textAlign: 'center' };}
+        return { width: '40%', textAlign: 'center' };}
   },
   {
     dataField: 'edit',
@@ -47,28 +48,28 @@ const data = [
   }];
 
 
-class Emp extends Component {
+class Vendors extends Component {
     render() {
         return (
           <div>
           
             <ul class="nav nav-tabs">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Employees</a>
+                <a class="nav-link" href="/employees">Employees</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/projects">Projects</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/vendors">Vendors</a>
+                <a class="nav-link active" aria-current="page" href="#">Vendors</a>
               </li>
             </ul>
 
-            <h2>Employees</h2>
+            <h2>Vendors</h2>
 
             <form className="row g-3">
               <div className="col-auto">
-                <input className="form-control" type="text" placeholder="Search employee"/>  
+                <input className="form-control" type="text" placeholder="Search vendor"/>  
               </div>
 
               <div className="col-auto">
@@ -79,14 +80,14 @@ class Emp extends Component {
 
               <div className="col-auto">
                 <select className="form-control" name="" id="">
-                  <option value="role1">civil engineer</option>
-                  <option value="role2">Project manager</option>
-                  <option value="role3">Site supervisor</option>
+                  <option value="role1">date</option>
+                  <option value="role2">Projects</option>
+                  <option value="role3">contact</option>
                 </select><br />
               </div>
 
               <div>
-                <a href="/addUser" className="btn btn-primary"> +add employee</a>
+                <a href="/addUser" className="btn btn-primary"> +add vendor</a>
               </div>
             </form>
 
@@ -105,4 +106,4 @@ class Emp extends Component {
       }
     }
 
-export default Emp;
+export default Vendors;
