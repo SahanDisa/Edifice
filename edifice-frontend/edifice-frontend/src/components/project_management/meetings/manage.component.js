@@ -92,7 +92,7 @@ class ManageMeetings extends Component {
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Weekly OAC Metting</button>
                       </h2>
                     </div>
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                       <div class="card-body">
                         <div className="">
                           <div class="col-md-12 text-right mb-2">
@@ -115,7 +115,7 @@ class ManageMeetings extends Component {
                         <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">2nd category</button>
                       </h2>
                     </div>
-                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                       <div class="card-body">
                         <div className="">
                           <div class="col-md-12 text-right mb-2">
@@ -131,6 +131,11 @@ class ManageMeetings extends Component {
                         </div>
                       </div>
                     </div>
+                  </div>  
+                </div>
+                <div>
+                  <div class="col-md-12 text-left mt-3 mb-3">
+                    <a href="/meetingsconfiguration" className="btn btn-outline-success">+ Add Category</a>
                   </div>
                 </div>
               </div>
