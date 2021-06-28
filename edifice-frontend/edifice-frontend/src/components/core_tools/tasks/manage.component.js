@@ -2,11 +2,8 @@ import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
 
-import UpdateTasks from "./update.component";
-import ViewTasks from "./view.component";
-
 const data = [
-  {edit:<a href={"/managestasks/update"} className="btn btn-outline-success">Edit</a>, view:<a href="/managestasks/view" className="btn btn-outline-primary">View</a>, no: 1, title:"", description:"Collect all the biddings", category:"Bidding"}
+  {edit:<a href="/managestasks/update" className="btn btn-outline-success">Edit</a>, view:<a href="/managestasks/view" className="btn btn-outline-primary">View</a>, no: 1, title:"", description:"Collect all the biddings", category:"Bidding"}
 ];
 const columns = [
   {
@@ -63,62 +60,71 @@ class ManageTasks extends Component {
     return (
       <div className="">
         <h2>Manage Tasks</h2><hr/>
-        <div className="">
-          <form action="">
-            <h5>New Tasks</h5>
-            <div>
-              <label htmlFor="">No</label>
-              <input type="number" required/>
+        <div className="mb-3">
+          <h5>New Tasks</h5>
+          <form>
+            <div className="form-row">
+              <div className="form-group col-md-2">
+                <label htmlFor="">No</label>
+                <input className="form-control" type="number" min="0" required/>
+              </div>
+              <div className="form-group col-md-4">
+                <label htmlFor="">Title</label>
+                <input className="form-control" type="text" required/>
+              </div>
+              <div className="form-group col-md-3">
+                <label htmlFor="">Status</label>
+                <select className="form-control" required>
+                  <option value="Initialized" selected>Initialized</option>
+                  <option value="In progress">In progress</option>
+                  <option value="Ready for review">Ready for review</option>
+                  <option value="Closed">Closed</option>
+                  <option value="Void">Void</option>
+                </select>
+              </div>
+              <div className="form-group col-md-3">
+                <label htmlFor="">Assignee</label>
+                <select className="form-control" required>
+                  <option value="Assignee 1" selected>Assignee 1</option>
+                  <option value="Assignee 2">Assignee 2</option>
+                </select>
+              </div>
             </div>
-            <div>
-              <label htmlFor="">Title</label>
-              <input type="text" required/>
+            <div className="form-row">
+              <div className="form-group col-md-2">
+                <label htmlFor="">Due Date</label>
+                <input className="form-control" type="date" min="" required/>
+              </div>
+              <div className="form-group col-md-4">
+                <label htmlFor="">Category</label>
+                <select className="form-control" required>
+                  <option value="Category 1">Category 1</option>
+                  <option value="Category 2">Category 2</option>
+                </select>
+              </div>
+              <div className="form-group col-md-6">
+                <label htmlFor="">Discription</label>
+                <input className="form-control" type="textarea"/>
+              </div>
             </div>
-            <div>
-              <label htmlFor="">Status</label>
-              <select duedate="" id="" required>
-                <option value="Initialized">Initialized</option>
-                <option value="In progress">In progress</option>
-                <option value="Ready for review">Ready for review</option>
-                <option value="Closed">Closed</option>
-                <option value="Void">Void</option>
-              </select>
+            <div className="form-group">
+              <div className="form-check">
+                <input type="checkbox" className="form-check-input" id="privateCheck" />
+                <label htmlFor="privateCheck" className="form-check-label">Private</label>
+              </div>
             </div>
-            <div>
-              <label htmlFor="">Assignee</label>
-              <select duedate="" id="" required>
-                <option value="Assignee 1">Assignee 1</option>
-                <option value="Assignee 2">Assignee 2</option>
-              </select>
-            </div>
-            <div>
-              <label htmlFor="">Due Date</label>
-              <input type="date" min="" required/>
-            </div>
-            <div>
-              <label htmlFor="">Category</label>
-              <select duedate="" id="">
-                <option value="Category 1">Category 1</option>
-                <option value="Category 2">Category 2</option>
-              </select>
-            </div>
-            <div>
-              <label htmlFor="">Private</label><input type="checkbox"/>
-            </div>
-            <div>
-              <label htmlFor="">Discription</label>
-              <input type="textarea"/>
-            </div>
-            {/* <label htmlFor="">Attachment</label> */}
-            <a href="/managetasks" className="btn btn-success">Add</a>
+            <a href="/managetasks" type="submit" className="btn btn-success">Add</a>
           </form>
-        
         </div>
-        <div>
-          <input type="text" placeholder="Search" /><br/>
-          <a href="#" className="btn btn-outline-primary">Add Filter</a>
-        </div>
-        <div>
+        <form>
+          <div className="form-row">
+            <div className="form-group col-md-4">
+              <input className="form-control" type="text" placeholder="Search" />
+            </div>
+            <a href="#" className="btn btn-outline-primary mb-3">Add Filter</a>
+          </div>
+        </form>
+        <div className="">
           <BootstrapTable 
             hover
             keyField='assignee'
@@ -126,12 +132,6 @@ class ManageTasks extends Component {
             columns={ columns } 
             cellEdit={ false }
           />
-        </div>
-        <div className="container mt-3">
-          <Switch>
-            <Route path="/managestasks/update" component={UpdateTasks} />
-            <Route path="/managestasks/view" component={ViewTasks} />
-          </Switch>
         </div>
       </div>
     );
