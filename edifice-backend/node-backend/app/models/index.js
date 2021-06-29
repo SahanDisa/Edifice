@@ -27,6 +27,14 @@ db.sequelize = sequelize;
 db.users = require("./user.model.js")(sequelize, Sequelize);
 db.roles = require("./role.model.js")(sequelize, Sequelize);
 db.projects = require("./project.model.js")(sequelize, Sequelize);
+db.drawings = require("./drawing.model.js")(sequelize, Sequelize);
+
+// One project has many drawings
+db.projects.hasMany(db.drawings, { as: "drawings" });
+db.drawings.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
 
 
 db.roles.belongsToMany(db.users, {
