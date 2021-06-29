@@ -28,18 +28,26 @@ import Roles from "./components/core_tools/admin/roles.component";
 
 import AddUser from "./components/core_tools/edifice-directory/add-emp.component";
 import EditUser from "./components/core_tools/edifice-directory/edit-emp.component";
+import Vendors from "./components/core_tools/edifice-directory/vendors.component";
+import Emp from "./components/core_tools/edifice-directory/employees.component";
+import AddVendor from "./components/core_tools/edifice-directory/add-vendor.component";
+import EditVendor from "./components/core_tools/edifice-directory/edit-vendor.component";
 
 import TaskConfiguration from "./components/core_tools/tasks/configuration.component";
 import ManageTasks from "./components/core_tools/tasks/manage.component";
 import UpdateTasks from "./components/core_tools/tasks/update.component";
 import ViewTasks from "./components/core_tools/tasks/view.component";
 
-import FileUpload from "./components/project_component/document.component";
+import FileUpload from "./components/project_management/document/document.component";
 
 import MeetingsConfig from "./components/project_management/meetings/configuration.component";
 import ManageMeetings from "./components/project_management/meetings/manage.component";
 import UpdateMeetings from "./components/project_management/meetings/update.component";
 import ViewMeetings from "./components/project_management/meetings/view.component";
+
+import Budget from "./components/financial_component/budget/budget.component";
+import PrimeContracts from "./components/financial_component/prime-contracts/prime-contracts.component";
+
 
 class App extends Component {
   constructor(props) {
@@ -187,6 +195,9 @@ class App extends Component {
             <Route path="/addVendor" component={AddVendor} />
             <Route path="/editVendor" component={EditVendor} />
             <Route path="/drawing" component={DrawingHome} />
+			
+			      <Route path="/budget" component={Budget} />
+            <Route path="/prime-contracts" component={PrimeContracts} />
 
           </Switch>
         </div>
