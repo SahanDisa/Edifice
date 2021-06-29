@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 import UserService from "../services/user.service";
 import myIcon from "../assets/066-bulldozer.png";
@@ -45,15 +46,19 @@ export default class Home extends Component {
             <div class="card-body">
               <h5 class="card-title">Port City: Apartment Section 01</h5>
               <p class="card-text">Random description.</p>
-              <a href="/project" className="btn btn-primary"> Go to the project</a>
+              <a href={"/Project"} className="btn btn-primary"> Go to the project</a>
             </div>
           </div>
-          <Fab color="primary" aria-label="add">
+          <Link to={"/AddProject"}>
+          <Fab color="primary" aria-label="add" >
             <AddIcon />
           </Fab>
+          </Link>
         </header>
         
       </div>
+
+      
     );
   }
 }
