@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import UploadService from "./../../services/document.service";
+import UploadService from "./../../../services/document.service";
 
 const UploadFiles = () => {
   

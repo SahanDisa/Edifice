@@ -3,7 +3,7 @@ import Dates from './core_tools/admin/dates.component'
 import Defaults from './core_tools/admin/defaults.component'
 import Roles from './core_tools/admin/roles.component'
 
-import Users from './core_tools/edifice-directory/employees.component'
+import Employees from './core_tools/edifice-directory/employees.component'
 
 import UserService from "../services/user.service";
 
@@ -62,9 +62,12 @@ export default class BoardUser extends Component {
               {/*Admin core tools description  */}
               <div className="tab-pane fade show active" id="list-admin" role="tabpanel" aria-labelledby="list-home-list">
                 <h5>This is admin</h5>
-                  <a href="/dates" className="btn btn-primary"> Go To Dates</a>
-                  <a href="/defaults" className="btn btn-primary"> Go To Defaults</a>
-                  <a href="/roles" className="btn btn-primary"> Go To Roles</a>
+                  <p>Manage Important dates</p>
+                  <a href="/dates" className="btn btn-outline-primary"> Go To Dates</a>
+                  <p>Manage Deafults</p>
+                  <a href="/defaults" className="btn btn-outline-primary"> Go To Defaults</a>
+                  <p>Manage Roles</p>
+                  <a href="/roles" className="btn btn-outline-primary"> Go To Roles</a>
               </div>
               {/* Admin project description */}
               <div className="tab-pane fade" id="list-home" role="tabpanel" aria-labelledby="list-profile-list">
@@ -76,14 +79,24 @@ export default class BoardUser extends Component {
                 <p>List All Project</p>
                 <a href="/projects" className="btn btn-outline-primary">Project Home</a>
               </div>
-              <div className="tab-pane fade" id="list-directory" role="tabpanel" aria-labelledby="list-messages-list"><Users /></div>
+              <div className="tab-pane fade" id="list-directory" role="tabpanel" aria-labelledby="list-messages-list">
+              <h5>Directory</h5>
+                <p>View Employee Directory</p>
+                <a href="/employees" className="btn btn-outline-primary"> Employees</a>
+                <p>View Vendor Directory</p>
+                <a href="/vendors" className="btn btn-outline-primary"> Vendors</a>
+                <p>View Project Directory</p>
+                <a href="/projects" className="btn btn-outline-primary"> Projects</a>
+              </div>
+
               <div className="tab-pane fade" id="list-document" role="tabpanel" aria-labelledby="list-settings-list">
                 <h5>This is document</h5>
-                <a href="/document" className="btn btn-primary"> Go To a Document</a>
+                <p>Manage pre construction level docments</p>
+                <a href="/document" className="btn btn-outline-primary"> Go To a Document</a>
               </div>
               <div className="tab-pane fade" id="list-tasks" role="tabpanel" aria-labelledby="list-settings-list">
                 <h5>Tasks</h5><hr/>
-                <a href="/tasksconfiguration" className="btn btn-outline-primary"> Task Tool Configuration</a>
+                <a href="/tasksconfiguration" className="btn btn-outline-primary mr-3"> Task Tool Configuration</a>
                 <a href="/managetasks" className="btn btn-outline-primary"> Manage Tasks</a>
               </div>
               <div className="tab-pane fade" id="list-report" role="tabpanel" aria-labelledby="list-settings-list">This is report</div>

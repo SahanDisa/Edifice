@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import $ from 'jquery';
-import Popper from 'popper.js';
+
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import "./App.css";
 
@@ -21,15 +20,30 @@ import BoardAdmin from "./components/board-admin.component";
 import AddProject from './components/core_tools/admin/add-project.component';
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
-import TaskConfiguration from "./components/core_tools/tasks/confirguration.component";
-import ManageTasks from "./components/core_tools/tasks/manage.component";
-import FileUpload from "./components/project_component/document.component";
+
+import DrawingHome from "./components/project_management/drawings/drawings.component";
+
 import Dates from "./components/core_tools/admin/dates.component";
 import Defaults from "./components/core_tools/admin/defaults.component";
 import Roles from "./components/core_tools/admin/roles.component";
 import AddUser from "./components/core_tools/edifice-directory/add.component";
 import EditUser from "./components/core_tools/edifice-directory/edit.component";
 import Budget from "./components/financial_component/budget.component";
+
+import AddUser from "./components/core_tools/edifice-directory/add-emp.component";
+import EditUser from "./components/core_tools/edifice-directory/edit-emp.component";
+
+import TaskConfiguration from "./components/core_tools/tasks/configuration.component";
+import ManageTasks from "./components/core_tools/tasks/manage.component";
+import UpdateTasks from "./components/core_tools/tasks/update.component";
+import ViewTasks from "./components/core_tools/tasks/view.component";
+
+import FileUpload from "./components/project_component/document.component";
+
+import MeetingsConfig from "./components/project_management/meetings/configuration.component";
+import ManageMeetings from "./components/project_management/meetings/manage.component";
+import UpdateMeetings from "./components/project_management/meetings/update.component";
+import ViewMeetings from "./components/project_management/meetings/view.component";
 
 class App extends Component {
   constructor(props) {
@@ -80,7 +94,7 @@ class App extends Component {
             )}
             {currentUser && (
               <li className="nav-item">
-                <Link to={"/user"} className="nav-link">
+                <Link to={"/projectmanagement"} className="nav-link">
                   Project Management
                 </Link>
               </li>
@@ -148,7 +162,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
-            <Route path="/user" component={BoardUser} />
+            <Route path="/projectmanagement" component={BoardUser} />
             <Route path="/resource" component={BoardResource} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
@@ -159,13 +173,29 @@ class App extends Component {
             <Route path="/dates" component={Dates} />
             <Route path="/defaults" component={Defaults} />
             <Route path="/roles" component={Roles} />
+            
             <Route path="/tasksconfiguration" component={TaskConfiguration} />
             <Route path="/managetasks" component={ManageTasks} />
+            <Route path="/managestasks/update" component={UpdateTasks} />
+            <Route path="/managestasks/view" component={ViewTasks} />
+            
+            <Route path="/meetingsconfiguration" component={MeetingsConfig} />
+            <Route path="/managemeetings" component={ManageMeetings} />
+            <Route path="/managesmeetings/update" component={UpdateMeetings} />
+            <Route path="/managesmeetings/view" component={ViewMeetings} />
+            
             <Route path="/addUser" component={AddUser} />
             <Route path="/editUder" component={EditUser} />
             <Route path="/budget" component={Budget} />
             
           
+            <Route path="/editUser" component={EditUser} />
+            <Route path="/vendors" component={Vendors} />
+            <Route path="/employees" component={Emp} />
+            <Route path="/addVendor" component={AddVendor} />
+            <Route path="/editVendor" component={EditVendor} />
+            <Route path="/drawing" component={DrawingHome} />
+
           </Switch>
             </div>        
       </div>
