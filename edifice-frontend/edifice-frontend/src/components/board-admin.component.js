@@ -96,7 +96,7 @@ export default class BoardUser extends Component {
               </div>
               <div className="tab-pane fade" id="list-tasks" role="tabpanel" aria-labelledby="list-settings-list">
                 <h5>Tasks</h5><hr/>
-                <a href="/tasksconfiguration" className="btn btn-outline-primary"> Task Tool Configuration</a>
+                <a href="/tasksconfiguration" className="btn btn-outline-primary mr-3"> Task Tool Configuration</a>
                 <a href="/managetasks" className="btn btn-outline-primary"> Manage Tasks</a>
               </div>
               <div className="tab-pane fade" id="list-report" role="tabpanel" aria-labelledby="list-settings-list">This is report</div>
