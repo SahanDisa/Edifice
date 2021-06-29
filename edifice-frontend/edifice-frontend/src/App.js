@@ -20,6 +20,7 @@ import AddProject from './components/core_tools/admin/add-project.component';
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
 import DrawingHome from "./components/project_management/drawings/drawings.component";
+import ProjectManagementHome from "./components/project_management/project-manage-home.component";
 
 import TaskConfiguration from "./components/core_tools/tasks/confirguration.component";
 import ManageTasks from "./components/core_tools/tasks/manage.component";
@@ -154,6 +155,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
             <Route path="/projectmanagement" component={BoardUser} />
+            <Route path="/projectmanagementhome" component={ProjectManagementHome} />
             <Route path="/resource" component={BoardResource} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
