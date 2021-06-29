@@ -11,3 +11,4 @@
 [0m2021.06.28 23:05:57 INFO  time: initialize in 9.04s[0m
 [0m2021.06.28 23:05:57 WARN  Build server is not auto-connectable.[0m
 [0m2021.06.28 23:05:57 WARN  no build tool detected in workspace 'E:\GitHub\Edifice\edifice-backend\node-backend'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.06.29 00:47:48 INFO  shutting down Metals[0m
