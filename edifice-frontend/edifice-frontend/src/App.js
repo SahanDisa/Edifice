@@ -21,6 +21,8 @@ import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
 
 import DrawingHome from "./components/project_management/drawings/drawings.component";
+import PhotosHome from "./components/project_management/photos/photos.component";
+import BiddingHome from "./components/project_management/biddings/bidding.component";
 import ProjectManagementHome from "./components/project_management/project-manage-home.component";
 
 import Dates from "./components/core_tools/admin/dates.component";
@@ -197,6 +199,8 @@ class App extends Component {
             <Route path="/addVendor" component={AddVendor} />
             <Route path="/editVendor" component={EditVendor} />
             <Route path="/drawing" component={DrawingHome} />
+            <Route path="/photos" component={PhotosHome} />
+            <Route path="/bidding" component={BiddingHome} />      
 			
 			      <Route path="/budget" component={Budget} />
             <Route path="/prime-contracts" component={PrimeContracts} />
