@@ -38,7 +38,7 @@ export default class Home extends Component {
       <div className="container">
         <header className="jumbotron">
           <h3> <img src={myIcon} width="36" height="36" /> Home</h3>
-          <h5>Projects that you are involved in</h5>
+          <h5>Projects that you are involved In</h5>
           {/* Display involved Project of a particular user */}
 
           <div class="card">

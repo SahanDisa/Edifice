@@ -28,6 +28,9 @@ class ProjectDataService {
   findByTitle(title) {
     return http.get(`/projects?title=${title}`);
   }
+  // findPublished(){
+  //   return http.get(`/projects?published=`)
+  // }
 }
 
 export default new ProjectDataService();
