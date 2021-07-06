@@ -90,6 +90,7 @@ export default class BoardUser extends Component {
               </Grid>
             </Grid>
         </div>
+        
       </div> 
     );
   }
