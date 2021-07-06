@@ -45,7 +45,9 @@ export default class Home extends Component {
             <h5 class="card-header">Project XX2</h5>
             <div class="card-body">
               <h5 class="card-title">Port City: Apartment Section 01</h5>
-              <p class="card-text">Random description.</p>
+              <p class="card-text">stat1</p>
+              <p class="card-text">stat2</p>
+              <p class="card-text">stat3</p>
               <a href={"/Project"} className="btn btn-primary"> Go to the project</a>
             </div>
           </div>
