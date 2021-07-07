@@ -19,8 +19,10 @@ export default class Project extends Component {
         description: "",
         location: "",
         published: false
+        
       },
-      message: ""
+      message: "",
+      temp: this.props.match.params.id
     };
   }
 
@@ -128,13 +130,14 @@ export default class Project extends Component {
   }
 
     render() {
-      const { currentProject } = this.state;
+      const { currentProject, temp} = this.state;
   
       return (
         <div>
           {currentProject ? (
             <div className="edit-form">
               <h2>Update a Project</h2>
+              <h4>Project Id : {temp}</h4>
               <form>
                 <div className="form-group">
                   <label htmlFor="title">Title</label>

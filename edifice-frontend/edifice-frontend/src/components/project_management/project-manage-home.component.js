@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import UserService from "./../../services/user.service";
 
 import portfolioIcon from "././../../assets/portfolio.png";
@@ -22,10 +23,10 @@ export default class BoardUser extends Component {
     super(props);
 
     this.state = {
-      content: ""
+      content: "",
+      id: this.props.match.params.id
     };
   }
-
   componentDidMount() {
     UserService.getUserBoard().then(
       response => {
@@ -47,13 +48,16 @@ export default class BoardUser extends Component {
   }
 
   render() {
+    const {id} = this.state;
     return (
       <div className="container">
         <header className="jumbotron">
           <h3>Project Management Tools</h3>
           <p>Port City: Apartment Section 01</p>
           <p>Location: Colombo 01</p>
+          <p>Id : {id}</p>
         </header>
+
         <div className="row">
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">

@@ -11,7 +11,9 @@ const Drawings = () => {
             <h4>Drawing Area</h4>
 
         </div>
-         
+        <div className="container">
+            <h4>Drawing List</h4>
+        </div> 
         </div>
     );
 }
