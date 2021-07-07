@@ -1,2 +1,2 @@
 #ignore the database file
-db.config.js
+edifice-backend/node-backend/app/config/db.config.js
