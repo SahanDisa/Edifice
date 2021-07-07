@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
+import AddWorker from './add-worker.component';
+import EditWorker from './edit-worker.component';
+import ViewWorker from './view-worker.component';
+import newCrew from './new-crew.component';
 
 const data = [
-  {edit: <a href="/managesmeetings/update" className="btn btn-outline-success">Edit</a>,view:<a href="/managesmeetings/view" className="btn btn-outline-primary">View</a>}
+  {edit: <a href="#" className="btn btn-outline-primary" data-toggle="modal" data-target="#editWorker">edit</a>,view:<a href="#" className="btn btn-outline-primary" data-toggle="modal" data-target="#viewWorker">View</a>}
 ];
+
 const columns = [
    {
     dataField: 'overview',
@@ -68,7 +73,7 @@ class Crew extends Component {
                         <form>
                             <div className="form-row mt-3">
                                 <div class="col-md-12 text-right">
-                                    <a href="#" className="btn btn-outline-primary">+ New Crew</a>
+                                    <a href="#" className="btn btn-outline-primary"  data-toggle="modal" data-target="#newCrew">+ New Crew</a>
                                 </div>
                                 <div className="form-group col-md-4">
                                     <input className="form-control" type="text" placeholder="Search" />
@@ -134,43 +139,29 @@ class Crew extends Component {
 
             </div>
 
-
-
-
             {/* Add Worker Starts */}
-          <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalCenterTitle">Add New Worker</h5>
-                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  
-                    <div>
-
-                        <label htmlFor="">First Name</label>
-                        <input className="form-control" type="text" required/>
-                        <br/>
-
-                        <label htmlFor="">Last Name</label>
-                        <input className="form-control" type="text" required/>
-                        <br/>
-
-                        <label htmlFor="">Id</label>
-                        <input className="form-control" type="text" required/>
-                        <br/>
-                    </div>
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-outline-success">Add</button>
-                </div>
-              </div>
+            <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <AddWorker/>        
             </div>
-          </div>
           {/* Add Worker Ends */}
+
+          {/* Edit Worker Starts */}
+          <div className="modal fade" id="editWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <EditWorker/>        
+          </div>
+          {/* Edit Worker Ends */}
+
+          {/* View Worker Starts */}
+          <div className="modal fade" id="viewWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <ViewWorker/>        
+          </div>
+          {/* View Worker Ends */}
+
+          {/* New Crew Starts */}
+            <div className="modal fade" id="newCrew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <AddWorker/>        
+          </div>
+          {/* New Crew Ends */}
 
         </div>
 
