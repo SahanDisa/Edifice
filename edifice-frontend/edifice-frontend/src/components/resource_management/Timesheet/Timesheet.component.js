@@ -39,222 +39,225 @@ class Timesheet extends Component {
 
             <hr/>
 
-            <p>Date: 05/01/2021</p>
-            <div class="jumbotron">
-                
-                <table class="table table-hover table-bordered align-middle">
-                <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col" colspan="2">Lunch</th>
-                            <th scope="col" colspan="2">Tea</th>
-                        </tr>
-                    </thead>
-                    <thead>
-                        <tr>
-                            <th scope="col">Crew</th>
-                            <th scope="col">Employee Name</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Start</th>
-                            <th scope="col">Stop</th>
-                            <th scope="col">Start</th>
-                            <th scope="col">Stop</th>
-                            <th scope="col">Start</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <div className="card">
+                <h5 className="card-header">Date: 05/01/2021</h5>
+            <div className="card-body">    
+                    <table class="table table-hover table-bordered align-middle">
+                        <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col" colspan="2">Lunch</th>
+                                    <th scope="col" colspan="2">Tea</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Crew</th>
+                                    <th scope="col">Employee Name</th>
+                                    <th scope="col">Location</th>
+                                    <th scope="col">Start</th>
+                                    <th scope="col">Stop</th>
+                                    <th scope="col">Start</th>
+                                    <th scope="col">Stop</th>
+                                    <th scope="col">Start</th>
+                                </tr>
+                            </thead>
+                        <tbody>
 
-                        <tr class="table-primary">
-                            <td>
-                            <select className="form-control" name="" id="">
-                                <option value="role1">Concrete Crew</option>
-                                <option value="role2">Welder</option>
-                                <option value="role3">Flooring Crew</option>
-                                <option value="role3">Carpenters</option>
-                            </select>
-                            </td>
-                            <td>Randie pathirae</td>
-                            <td>First Floor</td>
-                            <td>
-                                <div class="md-form md-outline">
-                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="md-form md-outline">
-                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="md-form md-outline">
-                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="md-form md-outline">
-                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="md-form md-outline">
-                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                                </div>
-                            </td>
+                            <tr class="table-primary">
+                                <td>
+                                <select className="form-control" name="" id="">
+                                    <option value="role1">Concrete Crew</option>
+                                    <option value="role2">Welder</option>
+                                    <option value="role3">Flooring Crew</option>
+                                    <option value="role3">Carpenters</option>
+                                </select>
+                                </td>
+                                <td>Randie pathirae</td>
+                                <td>First Floor</td>
+                                <td>
+                                    <div class="md-form md-outline">
+                                        <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="md-form md-outline">
+                                        <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="md-form md-outline">
+                                        <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="md-form md-outline">
+                                        <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="md-form md-outline">
+                                        <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                    </div>
+                                </td>
 
-                        </tr>
-                        <tr class="table-primary">
-                        <td>
-                            <select className="form-control" name="" id="">
-                                <option value="role1">Concrete Crew</option>
-                                <option value="role2">Welder</option>
-                                <option value="role3">Flooring Crew</option>
-                                <option value="role3">Carpenters</option>
-                            </select>
-                        </td>
-                        <td>Jacob</td>
-                        <td>Ground Floor</td>
-                        <td>
-                            <div class="md-form md-outline">
-                                <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="md-form md-outline">
-                                <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="md-form md-outline">
-                                <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="md-form md-outline">
-                                <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="md-form md-outline">
-                                <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                            </div>
-                        </td>
-                        </tr>
-                    </tbody>
-                </table>
-     
+                            </tr>
+                            <tr class="table-primary">
+                            <td>
+                                <select className="form-control" name="" id="">
+                                    <option value="role1">Concrete Crew</option>
+                                    <option value="role2">Welder</option>
+                                    <option value="role3">Flooring Crew</option>
+                                    <option value="role3">Carpenters</option>
+                                </select>
+                            </td>
+                            <td>Jacob</td>
+                            <td>Ground Floor</td>
+                            <td>
+                                <div class="md-form md-outline">
+                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="md-form md-outline">
+                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="md-form md-outline">
+                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="md-form md-outline">
+                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="md-form md-outline">
+                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                </div>
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+            <br/>
 
-            <p>Date: 05/01/2021</p>
-            <div class="jumbotron">
+            <div class="card">
+                <h5 className="card-header">Date: 06/01/2021</h5>
+                <div className="card-body"> 
                 
-                <table class="table table-hover table-bordered align-middle">
-                <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col" colspan="2">Lunch</th>
-                            <th scope="col" colspan="2">Tea</th>
-                        </tr>
-                    </thead>
+                    <table class="table table-hover table-bordered align-middle">
                     <thead>
-                        <tr>
-                            <th scope="col">Crew</th>
-                            <th scope="col">Employee Name</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Start</th>
-                            <th scope="col">Stop</th>
-                            <th scope="col">Start</th>
-                            <th scope="col">Stop</th>
-                            <th scope="col">Start</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col" colspan="2">Lunch</th>
+                                <th scope="col" colspan="2">Tea</th>
+                            </tr>
+                        </thead>
+                        <thead>
+                            <tr>
+                                <th scope="col">Crew</th>
+                                <th scope="col">Employee Name</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Start</th>
+                                <th scope="col">Stop</th>
+                                <th scope="col">Start</th>
+                                <th scope="col">Stop</th>
+                                <th scope="col">Start</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                        <tr class="table-primary">
-                            <td>
-                            <select className="form-control" name="" id="">
-                                <option value="role1">Concrete Crew</option>
-                                <option value="role2">Welder</option>
-                                <option value="role3">Flooring Crew</option>
-                                <option value="role3">Carpenters</option>
-                            </select>
-                            </td>
-                            <td>Randie pathirae</td>
-                            <td>First Floor</td>
-                            <td>
-                                <div class="md-form md-outline">
-                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="md-form md-outline">
-                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="md-form md-outline">
-                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="md-form md-outline">
-                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="md-form md-outline">
-                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                                </div>
-                            </td>
+                            <tr class="table-primary">
+                                <td>
+                                <select className="form-control" name="" id="">
+                                    <option value="role1">Concrete Crew</option>
+                                    <option value="role2">Welder</option>
+                                    <option value="role3">Flooring Crew</option>
+                                    <option value="role3">Carpenters</option>
+                                </select>
+                                </td>
+                                <td>Randie pathirae</td>
+                                <td>First Floor</td>
+                                <td>
+                                    <div class="md-form md-outline">
+                                        <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="md-form md-outline">
+                                        <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="md-form md-outline">
+                                        <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="md-form md-outline">
+                                        <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="md-form md-outline">
+                                        <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                    </div>
+                                </td>
 
-                        </tr>
-                        <tr class="table-primary">
-                        <td>
-                            <select className="form-control" name="" id="">
-                                <option value="role1">Concrete Crew</option>
-                                <option value="role2">Welder</option>
-                                <option value="role3">Flooring Crew</option>
-                                <option value="role3">Carpenters</option>
-                            </select>
-                        </td>
-                        <td>Jacob</td>
-                        <td>Ground Floor</td>
-                        <td>
-                            <div class="md-form md-outline">
-                                <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="md-form md-outline">
-                                <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="md-form md-outline">
-                                <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="md-form md-outline">
-                                <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="md-form md-outline">
-                                <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
-                            </div>
-                        </td>
-                        </tr>
-                    </tbody>
-                </table>
-     
+                            </tr>
+
+                            <tr class="table-primary">
+                            <td>
+                                <select className="form-control" name="" id="">
+                                    <option value="role1">Concrete Crew</option>
+                                    <option value="role2">Welder</option>
+                                    <option value="role3">Flooring Crew</option>
+                                    <option value="role3">Carpenters</option>
+                                </select>
+                            </td>
+                            <td>Jacob</td>
+                            <td>Ground Floor</td>
+                            <td>
+                                <div class="md-form md-outline">
+                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="md-form md-outline">
+                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="md-form md-outline">
+                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="md-form md-outline">
+                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="md-form md-outline">
+                                    <input type="time" id="default-picker" class="form-control" placeholder="Select time"/>
+                                </div>
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
             </div>
-
+            <br/>
 
             {/*------------------------------------ Add Emp Starts------------------------------------------------------------------ */}
             <div className="modal fade" id="addEmp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
