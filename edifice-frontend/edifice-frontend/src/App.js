@@ -22,6 +22,7 @@ import Project from './components/core_tools/admin/project.component';
 
 import DrawingHome from "./components/project_management/drawings/drawings.component";
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
+import ViewSingleDrawing from "./components/project_management/drawings/drawing-singlepage.component";
 import PhotosHome from "./components/project_management/photos/photos.component";
 import BiddingHome from "./components/project_management/biddings/bidding.component";
 import ProjectManagementHome from "./components/project_management/project-manage-home.component";
@@ -202,6 +203,8 @@ class App extends Component {
             <Route path="/editVendor" component={EditVendor} />
             <Route path="/drawing/:id" component={DrawingHome} />
             <Route path="/adddrawing/:id" component={AddDrawing} />
+            <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
+            
             <Route path="/photos" component={PhotosHome} />
             <Route path="/bidding/:id" component={BiddingHome} />      
 			
