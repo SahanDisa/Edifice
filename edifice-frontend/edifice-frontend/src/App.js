@@ -203,7 +203,7 @@ class App extends Component {
             <Route path="/drawing/:id" component={DrawingHome} />
             <Route path="/adddrawing/:id" component={AddDrawing} />
             <Route path="/photos" component={PhotosHome} />
-            <Route path="/bidding" component={BiddingHome} />      
+            <Route path="/bidding/:id" component={BiddingHome} />      
 			
 			      <Route path="/budget" component={Budget} />
             <Route path="/prime-contracts" component={PrimeContracts} />

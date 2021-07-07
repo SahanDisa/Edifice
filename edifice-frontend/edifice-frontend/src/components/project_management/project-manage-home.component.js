@@ -96,12 +96,16 @@ export default class BoardUser extends Component {
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mt-2 mb-2" href="/bidding">
+              <div className="d-block nav-heading text-center card card-hover shadow-sm">
+              <Link
+                to={"/bidding/" + id}
+              
+              >
                 <img src={biddingIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Biddings</h3>
-                <span className="fs-sm fw-normal text-muted">Manage all the bid packages realted to a project</span>
-              </a>
+                <span className="fs-sm fw-normal text-muted">Manage all the bid packages and bidding proceses</span>
+                
+              </Link>
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
@@ -123,9 +127,6 @@ export default class BoardUser extends Component {
                 <h3 className="h5 nav-heading-title mb-0">Drawings</h3>
                 <span className="fs-sm fw-normal text-muted">Manage your project drawings in one place</span>
               </Link>
-              
-                
-            
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
