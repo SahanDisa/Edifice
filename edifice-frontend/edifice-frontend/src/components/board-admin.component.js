@@ -94,6 +94,7 @@ export default class BoardUser extends Component {
                 <p>Manage pre construction level docments</p>
                 <a href="/document" className="btn btn-outline-primary"> Go To a Document</a>
               </div>
+              
               <div className="tab-pane fade" id="list-tasks" role="tabpanel" aria-labelledby="list-settings-list">
                 <h5>Tasks</h5><hr/>
                 <a href="/tasksconfiguration" className="btn btn-outline-primary mr-3"> Task Tool Configuration</a>

@@ -54,6 +54,10 @@ import CreatePrimeContracts from "./components/financial_management/prime-contra
 import DirectCosts from "./components/financial_management/direct-costs/direct-costs.component";
 import Invoicing from "./components/financial_management/invoicing/invoicing.component";
 
+import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
+import Customize from "./components/resource_management/Timesheet/customize.component";
+
+
 
 class App extends Component {
   constructor(props) {
@@ -212,6 +216,12 @@ class App extends Component {
             <Route path="/invoicing" component={Invoicing} />
             
 
+
+            <Route path="/prime-contracts" component={PrimeContracts} />
+
+            {/*resource management */}
+            <Route path="/timesheet" component={Timesheet} />
+            <Route path="/customize" component={Customize} />
 
           </Switch>
         </div>
