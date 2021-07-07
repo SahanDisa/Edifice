@@ -1,151 +1,146 @@
+import React,{useState} from 'react';
 import SettingsIcon from '@material-ui/icons/Settings';
-import paginationFactory from 'react-bootstrap-table2-paginator';
-import BootstrapTable from 'react-bootstrap-table-next';
-
+import MiniDrawer from '../MiniDrawer';
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 
 const Budget = () => {
+ 
+  const useStyles = makeStyles((theme) => ({
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 150,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+  }));
+  
 
-  const options = {
-    page: 1,
-    sizePerPage: 5,
-    nextPageText: '>',
-    prePageText: '<',
-    showTotal: true
-  };
+  const classes = useStyles();
 
-const data = [
-    {id: 1, name: 'Bid Day', check:<input type='checkbox' /> ,delete:''},
-    {id: 2, name: 'Breaking Ground', check: <input type='checkbox' />,delete:''},
-    {id: 3, name: 'Contract Awarded', check: <input type='checkbox' />,delete:''}
-  ];
-  const columns = [{
-    dataField: 'description',
-    text: 'Description',
-    headerStyle: (column, colIndex) => {
-        return { width: '20%', textAlign: 'center' };}
-  }, {
-    dataField: 'category',
-    text: 'Category',
-    headerStyle: (column, colIndex) => {
-        return { width: '10%', textAlign: 'center' };}
-  }, {
-    dataField: 'amount',
-    text: 'Original Budget Amount',
-    headerStyle: (column, colIndex) => {
-        return { width: '8.75%', textAlign: 'center' };}
-  },
-  {
-    dataField: 'mod',
-    text: 'Budget Modifications',
-    headerStyle: (column, colIndex) => {
-        return { width: '8.75%', textAlign: 'center' };}
-  },
-  {
-    dataField: 'co',
-    text: 'Approved COs',
-    headerStyle: (column, colIndex) => {
-        return { width: '8.75%', textAlign: 'center' };}
-  },
-  {
-    dataField: 'revised',
-    text: 'Revised Budget',
-    headerStyle: (column, colIndex) => {
-        return { width: '8.75%', textAlign: 'center' };}
-  },
-  {
-    dataField: 'changes',
-    text: 'Pending Budget Changes',
-    headerStyle: (column, colIndex) => {
-        return { width: '8.75%', textAlign: 'center' };}
-  },
-  {
-    dataField: '',
-    text: 'Projected Budget',
-    headerStyle: (column, colIndex) => {
-        return { width: '8.75%', textAlign: 'center' };}
-  },
-  {
-    dataField: 'commited',
-    text: 'Commited Costs',
-    headerStyle: (column, colIndex) => {
-        return { width: '8.75%', textAlign: 'center' };}
-  },
-  {
-    dataField: 'direct',
-    text: 'Directed Costs',
-    headerStyle: (column, colIndex) => {
-        return { width: '8.75%', textAlign: 'center' };}
-  }
-];
+    const [view, setView] = React.useState('');
+    const handleChangeView = (event) => {
+      setView(event.target.value);
+    }
 
+    const [snapshot, setSnapshot] = React.useState('');
+    const handleChangeSnapshot = (event) => {
+      setSnapshot(event.target.value);
+    }
+
+    const [group, setGroup] = React.useState('');
+    const handleChangeGroup = (event) => {
+      setGroup(event.target.value);
+    }
+
+    const [filter, setFilter] = React.useState('');
+    const handleChangeFilter = (event) => {
+      setFilter(event.target.value);
+    }
+
+   
     return (
         <div>
+          <MiniDrawer/>
+          <br />
           <ul class="nav nav-tabs">
-           <a href="/settings"> <SettingsIcon /></a><h3> BUDGET </h3>
-            
-       
+           <a href="/budgetSettings"> <SettingsIcon /></a><h3 style={{paddingLeft: 10, paddingRight: 50}}> BUDGET</h3>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Budget</a>
+              <a class="nav-link active" aria-current="page" href="/budget">Budget</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/changeHistory">Change History</a>
             </li>
           </ul>
           <br />
-          <form>
-          <div className="form-row">
-          <a href="" type="submit" className="btn btn-success">Export</a>
-          </div>
-            <div className="form-row">
-              <div className="form-group col-md-3">
-                <label htmlFor="">View</label>
-                <select className="form-control" required>
-                  <option value="Standardized" selected>Standardized</option>
-                  <option value="Template1">Template11</option>
-                  <option value="Template2">Template12</option>
-                  <option value="Template3">Template13</option>
-                  <option value="Template4">Template14</option>
-                </select>
-              </div>
-              <div className="form-group col-md-3">
-                <label htmlFor="">Snapshot</label>
-                <select className="form-control" required>
-                  <option value="current" selected>current</option>
-                  <option value="custom">custom</option>
-                </select>
-              </div>
-              <div className="form-group col-md-3">
-                <label htmlFor="">Group</label>
-                <select className="form-control" required>
-                  <option value="xxx" selected>xxx</option>
-                  <option value="yyy">yyy</option>
-                </select>
-              </div>
-              <div className="form-group col-md-3">
-                <label htmlFor="">Filter</label>
-                <select className="form-control" required>
-                  <option value="Add Filter" selected>Add Filter</option>
-                  <option value="yyy">yyy</option>
-                </select>
-              </div>
-            </div>
-            <div className="">
-       
-            </div>
-            
-          </form>
+          <ul class="nav nav-tabs">
+            <div className="col-md-8">
+        <FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel id="demo-simple-select-outlined-label">View</InputLabel>
+        <Select
+          labelId="demo-simple-select-outlined-label"
+          id="demo-simple-select-outlined"
+          value={view}
+          onChange={handleChangeView}
+          label="View"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={1}>Edifice Standard</MenuItem>
+          <MenuItem value={2}>Custom</MenuItem>
+        </Select>
+      </FormControl>
 
-          <BootstrapTable 
-                hover
-                keyField='id'
-                data={ data }
-                columns={ columns } 
-                pagination={ paginationFactory(options) }
- 
-            />
-          
+      <FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel id="demo-simple-select-outlined-label">Snapshot</InputLabel>
+        <Select
+          labelId="demo-simple-select-outlined-label"
+          id="demo-simple-select-outlined"
+          value={snapshot}
+          onChange={handleChangeSnapshot}
+          label="Snapshot"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={1}>Current</MenuItem>
+        </Select>
+      </FormControl>
 
-        </div>
+      <FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel id="demo-simple-select-outlined-label">Group</InputLabel>
+        <Select
+          labelId="demo-simple-select-outlined-label"
+          id="demo-simple-select-outlined"
+          value={group}
+          onChange={handleChangeGroup}
+          label="Group"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={1}>Group 1</MenuItem>
+          <MenuItem value={1}>Group 2</MenuItem>
+        </Select>
+      </FormControl>
+
+      <FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel id="demo-simple-select-outlined-label">Filter</InputLabel>
+        <Select
+          labelId="demo-simple-select-outlined-label"
+          id="demo-simple-select-outlined"
+          value={filter}
+          onChange={handleChangeFilter}
+          label="Add Filter"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={1}>Filter 1</MenuItem>
+          <MenuItem value={1}>Filter 2</MenuItem>
+        </Select>
+      </FormControl>
+      </div><div className="col-md-4">
+      <div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Export
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    <li><a href="#">.xsl</a></li>
+    <li><a href="#">csv</a></li>
+    <li><a href="#">html</a></li>
+  </ul>
+  <span><ZoomOutMapIcon/></span>
+</div>
+</div>
+</ul>
+    </div>
     );
 };
 

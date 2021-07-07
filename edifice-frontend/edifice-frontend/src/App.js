@@ -50,6 +50,11 @@ import ViewMeetings from "./components/project_management/meetings/view.componen
 
 import Budget from "./components/financial_component/budget/budget.component";
 import PrimeContracts from "./components/financial_component/prime-contracts/prime-contracts.component";
+import CreatePrimeContracts from "./components/financial_component/prime-contracts/createPrimeContracts.component";
+
+import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
+import Customize from "./components/resource_management/Timesheet/customize.component";
+
 
 
 class App extends Component {
@@ -204,6 +209,13 @@ class App extends Component {
 			
 			      <Route path="/budget" component={Budget} />
             <Route path="/prime-contracts" component={PrimeContracts} />
+            <Route path="/create-prime-contracts" component={CreatePrimeContracts} />
+
+            <Route path="/prime-contracts" component={PrimeContracts} />
+
+            {/*resource management */}
+            <Route path="/timesheet" component={Timesheet} />
+            <Route path="/customize" component={Customize} />
 
           </Switch>
         </div>
