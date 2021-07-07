@@ -50,6 +50,7 @@ import ViewMeetings from "./components/project_management/meetings/view.componen
 
 import Budget from "./components/financial_component/budget/budget.component";
 import PrimeContracts from "./components/financial_component/prime-contracts/prime-contracts.component";
+import CreatePrimeContracts from "./components/financial_component/prime-contracts/createPrimeContracts.component";
 
 
 class App extends Component {
@@ -204,6 +205,7 @@ class App extends Component {
 			
 			      <Route path="/budget" component={Budget} />
             <Route path="/prime-contracts" component={PrimeContracts} />
+            <Route path="/create-prime-contracts" component={CreatePrimeContracts} />
 
           </Switch>
         </div>
