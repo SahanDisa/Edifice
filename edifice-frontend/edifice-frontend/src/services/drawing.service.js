@@ -6,11 +6,11 @@ class DrawingDataService {
   }
 
   get(id) {
-    return http.get(`/projects/${id}`);
+    return http.get(`/projects/drawing/${id}`);
   }
 
   create(data) {
-    return http.post("/projects/drawing", data);
+    return http.post(`/projects/drawing/`, data);
   }
 }
 

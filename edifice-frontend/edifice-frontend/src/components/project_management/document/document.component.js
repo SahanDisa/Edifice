@@ -97,6 +97,15 @@ const UploadFiles = () => {
                 ))}
             </ul>
           </div>
+          {/* Browser-native */}
+          <embed
+              src="http://infolab.stanford.edu/pub/papers/google.pdf#toolbar=0&navpanes=0&scrollbar=0"
+              type="application/pdf"
+              frameBorder="0"
+              scrolling="auto"
+              height="500px"
+              width="100%"
+          ></embed>
         </div>
     );
 };

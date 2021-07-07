@@ -1,5 +1,9 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
+
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
 
 export default class Drawings extends Component {
     constructor(props) {
@@ -37,8 +41,12 @@ export default class Drawings extends Component {
                 <p>Manage the drawings,other related planning materials in here</p>
             </div>
             <div className="container">
-                <h4>Drawing Area</h4>
-    
+                <h4>Add Drawings</h4>
+                <Link to={"/adddrawing/"+id}>
+                <Fab color="primary" aria-label="add" >
+                    <AddIcon />
+                </Fab>
+                </Link>
             </div>
             <div className="container">
                 <h4>Drawing List</h4>
