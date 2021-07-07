@@ -15,12 +15,15 @@ class Timesheet extends Component {
                         <a href="/customize" className="btn btn-outline-primary mr-3"> Customize</a>
                         <a href="#" className="btn btn-outline-primary mr-3"> Export PDF</a>
                         <a href="#" className="btn btn-outline-primary" data-toggle="modal" data-target="#addEmp"> Create New</a>
+
+                        {/*------------------------------------ Add Emp Starts------------------------------------------------------------------ */}
+                        <div className="modal fade" id="addEmp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <Create/>
+                        </div>
+                        {/*-------------------------------------Add Emp Ends----------------------------------------------------------------------*/}
                 </div>
                 </div>
             </div>
-
-
-
             <hr />
 
             <form className="row g-3">
@@ -289,7 +292,6 @@ class Timesheet extends Component {
                 </div> 
             </div>
             <br/>
-
           </div>
           
         );
