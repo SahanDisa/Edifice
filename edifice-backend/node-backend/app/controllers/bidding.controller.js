@@ -1,27 +1,28 @@
 const db = require("./../models/index");
-const Project = db.projects;
-const Drawing = db.drawings;
+const Bidding = db.biddings;
 
-// create a drawing
+// create a bidding
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.name) {
+  if (!req.body.title) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
     return;
   }
 
-  // Create a Project
-  const drawing = {
-    name: req.body.name,
+  // Create a Bidding
+  const bidding = {
+    title: req.body.title,
     description: req.body.description,
-    drawtype: req.body.drawtype,
+    status: req.body.status,
+    dueDate: req.body.dueDate,
+    published: req.body.published ? req.body.published : false,
     projectId: req.body.projectId,
   };
 
-  // Save Project in the database
-  Drawing.create(drawing)
+  // Save Bidding in the database
+  Bidding.create(bidding)
     .then(data => {
       res.send(data);
     })
@@ -33,11 +34,11 @@ exports.create = (req, res) => {
     });
 };
 
-// Get drawings for a given project
+// Get Biddings for a given project
 exports.findAll = (req, res) => {
   const id = req.params.id;
 
-  Drawing.findAll({ where: {
+  Bidding.findAll({ where: {
     projectId: id
   }})
     .then(data => {
@@ -50,11 +51,11 @@ exports.findAll = (req, res) => {
     });  
 };
 
-//Find a single drawing by Id
+//Find a single bidding by Id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Drawing.findByPk(id)
+  Bidding.findByPk(id)
     .then(data => {
       res.send(data);
     })

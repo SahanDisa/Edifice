@@ -21,6 +21,7 @@ import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
 
 import DrawingHome from "./components/project_management/drawings/drawings.component";
+import AddDrawing from "./components/project_management/drawings/adddrawing.component";
 import PhotosHome from "./components/project_management/photos/photos.component";
 import BiddingHome from "./components/project_management/biddings/bidding.component";
 import ProjectManagementHome from "./components/project_management/project-manage-home.component";
@@ -175,7 +176,8 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
             <Route path="/projectmanagement" component={BoardUser} />
-            <Route path="/projectmanagementhome" component={ProjectManagementHome} />
+            {/* <Route path="/projectmanagementhome" component={ProjectManagementHome} /> */}
+            <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
             <Route path="/resource" component={BoardResource} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
@@ -203,9 +205,10 @@ class App extends Component {
             <Route path="/employees" component={Emp} />
             <Route path="/addVendor" component={AddVendor} />
             <Route path="/editVendor" component={EditVendor} />
-            <Route path="/drawing" component={DrawingHome} />
+            <Route path="/drawing/:id" component={DrawingHome} />
+            <Route path="/adddrawing/:id" component={AddDrawing} />
             <Route path="/photos" component={PhotosHome} />
-            <Route path="/bidding" component={BiddingHome} />      
+            <Route path="/bidding/:id" component={BiddingHome} />      
 			
 			      <Route path="/budget" component={Budget} />
             <Route path="/prime-contracts" component={PrimeContracts} />

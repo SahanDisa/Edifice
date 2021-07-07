@@ -167,7 +167,7 @@ export default class ProjectsList extends Component {
 
               <Link
                 to={"/projects/" + currentProject.id}
-                className="badge badge-warning"
+                className="btn btn-warning"
               >
                 Edit
               </Link>
