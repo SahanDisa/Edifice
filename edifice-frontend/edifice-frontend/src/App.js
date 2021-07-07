@@ -48,9 +48,11 @@ import ManageMeetings from "./components/project_management/meetings/manage.comp
 import UpdateMeetings from "./components/project_management/meetings/update.component";
 import ViewMeetings from "./components/project_management/meetings/view.component";
 
-import Budget from "./components/financial_component/budget/budget.component";
-import PrimeContracts from "./components/financial_component/prime-contracts/prime-contracts.component";
-import CreatePrimeContracts from "./components/financial_component/prime-contracts/createPrimeContracts.component";
+import Budget from "./components/financial_management/budget/budget.component";
+import PrimeContracts from "./components/financial_management/prime-contracts/prime-contracts.component";
+import CreatePrimeContracts from "./components/financial_management/prime-contracts/createPrimeContracts.component";
+import DirectCosts from "./components/financial_management/direct-costs/direct-costs.component";
+import Invoicing from "./components/financial_management/invoicing/invoicing.component";
 
 
 class App extends Component {
@@ -206,6 +208,10 @@ class App extends Component {
 			      <Route path="/budget" component={Budget} />
             <Route path="/prime-contracts" component={PrimeContracts} />
             <Route path="/create-prime-contracts" component={CreatePrimeContracts} />
+            <Route path="/direct-costs" component={DirectCosts} />
+            <Route path="/invoicing" component={Invoicing} />
+            
+
 
           </Switch>
         </div>
