@@ -2,6 +2,9 @@ import React, { Component } from "react";
 
 import UserService from "./../services/user.service";
 
+
+
+
 export default class BoardResource extends Component {
   constructor(props) {
     super(props);
@@ -37,6 +40,10 @@ export default class BoardResource extends Component {
         <header className="jumbotron">
           <h3>Resource Management</h3>
         </header>
+        <p>View timesheet</p>
+        <a href="/timesheet" className="btn btn-outline-primary">TimeSheet</a>
+        <p>View crew</p>
+        <a href="#" className="btn btn-outline-primary">Crew</a>
       </div>
     );
   }
