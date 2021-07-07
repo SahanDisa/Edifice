@@ -199,7 +199,7 @@ class App extends Component {
             <Route path="/employees" component={Emp} />
             <Route path="/addVendor" component={AddVendor} />
             <Route path="/editVendor" component={EditVendor} />
-            <Route path="/drawing" component={DrawingHome} />
+            <Route path="/drawing/:id" component={DrawingHome} />
             <Route path="/photos" component={PhotosHome} />
             <Route path="/bidding" component={BiddingHome} />      
 			
