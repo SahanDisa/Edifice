@@ -13,10 +13,6 @@ import photosIcon from "././../../assets/photos.png";
 import punchlistIcon from "././../../assets/punchlist.png";
 import documentIcon from "././../../assets/documents.png";
 
-import MeetingsConfig from "./meetings/configuration.component";
-import ManageMeetings from "./meetings/manage.component";
-import DrawingHome from "./drawings/drawings.component";
-
 export default class BoardUser extends Component {
   constructor(props) {
     super(props);
@@ -60,25 +56,25 @@ export default class BoardUser extends Component {
               <a className="d-block nav-heading text-center mt-2 mb-2" href="#">
                 <img src={portfolioIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Portfolio</h3>
-                <span className="fs-sm fw-normal text-muted">Small Detail</span>
+                <span className="fs-sm fw-normal text-muted">View the high-level overview and details of the project</span>
               </a>
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mt-2 mb-2" href="#">
+              <a className="d-block nav-heading text-center mt-2 mb-2" href="/rfi">
                 <img src={rfiIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">RFI</h3>
-                <span className="fs-sm fw-normal text-muted">Small Detail</span>
+                <span className="fs-sm fw-normal text-muted">Help to run the project smoothly and on schedule</span>
               </a>
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mt-2 mb-2" href="#">
+              <a className="d-block nav-heading text-center mt-2 mb-2" href="/dailylog">
                 <img src={dailylogIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Daily Log</h3>
-                <span className="fs-sm fw-normal text-muted">Small Detail</span>
+                <span className="fs-sm fw-normal text-muted">Keep track of every detail at job site each and everyday</span>
               </a>
               </div>
             </div>
@@ -102,10 +98,10 @@ export default class BoardUser extends Component {
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mt-2 mb-2" href="#">
+              <a className="d-block nav-heading text-center mt-2 mb-2" href="/actionplan">
                 <img src={actionplanIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Action Plan</h3>
-                <span className="fs-sm fw-normal text-muted">Small Detail</span>
+                <span className="fs-sm fw-normal text-muted">Clearly defined, centralized, and organized the project-specific requirements</span>
               </a>
               </div>
             </div>
@@ -129,10 +125,10 @@ export default class BoardUser extends Component {
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mt-2 mb-2" href="#">
+              <a className="d-block nav-heading text-center mt-2 mb-2" href="/punchlist">
                 <img src={punchlistIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Punch List</h3>
-                <span className="fs-sm fw-normal text-muted">Small Detail</span>
+                <span className="fs-sm fw-normal text-muted">Manage punch items</span>
               </a>
               </div>
             </div>
@@ -141,7 +137,7 @@ export default class BoardUser extends Component {
               <a className="d-block nav-heading text-center mt-2 mb-2" href="/document">
                 <img src={documentIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Documents</h3>
-                <span className="fs-sm fw-normal text-muted">Manage Docs</span>
+                <span className="fs-sm fw-normal text-muted">Manage documents</span>
               </a>
               </div>
             </div>
@@ -169,13 +165,6 @@ export default class BoardUser extends Component {
           </div>
           {/* Metting Model Ends */}
 
-          <div>
-            <Switch>
-              <Route path="/meetingsconfiguration" component={MeetingsConfig} />
-              <Route path="/managemeetings" component={ManageMeetings} />
-              <Route path="/drawing" component={DrawingHome} />
-            </Switch>
-          </div>
       </div>
     );
   }

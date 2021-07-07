@@ -48,6 +48,14 @@ import ManageMeetings from "./components/project_management/meetings/manage.comp
 import UpdateMeetings from "./components/project_management/meetings/update.component";
 import ViewMeetings from "./components/project_management/meetings/view.component";
 
+import rfiHome from "./components/project_management/rfi/rfi.component";
+
+import actionplanHome from "./components/project_management/actionplan/actionplan.component";
+
+import dailylogHome from "./components/project_management/dailylog/dailylog.component";
+
+import punchlistHome from "./components/project_management/punchlist/punchlist.component";
+
 import Budget from "./components/financial_component/budget/budget.component";
 import PrimeContracts from "./components/financial_component/prime-contracts/prime-contracts.component";
 
@@ -191,6 +199,14 @@ class App extends Component {
             <Route path="/managemeetings" component={ManageMeetings} />
             <Route path="/managesmeetings/update" component={UpdateMeetings} />
             <Route path="/managesmeetings/view" component={ViewMeetings} />
+
+            <Route path="/rfi" component={rfiHome} />
+
+            <Route path="/actionplan" component={actionplanHome} />
+
+            <Route path="/punchlist" component={punchlistHome} /> 
+
+            <Route path="/dailylog" component={dailylogHome} />
             
             <Route path="/addUser" component={AddUser} />
             <Route path="/editUser" component={EditUser} />
