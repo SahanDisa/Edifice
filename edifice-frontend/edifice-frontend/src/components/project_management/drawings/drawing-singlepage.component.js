@@ -60,6 +60,10 @@ export default class ViewSingleDrawing extends Component {
                 <p>Main measurements : - Area, Distance</p>
             </div>
             <div className="container">
+                <h4>Add Revisions</h4>
+                <p>Add specific notes for the drawing for the future reference</p>
+            </div>
+            <div className="container">
                 <h4>Add Versions</h4>
                 <p>Make adjustments and keep the drawing upto date</p>
             </div> 
