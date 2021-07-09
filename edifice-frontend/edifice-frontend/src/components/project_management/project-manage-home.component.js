@@ -60,8 +60,7 @@ export default class BoardUser extends Component {
               <a className="d-block nav-heading text-center mt-2 mb-2" href="/portfolio">
                 <img src={portfolioIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Portfolio</h3>
-                <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification</span>
-
+                <span className="fs-sm fw-normal text-muted">Contains the abstract project detail specification</span>
               </a>
               </div>
             </div>
@@ -94,10 +93,7 @@ export default class BoardUser extends Component {
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="d-block nav-heading text-center card card-hover shadow-sm">
-              <Link
-                to={"/bidding/" + id}
-              
-              >
+              <Link className="d-block nav-heading text-center mt-2 mb-2" to={"/bidding/" + id}>
                 <img src={biddingIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Biddings</h3>
                 <span className="fs-sm fw-normal text-muted">Manage all the bid packages and bidding proceses</span>
@@ -115,11 +111,8 @@ export default class BoardUser extends Component {
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-              <div className="d-block nav-heading text-center mt-2 mb-2 card card-hover shadow-sm">
-              <Link
-                to={"/drawing/" + id}
-              
-              >
+              <div className="card card-hover shadow-sm">
+              <Link className="d-block nav-heading text-center mt-2 mb-2" to={"/drawing/" + id} >
                 <img src={drawingsIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Drawings</h3>
                 <span className="fs-sm fw-normal text-muted">Manage your project drawings in one place</span>
