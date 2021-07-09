@@ -40,7 +40,7 @@ db.projectuser.belongsTo(db.users, {
 // One construction project can have many users
 db.projectuser.belongsToMany(db.projects, {
   through: "project_user",
-  as: "projectuser",
+  as: "projectusers",
   foreignKey: "project_id",
 });
 // One user can involve with many projects
@@ -49,6 +49,7 @@ db.projects.belongsToMany(db.projectuser, {
   as: "projects",
   foreignKey: "user_id",
 });
+
 // One project has many drawings
 db.projects.hasMany(db.drawings, { as: "drawings" });
 db.drawings.belongsTo(db.projects, {
