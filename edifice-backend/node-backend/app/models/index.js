@@ -29,7 +29,26 @@ db.roles = require("./role.model.js")(sequelize, Sequelize);
 db.projects = require("./project.model.js")(sequelize, Sequelize);
 db.drawings = require("./drawing.model.js")(sequelize, Sequelize);
 db.biddings = require("./bidding.model")(sequelize, Sequelize);
+db.projectuser = require("./projectuser.model")(sequelize, Sequelize);
 
+// One user has one project profile
+db.users.hasOne(db.projectuser, { as: "projectuser" });
+db.projectuser.belongsTo(db.users, {
+  foreignKey: "userId",
+  as: "user",
+});
+// One construction project can have many users
+db.projectuser.belongsToMany(db.projects, {
+  through: "project_user",
+  as: "projectuser",
+  foreignKey: "project_id",
+});
+// One user can involve with many projects
+db.projects.belongsToMany(db.projectuser, {
+  through: "project_user",
+  as: "projects",
+  foreignKey: "user_id",
+});
 // One project has many drawings
 db.projects.hasMany(db.drawings, { as: "drawings" });
 db.drawings.belongsTo(db.projects, {
