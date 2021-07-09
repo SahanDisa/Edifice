@@ -66,7 +66,7 @@ import punchlistHome from "./components/project_management/punchlist/punchlist.c
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
 import Customize from "./components/resource_management/Timesheet/customize.component";
 
-
+import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 
 class App extends Component {
   constructor(props) {
@@ -241,6 +241,9 @@ class App extends Component {
             {/*resource management */}
             <Route path="/timesheet" component={Timesheet} />
             <Route path="/customize" component={Customize} />
+
+ {/*financial management */}
+            <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
 
           </Switch>
         </div>
