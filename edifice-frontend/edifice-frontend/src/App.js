@@ -65,6 +65,7 @@ import punchlistHome from "./components/project_management/punchlist/punchlist.c
 
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
 import Customize from "./components/resource_management/Timesheet/customize.component";
+import Crew from "./components/resource_management/Crew/crew.component";
 
 
 
@@ -241,6 +242,7 @@ class App extends Component {
             {/*resource management */}
             <Route path="/timesheet" component={Timesheet} />
             <Route path="/customize" component={Customize} />
+            <Route path="/crew" component={Crew} />
 
           </Switch>
         </div>
