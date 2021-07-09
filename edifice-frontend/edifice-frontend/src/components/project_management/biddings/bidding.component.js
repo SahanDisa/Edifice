@@ -5,6 +5,12 @@ import BiddingDataService from "./../../../services/bidding.service";
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import EditIcon from '@material-ui/icons/Edit';
+
+
 export default class Bidding extends Component {
     constructor(props) {
       super(props);
@@ -67,6 +73,18 @@ export default class Bidding extends Component {
                     <p>{bidding.status}</p>
                     <p>{bidding.dueDate}</p>
                     <p>{bidding.published}</p>
+                    {/* Button group */}
+                    <div>
+                    <IconButton color="primary" aria-label="delete">
+                      <VisibilityIcon />
+                    </IconButton>
+                    <IconButton color="secondary" aria-label="delete">
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton aria-label="delete">
+                      <DeleteIcon />
+                    </IconButton>
+                    </div>
                 </li>
                 ))}
             </ul>
