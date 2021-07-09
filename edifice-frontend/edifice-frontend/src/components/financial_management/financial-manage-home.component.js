@@ -57,7 +57,7 @@ export default class BoardUser extends Component {
         <div className="row">
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mt-2 mb-2" href="#">
+              <a className="d-block nav-heading text-center mt-2 mb-2" href="/budget">
                 <img src={portfolioIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Budget</h3>
                 <span className="fs-sm fw-normal text-muted">View the high-level overview and details of the project</span>
@@ -66,7 +66,7 @@ export default class BoardUser extends Component {
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mt-2 mb-2" href="/rfi">
+              <a className="d-block nav-heading text-center mt-2 mb-2" href="/prime-contracts">
                 <img src={rfiIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Prime Contracts</h3>
                 <span className="fs-sm fw-normal text-muted">Help to run the project smoothly and on schedule</span>
@@ -75,7 +75,7 @@ export default class BoardUser extends Component {
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mt-2 mb-2" href="/dailylog">
+              <a className="d-block nav-heading text-center mt-2 mb-2" href="/direct-costs">
                 <img src={dailylogIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Direct Costs</h3>
                 <span className="fs-sm fw-normal text-muted">Keep track of every detail at job site each and everyday</span>
@@ -84,7 +84,7 @@ export default class BoardUser extends Component {
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mt-2 mb-2" data-toggle="modal" data-target="#meetingModal" href="#">
+              <a className="d-block nav-heading text-center mt-2 mb-2" data-toggle="modal" data-target="#meetingModal" href="/commitments">
                 <img src={meetingIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Commitments</h3>                
                 <span className="fs-sm fw-normal text-muted">Manage all aspects of your project meetings from agenda distribution</span>
@@ -94,7 +94,7 @@ export default class BoardUser extends Component {
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="d-block nav-heading text-center card card-hover shadow-sm">
               <Link
-                to={"/bidding/" + id}
+                to={"/invoicing/" + id}
               
               >
                 <img src={biddingIcon} alt="" width="50"/>
@@ -108,7 +108,7 @@ export default class BoardUser extends Component {
               <div className="card card-hover shadow-sm">
               <a className="d-block nav-heading text-center mt-2 mb-2" href="/actionplan">
                 <img src={actionplanIcon} alt="" width="50"/>
-                <h3 className="h5 nav-heading-title mb-0">Action Plan</h3>
+                <h3 className="h5 nav-heading-title mb-0"></h3>
                 <span className="fs-sm fw-normal text-muted">Clearly defined, centralized, and organized the project-specific requirements</span>
               </a>
               </div>
