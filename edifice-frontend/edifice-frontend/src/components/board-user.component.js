@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import UserService from "./../services/user.service";
+import AuthService from "./../services/auth.service";
 import ProjectDataService from "./../services/project.service";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 
 export default class BoardUser extends Component {
   constructor(props) {
@@ -12,8 +11,10 @@ export default class BoardUser extends Component {
     this.retrieveProjects = this.retrieveProjects.bind(this);
     this.state = {
       projects: [],
+      uprojects: [],
       currentIndex: -1,
-      content: ""
+      content: "",
+      currentUser:  AuthService.getCurrentUser() 
     };
   }
 
@@ -35,7 +36,8 @@ export default class BoardUser extends Component {
         });
       }
     );
-    this.retrieveProjects();
+    //this.retrieveProjects();
+    this.retrieveProjects(this.state.currentUser.id);
   }
   retrieveProjects() {
     ProjectDataService.getAll()
@@ -49,9 +51,33 @@ export default class BoardUser extends Component {
         console.log(e);
       });
   }
+  retrieveProjects(id) {
+    ProjectDataService.userProjects(id)
+      .then(response => {
+        this.setState({
+          projects: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+  retriveSingleProject(id){
+    ProjectDataService.get(id)
+    .then(response => {
+      this.setState({
+        uprojects: response.data
+      });
+      console.log(response.data);
+    })
+    .catch(e => {
+      console.log(e);
+    });
+  }
 
   render() {
-    const { projects,currentIndex } = this.state;
+    const { projects,uprojects,currentIndex } = this.state;
     return (
       <div className="container">
         <header className="jumbotron">
@@ -59,7 +85,7 @@ export default class BoardUser extends Component {
           <p>Start work on your project by select manage</p>
         </header>
         <div className="col-md-10">
-        <h4>Projects List</h4>
+        <h4>My Projects List</h4>
 
         <ul className="list-group">
           {projects &&
@@ -72,13 +98,14 @@ export default class BoardUser extends Component {
                 // onClick={() => this.setActiveProject(project, index)}
                 key={index}
               >
-                {project.title}
-                <h6>{project.description}</h6>
-                <p>{project.location}</p>
+                {this.retriveSingleProject(project.projectuserId)}
+                {uprojects.title}
+                <h6>{uprojects.description}</h6>
+                <p>{uprojects.location}</p>
               <CircularProgress variant="determinate" color="success" value={61} />
                   <p>61%</p>
               <Link
-                to={"/projectmanagementhome/" + project.id}
+                to={"/projectmanagementhome/" + uprojects.id}
                 className="btn btn-primary"
               >
                 Manage
