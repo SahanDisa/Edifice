@@ -1,147 +1,150 @@
-import React,{useState} from 'react';
-import SettingsIcon from '@material-ui/icons/Settings';
-import MiniDrawer from '../MiniDrawer';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
+import React, { Component } from "react";
+import BudgetDataService from "./../../../services/budget.service";
 
-const Budget = () => {
+export default class AddDrawing extends Component{
+
+  constructor(props) {
+    super(props);
+    this.onChangeCostCode = this.onChangeCostCode.bind(this);
+    this.onChangeCategory = this.onChangeCategory.bind(this);
+    this.onChangeOriginalBudget = this.onChangeOriginalBudget.bind(this);
+    this.saveBudget = this.saveBudget.bind(this);
+    this.newBudget = this.newBudget.bind(this);
+
+    this.state = {
+      id: null,
+      costCode: "",
+      category: "",
+      originalBudget: "",
+      projectId: this.props.match.params.id,  
+      submitted: false
+    };
+  }
+
+  onChangeCostCode(e) {
+    this.setState({
+      costCode: e.target.value
+    });
+  }
+
+  onChangeCategory(e) {
+    this.setState({
+      category: e.target.value
+    });
+  }
+  onChangeOriginalBudget(e) {
+    this.setState({
+      originalBudget: e.target.value
+    });
+  }
+
+  saveBudget() {
+    console.log("clicked");  
+    var data = {
+      costCode: this.state.costCode,
+      category: this.state.category,
+      originalBudget: this.state.originalBudget,
+      projectId: this.state.projectId
+    };
+
+    BudgetDataService.create(data)
+      .then(response => {
+        this.setState({
+          id: response.data.id,
+          costCode: response.data.costCode,
+          category: response.data.category,
+          originalBudget: response.data.originalBudget,
+          projectId: response.data.projectId,
+
+          submitted: true
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
+  newBudget() {
+    this.setState({
+      id: null,
+      costCode: "",
+      category: "",
+      originalBudget: "",
+      projectId: this.props.match.params.id,
+
+      submitted: false
+    });
+  }
+
  
-  const useStyles = makeStyles((theme) => ({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 150,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
-  }));
-  
-
-  const classes = useStyles();
-
-    const [view, setView] = React.useState('');
-    const handleChangeView = (event) => {
-      setView(event.target.value);
-    }
-
-    const [snapshot, setSnapshot] = React.useState('');
-    const handleChangeSnapshot = (event) => {
-      setSnapshot(event.target.value);
-    }
-
-    const [group, setGroup] = React.useState('');
-    const handleChangeGroup = (event) => {
-      setGroup(event.target.value);
-    }
-
-    const [filter, setFilter] = React.useState('');
-    const handleChangeFilter = (event) => {
-      setFilter(event.target.value);
-    }
-
-   
+  render() {
     return (
         <div>
-          <MiniDrawer/>
           <br />
           <ul class="nav nav-tabs">
-           <a href="/budgetSettings"> <SettingsIcon /></a><h3 style={{paddingLeft: 10, paddingRight: 50}}> BUDGET</h3>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/budget">Budget</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/changeHistory">Change History</a>
-            </li>
+           <h3 style={{paddingLeft: 10, paddingRight: 50}}> BUDGET</h3>
+            <hr />
           </ul>
           <br />
-          <ul class="nav nav-tabs">
-            <div className="col-md-8">
-        <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel id="demo-simple-select-outlined-label">View</InputLabel>
-        <Select
-          labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
-          value={view}
-          onChange={handleChangeView}
-          label="View"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={1}>Edifice Standard</MenuItem>
-          <MenuItem value={2}>Custom</MenuItem>
-        </Select>
-      </FormControl>
+          <div className="submit-form">
+        {this.state.submitted ? (
+          <div>
+            <h4>You submitted successfully!</h4>
+            <button className="btn btn-success" onClick={this.newBudget}>
+              Add Another Budget Line Item
+            </button>
+          </div>
+        ) : (
+          <div class="jumbotron">
+            <h2>Add New Budget Line Item {/*projectId*/}</h2>
+            <div className="form-group">
+              <label htmlFor="costCode">Cost Code</label>
+              <input
+                type="text"
+                className="form-control"
+                id="costCode"
+                required
+                value={this.state.costCode}
+                onChange={this.onChangeCostCode}
+                name="costCode"
+              />
+            </div>
 
-      <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel id="demo-simple-select-outlined-label">Snapshot</InputLabel>
-        <Select
-          labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
-          value={snapshot}
-          onChange={handleChangeSnapshot}
-          label="Snapshot"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={1}>Current</MenuItem>
-        </Select>
-      </FormControl>
+            <div className="form-group">
+              <label htmlFor="category">Category</label>
+              <input
+                type="text"
+                className="form-control"
+                id="category"
+                required
+                value={this.state.category}
+                onChange={this.onChangeCategory}
+                name="category"
+              />
+            </div>
 
-      <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel id="demo-simple-select-outlined-label">Group</InputLabel>
-        <Select
-          labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
-          value={group}
-          onChange={handleChangeGroup}
-          label="Group"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={1}>Group 1</MenuItem>
-          <MenuItem value={1}>Group 2</MenuItem>
-        </Select>
-      </FormControl>
+            <div className="form-group">
+              <label htmlFor="originalBudget">Original Budget</label>
+              <input
+                type="text"
+                className="form-control"
+                id="originalBudget"
+                required
+                value={this.state.originalBudget}
+                onChange={this.onChangeOriginalBudget}
+                name="originalBudget"
+              />
+            </div>
 
-      <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel id="demo-simple-select-outlined-label">Filter</InputLabel>
-        <Select
-          labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
-          value={filter}
-          onChange={handleChangeFilter}
-          label="Add Filter"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={1}>Filter 1</MenuItem>
-          <MenuItem value={1}>Filter 2</MenuItem>
-        </Select>
-      </FormControl>
-      </div><div className="col-md-4">
-      <div class="dropdown">
-  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Export
-  <span class="caret"></span></button>
-  <ul class="dropdown-menu">
-    <li><a href="#">.xsl</a></li>
-    <li><a href="#">csv</a></li>
-    <li><a href="#">html</a></li>
-  </ul>
-  <span><ZoomOutMapIcon/></span>
-</div>
-</div>
-</ul>
+            <button onClick={this.saveBudget} className="btn btn-success">
+             Add
+            </button>
+          </div>
+        )}
+      </div>
     </div>
     );
+  }
 };
 
-export default Budget;
