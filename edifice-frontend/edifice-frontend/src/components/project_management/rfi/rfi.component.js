@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, Route, Switch } from "react";
 import BootstrapTable from 'react-bootstrap-table-next';
 
 const data = [
-  {edit:<a href="/rfi/edit" className="btn btn-outline-success">Edit</a>, view:<a href="/rfi/view" className="btn btn-outline-primary">View</a>, no: 1, subject:"Collect all the biddings", status:"Draft", manager:""}
+  {edit:<a href="/managerfi/edit" className="btn btn-outline-success">Edit</a>, view:<a href="/managerfi/view" className="btn btn-outline-primary">View</a>}
 ];
 const columns = [
   {
@@ -62,7 +62,7 @@ const columns = [
         <form>
           <div className="form-row mt-3">
             <div class="col-md-12 text-right">
-              <a href="/rfi/create" className="btn btn-outline-primary">+ Create Meeting</a>
+              <a href="/managerfi/create" className="btn btn-outline-primary">+ Create RFI</a>
             </div>
             <div className="form-group col-md-4">
               <input className="form-control" type="text" placeholder="Search" />

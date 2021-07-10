@@ -73,8 +73,6 @@ import Timesheet from "./components/resource_management/Timesheet/Timesheet.comp
 import Customize from "./components/resource_management/Timesheet/customize.component";
 import Crew from "./components/resource_management/Crew/crew.component";
 
-
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -220,9 +218,9 @@ class App extends Component {
             <Route path="/managesmeetings/view" component={ViewMeetings} />
 
             <Route path="/rfi" component={rfiHome} />
-            <Route path="/rfi/create" component={CreateRFI} />
-            <Route path="/rfi/edit" component={EditRFI} />
-            <Route path="/rfi/view" component={ViewRFI} />
+            <Route path="/managerfi/create" component={CreateRFI} />
+            <Route path="/managerfi/edit" component={EditRFI} />
+            <Route path="/managerfi/view" component={ViewRFI} />
 
             <Route path="/actionplan" component={actionplanHome} />
 
@@ -236,7 +234,7 @@ class App extends Component {
             <Route path="/employees" component={Emp} />
             <Route path="/addVendor" component={AddVendor} />
             <Route path="/editVendor" component={EditVendor} />
-            
+
             <Route path="/drawing/:id" component={DrawingHome} />
             <Route path="/adddrawing/:id" component={AddDrawing} />
             <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
