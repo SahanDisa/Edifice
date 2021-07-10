@@ -4,6 +4,7 @@ import UserService from "./../services/user.service";
 import AuthService from "./../services/auth.service";
 import ProjectDataService from "./../services/project.service";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 export default class BoardUser extends Component {
   constructor(props) {
@@ -82,7 +83,7 @@ export default class BoardUser extends Component {
       <div className="container">
         <header className="jumbotron">
           <h3>Project Management Home</h3>
-          <p>Start work on your project by select manage</p>
+          <p>Start work on your project by select manage option</p>
         </header>
         <div className="col-md-10">
         <h4>My Projects List</h4>
@@ -98,20 +99,31 @@ export default class BoardUser extends Component {
                 // onClick={() => this.setActiveProject(project, index)}
                 key={index}
               >
-                {this.retriveSingleProject(project.projectuserId)}
-                {uprojects.title}
-                <h6>{uprojects.description}</h6>
-                <p>{uprojects.location}</p>
-              <CircularProgress variant="determinate" color="success" value={61} />
-                  <p>61%</p>
-              <Link
-                to={"/projectmanagementhome/" + uprojects.id}
-                className="btn btn-primary"
-              >
-                Manage
-              </Link>
-              </li>
-              
+              <div className="row">
+                <div className="col-7">
+                  {this.retriveSingleProject(project.projectuserId)}
+                  <h5>{uprojects.title}</h5>
+                  <h6>Breif : {uprojects.description}</h6>
+                  <p>Location : {uprojects.location}</p>
+                  <CircularProgress variant="determinate" color="success" value={61} />
+                    <p>61%</p>
+                  <Link
+                    to={"/projectmanagementhome/" + uprojects.id}
+                    className="btn btn-primary"
+                  >
+                    Manage
+                  </Link>
+                </div>
+                <div className="col-5">
+                  <h6>Involved users : 15</h6>
+                  <ProgressBar>
+                    <ProgressBar  variant="success" now={35} key={1} />
+                    <ProgressBar variant="warning" now={20} key={2} />
+                    <ProgressBar variant="danger" now={10} key={3} />
+                  </ProgressBar>
+                </div> 
+              </div>
+              </li> 
             ))}
         </ul>
         </div> 
