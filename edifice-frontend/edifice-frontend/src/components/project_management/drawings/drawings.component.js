@@ -50,7 +50,7 @@ export default class Drawings extends Component {
         return (
             <div>
             <div className="jumbotron">
-                <h2>Drawings {id}</h2>
+                <h2>Drawings</h2>
                 <p>Manage the drawings,other related planning materials in here</p>
             </div>
             <div className="container">

@@ -3,6 +3,8 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
+import mainIcon from "././../assets/logoedifice.png";
+
 import AuthService from "../services/auth.service";
 
 const required = value => {
@@ -82,11 +84,13 @@ export default class Login extends Component {
   render() {
     return (
       <div className="col-md-12">
-        <div className="card card-container">
+        <div className="card card-container" id="card-container">
           <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+            // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+            src={mainIcon}
             alt="profile-img"
             className="profile-img-card"
+            id="profile-img-card"
           />
 
           <Form

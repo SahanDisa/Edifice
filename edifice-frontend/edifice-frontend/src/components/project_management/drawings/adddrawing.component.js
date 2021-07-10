@@ -89,7 +89,7 @@ export default class AddDrawing extends Component {
           </div>
         ) : (
           <div class="jumbotron">
-            <h2>Add New Drawing {projectId}</h2>
+            <h2>Add New Drawing</h2>
             <div className="form-group">
               <label htmlFor="name">Name</label>
               <input

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ApexCharts from 'apexcharts'
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import Button from '@material-ui/core/Button';
@@ -27,7 +28,35 @@ export default class PortfolioHome extends Component {
         currentIndex: -1,
         content: "",
         id: this.props.match.params.id,
-        activeStep: 0
+        activeStep: 0,
+        series: [{
+          name: 'series1',
+          data: [31, 40, 28, 51, 42, 109, 100]
+        }, {
+          name: 'series2',
+          data: [11, 32, 45, 32, 34, 52, 41]
+        }],
+        options: {
+          chart: {
+            height: 350,
+            type: 'area'
+          },
+          dataLabels: {
+            enabled: false
+          },
+          stroke: {
+            curve: 'smooth'
+          },
+          xaxis: {
+            type: 'datetime',
+            categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+          },
+          tooltip: {
+            x: {
+              format: 'dd/MM/yy HH:mm'
+            },
+          }
+        }
       };
     }
   
@@ -89,23 +118,47 @@ export default class PortfolioHome extends Component {
             <div className="container">
                 <h3>Project Departments</h3>
                 <p>Project Department details</p>
+                {/* Info */}
+                <div className="row">
+                <div className="card text-dark bg-info">
+                  <div className="card-header">Engineering </div>
+                  <div className="card-body">
+                    <h5 className="card-title">Enginnering Division</h5>
+                    <p className="card-text"></p>
+                  </div>
+                </div>
+                <div className="card text-dark bg-info">
+                  <div className="card-header">Engineering </div>
+                  <div className="card-body">
+                    <h5 className="card-title">Block Section 1</h5>
+                    <p className="card-text"></p>
+                  </div>
+                </div>
+                <div className="card text-dark bg-info">
+                  <div className="card-header">Engineering </div>
+                  <div className="card-body">
+                    <h5 className="card-title">Block Section 2</h5>
+                    <p className="card-text"></p>
+                  </div>
+                </div>
+                </div>
                 
             </div>
             <div className="container">
                 <h3>Project Milestones</h3>
                 <p>conatines the project milestones and stages of the project</p>
-                
+                // Stepper
             </div>
             <div className="container">
                 <h3>Project Analytics</h3>
                 <p>conatines the necessary progress measurement of each section</p>
-                
+                // Project Charts (min 2)
             </div>
             {/* stepper */}
             <div className="container">
            
             </div>
-            
+           
             </div>
         );
     }
