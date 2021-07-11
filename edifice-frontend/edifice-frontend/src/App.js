@@ -106,7 +106,7 @@ class App extends Component {
     return (
       <div>
         <link rel="\public\icons\051-dumper truck.png" href=".\public\icons\051-dumper truck.png" type="image/x-icon" />
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
+        <nav className="navbar fixed-top navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
             Edifice
           </Link>
@@ -157,7 +157,8 @@ class App extends Component {
               <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
                   {/* Profile {currentUser.username} */}
-                  ✅ {currentUser.username + " Edifice"}
+                  {/* ✅ {currentUser.username + " Edifice"} */}
+                  ✅ Profile
                 </Link>
               </li>
               <li className="nav-item">

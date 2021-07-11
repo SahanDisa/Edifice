@@ -46,3 +46,16 @@
 [0m2021.06.29 15:39:20 INFO  time: initialize in 15s[0m
 [0m2021.06.29 15:39:20 WARN  Build server is not auto-connectable.[0m
 [0m2021.06.29 15:39:20 WARN  no build tool detected in workspace 'E:\GitHub\Edifice\edifice-frontend\edifice-frontend'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.07.09 02:16:57 INFO  Started: Metals version 0.10.4 in workspace 'E:\GitHub\Edifice\edifice-frontend\edifice-frontend' for client Visual Studio Code 1.57.1.[0m
+[0m2021.07.09 02:17:12 INFO  time: initialize in 15s[0m
+[0m2021.07.09 02:17:12 WARN  Build server is not auto-connectable.[0m
+[0m2021.07.09 02:17:12 WARN  no build tool detected in workspace 'E:\GitHub\Edifice\edifice-frontend\edifice-frontend'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.07.09 03:12:33 INFO  shutting down Metals[0m
+[0m2021.07.10 12:18:00 INFO  Started: Metals version 0.10.4 in workspace 'E:\GitHub\Edifice\edifice-frontend\edifice-frontend' for client Visual Studio Code 1.58.0.[0m
+[0m2021.07.10 12:18:10 INFO  time: initialize in 10s[0m
+[0m2021.07.10 12:18:11 WARN  Build server is not auto-connectable.[0m
+[0m2021.07.10 12:18:11 WARN  no build tool detected in workspace 'E:\GitHub\Edifice\edifice-frontend\edifice-frontend'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.07.11 09:37:22 INFO  Started: Metals version 0.10.4 in workspace 'E:\GitHub\Edifice\edifice-frontend\edifice-frontend' for client Visual Studio Code 1.58.0.[0m
+[0m2021.07.11 09:37:34 INFO  time: initialize in 11s[0m
+[0m2021.07.11 09:37:34 WARN  Build server is not auto-connectable.[0m
+[0m2021.07.11 09:37:34 WARN  no build tool detected in workspace 'E:\GitHub\Edifice\edifice-frontend\edifice-frontend'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
