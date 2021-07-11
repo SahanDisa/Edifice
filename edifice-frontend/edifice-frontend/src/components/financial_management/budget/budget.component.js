@@ -1,150 +1,118 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import BudgetDataService from "./../../../services/budget.service";
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import UpdateIcon from '@material-ui/icons/Update';
 
-export default class AddDrawing extends Component{
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
 
-  constructor(props) {
-    super(props);
-    this.onChangeCostCode = this.onChangeCostCode.bind(this);
-    this.onChangeCategory = this.onChangeCategory.bind(this);
-    this.onChangeOriginalBudget = this.onChangeOriginalBudget.bind(this);
-    this.saveBudget = this.saveBudget.bind(this);
-    this.newBudget = this.newBudget.bind(this);
+//styles classes
 
-    this.state = {
-      id: null,
-      costCode: "",
-      category: "",
-      originalBudget: "",
-      projectId: this.props.match.params.id,  
-      submitted: false
-    };
-  }
+export default class Budget extends Component {
+    constructor(props) {
+      super(props);
+      this.retrieveBudget = this.retrieveBudget.bind(this);
+      this.state = {
+        budgets: [],
+        currentIndex: -1,
+        content: "",
+        id: this.props.match.params.id
+      };
+    }
 
-  onChangeCostCode(e) {
-    this.setState({
-      costCode: e.target.value
-    });
-  }
-
-  onChangeCategory(e) {
-    this.setState({
-      category: e.target.value
-    });
-  }
-  onChangeOriginalBudget(e) {
-    this.setState({
-      originalBudget: e.target.value
-    });
-  }
-
-  saveBudget() {
-    console.log("clicked");  
-    var data = {
-      costCode: this.state.costCode,
-      category: this.state.category,
-      originalBudget: this.state.originalBudget,
-      projectId: this.state.projectId
-    };
-
-    BudgetDataService.create(data)
-      .then(response => {
-        this.setState({
-          id: response.data.id,
-          costCode: response.data.costCode,
-          category: response.data.category,
-          originalBudget: response.data.originalBudget,
-          projectId: response.data.projectId,
-
-          submitted: true
+    // makeStyles((theme) => ({
+    //     button: {
+    //       margin: theme.spacing(1),
+    //     },
+    //   }));
+  
+    componentDidMount() {
+      this.retrieveBudget(this.props.match.params.id);
+    }
+    retrieveBudget(id) {
+      BudgetDataService.getAll(id)
+        .then(response => {
+          this.setState({
+            budgets: response.data
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
         });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
-
-  newBudget() {
-    this.setState({
-      id: null,
-      costCode: "",
-      category: "",
-      originalBudget: "",
-      projectId: this.props.match.params.id,
-
-      submitted: false
-    });
-  }
-
- 
-  render() {
-    return (
-        <div>
-          <br />
-          <ul class="nav nav-tabs">
-           <h3 style={{paddingLeft: 10, paddingRight: 50}}> BUDGET</h3>
-            <hr />
-          </ul>
-          <br />
-          <div className="submit-form">
-        {this.state.submitted ? (
-          <div>
-            <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={this.newBudget}>
-              Add Another Budget Line Item
-            </button>
-          </div>
-        ) : (
-          <div class="jumbotron">
-            <h2>Add New Budget Line Item {/*projectId*/}</h2>
-            <div className="form-group">
-              <label htmlFor="costCode">Cost Code</label>
-              <input
-                type="text"
-                className="form-control"
-                id="costCode"
-                required
-                value={this.state.costCode}
-                onChange={this.onChangeCostCode}
-                name="costCode"
-              />
+    }
+    render() {
+        const { budgets ,currentIndex,id } = this.state;
+        // const classes = useStyles();
+        return (
+            <div>
+            <div className="jumbotron">
+                <h2>Budget {id}</h2>
+                <p>Set up and manage a comprehensive budget throughout the lifecycle of a project.</p>
             </div>
-
-            <div className="form-group">
-              <label htmlFor="category">Category</label>
-              <input
-                type="text"
-                className="form-control"
-                id="category"
-                required
-                value={this.state.category}
-                onChange={this.onChangeCategory}
-                name="category"
-              />
+            <div className="container">
+                <h4>Add Budget Line Item</h4>
+                <Link to={"/addbudget/"+id}>
+                <Fab color="primary" aria-label="add" >
+                    <AddIcon />
+                </Fab>
+                </Link>
             </div>
-
-            <div className="form-group">
-              <label htmlFor="originalBudget">Original Budget</label>
-              <input
-                type="text"
-                className="form-control"
-                id="originalBudget"
-                required
-                value={this.state.originalBudget}
-                onChange={this.onChangeOriginalBudget}
-                name="originalBudget"
-              />
+            <div className="container">
+                <h4>Budget List</h4>
+            {/* Drawing List */}
+            <ul className="list-group">
+            {budgets &&
+                budgets.map((budget, index) => (
+                <li
+                    className={
+                    "list-group-item " +
+                    (index === currentIndex ? "active" : "")
+                    }
+                    // onClick={() => this.setActiveProject(project, index)}
+                    key={index}
+                >
+                    {budget.costCode}
+                    <h6>{budget.category}</h6>
+                    <p>{budget.originalBudget}</p>
+                    {/* Button Group */}
+                    <div>
+                    <Link to={"/viewbudget/"+budget.id}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        //className={classes.button}
+                        endIcon={<VisibilityIcon/>}
+                    >
+                        View
+                    </Button>
+                    </Link>
+                    <Button
+                        variant="contained"
+                        color="default"
+                        //className={classes.button}
+                        startIcon={<UpdateIcon />}
+                    >
+                        Update
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        //className={classes.button}
+                        startIcon={<DeleteIcon />}
+                    >
+                        Delete
+                    </Button>
+                    {/* This Button uses a Font Icon, see the installation instructions in the Icon component docs. */}
+                    </div>
+                </li>
+                ))}
+            </ul>
+            </div> 
             </div>
-
-            <button onClick={this.saveBudget} className="btn btn-success">
-             Add
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-    );
-  }
-};
-
+        );
+    }
+}

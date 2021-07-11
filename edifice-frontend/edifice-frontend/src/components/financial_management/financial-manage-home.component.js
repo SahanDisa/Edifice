@@ -51,18 +51,23 @@ export default class BoardUser extends Component {
           <h3>Financial Management Tools</h3>
           <p>Port City: Apartment Section 01</p>
           <p>Location: Colombo 01</p>
-          <p>Id : {id}</p>
+          <p>Project Id : {id}</p>
         </header>
 
         <div className="row">
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mt-2 mb-2" href="/budget">
-                <img src={portfolioIcon} alt="" width="50"/>
+            <div className="card card-hover shadow-sm">
+            <div className="d-block nav-heading text-center mt-2 mb-2 card card-hover shadow-sm">
+              <Link
+                to={"/budget/" + id}
+              
+              >
+                <img src={drawingsIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Budget</h3>
-                <span className="fs-sm fw-normal text-muted">View the high-level overview and details of the project</span>
-              </a>
+                <span className="fs-sm fw-normal text-muted">Manage your project drawings in one place</span>
+              </Link>
               </div>
+            </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
