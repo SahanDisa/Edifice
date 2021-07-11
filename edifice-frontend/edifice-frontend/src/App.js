@@ -110,7 +110,7 @@ class App extends Component {
     return (
       <div>
         <link rel="\public\icons\051-dumper truck.png" href=".\public\icons\051-dumper truck.png" type="image/x-icon" />
-        <nav className="navbar fixed-top navbar-expand navbar-dark bg-dark">
+        <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
             Edifice
           </Link>
