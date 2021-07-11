@@ -88,3 +88,13 @@ label {
   max-width: 300px;
   margin: auto;
 }
+/* 
+.btn-primary.btn {
+  background-color: #E0E0E0;
+} */
+.btn-primary.btn {
+  background-color: #3F51B5;
+}
+.btn .btn-primary {
+  background-color: #F50057;
+}
