@@ -6,6 +6,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import mainIcon from "././../assets/profile-gen.png";
 import buildIcon from "././../assets/PM/ibulldozer.png";
+import PersonIcon from '@material-ui/icons/Person';
 
 export default class Profile extends Component {
   constructor(props) {
@@ -73,7 +74,10 @@ export default class Profile extends Component {
           <strong>Authorities:</strong>
           <ul>
             {currentUser.roles &&
-              currentUser.roles.map((role, index) => <li key={index}><b>{role}</b></li>)}
+              currentUser.roles.map((role, index) => 
+              <li key={index}><b>{role}</b></li>
+              )
+            }
           </ul>
           <a href="#" className="btn btn-warning">Update Profile</a>
           </div>
