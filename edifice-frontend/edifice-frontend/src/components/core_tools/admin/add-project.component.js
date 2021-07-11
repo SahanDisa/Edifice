@@ -6,6 +6,7 @@ export default class AddProject extends Component {
     super(props);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onChangeLocation = this.onChangeLocation.bind(this);
     this.saveProject = this.saveProject.bind(this);
     this.newProject = this.newProject.bind(this);
 
@@ -41,7 +42,7 @@ export default class AddProject extends Component {
     var data = {
       title: this.state.title,
       description: this.state.description,
-      location: this.location
+      location: this.state.location
     };
 
     ProjectDataService.create(data)

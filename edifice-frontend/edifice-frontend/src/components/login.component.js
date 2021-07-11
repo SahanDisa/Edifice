@@ -84,13 +84,13 @@ export default class Login extends Component {
   render() {
     return (
       <div className="col-md-12">
-        <div className="card card-container" id="card-container">
+        <div className="card card-container" id="card">
           <img
             // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
             src={mainIcon}
             alt="profile-img"
             className="profile-img-card"
-            id="profile-img-card"
+            id="img"
           />
 
           <Form
@@ -99,7 +99,7 @@ export default class Login extends Component {
               this.form = c;
             }}
           >
-            <div className="form-group">
+            <div className="form-group" id="form1">
               <label htmlFor="username">Username</label>
               <Input
                 type="text"
@@ -111,7 +111,7 @@ export default class Login extends Component {
               />
             </div>
 
-            <div className="form-group">
+            <div className="form-group" id="form2">
               <label htmlFor="password">Password</label>
               <Input
                 type="password"
