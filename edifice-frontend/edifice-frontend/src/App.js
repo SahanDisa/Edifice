@@ -65,7 +65,10 @@ import ViewRFI from "./components/project_management/rfi/view.component";
 
 import actionplanHome from "./components/project_management/actionplan/actionplan.component";
 
-import dailylogHome from "./components/project_management/dailylog/dailylog.component";
+import DlsConfig from "./components/project_management/dailylog/configuration.component";
+import ManageDls from "./components/project_management/dailylog/manage.component";
+import UpdateDls from "./components/project_management/dailylog/update.component";
+import ViewDls from "./components/project_management/dailylog/view.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
 
@@ -110,7 +113,7 @@ class App extends Component {
     return (
       <div>
         <link rel="\public\icons\051-dumper truck.png" href=".\public\icons\051-dumper truck.png" type="image/x-icon" />
-        <nav className="navbar fixed-top navbar-expand navbar-dark bg-dark">
+        <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
             Edifice
           </Link>
@@ -230,7 +233,10 @@ class App extends Component {
 
             <Route path="/punchlist" component={punchlistHome} /> 
 
-            <Route path="/dailylog" component={dailylogHome} />
+            <Route path="/dailylogsconfiguration" component={DlsConfig} />
+            <Route path="/managedailylogs" component={ManageDls} />
+            <Route path="/managesdailylogs/update" component={UpdateDls} />
+            <Route path="/managesdailylogs/view" component={ViewDls} />
             
             <Route path="/addUser" component={AddUser} />
             <Route path="/editUser" component={EditUser} />

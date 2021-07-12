@@ -113,15 +113,11 @@ export default class BoardUser extends Component {
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-              <div className="d-block nav-heading text-center card card-hover shadow-sm">
-              <Link
-                to={"/invoicing/" + id}
-              
-              >
+              <div className="card card-hover shadow-sm">
+              <Link className="d-block nav-heading text-center mt-2 mb-2" to={"/invoicing/" + id}>
                 <img src={biddingIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Invoicing</h3>
                 <span className="fs-sm fw-normal text-muted">Manage all the bid packages and bidding proceses</span>
-                
               </Link>
               </div>
             </div>
