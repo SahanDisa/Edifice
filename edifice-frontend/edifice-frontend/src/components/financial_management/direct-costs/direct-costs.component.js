@@ -2,10 +2,10 @@
 import BootstrapTable from 'react-bootstrap-table-next';
 
 const data = [
-    {edit:<a href="/direct-costs/edit" className="btn btn-success">Edit</a>, view:<a href="/direct-costs/view" className="btn btn-primary">View</a>, date: "05/04/17", vendor:"Pacific Gas", type:"Expense", invoice:"C001",status:"Approved",ammount:"$1,250.00",receivedDate:"",paidDate:"",blank:"",delete:<a href="/direct-costs/edit" className="btn btn-success">Delete</a>},
-    {edit:<a href="/direct-costs/edit" className="btn btn-success">Edit</a>, view:<a href="/direct-costs/view" className="btn btn-primary">View</a>, date: "05/04/17", vendor:"Pacific Gas", type:"Expense", invoice:"C001",status:"Approved",ammount:"$1,250.00",receivedDate:"",paidDate:"",blank:"",delete:<a href="/direct-costs/edit" className="btn btn-success">Delete</a>},
-    {edit:<a href="/direct-costs/edit" className="btn btn-success">Edit</a>, view:<a href="/direct-costs/view" className="btn btn-primary">View</a>, date: "05/04/17", vendor:"Pacific Gas", type:"Expense", invoice:"C001",status:"Approved",ammount:"$1,250.00",receivedDate:"",paidDate:"",blank:"",delete:<a href="/direct-costs/edit" className="btn btn-success">Delete</a>},
-    {edit:<a href="/direct-costs/edit" className="btn btn-success">Edit</a>, view:<a href="/direct-costs/view" className="btn btn-primary">View</a>, date: "05/04/17", vendor:"Pacific Gas", type:"Expense", invoice:"C001",status:"Approved",ammount:"$1,250.00",receivedDate:"",paidDate:"",blank:"",delete:<a href="/direct-costs/edit" className="btn btn-success">Delete</a>}
+    {edit:<a href="/direct-costs/edit" className="btn btn-outline-success">Edit</a>, view:<a href="/direct-costs/view" className="btn btn-outline-primary">View</a>, date: "05/04/17", vendor:"Pacific Gas", type:"Expense", invoice:"C001",status:"Approved",ammount:"$1,250.00",receivedDate:"",paidDate:"",blank:"",delete:<a href="/direct-costs/edit" className="btn btn-outline-success">Delete</a>},
+    {edit:<a href="/direct-costs/edit" className="btn btn-outline-success">Edit</a>, view:<a href="/direct-costs/view" className="btn btn-outline-primary">View</a>, date: "05/04/17", vendor:"Pacific Gas", type:"Expense", invoice:"C001",status:"Approved",ammount:"$1,250.00",receivedDate:"",paidDate:"",blank:"",delete:<a href="/direct-costs/edit" className="btn btn-outline-success">Delete</a>},
+    {edit:<a href="/direct-costs/edit" className="btn btn-outline-success">Edit</a>, view:<a href="/direct-costs/view" className="btn btn-outline-primary">View</a>, date: "05/04/17", vendor:"Pacific Gas", type:"Expense", invoice:"C001",status:"Approved",ammount:"$1,250.00",receivedDate:"",paidDate:"",blank:"",delete:<a href="/direct-costs/edit" className="btn btn-outline-success">Delete</a>},
+    {edit:<a href="/direct-costs/edit" className="btn btn-outline-success">Edit</a>, view:<a href="/direct-costs/view" className="btn btn-outline-primary">View</a>, date: "05/04/17", vendor:"Pacific Gas", type:"Expense", invoice:"C001",status:"Approved",ammount:"$1,250.00",receivedDate:"",paidDate:"",blank:"",delete:<a href="/direct-costs/edit" className="btn btn-outline-success">Delete</a>}
   ];
   const columns = [
     {
@@ -88,7 +88,7 @@ const DirectCosts = () => {
             </li>
           </ul><br />
          
-          <a href="/create-direct-costs" className="btn btn-primary"> New Direct Cost</a><br /><br />
+          <a href="/create-direct-costs" className="btn btn-outline-primary"> New Direct Cost</a><br /><br />
           <div class="dropdown">
   <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Export
   <span class="caret"></span></button>

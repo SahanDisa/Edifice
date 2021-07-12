@@ -12,9 +12,9 @@ class Timesheet extends Component {
                         <h2>Timesheet</h2>
                     </div>
                     <div class="col-8 align-items-end">
-                        <a href="/customize" className="btn btn-primary mr-3"> Customize</a>
-                        <a href="#" className="btn btn-primary mr-3"> Export PDF</a>
-                        <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#addEmp"> Create New</a>
+                        <a href="/customize" className="btn btn-outline-primary mr-3"> Customize</a>
+                        <a href="#" className="btn btn-outline-primary mr-3"> Export PDF</a>
+                        <a href="#" className="btn btn-outline-primary" data-toggle="modal" data-target="#addEmp"> Create New</a>
 
                         {/*------------------------------------ Add Emp Starts------------------------------------------------------------------ */}
                         <div className="modal fade" id="addEmp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -46,7 +46,7 @@ class Timesheet extends Component {
             <div className="card">
                 <div className="card-header">
                         <h5 >Date: 05/01/2021</h5>
-                        <a className="card-header" href="" className="btn btn-primary"> +Add Employee</a>
+                        <a className="card-header" href="" className="btn btn-outline-primary"> +Add Employee</a>
         
                 </div>
 
@@ -172,7 +172,7 @@ class Timesheet extends Component {
             <div class="card">
                 <div className="card-header">
                     <h5 >Date: 06/01/2021</h5>
-                    <a className="card-header" href="" className="btn btn-primary"> +Add Employee</a>
+                    <a className="card-header" href="" className="btn btn-outline-primary"> +Add Employee</a>
                 </div>
                 <div className="card-body"> 
                 

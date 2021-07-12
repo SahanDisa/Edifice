@@ -30,7 +30,7 @@ class PrimeContracts extends Component {
                   <div class="card">
                     <div class="card-header" id="headingOne">
                       <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Vortex properties</button>  <div class="col-md-12 text-right"><a href="#" className="btn btn-dark mb-3">Edit</a></div>
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Vortex properties</button>  <div class="col-md-12 text-right"><a href="#" className="btn btn-outline-dark mb-3">Edit</a></div>
                       </h2>
                     </div>
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">

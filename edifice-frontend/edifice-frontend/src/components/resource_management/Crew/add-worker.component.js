@@ -30,7 +30,7 @@ class AddWorker extends Component {
                     </div>
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-success">Add</button>
+                  <button type="button" className="btn btn-outline-success">Add</button>
                 </div>
               </div>
             </div>

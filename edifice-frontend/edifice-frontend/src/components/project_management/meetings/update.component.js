@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 
 const data = [
-  {edit: <a href="/managesmeetings/update" className="btn btn-success">Edit</a>}
+  {edit: <a href="/managesmeetings/update" className="btn btn-outline-success">Edit</a>}
 ];
 const columns = [
   {

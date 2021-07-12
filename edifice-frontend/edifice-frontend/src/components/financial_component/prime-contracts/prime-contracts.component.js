@@ -12,7 +12,7 @@ const PrimeContracts = () => {
             </li>
           </ul><br />
          
-          <a href="/create-prime-contracts" className="btn btn-primary"> New Prime Contract</a>
+          <a href="/create-prime-contracts" className="btn btn-outline-primary"> New Prime Contract</a>
 <p style={{textAlign:"center"}}>
 <img src={primeContractsIcon} alt="" width="50"/><br />
 There is no Prime Contract set up.<br />

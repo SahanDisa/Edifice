@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import BootstrapTable from 'react-bootstrap-table-next';
 
 const data = [
-  {edit:<a href="/managestasks/update" className="btn btn-success">Edit</a>, view:<a href="/managestasks/view" className="btn btn-primary">View</a>, no: 1, title:"", description:"Collect all the biddings", category:"Bidding"}
+  {edit:<a href="/managestasks/update" className="btn btn-outline-success">Edit</a>, view:<a href="/managestasks/view" className="btn btn-outline-primary">View</a>, no: 1, title:"", description:"Collect all the biddings", category:"Bidding"}
 ];
 const columns = [
   {
@@ -120,7 +120,7 @@ class ManageTasks extends Component {
             <div className="form-group col-md-4">
               <input className="form-control" type="text" placeholder="Search" />
             </div>
-            <a href="#" className="btn btn-primary mb-3">Add Filter</a>
+            <a href="#" className="btn btn-outline-primary mb-3">Add Filter</a>
           </div>
         </form>
         <div className="">

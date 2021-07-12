@@ -16,7 +16,7 @@ class CreateRFI extends Component {
                 </div>
                 <div className="form-group col-md-3 form-check">
                     <input type="checkbox" className="form-check-input" id="privateCheck" required/>
-                    <label htmlFor="privateCheck" className="form-check-label">Private</label>
+                    <label htmlFor="draftCheck" className="form-check-label">Private</label>
                 </div>
             </div>
             <div className="form-row">
