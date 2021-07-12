@@ -120,11 +120,6 @@ export default class BoardUser extends Component {
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
 
-              <div className="d-block nav-heading text-center mt-2 mb-2 card card-hover shadow-sm">
-              <Link
-                to={"/bidding/" + id}
-              >
-
               <div className="d-block nav-heading text-center card card-hover shadow-sm">
               <Link className="d-block nav-heading text-center mt-2 mb-2" to={"/bidding/" + id}>
 
