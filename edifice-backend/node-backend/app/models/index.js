@@ -64,6 +64,12 @@ db.biddings.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
+// One project has many budget line items
+db.projects.hasMany(db.budgets, { as: "budgets" });
+db.budgets.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
 
 db.roles.belongsToMany(db.users, {
   through: "user_roles",
