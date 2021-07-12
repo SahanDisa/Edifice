@@ -3,7 +3,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import CreateCategory from './createcat.component';
 
 const data = [
-    {edit: <a href="/dailylogsconfiguration/update" className="btn btn-success">Edit</a>, view:<a href="/dailylogsconfiguration/view" className="btn btn-primary">View</a>, delete: <a href="/dailylogsconfiguration/delete" className="btn btn-outline-danger">Delete</a>}
+    {edit: <a href="/dailylogsconfiguration/update" className="btn btn-success">Edit</a>, view:<a href="/dailylogsconfiguration/view" className="btn btn-primary">View</a>, delete: <a href="/dailylogsconfiguration/delete" className="btn btn-danger">Delete</a>}
   ];
 const columns = [
     {

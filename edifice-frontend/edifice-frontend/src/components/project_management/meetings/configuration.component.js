@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 
 const data = [
-    {edit:<a href="#" className="btn btn-success">Edit</a>, No: 1, name: 'Weekly OAC Meeting', description:'bla bla bla bla bla bla bla bla bla', delete:<a href="#" className="btn btn-outline-danger">Delete</a>},
-    {edit:<a href="#" className="btn btn-success">Edit</a>, No: 2, name: '2nd Category', description:'bla bla bla bla bla bla bla bla bla', delete:<a href="#" className="btn btn-outline-danger">Delete</a>}
+    {edit:<a href="#" className="btn btn-success">Edit</a>, No: 1, name: 'Weekly OAC Meeting', description:'bla bla bla bla bla bla bla bla bla', delete:<a href="#" className="btn btn-danger">Delete</a>},
+    {edit:<a href="#" className="btn btn-success">Edit</a>, No: 2, name: '2nd Category', description:'bla bla bla bla bla bla bla bla bla', delete:<a href="#" className="btn btn-danger">Delete</a>}
   ];
   const columns = [
   {
