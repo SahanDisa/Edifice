@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import UserService from "./../../services/user.service";
+import ProjectDataService from "./../../services/project.service";
 
 
 import budgetIcon from "././../../assets/FM/budget.png";
@@ -16,6 +17,7 @@ export default class BoardUser extends Component {
     super(props);
 
     this.state = {
+      projects: [],
       content: "",
       id: this.props.match.params.id
     };
@@ -38,17 +40,42 @@ export default class BoardUser extends Component {
         });
       }
     );
+    this.retrieveProjects(this.state.id);
+  }
+  retrieveProjects(id) {
+    ProjectDataService.get(id)
+      .then(response => {
+        this.setState({
+          projects: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   render() {
-    const {id} = this.state;
+    const {id,projects} = this.state;
     return (
       <div className="container">
         <header className="jumbotron">
+
           <h3>Financial Management Tools</h3>
           <p>Port City: Apartment Section 01</p>
           <p>Location: Colombo 01</p>
           <p>Project Id : {id}</p>
+          <div className="row">
+            <div className="col-6">
+            <h3>Financial Management Tools</h3>
+            </div>
+            <div className="col-6">
+              <h5>Title : {projects.title}</h5>
+              <p>Description : {projects.description}</p>
+              <p>Location: {projects.location}</p>  
+            </div>
+            </div>
+
         </header>
 
         <div className="row">

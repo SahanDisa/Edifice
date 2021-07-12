@@ -1,4 +1,7 @@
-/* .App {
+
+
+
+.App {
   text-align: center;
 }
 
@@ -40,13 +43,15 @@ label {
   display: block;
   margin-top: 10px;
 }
-
+/* 
 .card-container.card {
   max-width: 350px !important;
   padding: 40px 40px;
-}
+} */
 
-.card {
+#card {
+  max-width: 350px !important;
+  padding: 40px 40px;
   background-color: #f7f7f7;
   padding: 20px 25px 30px;
   margin: 0 auto 25px;
@@ -59,7 +64,7 @@ label {
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 }
 
-.profile-img-card {
+#img {
   width: 96px;
   height: 96px;
   margin: 0 auto 10px;
@@ -82,4 +87,91 @@ label {
 .edit-form {
   max-width: 300px;
   margin: auto;
+}
+/* 
+.btn-primary.btn {
+  background-color: #E0E0E0;
 } */
+.btn-primary.btn {
+  background-color: #3F51B5;
+}
+.btn .btn-primary {
+  background-color: #F50057;
+}
+.bg-primary {
+  background-color: #3f51b5 !important;
+}
+
+a.bg-primary:hover, a.bg-primary:focus,
+button.bg-primary:hover,
+button.bg-primary:focus {
+  background-color: #3f51b5 !important;
+}
+.bg-secondary {
+  background-color: #E0E0E0 !important;
+}
+
+a.bg-secondary:hover, a.bg-secondary:focus,
+button.bg-secondary:hover,
+button.bg-secondary:focus {
+  background-color: #2b2a2a !important;
+}
+
+.bg-success {
+  background-color: #00bc8c !important;
+}
+
+a.bg-success:hover, a.bg-success:focus,
+button.bg-success:hover,
+button.bg-success:focus {
+  background-color: #008966 !important;
+}
+
+.bg-info {
+  background-color: #3498db !important;
+}
+
+a.bg-info:hover, a.bg-info:focus,
+button.bg-info:hover,
+button.bg-info:focus {
+  background-color: #217dbb !important;
+}
+
+.bg-warning {
+  background-color: #f39c12 !important;
+}
+
+a.bg-warning:hover, a.bg-warning:focus,
+button.bg-warning:hover,
+button.bg-warning:focus {
+  background-color: #c87f0a !important;
+}
+
+.bg-danger {
+  background-color: #e74c3c !important;
+}
+
+a.bg-danger:hover, a.bg-danger:focus,
+button.bg-danger:hover,
+button.bg-danger:focus {
+  background-color: #d62c1a !important;
+}
+
+
+.bg-dark {
+  background-color: #303030 !important;
+}
+
+a.bg-dark:hover, a.bg-dark:focus,
+button.bg-dark:hover,
+button.bg-dark:focus {
+  background-color: #171616 !important;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.bg-transparent {
+  background-color: transparent !important;
+}

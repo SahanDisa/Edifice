@@ -79,7 +79,7 @@ export default class AddDrawing extends Component {
   render() {
     const {projectId} = this.state;
     return (
-      <div className="submit-form">
+      <div className="container">
         {this.state.submitted ? (
           <div>
             <h4>You submitted successfully!</h4>
@@ -88,8 +88,8 @@ export default class AddDrawing extends Component {
             </button>
           </div>
         ) : (
-          <div class="jumbotron">
-            <h2>Add New Drawing {projectId}</h2>
+          <div class="container">
+            <h2>Add New Drawing</h2>
             <div className="form-group">
               <label htmlFor="name">Name</label>
               <input

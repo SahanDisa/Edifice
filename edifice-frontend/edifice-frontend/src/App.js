@@ -17,6 +17,7 @@ import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
 
 import AddProject from './components/core_tools/admin/add-project.component';
+import AddDepartment from "./components/core_tools/admin/add-department.component";
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
 
@@ -59,6 +60,9 @@ import DirectCosts from "./components/financial_management/direct-costs/direct-c
 import Invoicing from "./components/financial_management/invoicing/invoicing.component";
 
 import rfiHome from "./components/project_management/rfi/rfi.component";
+import CreateRFI from "./components/project_management/rfi/create.component";
+import EditRFI from "./components/project_management/rfi/edit.component";
+import ViewRFI from "./components/project_management/rfi/view.component";
 
 import actionplanHome from "./components/project_management/actionplan/actionplan.component";
 
@@ -69,6 +73,7 @@ import punchlistHome from "./components/project_management/punchlist/punchlist.c
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
 import Customize from "./components/resource_management/Timesheet/customize.component";
 import Crew from "./components/resource_management/Crew/crew.component";
+
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
@@ -158,7 +163,8 @@ class App extends Component {
               <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
                   {/* Profile {currentUser.username} */}
-                  ✅ {currentUser.username + " Edifice"}
+                  {/* ✅ {currentUser.username + " Edifice"} */}
+                  ✅ Profile
                 </Link>
               </li>
               <li className="nav-item">
@@ -191,6 +197,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
             <Route path="/projectmanagement" component={BoardUser} />
+            <Route path="/adddepartment" component={AddDepartment} />
             {/* <Route path="/projectmanagementhome" component={ProjectManagementHome} /> */}
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
             <Route path="/portfolio" component={PortfolioHome} />
@@ -218,6 +225,9 @@ class App extends Component {
             <Route path="/managesmeetings/view" component={ViewMeetings} />
 
             <Route path="/rfi" component={rfiHome} />
+            <Route path="/managerfi/create" component={CreateRFI} />
+            <Route path="/managerfi/edit" component={EditRFI} />
+            <Route path="/managerfi/view" component={ViewRFI} />
 
             <Route path="/actionplan" component={actionplanHome} />
 
@@ -231,11 +241,13 @@ class App extends Component {
             <Route path="/employees" component={Emp} />
             <Route path="/addVendor" component={AddVendor} />
             <Route path="/editVendor" component={EditVendor} />
+
             <Route path="/drawing/:id" component={DrawingHome} />
             <Route path="/adddrawing/:id" component={AddDrawing} />
             <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
             
             <Route path="/photos" component={PhotosHome} />
+
             <Route path="/bidding/:id" component={BiddingHome} />      
 			
 			      <Route path="/budget/:id" component={BudgetHome} />
@@ -245,8 +257,6 @@ class App extends Component {
             <Route path="/direct-costs" component={DirectCosts} />
             <Route path="/invoicing" component={Invoicing} />
             
-
-
             <Route path="/prime-contracts" component={PrimeContracts} />
 
             {/*resource management */}
