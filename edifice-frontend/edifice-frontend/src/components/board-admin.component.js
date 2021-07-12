@@ -2,7 +2,14 @@ import React, { Component } from "react";
 import Dates from './core_tools/admin/dates.component'
 import Defaults from './core_tools/admin/defaults.component'
 import Roles from './core_tools/admin/roles.component'
+import { Link } from "react-router-dom";
 
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
+
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import HomeWorkIcon from '@material-ui/icons/HomeWork';
 import Employees from './core_tools/edifice-directory/employees.component'
 
 import UserService from "../services/user.service";
@@ -12,8 +19,31 @@ export default class BoardUser extends Component {
     super(props);
 
     this.state = {
-      content: ""
+      content: "",
+      id: "this.props.match.params.id"
     };
+
+    this.animationsomething();
+  }
+
+  animationsomething(){
+    console.log("kohomathee");
+  }
+
+  expand(card) {
+    card.classList.toggle('profile--expanded');
+
+    // If card is not expanded after toggle, add 'unexpanded' class
+    if (!card.classList.contains('profile--expanded')) card.classList.toggle('profile--unexpanded');
+    // Else if card is expanded after toggle and still contains 'unexpanded' class, remove 'unexpanded'
+    else if (card.classList.contains('profile--expanded') && card.classList.contains('profile--unexpanded')) card.classList.toggle('profile--unexpanded');
+  }
+
+  toggleTheme() {
+      let docu = document.querySelector('html');
+
+      docu.classList.toggle('light-theme');
+      docu.classList.toggle('dark-theme');
   }
 
   componentDidMount() {
@@ -39,12 +69,70 @@ export default class BoardUser extends Component {
   render() {
     return (
       <div className="container">
-        <header className="jumbotron">
-          {/* <h3>{this.state.content}</h3> */}
-          <h3>Core Tools</h3>
-          <h5>Hello Admin, These are your core tools</h5>
-        </header>
-        {/* Content */}
+
+        <div className="row">
+            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2" id="employeecard">
+              <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mt-3 mb-1" href="#">
+
+                <h1 className="nav-heading-title mb-0" style={{ fontSize:65 }}>148</h1>
+                <h4 mb-0> <SupervisorAccountIcon style={{ fontSize:30 }}/>  Employees</h4>
+              </a>
+              </div>
+            </div>
+
+            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2" id="projectcard">
+              <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mt-3 mb-1" href="#">
+
+                <h1 className="nav-heading-title mb-0" style={{ fontSize:65 }}>11</h1>
+                <h4> <HomeWorkIcon style={{ fontSize:25 }}/>  Projects</h4>
+              </a>
+              </div>
+            </div>
+
+            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2" id="vendorcard">
+              <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mt-3 mb-1" href="#">
+
+                <h1 className="nav-heading-title mb-1" style={{ fontSize:65 }}>56</h1>
+                <h6> <HomeWorkIcon style={{ fontSize:25 }}/>  Vendors & Subcontractors</h6>
+              </a>
+              </div>
+            </div>
+
+            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2" id="capitalcard">
+              <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mt-3 mb-1" href="#">
+
+                <h3 className="nav-heading-title mb-0" style={{ fontSize:65 }}><span style={{ fontSize:35 }}>Rs.</span>48M</h3>
+                <h4> <HomeWorkIcon style={{ fontSize:25 }}/>  Capital</h4>
+              </a>
+              </div>
+            </div>
+
+          </div>
+          <div classname="row">
+
+            <div className="card card-hover shadow-sm col-lg-12 pt-1 mb-3 pb-3" id="project1">
+              <a className="d-block nav-heading text-left ml-4 mt-3 mb-1 pb-3" href="#">
+                  <p>Port City</p>
+                  <div classname="ml-6 mr-6">
+                    <LinearProgress variant="determinate" value={50} />
+                  </div>
+              </a>
+            </div>
+
+            <div className="card card-hover shadow-sm col-lg-12 pt-1 mb-3 pb-3" id="project2">
+              <a className="d-block nav-heading text-left ml-4 mt-3 mb-1 pb-3" href="#">
+                  <p>Anilana</p>
+                  <div classname="ml-6 mr-6">
+                    <LinearProgress variant="determinate" value={38} />
+                  </div>
+              </a>
+            </div>
+
+          </div>
         <div className="row">
           <div className="col-2">
             <div className="list-group" id="list-tab" role="tablist">
@@ -60,14 +148,19 @@ export default class BoardUser extends Component {
           <div className="col-10">
             <div className="tab-content" id="nav-tabContent">
               {/*Admin core tools description  */}
-              <div className="tab-pane fade show active" id="list-admin" role="tabpanel" aria-labelledby="list-home-list">
-                <h5>This is admin</h5>
-                  <p>Manage Important dates</p>
-                  <a href="/dates" className="btn btn-outline-primary"> Go To Dates</a>
-                  <p>Manage Deafults</p>
-                  <a href="/defaults" className="btn btn-outline-primary"> Go To Defaults</a>
-                  <p>Manage Roles</p>
-                  <a href="/roles" className="btn btn-outline-primary"> Go To Roles</a>
+              <div className="modal fade pt-4" id="list-admin" role="dialog" aria-labelledby="list-home-list" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered pt-4" role="document">
+                  <div className="modal-content">
+                    <p>Manage Important dates</p>
+                    <div class="col text-center">
+                      <a href="/dates" className="btn btn-outline-primary"> Go To Dates</a>
+                    </div>  
+                    <p>Manage Deafults</p>
+                    <a href="/defaults" className="btn btn-outline-primary"> Go To Defaults</a>
+                    <p>Manage Roles</p>
+                    <a href="/roles" className="btn btn-outline-primary"> Go To Roles</a>
+                  </div>
+                </div>  
               </div>
               {/* Admin project description */}
               <div className="tab-pane fade" id="list-home" role="tabpanel" aria-labelledby="list-profile-list">

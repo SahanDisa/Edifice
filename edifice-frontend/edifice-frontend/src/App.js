@@ -17,6 +17,7 @@ import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
 
 import AddProject from './components/core_tools/admin/add-project.component';
+import AddDepartment from "./components/core_tools/admin/add-department.component";
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
 
@@ -52,7 +53,7 @@ import ManageMeetings from "./components/project_management/meetings/manage.comp
 import UpdateMeetings from "./components/project_management/meetings/update.component";
 import ViewMeetings from "./components/project_management/meetings/view.component";
 
-import Budget from "./components/financial_management/budget/budget.component";
+import BudgetHome from "./components/financial_management/budget/budget.component";
 import PrimeContracts from "./components/financial_management/prime-contracts/prime-contracts.component";
 import CreatePrimeContracts from "./components/financial_management/prime-contracts/createPrimeContracts.component";
 import DirectCosts from "./components/financial_management/direct-costs/direct-costs.component";
@@ -78,6 +79,7 @@ import Crew from "./components/resource_management/Crew/crew.component";
 
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
+import AddBudget from "./components/financial_management/budget/addbudget.component";
 
 class App extends Component {
   constructor(props) {
@@ -198,6 +200,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
             <Route path="/projectmanagement" component={BoardUser} />
+            <Route path="/adddepartment" component={AddDepartment} />
             {/* <Route path="/projectmanagementhome" component={ProjectManagementHome} /> */}
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
             <Route path="/portfolio" component={PortfolioHome} />
@@ -253,7 +256,8 @@ class App extends Component {
 
             <Route path="/bidding/:id" component={BiddingHome} />      
 			
-			      <Route path="/budget" component={Budget} />
+			      <Route path="/budget/:id" component={BudgetHome} />
+            <Route path="/addbudget/:id" component={AddBudget} />
             <Route path="/prime-contracts" component={PrimeContracts} />
             <Route path="/create-prime-contracts" component={CreatePrimeContracts} />
             <Route path="/direct-costs" component={DirectCosts} />
