@@ -1,5 +1,12 @@
 import React, { Component } from "react";
 import ProjectDataService from "./../../../services/project.service";
+import Timeline from '@material-ui/lab/Timeline';
+import TimelineItem from '@material-ui/lab/TimelineItem';
+import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
+import TimelineConnector from '@material-ui/lab/TimelineConnector';
+import TimelineContent from '@material-ui/lab/TimelineContent';
+import TimelineDot from '@material-ui/lab/TimelineDot';
+
 
 export default class AddProject extends Component {
   constructor(props) {
@@ -77,7 +84,7 @@ export default class AddProject extends Component {
 
   render() {
     return (
-      <div className="submit-form">
+      <div className="container">
         {this.state.submitted ? (
           <div>
             <h4>You submitted successfully!</h4>
@@ -86,8 +93,11 @@ export default class AddProject extends Component {
             </button>
           </div>
         ) : (
-          <div class="jumbotron">
+          <div class="container">
+          <div className="row">
+            <div className="container col-8">
             <h2>Add New Project</h2>
+            <h5>Step 1: Project Settings</h5>
             <div className="form-group">
               <label htmlFor="title">Title</label>
               <input
@@ -127,9 +137,70 @@ export default class AddProject extends Component {
               />
             </div>
 
-            <button onClick={this.saveProject} className="btn btn-success">
+            <div className="form-group">
+              <label htmlFor="startDate">Start Date</label>
+              <input
+                type="date"
+                className="form-control"
+                id="startDate"
+                //required
+                // value={this.state.location}
+                // onChange={this.onChangeLocation}
+                name="startDate"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="endDate">End Date</label>
+              <input
+                type="date"
+                className="form-control"
+                id="endDate"
+                //required
+                // value={this.state.location}
+                // onChange={this.onChangeLocation}
+                name="endDate"
+              />
+            </div>
+
+            <a href="/adddepartment" onClick={this.saveProject} className="btn btn-success">
               Submit
-            </button>
+            </a>
+            </div>
+            <div className="container col-4">
+            <Timeline>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><h5><strong>Step 1 </strong>Project Settings</h5> </TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 2 :</strong>Define departments</h6></TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                
+                <TimelineContent><h6><strong>Step 3 :</strong>Define milestones</h6></TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 4 :</strong>Assign users for the project</h6></TimelineContent>
+              </TimelineItem>
+            </Timeline>
+            </div>
+
+          </div>
           </div>
         )}
       </div>

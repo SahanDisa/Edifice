@@ -21,7 +21,7 @@ export default class PortfolioHome extends Component {
     constructor(props) {
       super(props);
       this.retrieveDrawing = this.retrieveDrawing.bind(this);
-      this.getSteps = this.getSteps.bind(this);
+      
       this.state = {
         drawings: [],
         currentIndex: -1,
