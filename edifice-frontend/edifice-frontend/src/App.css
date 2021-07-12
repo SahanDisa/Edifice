@@ -148,13 +148,13 @@ button.bg-warning:focus {
 }
 
 .bg-danger {
-  background-color: #e74c3c !important;
+  background-color: #EF253D !important;
 }
 
 a.bg-danger:hover, a.bg-danger:focus,
 button.bg-danger:hover,
 button.bg-danger:focus {
-  background-color: #d62c1a !important;
+  background-color: #EF253D !important;
 }
 
 
