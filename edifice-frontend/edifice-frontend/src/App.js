@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import "./App.css";
+// import mainIcon from "././assets/logoedifice.png";
+import mainIcon from "././assets/Edifice.png";
 
 import AuthService from "./services/auth.service";
 
@@ -114,6 +116,12 @@ class App extends Component {
         <link rel="\public\icons\051-dumper truck.png" href=".\public\icons\051-dumper truck.png" type="image/x-icon" />
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
+            <img
+                    // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                    src={mainIcon}
+                    style={{'width' : "50px", height: "50px"}}
+                    alt="profile-img"  
+                />
             Edifice
           </Link>
 
@@ -164,7 +172,7 @@ class App extends Component {
                 <Link to={"/profile"} className="nav-link">
                   {/* Profile {currentUser.username} */}
                   {/* ✅ {currentUser.username + " Edifice"} */}
-                  ✅ Profile
+                  Profile
                 </Link>
               </li>
               <li className="nav-item">

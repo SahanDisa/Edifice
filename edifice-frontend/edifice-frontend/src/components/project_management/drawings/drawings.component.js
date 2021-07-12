@@ -163,31 +163,23 @@ export default class Drawings extends Component {
                     <p>{drawing.drawtype}</p>
                     {/* Button Group */}
                     <Link to={"/viewdrawing/"+drawing.id}>
-                    <Button
+                    <button className="btn btn-primary">View <VisibilityIcon/> </button>
+                    {/* <Button
                         variant="contained"
                         color="primary"
                         className="btn btn-primary"
                         endIcon={<VisibilityIcon/>}
                     >
-                        View
-                    </Button>
+                        View 
+                    </Button>*/}
                     </Link>
-                    <Button
-                        variant="contained"
-                        color="default"
-                        //className={classes.button}
-                        startIcon={<UpdateIcon />}
-                    >
-                        Update
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        //className={classes.button}
-                        startIcon={<DeleteIcon />}
-                    >
-                        Delete
-                    </Button>
+                    <Link to={"/viewdrawing/"+drawing.id}>
+                    <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
+                    </Link>
+                    <Link to={"/viewdrawing/"+drawing.id}>
+                    <button className="btn btn-danger">Delete <DeleteIcon/> </button>
+                    </Link>
+                    
                 </div>
                 {/* <div className="col-2">
                 <img src={drawingIcon} alt="" width="50"/>

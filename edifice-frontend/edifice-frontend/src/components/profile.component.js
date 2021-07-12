@@ -45,7 +45,7 @@ export default class Profile extends Component {
         <div className="row">
         <div className="col-12">
           <Card
-              bg={'primary'}
+              bg={'success'}
               text={'white'}
               //style={{ width: '14rem' }}
               className="mb-2"
@@ -108,7 +108,7 @@ export default class Profile extends Component {
                 name="startDate"
               />
           </div>
-          <a href="#" className="btn btn-dark">Update Profile</a>
+          <a href="#" className="btn btn-primary">Update Profile</a>
             <hr></hr>
             
           </div>
