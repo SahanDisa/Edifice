@@ -77,6 +77,7 @@ import Crew from "./components/resource_management/Crew/crew.component";
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
+import EditPrimeContracts from "./components/financial_management/prime-contracts/editPrimeContracts.component";
 
 class App extends Component {
   constructor(props) {
@@ -266,6 +267,7 @@ class App extends Component {
 
  {/*financial management */}
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
+            <Route path="/editprimecontracts/:id" component={EditPrimeContracts} />
 
           </Switch>
         </div>

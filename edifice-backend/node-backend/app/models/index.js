@@ -30,7 +30,7 @@ db.projects = require("./project.model.js")(sequelize, Sequelize);
 db.drawings = require("./drawing.model.js")(sequelize, Sequelize);
 db.biddings = require("./bidding.model")(sequelize, Sequelize);
 db.projectuser = require("./projectuser.model")(sequelize, Sequelize);
-db.budget = require("./budget.model.js")(sequelize, Sequelize);
+db.budgets = require("./budget.model.js")(sequelize, Sequelize);
 db.demo = require("./demo.model")(sequelize, Sequelize);
 
 // One user has one project profile
@@ -65,7 +65,7 @@ db.biddings.belongsTo(db.projects, {
   as: "project",
 });
 // One project has one budget
-db.projects.hasOne(db.budgets, { as: "budgets" });
+db.projects.hasMany(db.budgets, { as: "budgets" });
 db.budgets.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
