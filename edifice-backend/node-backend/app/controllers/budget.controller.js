@@ -2,10 +2,10 @@ const db = require("./../models/index");
 const Project = db.projects;
 const Budget = db.budgets;
 
-// create a budget line item
+// create a budget 
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.name) {
+  if (!req.body.costCode) {
     res.status(400).send({
       message: "Content can not be empty!"
     });

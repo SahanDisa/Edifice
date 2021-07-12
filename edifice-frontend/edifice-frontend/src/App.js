@@ -144,7 +144,7 @@ class App extends Component {
 
             {showModeratorBoard && (
               <li className="nav-item">
-                <Link to={"/mod"} className="nav-link">
+                <Link to={"/financialmanagement"} className="nav-link">
                   Financial Management
                 </Link>
               </li>
@@ -212,7 +212,7 @@ class App extends Component {
             <Route path="/portstepper" component={PortfolioStepper} />
 
             <Route path="/resource" component={BoardResource} />
-            <Route path="/mod" component={BoardModerator} />
+            <Route path="/financialmanagement" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
             <Route exact path={["/", "/projects"]} component={ProjectsList} />
             <Route path="/document" component={FileUpload} />
