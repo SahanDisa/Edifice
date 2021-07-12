@@ -60,11 +60,6 @@ export default class BoardUser extends Component {
     return (
       <div className="container">
         <header className="jumbotron">
-
-          <h3>Financial Management Tools</h3>
-          <p>Port City: Apartment Section 01</p>
-          <p>Location: Colombo 01</p>
-          <p>Project Id : {id}</p>
           <div className="row">
             <div className="col-6">
             <h3>Financial Management Tools</h3>
