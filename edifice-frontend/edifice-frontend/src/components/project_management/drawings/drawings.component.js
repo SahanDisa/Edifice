@@ -8,7 +8,8 @@ import UpdateIcon from '@material-ui/icons/Update';
 
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
-
+import drawingIcon from "././../../../assets/PM/drawingsingle.png";
+import Card from 'react-bootstrap/Card';
 //styles classes
 
 export default class Drawings extends Component {
@@ -49,66 +50,142 @@ export default class Drawings extends Component {
         // const classes = useStyles();
         return (
             <div>
-            <div className="jumbotron">
-                <h2>Drawings</h2>
-                <p>Manage the drawings,other related planning materials in here</p>
+            <div className="container row">
+            <div className="col-12">
+            <h2>Drawings</h2>
+            <h6>Manage the drawings,other related planning materials in here</h6>
+            </div>
+            <hr></hr>
             </div>
             <div className="container">
-                <h4>Add Drawings</h4>
-                <Link to={"/adddrawing/"+id}>
-                <Fab color="primary" aria-label="add" >
-                    <AddIcon />
-                </Fab>
+                
+                <Link className="btn btn-primary mr-2" to={"/adddrawing/"+id}>
+                Add New Drawing
                 </Link>
+                <Link className="btn btn-primary" to={"/adddrawing/"+id}>
+                Add Catgory
+                </Link>
+                <hr></hr>
+            </div>
+            
+            <div className="container">
+                <h4>Drawing Category</h4>
+                <div className="container row">
+                <div className="container col-3">
+                <a href="/projectmanagementhome/1">
+                    <Card
+                    bg={'secondary'}
+                    text={'dark'}
+                    style={{ width: '15rem' }}
+                    className="mb-2"
+                    >
+                    <Card.Body>
+                        <Card.Title><h4>Insfrastructure</h4></Card.Title>
+                        <Card.Text>
+                        
+                        </Card.Text>
+                    </Card.Body>
+                    </Card>
+                </a>
+                </div>
+                <div className="container col-3">
+                <a href="/projectmanagementhome/1">
+                    <Card
+                    bg={'secondary'}
+                    text={'dark'}
+                    style={{ width: '15rem' }}
+                    className="mb-2"
+                    >
+                    <Card.Body>
+                        <Card.Title><h4>Finishing</h4></Card.Title>
+                        <Card.Text>
+                        
+                        </Card.Text>
+                    </Card.Body>
+                    </Card>
+                </a>
+                </div>
+                <div className="container col-3">
+                <a href="/projectmanagementhome/1">
+                    <Card
+                    bg={'secondary'}
+                    text={'dark'}
+                    style={{ width: '15rem' }}
+                    className="mb-2"
+                    >
+                    <Card.Body>
+                        <Card.Title><h4>Plumbing</h4></Card.Title>
+                        <Card.Text>
+                        
+                        </Card.Text>
+                    </Card.Body>
+                    </Card>
+                </a>
+                </div>
+                <div className="container col-3">
+                <a href="/projectmanagementhome/1">
+                    <Card
+                    bg={'secondary'}
+                    text={'dark'}
+                    style={{ width: '15rem' }}
+                    className="mb-2"
+                    >
+                    <Card.Body>
+                        <Card.Title><h4>Electrical</h4></Card.Title>
+                        <Card.Text>
+                        
+                        </Card.Text>
+                    </Card.Body>
+                    </Card>
+                </a>
+                </div>
+          </div>
+        <hr></hr>
             </div>
             <div className="container">
-                <h4>Drawing List</h4>
+                <h4>Recent List</h4>
             {/* Drawing List */}
             <ul className="list-group">
             {drawings &&
                 drawings.map((drawing, index) => (
-                <li
+                <div
                     className={
-                    "list-group-item " +
+                    "list-group-item row" +
                     (index === currentIndex ? "active" : "")
                     }
                     // onClick={() => this.setActiveProject(project, index)}
                     key={index}
                 >
-                    {drawing.name}
+                <div className="row">
+                <div className="col-10">
+                {drawing.name}
                     <h6>{drawing.description}</h6>
                     <p>{drawing.drawtype}</p>
                     {/* Button Group */}
-                    <div>
                     <Link to={"/viewdrawing/"+drawing.id}>
-                    <Button
+                    <button className="btn btn-primary">View <VisibilityIcon/> </button>
+                    {/* <Button
                         variant="contained"
                         color="primary"
-                        //className={classes.button}
+                        className="btn btn-primary"
                         endIcon={<VisibilityIcon/>}
                     >
-                        View
-                    </Button>
+                        View 
+                    </Button>*/}
                     </Link>
-                    <Button
-                        variant="contained"
-                        color="default"
-                        //className={classes.button}
-                        startIcon={<UpdateIcon />}
-                    >
-                        Update
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        //className={classes.button}
-                        startIcon={<DeleteIcon />}
-                    >
-                        Delete
-                    </Button>
-                    {/* This Button uses a Font Icon, see the installation instructions in the Icon component docs. */}
-                    </div>
-                </li>
+                    <Link to={"/viewdrawing/"+drawing.id}>
+                    <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
+                    </Link>
+                    <Link to={"/viewdrawing/"+drawing.id}>
+                    <button className="btn btn-danger">Delete <DeleteIcon/> </button>
+                    </Link>
+                    
+                </div>
+                {/* <div className="col-2">
+                <img src={drawingIcon} alt="" width="50"/>
+                </div>     */}
+                </div>    
+                </div>
                 ))}
             </ul>
             </div> 

@@ -7,6 +7,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import mainIcon from "././../assets/profile-gen.png";
 import buildIcon from "././../assets/PM/ibulldozer.png";
 import PersonIcon from '@material-ui/icons/Person';
+import Card from 'react-bootstrap/Card';
 
 export default class Profile extends Component {
   constructor(props) {
@@ -41,76 +42,91 @@ export default class Profile extends Component {
     const { projects,currentIndex,currentUser } = this.state;
     return (
       <div className="container">
-        <header className="jumbotron">
-          <h3>
-            <strong>Profile Page</strong>
-            {/* <AccountCircleIcon fontSize="large" /> */}
-          </h3>
-          <h4>Username: {currentUser.username}</h4>
-        </header>
+        <div className="row">
+        <div className="col-12">
+          <Card
+              bg={'success'}
+              text={'white'}
+              //style={{ width: '14rem' }}
+              className="mb-2"
+            >
+              <Card.Body>
+                <Card.Title></Card.Title>
+                <Card.Text>
+                <div className="row">
+                <div className="col-10">
+                <h3>Profile</h3>
+                <h6>Username : {currentUser.username}</h6>
+                <h6>Email : {currentUser.email}</h6>
+                <h6>Role  : Admin</h6> 
+                </div>
+                <div className="col-2">
+                <img
+                    // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                    src={mainIcon}
+                    alt="profile-img"
+                    className="profile-img-card"
+                    
+                />
+                </div>
+                </div>
+                </Card.Text>
+              </Card.Body>
+            </Card> 
+        </div>
+        </div>
+        {/* Page content */}
         <div className="row">
           <div className="col-6">
           <h3>My Account</h3>
-          <img
-            // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            src={mainIcon}
-            alt="profile-img"
-            className="profile-img-card"
-            
-          />
           <p>
             {/* <strong>Token:</strong>{" "}
             {currentUser.accessToken.substring(0, 20)} ...{" "}
             {currentUser.accessToken.substr(currentUser.accessToken.length - 20)} */}
           </p>
-          <p>
-            <strong>Username:</strong>{" "}
-            {currentUser.username}
-          </p>
-          <p>
-            <strong>Email:</strong>{" "}
-            {currentUser.email}
-          </p>
-          <strong>Authorities:</strong>
-          <ul>
-            {currentUser.roles &&
-              currentUser.roles.map((role, index) => 
-              <li key={index}><b>{role}</b></li>
-              )
-            }
-          </ul>
-          <a href="#" className="btn btn-warning">Update Profile</a>
+          <div className="form-group">
+              <label htmlFor="startDate"><h6>Username : </h6></label>
+              <input
+                type="text"
+                className="form-control"
+                id="startDate"
+                //required
+                value={this.state.currentUser.username}
+                // onChange={this.onChangeLocation}
+                name="startDate"
+              />
+          </div>
+          <div className="form-group">
+              <label htmlFor="startDate"><h6>Email : </h6></label>
+              <input
+                type="text"
+                className="form-control"
+                id="startDate"
+                //required
+                value={this.state.currentUser.email}
+                // onChange={this.onChangeLocation}
+                name="startDate"
+              />
+          </div>
+          <a href="#" className="btn btn-primary">Update Profile</a>
+            <hr></hr>
+            
           </div>
           <div className="col-6">
-              <h3>My Projects</h3>
-              <img
-                src={buildIcon}
-                alt="profile-img"
-                className="profile-img-card"
-              />
-              {projects &&
-              projects.map((project, index) => (
-                <li
-                  className={
-                    "list-group-item " +
-                    (index === currentIndex ? "active" : "")
-                  }
-                  // onClick={() => this.setActiveProject(project, index)}
-                  key={index}
-                >
-                  <h4>{project.firstname + " " + project.lastname}</h4>
-                  <h5>{project.position}</h5>
-                  <h6>{project.gender}</h6>
-                  <p>Project Id : {project.projectuserId} Port City</p>
-                <Link
-                  to={"/projectmanagementhome/" + project.projectuserId}
-                  className="btn btn-primary"
-                >
-                  Go To Project
-                </Link>
-                </li>
-                
-              ))}
+          <h3>My Roles & Permission</h3>
+          <h6>Authorities:</h6>
+              <ul>
+                {currentUser.roles &&
+                  currentUser.roles.map((role, index) => 
+                  <li className="list-group-item" key={index}><b>{role}</b></li>
+                  )
+                }
+              </ul>
+          <h6>Permission:</h6>
+          <ul>
+          <li className="list-group-item"><b>Project Management</b></li>
+          <li className="list-group-item"><b>Finance Management</b></li>
+          </ul>
           </div>
         </div>
        
