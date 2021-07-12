@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 
 const data = [
-    {edit:<a href="/addCategory" className="btn btn-outline-success">Edit</a>, view:<a href="/viewCategory" className="btn btn-outline-primary">View</a>, No: 1, name: 'Bidding', active:<input type="checkbox"></input>, delete:<a href="/deleteCategory" className="btn btn-outline-danger">Delete</a>},
-    {edit:<a href="/addCategory" className="btn btn-outline-success">Edit</a>, view:<a href="/viewCategory" className="btn btn-outline-primary">View</a>, No: 2, name: 'ABC Company', active:<input type="checkbox"></input>, delete:<a href="/deleteCategory" className="btn btn-outline-danger">Delete</a>},
-    {edit:<a href="/addCategory" className="btn btn-outline-success">Edit</a>, view:<a href="/viewCategory" className="btn btn-outline-primary">View</a>, No: 3, name: 'Contracts', active:<input type="checkbox"></input>, delete:<a href="/deleteCategory" className="btn btn-outline-danger">Delete</a>}
+    {edit:<a href="/addCategory" className="btn btn-success">Edit</a>, view:<a href="/viewCategory" className="btn btn-primary">View</a>, No: 1, name: 'Bidding', active:<input type="checkbox"></input>, delete:<a href="/deleteCategory" className="btn btn-outline-danger">Delete</a>},
+    {edit:<a href="/addCategory" className="btn btn-success">Edit</a>, view:<a href="/viewCategory" className="btn btn-primary">View</a>, No: 2, name: 'ABC Company', active:<input type="checkbox"></input>, delete:<a href="/deleteCategory" className="btn btn-outline-danger">Delete</a>},
+    {edit:<a href="/addCategory" className="btn btn-success">Edit</a>, view:<a href="/viewCategory" className="btn btn-primary">View</a>, No: 3, name: 'Contracts', active:<input type="checkbox"></input>, delete:<a href="/deleteCategory" className="btn btn-outline-danger">Delete</a>}
   ];
   const columns = [
   {

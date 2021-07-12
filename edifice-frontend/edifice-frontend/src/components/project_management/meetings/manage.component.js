@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 
 const data = [
-  {edit: <a href="/managesmeetings/update" className="btn btn-outline-success">Edit</a>, view:<a href="/managesmeetings/view" className="btn btn-outline-primary">View</a>}
+  {edit: <a href="/managesmeetings/update" className="btn btn-success">Edit</a>, view:<a href="/managesmeetings/view" className="btn btn-primary">View</a>}
 ];
 const columns = [
   {
@@ -76,12 +76,12 @@ class ManageMeetings extends Component {
                 <form>
                   <div className="form-row mt-3">
                     <div class="col-md-12 text-right">
-                      <a href="#" className="btn btn-outline-primary">+ Create Meeting</a>
+                      <a href="#" className="btn btn-primary">+ Create Meeting</a>
                     </div>
                     <div className="form-group col-md-4">
                       <input className="form-control" type="text" placeholder="Search" />
                     </div>
-                    <a href="#" className="btn btn-outline-dark mb-3">Add Filter</a>
+                    <a href="#" className="btn btn-dark mb-3">Add Filter</a>
                   </div>
                 </form>
 
@@ -96,7 +96,7 @@ class ManageMeetings extends Component {
                       <div class="card-body">
                         <div className="">
                           <div class="col-md-12 text-right mb-2">
-                            <a href="#" className="btn btn-outline-primary">+ Follow-up Meeting</a>
+                            <a href="#" className="btn btn-primary">+ Follow-up Meeting</a>
                           </div>
                           <BootstrapTable 
                             hover
@@ -119,7 +119,7 @@ class ManageMeetings extends Component {
                       <div class="card-body">
                         <div className="">
                           <div class="col-md-12 text-right mb-2">
-                            <a href="#" className="btn btn-outline-primary">+ Follow-up Meeting</a>
+                            <a href="#" className="btn btn-primary">+ Follow-up Meeting</a>
                           </div>
                           <BootstrapTable 
                             hover
@@ -135,7 +135,7 @@ class ManageMeetings extends Component {
                 </div>
                 <div>
                   <div class="col-md-12 text-left mt-3 mb-3">
-                    <a href="/meetingsconfiguration" className="btn btn-outline-success">+ Add Category</a>
+                    <a href="/meetingsconfiguration" className="btn btn-success">+ Add Category</a>
                   </div>
                 </div>
               </div>
