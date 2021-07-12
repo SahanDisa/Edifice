@@ -88,7 +88,7 @@ export default class BoardUser extends Component {
             <div className="container col-3">
             <a href="/projectmanagementhome/1">
             <Card
-              bg={'primary'}
+              bg={'success'}
               text={'white'}
               style={{ width: '14rem' }}
               className="mb-2"
@@ -105,8 +105,8 @@ export default class BoardUser extends Component {
             </div>
             <div className="container col-3">
             <Card
-              bg={'secondary'}
-              text={'dark'}
+              bg={'success'}
+              text={'light'}
               style={{ width: '14rem' }}
               className="mb-2"
               background-color={'#3F51B5'}
@@ -122,7 +122,7 @@ export default class BoardUser extends Component {
             </div>
             <div className="container col-3">
             <Card
-              bg={'dark'}
+              bg={'success'}
               text={'light'}
               style={{ width: '14rem' }}
               className="mb-2"
@@ -138,7 +138,7 @@ export default class BoardUser extends Component {
             </div>
             <div className="container col-3">
             <Card
-              bg={'danger'}
+              bg={'success'}
               text={'white'}
               style={{ width: '14rem' }}
               className="mb-2"
@@ -186,8 +186,8 @@ export default class BoardUser extends Component {
                 <div className="col-5">
                   <h6>Involved users : 15</h6>
                   <ProgressBar>
-                    <ProgressBar  variant="success" now={35} key={1} />
-                    <ProgressBar variant="warning" now={20} key={2} />
+                    <ProgressBar  variant="primary" now={35} key={1} />
+                    <ProgressBar variant="success" now={20} key={2} />
                     <ProgressBar variant="danger" now={10} key={3} />
                   </ProgressBar>
                   <h6>Progress</h6>

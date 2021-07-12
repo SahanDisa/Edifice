@@ -69,7 +69,8 @@ export default class BoardUser extends Component {
                   "list-group-item " +
                   (index === currentIndex ? "active" : "")
                 }
-                // onClick={() => this.setActiveProject(project, index)}
+                /*aluthin uncomment kala*/
+                //onClick={() => this.setActiveProject(project, index)}
                 key={index}
               >
                 {project.title}
