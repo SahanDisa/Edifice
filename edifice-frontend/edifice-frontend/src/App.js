@@ -68,7 +68,10 @@ import ViewRFI from "./components/project_management/rfi/view.component";
 
 import actionplanHome from "./components/project_management/actionplan/actionplan.component";
 
-import dailylogHome from "./components/project_management/dailylog/dailylog.component";
+import DlsConfig from "./components/project_management/dailylog/configuration.component";
+import ManageDls from "./components/project_management/dailylog/manage.component";
+import UpdateDls from "./components/project_management/dailylog/update.component";
+import ViewDls from "./components/project_management/dailylog/view.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
 
@@ -241,7 +244,10 @@ class App extends Component {
 
             <Route path="/punchlist" component={punchlistHome} /> 
 
-            <Route path="/dailylog" component={dailylogHome} />
+            <Route path="/dailylogsconfiguration" component={DlsConfig} />
+            <Route path="/managedailylogs" component={ManageDls} />
+            <Route path="/managesdailylogs/update" component={UpdateDls} />
+            <Route path="/managesdailylogs/view" component={ViewDls} />
             
             <Route path="/addUser" component={AddUser} />
             <Route path="/editUser" component={EditUser} />

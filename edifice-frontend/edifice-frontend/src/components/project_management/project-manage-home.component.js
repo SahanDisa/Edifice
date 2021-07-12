@@ -88,12 +88,7 @@ export default class BoardUser extends Component {
               <a className="d-block nav-heading text-center mt-2 mb-2" href="/portfolio" style={{ 'text-decoration': 'none' }}>
                 <img src={portfolioIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Portfolio</h3>
-
                 <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span>
-
-
-                <span className="fs-sm fw-normal text-muted">Contains the abstract project detail specification</span>
-
               </a>
               </div>
             </div>
@@ -108,7 +103,7 @@ export default class BoardUser extends Component {
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mt-2 mb-2" href="/dailylog" style={{ 'text-decoration': 'none' }}>
+              <a className="d-block nav-heading text-center mt-2 mb-2"  data-toggle="modal" data-target="#dlModal" href="#" style={{ 'text-decoration': 'none' }}>
                 <img src={dailylogIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Daily Log</h3>
                 <span className="fs-sm fw-normal text-muted">Keep track of every detail at job site each and everyday</span>
@@ -125,15 +120,11 @@ export default class BoardUser extends Component {
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-
               <div className="d-block nav-heading text-center mt-2 mb-2 card card-hover shadow-sm">
-              <Link style={{ 'text-decoration': 'none' }}
-                to={"/bidding/" + id}
-              >
+              <Link className="d-block nav-heading text-center mt-2 mb-2" to={"/bidding/" + id}>
                 <img src={biddingIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Biddings</h3>
                 <span className="fs-sm fw-normal text-muted">Manage all the bid packages and bidding proceses</span>
-                
               </Link>
               </div>
             </div>
@@ -173,6 +164,7 @@ export default class BoardUser extends Component {
               </a>
               </div>
             </div>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2"></div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
               <a className="d-block nav-heading text-center mt-2 mb-2" href="/document" style={{ 'text-decoration': 'none' }}>
@@ -184,7 +176,7 @@ export default class BoardUser extends Component {
             </div>
           </div>
 
-          {/* Metting Model Starts */}
+          {/* Meeting Model Starts */}
           <div className="modal fade" id="meetingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered" role="document">
               <div className="modal-content">
@@ -204,7 +196,29 @@ export default class BoardUser extends Component {
               </div>
             </div>
           </div>
-          {/* Metting Model Ends */}
+          {/* Meeting Model Ends */}
+
+          {/* Daily Log Model Starts */}
+          <div className="modal fade" id="dlModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalCenterTitle">Choose what you want to do?</h5>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <a href="/dailylogsconfiguration" className="btn btn-primary ml-5 mr-3"> Daily Log Configuration</a>
+                  <a href="/managedailylogs" className="btn btn-primary mr-6"> Manage Daily Logs</a>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Daily log Model Ends */}
 
       </div>
     );
