@@ -7,7 +7,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING
       },
       originalBudget: {
-        type: Sequelize.DECIMAL(10,2)
+        type: Sequelize.STRING
       }}, {
         freezeTableName: true,
     });
