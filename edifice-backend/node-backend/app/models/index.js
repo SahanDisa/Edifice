@@ -62,8 +62,8 @@ db.biddings.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
-// One project has many budget line items
-db.projects.hasMany(db.budgets, { as: "budgets" });
+// One project has one budget
+db.projects.hasOne(db.budgets, { as: "budgets" });
 db.budgets.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
