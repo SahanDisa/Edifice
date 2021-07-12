@@ -5,6 +5,7 @@ import AuthService from "./../services/auth.service";
 import ProjectDataService from "./../services/project.service";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import Card from 'react-bootstrap/Card';
 
 export default class BoardUser extends Component {
   constructor(props) {
@@ -81,10 +82,79 @@ export default class BoardUser extends Component {
     const { projects,uprojects,currentIndex } = this.state;
     return (
       <div className="container">
-        <header className="jumbotron">
           <h3>Project Management Home</h3>
           <p>Start work on your project by select manage option</p>
-        </header>
+          <div className="container row">
+            <div className="container col-3">
+            <a href="/projectmanagementhome/1">
+            <Card
+              bg={'primary'}
+              text={'white'}
+              style={{ width: '14rem' }}
+              className="mb-2"
+            >
+              
+              <Card.Body>
+                <Card.Title><h1>1</h1></Card.Title>
+                <Card.Text>
+                 Involved Projects
+                </Card.Text>
+              </Card.Body>
+            </Card>
+            </a>
+            </div>
+            <div className="container col-3">
+            <Card
+              bg={'secondary'}
+              text={'dark'}
+              style={{ width: '14rem' }}
+              className="mb-2"
+              background-color={'#3F51B5'}
+            >
+              
+              <Card.Body>
+                <Card.Title><h1>3</h1></Card.Title>
+                <Card.Text>
+                 Today Meetings
+                </Card.Text>
+              </Card.Body>
+            </Card>  
+            </div>
+            <div className="container col-3">
+            <Card
+              bg={'dark'}
+              text={'light'}
+              style={{ width: '14rem' }}
+              className="mb-2"
+            >
+              
+              <Card.Body>
+                <Card.Title><h1>17</h1></Card.Title>
+                <Card.Text>
+                 Remain Tasks
+                </Card.Text>
+              </Card.Body>
+            </Card>  
+            </div>
+            <div className="container col-3">
+            <Card
+              bg={'danger'}
+              text={'white'}
+              style={{ width: '14rem' }}
+              className="mb-2"
+            >
+              
+              <Card.Body>
+                <Card.Title><h1>4</h1></Card.Title>
+                <Card.Text>
+                 Today Deadlines
+                </Card.Text>
+              </Card.Body>
+            </Card>  
+            </div>
+            
+          </div>
+        <hr></hr>  
         <div className="col-md-10">
         <h4>My Projects List</h4>
 
@@ -105,8 +175,7 @@ export default class BoardUser extends Component {
                   <h5>{uprojects.title}</h5>
                   <h6>Breif : {uprojects.description}</h6>
                   <p>Location : {uprojects.location}</p>
-                  <CircularProgress variant="determinate" color="success" value={61} />
-                    <p>61%</p>
+                  
                   <Link
                     to={"/projectmanagementhome/" + uprojects.id}
                     className="btn btn-primary"
@@ -121,6 +190,9 @@ export default class BoardUser extends Component {
                     <ProgressBar variant="warning" now={20} key={2} />
                     <ProgressBar variant="danger" now={10} key={3} />
                   </ProgressBar>
+                  <h6>Progress</h6>
+                  <CircularProgress variant="determinate" color="success" value={61} />
+                    <p>61%</p>
                 </div> 
               </div>
               </li> 

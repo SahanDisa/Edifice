@@ -62,18 +62,19 @@ export default class BoardUser extends Component {
     const {id,projects} = this.state;
     return (
       <div className="container">
-        <header className="jumbotron">
+        
         <div className="row">
         <div className="col-6">
-          <h3>Project Management Tools</h3>
+          {/* <h3>Project Management Tools</h3> */}
+          <h4>{projects.title}</h4>
+          <h6>Description : {projects.description}</h6>
+          <h6>Location: {projects.location}</h6>  
         </div>
         <div className="col-6">
-          <h5>Title : {projects.title}</h5>
-          <p>Description : {projects.description}</p>
-          <p>Location: {projects.location}</p>  
+          
         </div>
         </div>
-        </header>
+        
 
         <div className="row">
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
@@ -118,11 +119,6 @@ export default class BoardUser extends Component {
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-
-              <div className="d-block nav-heading text-center mt-2 mb-2 card card-hover shadow-sm">
-              <Link
-                to={"/bidding/" + id}
-              >
 
               <div className="d-block nav-heading text-center card card-hover shadow-sm">
               <Link className="d-block nav-heading text-center mt-2 mb-2" to={"/bidding/" + id}>

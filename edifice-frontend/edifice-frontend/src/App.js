@@ -17,6 +17,7 @@ import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
 
 import AddProject from './components/core_tools/admin/add-project.component';
+import AddDepartment from "./components/core_tools/admin/add-department.component";
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
 
@@ -111,7 +112,7 @@ class App extends Component {
     return (
       <div>
         <link rel="\public\icons\051-dumper truck.png" href=".\public\icons\051-dumper truck.png" type="image/x-icon" />
-        <nav className="navbar fixed-top navbar-expand navbar-dark bg-dark">
+        <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
             Edifice
           </Link>
@@ -196,6 +197,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
             <Route path="/projectmanagement" component={BoardUser} />
+            <Route path="/adddepartment" component={AddDepartment} />
             {/* <Route path="/projectmanagementhome" component={ProjectManagementHome} /> */}
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
             <Route path="/portfolio" component={PortfolioHome} />
