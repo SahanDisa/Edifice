@@ -87,7 +87,7 @@ export default class BoardUser extends Component {
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm">
+            <div className="d-block nav-heading text-center mt-2 mb-2 card card-hover shadow-sm">
               <a className="d-block nav-heading text-center mt-2 mb-2" href="/prime-contracts">
                 <img src={primecontractsIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Prime Contracts</h3>
@@ -96,16 +96,19 @@ export default class BoardUser extends Component {
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mt-2 mb-2" href="/direct-costs">
+              <div className="d-block nav-heading text-center mt-2 mb-2 card card-hover shadow-sm">
+              <Link
+                to={"/directcost/" + id}
+              
+              >
                 <img src={costIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Direct Costs</h3>
                 <span className="fs-sm fw-normal text-muted">Track all direct costs that are not associated with commitments.</span>
-              </a>
+                </Link>
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm">
+                <div className="d-block nav-heading text-center mt-2 mb-2 card card-hover shadow-sm">
               <a className="d-block nav-heading text-center mt-2 mb-2" data-toggle="modal" data-target="#meetingModal" href="/commitments">
               <img src={commitmentsIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Commitments</h3>                
@@ -114,7 +117,7 @@ export default class BoardUser extends Component {
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm">
+              <div className="d-block nav-heading text-center mt-2 mb-2 card card-hover shadow-sm">
               <Link className="d-block nav-heading text-center mt-2 mb-2" to={"/invoicing/" + id}>
                 <img src={invoiceIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Invoicing</h3>
