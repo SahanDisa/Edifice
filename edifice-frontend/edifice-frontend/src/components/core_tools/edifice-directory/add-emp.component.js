@@ -35,8 +35,8 @@ class AddUser extends Component {
           <br/>
 
           <div>
-          <a href="#" className="btn btn-outline-success">Add</a>
-          <a href="/employees" className="btn btn-outline-success">Cancel</a>
+          <a href="#" className="btn btn-success">Add</a>
+          <a href="/employees" className="btn btn-success">Cancel</a>
           </div>
           <div>
           
