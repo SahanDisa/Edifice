@@ -2,10 +2,10 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 const data = [
-  {edit:<a href="/direct-costs/edit" className="btn btn-success">Edit</a>, view:<a href="/direct-costs/view" className="btn btn-primary">View</a>, date: "05/04/21", vendor:"Vertex Properties", type:"Expense", invoice:"C001",status:"Approved",ammount:"$1,250.00",receivedDate:"05/04/21",paidDate:"08/04/21",blank:"",delete:<a href="/direct-costs/edit" className="btn btn-success">Delete</a>},
-  {edit:<a href="/direct-costs/edit" className="btn btn-success">Edit</a>, view:<a href="/direct-costs/view" className="btn btn-primary">View</a>, date: "05/05/21", vendor:"Tesen Cement", type:"Expense", invoice:"C012",status:"Draft",ammount:"$1,250.00",receivedDate:"21/05/21",paidDate:"25/05/21",blank:"",delete:<a href="/direct-costs/edit" className="btn btn-success">Delete</a>},
-  {edit:<a href="/direct-costs/edit" className="btn btn-success">Edit</a>, view:<a href="/direct-costs/view" className="btn btn-primary">View</a>, date: "18/05/21", vendor:"Fusion", type:"Expense", invoice:"C020",status:"Approved",ammount:"$1,250.00",receivedDate:"18/05/21",paidDate:"20/05/21",blank:"",delete:<a href="/direct-costs/edit" className="btn btn-success">Delete</a>},
-  {edit:<a href="/direct-costs/edit" className="btn btn-success">Edit</a>, view:<a href="/direct-costs/view" className="btn btn-primary">View</a>, date: "20/06/21", vendor:"Xavie", type:"Expense", invoice:"C002",status:"Approved",ammount:"$1,250.00",receivedDate:"20/06/21",paidDate:"24/06/21",blank:"",delete:<a href="/direct-costs/edit" className="btn btn-success">Delete</a>}
+  {edit:<a href="/direct-costs/edit" className="btn btn-success">Edit</a>, view:<a href="/direct-costs/view" className="btn btn-primary">View</a>, date: "05/04/21", vendor:"Vertex Properties", type:"Expense", invoice:"C001",status:"Approved",ammount:"$1,250.00",receivedDate:"05/04/21",paidDate:"08/04/21",blank:"",delete:<a href="/direct-costs/edit" className="btn btn-danger">Delete</a>},
+  {edit:<a href="/direct-costs/edit" className="btn btn-success">Edit</a>, view:<a href="/direct-costs/view" className="btn btn-primary">View</a>, date: "05/05/21", vendor:"Tesen Cement", type:"Expense", invoice:"C012",status:"Draft",ammount:"$1,250.00",receivedDate:"21/05/21",paidDate:"25/05/21",blank:"",delete:<a href="/direct-costs/edit" className="btn btn-danger">Delete</a>},
+  {edit:<a href="/direct-costs/edit" className="btn btn-success">Edit</a>, view:<a href="/direct-costs/view" className="btn btn-primary">View</a>, date: "18/05/21", vendor:"Fusion", type:"Expense", invoice:"C020",status:"Approved",ammount:"$1,250.00",receivedDate:"18/05/21",paidDate:"20/05/21",blank:"",delete:<a href="/direct-costs/edit" className="btn btn-danger">Delete</a>},
+  {edit:<a href="/direct-costs/edit" className="btn btn-success">Edit</a>, view:<a href="/direct-costs/view" className="btn btn-primary">View</a>, date: "20/06/21", vendor:"Xavie", type:"Expense", invoice:"C002",status:"Approved",ammount:"$1,250.00",receivedDate:"20/06/21",paidDate:"24/06/21",blank:"",delete:<a href="/direct-costs/edit" className="btn btn-danger">Delete</a>}
 ];
 const columns = [
   {
@@ -81,7 +81,7 @@ const Invoicing = () => {
         <div>
           <div className="">
             <ul class="nav nav-tabs">
-           <a href="/invoiceSettings"> <SettingsIcon /></a><h3 style={{paddingLeft: 10, paddingRight: 50}}> INVOICING</h3>
+           <a href="/invoiceSettings"></a><h3 style={{paddingLeft: 10, paddingRight: 50}}> INVOICING</h3>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/invoicing">Owner</a>
             </li>

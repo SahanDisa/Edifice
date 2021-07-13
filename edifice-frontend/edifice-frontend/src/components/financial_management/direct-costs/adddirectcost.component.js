@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import DirectCostDataService from "./../../../services/directcost.service";
 
 export default class AddDirectCost extends Component{
@@ -135,17 +136,18 @@ export default class AddDirectCost extends Component{
   render() {
     const {projectId} = this.state;
     return (
-        <div className="submit-form">
+        <div className="container">
         {this.state.submitted ? (
           <div>
             <h4>You submitted successfully!</h4>
             <button className="btn btn-success" onClick={this.newDirectCost}>
               Add Another Direct Cost
             </button>
+            <Link  to={"/directcost/"+projectId} className="btn btn-success">View Direct Costs</Link>
           </div>
         ) : (
-          <div class="jumbotron">
-            <h2>Add New Direct Cost Item{projectId}</h2>
+          <div class="container">
+            <h2>Add New Direct Cost</h2>
             <div className="form-group">
               <label htmlFor="date">Date</label>
               <input
@@ -250,6 +252,7 @@ export default class AddDirectCost extends Component{
             </button>
           </div>
         )}
+        <br /><br />
       </div>
     );
   }

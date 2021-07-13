@@ -10,6 +10,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 
+
 //styles classes
 
 export default class Budget extends Component {
@@ -82,20 +83,26 @@ export default class Budget extends Component {
         // const classes = useStyles();
         return (
             <div>
-            <div className="jumbotron">
-                <h2>Budget {id}</h2>
-                <p>Set up and manage Direct Costs throughout the lifecycle of a project.</p>
-            </div>
-            <div className="container">
-                <h4>Add Budget Line Item</h4>
-                <Link to={"/adddirectcost/"+id}>
-                <Fab color="primary" aria-label="add" >
-                    <AddIcon />
-                </Fab>
+               <h3> DIRECT COSTS</h3>
+               <h6>Track all direct costs that are not associated with commitments.</h6>
+            <div className="col-md-12 text-right">
+            <Link className="btn btn-primary mr-2" to={"#"+id}>
+                Export 
+                </Link>
+                <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+id}>
+                + Create
                 </Link>
             </div>
+            <hr/>
+            <div className="form-row mt-3">
+            <div className="form-group col-md-4">
+                      <input className="form-control" type="text" placeholder="Search" />
+                    </div>
+                    <a href="#" className="btn btn-outline-dark mb-3">Add Filter</a>
+                    </div>
+                  <hr/>
             <div className="container">
-                <h4>Direct Cost List</h4>
+                <h4>SUMMARY</h4>
             {/* Drawing List */}
            {/* <ul className="list-group">*/}
            <BootstrapTable 
