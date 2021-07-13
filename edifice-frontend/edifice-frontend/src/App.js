@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import "./App.css";
-// import mainIcon from "././assets/logoedifice.png";
 import mainIcon from "././assets/Edifice.png";
 
 import AuthService from "./services/auth.service";
@@ -123,12 +122,12 @@ class App extends Component {
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
             <img
-                    // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                    src={mainIcon}
-                    style={{'width' : "50px", height: "50px"}}
-                    alt="profile-img"  
-                />
-            Edifice
+              // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+              src={mainIcon}
+              style={{'width' : "50px", height: "50px"}}
+              alt="profile-img"
+              className = "mr-1"
+            /> Edifice
           </Link>
 
           <div className="navbar-nav mr-auto">
@@ -281,7 +280,7 @@ class App extends Component {
             <Route path="/customize" component={Customize} />
             <Route path="/crew" component={Crew} />
 
- {/*financial management */}
+            {/*financial management */}
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
             <Route path="/editprimecontracts/:id" component={EditPrimeContracts} />
             <Route path="/adddirectcost/:id" component={AddDirectCost} />

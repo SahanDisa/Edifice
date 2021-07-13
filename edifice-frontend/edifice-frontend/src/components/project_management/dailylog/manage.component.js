@@ -69,11 +69,11 @@ class DlConfiguration extends Component {
                         <div className="form-row">
                             <div className="form-group col-md-6"></div>
                             <div className="form-group col-md-2 form-check">
-                                <input type="checkbox" className="form-check-input" id="singledayCheck" required/>
+                                <input type="checkbox" className="form-check-input mt-3" id="singledayCheck" required/>
                                 <label htmlFor="singledayCheck" className="form-check-label">View Single Day</label>
                             </div>
                             <div className="form-group col-md-2 form-check">
-                                <input type="checkbox" className="form-check-input" id="multipledayCheck" required/>
+                                <input type="checkbox" className="form-check-input mt-3" id="multipledayCheck" required/>
                                 <label htmlFor="multipledayCheck" className="form-check-label">View Multiple Days</label>
                             </div>
                             <div className="form-group col-md-2 form-check">

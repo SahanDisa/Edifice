@@ -10,16 +10,15 @@ class ViewMeetings extends Component {
         <h5>Meeting Name</h5>
           <form>
             <div className="form-row">
-                <div className="form-group col-md-12 text-right">
-                    <div className="form-check">
-                        <input type="checkbox" className="form-check-input" id="draftCheck" readOnly/>
-                        <label htmlFor="draftCheck" className="form-check-label">Draft Meeting</label>
-                    </div>
-                    <div className="form-check">
-                        <input type="checkbox" className="form-check-input" id="draftCheck" readOnly/>
-                        <label htmlFor="draftCheck" className="form-check-label">Private Meeting</label>
-                    </div>
-                </div>                
+              <div className="form-group col-md-6"></div>
+              <div className="form-group col-md-2 form-check">
+                <input type="checkbox" className="form-check-input mt-3" id="draftCheck" readOnly/>
+                <label htmlFor="draftCheck" className="form-check-label">Draft Meeting</label>
+              </div>
+              <div className="form-group col-md-2 form-check">
+                <input type="checkbox" className="form-check-input mt-3" id="draftCheck" readOnly/>
+                <label htmlFor="draftCheck" className="form-check-label">Private Meeting</label>
+              </div>
             </div>
             <div className="form-row">
                 <div className="form-group col-md-2">
@@ -64,8 +63,7 @@ class ViewMeetings extends Component {
                     </select>
                 </div>
             </div>
-            <a href="/managetasks" type="submit" className="btn btn-success mr-2">Save</a>
-            <a href="/managetasks" type="submit" className="btn btn-danger">Cancel</a>
+            <a href="/managemeetings" type="submit" className="btn btn-primary mr-2">Done</a>
           </form>
         </div>
       </div>      
