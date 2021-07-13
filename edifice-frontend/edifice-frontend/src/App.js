@@ -84,7 +84,6 @@ import Customize from "./components/resource_management/Timesheet/customize.comp
 import Crew from "./components/resource_management/Crew/crew.component";
 import Schedule from "./components/resource_management/Schedule/schedule.component";
 
-
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
 import EditPrimeContracts from "./components/financial_management/prime-contracts/editPrimeContracts.component";
@@ -151,9 +150,14 @@ class App extends Component {
                 </Link>
               </li>
             )}
-            
             {showModeratorBoard && (
-
+              <li className="nav-item">
+                <Link to={"/financialmanagement"} className="nav-link">
+                  Financial Management
+                </Link>
+              </li>
+            )}
+            {showModeratorBoard && (
             <li className="nav-item">
               <NavDropdown title="Manage Resources" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/timesheet">Timesheets</NavDropdown.Item>
@@ -161,9 +165,7 @@ class App extends Component {
                 <NavDropdown.Item href="/crew">Crews</NavDropdown.Item>
               </NavDropdown>
             </li>
-
             )}
-
             {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
