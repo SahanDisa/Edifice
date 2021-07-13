@@ -10,7 +10,7 @@ import primecontractsIcon from "././../../assets/FM/primecontract.png";
 import costIcon from "././../../assets/FM/cost.png";
 import invoiceIcon from "././../../assets/FM/invoice.png";
 import commitmentsIcon from "././../../assets/FM/commitments.png";
-
+import Card from 'react-bootstrap/Card';
 
 export default class BoardUser extends Component {
   constructor(props) {
@@ -59,22 +59,30 @@ export default class BoardUser extends Component {
     const {id,projects} = this.state;
     return (
       <div className="container">
-        <header className="jumbotron">
+    
           <div className="row">
-            <div className="col-6">
-            <h3>Financial Management Tools</h3>
+            <div className="col-12">
+            <Card
+              bg={'success'}
+              text={'white'}
+              //style={{ width: '14rem' }}
+              className="mb-2"
+            >
+            
+                <Card.Body>
+                <Card.Title><h4>{projects.title}</h4></Card.Title>
+                <Card.Text>
+                <h6>Description : {projects.description}</h6>
+                <h6>Location: {projects.location}</h6> 
+                </Card.Text>
+              </Card.Body>
+              </Card> 
+            
             </div>
-            <div className="col-6">
-              <h5>Title : {projects.title}</h5>
-              <p>Description : {projects.description}</p>
-              <p>Location: {projects.location}</p>  
             </div>
-            </div>
-
-        </header>
-
         <div className="row">
         <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+        <div className="card card-hover shadow-sm">
               <div className="d-block nav-heading text-center mt-2 mb-2 card card-hover shadow-sm">
               <Link
                 to={"/budget/" + id}
@@ -84,6 +92,7 @@ export default class BoardUser extends Component {
                 <h3 className="h5 nav-heading-title mb-0">Budget</h3>
                 <span className="fs-sm fw-normal text-muted">Set up and manage a comprehensive budget throughout the lifecycle of a project.</span>
               </Link>
+              </div>
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">

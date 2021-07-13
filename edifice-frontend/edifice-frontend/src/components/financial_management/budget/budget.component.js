@@ -20,15 +20,86 @@ export default class Budget extends Component {
         budgets: [],
         columns: [{
             dataField: 'costCode',
-            text: 'Cost Code'
+            text: 'Cost Code',
+            headerStyle: (column, colIndex) => {
+              return { width: '6%', textAlign: 'center' };}
           },
           {
             dataField: 'category',
-            text: 'Category'
-          }, {
+            text: 'Category',
+            headerStyle: (column, colIndex) => {
+              return { width: '6%', textAlign: 'center' };}
+          },
+           {
             dataField: 'originalBudget',
             text: 'Original Budget Amount',
-          }],
+            headerStyle: (column, colIndex) => {
+              return { width: '6%', textAlign: 'center' };}
+            
+          },{
+            dataField: 'budgetModifications',
+            text: 'Budget Modifications',
+            headerStyle: (column, colIndex) => {
+              return { width: '6%', textAlign: 'center' };}
+          },
+          {
+            dataField: 'revisedBudget',
+            text: 'Revised Budget',
+            headerStyle: (column, colIndex) => {
+              return { width: '6%', textAlign: 'center' };}
+          },{
+            dataField: 'projectedBudget',
+            text: 'Projected Budget',
+            headerStyle: (column, colIndex) => {
+              return { width: '6%', textAlign: 'center' };}
+          },
+          {
+            dataField: 'commitedcosts',
+            text: 'Commited Costs',
+            headerStyle: (column, colIndex) => {
+              return { width: '6%', textAlign: 'center' };}
+          },
+          {
+            dataField: 'directCosts',
+            text: 'direct Costs',
+            headerStyle: (column, colIndex) => {
+              return { width: '6%', textAlign: 'center' };}
+          },
+          {
+            dataField: 'projectedCosts',
+            text: 'Projected Costs',
+            headerStyle: (column, colIndex) => {
+              return { width: '6%', textAlign: 'center' };}
+          },
+          {
+            dataField: 'forecastToComplete',
+            text: 'Forecast To Complete',
+            headerStyle: (column, colIndex) => {
+              return { width: '6%', textAlign: 'center' };}
+          },
+          {
+            dataField: 'forecastToComplete',
+            text: 'Forecast To Complete',
+            headerStyle: (column, colIndex) => {
+              return { width: '6%', textAlign: 'center' };}
+          }, {
+            dataField: 'estimatedCostAtCompletion',
+            text: 'estimated Cost At Completion',
+            headerStyle: (column, colIndex) => {
+              return { width: '6%', textAlign: 'center' };}
+          }, {
+            dataField: 'projectedOverUnder',
+            text: 'Projected Over Under',
+            headerStyle: (column, colIndex) => {
+              return { width: '6%', textAlign: 'center' };}
+            },
+          {
+            dataField: 'delete',
+            text: '',
+            headerStyle: (column, colIndex) => {
+              return { width: '6%', textAlign: 'center' };}
+            }
+        ],
         currentIndex: -1,
         content: "",
         id: this.props.match.params.id
@@ -61,21 +132,27 @@ export default class Budget extends Component {
         // const classes = useStyles();
         return (
             <div>
-            <div className="jumbotron">
-                <h2>Budget {id}</h2>
+           
+                <h3>BUDGET</h3>
                 <p>Set up and manage a comprehensive budget throughout the lifecycle of a project.</p>
-            </div>
-            <div className="container">
-                <h4>Add Budget Line Item</h4>
-                <Link to={"/addbudget/"+id}>
-                <Fab color="primary" aria-label="add" >
-                    <AddIcon />
-                </Fab>
+           <hr/>
+           
+          
+            <div className="form-row mt-3">
+            <div className="col-md-12 text-right">
+                <Link className="btn btn-primary mr-2" to={"/addbudget/"+id}>
+                + Create
                 </Link>
             </div>
+            <div className="form-group col-md-4">
+                      <input className="form-control" type="text" placeholder="Search" />
+                    </div>
+                    <a href="#" className="btn btn-outline-dark mb-3">Add Filter</a>
+                    </div>
+                  <hr/>
             <div className="container">
-                <h4>Budget List</h4>
-            {/* Drawing List */}
+                
+           
            {/* <ul className="list-group">*/}
            <BootstrapTable 
         striped
