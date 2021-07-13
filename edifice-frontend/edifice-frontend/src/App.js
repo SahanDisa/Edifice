@@ -26,12 +26,14 @@ import AddProject from './components/core_tools/admin/add-project.component';
 import AddDepartment from "./components/core_tools/admin/add-department.component";
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
+import AddDirectory from "./components/project_management/document/adddirectory.component";
 
 import DrawingHome from "./components/project_management/drawings/drawings.component";
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
 import ViewSingleDrawing from "./components/project_management/drawings/drawing-singlepage.component";
 import PhotosHome from "./components/project_management/photos/photos.component";
 import BiddingHome from "./components/project_management/biddings/bidding.component";
+import AddBidding from "./components/project_management/biddings/addbidding.component";
 import PortfolioHome from "./components/project_management/portfolio/portfolio.component";
 import PortfolioStepper from "./components/project_management/portfolio/singleportfolio.component";
 import ProjectManagementHome from "./components/project_management/project-manage-home.component";
@@ -84,12 +86,13 @@ import Customize from "./components/resource_management/Timesheet/customize.comp
 import Crew from "./components/resource_management/Crew/crew.component";
 import Schedule from "./components/resource_management/Schedule/schedule.component";
 
-
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
 import EditPrimeContracts from "./components/financial_management/prime-contracts/editPrimeContracts.component";
 import AddDirectCost from "./components/financial_management/direct-costs/adddirectcost.component";
 import CommitmentHome from "./components/financial_management/commitments/commitment.component";
+
+import Dropdown from "react-bootstrap/Dropdown";
 
 class App extends Component {
   constructor(props) {
@@ -147,13 +150,18 @@ class App extends Component {
             {currentUser && (
               <li className="nav-item">
                 <Link to={"/projectmanagement"} className="nav-link">
-                  Project Management
+                  <b>Project Management</b>
                 </Link>
               </li>
             )}
-            
             {showModeratorBoard && (
-
+              <li className="nav-item">
+                <Link to={"/financialmanagement"} className="nav-link">
+                  Financial Management
+                </Link>
+              </li>
+            )}
+            {showModeratorBoard && (
             <li className="nav-item">
               <NavDropdown title="Manage Resources" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/timesheet">Timesheets</NavDropdown.Item>
@@ -161,9 +169,7 @@ class App extends Component {
                 <NavDropdown.Item href="/crew">Crews</NavDropdown.Item>
               </NavDropdown>
             </li>
-
             )}
-
             {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
@@ -199,11 +205,11 @@ class App extends Component {
                 </Link>
               </li>
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to={"/register"} className="nav-link">
                   Sign Up
                 </Link>
-              </li>
+              </li> */}
             </div>
           )}
         </nav>
@@ -262,14 +268,17 @@ class App extends Component {
             <Route path="/employees" component={Emp} />
             <Route path="/addVendor" component={AddVendor} />
             <Route path="/editVendor" component={EditVendor} />
-
+            {/* Document */}
+            <Route path="/directory" component={AddDirectory} />
+            {/* Drawing Component Routes  */}
             <Route path="/drawing/:id" component={DrawingHome} />
             <Route path="/adddrawing/:id" component={AddDrawing} />
             <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
-            
+            {/* Photo Component Routes */}
             <Route path="/photos" component={PhotosHome} />
-
-            <Route path="/bidding/:id" component={BiddingHome} />      
+            {/* Bidding Component Routes  */}
+            <Route path="/bidding/:id" component={BiddingHome} /> 
+            <Route path="/addbidding" component={AddBidding} /> 
 			
 			      <Route path="/budget/:id" component={BudgetHome} />
             <Route path="/addbudget/:id" component={AddBudget} />
