@@ -7,7 +7,6 @@ import 'bootstrap/dist/js/bootstrap.js';
 import $ from 'jquery';
 import Popper from 'popper.js';
 import "./App.css";
-// import mainIcon from "././assets/logoedifice.png";
 import mainIcon from "././assets/Edifice.png";
 
 import NavDropdown from "react-bootstrap/NavDropdown"
@@ -129,12 +128,12 @@ class App extends Component {
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
             <img
-                    // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                    src={mainIcon}
-                    style={{'width' : "50px", height: "50px"}}
-                    alt="profile-img"  
-                />
-            Edifice
+              // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+              src={mainIcon}
+              style={{'width' : "50px", height: "50px"}}
+              alt="profile-img"
+              className = "mr-1"
+            /> Edifice
           </Link>
 
           <div className="navbar-nav mr-auto">
@@ -287,7 +286,7 @@ class App extends Component {
             <Route path="/crew" component={Crew} />
             <Route path="/schedule" component={Schedule} />
 
- {/*financial management */}
+            {/*financial management */}
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
             <Route path="/editprimecontracts/:id" component={EditPrimeContracts} />
             <Route path="/adddirectcost/:id" component={AddDirectCost} />
