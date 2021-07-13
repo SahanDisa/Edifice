@@ -36,6 +36,7 @@ require("./app/routes/bidding.routes")(app);
 require('./app/routes/file.routes')(app);
 require('./app/routes/projectuser.routes')(app);
 require('./app/routes/budget.routes')(app);
+require('./app/routes/directcost.routes')(app);
 
 
 // simple route

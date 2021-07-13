@@ -63,7 +63,7 @@ import ViewMeetings from "./components/project_management/meetings/view.componen
 import BudgetHome from "./components/financial_management/budget/budget.component";
 import PrimeContracts from "./components/financial_management/prime-contracts/prime-contracts.component";
 import CreatePrimeContracts from "./components/financial_management/prime-contracts/createPrimeContracts.component";
-import DirectCosts from "./components/financial_management/direct-costs/direct-costs.component";
+import DirectCostHome from "./components/financial_management/direct-costs/direct-costs.component";
 import Invoicing from "./components/financial_management/invoicing/invoicing.component";
 
 import rfiHome from "./components/project_management/rfi/rfi.component";
@@ -88,6 +88,9 @@ import Schedule from "./components/resource_management/Schedule/schedule.compone
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
+import EditPrimeContracts from "./components/financial_management/prime-contracts/editPrimeContracts.component";
+import AddDirectCost from "./components/financial_management/direct-costs/adddirectcost.component";
+import CommitmentHome from "./components/financial_management/commitments/commitment.component";
 
 class App extends Component {
   constructor(props) {
@@ -273,7 +276,7 @@ class App extends Component {
             <Route path="/addbudget/:id" component={AddBudget} />
             <Route path="/prime-contracts" component={PrimeContracts} />
             <Route path="/create-prime-contracts" component={CreatePrimeContracts} />
-            <Route path="/direct-costs" component={DirectCosts} />
+            <Route path="/directcost/:id" component={DirectCostHome} />
             <Route path="/invoicing" component={Invoicing} />
             
             <Route path="/prime-contracts" component={PrimeContracts} />
@@ -286,7 +289,9 @@ class App extends Component {
 
  {/*financial management */}
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
-
+            <Route path="/editprimecontracts/:id" component={EditPrimeContracts} />
+            <Route path="/adddirectcost/:id" component={AddDirectCost} />
+            <Route path="/commitment/:id" component={CommitmentHome} />
           </Switch>
         </div>
       </div>

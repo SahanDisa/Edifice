@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
+import BootstrapTable from 'react-bootstrap-table-next';
 
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
@@ -17,6 +18,17 @@ export default class Budget extends Component {
       this.retrieveBudget = this.retrieveBudget.bind(this);
       this.state = {
         budgets: [],
+        columns: [{
+            dataField: 'costCode',
+            text: 'Cost Code'
+          },
+          {
+            dataField: 'category',
+            text: 'Category'
+          }, {
+            dataField: 'originalBudget',
+            text: 'Original Budget Amount',
+          }],
         currentIndex: -1,
         content: "",
         id: this.props.match.params.id
@@ -64,53 +76,13 @@ export default class Budget extends Component {
             <div className="container">
                 <h4>Budget List</h4>
             {/* Drawing List */}
-            <ul className="list-group">
-            {budgets &&
-                budgets.map((budget, index) => (
-                <li
-                    className={
-                    "list-group-item " +
-                    (index === currentIndex ? "active" : "")
-                    }
-                    // onClick={() => this.setActiveProject(project, index)}
-                    key={index}
-                >
-                    {budget.costCode}
-                    <h6>{budget.category}</h6>
-                    <p>{budget.originalBudget}</p>
-                    {/* Button Group */}
-                    <div>
-                    <Link to={"/viewbudget/"+budget.id}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        //className={classes.button}
-                        endIcon={<VisibilityIcon/>}
-                    >
-                        View
-                    </Button>
-                    </Link>
-                    <Button
-                        variant="contained"
-                        color="default"
-                        //className={classes.button}
-                        startIcon={<UpdateIcon />}
-                    >
-                        Update
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        //className={classes.button}
-                        startIcon={<DeleteIcon />}
-                    >
-                        Delete
-                    </Button>
-                    {/* This Button uses a Font Icon, see the installation instructions in the Icon component docs. */}
-                    </div>
-                </li>
-                ))}
-            </ul>
+           {/* <ul className="list-group">*/}
+           <BootstrapTable 
+        striped
+        hover
+        keyField='id' 
+        data={ this.state.budgets } 
+        columns={ this.state.columns } />
             </div> 
             </div>
         );
