@@ -3,9 +3,13 @@ import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import 'bootstrap/dist/js/bootstrap.js';
+import $ from 'jquery';
+import Popper from 'popper.js';
 import "./App.css";
-// import mainIcon from "././assets/logoedifice.png";
 import mainIcon from "././assets/Edifice.png";
+
+import NavDropdown from "react-bootstrap/NavDropdown"
 
 import AuthService from "./services/auth.service";
 
@@ -78,6 +82,7 @@ import punchlistHome from "./components/project_management/punchlist/punchlist.c
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
 import Customize from "./components/resource_management/Timesheet/customize.component";
 import Crew from "./components/resource_management/Crew/crew.component";
+import Schedule from "./components/resource_management/Schedule/schedule.component";
 
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
@@ -123,12 +128,12 @@ class App extends Component {
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
             <img
-                    // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                    src={mainIcon}
-                    style={{'width' : "50px", height: "50px"}}
-                    alt="profile-img"  
-                />
-            Edifice
+              // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+              src={mainIcon}
+              style={{'width' : "50px", height: "50px"}}
+              alt="profile-img"
+              className = "mr-1"
+            /> Edifice
           </Link>
 
           <div className="navbar-nav mr-auto">
@@ -147,22 +152,18 @@ class App extends Component {
               </li>
             )}
             
-
             {showModeratorBoard && (
-              <li className="nav-item">
-                <Link to={"/financialmanagement"} className="nav-link">
-                  Financial Management
-                </Link>
-              </li>
-              
+
+            <li className="nav-item">
+              <NavDropdown title="Manage Resources" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/timesheet">Timesheets</NavDropdown.Item>
+                <NavDropdown.Item href="/equipments">Equipments</NavDropdown.Item>
+                <NavDropdown.Item href="/crew">Crews</NavDropdown.Item>
+              </NavDropdown>
+            </li>
+
             )}
-            {showAdminBoard && (
-              <li className="nav-item">
-                <Link to={"/resource"} className="nav-link">
-                  Resource Management
-                </Link>
-              </li>
-            )}
+
             {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
@@ -175,9 +176,12 @@ class App extends Component {
           {currentUser ? (
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
+                <Link to={"/schedule"} className="nav-link">
+                  Schedule
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
-                  {/* Profile {currentUser.username} */}
-                  {/* ✅ {currentUser.username + " Edifice"} */}
                   Profile
                 </Link>
               </li>
@@ -280,8 +284,9 @@ class App extends Component {
             <Route path="/timesheet" component={Timesheet} />
             <Route path="/customize" component={Customize} />
             <Route path="/crew" component={Crew} />
+            <Route path="/schedule" component={Schedule} />
 
- {/*financial management */}
+            {/*financial management */}
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
             <Route path="/editprimecontracts/:id" component={EditPrimeContracts} />
             <Route path="/adddirectcost/:id" component={AddDirectCost} />

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Create from "./create.component";
+import AddWorker from "./add_worker.component";
+import Approve from "./approve.component";
 
 
 class Timesheet extends Component {
@@ -14,10 +16,10 @@ class Timesheet extends Component {
                     <div class="col-8 align-items-end">
                         <a href="/customize" className="btn btn-primary mr-3"> Customize</a>
                         <a href="#" className="btn btn-primary mr-3"> Export PDF</a>
-                        <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#addEmp"> Create New</a>
+                        <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#createNew"> Create New</a>
 
                         {/*------------------------------------ Add Emp Starts------------------------------------------------------------------ */}
-                        <div className="modal fade" id="addEmp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div className="modal fade" id="createNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <Create/>
                         </div>
                         {/*-------------------------------------Add Emp Ends----------------------------------------------------------------------*/}
@@ -46,9 +48,16 @@ class Timesheet extends Component {
             <div className="card">
                 <div className="card-header">
                         <h5 >Date: 05/01/2021</h5>
-                        <a className="card-header" href="" className="btn btn-primary"> +Add Employee</a>
+                        <a className="card-header" href="" className="btn btn-primary" data-toggle="modal" data-target="#addWorker"> +Add Worker</a>
         
                 </div>
+
+                {/*------------------------------------ Add worker Starts------------------------------------------------------------------ */}
+                <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <AddWorker/>
+                </div>
+                {/*-------------------------------------Add worker Ends----------------------------------------------------------------------*/}
+
 
             <div className="card-body">    
                     <table class="table table-hover table-bordered align-middle">
@@ -165,6 +174,19 @@ class Timesheet extends Component {
                             </tr>
                         </tbody>
                     </table>
+                    <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#approve"> Approve</a>
+
+
+                    {/*------------------------------------ Add worker Starts------------------------------------------------------------------ */}
+                    <div className="modal fade" id="approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <Approve/>
+                    </div>
+                    {/*-------------------------------------Add worker Ends----------------------------------------------------------------------*/}
+
+
+
+
+
                 </div>
             </div>
             <br/>
@@ -172,7 +194,7 @@ class Timesheet extends Component {
             <div class="card">
                 <div className="card-header">
                     <h5 >Date: 06/01/2021</h5>
-                    <a className="card-header" href="" className="btn btn-primary"> +Add Employee</a>
+                    <a className="card-header" href="" className="btn btn-primary"> +Add Worker</a>
                 </div>
                 <div className="card-body"> 
                 

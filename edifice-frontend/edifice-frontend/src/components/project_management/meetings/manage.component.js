@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
+import CreateMeeting from './createMeeting.component';
 
 const data = [
-  {edit: <a href="/managesmeetings/update" className="btn btn-success">Edit</a>, view:<a href="/managesmeetings/view" className="btn btn-primary">View</a>}
+  {edit: <a href="/managesmeetings/update" className="btn btn-primary">Edit</a>, view:<a href="/managesmeetings/view" className="btn btn-success">View</a>}
 ];
 const columns = [
   {
@@ -76,7 +77,7 @@ class ManageMeetings extends Component {
                 <form>
                   <div className="form-row mt-3">
                     <div class="col-md-12 text-right">
-                      <a href="#" className="btn btn-primary">+ Create Meeting</a>
+                      <a data-toggle="modal" data-target="#CreateMeeting" href="#" className="btn btn-primary">+ Create Meeting</a>
                     </div>
                     <div className="form-group col-md-4">
                       <input className="form-control" type="text" placeholder="Search" />
@@ -135,7 +136,7 @@ class ManageMeetings extends Component {
                 </div>
                 <div>
                   <div class="col-md-12 text-left mt-3 mb-3">
-                    <a href="/meetingsconfiguration" className="btn btn-success">+ Add Category</a>
+                    <a href="/meetingsconfiguration" className="btn btn-primary">+ Add Category</a>
                   </div>
                 </div>
               </div>
@@ -147,6 +148,11 @@ class ManageMeetings extends Component {
             </div>
 
           </div>
+          {/* Create Meeting Starts */}
+          <div className="modal fade" id="CreateMeeting" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <CreateMeeting/>        
+          </div>
+          {/* Create Meeting Ends */}
         </div>
       );
     }
