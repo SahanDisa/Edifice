@@ -3,7 +3,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import AddWorker from './add-worker.component';
 import EditWorker from './edit-worker.component';
 import ViewWorker from './view-worker.component';
-import newCrew from './new-crew.component';
+import  NewCrew from './new-crew.component';
 
 const data = [
   {edit: <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#editWorker">edit</a>,view:<a href="#" className="btn btn-primary" data-toggle="modal" data-target="#viewWorker">View</a>}
@@ -159,7 +159,7 @@ class Crew extends Component {
 
           {/* New Crew Starts */}
             <div className="modal fade" id="newCrew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <AddWorker/>        
+            <NewCrew />        
           </div>
           {/* New Crew Ends */}
 

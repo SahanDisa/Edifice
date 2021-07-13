@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class CreateTimesheet extends Component {
+class AddWorker extends Component {
     render() {
         return (  
         <div>
@@ -9,7 +9,7 @@ class CreateTimesheet extends Component {
                 <div className="modal-content">
 
                     <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalCenterTitle">New Timesheet</h5>
+                        <h5 className="modal-title" id="exampleModalCenterTitle">Add Worker</h5>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -19,10 +19,11 @@ class CreateTimesheet extends Component {
 
                         <div class="container">
                             <div class="row">
-                                <div className="col-auto">
-                                    <label>Select Date</label>
-                                    <input className="form-control" type="date" id="birthday" name="birthday"/>
-                                    <br />
+                                <div class="col">
+                                    <input className="form-control" type="text" placeholder="Search"/>  
+                                </div>
+                                <div class="col">
+                                    <a href="" className="btn btn-success">search</a>
                                 </div>
                             </div>
                         </div>
@@ -66,7 +67,7 @@ class CreateTimesheet extends Component {
     }
   }
 
-export default CreateTimesheet;
+export default AddWorker;
 
 
 

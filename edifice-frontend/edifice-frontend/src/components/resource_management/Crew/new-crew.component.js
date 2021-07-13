@@ -7,7 +7,7 @@ class NewCrew extends Component {
             <div className="modal-dialog modal-dialog-centered" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalCenterTitle">Worker Details</h5>
+                  <h5 className="modal-title" id="exampleModalCenterTitle">Create New Crew</h5>
                   <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -16,21 +16,14 @@ class NewCrew extends Component {
                   
                     <div>
 
-                        <label htmlFor="">First Name</label>
+                        <label htmlFor="">Enter crew Name</label>
                         <input className="form-control" type="text" required/>
                         <br/>
 
-                        <label htmlFor="">Last Name</label>
-                        <input className="form-control" type="text" required/>
-                        <br/>
-
-                        <label htmlFor="">Id</label>
-                        <input className="form-control" type="text" required/>
-                        <br/>
                     </div>
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-success">Check Worked Hours</button>
+                  <button type="button" className="btn btn-primary">Add</button>
                 </div>
               </div>
             </div>
