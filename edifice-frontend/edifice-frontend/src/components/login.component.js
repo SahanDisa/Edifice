@@ -122,7 +122,9 @@ export default class Login extends Component {
                 validations={[required]}
               />
             </div>
-
+            <div className="form-group">
+            <a href="#" style={{'text-decoration': "none"}}>Forget Password?</a>
+            </div>
             <div className="form-group">
               <button
                 className="btn btn-primary btn-block"
