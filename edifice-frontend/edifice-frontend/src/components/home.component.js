@@ -92,8 +92,6 @@ export default class Home extends Component {
           </ul>
           <h3>Tasks</h3>
           <h6>Tasks that are assign to you</h6>
-
-
           <h3>Action Plans & Schedule</h3>
           <h6>plans that you are contribution is assigned to</h6>
           
@@ -105,8 +103,6 @@ export default class Home extends Component {
         </header>
         
       </div>
-
-      
     );
   }
 }

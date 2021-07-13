@@ -8,6 +8,7 @@ import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import UpdateIcon from '@material-ui/icons/Update';
 import EditIcon from '@material-ui/icons/Edit';
 
 
@@ -42,18 +43,16 @@ export default class Bidding extends Component {
         const { biddings ,currentIndex,id } = this.state;
         return (
             <div>
-            <div className="jumbotron">
-                <h2>Bidding {id}</h2>
-                <p>Manage project related biddings here</p>
-            </div>
+            <h2>Bidding </h2>
+            <p>Manage project related biddings and bidders here</p>
+            <hr></hr>
             <div className="container">
-                <h4>Add Packages</h4>
-                <Link to={"/adddrawing/"+id}>
-                <Fab color="primary" aria-label="add" >
-                    <AddIcon />
-                </Fab>
-                </Link>
+            <h4>Add Biddings</h4>
+            <a className="btn btn-primary m-2" href="/addbidding">Add Bidding</a>
+            <a className="btn btn-primary" href="/addbidder">Add Bidders</a>
+            
             </div>
+            <hr></hr>
             <div className="container">
                 <h4>Bid Package List</h4>
             {/* Drawing List */}
@@ -74,17 +73,16 @@ export default class Bidding extends Component {
                     <p>{bidding.dueDate}</p>
                     <p>{bidding.published}</p>
                     {/* Button group */}
-                    <div>
-                    <IconButton color="primary" aria-label="delete">
-                      <VisibilityIcon />
-                    </IconButton>
-                    <IconButton color="secondary" aria-label="delete">
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton aria-label="delete">
-                      <DeleteIcon />
-                    </IconButton>
-                    </div>
+                    <Link to={"/viewdrawing/"}>
+                    <button className="btn btn-primary">View Status<VisibilityIcon/> </button>
+                    </Link>
+                    <Link to={"/viewdrawing/"}>
+                    <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
+                    </Link>
+                    <Link to={"/viewdrawing/"}>
+                    <button className="btn btn-danger">Delete <DeleteIcon/> </button>
+                    </Link>
+                    
                 </li>
                 ))}
             </ul>
