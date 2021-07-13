@@ -84,6 +84,7 @@ import FinancialManagementHome from "./components/financial_management/financial
 import AddBudget from "./components/financial_management/budget/addbudget.component";
 import EditPrimeContracts from "./components/financial_management/prime-contracts/editPrimeContracts.component";
 import AddDirectCost from "./components/financial_management/direct-costs/adddirectcost.component";
+import CommitmentHome from "./components/financial_management/commitments/commitment.component";
 
 class App extends Component {
   constructor(props) {
@@ -284,6 +285,7 @@ class App extends Component {
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
             <Route path="/editprimecontracts/:id" component={EditPrimeContracts} />
             <Route path="/adddirectcost/:id" component={AddDirectCost} />
+            <Route path="/commitment/:id" component={CommitmentHome} />
           </Switch>
         </div>
       </div>
