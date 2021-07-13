@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-class PrimeContracts extends Component {
+class EditPrimeContracts extends Component {
   render() {
     return (
         <div>
@@ -39,7 +39,6 @@ class PrimeContracts extends Component {
                 required
                 value= "1"
                 name="id"
-                readOnly
               />
               </div>
               <div className="form-group col-md-2"></div>
@@ -54,7 +53,6 @@ class PrimeContracts extends Component {
                 required
                 value= "Vortex Properties Prime Contract"
                 name="title"
-                readOnly
               />
               </div>
               </div></div><hr />
@@ -70,7 +68,6 @@ class PrimeContracts extends Component {
                 required
                 value= "Vertex Properties"
                 name="owner"
-                readOnly
               />
               </div> <div className="form-group col-md-2"></div>
               <div className="form-group col-md-2">
@@ -84,7 +81,6 @@ class PrimeContracts extends Component {
                 required
                 value= "Edifice"
                 name="contractor"
-                readOnly
               />
               </div>
               </div><hr />
@@ -100,7 +96,6 @@ class PrimeContracts extends Component {
                 required
                 value= ""
                 name="engineer"
-                readOnly
               />
               </div>
               </div><hr />
@@ -117,7 +112,6 @@ class PrimeContracts extends Component {
                 required
                 value= "Draft"
                 name="contractor"
-                readOnly
               />
               </div><div className="form-group col-md-2"></div>
               </div><hr />
@@ -133,7 +127,6 @@ class PrimeContracts extends Component {
                 required
                 value= "16/04/2021"
                 name="contractor"
-                readOnly
               />
               </div> <div className="form-group col-md-2"></div>
               <div className="form-group col-md-2">
@@ -147,7 +140,6 @@ class PrimeContracts extends Component {
                 required
                 value= "16/04/2021"
                 name="contractor"
-                readOnly
               />
               </div>
               </div><hr />
@@ -163,7 +155,6 @@ class PrimeContracts extends Component {
                 required
                 value= "16/04/2021"
                 name="contractor"
-                readOnly
               />
               </div> <div className="form-group col-md-2"></div>
               <div className="form-group col-md-2">
@@ -177,7 +168,6 @@ class PrimeContracts extends Component {
                 required
                 value= "16/04/2021"
                 name="contractor"
-                readOnly
               />
               </div>
               </div><hr />
@@ -193,7 +183,6 @@ class PrimeContracts extends Component {
                 required
                 value= "10"
                 name="contractor"
-                readOnly
               />
               </div><div className="form-group col-md-1">%</div>
               <div className="form-group col-md-2">
@@ -205,7 +194,6 @@ class PrimeContracts extends Component {
                 required
                 value="false"
                 name="executed"
-                readOnly
               />
               </div>
              
@@ -224,7 +212,6 @@ class PrimeContracts extends Component {
                 required
                 value= "dqwdqw"
                 name="contractor"
-                readOnly
               />
               </div>
             </div><hr />
@@ -240,7 +227,6 @@ class PrimeContracts extends Component {
                 required
                 value= "dqwdqw"
                 name="contractor"
-                readOnly
               />
               </div>
             </div><hr />
@@ -256,7 +242,6 @@ class PrimeContracts extends Component {
                 required
                 value= "dqwdqw"
                 name="contractor"
-                readOnly
               />
               </div>
             </div><hr />
@@ -288,4 +273,4 @@ class PrimeContracts extends Component {
 
 }
 
-export default PrimeContracts;
+export default EditPrimeContracts;

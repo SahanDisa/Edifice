@@ -1,6 +1,3 @@
-
-
-
 .App {
   text-align: center;
 }
@@ -88,23 +85,31 @@ label {
   max-width: 300px;
   margin: auto;
 }
-/* 
-.btn-primary.btn {
-  background-color: #E0E0E0;
-} */
-.btn-primary.btn {
-  background-color: #273F7D;
+
+.navbar{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.btn-primary.btn, .btn-primary.btn:hover, .btn-primary.btn:active, .btn-primary.btn:visited .btn-primary.btn:focus {
+  background-color: #273F7D !important;
   border-color: #273F7D;
+  box-shadow: none;
+
 }
 
-.btn-success.btn {
-  background-color: #6B7BA4;
+.btn-success.btn, .btn-success.btn:hover, .btn-success.btn:active, .btn-success.btn:visited .btn-success.btn:focus {
+  background-color: #6B7BA4 !important;
   border-color: #6B7BA4;
+  box-shadow: none;
+
 }
 
-.btn-danger.btn {
-  background-color: #EF253D;
+.btn-danger.btn, .btn-danger.btn:hover, .btn-danger.btn:active, .btn-danger.btn:visited .btn-danger.btn:focus {
+  background-color: #EF253D !important;
   border-color: #EF253D;
+  box-shadow: none;
+
 }
 
 .bg-primary {
@@ -183,4 +188,20 @@ button.bg-dark:focus {
 
 .bg-transparent {
   background-color: transparent !important;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F78D99;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #51547B; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #404363; 
 }

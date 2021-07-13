@@ -30,7 +30,7 @@ class EditWorker extends Component {
                     </div>
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-outline-success">Update</button>
+                  <button type="button" className="btn btn-success">Update</button>
                 </div>
               </div>
             </div>

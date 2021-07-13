@@ -3,10 +3,10 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import AddWorker from './add-worker.component';
 import EditWorker from './edit-worker.component';
 import ViewWorker from './view-worker.component';
-import newCrew from './new-crew.component';
+import  NewCrew from './new-crew.component';
 
 const data = [
-  {edit: <a href="#" className="btn btn-outline-primary" data-toggle="modal" data-target="#editWorker">edit</a>,view:<a href="#" className="btn btn-outline-primary" data-toggle="modal" data-target="#viewWorker">View</a>}
+  {edit: <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#editWorker">edit</a>,view:<a href="#" className="btn btn-primary" data-toggle="modal" data-target="#viewWorker">View</a>}
 ];
 
 const columns = [
@@ -73,7 +73,7 @@ class Crew extends Component {
                         <form>
                             <div className="form-row mt-3">
                                 <div class="col-md-12 text-right">
-                                    <a href="#" className="btn btn-outline-primary"  data-toggle="modal" data-target="#newCrew">+ New Crew</a>
+                                    <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCrew">+ New Crew</a>
                                 </div>
                                 <div className="form-group col-md-4">
                                     <input className="form-control" type="text" placeholder="Search" />
@@ -94,7 +94,7 @@ class Crew extends Component {
                                     <div class="card-body">
                                         <div className="">
                                             <div class="col-md-12 text-right mb-2">
-                                                <a href="#" className="btn btn-outline-primary" data-toggle="modal" data-target="#addWorker">+ Add Worker</a>
+                                                <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#addWorker">+ Add Worker</a>
                                             </div>
                                             <BootstrapTable 
                                                 hover
@@ -119,7 +119,7 @@ class Crew extends Component {
                                     <div class="card-body">
                                         <div className="">
                                             <div class="col-md-12 text-right mb-2">
-                                            <a href="#" className="btn btn-outline-primary" data-toggle="modal" data-target="#addWorker">+ Add Worker</a>
+                                            <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#addWorker">+ Add Worker</a>
                                             </div>
                                             <BootstrapTable 
                                                 hover
@@ -159,7 +159,7 @@ class Crew extends Component {
 
           {/* New Crew Starts */}
             <div className="modal fade" id="newCrew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <AddWorker/>        
+            <NewCrew />        
           </div>
           {/* New Crew Ends */}
 

@@ -41,13 +41,13 @@ export default class BoardResource extends Component {
           <h3>Resource Management</h3>
         </header>
         <p>View timesheet</p>
-        <a href="/timesheet" className="btn btn-outline-primary">TimeSheet</a>
+        <a href="/timesheet" className="btn btn-primary">TimeSheet</a>
         <p>View crew</p>
-        <a href="/crew" className="btn btn-outline-primary">Crew</a>
+        <a href="/crew" className="btn btn-primary">Crew</a>
         <p>View Schedule</p>
-        <a href="#" className="btn btn-outline-primary">Schedule</a>
+        <a href="#" className="btn btn-primary">Schedule</a>
         <p>View Equipment</p>
-        <a href="#" className="btn btn-outline-primary">Equipment</a>
+        <a href="#" className="btn btn-primary">Equipment</a>
       </div>
     );
   }
