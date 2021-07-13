@@ -16,11 +16,13 @@ export default class BoardUser extends Component {
       uprojects: [],
       currentIndex: -1,
       content: "",
-      currentUser:  AuthService.getCurrentUser() 
+      currentUser:  AuthService.getCurrentUser() ,
+      showModeratorBoard: false,
     };
   }
 
   componentDidMount() {
+    
     UserService.getUserBoard().then(
       response => {
         this.setState({

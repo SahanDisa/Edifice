@@ -143,21 +143,21 @@ class App extends Component {
             {currentUser && (
               <li className="nav-item">
                 <Link to={"/home"} className="nav-link">
-                  Home
+                  
                 </Link>
               </li>
             )}
             {currentUser && (
               <li className="nav-item">
                 <Link to={"/projectmanagement"} className="nav-link">
-                  <b>Project Management</b>
+                <h6>Manage Projects</h6>
                 </Link>
               </li>
             )}
             {showModeratorBoard && (
               <li className="nav-item">
                 <Link to={"/financialmanagement"} className="nav-link">
-                  Financial Management
+                <h6>Manage Finance</h6>
                 </Link>
               </li>
             )}
@@ -173,7 +173,7 @@ class App extends Component {
             {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
-                  Core Tools
+                <h6>Core Tools</h6>
                 </Link>
               </li>
             )}
