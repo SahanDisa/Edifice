@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import UserService from "./../../services/user.service";
 import ProjectDataService from "./../../services/project.service";
-
+import AuthService from "./../../services/auth.service";
 import portfolioIcon from "././../../assets/portfolio.png";
 import rfiIcon from "././../../assets/rfi.png";
 import dailylogIcon from "././../../assets/dailylog.png";
@@ -14,6 +14,13 @@ import drawingsIcon from "././../../assets/drawings.png";
 import photosIcon from "././../../assets/photos.png";
 import punchlistIcon from "././../../assets/punchlist.png";
 import documentIcon from "././../../assets/documents.png";
+
+import budgetIcon from "././../../assets/FM/budget.png";
+import primecontractsIcon from "././../../assets/FM/primecontract.png";
+import costIcon from "././../../assets/FM/cost.png";
+import invoiceIcon from "././../../assets/FM/invoice.png";
+import commitmentsIcon from "././../../assets/FM/commitments.png";
+
 import Card from 'react-bootstrap/Card';
 
 export default class BoardUser extends Component {
@@ -23,10 +30,20 @@ export default class BoardUser extends Component {
     this.state = {
       content: "",
       projects: [],
-      id: this.props.match.params.id
+      id: this.props.match.params.id,
+      currentUser:  AuthService.getCurrentUser() ,
+      showModeratorBoard: false,
     };
   }
   componentDidMount() {
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      this.setState({
+        currentUser: user,
+        showModeratorBoard: user.roles.includes("ROLE_MODERATOR")
+      });
+    }
     UserService.getUserBoard().then(
       response => {
         this.setState({
@@ -60,7 +77,7 @@ export default class BoardUser extends Component {
   }
 
   render() {
-    const {id,projects} = this.state;
+    const {id,showModeratorBoard,projects} = this.state;
     return (
       <div className="container">
         <div className="row">
@@ -82,6 +99,7 @@ export default class BoardUser extends Component {
             </Card> 
         </div>
         </div>
+        <h3>Project Tools</h3>
         <div className="row">
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
@@ -175,7 +193,60 @@ export default class BoardUser extends Component {
               </div>
             </div>
           </div>
-
+          {/* Finance Management */}
+          {showModeratorBoard && (
+          <div>  
+           <h3>Financial Tools</h3>
+           <div className="row">
+          <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm">
+              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/budget/" + id}>
+                <img src={budgetIcon} alt="" width="50"/><br />
+                <h3 className="h5 nav-heading-title mb-0">Budget</h3>
+                <span className="fs-sm fw-normal text-muted">Set up and manage a comprehensive budget throughout the lifecycle of a project.</span>
+              </Link>
+              </div>
+            </div>
+          <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mb-2 mt-2" href="/prime-contracts">
+                <img src={primecontractsIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Prime Contracts</h3>
+                <span className="fs-sm fw-normal text-muted">Easily create and manage contracts with the clients.</span>
+              </a>
+              </div>
+            </div>
+          <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm">
+              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/directcost/" + id}>
+                <img src={costIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Direct Costs</h3>
+                <span className="fs-sm fw-normal text-muted">Track all direct costs that are not associated with commitments.</span>
+                </Link>
+              </div>
+            </div>
+          <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm">
+                <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/commitment/" + id}>
+                    <img src={commitmentsIcon} alt="" width="50"/>
+                    <h3 className="h5 nav-heading-title mb-0">Commitments</h3>                
+                    <span className="fs-sm fw-normal text-muted">Allows seeing the status and current value of all contracts and purchase orders.</span>
+                </Link>
+              </div>
+            </div>
+          <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm">
+              <Link className="d-block nav-heading text-center mt-2 mb-2" to={"/invoicing/" + id}>
+                <img src={invoiceIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Invoicing</h3>
+                <span className="fs-sm fw-normal text-muted">Streamline the invoice collection, review, and approval process on all of the projects</span>
+              </Link>
+              </div>
+            </div>
+          </div>
+          </div>  
+            )}
+          {/* Finance Management Ends */}
           {/* Meeting Model Starts */}
           <div className="modal fade" id="meetingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered" role="document">

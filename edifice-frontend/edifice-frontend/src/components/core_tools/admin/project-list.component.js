@@ -118,7 +118,7 @@ export default class ProjectsList extends Component {
               projects.map((project, index) => (
                 <li
                   className={
-                    "list-group-item " +
+                    "list-group-item bg-success" +
                     (index === currentIndex ? "active" : "")
                   }
                   onClick={() => this.setActiveProject(project, index)}
@@ -167,20 +167,19 @@ export default class ProjectsList extends Component {
 
               <Link
                 to={"/projects/" + currentProject.id}
-                className="btn btn-warning"
+                className="btn btn-primary"
               >
                 Edit
               </Link>
               <Link
                 to={"#"}
-                className="badge badge-success"
+                className="btn btn-secondary"
                 >
                 Department
               </Link>
               <Link
                 to={"#"}
-                className="badge badge-primary"
-                >
+                className="btn btn-success">
                 Connect Users
               </Link>
             </div>
