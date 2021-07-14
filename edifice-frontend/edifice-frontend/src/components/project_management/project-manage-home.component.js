@@ -289,48 +289,7 @@ export default class BoardUser extends Component {
             </div>
           </div>
           </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
           {/*resource management ends*/}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
           {/* Meeting Model Starts */}
           <div className="modal fade" id="meetingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
