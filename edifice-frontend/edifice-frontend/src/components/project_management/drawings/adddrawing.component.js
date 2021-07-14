@@ -1,5 +1,12 @@
 import React, { Component } from "react";
 import DrawingDataService from "./../../../services/drawing.service";
+import Timeline from '@material-ui/lab/Timeline';
+import TimelineItem from '@material-ui/lab/TimelineItem';
+import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
+import TimelineConnector from '@material-ui/lab/TimelineConnector';
+import TimelineContent from '@material-ui/lab/TimelineContent';
+import TimelineDot from '@material-ui/lab/TimelineDot';
+
 
 export default class AddDrawing extends Component {
   constructor(props) {
@@ -82,14 +89,20 @@ export default class AddDrawing extends Component {
       <div className="container">
         {this.state.submitted ? (
           <div>
-            <h4>You submitted successfully!</h4>
+            <h4>File details successfully submitted!</h4>
+            <h4>Upload the file</h4>
+            <input type="file" />
+            <button type="upload" className="btn btn-warning">Upload</button>
             <button className="btn btn-success" onClick={this.newDrawing}>
-              Add Another Drawing
+            
+            Add Another Drawing
             </button>
           </div>
         ) : (
           <div class="container">
             <h2>Add New Drawing</h2>
+            <div className="row">
+            <div className="col-sm-8">
             <div className="form-group">
               <label htmlFor="name">Name</label>
               <input
@@ -117,8 +130,8 @@ export default class AddDrawing extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="drawtype">Drawing Type</label>
-              <input
+              <label htmlFor="drawtype">Drawing Category</label>
+              {/* <input
                 type="text"
                 className="form-control"
                 id="datatype"
@@ -126,11 +139,42 @@ export default class AddDrawing extends Component {
                 value={this.state.drawtype}
                 onChange={this.onChangeType}
                 name="drawtype"
-              />
+              /> */}
+              <select 
+                className="form-control"
+                id="datatype"
+                required
+                value={this.state.drawtype}
+                onChange={this.onChangeType}
+                name="drawtype"
+              >
+                <option>Infrastructure</option>
+                <option>Finishing</option>
+                <option>Plumbing</option>
+                <option>Electrical</option>
+              </select>
+            </div>  
             </div>
-
+            <div className="col-sm-4">
+            <Timeline>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><h5><strong>Step 1</strong><br/>Drawing Settings</h5> </TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 2</strong><br/>Upload File</h6></TimelineContent>
+              </TimelineItem>
+            </Timeline>
+            </div>
+            </div>
             <button onClick={this.saveDrawing} className="btn btn-success">
-              Submit
+              Create 
             </button>
           </div>
         )}

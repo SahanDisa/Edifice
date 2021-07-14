@@ -177,7 +177,8 @@ export default class PortfolioHome extends Component {
                     <Card.Title><h4>Port City: Tower</h4></Card.Title>
                     <Card.Text>
                     <h6>Description : Two tower construction</h6>
-                    <h6>Location: Colombo 2</h6> 
+                    <h6>Location: Colombo 2</h6>
+                    <h6>From <b>2021-07-16</b> To <b>2022-07-16</b></h6> 
                     </Card.Text>
                   </Card.Body>
                 </Card> 
