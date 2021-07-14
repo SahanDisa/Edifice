@@ -87,12 +87,14 @@ import Customize from "./components/resource_management/Timesheet/customize.comp
 import Crew from "./components/resource_management/Crew/crew.component";
 import Schedule from "./components/resource_management/Schedule/schedule.component";
 import Equipments from "./components/resource_management/Equipment/equipment.component";
+import EquipDetails from "./components/resource_management/Equipment/equipmentDetails.component";
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
 import EditPrimeContracts from "./components/financial_management/prime-contracts/editPrimeContracts.component";
 import AddDirectCost from "./components/financial_management/direct-costs/adddirectcost.component";
-import CommitmentHome from "./components/financial_management/commitments/commitment.component";
+import CommitmentHome from "./components/financial_management/commitments/commitments.component";
+import AddCommitment from "./components/financial_management/commitments/addcommitment.component";
 
 import Dropdown from "react-bootstrap/Dropdown";
 
@@ -298,12 +300,16 @@ class App extends Component {
             <Route path="/crew" component={Crew} />
             <Route path="/schedule" component={Schedule} />
             <Route path="/equipments" component={Equipments} />
+            <Route path="/equipDetails" component={EquipDetails} />
 
             {/*financial management */}
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
             <Route path="/editprimecontracts/:id" component={EditPrimeContracts} />
             <Route path="/adddirectcost/:id" component={AddDirectCost} />
-            <Route path="/commitment/:id" component={CommitmentHome} />
+               {/* Commitment Component Routes  */}
+               <Route path="/commitment/:id" component={CommitmentHome} />
+            <Route path="/addcommitment/:id" component={AddCommitment} />
+            {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
           </Switch>
         </div>
       </div>
