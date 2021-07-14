@@ -86,6 +86,7 @@ import Timesheet from "./components/resource_management/Timesheet/Timesheet.comp
 import Customize from "./components/resource_management/Timesheet/customize.component";
 import Crew from "./components/resource_management/Crew/crew.component";
 import Schedule from "./components/resource_management/Schedule/schedule.component";
+import Equipments from "./components/resource_management/Equipment/equipment.component";
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
@@ -296,6 +297,7 @@ class App extends Component {
             <Route path="/customize" component={Customize} />
             <Route path="/crew" component={Crew} />
             <Route path="/schedule" component={Schedule} />
+            <Route path="/equipments" component={Equipments} />
 
             {/*financial management */}
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
