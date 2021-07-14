@@ -118,11 +118,11 @@ export default class PortfolioHome extends Component {
         return (
             <div>
             <h2>Portfolio</h2>
-            <p>Detailed version of the project abstraction</p>
+            <p>Project abstraction</p>
             <hr></hr>
             <div className="container">
-                <h3>Project Analytics</h3>
-                <p>Graphical representation of the progress measurements based on items</p>
+              <h3>Project Analytics</h3>
+              <p>Graphical representation of the progress measurements based on items</p>
                 <div className="row">
                   <div className="col-6">
                   <h4>Overall Progress</h4>
@@ -172,7 +172,15 @@ export default class PortfolioHome extends Component {
             <hr></hr>
             <div className="container">
                 <h3>Project Profile & Team</h3>
-                <p>Project Name, Description,Location,</p>
+                <Card>
+                  <Card.Body>
+                    <Card.Title><h4>Port City: Tower</h4></Card.Title>
+                    <Card.Text>
+                    <h6>Description : Two tower construction</h6>
+                    <h6>Location: Colombo 2</h6> 
+                    </Card.Text>
+                  </Card.Body>
+                </Card> 
                 <div>
                   <h6>Manager - 2</h6>      
                   <ProgressBar variant="primary" now={10} />
