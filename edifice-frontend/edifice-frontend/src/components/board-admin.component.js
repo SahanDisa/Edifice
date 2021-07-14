@@ -72,9 +72,8 @@ export default class BoardUser extends Component {
     return (
       <div className="container">
 
-        <h3> Core Tools Home</h3>
+        <h3> Core tools home</h3>
         <p>Current statistics of ongoing projects </p>
-
         <div className="row">
             <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2" id="employeecard">
               <div className="card card-hover shadow-sm" style={{backgroundColor: "#6B7BA4"}}>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import CreateMeeting from './createMeeting.component';
+import CreateMeeting from './createmeeting.component';
 
 const data = [
   {edit: <a href="/managesmeetings/update" className="btn btn-primary">Edit</a>, view:<a href="/managesmeetings/view" className="btn btn-success">View</a>}
