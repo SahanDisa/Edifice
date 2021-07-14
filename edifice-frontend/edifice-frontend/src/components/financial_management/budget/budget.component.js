@@ -61,7 +61,7 @@ export default class Budget extends Component {
           },
           {
             dataField: 'directCosts',
-            text: 'direct Costs',
+            text: 'Direct Costs',
             headerStyle: (column, colIndex) => {
               return { width: '6%', textAlign: 'center' };}
           },
@@ -84,7 +84,7 @@ export default class Budget extends Component {
               return { width: '6%', textAlign: 'center' };}
           }, {
             dataField: 'estimatedCostAtCompletion',
-            text: 'estimated Cost At Completion',
+            text: 'Estimated Cost At Completion',
             headerStyle: (column, colIndex) => {
               return { width: '6%', textAlign: 'center' };}
           }, {
@@ -95,7 +95,7 @@ export default class Budget extends Component {
             },
           {
             dataField: 'delete',
-            text: '',
+            text: 'Remove',
             headerStyle: (column, colIndex) => {
               return { width: '6%', textAlign: 'center' };}
             }
@@ -134,7 +134,15 @@ export default class Budget extends Component {
             <div>
            
                 <h3>BUDGET</h3>
-                <p>Set up and manage a comprehensive budget throughout the lifecycle of a project.</p>
+                <p>Set up and manage a comprehensive budget throughout the lifecycle of a project.</p><hr />
+                <div className="col-md-12 text-left">
+                <Link className="btn btn-primary mr-2" to={"#"}>
+                Export
+                </Link>
+                <Link className="btn btn-primary mr-2" to={"#"}>
+                Import
+                </Link>
+                </div>
            <hr/>
            
           
@@ -142,6 +150,12 @@ export default class Budget extends Component {
             <div className="col-md-12 text-right">
                 <Link className="btn btn-primary mr-2" to={"/addbudget/"+id}>
                 + Create
+                </Link>
+                <Link className="btn btn-primary mr-2" to={"#"}>
+                Snapshot
+                </Link>
+                <Link className="btn btn-primary mr-2" to={"/addbudget/"+id}>
+                Lock
                 </Link>
             </div>
             <div className="form-group col-md-4">
