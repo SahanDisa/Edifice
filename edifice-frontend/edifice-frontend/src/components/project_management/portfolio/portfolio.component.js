@@ -1,21 +1,86 @@
-import React, { Component } from "react";
-import ApexCharts from 'apexcharts'
+import React, { Component, PureComponent } from "react";
+import { PieChart, Pie, Sector, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
-// import Typography from '@material-ui/core/Typography';
-// import Timeline from '@material-ui/lab/Timeline';
-// import TimelineItem from '@material-ui/lab/TimelineItem';
-// import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
-// import TimelineConnector from '@material-ui/lab/TimelineConnector';
-// import TimelineContent from '@material-ui/lab/TimelineContent';
-// import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
-// import TimelineDot from '@material-ui/lab/TimelineDot';
-// import FastfoodIcon from '@material-ui/icons/Fastfood';
-// import LaptopMacIcon from '@material-ui/icons/LaptopMac';
-// import HotelIcon from '@material-ui/icons/Hotel';
-// import RepeatIcon from '@material-ui/icons/Repeat';
+import Typography from '@material-ui/core/Typography';
+import Timeline from '@material-ui/lab/Timeline';
+import TimelineItem from '@material-ui/lab/TimelineItem';
+import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
+import TimelineConnector from '@material-ui/lab/TimelineConnector';
+import TimelineContent from '@material-ui/lab/TimelineContent';
+import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
+import TimelineDot from '@material-ui/lab/TimelineDot';
+import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import Paper from '@material-ui/core/Paper';
+import { ProgressBar } from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
 
 //styles classes
+const data = [
+  { name: 'Completed', value: 400 },
+  { name: 'Pending', value: 300 },
+  // { name: 'Group C', value: 300 },
+  { name: 'Not Completed', value: 200 },
+];
+const dataline = [
+  {
+    name: 'January 2021',
+    uv: 4000,
+    pv: 2400,
+    amt: 2400,
+  },
+  {
+    name: 'Feburary 2021',
+    uv: 3000,
+    pv: 1398,
+    amt: 2210,
+  },
+  {
+    name: 'March 2021',
+    uv: 2000,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: 'April 2021',
+    uv: 2780,
+    pv: 3908,
+    amt: 2000,
+  },
+  {
+    name: 'May 2021',
+    uv: 1890,
+    pv: 4800,
+    amt: 2181,
+  },
+  {
+    name: 'June 2021',
+    uv: 2390,
+    pv: 3800,
+    amt: 2500,
+  },
+  {
+    name: 'July 2021',
+    uv: 3490,
+    pv: 4300,
+    amt: 2100,
+  },
+];
+//yellow #FFBB28
+const COLORS = ['#273F7D', '#6B7BA4', '#EF253D'];
+
+const RADIAN = Math.PI / 180;
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+      {`${(percent * 100).toFixed(0)}%`}
+    </text>
+  );
+};
 
 export default class PortfolioHome extends Component {
     constructor(props) {
@@ -27,35 +92,6 @@ export default class PortfolioHome extends Component {
         currentIndex: -1,
         content: "",
         id: this.props.match.params.id,
-        activeStep: 0,
-        series: [{
-          name: 'series1',
-          data: [31, 40, 28, 51, 42, 109, 100]
-        }, {
-          name: 'series2',
-          data: [11, 32, 45, 32, 34, 52, 41]
-        }],
-        options: {
-          chart: {
-            height: 350,
-            type: 'area'
-          },
-          dataLabels: {
-            enabled: false
-          },
-          stroke: {
-            curve: 'smooth'
-          },
-          xaxis: {
-            type: 'datetime',
-            categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-          },
-          tooltip: {
-            x: {
-              format: 'dd/MM/yy HH:mm'
-            },
-          }
-        }
       };
     }
   
@@ -81,133 +117,203 @@ export default class PortfolioHome extends Component {
         
         return (
             <div>
-            <div className="jumbotron">
-                <h2>Portfolio</h2>
-                <p>Detailed version of the project abstraction</p>
+            <h2>Portfolio</h2>
+            <p>Detailed version of the project abstraction</p>
+            <hr></hr>
+            <div className="container">
+                <h3>Project Analytics</h3>
+                <p>Graphical representation of the progress measurements based on items</p>
+                <div className="row">
+                  <div className="col-6">
+                  <h4>Overall Progress</h4>
+                  <PieChart width={500} height={300}>
+                    <Tooltip />
+                    <Legend />
+                    <Pie
+                      data={data}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={renderCustomizedLabel}
+                      outerRadius={120}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
+                      {data.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                  </PieChart>
+                  </div>
+                  <div className="col-6">
+                  <h4>Monthly Progress</h4>
+                  <LineChart
+                    width={500}
+                    height={300}
+                    data={dataline}
+                    // margin={{
+                    //   top: 5,
+                    //   right: 30,
+                    //   left: 20,
+                    //   bottom: 5,
+                    // }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="pv" stroke="#273F7D" activeDot={{ r: 8 }} />
+                    <Line type="monotone" dataKey="uv" stroke="#EF253D" />
+                  </LineChart>
+                  </div>
+                </div>   
             </div>
+            <hr></hr>
             <div className="container">
                 <h3>Project Profile & Team</h3>
                 <p>Project Name, Description,Location,</p>
-                <ul>
-                    <li>Project director</li>
-                    <li>Project Manager</li>
-                    <li>Project Engineers</li>
-                </ul>
+                <div>
+                  <h6>Manager - 2</h6>      
+                  <ProgressBar variant="primary" now={10} />
+                  <h6>Enginners - 10</h6>  
+                  <ProgressBar variant="success" now={50} />
+                  <h6>Architects - 8</h6>
+                  <ProgressBar variant="warning" now={40} />
+                  <h6>Sub contractors/Vendors - 17</h6>
+                  <ProgressBar variant="danger" now={72} />
+                </div>
             </div>
+            <hr></hr>
             <div className="container">
                 <h3>Project Departments</h3>
                 <p>Project Department details</p>
                 {/* Info */}
-                <div className="row">
-                <div className="card text-dark bg-info">
-                  <div className="card-header">Engineering </div>
-                  <div className="card-body">
-                    <h5 className="card-title">Enginnering Division</h5>
-                    <p className="card-text"></p>
-                  </div>
-                </div>
-                <div className="card text-dark bg-info">
-                  <div className="card-header">Engineering </div>
-                  <div className="card-body">
-                    <h5 className="card-title">Block Section 1</h5>
-                    <p className="card-text"></p>
-                  </div>
-                </div>
-                <div className="card text-dark bg-info">
-                  <div className="card-header">Engineering </div>
-                  <div className="card-body">
-                    <h5 className="card-title">Block Section 2</h5>
-                    <p className="card-text"></p>
-                  </div>
-                </div>
-                </div>
-                
+                <Row>
+                  <Col sm>
+                  <Card>
+                  <Card.Body>
+                        <Card.Title><h4>Tower 1</h4></Card.Title>
+                        <Card.Text>
+                        
+                        </Card.Text>
+                    </Card.Body>
+                  </Card>
+                  </Col>
+                  <Col sm>
+                  <Card>
+                  <Card.Body>
+                        <Card.Title><h4>Tower 2</h4></Card.Title>
+                        <Card.Text>
+                        
+                        </Card.Text>
+                    </Card.Body>
+                  </Card>
+                  </Col>
+                  <Col sm>
+                  <Card>
+                  <Card.Body>
+                        <Card.Title><h4>Finishing</h4></Card.Title>
+                        <Card.Text>
+                        
+                        </Card.Text>
+                    </Card.Body>
+                  </Card>
+                  </Col>
+                </Row>   
             </div>
+            <hr></hr>
             <div className="container">
                 <h3>Project Milestones</h3>
                 <p>conatines the project milestones and stages of the project</p>
-                // Stepper
-                {/* <Timeline align="alternate">
+  
+                <Timeline align="alternate">
                   <TimelineItem>
                     <TimelineOppositeContent>
                       <Typography variant="body2" color="textSecondary">
-                        9:30 am
+                        3 months
                       </Typography>
                     </TimelineOppositeContent>
-                    <TimelineSeparator>
-                      <TimelineDot>
-                        <FastfoodIcon />
-                      </TimelineDot>
-                      <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <Paper elevation={3}>
-                        <Typography variant="h6" component="h1">
-                          Eat
-                        </Typography>
-                        <Typography>Because you need strength</Typography>
-                      </Paper>
-                    </TimelineContent>
-                  </TimelineItem>
-                  <TimelineItem>
-                    <TimelineOppositeContent>
-                      <Typography variant="body2" color="textSecondary">
-                        10:00 am
-                      </Typography>
-                    </TimelineOppositeContent>
-                    <TimelineSeparator>
-                      <TimelineDot color="primary">
-                        <LaptopMacIcon />
-                      </TimelineDot>
-                      <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <Paper elevation={3}>
-                        <Typography variant="h6" component="h1">
-                          Code
-                        </Typography>
-                        <Typography>Because it&apos;s awesome!</Typography>
-                      </Paper>
-                    </TimelineContent>
-                  </TimelineItem>
-                  <TimelineItem>
                     <TimelineSeparator>
                       <TimelineDot color="primary" variant="outlined">
-                        <HotelIcon />
+                        <EventAvailableIcon  />
+                      </TimelineDot>
+                      <TimelineConnector />
+                    </TimelineSeparator>
+                    <TimelineContent>
+                      <Paper elevation={3}>
+                        <Typography variant="h6" component="h1">
+                          Milestone 1
+                        </Typography>
+                        <Typography>Insfrastructure</Typography>
+                      </Paper>
+                    </TimelineContent>
+                  </TimelineItem>
+                  <TimelineItem>
+                    <TimelineOppositeContent>
+                      <Typography variant="body2" color="textSecondary">
+                        4 months
+                      </Typography>
+                    </TimelineOppositeContent>
+                    <TimelineSeparator>
+                      <TimelineDot color="primary" variant="outlined">
+                        <EventAvailableIcon  />
+                      </TimelineDot>
+                      <TimelineConnector />
+                    </TimelineSeparator>
+                    <TimelineContent>
+                      <Paper elevation={3}>
+                        <Typography variant="h6" component="h1">
+                          Milestone 2
+                        </Typography>
+                        <Typography>Initial Tower 1 construction</Typography>
+                      </Paper>
+                    </TimelineContent>
+                  </TimelineItem>
+                  <TimelineItem>
+                    <TimelineOppositeContent>
+                      <Typography variant="body2" color="textSecondary">
+                        8 months
+                      </Typography>
+                    </TimelineOppositeContent>
+                    <TimelineSeparator>
+                      <TimelineDot color="primary" variant="outlined">
+                        <EventAvailableIcon  />
                       </TimelineDot>
                       <TimelineConnector/>
                     </TimelineSeparator>
                     <TimelineContent>
                       <Paper elevation={3}>
                         <Typography variant="h6" component="h1">
-                          Sleep
+                          Milestone 3
                         </Typography>
-                        <Typography>Because you need rest</Typography>
+                        <Typography>Initial Tower 2 construction</Typography>
                       </Paper>
                     </TimelineContent>
                   </TimelineItem>
                   <TimelineItem>
+                    <TimelineOppositeContent>
+                      <Typography variant="body2" color="textSecondary">
+                        8 months
+                      </Typography>
+                    </TimelineOppositeContent>
                     <TimelineSeparator>
-                      <TimelineDot color="secondary">
-                        <RepeatIcon />
+                      <TimelineDot color="primary" variant="outlined">
+                        <EventAvailableIcon  />
                       </TimelineDot>
                     </TimelineSeparator>
                     <TimelineContent>
                       <Paper elevation={3}>
                         <Typography variant="h6" component="h1">
-                          Repeat
+                          Finishing
                         </Typography>
-                        <Typography>Because this is the life you love!</Typography>
+                        <Typography>Finishing process</Typography>
                       </Paper>
                     </TimelineContent>
                   </TimelineItem>
-                </Timeline> */}
+                </Timeline>
             </div>
-            <div className="container">
-                <h3>Project Analytics</h3>
-                <p>conatines the necessary progress measurement of each section</p>
-                // Project Charts (min 2)
-            </div>
+            
             {/* stepper */}
             <div className="container">
            
