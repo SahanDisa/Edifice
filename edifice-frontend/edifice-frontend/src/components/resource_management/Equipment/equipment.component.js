@@ -6,7 +6,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 
-import  NewEquip from './new-equipment.component';
+import  NewCategory from './new-category.component';
+import AddEquip from './new-equipment.component';
 
 
 class Equipment extends Component {
@@ -18,7 +19,7 @@ class Equipment extends Component {
             <form>
                     <div className="form-row mt-3">
                       <div class="col-md-12 text-right">
-                        <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newEquip">Add New Category</a>
+                        <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCategory">Add New Category</a>
           
                       </div>
                       <div className="form-group col-md-4">                     
@@ -49,7 +50,7 @@ class Equipment extends Component {
                       <div class="card-body">
                         <div className="">
                           <div class="col-md-12 text-right mb-2">
-                            <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#addWorker">+ Add New</a>
+                            <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#addEquip">+ Add New</a>
         
                             <List component="nav" aria-label="mailbox folders">
                               <ListItem button>
@@ -84,7 +85,7 @@ class Equipment extends Component {
                       <div class="card-body">
                         <div className="">
                           <div class="col-md-12 text-right mb-2">
-                            <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#addWorker">+ Add New</a>
+                            <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#addEquip">+ Add New</a>
                           </div>
                                             
                         </div>
@@ -93,11 +94,17 @@ class Equipment extends Component {
                   </div>  
                 </div>
 
-                {/* New Crew Starts */}
-                  <div className="modal fade" id="newEquip" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <NewEquip />        
+                {/* New Caregory Starts */}
+                  <div className="modal fade" id="newCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <NewCategory />        
                   </div>
-                {/* New Crew Ends */}
+                {/* New Caregory Ends */}
+
+                {/* New Equipment Starts */}
+                  <div className="modal fade" id="addEquip" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <AddEquip />        
+                  </div>
+                {/* New Equipment Ends */}
           </div>
 
 
