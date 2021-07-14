@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import BudgetDataService from "./../../../services/budget.service";
 
 export default class AddBudget extends Component{
@@ -81,17 +82,18 @@ export default class AddBudget extends Component{
   render() {
     const {projectId} = this.state;
     return (
-        <div className="submit-form">
+      <div className="container">
         {this.state.submitted ? (
           <div>
             <h4>You submitted successfully!</h4>
             <button className="btn btn-success" onClick={this.newBudget}>
               Add Another Budget Line Item
             </button>
+            <Link  to={"/budget/"+projectId} className="btn btn-success">View Budget</Link>
           </div>
         ) : (
-          <div class="jumbotron">
-            <h2>Add New Budget Line Item {projectId}</h2>
+          <div class="container">
+            <h2>Add New Budget Line Item</h2>
             <div className="form-group">
               <label htmlFor="costCode">Cost Code</label>
               <input
@@ -103,6 +105,13 @@ export default class AddBudget extends Component{
                 onChange={this.onChangeCostCode}
                 name="costCode"
               />
+              {/*
+               <select className="form-control" name="costCode" required id="costCode" value={this.state.costCode}  onChange={this.onChangeCostCode}>
+                  <option value="520-Construction Facilities" selected>520-Construction Facilities</option>
+                  <option value="000-General">000-General</option>
+                  <option value="500-Refractories">500-Refractories</option>
+                </select>
+              */}
             </div>
 
             <div className="form-group">
@@ -116,6 +125,17 @@ export default class AddBudget extends Component{
                 onChange={this.onChangeCategory}
                 name="category"
               />
+              {/*
+              <select className="form-control" name="category" required id="category" value={this.state.category}  onChange={this.onChangeCategory}>
+                  <option value="Labor" selected>Labor</option>
+                  <option value="Equipment">Equipment</option>
+                  <option value="Materials">Materials</option>
+<option value="Commitment">Commitment</option>
+<option value="Owner Cost">Owner Cost</option>
+<option value="Professional Services">Professional Services</option>
+<option value="Other">Other</option>
+                </select>
+              */}
             </div>
 
             <div className="form-group">

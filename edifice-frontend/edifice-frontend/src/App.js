@@ -30,6 +30,7 @@ import AddDirectory from "./components/project_management/document/adddirectory.
 
 import DrawingHome from "./components/project_management/drawings/drawings.component";
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
+import AddPhoto from "./components/project_management/photos/addphoto.component";
 import ViewSingleDrawing from "./components/project_management/drawings/drawing-singlepage.component";
 import PhotosHome from "./components/project_management/photos/photos.component";
 import BiddingHome from "./components/project_management/biddings/bidding.component";
@@ -278,6 +279,7 @@ class App extends Component {
             <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
             {/* Photo Component Routes */}
             <Route path="/photos" component={PhotosHome} />
+            <Route path="/addphoto" component={AddPhoto}/>
             {/* Bidding Component Routes  */}
             <Route path="/bidding/:id" component={BiddingHome} /> 
             <Route path="/addbidding" component={AddBidding} /> 
