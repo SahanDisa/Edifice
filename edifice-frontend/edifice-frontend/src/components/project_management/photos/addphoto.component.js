@@ -6,9 +6,9 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
+import CameraCapture from './cameracpature.component';
 
-
-export default class AddDrawing extends Component {
+export default class AddPhoto extends Component {
   constructor(props) {
     super(props);
     this.onChangeName = this.onChangeName.bind(this);
@@ -94,13 +94,12 @@ export default class AddDrawing extends Component {
             <input type="file" />
             <button type="upload" className="btn btn-warning">Upload</button>
             <button className="btn btn-success" onClick={this.newDrawing}>
-            
-            Add Another Drawing
+            Add Another Photo
             </button>
           </div>
         ) : (
           <div class="container">
-            <h2>Add New Drawing</h2>
+            <h2>Add New Photo</h2>
             <div className="row">
             <div className="col-sm-8">
             <div className="form-group">
@@ -153,7 +152,8 @@ export default class AddDrawing extends Component {
                 <option>Plumbing</option>
                 <option>Electrical</option>
               </select>
-            </div>  
+            </div>
+            <CameraCapture/>
             </div>
             <div className="col-sm-4">
             <Timeline>
@@ -162,7 +162,7 @@ export default class AddDrawing extends Component {
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h5><strong>Step 1</strong><br/>Drawing Settings</h5> </TimelineContent>
+                <TimelineContent><h5><strong>Step 1</strong><br/>Photo Settings</h5> </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>

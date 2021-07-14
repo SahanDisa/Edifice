@@ -39,34 +39,46 @@ export default class ViewSingleDrawing extends Component {
         const { id,name,description,drawtype } = this.state;
         return (
             <div>
-            <div className="jumbotron">
-                <h2>Drawing Single Page</h2>
-                <GestureIcon/>
-                <p>Manage as single drawing and add measurements and versioning</p>
-                <h4>Drawing Id : {id}</h4>
-                <h5>Name : {name}</h5>
-                <h5>Description : {description}</h5>
-                <h5>Drawing Type : {drawtype}</h5>
-
+              <h2>Drawing Single Page</h2>
+              <p>Manage as single drawing and add measurements and versioning</p>
+              <hr></hr>
+              <h3>File details</h3>
+              <h6>Drawing Id : {id}</h6>
+              <h6>Name : {name}</h6>
+              <h6>Description : {description}</h6>
+              <h6>Drawing Type : {drawtype}</h6>
+              <hr></hr>
+              <h3>View File</h3>
+              <p>View the particular drawing in pdf format</p>
+            <div className="row">
+            <div className="col-sm-10">
+            <embed
+                src="https://vancouver.ca/files/cov/sample-drawing-package-1and2family.pdf"
+                type="application/pdf"
+                frameBorder="0"
+                scrolling="auto"
+                height="700px"
+                width="100%"
+            ></embed>
             </div>
-            <div className="container">
-                <h4>Upload the file</h4>
-                <input type="file" />
-                <button type="upload" className="btn btn-warning">Upload</button>
-
+            <div className="col-sm-2">
+              <div>
+                  <h4>Measurements</h4>
+                  <p>Main measurements : Area, Distance</p>
+                  <button className="btn btn-primary">Add</button>
+              </div>
+              <div>
+                  <h4>Revisions</h4>
+                  <p>Add specific notes for the drawing for the future reference</p>
+                  <button className="btn btn-primary">Add Revision</button>
+              </div>
+              <div>
+                  <h4>Versions</h4>
+                  <h5>1.0.0</h5>
+                  {/* <p>Make adjustments and keep the drawing upto date</p> */}
+              </div> 
+              </div>
             </div>
-            <div className="container">
-                <h4>Add Measurements</h4>
-                <p>Main measurements : - Area, Distance</p>
-            </div>
-            <div className="container">
-                <h4>Add Revisions</h4>
-                <p>Add specific notes for the drawing for the future reference</p>
-            </div>
-            <div className="container">
-                <h4>Add Versions</h4>
-                <p>Make adjustments and keep the drawing upto date</p>
-            </div> 
             </div>
         );
     }

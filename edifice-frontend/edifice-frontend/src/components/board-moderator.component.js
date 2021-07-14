@@ -81,10 +81,10 @@ export default class BoardUser extends Component {
     const { projects,uprojects,currentIndex } = this.state;
     return (
       <div className="container">
-        <header className="jumbotron">
-          <h3>Financial Management</h3>
-          <p>Start work on your project financials by select manage</p>
-        </header>
+  
+          <h3>Financial Management Home</h3>
+          <p>Start work on your project financials by selecting manage</p>
+      <hr />
         <div className="col-md-10">
         <h4>My Projects</h4>
         
