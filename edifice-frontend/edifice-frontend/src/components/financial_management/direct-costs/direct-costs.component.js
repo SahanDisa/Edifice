@@ -20,35 +20,19 @@ export default class Budget extends Component {
       this.state = {
         directcosts: [],
         columns: [{
-            dataField: 'date',
-            text: 'Date'
+            dataField: 'costCode',
+            text: 'Cost Code'
           },
           {
-            dataField: 'vendor',
-            text: 'Vendor'
+            dataField: 'category',
+            text: 'Category'
           }, {
-            dataField: 'type',
-            text: 'Type',
-          },
-          {
-            dataField: 'invoice',
-            text: 'Invoice',
-          },
-          {
-            dataField: 'status',
-            text: 'Status',
+            dataField: 'date',
+            text: 'Date',
           },
           {
             dataField: 'ammount',
             text: 'Ammount',
-          },
-          {
-            dataField: 'receivedDate',
-            text: 'Received Date',
-          },
-          {
-            dataField: 'paidDate',
-            text: 'Paid Date',
           }
         ],
         currentIndex: -1,
