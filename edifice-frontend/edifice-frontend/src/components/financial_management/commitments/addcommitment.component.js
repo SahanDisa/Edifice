@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import CommitmentDataService from "./../../../services/commitment.service";
 
 export default class CreatePrimeContracts extends Component{
@@ -192,7 +193,8 @@ export default class CreatePrimeContracts extends Component{
             <h4>You submitted successfully!</h4>
             <button className="btn btn-success" onClick={this.newCommitment}>
               Add Another Commitment
-            </button>
+            </button>&nbsp;&nbsp;
+            <Link  to={"/commitment/"+projectId} className="btn btn-success">View Commitments</Link>
           </div>
         ) : (
             <div class="container">
