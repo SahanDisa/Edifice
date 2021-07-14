@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import UserService from "./../services/user.service";
+import AuthService from "./../services/auth.service";
 import ProjectDataService from "./../services/project.service";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import Card from 'react-bootstrap/Card';
 
 export default class BoardUser extends Component {
   constructor(props) {
@@ -12,8 +13,10 @@ export default class BoardUser extends Component {
     this.retrieveProjects = this.retrieveProjects.bind(this);
     this.state = {
       projects: [],
+      uprojects: [],
       currentIndex: -1,
-      content: "Moderator content"
+      content: "",
+      currentUser:  AuthService.getCurrentUser() 
     };
   }
 
@@ -35,7 +38,7 @@ export default class BoardUser extends Component {
         });
       }
     );
-    this.retrieveProjects();
+    this.retrieveProjects(this.state.currentUser.id);
   }
   retrieveProjects() {
     ProjectDataService.getAll()
@@ -49,9 +52,33 @@ export default class BoardUser extends Component {
         console.log(e);
       });
   }
+  retrieveProjects(id) {
+    ProjectDataService.userProjects(id)
+      .then(response => {
+        this.setState({
+          projects: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+  retriveSingleProject(id){
+    ProjectDataService.get(id)
+    .then(response => {
+      this.setState({
+        uprojects: response.data
+      });
+      console.log(response.data);
+    })
+    .catch(e => {
+      console.log(e);
+    });
+  }
   //UI component
   render() {
-    const { projects,currentIndex } = this.state;
+    const { projects,uprojects,currentIndex } = this.state;
     return (
       <div className="container">
         <header className="jumbotron">
@@ -59,8 +86,8 @@ export default class BoardUser extends Component {
           <p>Start work on your project financials by select manage</p>
         </header>
         <div className="col-md-10">
-        <h4>Projects List</h4>
-
+        <h4>My Projects</h4>
+        
         <ul className="list-group">
           {projects &&
             projects.map((project, index) => (
@@ -69,23 +96,36 @@ export default class BoardUser extends Component {
                   "list-group-item " +
                   (index === currentIndex ? "active" : "")
                 }
-                /*aluthin uncomment kala*/
-                //onClick={() => this.setActiveProject(project, index)}
+                // onClick={() => this.setActiveProject(project, index)}
                 key={index}
               >
-                {project.title}
-                <h6>{project.description}</h6>
-                <p>{project.location}</p>
-              <CircularProgress variant="determinate" color="success" value={61} />
-                  <p>61%</p>
-              <Link
-                to={"/financialmanagementhome/" + project.id}
-                className="btn btn-primary"
-              >
-                Manage
-              </Link>
-              </li>
-              
+              <div className="row">
+                <div className="col-7">
+                  {this.retriveSingleProject(project.projectuserId)}
+                  <h5>{uprojects.title}</h5>
+                  <h6>Breif : {uprojects.description}</h6>
+                  <p>Location : {uprojects.location}</p>
+                  
+                  <Link
+                    to={"/financialmanagementhome/" + uprojects.id}
+                    className="btn btn-primary"
+                  >
+                    Manage
+                  </Link>
+                </div>
+                <div className="col-5">
+                  <h6>Involved users : 15</h6>
+                  <ProgressBar>
+                    <ProgressBar  variant="primary" now={35} key={1} />
+                    <ProgressBar variant="success" now={20} key={2} />
+                    <ProgressBar variant="danger" now={10} key={3} />
+                  </ProgressBar>
+                  <h6>Progress</h6>
+                  <CircularProgress variant="determinate" color="success" value={61} />
+                    <p>61%</p>
+                </div> 
+              </div>
+              </li> 
             ))}
         </ul>
         </div> 
