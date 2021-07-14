@@ -14,14 +14,10 @@ exports.create = (req, res) => {
 
   // Create a Budget Line Item
   const directcost = {
+    costCode: req.body.costCode,
+    category: req.body.category,
     date: req.body.date,
-    vendor: req.body.vendor,
-    type: req.body.type,
-    invoice: req.body.invoice,
-    status: req.body.status,
     ammount: req.body.ammount,
-    receivedDate: req.body.receivedDate,
-    paidDate: req.body.paidDate,
     projectId: req.body.projectId,
   };
 
