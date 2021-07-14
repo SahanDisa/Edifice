@@ -68,17 +68,22 @@ export default class Budget extends Component {
         return (
             <div>
                <h3> DIRECT COSTS</h3>
-               <h6>Track all direct costs that are not associated with commitments.</h6>
-            <div className="col-md-12 text-right">
+               <h6>Track all direct costs that are not associated with commitments.</h6><hr />
+            <div className="col-md-12 text-left">
             <Link className="btn btn-primary mr-2" to={"#"+id}>
                 Export 
                 </Link>
-                <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+id}>
-                + Create
+                <Link className="btn btn-primary mr-2" to={"#"}>
+                Import
                 </Link>
             </div>
             <hr/>
             <div className="form-row mt-3">
+            <div className="col-md-12 text-right">
+            <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+id}>
+                + Create
+                </Link>
+                </div>
             <div className="form-group col-md-4">
                       <input className="form-control" type="text" placeholder="Search" />
                     </div>
