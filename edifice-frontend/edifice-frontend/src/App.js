@@ -30,6 +30,7 @@ import AddDirectory from "./components/project_management/document/adddirectory.
 
 import DrawingHome from "./components/project_management/drawings/drawings.component";
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
+import AddPhoto from "./components/project_management/photos/addphoto.component";
 import ViewSingleDrawing from "./components/project_management/drawings/drawing-singlepage.component";
 import PhotosHome from "./components/project_management/photos/photos.component";
 import BiddingHome from "./components/project_management/biddings/bidding.component";
@@ -85,6 +86,8 @@ import Timesheet from "./components/resource_management/Timesheet/Timesheet.comp
 import Customize from "./components/resource_management/Timesheet/customize.component";
 import Crew from "./components/resource_management/Crew/crew.component";
 import Schedule from "./components/resource_management/Schedule/schedule.component";
+import Equipments from "./components/resource_management/Equipment/equipment.component";
+import EquipDetails from "./components/resource_management/Equipment/equipmentDetails.component";
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
@@ -277,6 +280,7 @@ class App extends Component {
             <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
             {/* Photo Component Routes */}
             <Route path="/photos" component={PhotosHome} />
+            <Route path="/addphoto" component={AddPhoto}/>
             {/* Bidding Component Routes  */}
             <Route path="/bidding/:id" component={BiddingHome} /> 
             <Route path="/addbidding" component={AddBidding} /> 
@@ -295,6 +299,8 @@ class App extends Component {
             <Route path="/customize" component={Customize} />
             <Route path="/crew" component={Crew} />
             <Route path="/schedule" component={Schedule} />
+            <Route path="/equipments" component={Equipments} />
+            <Route path="/equipDetails" component={EquipDetails} />
 
             {/*financial management */}
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />

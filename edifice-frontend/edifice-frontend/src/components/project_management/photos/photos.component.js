@@ -1,22 +1,3 @@
-// import React, { useState, useEffect } from "react";
-
-// const Photos = () => {
-//     return (
-//         <div>
-//         <div className="jumbotron">
-//             <h2>Photos</h2>
-//             <p>Manage the images, captures in here</p>
-//         </div>
-//         <div className="container">
-//             <h4>Gallery</h4>
-
-//         </div>
-         
-//         </div>
-//     );
-// }
-
-// export default Photos;
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
@@ -24,19 +5,14 @@ import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
+import Icon1 from "././../../../assets/PM/photos/image1.jpg";
+import Icon2 from "././../../../assets/PM/photos/image2.jpg";
 
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
+import Card from 'react-bootstrap/Card';
+import { Button } from 'react-bootstrap';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
-import ImageIcon from '@material-ui/icons/Image';
-import WorkIcon from '@material-ui/icons/Work';
-import BeachAccessIcon from '@material-ui/icons/BeachAccess';
-import Divider from '@material-ui/core/Divider';
+
+import { WebcamCapture } from './webcam.component';
 
 const Accordion = withStyles({
   root: {
@@ -89,36 +65,90 @@ export default function CustomizedAccordions() {
 
   return (
     <div>
-      <div className="jumbotron">
-        <h2>Photos</h2>
-        <p>Here you can manage your photos and captures photos onsite</p>
-      </div>
+      <h2>Photos</h2>
+      <p>Here you can manage your photos and captures photos onsite</p>
+      <hr></hr>
       <Accordion square expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-          <Typography><h4>Add new Album</h4></Typography>
+          <Typography><h4>Albums</h4></Typography>
         </AccordionSummary>
         <AccordionDetails>
          
          <div className="container">
+         <h3>Albums</h3>
          <button className="btn btn-primary">+ Add Album</button>
          <br></br>
-         <h4>Albums</h4>
-         <List component="nav" aria-label="mailbox folders">
-            <ListItem button>
-              <ListItemText primary="Basement" />
-            </ListItem>
-            <Divider />
-            <ListItem button divider>
-              <ListItemText primary="Landscape" />
-            </ListItem>
-            <ListItem button>
-              <ListItemText primary="Excavator" />
-            </ListItem>
-            <Divider light />
-            <ListItem button>
-              <ListItemText primary="Basement section 1" />
-            </ListItem>
-          </List>
+         <h3>Album List</h3>
+         <div className="container row">
+            <div className="container col-3">
+            <a href="/projectmanagementhome/1">
+            <Card
+                    bg={'secondary'}
+                    text={'dark'}
+                    style={{ width: '15rem' }}
+                    className="mb-2"
+                    >
+                    <Card.Body>
+                        <Card.Title><h4>Insfrastructure</h4></Card.Title>
+                        <Card.Text>
+                        
+                        </Card.Text>
+                    </Card.Body>
+                    </Card>
+                </a>
+                </div>
+                <div className="container col-3">
+                <a href="/projectmanagementhome/1">
+                    <Card
+                    bg={'secondary'}
+                    text={'dark'}
+                    style={{ width: '15rem' }}
+                    className="mb-2"
+                    >
+                    <Card.Body>
+                        <Card.Title><h4>Finishing</h4></Card.Title>
+                        <Card.Text>
+                        
+                        </Card.Text>
+                    </Card.Body>
+                    </Card>
+                </a>
+                </div>
+                <div className="container col-3">
+                <a href="/projectmanagementhome/1">
+                    <Card
+                    bg={'secondary'}
+                    text={'dark'}
+                    style={{ width: '15rem' }}
+                    className="mb-2"
+                    >
+                    <Card.Body>
+                        <Card.Title><h4>Plumbing</h4></Card.Title>
+                        <Card.Text>
+                        
+                        </Card.Text>
+                    </Card.Body>
+                    </Card>
+                </a>
+                </div>
+                <div className="container col-3">
+                <a href="/projectmanagementhome/1">
+                    <Card
+                    bg={'secondary'}
+                    text={'dark'}
+                    style={{ width: '15rem' }}
+                    className="mb-2"
+                    >
+                    <Card.Body>
+                        <Card.Title><h4>Electrical</h4></Card.Title>
+                        <Card.Text>
+                        
+                        </Card.Text>
+                    </Card.Body>
+                    </Card>
+                </a>
+                </div>
+          </div>
          </div>
         </AccordionDetails>
       </Accordion>
@@ -127,37 +157,44 @@ export default function CustomizedAccordions() {
           <Typography><h4>Add Photos</h4></Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            {/* demo text */}
-            <List>
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <ImageIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-              </ListItem>
-              <Divider variant="inset" component="li" />
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <WorkIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Work" secondary="Jan 7, 2014" />
-              </ListItem>
-              <Divider variant="inset" component="li" />
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <BeachAccessIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Vacation" secondary="July 20, 2014" />
-              </ListItem>
-            </List>
-          </Typography>
+        <div>
+        <div className="container">
+        <a href="/addphoto" className="btn btn-primary">Add Photo</a>
+        <hr></hr>
+        </div>
+        
+        <div className="container">
+        <h3>Recent Photos</h3>
+        <div className="row">
+          <div className="col-sm-6">
+          <Card style={{ width: '18rem' }}>
+            <Card.Img variant="top" src={Icon1} />
+            <Card.Body>
+              <Card.Title>Image 1</Card.Title>
+              <Card.Text>
+               No caption
+              </Card.Text>
+              <Button variant="primary">view</Button>
+            </Card.Body>
+          </Card>
+          </div>
+          <div className="col-sm-6">
+          <Card style={{ width: '18rem' }}>
+            <Card.Img variant="top" src={Icon2} />
+            <Card.Body>
+              <Card.Title>Image 2</Card.Title>
+              <Card.Text>
+                No caption
+              </Card.Text>
+              <Button variant="primary">view</Button>
+            </Card.Body>
+          </Card>
+          </div>
+          
+        </div>
+        </div>
+        </div>
+
         </AccordionDetails>
       </Accordion>
       <Accordion square expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
@@ -166,14 +203,16 @@ export default function CustomizedAccordions() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-           <div className="container">
+           {/* <div className="container">
               <h5>Press + button to capture images</h5>
               <Link to={"/adddrawing/"}>
                 <Fab color="primary" aria-label="add" >
                     <AddIcon />
                 </Fab>
                 </Link>
-           </div>
+                
+           </div> */}
+           <WebcamCapture/>
           </Typography>
         </AccordionDetails>
       </Accordion>
