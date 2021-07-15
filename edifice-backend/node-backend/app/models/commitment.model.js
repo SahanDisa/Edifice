@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING
       },*/
       defaultRetainage: {
-        type: Sequelize.STRING
+        type: Sequelize.DECIMAL(10,2)
       },
       description: {
         type: Sequelize.STRING

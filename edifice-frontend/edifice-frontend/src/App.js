@@ -95,6 +95,10 @@ import EditPrimeContracts from "./components/financial_management/prime-contract
 import AddDirectCost from "./components/financial_management/direct-costs/adddirectcost.component";
 import CommitmentHome from "./components/financial_management/commitments/commitments.component";
 import AddCommitment from "./components/financial_management/commitments/addcommitment.component";
+import ViewSingleCommitment from "./components/financial_management/commitments/commitment-singlepage.component";
+import AddSov from "./components/financial_management/commitments/addsov.component";
+
+
 
 import Dropdown from "react-bootstrap/Dropdown";
 
@@ -310,6 +314,8 @@ class App extends Component {
                <Route path="/commitment/:id" component={CommitmentHome} />
             <Route path="/addcommitment/:id" component={AddCommitment} />
             {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
+            <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
+            <Route path="/addsov/:id" component={AddSov} />
           </Switch>
         </div>
       </div>

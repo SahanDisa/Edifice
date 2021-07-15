@@ -34,6 +34,8 @@ db.budgets = require("./budget.model.js")(sequelize, Sequelize);
 db.demo = require("./demo.model")(sequelize, Sequelize);
 db.directcosts = require("./directcost.model.js")(sequelize, Sequelize);
 db.commitments = require("./commitment.model.js")(sequelize, Sequelize);
+db.sovs = require("./sov.model.js")(sequelize, Sequelize);
+
 
 // One user has one project profile
 db.users.hasOne(db.projectuser, { as: "projectuser" });
@@ -94,6 +96,14 @@ db.directcosts.belongsTo(db.projects, {
 // One project has many drawings
 db.projects.hasOne(db.commitments, { as: "commitments" });
 db.commitments.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+
+// One project has 
+db.projects.hasOne(db.sovs, { as: "sovs" });
+db.sovs.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });

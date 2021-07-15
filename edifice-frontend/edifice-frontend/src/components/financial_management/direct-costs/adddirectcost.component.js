@@ -106,7 +106,7 @@ export default class AddDirectCost extends Component{
             <h2>Add New Direct Cost</h2>
             <div className="form-group">
               <label htmlFor="costCode">Cost Code</label>
-              <input
+             {/* <input
                 type="text"
                 className="form-control"
                 id="costCode"
@@ -114,12 +114,26 @@ export default class AddDirectCost extends Component{
                 value={this.state.costCode}
                 onChange={this.onChangeCostCode}
                 name="costCode"
-              />
+             />*/}
+                <select 
+                className="form-control"
+                id="costCode"
+                required
+                value={this.state.costCode}
+                onChange={this.onChangeCostCode}
+                name="costCode"
+              >
+                <option>000-General</option>
+                <option>200-Site Preparation</option>
+                <option>220-Site Demolition</option>
+                <option>230-Site Clearing</option>
+                <option>240-Dewatering</option>
+              </select>
             </div>
 
             <div className="form-group">
               <label htmlFor="category">Category</label>
-              <input
+              {/*<input
                 type="text"
                 className="form-control"
                 id="category"
@@ -127,7 +141,21 @@ export default class AddDirectCost extends Component{
                 value={this.state.category}
                 onChange={this.onChangeCategory}
                 name="category"
-              />
+              />*/}
+  <select 
+                className="form-control"
+                id="category"
+                required
+                value={this.state.category}
+                onChange={this.onChangeCategory}
+                name="category"
+              >
+                <option>Labor</option>
+                <option>Equipment</option>
+                <option>Materials</option>
+                <option>Commitment</option>
+                <option>Owner Cost</option>
+              </select>
             </div>
 
             <div className="form-group">
