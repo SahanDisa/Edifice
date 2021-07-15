@@ -197,7 +197,7 @@ export default class BoardUser extends Component {
           </div>
           {/* Finance Management */}
           {showModeratorBoard && (
-          <div>  
+          <div className="mt-2">  
            <h3>Financial Tools</h3>
            <div className="row">
           <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
@@ -249,10 +249,9 @@ export default class BoardUser extends Component {
           </div>  
             )}
           {/* Finance Management Ends */}
-          
 
           {/*resource management starts*/}
-          <div>  
+          <div className="mt-2">  
            <h3>Manage resources</h3>
            <div className="row">
           <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
