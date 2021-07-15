@@ -74,6 +74,8 @@ import EditRFI from "./components/project_management/rfi/edit.component";
 import ViewRFI from "./components/project_management/rfi/view.component";
 
 import actionplanHome from "./components/project_management/actionplan/actionplan.component";
+import ViewAP from "./components/project_management/actionplan/view.component";
+import CreateAP from "./components/project_management/actionplan/create.component";
 
 import DlsConfig from "./components/project_management/dailylog/configuration.component";
 import ManageDls from "./components/project_management/dailylog/manage.component";
@@ -95,8 +97,6 @@ import EditPrimeContracts from "./components/financial_management/prime-contract
 import AddDirectCost from "./components/financial_management/direct-costs/adddirectcost.component";
 import CommitmentHome from "./components/financial_management/commitments/commitments.component";
 import AddCommitment from "./components/financial_management/commitments/addcommitment.component";
-
-import Dropdown from "react-bootstrap/Dropdown";
 
 class App extends Component {
   constructor(props) {
@@ -135,7 +135,6 @@ class App extends Component {
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
             <img
-              // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
               src={mainIcon}
               style={{'width' : "50px", height: "50px"}}
               alt="profile-img"
@@ -146,9 +145,7 @@ class App extends Component {
           <div className="navbar-nav mr-auto">
             {currentUser && (
               <li className="nav-item">
-                <Link to={"/home"} className="nav-link">
-                  
-                </Link>
+                <Link to={"/home"} className="nav-link"></Link>
               </li>
             )}
             {currentUser && (
@@ -258,6 +255,8 @@ class App extends Component {
             <Route path="/managerfi/view" component={ViewRFI} />
 
             <Route path="/actionplan" component={actionplanHome} />
+            <Route path="/manageactionplan/view" component={ViewAP} />
+            <Route path="/manageactionplan/create" component={CreateAP} />
 
             <Route path="/punchlist" component={punchlistHome} /> 
 
