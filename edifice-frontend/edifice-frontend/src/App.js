@@ -35,6 +35,9 @@ import ViewSingleDrawing from "./components/project_management/drawings/drawing-
 import PhotosHome from "./components/project_management/photos/photos.component";
 import BiddingHome from "./components/project_management/biddings/bidding.component";
 import AddBidding from "./components/project_management/biddings/addbidding.component";
+import ViewSpec from "./components/project_management/biddings/viewspec.component";
+
+import ViewSingleBidding from "./components/project_management/biddings/viewbidding.component";
 import PortfolioHome from "./components/project_management/portfolio/portfolio.component";
 import PortfolioStepper from "./components/project_management/portfolio/singleportfolio.component";
 import ProjectManagementHome from "./components/project_management/project-manage-home.component";
@@ -56,6 +59,7 @@ import UpdateTasks from "./components/core_tools/tasks/update.component";
 import ViewTasks from "./components/core_tools/tasks/view.component";
 
 import FileUpload from "./components/project_management/document/document.component";
+import UploadDocFiles from "./components/project_management/document/adddocument.component";
 
 import MeetingsConfig from "./components/project_management/meetings/configuration.component";
 import ManageMeetings from "./components/project_management/meetings/manage.component";
@@ -81,6 +85,8 @@ import UpdateDls from "./components/project_management/dailylog/update.component
 import ViewDls from "./components/project_management/dailylog/view.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
+import ViewPL from "./components/project_management/punchlist/view.component";
+import CreatePL from "./components/project_management/punchlist/create.component";
 
 import ResourceManagementHome from "./components/resource_management/resource-manage-home.component";
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
@@ -96,8 +102,10 @@ import EditPrimeContracts from "./components/financial_management/prime-contract
 import AddDirectCost from "./components/financial_management/direct-costs/adddirectcost.component";
 import CommitmentHome from "./components/financial_management/commitments/commitments.component";
 import AddCommitment from "./components/financial_management/commitments/addcommitment.component";
+import ViewSingleCommitment from "./components/financial_management/commitments/commitment-singlepage.component";
+import AddSov from "./components/financial_management/commitments/addsov.component";
 
-import Dropdown from "react-bootstrap/Dropdown";
+
 
 class App extends Component {
   constructor(props) {
@@ -136,7 +144,6 @@ class App extends Component {
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
             <img
-              // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
               src={mainIcon}
               style={{'width' : "50px", height: "50px"}}
               alt="profile-img"
@@ -147,9 +154,7 @@ class App extends Component {
           <div className="navbar-nav mr-auto">
             {currentUser && (
               <li className="nav-item">
-                <Link to={"/home"} className="nav-link">
-                  
-                </Link>
+                <Link to={"/home"} className="nav-link"></Link>
               </li>
             )}
             {currentUser && (
@@ -240,6 +245,7 @@ class App extends Component {
             <Route path="/admin" component={BoardAdmin} />
             <Route exact path={["/", "/projects"]} component={ProjectsList} />
             <Route path="/document" component={FileUpload} />
+            <Route path="/adddocument" component={UploadDocFiles} />
             <Route path="/addproject" component={AddProject} />
             <Route path="/projects/:id" component={Project} />
             <Route path="/dates" component={Dates} />
@@ -263,7 +269,9 @@ class App extends Component {
 
             <Route path="/actionplan" component={actionplanHome} />
 
-            <Route path="/punchlist" component={punchlistHome} /> 
+            <Route path="/punchlist" component={punchlistHome} />
+            <Route path="/managepunchlist/view" component={ViewPL} />
+            <Route path="/managepunchlist/create" component={CreatePL} />
 
             <Route path="/dailylogsconfiguration" component={DlsConfig} />
             <Route path="/managedailylogs" component={ManageDls} />
@@ -288,7 +296,8 @@ class App extends Component {
             {/* Bidding Component Routes  */}
             <Route path="/bidding/:id" component={BiddingHome} /> 
             <Route path="/addbidding" component={AddBidding} /> 
-			
+            <Route path="/viewbidding" component={ViewSingleBidding}/>
+            <Route path="/viewspec" component={ViewSpec} />  
 			      <Route path="/budget/:id" component={BudgetHome} />
             <Route path="/addbudget/:id" component={AddBudget} />
             <Route path="/prime-contracts" component={PrimeContracts} />
@@ -315,6 +324,8 @@ class App extends Component {
                <Route path="/commitment/:id" component={CommitmentHome} />
             <Route path="/addcommitment/:id" component={AddCommitment} />
             {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
+            <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
+            <Route path="/addsov/:id" component={AddSov} />
           </Switch>
         </div>
       </div>

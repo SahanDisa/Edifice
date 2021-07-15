@@ -198,12 +198,12 @@ export default class BoardUser extends Component {
           </div>
           {/* Finance Management */}
           {showModeratorBoard && (
-          <div>  
+          <div className="mt-2">  
            <h3>Financial Tools</h3>
            <div className="row">
           <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm">
-              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/budget/" + id}>
+              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/budget/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={budgetIcon} alt="" width="50"/><br />
                 <h3 className="h5 nav-heading-title mb-0">Budget</h3>
                 <span className="fs-sm fw-normal text-muted">Set up and manage a comprehensive budget throughout the lifecycle of a project.</span>
@@ -212,7 +212,7 @@ export default class BoardUser extends Component {
             </div>
           <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mb-2 mt-2" href="/prime-contracts">
+              <a className="d-block nav-heading text-center mb-2 mt-2" href="/prime-contracts" style={{ 'text-decoration': 'none' }}>
                 <img src={primecontractsIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Prime Contracts</h3>
                 <span className="fs-sm fw-normal text-muted">Easily create and manage contracts with the clients.</span>
@@ -221,7 +221,7 @@ export default class BoardUser extends Component {
             </div>
           <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm">
-              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/directcost/" + id}>
+              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/directcost/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={costIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Direct Costs</h3>
                 <span className="fs-sm fw-normal text-muted">Track all direct costs that are not associated with commitments.</span>
@@ -230,7 +230,7 @@ export default class BoardUser extends Component {
             </div>
           <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm">
-                <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/commitment/" + id}>
+                <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/commitment/" + id} style={{ 'text-decoration': 'none' }}>
                     <img src={commitmentsIcon} alt="" width="50"/>
                     <h3 className="h5 nav-heading-title mb-0">Commitments</h3>                
                     <span className="fs-sm fw-normal text-muted">Allows seeing the status and current value of all contracts and purchase orders.</span>
@@ -239,7 +239,7 @@ export default class BoardUser extends Component {
             </div>
           <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm">
-              <Link className="d-block nav-heading text-center mt-2 mb-2" to={"/invoicing/" + id}>
+              <Link className="d-block nav-heading text-center mt-2 mb-2" to={"/invoicing/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={invoiceIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Invoicing</h3>
                 <span className="fs-sm fw-normal text-muted">Streamline the invoice collection, review, and approval process on all of the projects</span>
@@ -250,15 +250,50 @@ export default class BoardUser extends Component {
           </div>  
             )}
           {/* Finance Management Ends */}
-          
 
           {/*resource management starts*/}
           <div>
               <ResourceCard/>
           </div>
-          
-  
-          
+          {showModeratorBoard && (
+          <div>
+          <h3>Manage resources</h3>
+          <div className="row">
+            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+                <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/timesheet/" + id}>
+                  <img src={documentIcon} alt="" width="50"/><br />
+                  <h3 className="h5 nav-heading-title mb-0">Timesheet</h3>
+                </Link>
+                </div>
+              </div>
+            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+                <a className="d-block nav-heading text-center mb-2 mt-2" href="/crew">
+                  <img src={meetingIcon} alt="" width="50"/>
+                  <h3 className="h5 nav-heading-title mb-0">Crews</h3>
+                </a>
+                </div>
+              </div>
+            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+                <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/equipments/" + id}>
+                  <img src={bulldozerIcon} alt="" width="50"/>
+                  <h3 className="h5 nav-heading-title mb-0">Equipments</h3>
+                  </Link>
+                </div>
+              </div>
+            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+                  <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/schedule/" + id}>
+                      <img src={dailylogIcon} alt="" width="50"/>
+                      <h3 className="h5 nav-heading-title mb-0">Schedule</h3>                
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
           {/*resource management ends*/}
 
           {/* Meeting Model Starts */}

@@ -55,15 +55,15 @@ export default class Commitments extends Component {
             <div className="col-12">
             <h2>COMMITMENTS</h2>
             <h6>See the status and current value of contracts and purchase orders.</h6>
+            <hr />
             </div>
-            <hr></hr>
+           
             </div>
-            <div className="container">
+            <div className="col-12 text-right">
                 
                 <Link className="btn btn-primary mr-2" to={"/addcommitment/"+id}>
                 Add New Commitment
                 </Link>
-                <hr></hr>
             </div>
 
 
@@ -83,11 +83,11 @@ export default class Commitments extends Component {
                 >
                 <div className="row">
                 <div className="col-10">
-                <h6>Title: {commitment.title}</h6>
-                    <h6>Contract Company:{commitment.contractCompany}</h6> 
-                    <h6>Status:  {commitment.status}</h6>
+                <h6>Title : {commitment.title}</h6>
+                    <h6>Contract Company :{commitment.contractCompany}</h6> 
+                    <h6>Status :  {commitment.status}</h6>
                     {/* Button Group */}
-                    <Link to={"/viewcommitment"+commitment.id}>
+                    <Link to={"/viewcommitment/"+commitment.id}>
                     <button className="btn btn-primary">View <VisibilityIcon/> </button>
                     {/* <Button
                         variant="contained"
