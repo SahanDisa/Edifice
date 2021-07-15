@@ -1,19 +1,27 @@
 module.exports = (sequelize, Sequelize) => {
-    const Equipment = sequelize.define("equipment", {
-      title: {
+    const Equipment = sequelize.define("equipments", {
+      code: {
+        type: Sequelize.STRING
+      },
+      brand: {
+        type: Sequelize.STRING
+      },
+      date_issued:{
+        type: Sequelize.DATE    
+      },
+      condition: {
+        type: Sequelize.STRING
+      },
+      category: {
         type: Sequelize.STRING
       },
       description: {
         type: Sequelize.STRING
-      },
-      location:{
-        type: Sequelize.STRING    
-      },
-      published: {
-        type: Sequelize.BOOLEAN
-      }}, {
+      }},{
         freezeTableName: true,
     });
   
     return Equipment;
   };
+  
+  

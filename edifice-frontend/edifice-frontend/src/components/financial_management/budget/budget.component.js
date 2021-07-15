@@ -32,7 +32,7 @@ export default class Budget extends Component {
           },
            {
             dataField: 'originalBudget',
-            text: 'Original Budget Amount',
+            text: 'Original Budget Amount(Rs.)',
             headerStyle: (column, colIndex) => {
               return { width: '6%', textAlign: 'center' };}
             
@@ -136,12 +136,23 @@ export default class Budget extends Component {
                 <h3>BUDGET</h3>
                 <p>Set up and manage a comprehensive budget throughout the lifecycle of a project.</p><hr />
                 <div className="col-md-12 text-left">
-                <Link className="btn btn-primary mr-2" to={"#"}>
-                Export
-                </Link>
-                <Link className="btn btn-primary mr-2" to={"#"}>
+
+                <div class="dropdown">
+  <button class="btn btn-primary mr-2 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+   Export
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+  </ul>
+  <Link className="btn btn-primary mr-2" to={"#"}>
                 Import
                 </Link>
+</div>
+
+
+               
                 </div>
            <hr/>
            
@@ -161,7 +172,7 @@ export default class Budget extends Component {
             <div className="form-group col-md-4">
                       <input className="form-control" type="text" placeholder="Search" />
                     </div>
-                    <a href="#" className="btn btn-outline-dark mb-3">Add Filter</a>
+                    <a href="#" className="btn btn-outline-dark mb-3">Search</a>
                     </div>
                   <hr/>
             <div className="container">

@@ -90,11 +90,29 @@ export default class Home extends Component {
                 
               ))}
           </ul>
-          <h3>Tasks</h3>
-          <h6>Tasks that are assign to you</h6>
+          <h3>Puch List Items</h3>
+          <h6>Items that you need attention to</h6>
+          <ul className="list-group list-group-flush col-7">
+              <li className="list-group-item">Basement Plan Checking</li>
+              <li className="list-group-item">Inspect 2nd Floor Beam 2mm curving</li>
+              <li className="list-group-item">Bidding #23 awarding</li>
+          </ul>
           <h3>Action Plans & Schedule</h3>
           <h6>plans that you are contribution is assigned to</h6>
-          
+          <ul className="list-group list-group-flush col-7">
+              <li className="list-group-item">
+              <h5>Basement Plan</h5>
+              Layer checking
+              </li>
+              <li className="list-group-item">
+              <h5>Foundation Plan #2</h5>
+              Concrete Bed inspect and quality check
+              </li>
+              <li className="list-group-item">
+              <h5>Foundation Plan #1</h5>
+              Layer 1 concrete + temperature check
+              </li>
+          </ul>
           <Link to={"/projectmanagement"}>
           <Fab color="primary" aria-label="add" >
             <CategoryIcon />
