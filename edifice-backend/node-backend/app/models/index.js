@@ -41,6 +41,9 @@ db.sovs = require("./sov.model.js")(sequelize, Sequelize);
 db.equipments = require("./equipment.model")(sequelize, Sequelize);
 db.categorys = require("./equipment-category.model")(sequelize, Sequelize);
 
+db.meetings = require("./meeting.model")(sequelize, Sequelize);
+db.meetingcategory = require("./meetingcategory.model")(sequelize, Sequelize);
+
 
 // One user has one project profile
 db.users.hasOne(db.projectuser, { as: "projectuser" });
@@ -113,8 +116,6 @@ db.sovs.belongsTo(db.projects, {
   as: "project",
 });
 
-// 
-
 //One category has many equipments
 db.categorys.hasMany(db.equipments, { as: "equipments" });
 db.equipments.belongsTo(db.categorys, {
@@ -122,6 +123,26 @@ db.equipments.belongsTo(db.categorys, {
   as: "categories",
 });
 
+//One project has many meetings
+db.projects.hasMany(db.meetings, { as: "meetings" });
+db.meetings.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+//One project has many meeting categories
+db.projects.hasMany(db.meetingcategory, { as: "meetingcategory" });
+db.meetingcategory.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+// One meeting category has many meetings
+db.meetingcategory.hasMany(db.meetings, { as: "meetings" });
+db.meetings.belongsTo(db.meetingcategory, {
+  foreignKey: "mcId",
+  as: "mcategory",
+});
 
 db.ROLES = ["user", "admin", "moderator"];
 
