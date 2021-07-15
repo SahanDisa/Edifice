@@ -89,6 +89,16 @@ label {
 .navbar{
   padding-top: 0;
   padding-bottom: 0;
+  color: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 3;
+}
+
+#root{
+  margin-top: 75px;
+  margin-bottom: 25px;
 }
 
 .btn-primary.btn, .btn-primary.btn:hover, .btn-primary.btn:active, .btn-primary.btn:visited .btn-primary.btn:focus {
