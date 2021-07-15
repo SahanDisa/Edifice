@@ -85,6 +85,8 @@ import UpdateDls from "./components/project_management/dailylog/update.component
 import ViewDls from "./components/project_management/dailylog/view.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
+import ViewPL from "./components/project_management/punchlist/view.component";
+import CreatePL from "./components/project_management/punchlist/create.component";
 
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
 import Customize from "./components/resource_management/Timesheet/customize.component";
@@ -103,8 +105,6 @@ import ViewSingleCommitment from "./components/financial_management/commitments/
 import AddSov from "./components/financial_management/commitments/addsov.component";
 
 
-
-import Dropdown from "react-bootstrap/Dropdown";
 
 class App extends Component {
   constructor(props) {
@@ -143,7 +143,6 @@ class App extends Component {
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
             <img
-              // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
               src={mainIcon}
               style={{'width' : "50px", height: "50px"}}
               alt="profile-img"
@@ -154,9 +153,7 @@ class App extends Component {
           <div className="navbar-nav mr-auto">
             {currentUser && (
               <li className="nav-item">
-                <Link to={"/home"} className="nav-link">
-                  
-                </Link>
+                <Link to={"/home"} className="nav-link"></Link>
               </li>
             )}
             {currentUser && (
@@ -271,7 +268,9 @@ class App extends Component {
 
             <Route path="/actionplan" component={actionplanHome} />
 
-            <Route path="/punchlist" component={punchlistHome} /> 
+            <Route path="/punchlist" component={punchlistHome} />
+            <Route path="/managepunchlist/view" component={ViewPL} />
+            <Route path="/managepunchlist/create" component={CreatePL} />
 
             <Route path="/dailylogsconfiguration" component={DlsConfig} />
             <Route path="/managedailylogs" component={ManageDls} />
