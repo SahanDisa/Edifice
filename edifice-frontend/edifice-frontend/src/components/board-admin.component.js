@@ -19,6 +19,8 @@ import UserService from "../services/user.service";
 //css styles
 const cardStyle = {
   backgroundColor: "#6B7BA4",
+  "&:hover": {
+    backgroundColor: "#efefef"}
 }
 
 const linkText={
@@ -38,8 +40,8 @@ export default class BoardUser extends Component {
     this.animationsomething();
   }
 
-  animationsomething(){
-    console.log("kohomathee");
+  animationsomething(e){
+    //
   }
 
   expand(card) {
@@ -79,7 +81,15 @@ export default class BoardUser extends Component {
   }
 
   render() {
+    
     return (
+      `
+    .card-hover:hover {
+      color:red;
+      transform: scale(1.001);
+      background: #f0c14b;
+    }
+    `,
       <div className="container">
 
         <h3> Core tools home</h3>
