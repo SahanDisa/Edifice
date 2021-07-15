@@ -171,11 +171,14 @@ class App extends Component {
             )}
             {showModeratorBoard && (
             <li className="nav-item">
-              <NavDropdown title="Manage Resources" id="basic-nav-dropdown">
+                <Link to={""} className="nav-link">
+                  <h6>Manage Resources</h6>
+                </Link>
+        { /*    <NavDropdown title="Manage Resources" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/timesheet">Timesheets</NavDropdown.Item>
                 <NavDropdown.Item href="/equipments">Equipments</NavDropdown.Item>
                 <NavDropdown.Item href="/crew">Crews</NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdown>*/}
             </li>
             )}
             {showAdminBoard && (
