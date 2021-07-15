@@ -26,6 +26,7 @@ export const WebcamCapture = () => {
     return (
         <div className="webcam-container">
             <div className="webcam-img">
+            <h4>Capture Display</h4>
             <center>
                 {image == '' ? <Webcam
                     audio={false}

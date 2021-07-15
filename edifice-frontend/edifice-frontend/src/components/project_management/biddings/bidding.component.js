@@ -49,7 +49,7 @@ export default class Bidding extends Component {
             <div className="container">
             <h4>Add Biddings</h4>
             <a className="btn btn-primary m-2" href="/addbidding">Add Bidding</a>
-            <a className="btn btn-primary" href="/addbidder">Add Bidders</a>
+            <a className="btn btn-primary" href="/vendors">Add Bidders</a>
             
             </div>
             <hr></hr>
@@ -73,8 +73,8 @@ export default class Bidding extends Component {
                     <p>{bidding.dueDate}</p>
                     <p>{bidding.published}</p>
                     {/* Button group */}
-                    <Link to={"/viewdrawing/"}>
-                    <button className="btn btn-primary">View Status<VisibilityIcon/> </button>
+                    <Link to={"/viewbidding/"}>
+                    <button className="btn btn-primary">Review<VisibilityIcon/> </button>
                     </Link>
                     <Link to={"/viewdrawing/"}>
                     <button className="btn btn-success m-2">Update <UpdateIcon/> </button>

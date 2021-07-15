@@ -52,22 +52,22 @@ export default class AddDirectory extends Component {
       location: this.state.location
     };
 
-    ProjectDataService.create(data)
-      .then(response => {
-        this.setState({
-          id: response.data.id,
-          title: response.data.title,
-          description: response.data.description,
-          location: response.data.location,
-          published: response.data.published,
+    // ProjectDataService.create(data)
+    //   .then(response => {
+    //     this.setState({
+    //       id: response.data.id,
+    //       title: response.data.title,
+    //       description: response.data.description,
+    //       location: response.data.location,
+    //       published: response.data.published,
 
-          submitted: true
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    //       submitted: true
+    //     });
+    //     console.log(response.data);
+    //   })
+    //   .catch(e => {
+    //     console.log(e);
+    //   });
   }
 
   newProject() {
@@ -89,17 +89,17 @@ export default class AddDirectory extends Component {
           <div>
             <h4>You submitted successfully!</h4>
             <button className="btn btn-success" onClick={this.newProject}>
-              Add Project
+              Add Another Directory
             </button>
           </div>
         ) : (
           <div class="container">
           <div className="row">
             <div className="container col-8">
-            <h2>Add New Project</h2>
+            <h2>Add New Directory</h2>
             <h5>Step 1: Project Settings</h5>
             <div className="form-group">
-              <label htmlFor="title">Title</label>
+              <label htmlFor="title">Directory Name:</label>
               <input
                 type="text"
                 className="form-control"
@@ -112,7 +112,7 @@ export default class AddDirectory extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="description">Description</label>
+              <label htmlFor="description">Description :</label>
               <input
                 type="text"
                 className="form-control"
@@ -121,45 +121,6 @@ export default class AddDirectory extends Component {
                 value={this.state.description}
                 onChange={this.onChangeDescription}
                 name="description"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="description">Location</label>
-              <input
-                type="text"
-                className="form-control"
-                id="location"
-                required
-                value={this.state.location}
-                onChange={this.onChangeLocation}
-                name="location"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="startDate">Start Date</label>
-              <input
-                type="date"
-                className="form-control"
-                id="startDate"
-                //required
-                // value={this.state.location}
-                // onChange={this.onChangeLocation}
-                name="startDate"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="endDate">End Date</label>
-              <input
-                type="date"
-                className="form-control"
-                id="endDate"
-                //required
-                // value={this.state.location}
-                // onChange={this.onChangeLocation}
-                name="endDate"
               />
             </div>
 
@@ -174,28 +135,13 @@ export default class AddDirectory extends Component {
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h5><strong>Step 1 </strong>Project Settings</h5> </TimelineContent>
-              </TimelineItem>
-              <TimelineItem>
-                <TimelineSeparator>
-                  <TimelineDot />
-                  <TimelineConnector />
-                </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 2 :</strong>Define departments</h6></TimelineContent>
-              </TimelineItem>
-              <TimelineItem>
-                <TimelineSeparator>
-                  <TimelineDot />
-                  <TimelineConnector />
-                </TimelineSeparator>
-                
-                <TimelineContent><h6><strong>Step 3 :</strong>Define milestones</h6></TimelineContent>
+                <TimelineContent><h5><strong>Step 1 </strong>Directory Details</h5> </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 4 :</strong>Assign users for the project</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 2 :</strong>Submit</h6></TimelineContent>
               </TimelineItem>
             </Timeline>
             </div>

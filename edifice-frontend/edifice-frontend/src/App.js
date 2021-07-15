@@ -35,6 +35,9 @@ import ViewSingleDrawing from "./components/project_management/drawings/drawing-
 import PhotosHome from "./components/project_management/photos/photos.component";
 import BiddingHome from "./components/project_management/biddings/bidding.component";
 import AddBidding from "./components/project_management/biddings/addbidding.component";
+import ViewSpec from "./components/project_management/biddings/viewspec.component";
+
+import ViewSingleBidding from "./components/project_management/biddings/viewbidding.component";
 import PortfolioHome from "./components/project_management/portfolio/portfolio.component";
 import PortfolioStepper from "./components/project_management/portfolio/singleportfolio.component";
 import ProjectManagementHome from "./components/project_management/project-manage-home.component";
@@ -56,6 +59,7 @@ import UpdateTasks from "./components/core_tools/tasks/update.component";
 import ViewTasks from "./components/core_tools/tasks/view.component";
 
 import FileUpload from "./components/project_management/document/document.component";
+import UploadDocFiles from "./components/project_management/document/adddocument.component";
 
 import MeetingsConfig from "./components/project_management/meetings/configuration.component";
 import ManageMeetings from "./components/project_management/meetings/manage.component";
@@ -97,6 +101,10 @@ import EditPrimeContracts from "./components/financial_management/prime-contract
 import AddDirectCost from "./components/financial_management/direct-costs/adddirectcost.component";
 import CommitmentHome from "./components/financial_management/commitments/commitments.component";
 import AddCommitment from "./components/financial_management/commitments/addcommitment.component";
+import ViewSingleCommitment from "./components/financial_management/commitments/commitment-singlepage.component";
+import AddSov from "./components/financial_management/commitments/addsov.component";
+
+
 
 class App extends Component {
   constructor(props) {
@@ -164,11 +172,14 @@ class App extends Component {
             )}
             {showModeratorBoard && (
             <li className="nav-item">
-              <NavDropdown title="Manage Resources" id="basic-nav-dropdown">
+                <Link to={""} className="nav-link">
+                  <h6>Manage Resources</h6>
+                </Link>
+        { /*    <NavDropdown title="Manage Resources" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/timesheet">Timesheets</NavDropdown.Item>
                 <NavDropdown.Item href="/equipments">Equipments</NavDropdown.Item>
                 <NavDropdown.Item href="/crew">Crews</NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdown>*/}
             </li>
             )}
             {showAdminBoard && (
@@ -233,6 +244,7 @@ class App extends Component {
             <Route path="/admin" component={BoardAdmin} />
             <Route exact path={["/", "/projects"]} component={ProjectsList} />
             <Route path="/document" component={FileUpload} />
+            <Route path="/adddocument" component={UploadDocFiles} />
             <Route path="/addproject" component={AddProject} />
             <Route path="/projects/:id" component={Project} />
             <Route path="/dates" component={Dates} />
@@ -283,7 +295,8 @@ class App extends Component {
             {/* Bidding Component Routes  */}
             <Route path="/bidding/:id" component={BiddingHome} /> 
             <Route path="/addbidding" component={AddBidding} /> 
-			
+            <Route path="/viewbidding" component={ViewSingleBidding}/>
+            <Route path="/viewspec" component={ViewSpec} />  
 			      <Route path="/budget/:id" component={BudgetHome} />
             <Route path="/addbudget/:id" component={AddBudget} />
             <Route path="/prime-contracts" component={PrimeContracts} />
@@ -309,6 +322,8 @@ class App extends Component {
                <Route path="/commitment/:id" component={CommitmentHome} />
             <Route path="/addcommitment/:id" component={AddCommitment} />
             {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
+            <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
+            <Route path="/addsov/:id" component={AddSov} />
           </Switch>
         </div>
       </div>
