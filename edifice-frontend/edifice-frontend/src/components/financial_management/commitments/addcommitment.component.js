@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import CommitmentDataService from "./../../../services/commitment.service";
+import Timeline from '@material-ui/lab/Timeline';
+import TimelineItem from '@material-ui/lab/TimelineItem';
+import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
+import TimelineConnector from '@material-ui/lab/TimelineConnector';
+import TimelineContent from '@material-ui/lab/TimelineContent';
+import TimelineDot from '@material-ui/lab/TimelineDot';
+
 
 export default class CreatePrimeContracts extends Component{
   constructor(props) {
@@ -192,18 +199,18 @@ export default class CreatePrimeContracts extends Component{
           <div>
             <h4>You submitted successfully!</h4>
             <button className="btn btn-success" onClick={this.newCommitment}>
-              Add Another Commitment
+             Create Another Commitment
             </button>&nbsp;&nbsp;
             <Link  to={"/commitment/"+projectId} className="btn btn-success">View Commitments</Link>
           </div>
         ) : (
             <div class="container">
-       <h2>Add New Commitment </h2><hr/>
-
-         
+       <h2>Create New Commitment </h2><hr/>
+       <div className="row">
+       <div className="col-sm-6">
           <div className="form-group">
          
-                <label htmlFor="hash">#</label> 
+                <label htmlFor="hash"># :</label> 
              
   
               <input
@@ -217,7 +224,7 @@ export default class CreatePrimeContracts extends Component{
               />
               </div>
               <div className="form-group">
-                <label htmlFor="title">Title</label>
+                <label htmlFor="title">Title :</label>
     
               <input
                 type="text"
@@ -230,7 +237,7 @@ export default class CreatePrimeContracts extends Component{
               />
               </div>
               <div className="form-group">
-                <label htmlFor="contractCompany">Contract Company:</label>
+                <label htmlFor="contractCompany">Contract Company :</label>
              
                 <input
                 type="text"
@@ -244,7 +251,7 @@ export default class CreatePrimeContracts extends Component{
               </div>
             
             <div className="form-group">
-                <label htmlFor="status">Status</label>
+                <label htmlFor="status">Status :</label>
             
               <input
                 type="text"
@@ -272,7 +279,7 @@ export default class CreatePrimeContracts extends Component{
         </div>*/}
          
               <div className="form-group">
-                <label htmlFor="defaultRetainage">Default Retainage</label>
+                <label htmlFor="defaultRetainage">Default Retainage % :</label>
                 <input
                 type="text"
                 className="form-control"
@@ -284,7 +291,7 @@ export default class CreatePrimeContracts extends Component{
               />
               </div>
               <div className="form-group">
-                <label htmlFor="description">Description</label>
+                <label htmlFor="description">Description :</label>
  
               <input
                 type="textarea"
@@ -310,7 +317,7 @@ export default class CreatePrimeContracts extends Component{
               />
               </div>*/}
               <div className="form-group">
-                <label htmlFor="startDate">Start Date:</label>
+                <label htmlFor="startDate">Start Date :</label>
             
               <input
                 type="date"
@@ -323,7 +330,7 @@ export default class CreatePrimeContracts extends Component{
               />
               </div> 
               <div className="form-group">
-                <label htmlFor="estimatedCompletionDate">Estimated Completion Date</label>
+                <label htmlFor="estimatedCompletionDate">Estimated Completion Date :</label>
 
               <input
                 type="date"
@@ -337,7 +344,7 @@ export default class CreatePrimeContracts extends Component{
               </div>
              
             <div className="form-group">
-                <label htmlFor="actualCompletionDate">Actual Completion Date</label>
+                <label htmlFor="actualCompletionDate">Actual Completion Date :</label>
  
               <input
                 type="date"
@@ -350,7 +357,7 @@ export default class CreatePrimeContracts extends Component{
               />
               </div>
               <div className="form-group">
-                <label htmlFor="signedContractReceivedDate">Signed Contract Received Date</label>
+                <label htmlFor="signedContractReceivedDate">Signed Contract Received Date :</label>
  
               <input
                 type="date"
@@ -365,7 +372,7 @@ export default class CreatePrimeContracts extends Component{
              
             
             <div className="form-group">
-                <label htmlFor="">Inclusions:</label>
+                <label htmlFor="">Inclusions :</label>
 
               <input
                 type="textarea"
@@ -379,7 +386,7 @@ export default class CreatePrimeContracts extends Component{
               </div>
             
             <div className="form-group">
-                <label htmlFor="">Exclusions:</label>
+                <label htmlFor="">Exclusions :</label>
               
               <input
                 type="textarea"
@@ -390,7 +397,27 @@ export default class CreatePrimeContracts extends Component{
                 onChange={this.onChangeExclusions}
                 name="exclusions"
               />
-              </div>
+   </div></div>
+<div className="col-sm-6">
+            <Timeline>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><h5><strong>Step 1</strong><br/>Create a Commitment</h5> </TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 2</strong><br/>Add SoV to a Commitment</h6></TimelineContent>
+              </TimelineItem>
+            </Timeline>
+            </div>
+
+</div>
+           
            
            
          
@@ -400,10 +427,8 @@ export default class CreatePrimeContracts extends Component{
             <button onClick={this.saveCommitment} className="btn btn-success">
             Cancel
             </button>&nbsp;&nbsp;
-            <button onClick={this.saveCommitment} className="btn btn-success">
-            Create & Email
-            </button>&nbsp;&nbsp;
-            <br />
+           &nbsp;&nbsp;
+            <br /><br /><br />
             </div>
         )}
           </div>

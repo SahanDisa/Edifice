@@ -3,7 +3,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 const data = [
-  {checkbox: <input type="checkbox" />, commitment:<a href="#">SC-01-001</a>,  contractCompany:"Vertex Properties", billingPeriod: "15/07/2021-15/08/2021",invoiceStatus:<a href="#">Draft</a>, invoiceDates:"15/07/2021-15/08/2021",contractValue:"20,000",complete:"0.00%",currentPaymentDue:"0.00",paymentStatus:"Unpaid"},
+  {checkbox: <input type="checkbox" />, commitment:<a href="/viewcommitment/1">SC-01-001</a>,  contractCompany:"Vertex Properties", billingPeriod: "15/07/2021-15/08/2021",invoiceStatus:<a href="#">Draft</a>, invoiceDates:"15/07/2021-15/08/2021",contractValue:"20,000",complete:"0.00%",currentPaymentDue:"0.00",paymentStatus:"Unpaid"},
   {checkbox: <input type="checkbox" />, commitment:<a href="#">SC-01-001</a>, contractCompany:"Vertex Properties",billingPeriod: "15/07/2021-15/08/2021", invoiceStatus:<a href="#">Under Review</a>, invoiceDates:"15/07/2021-15/08/2021",contractValue:"32,500",complete:"11.00%",currentPaymentDue:"0.00",paymentStatus:"Unpaid"},
   {checkbox: <input type="checkbox" />,  commitment:<a href="#">SC-01-001</a>,contractCompany:"Vertex Properties",billingPeriod: "15/07/2021-15/08/2021", invoiceStatus:<a href="#">Draft</a>, invoiceDates:"15/07/2021-15/08/2021",contractValue:"15,380",complete:"0.00%",currentPaymentDue:"0.00",paymentStatus:"Unpaid"},
   {checkbox: <input type="checkbox" />, commitment:<a href="#">SC-01-001</a>,contractCompany:"Vertex Properties",billingPeriod: "15/07/2021-15/08/2021", invoiceStatus:<a href="#">Under Review</a>, invoiceDates:"15/07/2021-15/08/2021",contractValue:"11,000",complete:"23.00%",currentPaymentDue:"0.00",paymentStatus:"Unpaid"},
@@ -83,6 +83,9 @@ const Invoicing = () => {
             <div className="col-md-12 text-right">
             <Link className="btn btn-primary mr-2" to={"/adddirectcost/"}>
                 Export
+                </Link>
+                <Link className="btn btn-primary mr-2" to={"/adddirectcost/"}>
+                + New Billing Period
                 </Link>
                 </div>
             <div className="form-group col-md-4">
