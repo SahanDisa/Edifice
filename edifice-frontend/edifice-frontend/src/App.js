@@ -82,6 +82,7 @@ import ViewDls from "./components/project_management/dailylog/view.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
 
+import ResourceManagementHome from "./components/resource_management/resource-manage-home.component";
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
 import Customize from "./components/resource_management/Timesheet/customize.component";
 import Crew from "./components/resource_management/Crew/crew.component";
@@ -167,7 +168,7 @@ class App extends Component {
             )}
             {showModeratorBoard && (
             <li className="nav-item">
-                <Link to={""} className="nav-link">
+                <Link to={"/resource"} className="nav-link">
                   <h6>Manage Resources</h6>
                 </Link>
         { /*    <NavDropdown title="Manage Resources" id="basic-nav-dropdown">
@@ -304,6 +305,7 @@ class App extends Component {
             <Route path="/schedule" component={Schedule} />
             <Route path="/equipments" component={Equipments} />
             <Route path="/equipDetails" component={EquipDetails} />
+            <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
 
             {/*financial management */}
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
