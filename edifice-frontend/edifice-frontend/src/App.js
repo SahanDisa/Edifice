@@ -74,8 +74,6 @@ import EditRFI from "./components/project_management/rfi/edit.component";
 import ViewRFI from "./components/project_management/rfi/view.component";
 
 import actionplanHome from "./components/project_management/actionplan/actionplan.component";
-import ViewAP from "./components/project_management/actionplan/view.component";
-import CreateAP from "./components/project_management/actionplan/create.component";
 
 import DlsConfig from "./components/project_management/dailylog/configuration.component";
 import ManageDls from "./components/project_management/dailylog/manage.component";
@@ -83,6 +81,8 @@ import UpdateDls from "./components/project_management/dailylog/update.component
 import ViewDls from "./components/project_management/dailylog/view.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
+import ViewPL from "./components/project_management/punchlist/view.component";
+import CreatePL from "./components/project_management/punchlist/create.component";
 
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
 import Customize from "./components/resource_management/Timesheet/customize.component";
@@ -255,10 +255,10 @@ class App extends Component {
             <Route path="/managerfi/view" component={ViewRFI} />
 
             <Route path="/actionplan" component={actionplanHome} />
-            <Route path="/manageactionplan/view" component={ViewAP} />
-            <Route path="/manageactionplan/create" component={CreateAP} />
 
-            <Route path="/punchlist" component={punchlistHome} /> 
+            <Route path="/punchlist" component={punchlistHome} />
+            <Route path="/managepunchlist/view" component={ViewPL} />
+            <Route path="/managepunchlist/create" component={CreatePL} />
 
             <Route path="/dailylogsconfiguration" component={DlsConfig} />
             <Route path="/managedailylogs" component={ManageDls} />
