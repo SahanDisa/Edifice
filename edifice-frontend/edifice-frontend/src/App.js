@@ -35,6 +35,9 @@ import ViewSingleDrawing from "./components/project_management/drawings/drawing-
 import PhotosHome from "./components/project_management/photos/photos.component";
 import BiddingHome from "./components/project_management/biddings/bidding.component";
 import AddBidding from "./components/project_management/biddings/addbidding.component";
+import ViewSpec from "./components/project_management/biddings/viewspec.component";
+
+import ViewSingleBidding from "./components/project_management/biddings/viewbidding.component";
 import PortfolioHome from "./components/project_management/portfolio/portfolio.component";
 import PortfolioStepper from "./components/project_management/portfolio/singleportfolio.component";
 import ProjectManagementHome from "./components/project_management/project-manage-home.component";
@@ -284,7 +287,8 @@ class App extends Component {
             {/* Bidding Component Routes  */}
             <Route path="/bidding/:id" component={BiddingHome} /> 
             <Route path="/addbidding" component={AddBidding} /> 
-			
+            <Route path="/viewbidding" component={ViewSingleBidding}/>
+            <Route path="/viewspec" component={ViewSpec} />  
 			      <Route path="/budget/:id" component={BudgetHome} />
             <Route path="/addbudget/:id" component={AddBudget} />
             <Route path="/prime-contracts" component={PrimeContracts} />
