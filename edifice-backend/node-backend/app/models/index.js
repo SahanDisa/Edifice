@@ -34,6 +34,13 @@ db.budgets = require("./budget.model.js")(sequelize, Sequelize);
 db.demo = require("./demo.model")(sequelize, Sequelize);
 db.directcosts = require("./directcost.model.js")(sequelize, Sequelize);
 db.commitments = require("./commitment.model.js")(sequelize, Sequelize);
+db.sovs = require("./sov.model.js")(sequelize, Sequelize);
+
+
+//resource management
+db.equipments = require("./equipment.model")(sequelize, Sequelize);
+db.categorys = require("./equipment-category.model")(sequelize, Sequelize);
+
 
 // One user has one project profile
 db.users.hasOne(db.projectuser, { as: "projectuser" });
@@ -98,7 +105,23 @@ db.commitments.belongsTo(db.projects, {
   as: "project",
 });
 
+
+// One project has 
+db.projects.hasOne(db.sovs, { as: "sovs" });
+db.sovs.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
 // 
+
+//One category has many equipments
+db.categorys.hasMany(db.equipments, { as: "equipments" });
+db.equipments.belongsTo(db.categorys, {
+  foreignKey: "name",
+  as: "categories",
+});
+
 
 db.ROLES = ["user", "admin", "moderator"];
 

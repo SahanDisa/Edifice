@@ -83,10 +83,10 @@ export default class BoardUser extends Component {
       <div className="container">
   
           <h3>Financial Management Home</h3>
-          <p>Start work on your project financials by selecting manage</p>
+          <p>Select the Project and Start Working on Your Project Financials Smoothly.</p>
       <hr />
         <div className="col-md-10">
-        <h4>My Projects</h4>
+        <h4>My Projects List</h4><br />
         
         <ul className="list-group">
           {projects &&

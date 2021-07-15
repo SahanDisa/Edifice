@@ -85,7 +85,10 @@ import UpdateDls from "./components/project_management/dailylog/update.component
 import ViewDls from "./components/project_management/dailylog/view.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
+import ViewPL from "./components/project_management/punchlist/view.component";
+import CreatePL from "./components/project_management/punchlist/create.component";
 
+import ResourceManagementHome from "./components/resource_management/resource-manage-home.component";
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
 import Customize from "./components/resource_management/Timesheet/customize.component";
 import Crew from "./components/resource_management/Crew/crew.component";
@@ -99,8 +102,10 @@ import EditPrimeContracts from "./components/financial_management/prime-contract
 import AddDirectCost from "./components/financial_management/direct-costs/adddirectcost.component";
 import CommitmentHome from "./components/financial_management/commitments/commitments.component";
 import AddCommitment from "./components/financial_management/commitments/addcommitment.component";
+import ViewSingleCommitment from "./components/financial_management/commitments/commitment-singlepage.component";
+import AddSov from "./components/financial_management/commitments/addsov.component";
 
-import Dropdown from "react-bootstrap/Dropdown";
+
 
 class App extends Component {
   constructor(props) {
@@ -139,7 +144,6 @@ class App extends Component {
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
             <img
-              // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
               src={mainIcon}
               style={{'width' : "50px", height: "50px"}}
               alt="profile-img"
@@ -150,9 +154,7 @@ class App extends Component {
           <div className="navbar-nav mr-auto">
             {currentUser && (
               <li className="nav-item">
-                <Link to={"/home"} className="nav-link">
-                  
-                </Link>
+                <Link to={"/home"} className="nav-link"></Link>
               </li>
             )}
             {currentUser && (
@@ -171,11 +173,14 @@ class App extends Component {
             )}
             {showModeratorBoard && (
             <li className="nav-item">
-              <NavDropdown title="Manage Resources" id="basic-nav-dropdown">
+                <Link to={"/resource"} className="nav-link">
+                  <h6>Manage Resources</h6>
+                </Link>
+        { /*    <NavDropdown title="Manage Resources" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/timesheet">Timesheets</NavDropdown.Item>
                 <NavDropdown.Item href="/equipments">Equipments</NavDropdown.Item>
                 <NavDropdown.Item href="/crew">Crews</NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdown>*/}
             </li>
             )}
             {showAdminBoard && (
@@ -264,7 +269,9 @@ class App extends Component {
 
             <Route path="/actionplan" component={actionplanHome} />
 
-            <Route path="/punchlist" component={punchlistHome} /> 
+            <Route path="/punchlist" component={punchlistHome} />
+            <Route path="/managepunchlist/view" component={ViewPL} />
+            <Route path="/managepunchlist/create" component={CreatePL} />
 
             <Route path="/dailylogsconfiguration" component={DlsConfig} />
             <Route path="/managedailylogs" component={ManageDls} />
@@ -307,6 +314,7 @@ class App extends Component {
             <Route path="/schedule" component={Schedule} />
             <Route path="/equipments" component={Equipments} />
             <Route path="/equipDetails" component={EquipDetails} />
+            <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
 
             {/*financial management */}
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
@@ -316,6 +324,8 @@ class App extends Component {
                <Route path="/commitment/:id" component={CommitmentHome} />
             <Route path="/addcommitment/:id" component={AddCommitment} />
             {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
+            <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
+            <Route path="/addsov/:id" component={AddSov} />
           </Switch>
         </div>
       </div>

@@ -38,6 +38,10 @@ require('./app/routes/projectuser.routes')(app);
 require('./app/routes/budget.routes')(app);
 require('./app/routes/directcost.routes')(app);
 require('./app/routes/commitment.routes')(app);
+require('./app/routes/sov.routes')(app);
+
+require('./app/routes/equipment.routes')(app);
+require('./app/routes/equipment-category.routes')(app);
 
 
 // simple route
