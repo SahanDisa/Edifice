@@ -73,16 +73,16 @@ export default class ViewSingleCommitment extends Component {
                     </div>
               {/*<h6>Drawing Id : {id}</h6>*/}
               <h3>General Information</h3><br />
-              <h6>Contract Company : {contractCompany}</h6>
-              <h6>Status : {status}</h6>
-              <h6>Default Retainage : {defaultRetainage}</h6>
-              <h6>Description  : {description}</h6>
-              <h6>Start Date : {startDate}</h6>
-              <h6>Estimated Completion Date  : {estimatedCompletionDate}</h6>
-              <h6>Actual Completion Date: {actualCompletionDate}</h6>
-              <h6>Signed Contract Received Date : {signedContractReceivedDate }</h6>
-              <h6>Inclusions  : {inclusions}</h6>
-              <h6>Exclusions  : {exclusions}</h6>
+              <h6>Contract Company : {contractCompany}</h6><br />
+              <h6>Status : {status}</h6><br />
+              <h6>Default Retainage : {defaultRetainage}</h6><br />
+              <h6>Description  : {description}</h6><br />
+              <h6>Start Date : {startDate}</h6><br />
+              <h6>Estimated Completion Date  : {estimatedCompletionDate}</h6><br />
+              <h6>Actual Completion Date: {actualCompletionDate}</h6><br />
+              <h6>Signed Contract Received Date : {signedContractReceivedDate }</h6><br />
+              <h6>Inclusions  : {inclusions}</h6><br />
+              <h6>Exclusions  : {exclusions}</h6><br />
               
               <hr></hr>
               

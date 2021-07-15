@@ -70,12 +70,19 @@ export default class Budget extends Component {
                <h3> DIRECT COSTS</h3>
                <h6>Track all direct costs that are not associated with commitments.</h6><hr />
             <div className="col-md-12 text-left">
-            <Link className="btn btn-primary mr-2" to={"#"+id}>
-                Export 
-                </Link>
-                <Link className="btn btn-primary mr-2" to={"#"}>
+            <div class="dropdown">
+  <button class="btn btn-primary mr-2 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+   Export
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+  </ul>
+  <Link className="btn btn-primary mr-2" to={"#"}>
                 Import
                 </Link>
+</div>
             </div>
             <hr/>
             <div className="form-row mt-3">

@@ -350,7 +350,7 @@ export default class CreatePrimeContracts extends Component{
                 type="date"
                 className="form-control"
                 id="actualCompletionDate"
-                required
+             
                 value={this.state.actualCompletionDate}
                 onChange={this.onChangeActualCompletionDate}
                 name="actualCompletionDate"
@@ -363,7 +363,7 @@ export default class CreatePrimeContracts extends Component{
                 type="date"
                 className="form-control"
                 id="signedContractReceivedDate"
-                required
+                
                 value={this.state.signedContractReceivedDate}
                 onChange={this.onChangeSignedContractReceivedDate}
                 name="signedContractReceivedDate"
@@ -378,7 +378,7 @@ export default class CreatePrimeContracts extends Component{
                 type="textarea"
                 className="form-control"
                 id="inclusions"
-                required
+              
                 value={this.state.inclusions}
                 onChange={this.onChangeInclusions}
                 name="inclusions"
@@ -392,7 +392,7 @@ export default class CreatePrimeContracts extends Component{
                 type="textarea"
                 className="form-control"
                 id="exclusions"
-                required
+             
                 value={this.state.exclusions}
                 onChange={this.onChangeExclusions}
                 name="exclusions"
