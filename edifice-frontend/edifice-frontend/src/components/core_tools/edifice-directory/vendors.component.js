@@ -64,9 +64,6 @@ class Vendors extends Component {
                 <a class="nav-link" href="/employees">Employees</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/projects">Projects</a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Vendors</a>
               </li>
             </ul>
