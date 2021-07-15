@@ -27,6 +27,10 @@ class AddWorker extends Component {
                         <label htmlFor="">Id</label>
                         <input className="form-control" type="text" required/>
                         <br/>
+
+                        <label htmlFor="">Mobile Number</label>
+                        <input className="form-control" type="number" required/>
+                        <br/>
                     </div>
                 </div>
                 <div className="modal-footer">
