@@ -59,6 +59,7 @@ import UpdateTasks from "./components/core_tools/tasks/update.component";
 import ViewTasks from "./components/core_tools/tasks/view.component";
 
 import FileUpload from "./components/project_management/document/document.component";
+import UploadDocFiles from "./components/project_management/document/adddocument.component";
 
 import MeetingsConfig from "./components/project_management/meetings/configuration.component";
 import ManageMeetings from "./components/project_management/meetings/manage.component";
@@ -239,6 +240,7 @@ class App extends Component {
             <Route path="/admin" component={BoardAdmin} />
             <Route exact path={["/", "/projects"]} component={ProjectsList} />
             <Route path="/document" component={FileUpload} />
+            <Route path="/adddocument" component={UploadDocFiles} />
             <Route path="/addproject" component={AddProject} />
             <Route path="/projects/:id" component={Project} />
             <Route path="/dates" component={Dates} />

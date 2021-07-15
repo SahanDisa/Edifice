@@ -62,7 +62,7 @@ export default class AddBidding extends Component {
                 {/* <br /> */}
               </div>
               <button className="btn btn-success" onClick={this.newDrawing}>
-              Create
+              Send Invitation 
               </button>
             </div>
             <div className="col-sm-4">
