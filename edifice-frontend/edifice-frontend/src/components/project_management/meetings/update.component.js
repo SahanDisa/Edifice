@@ -64,11 +64,11 @@ class UpdateMeetings extends Component {
             <div className="form-row">
                 <div className="form-group col-md-12 text-right">
                     <div className="form-check">
-                        <input type="checkbox" className="form-check-input" id="draftCheck" required/>
+                        <input type="checkbox" className="form-check-input" id="draftCheck" placeholder="" required/>
                         <label htmlFor="draftCheck" className="form-check-label">Draft Meeting</label>
                     </div>
                     <div className="form-check">
-                        <input type="checkbox" className="form-check-input" id="draftCheck" required/>
+                        <input type="checkbox" className="form-check-input" id="draftCheck" placeholder="" required/>
                         <label htmlFor="draftCheck" className="form-check-label">Private Meeting</label>
                     </div>
                 </div>                
@@ -76,48 +76,49 @@ class UpdateMeetings extends Component {
             <div className="form-row">
                 <div className="form-group col-md-2">
                     <label htmlFor="">Meeting No</label>
-                    <input className="form-control" type="number" min="0" required/>
+                    <input className="form-control" type="number" min="0" placeholder="1" required/>
                 </div>
                 <div className="form-group col-md-4">
                     <label htmlFor="">Meeting Name</label>
-                    <input className="form-control" type="text" required/>
+                    <input className="form-control" type="text" placeholder="Weekly OAC Meeting" required/>
                 </div>
                 <div className="form-group col-md-3">
                     <label htmlFor="">Meeting Lcoation</label>
-                    <input className="form-control" type="text" required/>
+                    <input className="form-control" type="text" placeholder="Zoom Platform" required/>
                 </div>
             </div>
             <div className="form-row">
               <div className="form-group col-md-2">
                 <label htmlFor="">Date</label>
-                <input className="form-control" type="date" min="" required/>
+                <input className="form-control" type="text" min="" placeholder="17/07/2021" required/>
               </div>
               <div className="form-group col-md-2">
                 <label htmlFor="">Start Time</label>
-                <input className="form-control" type="time" min="" required/>
+                <input className="form-control" type="text" min="" placeholder="10:30 AM" required/>
               </div>
               <div className="form-group col-md-2">
                 <label htmlFor="">End Time</label>
-                <input className="form-control" type="time" min="" required/>
+                <input className="form-control" type="text" min="" placeholder="11:30 AM" required/>
               </div>
             </div>
             <div className="form-row">
                 <div className="form-group col-md-6">
                     <label htmlFor="">Overview</label>
-                    <textarea className="form-control" name="" id="" required></textarea>
+                    <textarea className="form-control" name="" id="" placeholder="Updates on this week" required></textarea>
                 </div>
             </div>
             <div className="form-row mb-3">
                 <div className="form-group col-md-6 mb-3">
                     <label htmlFor="">Scheduled Attendees</label>
-                    <select className="form-control" required>
+                    <input className="form-control" type="text" min="" placeholder="Mr. Mangala Rajakaruna, Ms. Koshitha Weerasinghe, Mr. Kusuman PErera" required/>
+                    {/* <select className="form-control" required>
                         <option value="Attendee 1" selected>Attendee 1</option>
                         <option value="Attendee 2">Attendee 2</option>
-                    </select>
+                    </select> */}
                 </div>
             </div>
-            <a href="/managetasks" type="submit" className="btn btn-success mr-2">Save</a>
-            <a href="/managetasks" type="submit" className="btn btn-danger">Cancel</a>
+            {/* <a href="/managetasks" type="submit" className="btn btn-success mr-2">Save</a>
+            <a href="/managetasks" type="submit" className="btn btn-danger">Cancel</a> */}
           </form>
         </div>
         <div class="accordion" id="accordionExample">
@@ -161,8 +162,11 @@ class UpdateMeetings extends Component {
                 </div>
               </div>
             </div>
-          </div>  
+          </div> 
+          <a href="/managetasks" type="submit" className="btn btn-success mt-2 mb-2">+ Add an Agenga Item</a> 
         </div>
+        <a href="/projectmanagementhome/1" type="submit" className="btn btn-primary mr-2">Save</a>
+        <a href="/managetasks" type="submit" className="btn btn-danger">Cancel</a>
       </div>
     );
   }

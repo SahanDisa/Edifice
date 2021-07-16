@@ -4,10 +4,10 @@ import SettingsIcon from '@material-ui/icons/Settings';
 
 const data = [
   {checkbox: <input type="checkbox" />, commitment:<a href="/viewcommitment/1">SC-01-001</a>,  contractCompany:"Vertex Properties", billingPeriod: "15/07/2021-15/08/2021",invoiceStatus:<a href="#">Draft</a>, invoiceDates:"15/07/2021-15/08/2021",contractValue:"20,000",complete:"0.00%",currentPaymentDue:"0.00",paymentStatus:"Unpaid"},
-  {checkbox: <input type="checkbox" />, commitment:<a href="#">SC-01-001</a>, contractCompany:"Vertex Properties",billingPeriod: "15/07/2021-15/08/2021", invoiceStatus:<a href="#">Under Review</a>, invoiceDates:"15/07/2021-15/08/2021",contractValue:"32,500",complete:"11.00%",currentPaymentDue:"0.00",paymentStatus:"Unpaid"},
-  {checkbox: <input type="checkbox" />,  commitment:<a href="#">SC-01-001</a>,contractCompany:"Vertex Properties",billingPeriod: "15/07/2021-15/08/2021", invoiceStatus:<a href="#">Draft</a>, invoiceDates:"15/07/2021-15/08/2021",contractValue:"15,380",complete:"0.00%",currentPaymentDue:"0.00",paymentStatus:"Unpaid"},
+  {checkbox: <input type="checkbox" />, commitment:<a href="#">SC-01-001</a>, contractCompany:"Xero",billingPeriod: "15/07/2021-15/08/2021", invoiceStatus:<a href="#">Under Review</a>, invoiceDates:"15/07/2021-15/08/2021",contractValue:"32,500",complete:"11.00%",currentPaymentDue:"0.00",paymentStatus:"Unpaid"},
+  {checkbox: <input type="checkbox" />,  commitment:<a href="#">SC-01-001</a>,contractCompany:"Brisk Concrete",billingPeriod: "15/07/2021-15/08/2021", invoiceStatus:<a href="#">Draft</a>, invoiceDates:"15/07/2021-15/08/2021",contractValue:"15,380",complete:"0.00%",currentPaymentDue:"0.00",paymentStatus:"Unpaid"},
   {checkbox: <input type="checkbox" />, commitment:<a href="#">SC-01-001</a>,contractCompany:"Vertex Properties",billingPeriod: "15/07/2021-15/08/2021", invoiceStatus:<a href="#">Under Review</a>, invoiceDates:"15/07/2021-15/08/2021",contractValue:"11,000",complete:"23.00%",currentPaymentDue:"0.00",paymentStatus:"Unpaid"},
-  {checkbox: "", commitment:"Grand Total: ",contractCompany:"",billingPeriod: "", invoiceStatus:"", invoiceDates:"",contractValue:"",complete:"",currentPaymentDue:"",paymentStatus:"234,567"}
+  {checkbox: "", commitment:"Grand Total: ",contractCompany:"",billingPeriod: "", invoiceStatus:"", invoiceDates:"",contractValue:"",complete:"",currentPaymentDue:"0.00",paymentStatus:""}
 ];
 const columns = [
   {

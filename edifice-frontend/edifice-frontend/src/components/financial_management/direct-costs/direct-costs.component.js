@@ -32,7 +32,7 @@ export default class Budget extends Component {
           },
           {
             dataField: 'ammount',
-            text: 'Ammount',
+            text: 'Amount',
           }
         ],
         currentIndex: -1,

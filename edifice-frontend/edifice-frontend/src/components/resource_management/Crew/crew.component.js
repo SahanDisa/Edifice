@@ -4,57 +4,45 @@ import AddWorker from './add-worker.component';
 import EditWorker from './edit-worker.component';
 import ViewWorker from './view-worker.component';
 import  NewCrew from './new-crew.component';
+import Card from 'react-bootstrap/Card';
 
 const data = [
-  {edit: <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#editWorker">edit</a>,view:<a href="#" className="btn btn-primary" data-toggle="modal" data-target="#viewWorker">View</a>}
+  {Id: 1, FirstName: 'randie',LastName:'pathirage',Mobile:'075 4344323',edit: <a href="#" className="btn btn-secondary" data-toggle="modal" data-target="#editWorker">edit</a>,More:<a href="#" className="btn btn-primary" data-toggle="modal" data-target="#viewWorker">More</a>},
+  {Id: 2, FirstName: 'abc', LastName:'iyanage',Mobile:'071 4325431',  edit: <a href="#" className="btn btn-secondary" data-toggle="modal" data-target="#editWorker">edit</a>,More:<a href="#" className="btn btn-primary" data-toggle="modal" data-target="#viewWorker">More</a>},
+  {Id: 3, FirstName: 'kumara', LastName:'Dharampala',Mobile:'071 4532765',  edit: <a href="#" className="btn btn-secondary" data-toggle="modal" data-target="#editWorker">edit</a>,More:<a href="#" className="btn btn-primary" data-toggle="modal" data-target="#viewWorker">More</a>}
 ];
 
 const columns = [
    {
-    dataField: 'overview',
-    text: 'Meeting Overview',
+    dataField: 'Id',
+    text: 'Id No',
     headerStyle: (column, colIndex) => {
-    return { width: '50%', textAlign: 'center' };}
+    return { width: '5%', textAlign: 'center' };}
   }, {
-    dataField: 'date',
-    text: 'Meeting Date',
+    dataField: 'FirstName',
+    text: 'First Name',
     headerStyle: (column, colIndex) => {
         return { width: '10%', textAlign: 'center' };}
   }, {
-    dataField: 'time',
-    text: 'Time',
+    dataField: 'LastName',
+    text: 'Last Name',
     headerStyle: (column, colIndex) => {
-    return { width: '7%', textAlign: 'center' };}
+    return { width: '10%', textAlign: 'center' };}
   }, {
-    dataField: 'location',
-    text: 'location',
+    dataField: 'Mobile',
+    text: 'Mobile Number',
     headerStyle: (column, colIndex) => {
-    return { width: '7%', textAlign: 'center' };}
-  }, {
-    dataField: 'status',
-    text: 'Status',
-    headerStyle: (column, colIndex) => {
-        return { width: '7%', textAlign: 'center' };}
-  }, {
-    dataField: 'items',
-    text: 'Number of Items',
-    headerStyle: (column, colIndex) => {
-    return { width: '7%', textAlign: 'center' };}
-  }, {
-    dataField: 'extra',
-    text: '',
-    headerStyle: (column, colIndex) => {
-        return { width: '7%', textAlign: 'center' };}
+    return { width: '10%', textAlign: 'center' };}
   },{
     dataField: 'edit',
     text: '',
     headerStyle: (column, colIndex) => {
-        return { width: '7%', textAlign: 'center' };}
+        return { width: '3%', textAlign: 'center' };}
   }, {
-    dataField: 'view',
+    dataField: 'More',
     text: '',
     headerStyle: (column, colIndex) => {
-    return { width: '7%', textAlign: 'center' };}
+    return { width: '3%', textAlign: 'center' };}
   },
 ];
 
@@ -63,22 +51,29 @@ class Crew extends Component {
     render() {
       return (
         <div>
-            <h2>Crew</h2><hr/>
+          <Card
+            bg={'success'}
+            text={'white'}
+            className="mb-2">
+                
+            <Card.Body>
+              <Card.Title><h4>Schedule</h4></Card.Title>
+            </Card.Body>
+          </Card> 
+          <br/>
             <div>
-            
                 <div class="tab-content" id="myTabContent">
-              
-                    <div class="tab-pane fade show active" id="status" role="tabpanel" aria-labelledby="allmeetings">
-                        
+                    <div class="tab-pane fade show active" id="status" role="tabpanel" aria-labelledby="allmeetings">  
                         <form>
-                            <div className="form-row mt-3">
-                                <div class="col-md-12 text-right">
-                                    <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCrew">+ New Crew</a>
-                                </div>
-                                <div className="form-group col-md-4">
+                            <div className="form-row">
+                              <div className="form-group col-md-3">
                                     <input className="form-control" type="text" placeholder="Search" />
-                                </div>
-                                <a href="#" className="btn btn-outline-dark mb-3">Add Filter</a>
+                              </div>
+                              <a href="#" className="btn btn-outline-dark mb-3">Add Filter</a>
+                              <div class="col-md-7 text-right">
+                                <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCrew">+ New Crew</a>
+                              </div>
+
                             </div>
                         </form>
 

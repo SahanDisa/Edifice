@@ -39,10 +39,10 @@ require('./app/routes/budget.routes')(app);
 require('./app/routes/directcost.routes')(app);
 require('./app/routes/commitment.routes')(app);
 require('./app/routes/sov.routes')(app);
-
 require('./app/routes/equipment.routes')(app);
 require('./app/routes/equipment-category.routes')(app);
-
+require('./app/routes/meeting.routes')(app);
+require('./app/routes/meetingcategory.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {

@@ -50,9 +50,9 @@ class CreateMeeting extends Component {
                                 <div className="form-group col-md-6">
                                     <label htmlFor="">Status</label>
                                     <select className="form-control" name="" id="" required>
-                                        <option value="1">Status #1</option>
-                                        <option value="2">Status #2</option>
-                                        <option value="3">Status #3</option>
+                                        <option value="1">Open</option>
+                                        <option value="2">Close</option>
+                                        <option value="3">Draft</option>
                                     </select>
                                 </div>
                             </div>
