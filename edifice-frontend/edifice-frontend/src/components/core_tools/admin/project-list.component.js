@@ -90,6 +90,7 @@ export default class ProjectsList extends Component {
     return (
       <div className="list row">
       <h2>Project Dashboard</h2>
+        
         <div className="col-md-10">
           <div className="input-group mb-3">
             <input
@@ -113,12 +114,18 @@ export default class ProjectsList extends Component {
         <div className="col-md-6">
           <h4>Projects List</h4>
 
+          <a
+            className="m-3 btn btn-sm btn-primary"
+            href="/addProject">
+            Add Project
+          </a>
+
           <ul className="list-group">
             {projects &&
               projects.map((project, index) => (
                 <li
                   className={
-                    "list-group-item bg-success" +
+                    "list-group-item" +
                     (index === currentIndex ? "active" : "")
                   }
                   onClick={() => this.setActiveProject(project, index)}
@@ -135,6 +142,7 @@ export default class ProjectsList extends Component {
           >
             Remove All
           </button>
+
         </div>
         <div className="col-md-6">
           {currentProject ? (
