@@ -21,9 +21,7 @@ import costIcon from "././../../assets/FM/cost.png";
 import invoiceIcon from "././../../assets/FM/invoice.png";
 import commitmentsIcon from "././../../assets/FM/commitments.png";
 import bulldozerIcon from "././../../assets/066-bulldozer.png";
-
-
-
+import bulldozerIcon from "././../../assets/PM/ibulldozer.png";
 import Card from 'react-bootstrap/Card';
 import ResourceCard from "../resource_management/resource-manage-cards";
 
