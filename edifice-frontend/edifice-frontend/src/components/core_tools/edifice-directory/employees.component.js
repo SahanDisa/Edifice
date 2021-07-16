@@ -4,12 +4,12 @@ import cellEditFactory from 'react-bootstrap-table2-editor';
 
 
 const data = [
-    {id: 1, name: 'randie pathirage',role:'Engineer', edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 2, name: 'Osumali Liyanage', role:'Project Manager',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 3, name: 'Shanuka Fernando', role:'Project Manager',  edit:<a href="/editUser" className="btn btn-primary">edit</a>},
-    {id: 4, name: 'Sahan Dissanayaka', role:'Quanttity Surveyor',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 5, name: 'Buddhika Ranasinghe', role:'Engineer',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 6, name: 'Malithya Fernando',role:'Administrator',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>}
+    {id: 1, name: 'randie pathirage',role:'', edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
+    {id: 2, name: 'abc liyanage', role:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
+    {id: 3, name: 'abc liyanage', role:'',  edit:<a href="/editUser" className="btn btn-primary">edit</a>},
+    {id: 4, name: 'abc liyanage', role:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
+    {id: 5, name: 'abc liyanage', role:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
+    {id: 6, name: 'jhk kumara',role:'',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>}
   ];
   const columns = [{
     dataField: 'id',
@@ -55,6 +55,9 @@ class Emp extends Component {
             <ul class="nav nav-tabs">
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Employees</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/projects">Projects</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/vendors">Vendors</a>
