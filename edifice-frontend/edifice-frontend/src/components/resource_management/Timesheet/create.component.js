@@ -41,14 +41,70 @@ class CreateTimesheet extends Component {
                                 </div>
 
                                 <div class="col-4">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text mr-3">
+                                            <input type="checkbox" aria-label="Checkbox for following text input"/>
+                                        </div>
+                                    </div>
+                                    <div className="mr-3">
+                                        <p>randie pathirage</p>
+                                    </div>
                                     
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text mr-3">
+                                            <input type="checkbox" aria-label="Checkbox for following text input"/>
+                                        </div>
+                                    </div>
+                                    <div className="mr-3">
+                                        <p>Malithya fernando</p>
+                                    </div>
+                                    
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text mr-3">
+                                            <input type="checkbox" aria-label="Checkbox for following text input"/>
+                                        </div>
+                                    </div>
+                                    <div className="mr-3">
+                                        <p>vinuri piyathilake</p>
+                                    </div>
+                                    
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text mr-3">
+                                            <input type="checkbox" aria-label="Checkbox for following text input"/>
+                                        </div>
+                                    </div>
+                                    <div className="mr-3">
+                                        <p>sahan dissanayake</p>
+                                    </div>
+                                    
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text mr-3">
+                                            <input type="checkbox" aria-label="Checkbox for following text input"/>
+                                        </div>
+                                    </div>
+                                    <div className="mr-3">
+                                        <p>thenuka ovin</p>
+                                    </div>
+                                    
+                                </div>
+
+                                    {/* 
                                     <div class="tab-content" id="nav-tabContent">
                                         <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list"><p>Concrete Crew</p></div>
                                         <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list"><p>Welders</p></div>
                                         <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list"><p>Flooring Crew</p></div>
                                         <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list"><p>Carpenters</p></div>
                                     </div>
-                            
+                                    */}
                                 </div>
                             </div>
                         </div>
