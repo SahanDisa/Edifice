@@ -20,9 +20,8 @@ import primecontractsIcon from "././../../assets/FM/primecontract.png";
 import costIcon from "././../../assets/FM/cost.png";
 import invoiceIcon from "././../../assets/FM/invoice.png";
 import commitmentsIcon from "././../../assets/FM/commitments.png";
+import bulldozerIcon from "././../../assets/066-bulldozer.png";
 import bulldozerIcon from "././../../assets/PM/ibulldozer.png";
-
-
 import Card from 'react-bootstrap/Card';
 import ResourceCard from "../resource_management/resource-manage-cards";
 
@@ -115,6 +114,51 @@ export default class BoardUser extends Component {
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mb-2 mt-2" href="/rfi" style={{ 'text-decoration': 'none' }}>
+                <img src={rfiIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">RFI</h3>
+                <span className="fs-sm fw-normal text-muted">Help to run the project smoothly and on schedule</span>
+              </a>
+              </div>
+            </div>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mb-2 mt-2"  data-toggle="modal" data-target="#dlModal" href="#" style={{ 'text-decoration': 'none' }}>
+                <img src={dailylogIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Daily Log</h3>
+                <span className="fs-sm fw-normal text-muted">Keep track of every detail at job site each and everyday</span>
+              </a>
+              </div>
+            </div>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mb-2 mt-2" data-toggle="modal" data-target="#meetingModal" href="#" style={{ 'text-decoration': 'none' }}>
+                <img src={meetingIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Meetings</h3>                
+                <span className="fs-sm fw-normal text-muted">Manage all aspects of your project meetings from agenda distribution</span>
+              </a>
+              </div>
+            </div>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/bidding/" + id} style={{ 'text-decoration': 'none' }}>
+                <img src={biddingIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Biddings</h3>
+                <span className="fs-sm fw-normal text-muted">Manage all the bid packages and bidding proceses</span>
+              </Link>
+              </div>
+            </div>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+              <a className="d-block nav-heading text-center mb-2 mt-2" href="/actionplan" style={{ 'text-decoration': 'none' }}>
+                <img src={actionplanIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Action Plan</h3>
+                <span className="fs-sm fw-normal text-muted">Clearly defined, centralized, and organized the project-specific requirements</span>
+              </a>
+              </div>
+            </div>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
               <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/drawing/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={drawingsIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Drawings</h3>
@@ -131,44 +175,6 @@ export default class BoardUser extends Component {
               </a>
               </div>
             </div>
-            
-            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm">
-              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/bidding/" + id} style={{ 'text-decoration': 'none' }}>
-                <img src={biddingIcon} alt="" width="50"/>
-                <h3 className="h5 nav-heading-title mb-0">Biddings</h3>
-                <span className="fs-sm fw-normal text-muted">Manage all the bid packages and bidding proceses</span>
-              </Link>
-              </div>
-            </div>
-            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mb-2 mt-2" data-toggle="modal" data-target="#meetingModal" href="#" style={{ 'text-decoration': 'none' }}>
-                <img src={meetingIcon} alt="" width="50"/>
-                <h3 className="h5 nav-heading-title mb-0">Meetings</h3>                
-                <span className="fs-sm fw-normal text-muted">Manage all aspects of your project meetings from agenda distribution</span>
-              </a>
-              </div>
-            </div>
-            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mb-2 mt-2" href="/rfi" style={{ 'text-decoration': 'none' }}>
-                <img src={rfiIcon} alt="" width="50"/>
-                <h3 className="h5 nav-heading-title mb-0">RFI</h3>
-                <span className="fs-sm fw-normal text-muted">Help to run the project smoothly and on schedule</span>
-              </a>
-              </div>
-            </div>
-            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mb-2 mt-2" href="/actionplan" style={{ 'text-decoration': 'none' }}>
-                <img src={actionplanIcon} alt="" width="50"/>
-                <h3 className="h5 nav-heading-title mb-0">Action Plan</h3>
-                <span className="fs-sm fw-normal text-muted">Clearly defined, centralized, and organized the project-specific requirements</span>
-              </a>
-              </div>
-            </div>
-            
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
               <a className="d-block nav-heading text-center mb-2 mt-2" href="/punchlist" style={{ 'text-decoration': 'none' }}>
@@ -178,7 +184,7 @@ export default class BoardUser extends Component {
               </a>
               </div>
             </div>
-            
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2"></div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
               <a className="d-block nav-heading text-center mb-2 mt-2" href="/document" style={{ 'text-decoration': 'none' }}>
@@ -188,19 +194,6 @@ export default class BoardUser extends Component {
               </a>
               </div>
             </div>
-            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2"></div>
-            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mb-2 mt-2"  data-toggle="modal" data-target="#dlModal" href="#" style={{ 'text-decoration': 'none' }}>
-                <img src={dailylogIcon} alt="" width="50"/>
-                <h3 className="h5 nav-heading-title mb-0">Daily Log</h3>
-                <span className="fs-sm fw-normal text-muted">Keep track of every detail at job site each and everyday</span>
-              </a>
-              </div>
-            </div>
-            
-           
-           
           </div>
           {/* Finance Management */}
           {showModeratorBoard && (
@@ -259,47 +252,8 @@ export default class BoardUser extends Component {
 
           {/*resource management starts*/}
           {showModeratorBoard && (
-            <div>
-              <ResourceCard/>
-            </div>
-          )}
-          {showModeratorBoard && (
           <div>
-          {/* <h3>Manage resources</h3>
-          <div className="row">
-            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm">
-                <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/timesheet/" + id}>
-                  <img src={documentIcon} alt="" width="50"/><br />
-                  <h3 className="h5 nav-heading-title mb-0">Timesheet</h3>
-                </Link>
-                </div>
-              </div>
-            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm">
-                <a className="d-block nav-heading text-center mb-2 mt-2" href="/crew">
-                  <img src={meetingIcon} alt="" width="50"/>
-                  <h3 className="h5 nav-heading-title mb-0">Crews</h3>
-                </a>
-                </div>
-              </div>
-            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm">
-                <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/equipments/" + id}>
-                  <img src={bulldozerIcon} alt="" width="50"/>
-                  <h3 className="h5 nav-heading-title mb-0">Equipments</h3>
-                  </Link>
-                </div>
-              </div>
-            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm">
-                  <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/schedule/" + id}>
-                      <img src={dailylogIcon} alt="" width="50"/>
-                      <h3 className="h5 nav-heading-title mb-0">Schedule</h3>                
-                  </Link>
-                </div>
-              </div>
-            </div> */}
+              <ResourceCard/>
           </div>
           )}
           {/*resource management ends*/}

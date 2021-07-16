@@ -1,55 +1,62 @@
 import React, { Component } from "react";
+import Card from 'react-bootstrap/Card';
 
 class EquipDetails extends Component {
 
   render() {
     return (
-      <div className="">
-        <h2>New Vendor</h2><hr/>
-        <div className="">
-          <h5>235E - ExcavatorABC</h5>
+      <div>
+        <Card
+          bg={'success'}
+          text={'white'}
+          className="mb-2">    
+          <Card.Body>
+            <Card.Title><h4>Equipment</h4></Card.Title>
+              <h5>235E - ExcavatorABC</h5>
+          </Card.Body>
+        </Card>
+        <div className="text-right">
+                    <from>
+                      <a href="#" className="btn btn-success mr-3">Edit</a>
+                      <a href="#" className="btn btn-primary">View Usage</a>
+                    </from>
+                  </div>
 
-        <p>Id : </p>
-          <p> 235E </p>
-          <br/>
+        <div class="container">                                
+                    <div class="row">
+                      <div class="col-6">
+                        <label htmlFor="">Id</label>
+                        <input className="form-control" type="text" required/>
+                      </div>
 
+                      <div class="col-6">
+                        <label htmlFor="">Brand/code</label>
+                        <input className="form-control" type="text" required/>
+                      </div>
+                   </div>
+                  </div>
+                  <div class="container">                                
+                    <div class="row">
+                      <div class="col-6">
+                        <label htmlFor="">Date issued</label>
+                        <input className="form-control" type="date" id="timesheet" name="timesheet"/>
+                      </div>
 
-
-          <label htmlFor="">Company Name</label>
-          <input className="form-control" type="text" required/>
-          <br/>
-
-          <label htmlFor="">Type</label>
-
-          <select className="form-control" name="" id="">
-            <option value="role1">concrete</option>
-            <option value="role2">electronic</option>
-            <option value="role3">other</option>
-          </select><br />
-
-          <label htmlFor="">Contact No</label>
-          <input className="form-control" type="number" required/>
-          <br/>
-
-          <label htmlFor="">Email</label>
-          <input className="form-control" type="text" required/>
-          <br/>
-
-          
-          <label htmlFor="">Contact Person Name</label>
-          <input className="form-control" type="text" required/>
-          <br/>
-          <br/>
-
-          <div>
-          <a href="#" className="btn btn-success">Update</a>
-          </div>
-          <div>
-          <a href="/vendors" className="btn btn-success">Cancel</a>
-          </div>
-        </div>
-        
-
+                      <div class="col-6">
+                        <label htmlFor="">Condition</label>
+                        <select className="form-control" name="" id="">
+                            <option value="role1">Good(New)</option>
+                            <option value="role2">Fair</option>
+                            <option value="role3">Poor</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label htmlFor="">Description</label>
+                    <input className="form-control" type="text" required/>
+                  </div>
+                  <br/>
       </div>
     );
   }

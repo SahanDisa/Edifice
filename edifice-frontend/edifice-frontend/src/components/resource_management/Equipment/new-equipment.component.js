@@ -50,10 +50,6 @@ class NewEquip extends Component {
                     <label htmlFor="">Description</label>
                     <input className="form-control" type="text" required/>
                   </div>
-
-
-
-
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-primary">Add</button>

@@ -123,9 +123,9 @@ export default class AddDirectCost extends Component{
                 onChange={this.onChangeCostCode}
                 name="costCode"
               >
-                <option>000-General</option>
-                <option>200-Site Preparation</option>
-                <option>220-Site Demolition</option>
+                <option>010-Maintenance Equipment</option>
+                <option>924-Sodding</option>
+                <option>100-Visual Display Boards</option>
                 <option>230-Site Clearing</option>
                 <option>240-Dewatering</option>
               </select>
@@ -150,11 +150,9 @@ export default class AddDirectCost extends Component{
                 onChange={this.onChangeCategory}
                 name="category"
               >
-                <option>Labor</option>
-                <option>Equipment</option>
-                <option>Materials</option>
-                <option>Commitment</option>
-                <option>Owner Cost</option>
+                <option>Expense</option>
+                <option>Invoice</option>
+                <option>Payroll</option>
               </select>
             </div>
 
@@ -171,7 +169,7 @@ export default class AddDirectCost extends Component{
               />
             </div>
             <div className="form-group">
-              <label htmlFor="ammount">Ammount</label>
+              <label htmlFor="amount">Ammount</label>
               <input
                 type="text"
                 className="form-control"

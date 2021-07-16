@@ -2,20 +2,43 @@ import React, { Component } from 'react';
 import Create from "./create.component";
 import AddWorker from "./add_worker.component";
 import Approve from "./approve.component";
+import Card from 'react-bootstrap/Card';
 
 
 class Timesheet extends Component {
     render() {
         return (
           <div>
+            <Card
+              bg={'success'}
+              text={'white'}
+              className="mb-2">    
+              <Card.Body>
+                <Card.Title><h4>Timesheet</h4></Card.Title>
+              </Card.Body>
+            </Card> 
+            <br/>
+
             <div class="container">                                
-                <div class="row">
-                    <div class="col-4">
-                        <h2>Timesheet</h2>
-                    </div>
-                    <div class="col-8 align-items-end">
-                        <a href="/customize" className="btn btn-primary mr-3"> Customize</a>
-                        <a href="#" className="btn btn-primary mr-3"> Export PDF</a>
+                <div class="row">   
+                    <form className="row g-3">
+                        <div className="col-auto">
+                            <input className="form-control" type="text" placeholder="Search"/>  
+                        </div>
+
+                        <div className="col-auto">
+                            <a href="" className="btn btn-success">search</a>
+                        </div>
+
+                        <div className="col-auto">
+                            <input className="form-control" type="date" id="birthday" name="birthday"/>
+                            <br />
+                        </div>
+                    </form>
+
+                    <div class="col-6 align-items-end text-right">
+                        <a href="/customize" className="btn btn-secondary mr-3"> Customize</a>
+                        <a href="#" className="btn btn-secondary mr-3"> Export PDF</a>
                         <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#createNew"> Create New</a>
 
                         {/*------------------------------------ Add Emp Starts------------------------------------------------------------------ */}
@@ -23,25 +46,11 @@ class Timesheet extends Component {
                             <Create/>
                         </div>
                         {/*-------------------------------------Add Emp Ends----------------------------------------------------------------------*/}
-                </div>
+                    </div>
                 </div>
             </div>
             <hr />
 
-            <form className="row g-3">
-              <div className="col-auto">
-                <input className="form-control" type="text" placeholder="Search"/>  
-              </div>
-
-              <div className="col-auto">
-                <a href="" className="btn btn-success">search</a>
-              </div>
-
-              <div className="col-auto">
-                <input className="form-control" type="date" id="birthday" name="birthday"/>
-                <br />
-              </div>
-            </form>
 
             <hr/>
 

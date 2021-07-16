@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 
 const data = [
-    {edit: <a href="/managesmeetings/update" className="btn btn-success">Edit</a>}
+    {edit: <a href="/managesmeetings/update" className="btn btn-success">Edit</a>, logdate: "15/07/202", weatherlog: "Normal", sky: "Cloudy", temp: "28", precipitation: "Light Rain", wind:"calm"}
   ];
 const columns = [
     {
@@ -35,12 +35,14 @@ const columns = [
         text: 'Precipitation',
         headerStyle: (column, colIndex) => {
         return { width: '10%', textAlign: 'center' };}
-    }, {
-      dataField: 'calamity',
-      text: 'Calamity',
-      headerStyle: (column, colIndex) => {
-          return { width: '10%', textAlign: 'center' };}
-    }, {
+    },
+    // {
+    //   dataField: 'calamity',
+    //   text: 'Calamity',
+    //   headerStyle: (column, colIndex) => {
+    //       return { width: '10%', textAlign: 'center' };}
+    // },
+    {
       dataField: 'wind',
       text: 'Wind',
       headerStyle: (column, colIndex) => {
@@ -50,12 +52,13 @@ const columns = [
         text: 'Comment',
         headerStyle: (column, colIndex) => {
         return { width: '10%', textAlign: 'center' };}
-    }, {
-        dataField: 'atatchment',
-        text: 'Attachment',
-        headerStyle: (column, colIndex) => {
-            return { width: '10%', textAlign: 'center' };}
-    }
+    },
+    // {
+    //     dataField: 'atatchment',
+    //     text: 'Attachment',
+    //     headerStyle: (column, colIndex) => {
+    //         return { width: '10%', textAlign: 'center' };}
+    // }
 ];
 
 class DlConfiguration extends Component {
@@ -120,8 +123,10 @@ class DlConfiguration extends Component {
                                 <div class="card-body"></div>
                             </div>
                         </div>  
-                    </div>           
+                    </div>
+                    <a className="btn btn-primary mt-2" href="">+ Daily Log Category</a>           
                 </div>
+                <a className="btn btn-success" href="/projectmanagementhome/1">Done</a>           
             </div>
         );
     }
