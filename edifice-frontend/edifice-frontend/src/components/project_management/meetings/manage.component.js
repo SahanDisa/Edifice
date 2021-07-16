@@ -3,7 +3,9 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import CreateMeeting from './createmeeting.component';
 
 const data = [
-  {edit: <a href="/managesmeetings/update" className="btn btn-primary">Edit</a>, view:<a href="/managesmeetings/view" className="btn btn-success">View</a>}
+  {edit: <a href="/managesmeetings/update" className="btn btn-primary">Edit</a>, view:<a href="/managesmeetings/view" className="btn btn-success">View</a>,
+  overview: "Updates on this week", date: "17/07/2021", time: "10:30 AM", location: "Zoom Platform", status: "Scheduled", items: "2", extra: ""
+  }
 ];
 const columns = [
   {
@@ -48,7 +50,7 @@ const columns = [
     return { width: '7%', textAlign: 'center' };}
   }, {
     dataField: 'extra',
-    text: '',
+    text: 'Extra',
     headerStyle: (column, colIndex) => {
         return { width: '7%', textAlign: 'center' };}
   }];
@@ -90,7 +92,7 @@ class ManageMeetings extends Component {
                   <div class="card">
                     <div class="card-header" id="headingOne">
                       <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Weekly OAC Metting</button>
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Weekly OAC Meeting</button>
                       </h2>
                     </div>
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
@@ -110,29 +112,6 @@ class ManageMeetings extends Component {
                       </div>
                     </div>
                   </div>
-                  <div class="card">
-                    <div class="card-header" id="headingTwo">
-                      <h2 class="mb-0">
-                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">2nd category</button>
-                      </h2>
-                    </div>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                      <div class="card-body">
-                        <div className="">
-                          <div class="col-md-12 text-right mb-2">
-                            <a href="#" className="btn btn-primary">+ Follow-up Meeting</a>
-                          </div>
-                          <BootstrapTable 
-                            hover
-                            keyField='location'
-                            data={ data }
-                            columns={ columns } 
-                            cellEdit={ false }
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>  
                 </div>
                 <div>
                   <div class="col-md-12 text-left mt-3 mb-3">
@@ -141,8 +120,9 @@ class ManageMeetings extends Component {
                 </div>
               </div>
               
-              <div class="tab-pane fade" id="comment" role="tabpanel" aria-labelledby="recyclebin">
-                
+              <div className="tab-pane fade" id="comment" role="tabpanel" aria-labelledby="recyclebin">
+                <h5 className="mt-3 ml-9">There is no meetings in the Recycle Bin</h5>
+                <a href="/projectmanagementhome/1" type="submit" className="btn btn-primary mt-2">Ok</a>
               </div>
 
             </div>

@@ -9,7 +9,11 @@ class ViewPL extends Component {
       <div className="">
         <h2>1 - Replace the Broken Switch Plate</h2><hr/>
         <div className="mb-3">
-          <form>
+        <div className="col-sm-6 mb-3">
+                <h5>Date: 2021-07-15</h5>
+                <h5>Status : <b>Initiated 🟢</b></h5>
+              </div>
+          {/* <form>
             <div className="form-row">
                 <div className="form-group col-md-3 form-check">
                     <label htmlFor="" className="form-check-label">Status: Open</label>
@@ -18,7 +22,7 @@ class ViewPL extends Component {
                     <label htmlFor="" className="form-check-label">Date: 2021-07-15</label>
                 </div>
             </div>
-        </form>
+        </form> */}
         <div>
             
             <ul class="nav nav-tabs">
@@ -44,8 +48,8 @@ class ViewPL extends Component {
                                 <input className="form-control" type="text" value="Switch and Hardware" readOnly/>
                             </div>
                             <div className="form-group col-md-4">
-                                <label htmlFor="">Type</label>
-                                <input className="form-control" type="text" value="Damaged by others" readOnly/>
+                                <label htmlFor="">Reason</label>
+                                <input className="form-control" type="text" value="Damaged by one of the labourer" readOnly/>
                             </div>
                         </div>
                         <div className="form-row">
@@ -111,7 +115,7 @@ class ViewPL extends Component {
                     </div>
                 </div>
             </div>
-            <a href="/punchlist" className="btn btn-success mt-2 mr-2">Done</a>
+            <a href="/projectmanagementhome/1" className="btn btn-primary mt-2 mr-2">Done</a>
           </div>
         </div>
       </div>
