@@ -164,7 +164,7 @@ export default class AddProject extends Component {
             </div>
 
             <a href="/adddepartment" onClick={this.saveProject} className="btn btn-success">
-              Submit
+              Next
             </a>
             </div>
             <div className="container col-4">
