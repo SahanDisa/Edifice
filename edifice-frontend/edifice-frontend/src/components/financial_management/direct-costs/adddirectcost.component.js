@@ -103,7 +103,7 @@ export default class AddDirectCost extends Component{
           </div>
         ) : (
           <div class="container">
-            <h2>Add New Direct Cost</h2>
+            <h2>New Direct Cost</h2>
             <div className="form-group">
               <label htmlFor="costCode">Cost Code</label>
              {/* <input
