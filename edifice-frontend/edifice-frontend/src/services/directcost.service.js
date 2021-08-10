@@ -12,6 +12,27 @@ class DirectCostDataService {
   create(data) {
     return http.post(`/projects/directcost/`, data);
   }
+
+/*added new*/
+update(id, data){
+  return http.put(`/projects/directcost/${id}`, data);
+}
+
+remove(id){
+  return http.delete(`/projects/directcost/${id}`);
+}
+
+removeAll(){
+  return http.delete(`/projects/directcost`);
+}
+
+findByCostCode(costCode){
+  return http.get(`/projects/directcost?costCode=${costCode}`);
+}
+
+
+/*added new*/
+
 }
 
 export default new DirectCostDataService();
