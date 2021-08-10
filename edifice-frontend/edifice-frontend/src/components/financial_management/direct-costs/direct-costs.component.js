@@ -13,7 +13,7 @@ import Fab from '@material-ui/core/Fab';
 
 //styles classes
 
-export default class Budget extends Component {
+export default class DirectCost extends Component {
     constructor(props) {
       super(props);
       this.retrieveDirectCost = this.retrieveDirectCost.bind(this);

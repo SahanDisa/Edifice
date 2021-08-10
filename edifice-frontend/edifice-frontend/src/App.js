@@ -67,8 +67,8 @@ import UpdateMeetings from "./components/project_management/meetings/update.comp
 import ViewMeetings from "./components/project_management/meetings/view.component";
 
 import BudgetHome from "./components/financial_management/budget/budget.component";
-import PrimeContracts from "./components/financial_management/prime-contracts/prime-contracts.component";
-import CreatePrimeContracts from "./components/financial_management/prime-contracts/createPrimeContracts.component";
+import PrimeContracts from "./components/financial_management/prime-contracts/primecontracts.component";
+import CreatePrimeContracts from "./components/financial_management/prime-contracts/addprimecontract.component";
 import DirectCostHome from "./components/financial_management/direct-costs/direct-costs.component";
 import Invoicing from "./components/financial_management/invoicing/invoicing.component";
 
@@ -301,11 +301,11 @@ class App extends Component {
 			      <Route path="/budget/:id" component={BudgetHome} />
             <Route path="/addbudget/:id" component={AddBudget} />
             <Route path="/prime-contracts" component={PrimeContracts} />
-            <Route path="/create-prime-contracts" component={CreatePrimeContracts} />
+            <Route path="/addprimecontract/:id" component={CreatePrimeContracts} />
             <Route path="/directcost/:id" component={DirectCostHome} />
             <Route path="/invoicing" component={Invoicing} />
             
-            <Route path="/prime-contracts" component={PrimeContracts} />
+            <Route path="/primecontract/:id" component={PrimeContracts} />
 
             {/*resource management */}
             <Route path="/timesheet" component={Timesheet} />
@@ -326,6 +326,7 @@ class App extends Component {
             {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
             <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
             <Route path="/addsov/:id" component={AddSov} />
+            
           </Switch>
         </div>
       </div>

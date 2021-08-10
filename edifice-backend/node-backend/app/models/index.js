@@ -35,6 +35,7 @@ db.demo = require("./demo.model")(sequelize, Sequelize);
 db.directcosts = require("./directcost.model.js")(sequelize, Sequelize);
 db.commitments = require("./commitment.model.js")(sequelize, Sequelize);
 db.sovs = require("./sov.model.js")(sequelize, Sequelize);
+db.primecontracts = require("./primecontract.model.js")(sequelize, Sequelize);
 
 
 //resource management
@@ -142,6 +143,13 @@ db.meetingcategory.hasMany(db.meetings, { as: "meetings" });
 db.meetings.belongsTo(db.meetingcategory, {
   foreignKey: "mcId",
   as: "mcategory",
+});
+
+// One project has many drawings
+db.projects.hasOne(db.primecontracts, { as: "primecontracts" });
+db.primecontracts.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
 });
 
 db.ROLES = ["user", "admin", "moderator"];
