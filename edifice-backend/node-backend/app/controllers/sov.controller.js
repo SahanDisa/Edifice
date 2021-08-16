@@ -1,5 +1,5 @@
 const db = require("./../models/index");
-const Project = db.projects;
+const Commitment = db.commitments;
 const Sov = db.sovs;
 
 // create a drawing
@@ -21,7 +21,7 @@ exports.create = (req, res) => {
     //executed:req.body.executed,
     ammountRemaining:req.body.ammountRemaining,
 
-    projectId: req.body.projectId,
+    commitmentId: req.body.commitmentId,
   };
 
   // Save Project in the database
@@ -42,7 +42,7 @@ exports.findAll = (req, res) => {
   const id = req.params.id;
 
   Sov.findAll({ where: {
-    projectId: id
+    commitmentId: id
   }})
     .then(data => {
       res.send(data);
