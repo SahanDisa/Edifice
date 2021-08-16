@@ -102,8 +102,15 @@ db.directcosts.belongsTo(db.projects, {
   as: "project",
 });
 
-// One project has many drawings
+/* One project has one commitments table
 db.projects.hasOne(db.commitments, { as: "commitments" });
+db.commitments.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+}); */
+
+
+db.projects.hasMany(db.commitments, { as: "commitments" });
 db.commitments.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
@@ -111,10 +118,10 @@ db.commitments.belongsTo(db.projects, {
 
 
 // One project has 
-db.projects.hasOne(db.sovs, { as: "sovs" });
-db.sovs.belongsTo(db.projects, {
-  foreignKey: "projectId",
-  as: "project",
+db.commitments.hasMany(db.sovs, { as: "sovs" });
+db.sovs.belongsTo(db.commitments, {
+  foreignKey: "commitmentId",
+  as: "commitment",
 });
 
 //One category has many equipments

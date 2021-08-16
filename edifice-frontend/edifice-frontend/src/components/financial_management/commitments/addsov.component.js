@@ -29,7 +29,8 @@ export default class CreatePrimeContracts extends Component{
       billedToDate: "", 
       ammountRemaining :"",
 
-      projectId: this.props.match.params.id,  
+      projectId: this.props.match.params.id, 
+      commitmentId: this.props.match.params.id,   
       submitted: false
     };
   }
@@ -69,7 +70,8 @@ export default class CreatePrimeContracts extends Component{
       billedToDate: this.state.billedToDate,
       ammountRemaining:this.state.ammountRemaining,
       
-      projectId: this.state.projectId
+      projectId: this.state.projectId,
+      commitmentId: this.state.commitmentId
     };
 
     SovDataService.create(data)
@@ -82,6 +84,7 @@ export default class CreatePrimeContracts extends Component{
       ammountRemaining:response.data.ammountRemaining,
           
           projectId: response.data.projectId,
+          commitmentId: response.data.commitmentId,
 
           submitted: true
         });
@@ -101,13 +104,14 @@ export default class CreatePrimeContracts extends Component{
       ammountRemaining: "", 
       
       projectId: this.props.match.params.id,
+      commitmentId: this.props.match.params.id,
 
       submitted: false
     });
   }
 
   render() {
-    const {projectId} = this.state;
+    const {projectId, commitmentId} = this.state;
     return (
         <div className="container">
         {this.state.submitted ? (
@@ -116,8 +120,8 @@ export default class CreatePrimeContracts extends Component{
             <button className="btn btn-success" onClick={this.newSov}>
              Create Another SoV
             </button>&nbsp;&nbsp;
-            <Link  to={"/sov/"+projectId} className="btn btn-success">View SoV</Link>&nbsp;&nbsp;
-            <Link  to={"/emailCommitment/"+projectId} className="btn btn-success">Email SoV</Link>
+            <Link  to={"/sov/"+commitmentId} className="btn btn-success">View SoVs</Link>&nbsp;&nbsp;
+           
           </div>
         ) : (
             <div class="container">
@@ -212,13 +216,21 @@ export default class CreatePrimeContracts extends Component{
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h5><strong>Step 1</strong><br/>Create SoV</h5> </TimelineContent>
+                <TimelineContent><h5><strong>Step 1</strong><br/>Create SoV for the commitment</h5> </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot />
+                  <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 2</strong><br/>Email</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 2</strong><br/>Save SoV</h6></TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                 
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 3</strong><br/>View the SoVs for the Commitment</h6></TimelineContent>
               </TimelineItem>
             </Timeline>
             </div>
@@ -228,9 +240,7 @@ export default class CreatePrimeContracts extends Component{
             <button onClick={this.saveSov} className="btn btn-success">
               Save
             </button>&nbsp;&nbsp;
-            <button onClick={this.saveSov} className="btn btn-success">
-           Email the Commitment
-            </button>&nbsp;&nbsp;
+            
            &nbsp;&nbsp;
             <br /><br /><br />
             </div>
