@@ -410,8 +410,23 @@ export default class CreatePrimeContracts extends Component{
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot />
+                  <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 2</strong><br/>Add SoV to a Commitment</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 2</strong><br/>View the created Commitment</h6></TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 3</strong><br/>Add SoV to the Commitment</h6></TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 4</strong><br/>Save & Email the Commitment</h6></TimelineContent>
               </TimelineItem>
             </Timeline>
             </div>
@@ -424,9 +439,10 @@ export default class CreatePrimeContracts extends Component{
             <button onClick={this.saveCommitment} className="btn btn-success">
               Save
             </button>&nbsp;&nbsp;
+            <Link to={"/commitment/" + projectId}>
             <button onClick={this.saveCommitment} className="btn btn-success">
             Cancel
-            </button>&nbsp;&nbsp;
+            </button></Link>&nbsp;&nbsp;
            &nbsp;&nbsp;
             <br /><br /><br />
             </div>
