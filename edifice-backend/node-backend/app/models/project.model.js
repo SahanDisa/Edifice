@@ -9,6 +9,12 @@ module.exports = (sequelize, Sequelize) => {
       location:{
         type: Sequelize.STRING    
       },
+      // startdate:{
+      //   type: Sequelize.STRING  
+      // },
+      // endate:{
+      //   type: Sequelize.STRING  
+      // },
       published: {
         type: Sequelize.BOOLEAN
       }}, {

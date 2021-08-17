@@ -26,8 +26,14 @@ db.sequelize = sequelize;
 
 db.users = require("./user.model.js")(sequelize, Sequelize);
 db.roles = require("./role.model.js")(sequelize, Sequelize);
+// Project Component Model Classes
 db.projects = require("./project.model.js")(sequelize, Sequelize);
+db.departments = require("./department.model.js")(sequelize, Sequelize);
+db.milestones = require("./milestone.model.js")(sequelize, Sequelize);
+// Drawing Component Model Classes
+db.drawingcategory = require("./drawing-category.model")(sequelize, Sequelize);
 db.drawings = require("./drawing.model.js")(sequelize, Sequelize);
+// Bidding Compoennt Model Classes
 db.biddings = require("./bidding.model")(sequelize, Sequelize);
 db.projectuser = require("./projectuser.model")(sequelize, Sequelize);
 db.budgets = require("./budget.model.js")(sequelize, Sequelize);
@@ -45,7 +51,18 @@ db.categorys = require("./equipment-category.model")(sequelize, Sequelize);
 db.meetings = require("./meeting.model")(sequelize, Sequelize);
 db.meetingcategory = require("./meetingcategory.model")(sequelize, Sequelize);
 
-
+// One project has many departments
+db.projects.hasMany(db.departments, { as: "departments" });
+db.departments.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+// One project has many milestones
+db.projects.hasMany(db.milestones, { as: "milestones" });
+db.milestones.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
 // One user has one project profile
 db.users.hasOne(db.projectuser, { as: "projectuser" });
 db.projectuser.belongsTo(db.users, {
@@ -65,12 +82,22 @@ db.projects.belongsToMany(db.projectuser, {
   foreignKey: "user_id",
 });
 
+// One project has many drawing categories
+db.projects.hasMany(db.drawings, { as: "drawingcategory" });
+db.drawingcategory.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
 // One project has many drawings
 db.projects.hasMany(db.drawings, { as: "drawings" });
 db.drawings.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
+
+// One drawing has one drawing category
+
 //One project has many biddings
 db.projects.hasMany(db.biddings, { as: "biddings" });
 db.biddings.belongsTo(db.projects, {
