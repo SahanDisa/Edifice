@@ -32,6 +32,7 @@ require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require("./app/routes/project.routes")(app);
 require("./app/routes/drawing.routes")(app);
+require("./app/routes/drawing-category.routes")(app);
 require("./app/routes/bidding.routes")(app);
 require('./app/routes/file.routes')(app);
 require('./app/routes/projectuser.routes')(app);

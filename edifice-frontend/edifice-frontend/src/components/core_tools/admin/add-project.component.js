@@ -188,7 +188,6 @@ export default class AddProject extends Component {
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                
                 <TimelineContent><h6><strong>Step 3 :</strong>Define milestones</h6></TimelineContent>
               </TimelineItem>
               <TimelineItem>
