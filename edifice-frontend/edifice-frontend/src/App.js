@@ -35,6 +35,7 @@ import ViewSingleDrawingCategory from "./components/project_management/drawings/
 import AddPhoto from "./components/project_management/photos/addphoto.component";
 import ViewSingleDrawing from "./components/project_management/drawings/drawing-singlepage.component";
 import PhotosHome from "./components/project_management/photos/photos.component";
+import AddAlbum from "./components/project_management/photos/addalbum.component";
 import BiddingHome from "./components/project_management/biddings/bidding.component";
 import AddBidding from "./components/project_management/biddings/addbidding.component";
 import ViewSpec from "./components/project_management/biddings/viewspec.component";
@@ -295,8 +296,9 @@ class App extends Component {
             <Route path="/adddrawing/:id" component={AddDrawing} />
             <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
             {/* Photo Component Routes */}
-            <Route path="/photos" component={PhotosHome} />
+            <Route path="/photos/:id" component={PhotosHome} />
             <Route path="/addphoto" component={AddPhoto}/>
+            <Route path="/addalbum/:id" component={AddAlbum}/>
             {/* Bidding Component Routes  */}
             <Route path="/bidding/:id" component={BiddingHome} /> 
             <Route path="/addbidding" component={AddBidding} /> 
