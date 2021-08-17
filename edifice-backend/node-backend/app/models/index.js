@@ -95,8 +95,8 @@ db.users.belongsToMany(db.roles, {
   otherKey: "roleId"
 });
 
-/* One project has one direct cost*/
-db.projects.hasOne(db.directcosts, { as: "directcosts" });
+/* One project has many direct cost*/
+db.projects.hasMany(db.directcosts, { as: "directcosts" });
 db.directcosts.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",

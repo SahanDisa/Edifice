@@ -105,7 +105,7 @@ import AddCommitment from "./components/financial_management/commitments/addcomm
 import ViewSingleCommitment from "./components/financial_management/commitments/commitment-singlepage.component";
 import AddSov from "./components/financial_management/commitments/addsov.component";
 
-
+import ViewSingleDirectCost from "./components/financial_management/direct-costs/directcost-singlepage.component";
 
 class App extends Component {
   constructor(props) {
@@ -326,7 +326,9 @@ class App extends Component {
             {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
             <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
             <Route path="/addsov/:id" component={AddSov} />
-            
+            <Route path="/viewdirectcost/:id" component={ViewSingleDirectCost} />
+
+
           </Switch>
         </div>
       </div>

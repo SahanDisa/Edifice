@@ -7,8 +7,12 @@ export default class AddDirectCost extends Component{
   constructor(props) {
     super(props);
     this.onChangeCostCode = this.onChangeCostCode.bind(this);
+    this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeCategory = this.onChangeCategory.bind(this);
-    this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangeVendor = this.onChangeVendor.bind(this);
+    this.onChangeEmployee = this.onChangeEmployee.bind(this);
+    this.onChangeReceivedDate = this.onChangeReceivedDate.bind(this);
+    this.onChangePaidDate = this.onChangePaidDate.bind(this);
     this.onChangeAmmount= this.onChangeAmmount.bind(this);
     this.saveDirectCost = this.saveDirectCost.bind(this);
     this.newDirectCost = this.newDirectCost.bind(this);
@@ -16,8 +20,12 @@ export default class AddDirectCost extends Component{
     this.state = {
       id: null,
       costCode :"",
+      description :"",
       category :"",
-      date :"",
+      vendor :"",
+      employee :"",
+      receivedDate :"",
+      paidDate :"",
       ammount: "",
       projectId: this.props.match.params.id,  
       submitted: false
@@ -30,14 +38,39 @@ export default class AddDirectCost extends Component{
     });
   }
 
+  onChangeDescription(e) {
+    this.setState({
+      description: e.target.value
+    });
+  }
+
   onChangeCategory(e) {
     this.setState({
       category: e.target.value
     });
   }
-  onChangeDate(e) {
+
+  onChangeVendor(e) {
     this.setState({
-      date: e.target.value
+      vendor: e.target.value
+    });
+  }
+
+  onChangeEmployee(e) {
+    this.setState({
+      employee: e.target.value
+    });
+  }
+
+  onChangeReceivedDate(e) {
+    this.setState({
+      receivedDate: e.target.value
+    });
+  }
+
+  onChangePaidDate(e) {
+    this.setState({
+      paidDate: e.target.value
     });
   }
 
@@ -51,8 +84,12 @@ export default class AddDirectCost extends Component{
     console.log("clicked");  
     var data = {
       costCode: this.state.costCode,
+      description: this.state.description,
       category: this.state.category,
-      date: this.state.date,
+      vendor: this.state.vendor,
+      employee: this.state.employee,
+      receivedDate: this.state.receivedDate,
+      paidDate: this.state.paidDate,
       ammount: this.state.ammount,
       projectId: this.state.projectId
     };
@@ -62,8 +99,12 @@ export default class AddDirectCost extends Component{
         this.setState({
           id: response.data.id,
           costCode: response.data.costCode,
+          description: response.data.description,
           category: response.data.category,
-            date: response.data.date,
+          vendor: response.data.vendor,
+          employee: response.data.employee,
+            receivedDate: response.data.receivedDate,
+            paidDate: response.data.paidDate,
             ammount: response.data.ammount,
             projectId: response.data.projectId,
           submitted: true
@@ -79,8 +120,12 @@ export default class AddDirectCost extends Component{
     this.setState({
       id: null,
       costCode: "",
+      desription: "",
       category: "",
-      date: "",
+      vendor: "",
+      employee: "",
+      receivedDate: "",
+      paidDate: "",
       ammount: "",
       projectId: this.props.match.params.id,
 
@@ -132,6 +177,19 @@ export default class AddDirectCost extends Component{
             </div>
 
             <div className="form-group">
+              <label htmlFor="amount">Description</label>
+              <input
+                type="text"
+                className="form-control"
+                id="description"
+                required
+                value={this.state.description}
+                onChange={this.onChangeDescription}
+                name="description"
+              />
+            </div>
+
+            <div className="form-group">
               <label htmlFor="category">Category</label>
               {/*<input
                 type="text"
@@ -157,17 +215,57 @@ export default class AddDirectCost extends Component{
             </div>
 
             <div className="form-group">
-              <label htmlFor="date">Date</label>
+              <label htmlFor="amount">Vendor</label>
+              <input
+                type="text"
+                className="form-control"
+                id="vendor"
+                required
+                value={this.state.vendor}
+                onChange={this.onChangeVendor}
+                name="vendor"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="amount">Employee</label>
+              <input
+                type="text"
+                className="form-control"
+                id="employee"
+                required
+                value={this.state.employee}
+                onChange={this.onChangeEmployee}
+                name="employee"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="date">Received Date</label>
               <input
                 type="date"
                 className="form-control"
-                id="date"
+                id="receivedDate"
                 required
-                value={this.state.date}
-                onChange={this.onChangeDate}
-                name="date"
+                value={this.state.receivedDate}
+                onChange={this.onChangeReceivedDate}
+                name="receivedDate"
               />
             </div>
+
+            <div className="form-group">
+              <label htmlFor="date">Paid Date</label>
+              <input
+                type="date"
+                className="form-control"
+                id="paidDate"
+                required
+                value={this.state.paidDate}
+                onChange={this.onChangePaidDate}
+                name="paidDate"
+              />
+            </div>
+
             <div className="form-group">
               <label htmlFor="amount">Ammount</label>
               <input

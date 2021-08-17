@@ -230,7 +230,7 @@ exclusions : exclusions
     CommitmentDataService.delete(this.state.currentCommitment.id)
       .then(response => {
         console.log(response.data);
-        this.props.history.push('/commitment')
+        this.props.history.push('/commitment/1')
       })
       .catch(e => {
         console.log(e);
