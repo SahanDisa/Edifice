@@ -30,6 +30,8 @@ import AddDirectory from "./components/project_management/document/adddirectory.
 
 import DrawingHome from "./components/project_management/drawings/drawings.component";
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
+import AddDrawingCategory from "./components/project_management/drawings/adddrawingcategory.component";
+import ViewSingleDrawingCategory from "./components/project_management/drawings/drawing-category-singlepage";
 import AddPhoto from "./components/project_management/photos/addphoto.component";
 import ViewSingleDrawing from "./components/project_management/drawings/drawing-singlepage.component";
 import PhotosHome from "./components/project_management/photos/photos.component";
@@ -288,6 +290,8 @@ class App extends Component {
             <Route path="/directory" component={AddDirectory} />
             {/* Drawing Component Routes  */}
             <Route path="/drawing/:id" component={DrawingHome} />
+            <Route path="/adddrawingcategory/:id" component={AddDrawingCategory} />
+            <Route path="/viewdrawingcategory/:id" component={ViewSingleDrawingCategory}/>
             <Route path="/adddrawing/:id" component={AddDrawing} />
             <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
             {/* Photo Component Routes */}

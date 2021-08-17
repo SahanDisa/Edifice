@@ -7,7 +7,8 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 
-
+//JSX(Javascript XML)
+//https://addrwaing/projectId?=1
 export default class AddDrawing extends Component {
   constructor(props) {
     super(props);
