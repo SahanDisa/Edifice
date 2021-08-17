@@ -9,6 +9,51 @@ import buildIcon from "././../assets/PM/ibulldozer.png";
 import PersonIcon from '@material-ui/icons/Person';
 import Card from 'react-bootstrap/Card';
 
+//css styles
+const linkText={
+  color: "#FFFFFF",
+  textDecoration: "none"
+}
+
+const adminCardStyle = {
+  backgroundColor: "#273f7d",
+  color: "#ffffff",
+  "&:hover": {
+    backgroundColor: "#efefef"}
+}
+
+const modCardStyle = {
+  backgroundColor: "#6B7BA4",
+  color: "#ffffff",
+  "&:hover": {
+    backgroundColor: "#efefef"}
+}
+
+const userCardStyle = {
+  backgroundColor: "#6B7BA4",
+  color: "#ffffff",
+  "&:hover": {
+    backgroundColor: "#efefef"}
+}
+
+function makeButtonForRole(name) {
+  // return a lassana div
+  if(name=='ROLE_ADMIN'){
+    return <div className="d-inline-block pt-1 pl-2 pr-3 mt-1 mb-1 rounded" style={adminCardStyle}>
+    <h4><PersonIcon className="pb-1" style={{ fontSize:28 }}/> Admin</h4>
+    </div>;
+  }
+  else if(name=='ROLE_MODERATOR'){
+    return <div className="d-inline-block pt-1 pl-2 pr-3 mt-1 mb-1 rounded" style={modCardStyle}>
+    <h4><PersonIcon className="pb-1" style={{ fontSize:28 }}/> Moderator</h4>
+    </div>;
+  }
+  else if(name=='ROLE_USER'){
+    return <div className="d-inline-block pt-1 pl-2 pr-3 mt-1 mb-1 rounded" style={userCardStyle}>
+    <h4><PersonIcon className="pb-1" style={{ fontSize:28 }}/> User</h4>
+    </div>;
+  }
+}
 export default class Profile extends Component {
   constructor(props) {
     super(props);
@@ -58,7 +103,8 @@ export default class Profile extends Component {
                 <h3>Profile</h3>
                 <h6>Username : {currentUser.username}</h6>
                 <h6>Email : {currentUser.email}</h6>
-                <h6>Role  : Admin</h6> 
+                {/*  currentUser.roles.length-1 is to get last element  */} 
+                <h6>Role  : {currentUser.roles[currentUser.roles.length-1]}</h6> 
                 </div>
                 <div className="col-2">
                 <img
@@ -75,7 +121,6 @@ export default class Profile extends Component {
             </Card> 
         </div>
         </div>
-        {/* Page content */}
         <div className="row">
           <div className="col-6">
           <h3>My Account</h3>
@@ -114,15 +159,11 @@ export default class Profile extends Component {
           </div>
           <div className="col-6">
           <h3>My Roles & Permission</h3>
-          <h6>Authorities:</h6>
-              <ul>
-                {currentUser.roles &&
-                  currentUser.roles.map((role, index) => 
-                  <li className="list-group-item" key={index}><b>{role}</b></li>
-                  )
-                }
-              </ul>
-          <h6>Permission:</h6>
+            <div className="form-group">
+              {makeButtonForRole(currentUser.roles[currentUser.roles.length-1])}
+            </div>
+            
+          <h6>Permissions:</h6>
           <ul>
           <li className="list-group-item"><b>Project Management</b></li>
           <li className="list-group-item"><b>Finance Management</b></li>
