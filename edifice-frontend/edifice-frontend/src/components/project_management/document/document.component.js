@@ -4,7 +4,8 @@ import UploadService from "./../../../services/document.service";
 import DirectoryService from "../../../services/directory.service";
 import Card from 'react-bootstrap/Card';
 import { AccordViewer } from "./viewdocument.component";
-
+import Pdfviewer from "./pdfviewer.component";
+import UploadFiles from "./fileupload.component";
 
 export default class Documents extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ export default class Documents extends Component {
           </Link>
           <hr></hr>
           <div className="container">
-        <div className="container row">
+          <div className="container row">
             {directories &&
               directories.map((directory, index) => (
                     <div
@@ -91,24 +92,17 @@ export default class Documents extends Component {
             <hr></hr>
             <h3>View Documents</h3>
             <p>View necessary documents</p>
-            <embed
+            {/* <embed
                 src="https://www.pearsonhighered.com/assets/samplechapter/0/1/3/4/0134454170.pdf"
                 type="application/pdf"
                 frameBorder="0"
                 scrolling="auto"
                 height="500px"
                 width="100%"
-            ></embed>
-            {/* <div>
-              <Document
-                file="http://www.oas.org/juridico/PDFs/https://www.tendringdc.gov.uk/sites/default/files/documents/business/doing%20business%20with%20the%20council/RosemaryRd/3327-Preconstruction%20Information.pdf.pdf.pdf"
-                onLoadSuccess={onDocumentLoadSuccess}
-              >
-                <Page pageNumber={pageNumber} />
-              </Document>
-              <p>Page {pageNumber} of {numPages}</p>
-            </div> */}
+            ></embed> */}
             <AccordViewer />
+            {/* <Pdfviewer/> */}
+            <UploadFiles/>
           </div>
 
       );
