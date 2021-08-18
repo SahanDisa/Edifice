@@ -30,12 +30,17 @@ db.roles = require("./role.model.js")(sequelize, Sequelize);
 db.projects = require("./project.model.js")(sequelize, Sequelize);
 db.departments = require("./department.model.js")(sequelize, Sequelize);
 db.milestones = require("./milestone.model.js")(sequelize, Sequelize);
+db.projectuser = require("./projectuser.model")(sequelize, Sequelize);
 // Drawing Component Model Classes
 db.drawingcategory = require("./drawing-category.model")(sequelize, Sequelize);
 db.drawings = require("./drawing.model.js")(sequelize, Sequelize);
-// Bidding Compoennt Model Classes
+// Bidding Component Model Classes
 db.biddings = require("./bidding.model")(sequelize, Sequelize);
-db.projectuser = require("./projectuser.model")(sequelize, Sequelize);
+// Photo component Model Classes
+db.album = require("./photo-album.model")(sequelize, Sequelize);
+// Document component Model Classes
+db.directory = require("./directory.model")(sequelize, Sequelize);
+
 db.budgets = require("./budget.model.js")(sequelize, Sequelize);
 db.demo = require("./demo.model")(sequelize, Sequelize);
 db.directcosts = require("./directcost.model.js")(sequelize, Sequelize);
@@ -82,14 +87,14 @@ db.projects.belongsToMany(db.projectuser, {
   foreignKey: "user_id",
 });
 
-// One project has many drawing categories
+// One project has many drawing categories & one category has only one project
 db.projects.hasMany(db.drawings, { as: "drawingcategory" });
 db.drawingcategory.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
 
-// One project has many drawings
+// One project has many drawings 
 db.projects.hasMany(db.drawings, { as: "drawings" });
 db.drawings.belongsTo(db.projects, {
   foreignKey: "projectId",
@@ -97,6 +102,21 @@ db.drawings.belongsTo(db.projects, {
 });
 
 // One drawing has one drawing category
+
+// One project has many albums
+db.projects.hasMany(db.album,{as: "albums"});
+db.album.belongsTo(db.projects,{
+  foreignKey: "projectId",
+  as: "project",
+});
+// One album has many photos
+
+// One project can has many directories
+db.projects.hasMany(db.directory,{as: "directory"});
+db.directory.belongsTo(db.projects,{
+  foreignKey: "projectId",
+  as: "project",
+});
 
 //One project has many biddings
 db.projects.hasMany(db.biddings, { as: "biddings" });

@@ -167,11 +167,11 @@ export default class BoardUser extends Component {
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mb-2 mt-2" href="/photos" style={{ 'text-decoration': 'none' }}>
+              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/photos/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={photosIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Photos</h3>
                 <span className="fs-sm fw-normal text-muted">Manage and capture all the images</span>
-              </a>
+              </Link>
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
@@ -186,11 +186,11 @@ export default class BoardUser extends Component {
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2"></div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm">
-              <a className="d-block nav-heading text-center mb-2 mt-2" href="/document" style={{ 'text-decoration': 'none' }}>
+              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/document/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={documentIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Documents</h3>
                 <span className="fs-sm fw-normal text-muted">Manage documents</span>
-              </a>
+              </Link>
               </div>
             </div>
           </div>
