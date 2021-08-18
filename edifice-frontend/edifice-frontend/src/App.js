@@ -237,7 +237,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
             <Route path="/projectmanagement" component={BoardUser} />
-            <Route path="/adddepartment" component={AddDepartment} />
+            <Route path="/adddepartment/:id" component={AddDepartment} />
             {/* <Route path="/projectmanagementhome" component={ProjectManagementHome} /> */}
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
             <Route path="/portfolio" component={PortfolioHome} />

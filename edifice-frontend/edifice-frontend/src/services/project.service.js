@@ -31,6 +31,9 @@ class ProjectDataService {
   userProjects(id){
     return http.get(`/projects/user/list/${id}`);
   }
+  findlastProject(){
+    return http.get(`/projects/app/last`);
+  }
   // findPublished(){
   //   return http.get(`/projects?published=`)
   // }

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import ProjectDataService from "./../../../services/project.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -24,7 +25,9 @@ export default class AddProject extends Component {
       location: "", 
       published: false,
 
-      submitted: false
+      submitted: false,
+      lastproject:[],
+      currentIndex: -1,
     };
   }
 
@@ -68,6 +71,7 @@ export default class AddProject extends Component {
       .catch(e => {
         console.log(e);
       });
+    //this.state.getLastProjectID();
   }
 
   newProject() {
@@ -82,7 +86,21 @@ export default class AddProject extends Component {
     });
   }
 
+  getLastProjectID(){
+    ProjectDataService.findlastProject()
+      .then(response => {
+          this.setState({
+            lastproject: response.data
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+  }
+
   render() {
+    const {lastproject, currentIndex} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
@@ -91,6 +109,23 @@ export default class AddProject extends Component {
             <button className="btn btn-success" onClick={this.newProject}>
               Add Project
             </button>
+            <div className="container row">
+            {lastproject &&
+              lastproject.map((project, index) => (
+                <div
+                    className={
+                    "container col-3" +
+                    (index === currentIndex ? "active" : "")
+                    }
+                    key={index}
+                >
+                {/* unit data */}
+                <Link to={"/adddepartment/"+project.id} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
+                       Add Departments
+                </Link>
+                </div>
+            ))}
+            </div>
           </div>
         ) : (
           <div class="container">
@@ -143,7 +178,7 @@ export default class AddProject extends Component {
                 type="date"
                 className="form-control"
                 id="startDate"
-                //required
+                // required
                 // value={this.state.location}
                 // onChange={this.onChangeLocation}
                 name="startDate"
@@ -163,9 +198,9 @@ export default class AddProject extends Component {
               />
             </div>
 
-            <a href="/adddepartment" onClick={this.saveProject} className="btn btn-success">
-              Next
-            </a>
+            <button onClick={()=>{this.saveProject(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastProjectID()}} className="btn btn-success">
+              Create Project
+            </button>
             </div>
             <div className="container col-4">
             <Timeline>
