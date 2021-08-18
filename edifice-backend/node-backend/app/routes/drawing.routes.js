@@ -11,6 +11,9 @@ module.exports = app => {
   
     // Retrieve a single Drawing with id
     router.get("/:id", drawing.findOne);
+
+    // Get all category drawings
+    router.get("/cat/:id", drawing.findAllCat);
   
     app.use('/api/projects/drawing', router);
   };

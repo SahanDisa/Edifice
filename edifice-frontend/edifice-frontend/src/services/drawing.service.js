@@ -12,6 +12,10 @@ class DrawingDataService {
   create(data) {
     return http.post(`/projects/drawing/`, data);
   }
+
+  getCat(id){
+    return http.get(`/projects/drawing/cat/${id}`);
+  }
 }
 
 export default new DrawingDataService();

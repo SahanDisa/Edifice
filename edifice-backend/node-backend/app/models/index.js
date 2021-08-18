@@ -47,13 +47,23 @@ db.directcosts = require("./directcost.model.js")(sequelize, Sequelize);
 db.commitments = require("./commitment.model.js")(sequelize, Sequelize);
 db.sovs = require("./sov.model.js")(sequelize, Sequelize);
 
-
 //resource management
 db.equipments = require("./equipment.model")(sequelize, Sequelize);
 db.categorys = require("./equipment-category.model")(sequelize, Sequelize);
 
 db.meetings = require("./meeting.model")(sequelize, Sequelize);
 db.meetingcategory = require("./meetingcategory.model")(sequelize, Sequelize);
+
+//This section is for testing purposes
+db.demo1 = require("./demo1.model")(sequelize, Sequelize);
+db.demo2 = require("./demo2.model")(sequelize, Sequelize);
+
+db.demo1.hasOne(db.demo2,{as: "demo2"});
+db.demo2.belongsTo(db.demo1,{
+  foreignKey: "demo1Id",
+  as: "demo1"
+})
+//Testing section ends
 
 // One project has many departments
 db.projects.hasMany(db.departments, { as: "departments" });
