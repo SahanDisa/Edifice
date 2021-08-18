@@ -50,6 +50,22 @@ exports.findAll = (req, res) => {
     });  
 };
 
+// Get drawings for a given category
+exports.findAllCat = (req, res) => {
+  const id = req.params.id;
+
+  Drawing.findAll({ where: {
+    drawtype: id
+  }})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Project Drawings with id=" + id
+      });
+    });  
+};
 //Find a single drawing by Id
 exports.findOne = (req, res) => {
   const id = req.params.id;
