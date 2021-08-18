@@ -12,6 +12,7 @@ import AddEquip from './new-equipment.component';
 
 
 class Equipment extends Component {
+
     render() {
         return (
           <div>
@@ -113,7 +114,7 @@ class Equipment extends Component {
             </div>
                 {/* New Caregory Starts */}
                   <div className="modal fade" id="newCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <NewCategory />        
+                   <NewCategory />      
                   </div>
                 {/* New Caregory Ends */}
 
