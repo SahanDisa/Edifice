@@ -1,23 +1,25 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import DirectCostDataService from "./../../../services/directcost.service";
 import { useTable } from "react-table";
-//import { Route, useParams } from "react-router-dom";
+import { Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 const DirectCostList = (props) => {
+  const {id}= useParams();
   const [directcosts, setDirectCosts] = useState([]);
   const [searchCostCode, setSearchCostCode] = useState("");
   const directcostsRef = useRef();
 
-  //const {projectId}= useParams();
+  
  
   directcostsRef.current = directcosts;
 
   useEffect(() => {
-    retrieveDirectCosts(1);
+    retrieveDirectCosts();
   }, []);
+
 
   const onChangeSearchCostCode = (e) => {
     const searchCostCode = e.target.value;
@@ -25,7 +27,8 @@ const DirectCostList = (props) => {
   };
 
   const retrieveDirectCosts = () => {
-    DirectCostDataService.getAll(1)
+    
+    DirectCostDataService.getAll(id)//passing project id as id
       .then((response) => {
         setDirectCosts(response.data);
       })
@@ -51,7 +54,7 @@ const DirectCostList = (props) => {
   const openDirectCost = (rowIndex) => {
     const id = directcostsRef.current[rowIndex].id;
 
-    props.history.push("/viewdirectcost/" + id);
+    props.history.push("/viewdirectcost/" + id);//here id is direct cost id
   };
 
 
@@ -61,7 +64,8 @@ const DirectCostList = (props) => {
 
     DirectCostDataService.remove(id)
       .then((response) => {
-        props.history.push("/directcost/1");
+        
+        //props.history.push("/directcost/"+id);
 
         let newDirectCosts = [...directcostsRef.current];
         newDirectCosts.splice(rowIndex, 1);
@@ -148,7 +152,7 @@ const DirectCostList = (props) => {
                <h6>Track all direct costs that are not associated with commitments.</h6><hr />
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
-            <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
+            <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+id}>{/*check this again*/}
                 + Create
                 </Link>
                 <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>

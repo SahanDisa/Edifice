@@ -120,7 +120,7 @@ export default class CreatePrimeContracts extends Component{
             <button className="btn btn-success" onClick={this.newSov}>
              Create Another SoV
             </button>&nbsp;&nbsp;
-            <Link  to={"/sov/"+commitmentId} className="btn btn-success">View SoVs</Link>&nbsp;&nbsp;
+            <Link  to={"/viewsov/"+commitmentId} className="btn btn-success">View SoVs</Link>&nbsp;&nbsp;
            
           </div>
         ) : (

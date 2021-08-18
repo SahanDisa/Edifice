@@ -2,7 +2,7 @@ const db = require("./../models/index");
 const Project = db.projects;
 const DirectCost = db.directcosts;
 
-// create a budget 
+
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.description) {
@@ -12,7 +12,7 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Budget Line Item
+  // Create a direct cost
   const directcost = {
     costCode: req.body.costCode,
     description:req.body.description,
@@ -25,7 +25,7 @@ exports.create = (req, res) => {
     projectId: req.body.projectId,
   };
 
-  // Save Budget Line in the database
+  // Save direct cost in the database
   DirectCost.create(directcost)
     .then(data => {
       res.send(data);
@@ -38,7 +38,7 @@ exports.create = (req, res) => {
     });
 };
 
-// Get budget line items for a given project
+// Get direct costs for a given project
 exports.findAll = (req, res) => {
   const id = req.params.id;
 
@@ -55,7 +55,7 @@ exports.findAll = (req, res) => {
     });  
 };
 
-//Find a single budget by Id
+//Find a single direct cost by Id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
@@ -72,7 +72,7 @@ exports.findOne = (req, res) => {
 
 /*-------------------------------------------------------------- */
 
-//delete a commitment
+//delete a direct cost
 
 exports.delete = (req, res) => {
   const id = req.params.id;
@@ -83,22 +83,22 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Commitment was deleted successfully!"
+          message: "Direct Cost was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete Commitment with id=${id}. Maybe Commitment was not found!`
+          message: `Cannot delete Direct Cost with id=${id}. Maybe Direct Cost was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Commitment with id=" + id
+        message: "Could not delete Direct Cost with id=" + id
       });
     });
 };
 
-//update a commitment
+//update a direct cost
 
 exports.update = (req, res) => {
   const id = req.params.id;
@@ -109,17 +109,17 @@ exports.update = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Commitment was updated successfully."
+          message: "Direct Cost was updated successfully."
         });
       } else {
         res.send({
-          message: `Cannot update Commitment with id=${id}. Maybe Commitment  was not found or req.body is empty!`
+          message: `Cannot update Direct Cost with id=${id}. Maybe Direct Cost  was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Commitment with id=" + id
+        message: "Error updating Direct Cost with id=" + id
       });
     });
 };

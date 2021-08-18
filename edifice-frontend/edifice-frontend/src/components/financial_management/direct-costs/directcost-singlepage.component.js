@@ -3,9 +3,10 @@ import DirectCostDataService from "./../../../services/directcost.service";
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
-
+import { Route, useParams } from "react-router-dom";
 
 const DirectCost = props => {
+  //const {projectId}= useParams();
   const initialDirectCostState = {
     id: null,
     costCode: "",
@@ -16,7 +17,7 @@ const DirectCost = props => {
     receivedDate: "",
     paidDate: "",
     ammount: "",
-   
+    projectId:""
   };
   const [currentDirectCost, setCurrentDirectCost] = useState(initialDirectCostState);
   const [message, setMessage] = useState("");
@@ -58,7 +59,7 @@ const DirectCost = props => {
     DirectCostDataService.remove(currentDirectCost.id)
       .then(response => {
         console.log(response.data);
-        props.history.push("/directcost/1");
+        props.history.push("/directcost/"+currentDirectCost.projectId);//check this again
       })
       .catch(e => {
         console.log(e);
@@ -70,17 +71,31 @@ const DirectCost = props => {
       {currentDirectCost ? (
         <div class="container">
           <h4>Direct Costs</h4>
-          
             <div className="form-group">
-              <label htmlFor="title">Cost Code</label>
-              <input
+              <label htmlFor="costCode">Cost Code</label>
+             {/* <input
                 type="text"
                 className="form-control"
                 id="costCode"
+                required
+                value={this.state.costCode}
+                onChange={this.onChangeCostCode}
                 name="costCode"
+             />*/}
+                <select 
+                className="form-control"
+                id="costCode"
+                required
                 value={currentDirectCost.costCode}
                 onChange={handleInputChange}
-              />
+                name="costCode"
+              >
+                <option>010-Maintenance Equipment</option>
+                <option>924-Sodding</option>
+                <option>100-Visual Display Boards</option>
+                <option>230-Site Clearing</option>
+                <option>240-Dewatering</option>
+              </select>
             </div>
             <div className="form-group">
               <label htmlFor="title">Description</label>
@@ -94,16 +109,33 @@ const DirectCost = props => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="description">Category</label>
-              <input
+              <label htmlFor="category">Category</label>
+              {/*<input
                 type="text"
                 className="form-control"
                 id="category"
+                required
+                value={this.state.category}
+                onChange={this.onChangeCategory}
                 name="category"
+              />*/}
+  <select 
+                className="form-control"
+                id="category"
+                required
                 value={currentDirectCost.category}
                 onChange={handleInputChange}
-              />
+                name="category"
+              >
+                <option>Expense</option>
+                <option>Invoice</option>
+                <option>Payroll</option>
+              </select>
             </div>
+
+
+
+
             <div className="form-group">
               <label htmlFor="title">Vendor</label>
               <input

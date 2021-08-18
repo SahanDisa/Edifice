@@ -95,10 +95,11 @@ export default class Commitments extends Component {
 
     deleteCommitment() { 
       //this.getCommitment();
+     
       CommitmentDataService.delete(this.state.id)
         .then(response => {
           console.log(response.data);
-          //this.props.history.push('/commitment')
+          //this.props.history.push('/commitment/'+this.state.projectId)
         })
         .catch(e => {
           console.log(e);
@@ -196,7 +197,7 @@ export default class Commitments extends Component {
                         View 
                     </Button>*/}
                     </Link>
-                    <Link to={"/commitment/" + id}>
+                    <Link to={"/viewcommitment/"+commitment.id}>
                     <button className="btn btn-success m-2">Edit <UpdateIcon/> </button>
                     </Link>
                    

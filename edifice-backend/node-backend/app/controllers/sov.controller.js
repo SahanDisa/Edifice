@@ -5,7 +5,7 @@ const Sov = db.sovs;
 // create a drawing
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.costCode) {
+  if (!req.body.ammount) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
