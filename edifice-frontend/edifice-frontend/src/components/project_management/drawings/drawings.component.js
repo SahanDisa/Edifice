@@ -2,14 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import DrawingCategoryService from "../../../services/drawing-category.service";
-import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
-
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
-import drawingIcon from "././../../../assets/PM/drawingsingle.png";
 import Card from 'react-bootstrap/Card';
 //styles classes
 
@@ -130,14 +125,6 @@ export default class Drawings extends Component {
                     {/* Button Group */}
                     <Link to={"/viewdrawing/"+drawing.id}>
                     <button className="btn btn-primary">View <VisibilityIcon/> </button>
-                    {/* <Button
-                        variant="contained"
-                        color="primary"
-                        className="btn btn-primary"
-                        endIcon={<VisibilityIcon/>}
-                    >
-                        View 
-                    </Button>*/}
                     </Link>
                     <Link to={"/viewdrawing/"+drawing.id}>
                     <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
@@ -145,11 +132,7 @@ export default class Drawings extends Component {
                     <Link to={"/viewdrawing/"+drawing.id}>
                     <button className="btn btn-danger">Delete <DeleteIcon/> </button>
                     </Link>
-                    
                 </div>
-                {/* <div className="col-2">
-                <img src={drawingIcon} alt="" width="50"/>
-                </div>     */}
                 </div>    
                 </div>
                 ))}

@@ -61,7 +61,7 @@ import ManageTasks from "./components/core_tools/tasks/manage.component";
 import UpdateTasks from "./components/core_tools/tasks/update.component";
 import ViewTasks from "./components/core_tools/tasks/view.component";
 
-import FileUpload from "./components/project_management/document/document.component";
+import DocumentHome from "./components/project_management/document/document.component";
 import UploadDocFiles from "./components/project_management/document/adddocument.component";
 
 import MeetingsConfig from "./components/project_management/meetings/configuration.component";
@@ -247,8 +247,7 @@ class App extends Component {
             <Route path="/financialmanagement" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
             <Route exact path={["/", "/projects"]} component={ProjectsList} />
-            <Route path="/document" component={FileUpload} />
-            <Route path="/adddocument" component={UploadDocFiles} />
+           
             <Route path="/addproject" component={AddProject} />
             <Route path="/projects/:id" component={Project} />
             <Route path="/dates" component={Dates} />
@@ -288,7 +287,9 @@ class App extends Component {
             <Route path="/addVendor" component={AddVendor} />
             <Route path="/editVendor" component={EditVendor} />
             {/* Document */}
-            <Route path="/directory" component={AddDirectory} />
+            <Route path="/directory/:id" component={AddDirectory} />
+            <Route path="/document/:id" component={DocumentHome} />
+            <Route path="/adddocument" component={UploadDocFiles} />
             {/* Drawing Component Routes  */}
             <Route path="/drawing/:id" component={DrawingHome} />
             <Route path="/adddrawingcategory/:id" component={AddDrawingCategory} />
