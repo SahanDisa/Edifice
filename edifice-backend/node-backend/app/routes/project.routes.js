@@ -23,6 +23,9 @@ module.exports = app => {
   
     // Delete all Tutorials
     router.delete("/", projects.deleteAll);
+
+    // Find Last Project
+    router.get("/app/last/",projects.findLastOne);
   
     app.use('/api/projects', router);
   };

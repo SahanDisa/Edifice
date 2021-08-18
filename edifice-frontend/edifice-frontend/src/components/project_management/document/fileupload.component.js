@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react";
 import UploadService from "./../../../services/document.service";
-import Card from 'react-bootstrap/Card';
-import { AccordViewer } from "./viewdocument.component";
+
+//
+// Import the main component
+import { Viewer } from '@react-pdf-viewer/core';
+// Plugins
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+// Import the styles
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+// Worker
+import { Worker } from '@react-pdf-viewer/core';
+//
 
 const UploadFiles = () => {
   
@@ -49,91 +59,55 @@ const UploadFiles = () => {
           setFileInfos(response.data);
         });
     }, []);
+    //viewer
+    // Create new plugin instance
+    const defaultLayoutPluginInstance = defaultLayoutPlugin();
+      
+    // for onchange event
+    const [pdfFile, setPdfFile]=useState(null);
+    const [pdfFileError, setPdfFileError]=useState('');
+
+    // for submit event
+    const [viewPdf, setViewPdf]=useState(null);
+
+    // onchange event
+    const fileType=['application/pdf'];
+    const handlePdfFileChange=(e)=>{
+      let selectedFile=e.target.files[0];
+      if(selectedFile){
+        if(selectedFile&&fileType.includes(selectedFile.type)){
+          let reader = new FileReader();
+              reader.readAsDataURL(selectedFile);
+              reader.onloadend = (e) =>{
+                setPdfFile(e.target.result);
+                setPdfFileError('');
+              }
+        }
+        else{
+          setPdfFile(null);
+          setPdfFileError('Please select valid pdf file');
+        }
+      }
+      else{
+        console.log('select your file');
+      }
+    }
+
+    // form submit
+    const handlePdfFileSubmit=(e)=>{
+      e.preventDefault();
+      console.log("pdf-look");
+      if(pdfFile!==null){
+        setViewPdf(pdfFile);
+      }
+      else{
+        setViewPdf(null);
+      }
+    }
+    //end viewer
     return (
         <div>
-        <h2>Document</h2>
-        <p>Manage project specific documents in one place</p>
-        <hr></hr>
-        <h3>Directory</h3>
-        <p>Manage the related documents in one place using directory</p>
-        <a href="/directory" className="btn btn-primary m-2">Add Directory</a>
-        <a href="/adddocument" className="btn btn-primary">Add Document</a>
-        <hr></hr>
-        <div className="container row">
-          <div className="container">
-            <h4>Directory List</h4>
-              <div className="container row">
-                <div className="container col-3">
-                <a href="/projectmanagementhome/1">
-                    <Card
-                    bg={'secondary'}
-                    text={'dark'}
-                    style={{ width: '15rem' }}
-                    className="mb-2"
-                    >
-                    <Card.Body>
-                        <Card.Title><h4>Insfrastructure</h4></Card.Title>
-                        <Card.Text>
-                        
-                        </Card.Text>
-                    </Card.Body>
-                    </Card>
-                </a>
-                </div>
-                <div className="container col-3">
-                <a href="/projectmanagementhome/1">
-                    <Card
-                    bg={'secondary'}
-                    text={'dark'}
-                    style={{ width: '15rem' }}
-                    className="mb-2"
-                    >
-                    <Card.Body>
-                        <Card.Title><h4>Finishing</h4></Card.Title>
-                        <Card.Text>
-                        
-                        </Card.Text>
-                    </Card.Body>
-                    </Card>
-                </a>
-                </div>
-                <div className="container col-3">
-                <a href="/projectmanagementhome/1">
-                    <Card
-                    bg={'secondary'}
-                    text={'dark'}
-                    style={{ width: '15rem' }}
-                    className="mb-2"
-                    >
-                    <Card.Body>
-                        <Card.Title><h4>Plumbing</h4></Card.Title>
-                        <Card.Text>
-                        
-                        </Card.Text>
-                    </Card.Body>
-                    </Card>
-                </a>
-                </div>
-                <div className="container col-3">
-                <a href="/projectmanagementhome/1">
-                    <Card
-                    bg={'secondary'}
-                    text={'dark'}
-                    style={{ width: '15rem' }}
-                    className="mb-2"
-                    >
-                    <Card.Body>
-                        <Card.Title><h4>Electrical</h4></Card.Title>
-                        <Card.Text>
-                        
-                        </Card.Text>
-                    </Card.Body>
-                    </Card>
-                </a>
-              </div>
-          </div>
-        </div>
-        </div>
+        
         <hr></hr>
         <h3>Document View and Download</h3>  
         <div className="card">
@@ -149,26 +123,32 @@ const UploadFiles = () => {
           </div>
           {/* Browser-native */}
           <hr></hr>
-          <h3>View Documents</h3>
-          <p>View necessary documents</p>
-          <embed
-              src="https://www.pearsonhighered.com/assets/samplechapter/0/1/3/4/0134454170.pdf"
-              type="application/pdf"
-              frameBorder="0"
-              scrolling="auto"
-              height="500px"
-              width="100%"
-          ></embed>
-          {/* <div>
-            <Document
-              file="http://www.oas.org/juridico/PDFs/https://www.tendringdc.gov.uk/sites/default/files/documents/business/doing%20business%20with%20the%20council/RosemaryRd/3327-Preconstruction%20Information.pdf.pdf.pdf"
-              onLoadSuccess={onDocumentLoadSuccess}
-            >
-              <Page pageNumber={pageNumber} />
-            </Document>
-            <p>Page {pageNumber} of {numPages}</p>
-          </div> */}
-          <AccordViewer />
+          <div className='container'>
+           <br></br>  
+              <form className='form-group' onSubmit={handlePdfFileSubmit}>
+                <input type="file" className='form-control'
+                  required onChange={handlePdfFileChange}
+                />
+                {pdfFileError&&<div className='error-msg'>{pdfFileError}</div>}
+                <br></br>
+                <button type="submit" className='btn btn-success btn-lg'>
+                  UPLOAD
+                </button>
+              </form>
+              {/* form select */}
+              <br></br>
+              <h4>View PDF</h4>
+              <div className='pdf-container'>
+                {/* show pdf conditionally (if we have one)  */}
+                {viewPdf&&<><Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+                  <Viewer fileUrl={viewPdf}
+                    plugins={[defaultLayoutPluginInstance]} />
+              </Worker></>}
+            
+              {/* if we dont have pdf or viewPdf state is null */}
+              {!viewPdf&&<>No pdf file selected</>}
+              </div>
+            </div>
         </div>
     );
 };

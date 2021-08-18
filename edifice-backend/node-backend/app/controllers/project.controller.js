@@ -45,7 +45,7 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Some error occurred while retrieving projects."
         });
       });
 };
@@ -64,6 +64,23 @@ exports.findOne = (req, res) => {
         });
       });  
 };
+
+//get the last project 
+exports.findLastOne = (req,res) =>{
+   Project.findAll({
+     limit: 1,
+     order: [['id', 'DESC']]
+   })
+   .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving projects."
+    });
+  });
+}
 
 // Update a Project by the id in the request
 exports.update = (req, res) => {
