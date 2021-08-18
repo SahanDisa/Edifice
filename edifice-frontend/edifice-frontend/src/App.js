@@ -316,11 +316,11 @@ class App extends Component {
             <Route path="/primecontract/:id" component={PrimeContracts} />
 
             {/*resource management */}
-            <Route path="/timesheet" component={Timesheet} />
+            <Route path="/timesheet/:id" component={Timesheet} />
             <Route path="/customize" component={Customize} />
             <Route path="/crew" component={Crew} />
-            <Route path="/schedule" component={Schedule} />
-            <Route path="/equipments" component={Equipments} />
+            <Route path="/schedule/:id" component={Schedule} />
+            <Route path="/equipments/:id" component={Equipments} />
             <Route path="/equipDetails" component={EquipDetails} />
             <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
 
