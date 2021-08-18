@@ -230,7 +230,7 @@ exclusions : exclusions
     CommitmentDataService.delete(this.state.currentCommitment.id)
       .then(response => {
         console.log(response.data);
-        this.props.history.push('/commitment')
+        this.props.history.push('/commitment/'+this.state.currentCommitment.projectId)
       })
       .catch(e => {
         console.log(e);
@@ -413,7 +413,7 @@ exclusions : exclusions
                     <button className="btn btn-success m-2">+ Create SoV </button>
                     </Link><br />
 
-                    <Link to={"/addsov/"+currentCommitment.id}>
+                    <Link to={"/viewsov/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">View SoVs </button>
                     </Link><br />
 

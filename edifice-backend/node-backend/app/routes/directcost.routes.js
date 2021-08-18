@@ -11,6 +11,12 @@ module.exports = app => {
   
     // Retrieve a single Budget with id
     router.get("/:id", directcost.findOne);
+
+        // Update a Commitment with id
+  router.put("/:id", directcost.update);
+
+  // Delete a Commitment with id
+  router.delete("/:id", directcost.delete);
   
     app.use('/api/projects/directcost', router);
   };

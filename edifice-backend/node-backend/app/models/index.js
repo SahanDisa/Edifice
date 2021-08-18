@@ -142,21 +142,14 @@ db.users.belongsToMany(db.roles, {
   otherKey: "roleId"
 });
 
-/* One project has one direct cost*/
-db.projects.hasOne(db.directcosts, { as: "directcosts" });
+/* One project has many direct costs*/
+db.projects.hasMany(db.directcosts, { as: "directcosts" });
 db.directcosts.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
 
-/* One project has one commitments table
-db.projects.hasOne(db.commitments, { as: "commitments" });
-db.commitments.belongsTo(db.projects, {
-  foreignKey: "projectId",
-  as: "project",
-}); */
-
-
+/* One project has many commitments*/
 db.projects.hasMany(db.commitments, { as: "commitments" });
 db.commitments.belongsTo(db.projects, {
   foreignKey: "projectId",
@@ -164,7 +157,7 @@ db.commitments.belongsTo(db.projects, {
 });
 
 
-// One project has 
+// One commitment has many sovs
 db.commitments.hasMany(db.sovs, { as: "sovs" });
 db.sovs.belongsTo(db.commitments, {
   foreignKey: "commitmentId",
