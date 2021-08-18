@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DrawingDataService from "./../../../services/drawing.service";
+import DrawingCategoryService from "../../../services/drawing-category.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -7,7 +8,8 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 
-
+//JSX(Javascript XML)
+//https://addrwaing/projectId?=1
 export default class AddDrawing extends Component {
   constructor(props) {
     super(props);
@@ -21,12 +23,17 @@ export default class AddDrawing extends Component {
       id: null,
       name: "",
       description: "",
-      drawtype: "", 
-      projectId: this.props.match.params.id,  
+      drawtype: "1", 
+      projectId: this.props.match.params.id, 
+      
+      drawingcategories: [],
+      currentIndex: -1,
       submitted: false
     };
   }
-
+  componentDidMount() {
+    this.retriveDrawingCategory(this.props.match.params.id);
+  }
   onChangeName(e) {
     this.setState({
       name: e.target.value
@@ -43,9 +50,19 @@ export default class AddDrawing extends Component {
       drawtype: e.target.value
     });
   }
-
-  saveDrawing() {
-    console.log("click kala");  
+  retriveDrawingCategory(id){
+    DrawingCategoryService.getAll(id)
+    .then(response => {
+        this.setState({
+          drawingcategories: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+  saveDrawing() {  
     var data = {
       name: this.state.name,
       description: this.state.description,
@@ -78,13 +95,13 @@ export default class AddDrawing extends Component {
       description: "",
       drawtype: "",
       projectId: this.props.match.params.id,
-
+      
       submitted: false
     });
   }
 
   render() {
-    const {projectId} = this.state;
+    const {projectId, currentIndex, drawingcategories} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
@@ -131,27 +148,25 @@ export default class AddDrawing extends Component {
 
             <div className="form-group">
               <label htmlFor="drawtype">Drawing Category</label>
-              {/* <input
-                type="text"
-                className="form-control"
-                id="datatype"
-                required
-                value={this.state.drawtype}
-                onChange={this.onChangeType}
-                name="drawtype"
-              /> */}
               <select 
                 className="form-control"
                 id="datatype"
                 required
+                name="drawtype"
                 value={this.state.drawtype}
                 onChange={this.onChangeType}
-                name="drawtype"
               >
-                <option>Infrastructure</option>
-                <option>Finishing</option>
-                <option>Plumbing</option>
-                <option>Electrical</option>
+                {drawingcategories &&
+                drawingcategories.map((drawingcategory, index) => (
+                <option
+                    value={drawingcategory.id}
+                    onChange={this.onChangeType}
+                    key={index}
+                >
+                {/* unit data */}
+                {drawingcategory.title}
+                </option>
+                ))}
               </select>
             </div>  
             </div>

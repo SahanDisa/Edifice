@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ProjectDataService from "./../../../services/project.service";
+import DirectoryService from "../../../services/directory.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -13,17 +13,14 @@ export default class AddDirectory extends Component {
     super(props);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeLocation = this.onChangeLocation.bind(this);
-    this.saveProject = this.saveProject.bind(this);
-    this.newProject = this.newProject.bind(this);
+    this.saveDirectory = this.saveDirectory.bind(this);
+    this.newDirectory = this.newDirectory.bind(this);
 
     this.state = {
       id: null,
       title: "",
       description: "",
-      location: "", 
-      published: false,
-
+      projectId: this.props.match.params.id,  
       submitted: false
     };
   }
@@ -39,56 +36,49 @@ export default class AddDirectory extends Component {
       description: e.target.value
     });
   }
-  onChangeLocation(e) {
-    this.setState({
-      location: e.target.value
-    });
-  }
 
-  saveProject() {
+  saveDirectory() {
+    console.log("click kala");  
     var data = {
-      title: this.state.title,
+      title : this.state.title,
       description: this.state.description,
-      location: this.state.location
+      projectId: this.state.projectId
     };
 
-    // ProjectDataService.create(data)
-    //   .then(response => {
-    //     this.setState({
-    //       id: response.data.id,
-    //       title: response.data.title,
-    //       description: response.data.description,
-    //       location: response.data.location,
-    //       published: response.data.published,
+    DirectoryService.create(data)
+      .then(response => {
+        this.setState({
+          id: response.data.id,
+          title: response.data.title,
+          description: response.data.description,
+          projectId: response.data.projectId,
 
-    //       submitted: true
-    //     });
-    //     console.log(response.data);
-    //   })
-    //   .catch(e => {
-    //     console.log(e);
-    //   });
+          submitted: true
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
-  newProject() {
+  newDirectory() {
     this.setState({
       id: null,
       title: "",
       description: "",
-      location: "",
-      published: false,
+      projectId: this.props.match.params.id,
 
       submitted: false
     });
   }
-
   render() {
     return (
       <div className="container">
         {this.state.submitted ? (
           <div>
             <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={this.newProject}>
+            <button className="btn btn-success" onClick={this.newDirectory}>
               Add Another Directory
             </button>
           </div>
@@ -99,7 +89,7 @@ export default class AddDirectory extends Component {
             <h2>Add New Directory</h2>
             <h5>Step 1: Project Settings</h5>
             <div className="form-group">
-              <label htmlFor="title">Directory Name:</label>
+              <label htmlFor="title">Title :</label>
               <input
                 type="text"
                 className="form-control"
@@ -124,9 +114,9 @@ export default class AddDirectory extends Component {
               />
             </div>
 
-            <a href="/adddepartment" onClick={this.saveProject} className="btn btn-success">
-              Submit
-            </a>
+            <button onClick={this.saveDirectory} className="btn btn-success">
+              Create 
+            </button>
             </div>
             <div className="container col-4">
             <Timeline>

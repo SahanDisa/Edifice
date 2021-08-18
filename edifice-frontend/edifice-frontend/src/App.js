@@ -30,9 +30,12 @@ import AddDirectory from "./components/project_management/document/adddirectory.
 
 import DrawingHome from "./components/project_management/drawings/drawings.component";
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
+import AddDrawingCategory from "./components/project_management/drawings/adddrawingcategory.component";
+import ViewSingleDrawingCategory from "./components/project_management/drawings/drawing-category-singlepage";
 import AddPhoto from "./components/project_management/photos/addphoto.component";
 import ViewSingleDrawing from "./components/project_management/drawings/drawing-singlepage.component";
 import PhotosHome from "./components/project_management/photos/photos.component";
+import AddAlbum from "./components/project_management/photos/addalbum.component";
 import BiddingHome from "./components/project_management/biddings/bidding.component";
 import AddBidding from "./components/project_management/biddings/addbidding.component";
 import ViewSpec from "./components/project_management/biddings/viewspec.component";
@@ -58,7 +61,7 @@ import ManageTasks from "./components/core_tools/tasks/manage.component";
 import UpdateTasks from "./components/core_tools/tasks/update.component";
 import ViewTasks from "./components/core_tools/tasks/view.component";
 
-import FileUpload from "./components/project_management/document/document.component";
+import DocumentHome from "./components/project_management/document/document.component";
 import UploadDocFiles from "./components/project_management/document/adddocument.component";
 
 import MeetingsConfig from "./components/project_management/meetings/configuration.component";
@@ -67,8 +70,8 @@ import UpdateMeetings from "./components/project_management/meetings/update.comp
 import ViewMeetings from "./components/project_management/meetings/view.component";
 
 import BudgetHome from "./components/financial_management/budget/budget.component";
-import PrimeContracts from "./components/financial_management/prime-contracts/prime-contracts.component";
-import CreatePrimeContracts from "./components/financial_management/prime-contracts/createPrimeContracts.component";
+import PrimeContracts from "./components/financial_management/prime-contracts/primecontracts.component";
+import CreatePrimeContracts from "./components/financial_management/prime-contracts/addprimecontract.component";
 import DirectCostHome from "./components/financial_management/direct-costs/direct-costs.component";
 import Invoicing from "./components/financial_management/invoicing/invoicing.component";
 
@@ -105,7 +108,8 @@ import AddCommitment from "./components/financial_management/commitments/addcomm
 import ViewSingleCommitment from "./components/financial_management/commitments/commitment-singlepage.component";
 import AddSov from "./components/financial_management/commitments/addsov.component";
 
-
+import ViewSingleDirectCost from "./components/financial_management/direct-costs/directcost-singlepage.component";
+import SovHome from "./components/financial_management/commitments/sovs.component";
 
 class App extends Component {
   constructor(props) {
@@ -234,7 +238,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
             <Route path="/projectmanagement" component={BoardUser} />
-            <Route path="/adddepartment" component={AddDepartment} />
+            <Route path="/adddepartment/:id" component={AddDepartment} />
             {/* <Route path="/projectmanagementhome" component={ProjectManagementHome} /> */}
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
             <Route path="/portfolio" component={PortfolioHome} />
@@ -244,8 +248,7 @@ class App extends Component {
             <Route path="/financialmanagement" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
             <Route exact path={["/", "/projects"]} component={ProjectsList} />
-            <Route path="/document" component={FileUpload} />
-            <Route path="/adddocument" component={UploadDocFiles} />
+           
             <Route path="/addproject" component={AddProject} />
             <Route path="/projects/:id" component={Project} />
             <Route path="/dates" component={Dates} />
@@ -285,14 +288,19 @@ class App extends Component {
             <Route path="/addVendor" component={AddVendor} />
             <Route path="/editVendor" component={EditVendor} />
             {/* Document */}
-            <Route path="/directory" component={AddDirectory} />
+            <Route path="/directory/:id" component={AddDirectory} />
+            <Route path="/document/:id" component={DocumentHome} />
+            <Route path="/adddocument" component={UploadDocFiles} />
             {/* Drawing Component Routes  */}
             <Route path="/drawing/:id" component={DrawingHome} />
+            <Route path="/adddrawingcategory/:id" component={AddDrawingCategory} />
+            <Route path="/viewdrawingcategory/:id" component={ViewSingleDrawingCategory}/>
             <Route path="/adddrawing/:id" component={AddDrawing} />
             <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
             {/* Photo Component Routes */}
-            <Route path="/photos" component={PhotosHome} />
+            <Route path="/photos/:id" component={PhotosHome} />
             <Route path="/addphoto" component={AddPhoto}/>
+            <Route path="/addalbum/:id" component={AddAlbum}/>
             {/* Bidding Component Routes  */}
             <Route path="/bidding/:id" component={BiddingHome} /> 
             <Route path="/addbidding" component={AddBidding} /> 
@@ -301,11 +309,11 @@ class App extends Component {
 			      <Route path="/budget/:id" component={BudgetHome} />
             <Route path="/addbudget/:id" component={AddBudget} />
             <Route path="/prime-contracts" component={PrimeContracts} />
-            <Route path="/create-prime-contracts" component={CreatePrimeContracts} />
+            <Route path="/addprimecontract/:id" component={CreatePrimeContracts} />
             <Route path="/directcost/:id" component={DirectCostHome} />
             <Route path="/invoicing" component={Invoicing} />
             
-            <Route path="/prime-contracts" component={PrimeContracts} />
+            <Route path="/primecontract/:id" component={PrimeContracts} />
 
             {/*resource management */}
             <Route path="/timesheet/:id" component={Timesheet} />
@@ -326,6 +334,10 @@ class App extends Component {
             {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
             <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
             <Route path="/addsov/:id" component={AddSov} />
+            <Route path="/viewdirectcost/:id" component={ViewSingleDirectCost} />
+           {/* <Route path="/viewsov/:id" component={ViewSingleSov} />*/}
+            <Route path="/viewsov/:id" component={SovHome} />
+           
           </Switch>
         </div>
       </div>

@@ -170,14 +170,14 @@ export default class BoardUser extends Component {
 
           </div>
         <div className="row">
-          <div className="col-2">
+          <div className="col-3">
             <div className="list-group" id="list-tab" role="tablist">
-              <a className="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-admin" role="tab" aria-controls="home">Admin</a>
-              <a className="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Project</a>
-              <a className="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-directory" role="tab" aria-controls="profile">Directory</a>
-              <a className="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-document" role="tab" aria-controls="messages">Document</a>
-              <a className="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-tasks" role="tab" aria-controls="settings">Task</a>
-              <a className="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-report" role="tab" aria-controls="settings">Reports</a>
+              <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="#list-report" role="tab" aria-controls="settings">Generate Report</a>
+            </div>
+          </div>
+          <div className="col-3">
+            <div className="list-group" id="list-tab" role="tablist">
+              <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="#list-report" role="tab" aria-controls="settings">Analytics</a>
             </div>
           </div>
           {/* Admin content */}

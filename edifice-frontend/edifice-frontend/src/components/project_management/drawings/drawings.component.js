@@ -1,14 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
-import Button from '@material-ui/core/Button';
+import DrawingCategoryService from "../../../services/drawing-category.service";
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
-
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
-import drawingIcon from "././../../../assets/PM/drawingsingle.png";
 import Card from 'react-bootstrap/Card';
 //styles classes
 
@@ -18,20 +14,15 @@ export default class Drawings extends Component {
       this.retrieveDrawing = this.retrieveDrawing.bind(this);
       this.state = {
         drawings: [],
+        drawingcategories: [],
         currentIndex: -1,
         content: "",
         id: this.props.match.params.id
       };
     }
-
-    // makeStyles((theme) => ({
-    //     button: {
-    //       margin: theme.spacing(1),
-    //     },
-    //   }));
-  
     componentDidMount() {
       this.retrieveDrawing(this.props.match.params.id);
+      this.retriveDrawingCategory(this.props.match.params.id);
     }
     retrieveDrawing(id) {
       DrawingDataService.getAll(id)
@@ -45,16 +36,29 @@ export default class Drawings extends Component {
           console.log(e);
         });
     }
+    retriveDrawingCategory(id){
+        DrawingCategoryService.getAll(id)
+        .then(response => {
+            this.setState({
+              drawingcategories: response.data
+            });
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+    }
+
     render() {
-        const { drawings ,currentIndex,id } = this.state;
+        const { drawings , drawingcategories, currentIndex,id } = this.state;
         // const classes = useStyles();
         return (
-            <div>
+        <div>
             <div className="container row">
-            <div className="col-12">
-            <h2>Drawings</h2>
-            <h6>Manage the drawings,other related planning materials in here</h6>
-            </div>
+                <div className="col-12">
+                    <h2>Drawings</h2>
+                    <h6>Manage the drawings,other related planning materials in here</h6>
+                </div>
             <hr></hr>
             </div>
             <div className="container">
@@ -62,87 +66,44 @@ export default class Drawings extends Component {
                 <Link className="btn btn-primary mr-2" to={"/adddrawing/"+id}>
                 Add New Drawing
                 </Link>
-                <Link className="btn btn-primary" to={"/adddrawing/"+id}>
+                <Link className="btn btn-primary" to={"/adddrawingcategory/"+id}>
                 Add Catgory
                 </Link>
                 <hr></hr>
             </div>
-            
-            <div className="container">
-                <h4>Drawing Category</h4>
-                <div className="container row">
-                <div className="container col-3">
-                <a href="/projectmanagementhome/1">
-                    <Card
-                    bg={'secondary'}
-                    text={'dark'}
-                    style={{ width: '15rem' }}
-                    className="mb-2"
-                    >
-                    <Card.Body>
-                        <Card.Title><h4>Insfrastructure</h4></Card.Title>
-                        <Card.Text>
-                        
-                        </Card.Text>
-                    </Card.Body>
-                    </Card>
-                </a>
+        <div className="container">
+        <div className="container row">
+            {drawingcategories &&
+                drawingcategories.map((drawingcategory, index) => (
+                    <div
+                    className={
+                    "container col-3" +
+                    (index === currentIndex ? "active" : "")
+                    }
+                    key={index}
+                >
+                {/* unit data */}
+                <Link to={"/viewdrawingcategory/"+drawingcategory.id}>
+                        <Card
+                        bg={'secondary'}
+                        text={'dark'}
+                        style={{ width: '15rem' }}
+                        className="mb-2"
+                        >
+                        <Card.Body>
+                            <Card.Title><h4>{drawingcategory.title}</h4></Card.Title>
+                            <Card.Text>
+                            
+                            </Card.Text>
+                        </Card.Body>
+                        </Card>
+                </Link>
                 </div>
-                <div className="container col-3">
-                <a href="/projectmanagementhome/1">
-                    <Card
-                    bg={'secondary'}
-                    text={'dark'}
-                    style={{ width: '15rem' }}
-                    className="mb-2"
-                    >
-                    <Card.Body>
-                        <Card.Title><h4>Finishing</h4></Card.Title>
-                        <Card.Text>
-                        
-                        </Card.Text>
-                    </Card.Body>
-                    </Card>
-                </a>
-                </div>
-                <div className="container col-3">
-                <a href="/projectmanagementhome/1">
-                    <Card
-                    bg={'secondary'}
-                    text={'dark'}
-                    style={{ width: '15rem' }}
-                    className="mb-2"
-                    >
-                    <Card.Body>
-                        <Card.Title><h4>Plumbing</h4></Card.Title>
-                        <Card.Text>
-                        
-                        </Card.Text>
-                    </Card.Body>
-                    </Card>
-                </a>
-                </div>
-                <div className="container col-3">
-                <a href="/projectmanagementhome/1">
-                    <Card
-                    bg={'secondary'}
-                    text={'dark'}
-                    style={{ width: '15rem' }}
-                    className="mb-2"
-                    >
-                    <Card.Body>
-                        <Card.Title><h4>Electrical</h4></Card.Title>
-                        <Card.Text>
-                        
-                        </Card.Text>
-                    </Card.Body>
-                    </Card>
-                </a>
-                </div>
-          </div>
-        <hr></hr>
+            ))}
             </div>
-            <div className="container">
+        </div>
+        <hr></hr>
+        <div className="container">
                 <h4>Recent List</h4>
             {/* Drawing List */}
             <ul className="list-group">
@@ -164,14 +125,6 @@ export default class Drawings extends Component {
                     {/* Button Group */}
                     <Link to={"/viewdrawing/"+drawing.id}>
                     <button className="btn btn-primary">View <VisibilityIcon/> </button>
-                    {/* <Button
-                        variant="contained"
-                        color="primary"
-                        className="btn btn-primary"
-                        endIcon={<VisibilityIcon/>}
-                    >
-                        View 
-                    </Button>*/}
                     </Link>
                     <Link to={"/viewdrawing/"+drawing.id}>
                     <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
@@ -179,11 +132,7 @@ export default class Drawings extends Component {
                     <Link to={"/viewdrawing/"+drawing.id}>
                     <button className="btn btn-danger">Delete <DeleteIcon/> </button>
                     </Link>
-                    
                 </div>
-                {/* <div className="col-2">
-                <img src={drawingIcon} alt="" width="50"/>
-                </div>     */}
                 </div>    
                 </div>
                 ))}

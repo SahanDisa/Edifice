@@ -12,5 +12,5 @@ module.exports = app => {
     // Retrieve a single Drawing with id
     router.get("/:id", sov.findOne);
   
-    app.use('/api/projects/sov', router);
+    app.use('/api/commitments/sov', router);
   };

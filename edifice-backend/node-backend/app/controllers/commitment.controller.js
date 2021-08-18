@@ -2,7 +2,7 @@ const db = require("./../models/index");
 const Project = db.projects;
 const Commitment = db.commitments;
 
-// create a drawing
+
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.hash) {
@@ -12,7 +12,7 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Project
+  // Create a commitment
   const commitment = {
     hash: req.body.hash,
     title:req.body.title,
@@ -32,7 +32,7 @@ exports.create = (req, res) => {
     projectId: req.body.projectId,
   };
 
-  // Save Project in the database
+  // Save commitment in the database
   Commitment.create(commitment)
     .then(data => {
       res.send(data);
@@ -45,7 +45,7 @@ exports.create = (req, res) => {
     });
 };
 
-// Get drawings for a given project
+// Get commitments for a given project
 exports.findAll = (req, res) => {
   const id = req.params.id;
 
@@ -62,7 +62,7 @@ exports.findAll = (req, res) => {
     });  
 };
 
-//Find a single drawing by Id
+//Find a single commitment by Id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
@@ -75,4 +75,59 @@ exports.findOne = (req, res) => {
         message: "Error retrieving Project with id=" + id
       });
     });  
+};
+
+
+/*-------------------------------------------------------------- */
+
+//delete a commitment
+
+exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  Commitment.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Commitment was deleted successfully!"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Commitment with id=${id}. Maybe Commitment was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete Commitment with id=" + id
+      });
+    });
+};
+
+//update a commitment
+
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  Commitment.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Commitment was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Commitment with id=${id}. Maybe Commitment  was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Commitment with id=" + id
+      });
+    });
 };
