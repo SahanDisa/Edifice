@@ -1,36 +1,36 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
-import DirectCostDataService from "./../../../services/directcost.service";
+import InvoiceDataService from "./../../../services/invoice.service";
 import { useTable } from "react-table";
 import { Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-const DirectCostList = (props) => {
+const InvoiceList = (props) => {
   const {id}= useParams();
-  const [directcosts, setDirectCosts] = useState([]);
-  const [searchCostCode, setSearchCostCode] = useState("");
-  const directcostsRef = useRef();
+  const [invoices, setInvoices] = useState([]);
+  const [searchFrom, setSearchFrom] = useState("");
+  const invoicesRef = useRef();
 
   
  
-  directcostsRef.current = directcosts;
+  invoicesRef.current = invoices;
 
   useEffect(() => {
-    retrieveDirectCosts();
+    retrieveInvoices();
   }, []);
 
 
-  const onChangeSearchCostCode = (e) => {
-    const searchCostCode = e.target.value;
-    setSearchCostCode(searchCostCode);
+  const onChangeSearchFrom = (e) => {
+    const searchFrom = e.target.value;
+    setSearchFrom(searchFrom);
   };
 
-  const retrieveDirectCosts = () => {
+  const retrieveInvoices = () => {
     
-    DirectCostDataService.getAll(id)//passing project id as id
+    InvoiceDataService.getAll(id)//passing project id as id
       .then((response) => {
-        setDirectCosts(response.data);
+        setInvoices(response.data);
       })
       .catch((e) => {
         console.log(e);
@@ -38,41 +38,39 @@ const DirectCostList = (props) => {
   };
 
   const refreshList = () => {
-    retrieveDirectCosts();
+    retrieveInvoices();
   };
 
-  const findByCostCode = () => {
-    DirectCostDataService.findByCostCode(searchCostCode)
+  const findByFrom = () => {
+    InvoiceDataService.findByFrom(searchFrom)
       .then((response) => {
-        setDirectCosts(response.data);
+        setInvoices(response.data);
       })
       .catch((e) => {
         console.log(e);
       });
   };
 
-  const openDirectCost = (rowIndex) => {
-    const id = directcostsRef.current[rowIndex].id;
-    //const projectId = directcostsRef.current[rowIndex].projectId;
+  const openInvoice = (rowIndex) => {
+    const id = invoicesRef.current[rowIndex].id;
 
-    props.history.push("/viewdirectcost/"+ id);//here id is direct cost id
+    props.history.push("/viewinvoice/" + id);//here id is direct cost id
   };
 
 
 
-  const deleteDirectCost = (rowIndex) => {
-    const id = directcostsRef.current[rowIndex].id;
-    //const projectId = directcostsRef.current[rowIndex].projectId;
+  const deleteInvoice = (rowIndex) => {
+    const id = invoicesRef.current[rowIndex].id;
 
-    DirectCostDataService.remove(id)
+    InvoiceDataService.remove(id)
       .then((response) => {
         
         //props.history.push("/directcost/"+id);
 
-        let newDirectCosts = [...directcostsRef.current];
-        newDirectCosts.splice(rowIndex, 1);
+        let newInvoices = [...invoicesRef.current];
+        newInvoices.splice(rowIndex, 1);
 
-        setDirectCosts(newDirectCosts);
+        setInvoices(newInvoices);
       })
       .catch((e) => {
         console.log(e);
@@ -82,39 +80,35 @@ const DirectCostList = (props) => {
   const columns = useMemo(
     () => [
       {
-        Header: "Cost Code",
-        accessor: "costCode",
+        Header: "#",
+        accessor: "hash",
+      },
+      {
+        Header: "Invoice Date",
+        accessor: "date",
+      },
+      {
+        Header: "Contract Company",
+        accessor: "to",
+      },
+      {
+        Header: "",
+        accessor: "from",
       },
       {
         Header: "Description",
         accessor: "description",
       },
-      {
-        Header: "Category",
-        accessor: "category",
-      },
-      {
-        Header: "Vendor",
-        accessor: "vendor",
-      },
-      {
-        Header: "Employee",
-        accessor: "employee",
-      },
 
   {
-        Header: "Received Date",
-        accessor: "receivedDate",
+        Header: "Ammount for work completed",
+        accessor: "workCompleted",
       },
       
   {
-    Header: "Paid Date",
-    accessor: "paidDate",
+    Header: "Ammount Due",
+    accessor: "ammountDue",
   },
-  {
-        Header: "Ammount",
-        accessor: "ammount",
-      },
       {
         Header: "Actions",
         accessor: "actions",
@@ -122,11 +116,11 @@ const DirectCostList = (props) => {
           const rowIdx = props.row.id;
           return (
             <div>
-              <span onClick={() => openDirectCost(rowIdx)}>
+              <span onClick={() => openInvoice(rowIdx)}>
               <EditIcon></EditIcon>&nbsp;&nbsp;
               </span>
 
-              <span onClick={() => deleteDirectCost(rowIdx)}>
+              <span onClick={() => deleteInvoice(rowIdx)}>
                 <DeleteIcon></DeleteIcon>
               </span>
             </div>
@@ -145,12 +139,12 @@ const DirectCostList = (props) => {
     prepareRow,
   } = useTable({
     columns,
-    data: directcosts,
+    data: invoices,
   });
 
   return (
     <div>
-        <h3> DIRECT COSTS</h3>
+        <h3> INVOICES</h3>
                <h6>Track all direct costs that are not associated with commitments.</h6><hr />
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
@@ -169,15 +163,15 @@ const DirectCostList = (props) => {
           <input
             type="text"
             className="form-control"
-            placeholder="Search by cost code"
-            value={searchCostCode}
-            onChange={onChangeSearchCostCode}
+            placeholder="Search by contract company"
+            value={searchFrom}
+            onChange={onChangeSearchFrom}
           />
           <div className="input-group-append">
             <button
               className="btn btn-outline-secondary"
               type="button"
-              onClick={findByCostCode}
+              onClick={findByFrom}
             >
               Search
             </button>
@@ -221,4 +215,4 @@ const DirectCostList = (props) => {
   );
 };
 
-export default DirectCostList;
+export default InvoiceList;

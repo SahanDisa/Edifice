@@ -2,7 +2,6 @@ const db = require("./../models/index");
 const Project = db.projects;
 const DirectCost = db.directcosts;
 
-
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.description) {
@@ -58,7 +57,7 @@ exports.findAll = (req, res) => {
 //Find a single direct cost by Id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-
+ 
   DirectCost.findByPk(id)
     .then(data => {
       res.send(data);
@@ -76,6 +75,7 @@ exports.findOne = (req, res) => {
 
 exports.delete = (req, res) => {
   const id = req.params.id;
+ 
 
   DirectCost.destroy({
     where: { id: id }
@@ -102,6 +102,7 @@ exports.delete = (req, res) => {
 
 exports.update = (req, res) => {
   const id = req.params.id;
+
 
   DirectCost.update(req.body, {
     where: { id: id }
