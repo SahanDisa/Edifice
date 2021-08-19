@@ -47,6 +47,7 @@ db.directcosts = require("./directcost.model.js")(sequelize, Sequelize);
 db.commitments = require("./commitment.model.js")(sequelize, Sequelize);
 db.sovs = require("./sov.model.js")(sequelize, Sequelize);
 db.primecontracts = require("./primecontract.model.js")(sequelize, Sequelize);
+db.invoices = require("./invoice.model.js")(sequelize, Sequelize);
 
 //resource management
 db.equipments = require("./equipment.model")(sequelize, Sequelize);
@@ -207,6 +208,13 @@ db.projects.hasOne(db.primecontracts, { as: "primecontracts" });
 db.primecontracts.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
+});
+
+// One commitment has many invoices
+db.commitments.hasMany(db.invoices, { as: "invoices" });
+db.invoices.belongsTo(db.commitments, {
+  foreignKey: "commitmentId",
+  as: "commitment",
 });
 
 db.ROLES = ["user", "admin", "moderator"];
