@@ -48,6 +48,7 @@ require('./app/routes/equipment-category.routes')(app);
 require('./app/routes/meeting.routes')(app);
 require('./app/routes/meetingcategory.routes')(app);
 require('./app/routes/primecontract.routes')(app);
+require('./app/routes/invoice.routes')(app);
 
 
 // simple route

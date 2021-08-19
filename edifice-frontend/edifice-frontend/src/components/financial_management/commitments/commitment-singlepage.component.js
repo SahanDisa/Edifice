@@ -416,6 +416,9 @@ exclusions : exclusions
                     <Link to={"/viewsov/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">View SoVs </button>
                     </Link><br />
+                    <Link to={"/addinvoice/"+currentCommitment.id}>
+                    <button className="btn btn-success m-2">+ Create Invoice </button>
+                    </Link><br />
 
                     <Link to={"/addsov/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">Email Contract </button>
