@@ -12,6 +12,10 @@ import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 // Worker
 import { Worker } from '@react-pdf-viewer/core';
 //
+import { MobilePDFReader } from 'reactjs-pdf-reader';
+import { PDFReader } from 'reactjs-pdf-reader';
+
+
 
 const UploadFiles = () => {
   
@@ -57,6 +61,8 @@ const UploadFiles = () => {
     useEffect(() => {
         UploadService.getFiles().then((response) => {
           setFileInfos(response.data);
+          console.log("hi");
+          console.log(response.data);
         });
     }, []);
     //viewer
@@ -116,7 +122,7 @@ const UploadFiles = () => {
               {fileInfos &&
                 fileInfos.map((file, index) => (
                   <li className="list-group-item" key={index}>
-                    <a href={file.url}>{file.name}</a>
+                    <a href={file.url}>{file.name}{" "}{file.url}</a>
                   </li>
                 ))}
             </ul>
@@ -148,6 +154,12 @@ const UploadFiles = () => {
               {/* if we dont have pdf or viewPdf state is null */}
               {!viewPdf&&<>No pdf file selected</>}
               </div>
+              <div>
+              
+              </div>
+              {/* <div style={{overflow:'scroll',height:600}}>
+                <MobilePDFReader url={"http://localhost:8080/api/files/APPS10.pdf"} showAllPage="true"/>
+              </div> */}
             </div>
         </div>
     );

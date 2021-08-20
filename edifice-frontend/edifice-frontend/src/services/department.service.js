@@ -6,7 +6,7 @@ class DepartmentDataService {
   }
 
   get(id) {
-    return http.get(`/projects/single/${id}`);
+    return http.get(`/projects/department/single/${id}`);
   }
 
   create(data) {

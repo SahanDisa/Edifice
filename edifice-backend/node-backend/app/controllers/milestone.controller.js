@@ -16,12 +16,12 @@ exports.create = (req, res) => {
   const milestone = {
     title: req.body.title,
     description: req.body.description,
-    purpose: req.body.duration,
+    duration: req.body.duration,
     projectId: req.body.projectId
   }
 
   // Save Milestone in the database
-  Milestone.create(department)
+  Milestone.create(milestone)
     .then(data => {
       res.send(data);
     })
@@ -54,7 +54,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Project.findByPk(id)
+    Milestone.findByPk(id)
       .then(data => {
         res.send(data);
       })
