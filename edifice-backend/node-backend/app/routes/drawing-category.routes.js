@@ -8,6 +8,9 @@ module.exports = app => {
   
     // Retrieve all Drawings category for a project
     router.get("/:id", drawingcategory.findAll);
+
+    // Retrive single Drawing Category for a project
+    router.get("/single/:id", drawingcategory.findOne);
   
     app.use('/api/projects/drawing-category', router);
 };

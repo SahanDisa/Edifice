@@ -8,6 +8,10 @@ class DrawingCategoryDataService {
   create(data) {
     return http.post(`/projects/drawing-category/`, data);
   }
+
+  getOne(id){
+    return http.get(`/projects/drawing-category/single/${id}`);
+  }
 }
 
 export default new DrawingCategoryDataService();
