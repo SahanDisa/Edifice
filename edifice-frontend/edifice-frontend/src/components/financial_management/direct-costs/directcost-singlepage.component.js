@@ -35,7 +35,7 @@ const DirectCost = props => {
 
   useEffect(() => {
     getDirectCost(props.match.params.id);
-  }, [props.match.params.id]);
+  },[props.match.params.id]);
 
   const handleInputChange = event => {
     const { name, value } = event.target;

@@ -48,6 +48,7 @@ db.commitments = require("./commitment.model.js")(sequelize, Sequelize);
 db.sovs = require("./sov.model.js")(sequelize, Sequelize);
 db.primecontracts = require("./primecontract.model.js")(sequelize, Sequelize);
 db.invoices = require("./invoice.model.js")(sequelize, Sequelize);
+db.payments = require("./payment.model.js")(sequelize, Sequelize);
 
 //resource management
 db.equipments = require("./equipment.model")(sequelize, Sequelize);
@@ -153,12 +154,13 @@ db.users.belongsToMany(db.roles, {
   otherKey: "roleId"
 });
 
-/* One project has many direct costs*/
+//One project has many direct costs
 db.projects.hasMany(db.directcosts, { as: "directcosts" });
 db.directcosts.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
+
 
 /* One project has many commitments*/
 db.projects.hasMany(db.commitments, { as: "commitments" });
@@ -171,6 +173,13 @@ db.commitments.belongsTo(db.projects, {
 // One commitment has many sovs
 db.commitments.hasMany(db.sovs, { as: "sovs" });
 db.sovs.belongsTo(db.commitments, {
+  foreignKey: "commitmentId",
+  as: "commitment",
+});
+
+// One commitment has many sovs
+db.commitments.hasMany(db.payments, { as: "payments" });
+db.payments.belongsTo(db.commitments, {
   foreignKey: "commitmentId",
   as: "commitment",
 });
