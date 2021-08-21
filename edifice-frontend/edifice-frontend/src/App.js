@@ -111,6 +111,8 @@ import AddSov from "./components/financial_management/commitments/addsov.compone
 import ViewSingleDirectCost from "./components/financial_management/direct-costs/directcost-singlepage.component";
 import SovHome from "./components/financial_management/commitments/sovs.component";
 import AddInvoice from "./components/financial_management/invoicing/addinvoice.component";
+import AddPayment from "./components/financial_management/commitments/addpayment.component";
+import PaymentHome from "./components/financial_management/commitments/payments.component";
 
 class App extends Component {
   constructor(props) {
@@ -339,6 +341,8 @@ class App extends Component {
            {/* <Route path="/viewsov/:id" component={ViewSingleSov} />*/}
             <Route path="/viewsov/:id" component={SovHome} />
             <Route path="/addinvoice/:id" component={AddInvoice} />
+            <Route path="/addpayment/:id" component={AddPayment} />
+            <Route path="/viewpayment/:id" component={PaymentHome} />
            
           </Switch>
         </div>

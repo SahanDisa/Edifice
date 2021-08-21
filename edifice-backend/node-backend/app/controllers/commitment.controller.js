@@ -19,7 +19,7 @@ exports.create = (req, res) => {
     contractCompany:req.body.contractCompany,
     status:req.body.status,
     //executed:req.body.executed,
-    defaultRetainage:req.body.defaultRetainage,
+    //defaultRetainage:req.body.defaultRetainage,
     description:req.body.description,
     startDate:req.body.startDate,
     estimatedCompletionDate:req.body.estimatedCompletionDate,

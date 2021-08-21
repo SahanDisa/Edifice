@@ -1,34 +1,34 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
-import SovDataService from "./../../../services/sov.service";
+import PaymentDataService from "./../../../services/payment.service";
 import { useTable } from "react-table";
 import { Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-const SovList = (props) => {
+const PaymentList = (props) => {
   const {id}= useParams();
-  const [sovs, setSovs] = useState([]);
-  const [searchCostCode, setSearchCostCode] = useState("");
-  const sovsRef = useRef();
+  const [payments, setPayments] = useState([]);
+  const [searchDate, setSearchDate] = useState("");
+  const paymentsRef = useRef();
 
   //const {cId}= useParams();
  
-  sovsRef.current = sovs;
+  paymentsRef.current = payments;
 
   useEffect(() => {
-    retrieveSovs();
+    retrievePayments();
   }, []);
 
-  const onChangeSearchCostCode = (e) => {
-    const searchCostCode = e.target.value;
-    setSearchCostCode(searchCostCode);
+  const onChangeSearchDate = (e) => {
+    const searchDate = e.target.value;
+    setSearchDate(searchDate);
   };
 
-  const retrieveSovs = () => {
-    SovDataService.getAll(id)
+  const retrievePayments = () => {
+    PaymentDataService.getAll(id)
       .then((response) => {
-        setSovs(response.data);
+        setPayments(response.data);
       })
       .catch((e) => {
         console.log(e);
@@ -36,38 +36,38 @@ const SovList = (props) => {
   };
 
   const refreshList = () => {
-    retrieveSovs();
+    retrievePayments();
   };
 
-  const findByCostCode = () => {
-    SovDataService.findByCostCode(searchCostCode)
+  const findByDate = () => {
+    PaymentDataService.findByDate(searchDate)
       .then((response) => {
-        setSovs(response.data);
+        setPayments(response.data);
       })
       .catch((e) => {
         console.log(e);
       });
   };
 
-  const openSov = (rowIndex) => {
-    const id = sovsRef.current[rowIndex].id;
+  const openPayment = (rowIndex) => {
+    const id = paymentsRef.current[rowIndex].id;
 
-    props.history.push("/viewsov/" + id);
+    props.history.push("/viewpayment/" + id);
   };
 
 
 
-  const deleteSov = (rowIndex) => {
-    const id = sovsRef.current[rowIndex].id;
+  const deletePayment = (rowIndex) => {
+    const id = paymentsRef.current[rowIndex].id;
 
-    SovDataService.remove(id)
+    PaymentDataService.remove(id)
       .then((response) => {
         //props.history.push("/sov/1");
 
-        let newSovs = [...sovsRef.current];
-        newSovs.splice(rowIndex, 1);
+        let newPayments = [...paymentsRef.current];
+        newPayments.splice(rowIndex, 1);
 
-        setSovs(newSovs);
+        setPayments(newPayments);
       })
       .catch((e) => {
         console.log(e);
@@ -77,25 +77,33 @@ const SovList = (props) => {
   const columns = useMemo(
     () => [
       {
-        Header: "Cost Code",
-        accessor: "costCode",
+        Header: "Invoice",
+        accessor: "invoice",
       },
       {
-        Header: "Description",
-        accessor: "description",
+        Header: "Payment Method",
+        accessor: "paymentMethod",
+      },
+      {
+        Header: "Date",
+        accessor: "date",
+      },
+      {
+        Header: "Payment #",
+        accessor: "paymentHash",
+      },
+      {
+        Header: "Invoice #",
+        accessor: "invoiceHash",
+      },
+      {
+        Header: "Note",
+        accessor: "note",
       },
       {
         Header: "Ammount",
         accessor: "ammount",
       },
-      /*{
-        Header: "Billed To Date",
-        accessor: "billedToDate",
-      },
-      {
-        Header: "Ammount Remaining",
-        accessor: "ammountRemaining",
-      },*/
       {
         Header: "",
         accessor: "actions",
@@ -103,11 +111,11 @@ const SovList = (props) => {
           const rowIdx = props.row.id;
           return (
             <div>
-              <span onClick={() => openSov(rowIdx)}>
+              <span onClick={() => openPayment(rowIdx)}>
               <EditIcon></EditIcon>&nbsp;&nbsp;
               </span>
 
-              <span onClick={() => deleteSov(rowIdx)}>
+              <span onClick={() => deletePayment(rowIdx)}>
                 <DeleteIcon></DeleteIcon>
               </span>
             </div>
@@ -126,16 +134,16 @@ const SovList = (props) => {
     prepareRow,
   } = useTable({
     columns,
-    data: sovs,
+    data: payments,
   });
 
   return (
     <div>
-        <h3> Schedule of Values</h3>
+        <h3> Payments</h3>
                <h6>Track all direct costs that are not associated with commitments.</h6><hr />
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
-            <Link className="btn btn-primary mr-2" to={"/addsov/"+id}>
+            <Link className="btn btn-primary mr-2" to={"/addpayment/"+id}>
                 + Create
                 </Link>
                 <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
@@ -151,14 +159,14 @@ const SovList = (props) => {
             type="text"
             className="form-control"
             placeholder="Search by cost code"
-            value={searchCostCode}
-            onChange={onChangeSearchCostCode}
+            value={searchDate}
+            onChange={onChangeSearchDate}
           />
           <div className="input-group-append">
             <button
               className="btn btn-outline-secondary"
               type="button"
-              onClick={findByCostCode}
+              onClick={findByDate}
             >
               Search
             </button>
@@ -202,4 +210,4 @@ const SovList = (props) => {
   );
 };
 
-export default SovList;
+export default PaymentList;

@@ -17,9 +17,9 @@ exports.create = (req, res) => {
     costCode: req.body.costCode,
     description:req.body.description,
     ammount:req.body.ammount,
-    billedToDate:req.body.billedToDate,
+    //billedToDate:req.body.billedToDate,
     //executed:req.body.executed,
-    ammountRemaining:req.body.ammountRemaining,
+    //ammountRemaining:req.body.ammountRemaining,
 
     commitmentId: req.body.commitmentId,
   };
