@@ -1,128 +1,204 @@
-import React, { useState, useEffect } from "react";
-import UploadService from "./../../../services/document.service";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from 'react-bootstrap/Card';
-import { Document, Page } from "react-pdf";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import DocumentDataService from "./../../../services/documentfile.service";
+import DirectoryDataService from "./../../../services/directory.service";
+import Timeline from '@material-ui/lab/Timeline';
+import TimelineItem from '@material-ui/lab/TimelineItem';
+import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
+import TimelineConnector from '@material-ui/lab/TimelineConnector';
+import TimelineContent from '@material-ui/lab/TimelineContent';
+import TimelineDot from '@material-ui/lab/TimelineDot';
 
-const UploadDocFiles = () => {
-  
-    const [selectedFiles, setSelectedFiles] = useState(undefined);
-    const [currentFile, setCurrentFile] = useState(undefined);
-    const [progress, setProgress] = useState(0);
-    const [message, setMessage] = useState("");
-    const [numPages, setNumPages] = useState(null);
-    const [pageNumber, setPageNumber] = useState(1);
+export default class AddDocument extends Component {
+  constructor(props) {
+    super(props);
+    this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onChangeType = this.onChangeType.bind(this);
+    this.onChangePath = this.onChangePath.bind(this);
+    this.saveDocument = this.saveDocument.bind(this);
+    this.newDocument = this.newDocument.bind(this);
 
-    function onDocumentLoadSuccess({ numPages }) {
-      setNumPages(numPages);
-    }
-  
-    const [fileInfos, setFileInfos] = useState([]);
-    const selectFile = (event) => {
-        setSelectedFiles(event.target.files);
+    this.state = {
+      id: null,
+      title: "",
+      description: "",
+      category: "1",
+      path: "http://localhost:8080/api/files/", 
+      projectId: this.props.match.params.id, 
+      
+      directory: [],
+      currentIndex: -1,
+      submitted: false
     };
-    const upload = () => {
-        let currentFile = selectedFiles[0];
-    
-        setProgress(0);
-        setCurrentFile(currentFile);
-    
-        UploadService.upload(currentFile, (event) => {
-          setProgress(Math.round((100 * event.loaded) / event.total));
-        })
-          .then((response) => {
-            setMessage(response.data.message);
-            return UploadService.getFiles();
-          })
-          .then((files) => {
-            setFileInfos(files.data);
-          })
-          .catch(() => {
-            setProgress(0);
-            setMessage("Could not upload the file!");
-            setCurrentFile(undefined);
-          });
-    
-        setSelectedFiles(undefined);
-    };
-    useEffect(() => {
-        UploadService.getFiles().then((response) => {
-          setFileInfos(response.data);
+  }
+  componentDidMount() {
+    this.retriveDocumentCategory(this.props.match.params.id);
+  }
+  onChangeName(e) {
+    this.setState({
+      title: e.target.value
+    });
+  }
+  onChangeDescription(e) {
+    this.setState({
+      description: e.target.value
+    });
+  }
+  onChangeType(e) {
+    this.setState({
+      category: e.target.value
+    });
+  }
+  onChangePath(e) {
+    this.setState({
+      path: e.target.value
+    });
+  }
+  retriveDocumentCategory(id){
+    DirectoryDataService.getAll(id)
+    .then(response => {
+        this.setState({
+          directory: response.data
         });
-    }, []);
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+  saveDocument() {  
+    var data = {
+      title: this.state.title,
+      description: this.state.description,
+      category: this.state.category,
+      path: this.state.path,
+      projectId: this.state.projectId
+    };
+
+    DocumentDataService.create(data)
+      .then(response => {
+        this.setState({
+          id: response.data.id,
+          title: response.data.title,
+          description: response.data.description,
+          category: response.data.category,
+          path: response.data.path,
+          projectId: response.data.projectId,
+
+          submitted: true
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
+  newDocument() {
+    this.setState({
+      id: null,
+      title: "",
+      description: "",
+      category: "",
+      path: "",
+      projectId: this.props.match.params.id,
+      
+      submitted: false
+    });
+  }
+
+  render() {
+    const {projectId, title,currentIndex, directory} = this.state;
     return (
-        <div>
-        <h2>Add Single Document</h2>
-        <hr></hr>
-        <p>Add your required and vital documents</p>
-        <div className="row">
-        <div className="container col-sm-8">
+      <div className="container">
+        {this.state.submitted ? (
+          <div>
+            <h4>File details successfully submitted!</h4>
+            <h4>Upload the file</h4>
+            <Link to={"/uploaddocument/"+title+".pdf"} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
+              Upload File
+            </Link>
+          </div>
+        ) : (
+          <div class="container">
+            <h2>Add New Document</h2>
+            <div className="row">
+            <div className="col-sm-8">
             <div className="form-group">
-              <label htmlFor="title">Document Name:</label>
+              <label htmlFor="name">Document Title</label>
               <input
                 type="text"
                 className="form-control"
-                id="title"
+                id="name"
                 required
-                // value={this.state.title}
-                // onChange={this.onChangeTitle}
-                // name="title"
+                value={this.state.title}
+                onChange={this.onChangeName}
+                name="title"
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="description">Description :</label>
+              <label htmlFor="description">Description</label>
               <input
                 type="text"
                 className="form-control"
                 id="description"
                 required
-                // value={this.state.description}
-                // onChange={this.onChangeDescription}
-                // name="description"
+                value={this.state.description}
+                onChange={this.onChangeDescription}
+                name="description"
               />
             </div>
-            {/* Upload part */}
-            <h4>Upload Status</h4>
-            {currentFile && (
-            <div className="progress">
-            
-              <div
-                className="progress-bar progress-bar-info progress-bar-striped"
-                role="progressbar"
-                aria-valuenow={progress}
-                aria-valuemin="0"
-                aria-valuemax="100"
-                style={{ width: progress + "%" }}
-              >
-                {progress}%
-              </div>
-            </div>
-          )}
-    
-          <label className="btn btn-default">
-            <input type="file" onChange={selectFile} />
-          </label>
-    
-          <button
-            className="btn btn-primary"
-            disabled={!selectedFiles}
-            onClick={upload}
-          >
-            Upload
-          </button>
-    
-          <div className="alert alert-light" role="alert">
-            {message}
-          </div>
-        </div>
-        <div className="col-sm-4">
-        </div>
-        </div>
-        <button className="btn btn-success">Add Document</button>
-       </div>
-    );
-};
 
-export default UploadDocFiles;
+            <div className="form-group">
+              <label htmlFor="category">Document Category</label>
+              <select 
+                className="form-control"
+                id="datatype"
+                required
+                name="category"
+                value={this.state.category}
+                onChange={this.onChangeType}
+              >
+                {directory &&
+                directory.map((singledirectory, index) => (
+                <option
+                    value={singledirectory.id}
+                    onChange={this.onChangeType}
+                    key={index}
+                >
+                {/* unit data */}
+                {singledirectory.title}
+                </option>
+                ))}
+              </select>
+            </div>  
+            </div>
+            <div className="col-sm-4">
+            <Timeline>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><h5><strong>Step 1</strong><br/>Document Settings</h5> </TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 2</strong><br/>Upload File</h6></TimelineContent>
+              </TimelineItem>
+            </Timeline>
+            </div>
+            </div>
+            <button onClick={this.saveDocument} className="btn btn-success">
+              Create 
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
+}

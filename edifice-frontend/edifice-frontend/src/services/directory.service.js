@@ -8,6 +8,9 @@ class DirectoryDataService {
   create(data) {
     return http.post(`/projects/directory/`, data);
   }
+  getOne(id){
+    return http.get(`/projects/directory/single/${id}`);
+  }
 }
 
 export default new DirectoryDataService();

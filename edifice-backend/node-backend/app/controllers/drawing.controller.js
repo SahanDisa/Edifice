@@ -1,5 +1,4 @@
 const db = require("./../models/index");
-const Project = db.projects;
 const Drawing = db.drawings;
 
 // create a drawing

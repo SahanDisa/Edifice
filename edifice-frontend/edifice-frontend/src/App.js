@@ -28,6 +28,7 @@ import AddMilestone from "./components/core_tools/admin/add-milestone.component"
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
 import AddDirectory from "./components/project_management/document/adddirectory.component";
+import ViewDirectory from "./components/project_management/document/directorysinglepage";
 
 import DrawingHome from "./components/project_management/drawings/drawings.component";
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
@@ -64,6 +65,8 @@ import ViewTasks from "./components/core_tools/tasks/view.component";
 
 import DocumentHome from "./components/project_management/document/document.component";
 import UploadDocFiles from "./components/project_management/document/adddocument.component";
+import UploadDocment from "./components/project_management/document/uploaddocument.component";
+import PdfViewerComponent from "./components/project_management/document/viewpdf.component";
 
 import MeetingsConfig from "./components/project_management/meetings/configuration.component";
 import ManageMeetings from "./components/project_management/meetings/manage.component";
@@ -108,6 +111,7 @@ import CommitmentHome from "./components/financial_management/commitments/commit
 import AddCommitment from "./components/financial_management/commitments/addcommitment.component";
 import ViewSingleCommitment from "./components/financial_management/commitments/commitment-singlepage.component";
 import AddSov from "./components/financial_management/commitments/addsov.component";
+import Pdfviewer from "./components/project_management/document/pdfviewer.component";
 
 import ViewSingleDirectCost from "./components/financial_management/direct-costs/directcost-singlepage.component";
 import SovHome from "./components/financial_management/commitments/sovs.component";
@@ -293,7 +297,10 @@ class App extends Component {
             {/* Document */}
             <Route path="/directory/:id" component={AddDirectory} />
             <Route path="/document/:id" component={DocumentHome} />
-            <Route path="/adddocument" component={UploadDocFiles} />
+            <Route path="/adddocument/:id" component={UploadDocFiles} />
+            <Route path="/uploaddocument/:name" component={UploadDocment}/>
+            <Route path={"/viewdocument"} component={PdfViewerComponent}/>
+            <Route path={"/viewdirectory/:id"} component={ViewDirectory}/>
             {/* Drawing Component Routes  */}
             <Route path="/drawing/:id" component={DrawingHome} />
             <Route path="/adddrawingcategory/:id" component={AddDrawingCategory} />

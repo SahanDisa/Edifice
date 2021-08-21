@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import UploadService from "./../../../services/document.service";
 import DirectoryService from "../../../services/directory.service";
 import Card from 'react-bootstrap/Card';
-import { AccordViewer } from "./viewdocument.component";
-import Pdfviewer from "./pdfviewer.component";
 import UploadFiles from "./fileupload.component";
 
 export default class Documents extends Component {
   constructor(props) {
     super(props);
-    this.retrieveDirectory = this.retriveDiirectory.bind(this);
+    this.retrieveDirectory = this.retriveDirectory.bind(this);
     this.state = {
       directories: [],
       currentIndex: -1,
@@ -21,7 +18,7 @@ export default class Documents extends Component {
   componentDidMount() {
     this.retrieveDirectory(this.props.match.params.id);
   }
-  retriveDiirectory(id){
+  retriveDirectory(id){
       DirectoryService.getAll(id)
       .then(response => {
           this.setState({
@@ -44,13 +41,14 @@ export default class Documents extends Component {
           <hr></hr>
           <h3>Directory</h3>
           <p>Manage the related documents in one place using directory</p>
-          <Link className="btn btn-primary" to={"/directory/"+id}>
+          <Link className="btn btn-primary mr-2" to={"/directory/"+id}>
                 Add Directory
           </Link>
-          <Link className="btn btn-primary" to={"/adddocument/"}>
+          <Link className="btn btn-primary" to={"/adddocument/"+id}>
                 Add Document
           </Link>
           <hr></hr>
+          <h3>Directory List</h3>
           <div className="container">
           <div className="container row">
             {directories &&
@@ -63,7 +61,7 @@ export default class Documents extends Component {
                     key={index}
                 >
                 {/* unit data */}
-                <Link to={"/viewdrawingcategory/"+id}>
+                <Link to={"/viewdirectory/"+directory.id}>
                         <Card
                         bg={'secondary'}
                         text={'dark'}
@@ -82,16 +80,7 @@ export default class Documents extends Component {
             ))}
             </div>
         </div>
-        <hr></hr>
-          <h3>Document View and Download</h3>  
-          <div className="card">
-              <div className="card-header"><h5>Recent List</h5></div>
-              
-            </div>
-            {/* Browser-native */}
-            <hr></hr>
-            <h3>View Documents</h3>
-            <p>View necessary documents</p>
+            
             {/* <embed
                 src="https://www.pearsonhighered.com/assets/samplechapter/0/1/3/4/0134454170.pdf"
                 type="application/pdf"
@@ -100,7 +89,6 @@ export default class Documents extends Component {
                 height="500px"
                 width="100%"
             ></embed> */}
-            <AccordViewer />
             {/* <Pdfviewer/> */}
             <UploadFiles/>
           </div>

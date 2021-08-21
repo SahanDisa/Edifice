@@ -20,6 +20,7 @@ import { PDFReader } from 'reactjs-pdf-reader';
 const UploadFiles = () => {
   
     const [selectedFiles, setSelectedFiles] = useState(undefined);
+    const [name, setName] = useState("demo");
     const [currentFile, setCurrentFile] = useState(undefined);
     const [progress, setProgress] = useState(0);
     const [message, setMessage] = useState("");
@@ -61,7 +62,7 @@ const UploadFiles = () => {
     useEffect(() => {
         UploadService.getFiles().then((response) => {
           setFileInfos(response.data);
-          console.log("hi");
+          
           console.log(response.data);
         });
     }, []);
@@ -80,6 +81,7 @@ const UploadFiles = () => {
     const fileType=['application/pdf'];
     const handlePdfFileChange=(e)=>{
       let selectedFile=e.target.files[0];
+      console.log(e.target.files[0]);
       if(selectedFile){
         if(selectedFile&&fileType.includes(selectedFile.type)){
           let reader = new FileReader();
@@ -122,15 +124,19 @@ const UploadFiles = () => {
               {fileInfos &&
                 fileInfos.map((file, index) => (
                   <li className="list-group-item" key={index}>
-                    <a href={file.url}>{file.name}{" "}{file.url}</a>
+                    <a href={file.url} target="_blank">{file.name}{" "}{file.url}</a>
+                    
                   </li>
                 ))}
             </ul>
           </div>
           {/* Browser-native */}
           <hr></hr>
-          <div className='container'>
-           <br></br>  
+          <h3>View Custom Documents</h3>
+          <p>View necessary documents</p>
+           <br></br>
+           <div className="row">
+           <div className="col-4">  
               <form className='form-group' onSubmit={handlePdfFileSubmit}>
                 <input type="file" className='form-control'
                   required onChange={handlePdfFileChange}
@@ -141,10 +147,11 @@ const UploadFiles = () => {
                   UPLOAD
                 </button>
               </form>
+            </div>
+            <div className="col-8">
               {/* form select */}
-              <br></br>
               <h4>View PDF</h4>
-              <div className='pdf-container'>
+              <div className='pdf-container'style={{ 'height': '800px' }}>
                 {/* show pdf conditionally (if we have one)  */}
                 {viewPdf&&<><Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
                   <Viewer fileUrl={viewPdf}
@@ -154,14 +161,9 @@ const UploadFiles = () => {
               {/* if we dont have pdf or viewPdf state is null */}
               {!viewPdf&&<>No pdf file selected</>}
               </div>
-              <div>
-              
-              </div>
-              {/* <div style={{overflow:'scroll',height:600}}>
-                <MobilePDFReader url={"http://localhost:8080/api/files/APPS10.pdf"} showAllPage="true"/>
-              </div> */}
             </div>
-        </div>
+            </div>
+            </div>
     );
 };
 
