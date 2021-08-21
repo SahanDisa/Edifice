@@ -5,6 +5,7 @@ import DrawingCategoryService from "../../../services/drawing-category.service";
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
+import Pdfviewer from "./pdfviewer.component";
 import Card from 'react-bootstrap/Card';
 //styles classes
 
@@ -72,6 +73,7 @@ export default class Drawings extends Component {
                 <hr></hr>
             </div>
         <div className="container">
+        <h3>Drawing Category</h3>
         <div className="container row">
             {drawingcategories &&
                 drawingcategories.map((drawingcategory, index) => (
@@ -104,8 +106,14 @@ export default class Drawings extends Component {
         </div>
         <hr></hr>
         <div className="container">
-                <h4>Recent List</h4>
-            {/* Drawing List */}
+        <h3>Custom Drawing Viewer</h3>
+        <p>View the drawing before use in a system and rapid file viewer</p>
+        <Pdfviewer/>            
+        </div>
+        <hr></hr>
+        <div className="container">
+            {/* <h3>Recent List</h3>
+            
             <ul className="list-group">
             {drawings &&
                 drawings.map((drawing, index) => (
@@ -114,7 +122,6 @@ export default class Drawings extends Component {
                     "list-group-item row" +
                     (index === currentIndex ? "active" : "")
                     }
-                    // onClick={() => this.setActiveProject(project, index)}
                     key={index}
                 >
                 <div className="row">
@@ -122,7 +129,7 @@ export default class Drawings extends Component {
                 {drawing.name}
                     <h6>{drawing.description}</h6>
                     <p>{drawing.drawtype}</p>
-                    {/* Button Group */}
+                    
                     <Link to={"/viewdrawing/"+drawing.id}>
                     <button className="btn btn-primary">View <VisibilityIcon/> </button>
                     </Link>
@@ -136,9 +143,9 @@ export default class Drawings extends Component {
                 </div>    
                 </div>
                 ))}
-            </ul>
-            </div> 
-            </div>
+            </ul> */}
+          </div> 
+          </div>
         );
     }
 }

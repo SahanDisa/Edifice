@@ -93,9 +93,10 @@ export default class ViewDirectory extends Component {
                       <td>{title}</td>
                       <td>   
                           {/* Button Group */}
-                          <Link to={"/viewdrawing/"+drawing.id}>
+                          {/* <Link to={"/viewdrawing/"+drawing.id}>
                           <button className="btn btn-primary">View <VisibilityIcon/> </button>
-                          </Link>
+                          </Link> */}
+                          <a className="btn btn-primary" href={"http://localhost:8080/api/files/"+drawing.title+".pdf"} target="_blank">View<VisibilityIcon/></a>
                           <Link to={"/viewdrawing/"+drawing.id}>
                           <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
                           </Link>
