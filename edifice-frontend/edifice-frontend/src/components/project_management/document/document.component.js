@@ -6,11 +6,12 @@ import Card from 'react-bootstrap/Card';
 import { AccordViewer } from "./viewdocument.component";
 import Pdfviewer from "./pdfviewer.component";
 import UploadFiles from "./fileupload.component";
+import App from "./viewpdf.component";
 
 export default class Documents extends Component {
   constructor(props) {
     super(props);
-    this.retrieveDirectory = this.retriveDiirectory.bind(this);
+    this.retrieveDirectory = this.retriveDirectory.bind(this);
     this.state = {
       directories: [],
       currentIndex: -1,
@@ -21,7 +22,7 @@ export default class Documents extends Component {
   componentDidMount() {
     this.retrieveDirectory(this.props.match.params.id);
   }
-  retriveDiirectory(id){
+  retriveDirectory(id){
       DirectoryService.getAll(id)
       .then(response => {
           this.setState({
@@ -47,7 +48,7 @@ export default class Documents extends Component {
           <Link className="btn btn-primary" to={"/directory/"+id}>
                 Add Directory
           </Link>
-          <Link className="btn btn-primary" to={"/adddocument/"}>
+          <Link className="btn btn-primary" to={"/adddocument/"+id}>
                 Add Document
           </Link>
           <hr></hr>
@@ -82,16 +83,7 @@ export default class Documents extends Component {
             ))}
             </div>
         </div>
-        <hr></hr>
-          <h3>Document View and Download</h3>  
-          <div className="card">
-              <div className="card-header"><h5>Recent List</h5></div>
-              
-            </div>
-            {/* Browser-native */}
-            <hr></hr>
-            <h3>View Documents</h3>
-            <p>View necessary documents</p>
+            
             {/* <embed
                 src="https://www.pearsonhighered.com/assets/samplechapter/0/1/3/4/0134454170.pdf"
                 type="application/pdf"
@@ -100,9 +92,10 @@ export default class Documents extends Component {
                 height="500px"
                 width="100%"
             ></embed> */}
-            <AccordViewer />
             {/* <Pdfviewer/> */}
             <UploadFiles/>
+
+            <App/>
           </div>
 
       );

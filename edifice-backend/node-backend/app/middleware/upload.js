@@ -8,6 +8,7 @@ let storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     console.log(file.originalname);
+    console.log(req.title + "methana");
     cb(null, file.originalname);
   },
 });

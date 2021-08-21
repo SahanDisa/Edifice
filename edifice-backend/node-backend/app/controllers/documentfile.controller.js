@@ -1,10 +1,10 @@
 const db = require("./../models/index");
-const Drawing = db.drawings;
+const Document = db.document;
 
 // create a drawing
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.name) {
+  if (!req.body.title) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -13,14 +13,15 @@ exports.create = (req, res) => {
 
   // Create a Project
   const drawing = {
-    name: req.body.name,
+    title: req.body.title,
     description: req.body.description,
-    drawtype: req.body.drawtype,
+    category: req.body.category,
+    path: req.body.path,
     projectId: req.body.projectId,
   };
 
   // Save Project in the database
-  Drawing.create(drawing)
+  Document.create(drawing)
     .then(data => {
       res.send(data);
     })
@@ -36,7 +37,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   const id = req.params.id;
 
-  Drawing.findAll({ where: {
+  Document.findAll({ where: {
     projectId: id
   }})
     .then(data => {
@@ -44,7 +45,7 @@ exports.findAll = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Project Drawings with id=" + id
+        message: "Error retrieving Project Documents with id=" + id
       });
     });  
 };
@@ -53,15 +54,15 @@ exports.findAll = (req, res) => {
 exports.findAllCat = (req, res) => {
   const id = req.params.id;
 
-  Drawing.findAll({ where: {
-    drawtype: id
+  Document.findAll({ where: {
+    category: id
   }})
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Project Drawings with id=" + id
+        message: "Error retrieving Project Documents with id=" + id
       });
     });  
 };
@@ -69,13 +70,13 @@ exports.findAllCat = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Drawing.findByPk(id)
+  Document.findByPk(id)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Project with id=" + id
+        message: "Error retrieving Document with id=" + id
       });
     });  
 };

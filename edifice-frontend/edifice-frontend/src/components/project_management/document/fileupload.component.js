@@ -20,6 +20,7 @@ import { PDFReader } from 'reactjs-pdf-reader';
 const UploadFiles = () => {
   
     const [selectedFiles, setSelectedFiles] = useState(undefined);
+    const [name, setName] = useState("demo");
     const [currentFile, setCurrentFile] = useState(undefined);
     const [progress, setProgress] = useState(0);
     const [message, setMessage] = useState("");
@@ -61,7 +62,7 @@ const UploadFiles = () => {
     useEffect(() => {
         UploadService.getFiles().then((response) => {
           setFileInfos(response.data);
-          console.log("hi");
+          
           console.log(response.data);
         });
     }, []);
@@ -80,6 +81,7 @@ const UploadFiles = () => {
     const fileType=['application/pdf'];
     const handlePdfFileChange=(e)=>{
       let selectedFile=e.target.files[0];
+      console.log(e.target.files[0]);
       if(selectedFile){
         if(selectedFile&&fileType.includes(selectedFile.type)){
           let reader = new FileReader();
@@ -122,7 +124,8 @@ const UploadFiles = () => {
               {fileInfos &&
                 fileInfos.map((file, index) => (
                   <li className="list-group-item" key={index}>
-                    <a href={file.url}>{file.name}{" "}{file.url}</a>
+                    <a href={file.url} target="_blank">{file.name}{" "}{file.url}</a>
+                    
                   </li>
                 ))}
             </ul>
@@ -130,6 +133,8 @@ const UploadFiles = () => {
           {/* Browser-native */}
           <hr></hr>
           <div className='container'>
+          <h3>View Documents</h3>
+          <p>View necessary documents</p>
            <br></br>  
               <form className='form-group' onSubmit={handlePdfFileSubmit}>
                 <input type="file" className='form-control'

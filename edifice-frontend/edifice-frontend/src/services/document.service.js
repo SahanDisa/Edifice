@@ -1,23 +1,22 @@
-import http from "./../http-common.js";
+import http from "../http-common";
 
-const upload = (file, onUploadProgress) => {
-  let formData = new FormData();
+class UploadFilesService {
+  upload(file, title, onUploadProgress) {
+    let formData = new FormData();
 
-  formData.append("file", file);
+    formData.append("file", file, title);
 
-  return http.post("/upload", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-    onUploadProgress,
-  });
-};
+    return http.post("/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      onUploadProgress,
+    });
+  }
 
-const getFiles = () => {
-  return http.get("/files");
-};
+  getFiles() {
+    return http.get("/files");
+  }
+}
 
-export default {
-  upload,
-  getFiles,
-};
+export default new UploadFilesService();
