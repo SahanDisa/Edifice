@@ -28,6 +28,7 @@ import AddMilestone from "./components/core_tools/admin/add-milestone.component"
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
 import AddDirectory from "./components/project_management/document/adddirectory.component";
+import ViewDirectory from "./components/project_management/document/directorysinglepage";
 
 import DrawingHome from "./components/project_management/drawings/drawings.component";
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
@@ -297,6 +298,7 @@ class App extends Component {
             <Route path="/adddocument/:id" component={UploadDocFiles} />
             <Route path="/uploaddocument/:name" component={UploadDocment}/>
             <Route path={"/viewdocument"} component={PdfViewerComponent}/>
+            <Route path={"/viewdirectory/:id"} component={ViewDirectory}/>
             {/* Drawing Component Routes  */}
             <Route path="/drawing/:id" component={DrawingHome} />
             <Route path="/adddrawingcategory/:id" component={AddDrawingCategory} />

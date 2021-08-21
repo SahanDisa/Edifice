@@ -132,10 +132,11 @@ const UploadFiles = () => {
           </div>
           {/* Browser-native */}
           <hr></hr>
-          <div className='container'>
-          <h3>View Documents</h3>
+          <h3>View Custom Documents</h3>
           <p>View necessary documents</p>
-           <br></br>  
+           <br></br>
+           <div className="row">
+           <div className="col-4">  
               <form className='form-group' onSubmit={handlePdfFileSubmit}>
                 <input type="file" className='form-control'
                   required onChange={handlePdfFileChange}
@@ -146,10 +147,11 @@ const UploadFiles = () => {
                   UPLOAD
                 </button>
               </form>
+            </div>
+            <div className="col-8">
               {/* form select */}
-              <br></br>
               <h4>View PDF</h4>
-              <div className='pdf-container'>
+              <div className='pdf-container'style={{ 'height': '800px' }}>
                 {/* show pdf conditionally (if we have one)  */}
                 {viewPdf&&<><Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
                   <Viewer fileUrl={viewPdf}
@@ -159,14 +161,9 @@ const UploadFiles = () => {
               {/* if we dont have pdf or viewPdf state is null */}
               {!viewPdf&&<>No pdf file selected</>}
               </div>
-              <div>
-              
-              </div>
-              {/* <div style={{overflow:'scroll',height:600}}>
-                <MobilePDFReader url={"http://localhost:8080/api/files/APPS10.pdf"} showAllPage="true"/>
-              </div> */}
             </div>
-        </div>
+            </div>
+            </div>
     );
 };
 

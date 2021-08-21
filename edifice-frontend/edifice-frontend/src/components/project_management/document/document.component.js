@@ -1,12 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import UploadService from "./../../../services/document.service";
 import DirectoryService from "../../../services/directory.service";
 import Card from 'react-bootstrap/Card';
-import { AccordViewer } from "./viewdocument.component";
-import Pdfviewer from "./pdfviewer.component";
 import UploadFiles from "./fileupload.component";
-import App from "./viewpdf.component";
 
 export default class Documents extends Component {
   constructor(props) {
@@ -45,13 +41,14 @@ export default class Documents extends Component {
           <hr></hr>
           <h3>Directory</h3>
           <p>Manage the related documents in one place using directory</p>
-          <Link className="btn btn-primary" to={"/directory/"+id}>
+          <Link className="btn btn-primary mr-2" to={"/directory/"+id}>
                 Add Directory
           </Link>
           <Link className="btn btn-primary" to={"/adddocument/"+id}>
                 Add Document
           </Link>
           <hr></hr>
+          <h3>Directory List</h3>
           <div className="container">
           <div className="container row">
             {directories &&
@@ -64,7 +61,7 @@ export default class Documents extends Component {
                     key={index}
                 >
                 {/* unit data */}
-                <Link to={"/viewdrawingcategory/"+id}>
+                <Link to={"/viewdirectory/"+directory.id}>
                         <Card
                         bg={'secondary'}
                         text={'dark'}
@@ -94,8 +91,6 @@ export default class Documents extends Component {
             ></embed> */}
             {/* <Pdfviewer/> */}
             <UploadFiles/>
-
-            <App/>
           </div>
 
       );
