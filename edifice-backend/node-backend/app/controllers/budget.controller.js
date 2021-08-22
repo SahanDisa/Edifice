@@ -15,8 +15,10 @@ exports.create = (req, res) => {
   // Create a Budget Line Item
   const budget = {
     costCode: req.body.costCode,
-    category: req.body.category,
-    originalBudget: req.body.originalBudget,
+    estimatedBudget: req.body.estimatedBudget,
+    revisedBudget: req.body.revisedBudget,
+    currentBudget: req.body.currentBudget,
+   
     projectId: req.body.projectId,
   };
 
@@ -63,4 +65,61 @@ exports.findOne = (req, res) => {
         message: "Error retrieving Project with id=" + id
       });
     });  
+};
+
+
+/*-------------------------------------------------------------- */
+
+//delete a direct cost
+
+exports.delete = (req, res) => {
+  const id = req.params.id;
+ 
+
+  Budget.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Direct Cost was deleted successfully!"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Direct Cost with id=${id}. Maybe Direct Cost was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete Direct Cost with id=" + id
+      });
+    });
+};
+
+//update a direct cost
+
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+
+  Budget.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Direct Cost was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Direct Cost with id=${id}. Maybe Direct Cost  was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Direct Cost with id=" + id
+      });
+    });
 };
