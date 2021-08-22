@@ -5,7 +5,7 @@ const Payment = db.payments;
 // create a drawing
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.date) {
+  if (!req.body.note) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -19,7 +19,6 @@ exports.create = (req, res) => {
     date:req.body.date,
     paymentHash:req.body.paymentHash,
     invoiceHash:req.body.invoiceHash,
-    //executed:req.body.executed,
     note:req.body.note,
     ammount:req.body.ammount,
 

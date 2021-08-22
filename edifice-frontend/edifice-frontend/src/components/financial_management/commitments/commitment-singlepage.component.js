@@ -12,7 +12,7 @@ export default class ViewSingleCommitment extends Component {
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeContractCompany = this.onChangeContractCompany.bind(this);
  this.onChangeStatus = this.onChangeStatus.bind(this);
- this.onChangeDefaultRetainage = this.onChangeDefaultRetainage.bind(this);
+ //this.onChangeDefaultRetainage = this.onChangeDefaultRetainage.bind(this);
  this.onChangeDescription = this.onChangeDescription.bind(this);
  this.onChangeStartDate = this.onChangeStartDate.bind(this);
  this.onChangeEstimatedCompletionDate = this.onChangeEstimatedCompletionDate.bind(this);
@@ -33,7 +33,7 @@ export default class ViewSingleCommitment extends Component {
       contractCompany: "",
       status: "", 
       //executed:"",
-      defaultRetainage :"",
+      //defaultRetainage :"",
       description:"",
       /*attachments:"",*/
       startDate: "",
@@ -106,7 +106,7 @@ export default class ViewSingleCommitment extends Component {
     });
   }
 
-  onChangeDefaultRetainage(e) {
+  /*onChangeDefaultRetainage(e) {
     const defaultRetainage = e.target.value;
 
     this.setState(function(prevState) {
@@ -117,7 +117,7 @@ export default class ViewSingleCommitment extends Component {
         }
       };
     });
-  }
+  }*/
 
   onChangeDescription(e) {
     const description = e.target.value;
@@ -298,7 +298,7 @@ exclusions : exclusions
                 name="status"
               />
               </div>
-              <div className="form-group">
+              {/*<div className="form-group">
                 <label htmlFor="defaultRetainage">Default Retainage % :</label>
                 <input
                 type="text"
@@ -309,7 +309,7 @@ exclusions : exclusions
                 onChange={this.onChangeDefaultRetainage}
                 name="defaultRetainage"
               />
-              </div>
+        </div>*/}
               <div className="form-group">
                 <label htmlFor="description">Description</label>
                 <input
@@ -409,13 +409,23 @@ exclusions : exclusions
      
           </div>
           <div className="col-sm-6">
-          <Link to={"/addsov/"+currentCommitment.id}>
+        { /* <Link to={"/addsov/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">+ Create SoV </button>
-                    </Link><br />
+      </Link><br />*/}
 
                     <Link to={"/viewsov/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">View SoVs </button>
                     </Link><br />
+
+                   {/* <Link to={"/addpayment/"+currentCommitment.id}>
+                    <button className="btn btn-success m-2">+ Create Payment </button>
+    </Link><br />*/}
+
+                    <Link to={"/viewpayment/"+currentCommitment.id}>
+                    <button className="btn btn-success m-2">View Payments </button>
+                    </Link><br />
+
+
                     <Link to={"/addinvoice/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">+ Create Invoice </button>
                     </Link><br />

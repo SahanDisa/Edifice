@@ -85,7 +85,7 @@ export default class BoardUser extends Component {
               <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/budget/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={budgetIcon} alt="" width="50"/><br />
                 <h3 className="h5 nav-heading-title mb-0">Budget</h3>
-                <span className="fs-sm fw-normal text-muted">Set up and manage a comprehensive budget throughout the lifecycle of a project.</span>
+                <span className="fs-sm fw-normal text-muted">Set up and manage a comprehensive budget throughout the lifecycle of the project.</span>
               </Link>
               </div>
             </div>
@@ -112,7 +112,7 @@ export default class BoardUser extends Component {
               <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/commitment/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={commitmentsIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Commitments</h3>
-                <span className="fs-sm fw-normal text-muted">See the status of all contracts and purchase orders.</span>
+                <span className="fs-sm fw-normal text-muted">Easily create and manage contracts with the contractors.</span>
               </Link>
               </div>
             </div>
@@ -121,7 +121,7 @@ export default class BoardUser extends Component {
               <Link className="d-block nav-heading text-center mt-2 mb-2" to={"/invoice/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={invoiceIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Invoicing</h3>
-                <span className="fs-sm fw-normal text-muted">Streamline the invoice collection, review, and approval process on all of the projects.</span>
+                <span className="fs-sm fw-normal text-muted">View and review the invoice collection of the project.</span>
               </Link>
               </div>
             </div>

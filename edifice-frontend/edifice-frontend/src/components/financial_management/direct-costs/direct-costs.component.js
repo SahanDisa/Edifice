@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+
+
 const DirectCostList = (props) => {
   const {id}= useParams();
   const [directcosts, setDirectCosts] = useState([]);
@@ -112,11 +114,11 @@ const DirectCostList = (props) => {
     accessor: "paidDate",
   },
   {
-        Header: "Ammount",
+        Header: "Ammount (Rs.)",
         accessor: "ammount",
       },
       {
-        Header: "Actions",
+        Header: "",
         accessor: "actions",
         Cell: (props) => {
           const rowIdx = props.row.id;
@@ -158,10 +160,10 @@ const DirectCostList = (props) => {
                 + Create
                 </Link>
                 <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
-                Import
+                Import 
                 </Link>
                 <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
-                Export
+                Export 
                 </Link>
                 </div>
       <div className="form-group col-md-4">
