@@ -3,12 +3,18 @@ module.exports = (sequelize, Sequelize) => {
       costCode: {
         type: Sequelize.STRING
       },
-      category: {
-        type: Sequelize.STRING
-      },
-      originalBudget: {
+      estimatedBudget: {
         type: Sequelize.DECIMAL(10, 2)
-      }}, {
+      }
+      ,
+      revisedBudget: {
+        type: Sequelize.DECIMAL(10, 2)
+      },
+      currentBudget: {
+        type: Sequelize.DECIMAL(10, 2)
+      }
+    
+    }, {
         freezeTableName: true,
     });
   
