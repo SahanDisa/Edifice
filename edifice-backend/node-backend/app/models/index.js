@@ -187,7 +187,7 @@ db.sovs.belongsTo(db.projects, {
 //One category has many equipments
 db.categorys.hasMany(db.equipments, { as: "equipments" });
 db.equipments.belongsTo(db.categorys, {
-  foreignKey: "name",
+  foreignKey: "categoryId",
   as: "categories",
 });
 
