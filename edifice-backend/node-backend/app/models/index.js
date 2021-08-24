@@ -38,6 +38,7 @@ db.drawings = require("./drawing.model.js")(sequelize, Sequelize);
 db.biddings = require("./bidding.model")(sequelize, Sequelize);
 // Photo component Model Classes
 db.album = require("./photo-album.model")(sequelize, Sequelize);
+db.photo = require("./photo.model.js")(sequelize, Sequelize);
 // Document component Model Classes
 db.directory = require("./directory.model")(sequelize, Sequelize);
 db.document = require("./document.model")(sequelize, Sequelize);
@@ -114,16 +115,18 @@ db.drawings.belongsTo(db.projects, {
   as: "project",
 });
 
-// One drawing has one drawing category
-
 // One project has many albums
 db.projects.hasMany(db.album,{as: "albums"});
 db.album.belongsTo(db.projects,{
   foreignKey: "projectId",
   as: "project",
 });
-// One album has many photos
-
+// One project has many photos
+db.projects.hasMany(db.photo,{as: "photos"});
+db.photo.belongsTo(db.projects,{
+  foreignKey: "projectId",
+  as: "project",
+});
 // One project can has many directories
 db.projects.hasMany(db.directory,{as: "directory"});
 db.directory.belongsTo(db.projects,{
@@ -195,7 +198,7 @@ db.payments.belongsTo(db.commitments, {
 //One category has many equipments
 db.categorys.hasMany(db.equipments, { as: "equipments" });
 db.equipments.belongsTo(db.categorys, {
-  foreignKey: "name",
+  foreignKey: "categoryId",
   as: "categories",
 });
 

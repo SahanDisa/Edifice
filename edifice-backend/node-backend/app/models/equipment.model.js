@@ -1,7 +1,9 @@
 module.exports = (sequelize, Sequelize) => {
     const Equipment = sequelize.define("equipments", {
       code: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        primaryKey: true,
+        allowNull: false
       },
       brand: {
         type: Sequelize.STRING

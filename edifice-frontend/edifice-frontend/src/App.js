@@ -250,7 +250,7 @@ class App extends Component {
             <Route path="/addmilestone/:id" component={AddMilestone}/>
             {/* <Route path="/projectmanagementhome" component={ProjectManagementHome} /> */}
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
-            <Route path="/portfolio" component={PortfolioHome} />
+            <Route path="/portfolio/:id" component={PortfolioHome} />
             <Route path="/portstepper" component={PortfolioStepper} />
 
             <Route path="/resource" component={BoardResource} />

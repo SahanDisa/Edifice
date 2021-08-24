@@ -9,9 +9,9 @@ module.exports = (sequelize, Sequelize) => {
       category:{
         type: Sequelize.STRING
       },
-      path: {
-        type: Sequelize.STRING  
-      }
+      data: {
+        type: Sequelize.BLOB("long"),
+      },
         }, {
         freezeTableName: true,
     });
