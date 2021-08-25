@@ -15,8 +15,8 @@ export default class CreatePrimeContracts extends Component{
     this.onChangeCostCode = this.onChangeCostCode.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeAmmount = this.onChangeAmmount.bind(this);
-    this.onChangeBilledToDate = this.onChangeBilledToDate.bind(this);
-    this.onChangeAmmountRemaining = this.onChangeAmmountRemaining.bind(this);
+    //this.onChangeBilledToDate = this.onChangeBilledToDate.bind(this);
+    //this.onChangeAmmountRemaining = this.onChangeAmmountRemaining.bind(this);
 
     this.saveSov = this.saveSov.bind(this);
     this.newSov = this.newSov.bind(this);
@@ -26,8 +26,8 @@ export default class CreatePrimeContracts extends Component{
       costCode: "",
       description: "",
       ammount: "",
-      billedToDate: "", 
-      ammountRemaining :"",
+      //billedToDate: "", 
+      //ammountRemaining :"",
 
       projectId: this.props.match.params.id, 
       commitmentId: this.props.match.params.id,   
@@ -50,7 +50,7 @@ export default class CreatePrimeContracts extends Component{
       ammount: e.target.value
     });
   }
-  onChangeBilledToDate (e) {
+  /*onChangeBilledToDate (e) {
     this.setState({
         billedToDate: e.target.value
     });
@@ -59,7 +59,7 @@ export default class CreatePrimeContracts extends Component{
     this.setState({
         ammountRemaining: e.target.value
     });
-  }
+  }*/
   
   saveSov(){
     console.log("clicked");  
@@ -67,8 +67,8 @@ export default class CreatePrimeContracts extends Component{
       costCode: this.state.costCode,
       description: this.state.description,
       ammount: this.state.ammount,     
-      billedToDate: this.state.billedToDate,
-      ammountRemaining:this.state.ammountRemaining,
+      //billedToDate: this.state.billedToDate,
+      //ammountRemaining:this.state.ammountRemaining,
       
       projectId: this.state.projectId,
       commitmentId: this.state.commitmentId
@@ -80,8 +80,8 @@ export default class CreatePrimeContracts extends Component{
         costCode: response.data.costCode,
         description: response.data.description,
       ammount:response.data.ammount,      
-      billedToDate:response.data.billedToDate,
-      ammountRemaining:response.data.ammountRemaining,
+      //billedToDate:response.data.billedToDate,
+      //ammountRemaining:response.data.ammountRemaining,
           
           projectId: response.data.projectId,
           commitmentId: response.data.commitmentId,
@@ -100,8 +100,8 @@ export default class CreatePrimeContracts extends Component{
       id: null,
       costCode: "",
       ammount: "",
-      billedToDate: "",
-      ammountRemaining: "", 
+      //billedToDate: "",
+      //ammountRemaining: "", 
       
       projectId: this.props.match.params.id,
       commitmentId: this.props.match.params.id,
@@ -182,7 +182,7 @@ export default class CreatePrimeContracts extends Component{
               />
               </div>
             
-            <div className="form-group">
+           { /*<div className="form-group">
                 <label htmlFor="status">Billed To Date :</label>
             
               <input
@@ -207,7 +207,7 @@ export default class CreatePrimeContracts extends Component{
                 onChange={this.onChangeAmmountRemaining}
                 name="ammountRemaining"
               />
-              </div>
+      </div>*/}
               </div>
 <div className="col-sm-6">
             <Timeline>

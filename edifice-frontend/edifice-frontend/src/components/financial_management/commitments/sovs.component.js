@@ -88,16 +88,16 @@ const SovList = (props) => {
         Header: "Ammount",
         accessor: "ammount",
       },
-      {
+      /*{
         Header: "Billed To Date",
         accessor: "billedToDate",
       },
       {
         Header: "Ammount Remaining",
         accessor: "ammountRemaining",
-      },
+      },*/
       {
-        Header: "Actions",
+        Header: "",
         accessor: "actions",
         Cell: (props) => {
           const rowIdx = props.row.id;

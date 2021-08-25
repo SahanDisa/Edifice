@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AlbumDataService from "./../../../services/album.service";
 import { WebcamCapture } from './webcam.component';
+import { CameraViewer } from "./viewphoto.component";
 import Accordion from 'react-bootstrap/Accordion';
 import Typography from '@material-ui/core/Typography';
 import Icon1 from "././../../../assets/PM/photos/image1.jpg";
@@ -135,11 +136,12 @@ export default class PhotosHome extends Component {
                     </Link>
                     
               </div> */}
-              {/* <WebcamCapture/> */}
+        <WebcamCapture/>      
         </Typography>
         </div>
-              
+        {/* <CameraViewer/>     */}
       </div>
+      
     );
   }
 }

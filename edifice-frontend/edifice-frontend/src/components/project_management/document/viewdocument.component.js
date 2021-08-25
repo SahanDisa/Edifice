@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Accordion, Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+
 export class AccordViewer extends Component {
+    
     render() {
         return (
             <>
@@ -15,6 +17,7 @@ export class AccordViewer extends Component {
 
                             <Accordion.Collapse eventKey="0">
                                 <Card.Body>This is first tab body</Card.Body>
+                                
                             </Accordion.Collapse>
                         </Card>
 

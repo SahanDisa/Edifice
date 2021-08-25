@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
+import DrawingCategoryDataService from "./../../../services/drawing-category.service";
+import Table from 'react-bootstrap/Table';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
@@ -12,31 +14,30 @@ export default class ViewSingleDrawingCategory extends Component {
       this.state = {
         id: this.props.match.params.id,
         drawings: [],
-        name: "",
-        description: "",
-        drawtype: "", 
+        title: "",
+        description: "", 
         projectId: ""
       };
     }
   
     componentDidMount() {
       this.retrieveCategoryDrawing(this.props.match.params.id);
+      this.retriveCategoryInfo(this.props.match.params.id);
     }
-    retrieveDrawing(id) {
-      DrawingDataService.get(id)
-        .then(response => {
-          this.setState({
-            id: response.data.id,
-            name: response.data.name,
-            description: response.data.description,
-            drawtype: response.data.drawtype,
-            projectId: response.data.projectId,
-          });
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
+    retriveCategoryInfo(id){
+      DrawingCategoryDataService.getOne(id)
+      .then(response => {
+        this.setState({
+          id: response.data.id,
+          title: response.data.title,
+          description: response.data.description,
+          projectId: response.data.projectId,
         });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
     }
     retrieveCategoryDrawing(id) {
       DrawingDataService.getCat(id)
@@ -51,53 +52,63 @@ export default class ViewSingleDrawingCategory extends Component {
         });
     }
     render() {
-        const { id,name,description,drawtype, drawings,currentIndex } = this.state;
+        const { id,title,description,drawings,currentIndex } = this.state;
         return (
             <div>
               <h2>Drawing Category Single Page</h2>
               <p>Manage the drawing in each drawing category</p>
               <hr></hr>
-              <h3>File details</h3>
-              <h6>Drawing Id : {id}</h6>
-              <h6>Name : {name}</h6>
+              <h3>Category details</h3>
+              <h6>Name : {title}</h6>
               <h6>Description : {description}</h6>
-              <h6>Drawing Type : {drawtype}</h6>
               <hr></hr>
-              <div className="container">
-                <h4>Recent List</h4>
-            {/* Drawing List */}
-            <ul className="list-group">
-            {drawings &&
-                drawings.map((drawing, index) => (
-                <div
-                    className={
-                    "list-group-item row" +
-                    (index === currentIndex ? "active" : "")
-                    }
-                    // onClick={() => this.setActiveProject(project, index)}
-                    key={index}
-                >
-                <div className="row">
-                <div className="col-10">
-                {drawing.name}
-                    <h6>{drawing.description}</h6>
-                    <p>{drawing.drawtype}</p>
-                    {/* Button Group */}
-                    <Link to={"/viewdrawing/"+drawing.id}>
-                    <button className="btn btn-primary">View <VisibilityIcon/> </button>
-                    </Link>
-                    <Link to={"/viewdrawing/"+drawing.id}>
-                    <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
-                    </Link>
-                    <Link to={"/viewdrawing/"+drawing.id}>
-                    <button className="btn btn-danger">Delete <DeleteIcon/> </button>
-                    </Link>
-                </div>
-                </div>    
-                </div>
-                ))}
-            </ul>
-            </div> 
+              
+              <h3>Drawing List</h3>
+              {/* Drawing List */}
+              <Table striped bordered hover variant="dark" responsive>
+                <thead>
+                  <tr>
+                    <th>Index</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                {/* Functional for table data */}
+                <tbody>
+                {drawings &&
+                    drawings.map((drawing, index) => (
+                    <tr
+                        // className={
+                        // "list-group-item row" +
+                        // (index === currentIndex ? "active" : "")
+                        // }
+                        // onClick={() => this.setActiveProject(project, index)}
+                        key={index}
+                    >
+                    <td>{drawing.id}</td>
+                    <td>{drawing.name}</td>
+                    <td>{drawing.description}</td>
+                    <td>{title}</td>
+                    <td>   
+                        {/* Button Group */}
+                        <Link to={"/viewdrawing/"+drawing.id}>
+                        <button className="btn btn-primary">View <VisibilityIcon/> </button>
+                        </Link>
+                        <Link to={"/viewdrawing/"+drawing.id}>
+                        <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
+                        </Link>
+                        <Link to={"/viewdrawing/"+drawing.id}>
+                        <button className="btn btn-danger">Delete <DeleteIcon/> </button>
+                        </Link>
+                    </td>    
+                    </tr>
+                    ))}
+                </tbody>
+                {/*Ends */}
+              </Table>
+             
             </div>
         );
     }

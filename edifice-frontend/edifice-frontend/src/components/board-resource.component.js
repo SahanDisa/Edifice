@@ -7,7 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import Card from 'react-bootstrap/Card';
 
-export default class BoardResource extends Component {
+export default class BoardUser extends Component {
   constructor(props) {
     super(props);
     this.retrieveProjects = this.retrieveProjects.bind(this);

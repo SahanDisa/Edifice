@@ -4,6 +4,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
 import { Route, useParams } from "react-router-dom";
+import Timeline from '@material-ui/lab/Timeline';
+import TimelineItem from '@material-ui/lab/TimelineItem';
+import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
+import TimelineConnector from '@material-ui/lab/TimelineConnector';
+import TimelineContent from '@material-ui/lab/TimelineContent';
+import TimelineDot from '@material-ui/lab/TimelineDot';
+
 
 const DirectCost = props => {
   //const {projectId}= useParams();
@@ -35,7 +42,7 @@ const DirectCost = props => {
 
   useEffect(() => {
     getDirectCost(props.match.params.id);
-  }, [props.match.params.id]);
+  },[props.match.params.id]);
 
   const handleInputChange = event => {
     const { name, value } = event.target;
@@ -71,6 +78,8 @@ const DirectCost = props => {
       {currentDirectCost ? (
         <div class="container">
           <h4>Direct Costs</h4>
+          <div className="row">
+       <div className="col-sm-6">
             <div className="form-group">
               <label htmlFor="costCode">Cost Code</label>
              {/* <input
@@ -192,7 +201,44 @@ const DirectCost = props => {
               />
             </div>
 
+          </div>
           
+          <div className="col-sm-6">
+            <Timeline>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 1</strong><br/>Create a Direct Cost</h6> </TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 2</strong><br/>Direct Cost will be automatically added to the Budget.</h6></TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 3</strong><br/>View the Direct Costs.</h6></TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                 
+                </TimelineSeparator>
+                <TimelineContent><h5><strong>Step 4</strong><br/>Edit/Delete a DirectCost.</h5></TimelineContent>
+              </TimelineItem>
+            </Timeline>
+            </div>
+            
+          
+          
+          </div>
           
 
 

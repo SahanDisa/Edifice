@@ -7,16 +7,16 @@ export default class AddBudget extends Component{
   constructor(props) {
     super(props);
     this.onChangeCostCode = this.onChangeCostCode.bind(this);
-    this.onChangeCategory = this.onChangeCategory.bind(this);
-    this.onChangeOriginalBudget = this.onChangeOriginalBudget.bind(this);
+    //this.onChangeCategory = this.onChangeCategory.bind(this);
+    this.onChangeEstimatedBudget = this.onChangeEstimatedBudget.bind(this);
     this.saveBudget = this.saveBudget.bind(this);
     this.newBudget = this.newBudget.bind(this);
 
     this.state = {
       id: null,
       costCode: "",
-      category: "",
-      originalBudget: "",
+      //category: "",
+      estimatedBudget: "",
       projectId: this.props.match.params.id,  
       submitted: false
     };
@@ -28,14 +28,10 @@ export default class AddBudget extends Component{
     });
   }
 
-  onChangeCategory(e) {
+
+  onChangeEstimatedBudget(e) {
     this.setState({
-      category: e.target.value
-    });
-  }
-  onChangeOriginalBudget(e) {
-    this.setState({
-      originalBudget: e.target.value
+      estimatedBudget: e.target.value
     });
   }
 
@@ -43,8 +39,8 @@ export default class AddBudget extends Component{
     console.log("clicked");  
     var data = {
       costCode: this.state.costCode,
-      category: this.state.category,
-      originalBudget: this.state.originalBudget,
+      //category: this.state.category,
+     estimatedBudget: this.state.estimatedBudget,
       projectId: this.state.projectId
     };
 
@@ -53,8 +49,8 @@ export default class AddBudget extends Component{
         this.setState({
           id: response.data.id,
           costCode: response.data.costCode,
-          category: response.data.category,
-          originalBudget: response.data.originalBudget,
+          //category: response.data.category,
+          estimatedBudget: response.data.estimatedBudget,
           projectId: response.data.projectId,
 
           submitted: true
@@ -70,8 +66,8 @@ export default class AddBudget extends Component{
     this.setState({
       id: null,
       costCode: "",
-      category: "",
-      originalBudget: "",
+      //category: "",
+      estimatedBudget: "",
       projectId: this.props.match.params.id,
 
       submitted: false
@@ -121,42 +117,16 @@ export default class AddBudget extends Component{
               </select>
             </div>
 
+          
             <div className="form-group">
-              <label htmlFor="category">Category</label>
-              {/*<input
-                type="text"
-                className="form-control"
-                id="category"
-                required
-                value={this.state.category}
-                onChange={this.onChangeCategory}
-                name="category"
-              />*/}
-                   <select 
-                className="form-control"
-                id="category"
-                required
-                value={this.state.category}
-                onChange={this.onChangeCategory}
-                name="category"
-              >
-                <option>Labor</option>
-                <option>Equipment</option>
-                <option>Materials</option>
-                <option>Commitment</option>
-                <option>Owner Cost</option>
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="originalBudget">Original Budget</label>
+              <label htmlFor="originalBudget">Estimated Budget Ammount</label>
               <input
                 type="text"
                 className="form-control"
                 id="originalBudget"
                 required
-                value={this.state.originalBudget}
-                onChange={this.onChangeOriginalBudget}
+                value={this.state.estimatedBudget}
+                onChange={this.onChangeEstimatedBudget}
                 name="originalBudget"
               />
             </div>

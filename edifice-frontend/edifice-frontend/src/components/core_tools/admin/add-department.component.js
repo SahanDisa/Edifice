@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import DepartmentDataService from "./../../../services/department.service";
 import ProjectDataService from "./../../../services/project.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -13,21 +15,25 @@ export default class AddDepartment extends Component {
     super(props);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeLocation = this.onChangeLocation.bind(this);
-    this.saveProject = this.saveProject.bind(this);
-    this.newProject = this.newProject.bind(this);
+    this.onChangePurpose = this.onChangePurpose.bind(this);
+    this.saveDepartment = this.saveDepartment.bind(this);
+    this.newDepartment = this.newDepartment.bind(this);
 
     this.state = {
       id: null,
+      lastproject: [],
       title: "",
       description: "",
-      location: "", 
-      published: false,
+      purpose: "", 
+      currentIndex: -1,
+      projectId: "",
 
       submitted: false
     };
   }
-
+  componentDidMount() {
+    this.getLastProjectID();
+  }
   onChangeTitle(e) {
     this.setState({
       title: e.target.value
@@ -39,27 +45,39 @@ export default class AddDepartment extends Component {
       description: e.target.value
     });
   }
-  onChangeLocation(e) {
+  onChangePurpose(e) {
     this.setState({
-      location: e.target.value
+      purpose: e.target.value
     });
   }
-
-  saveProject() {
+  getLastProjectID(){
+    ProjectDataService.findlastProject()
+      .then(response => {
+          this.setState({
+            lastproject: response.data,
+            projectId: response.data[0].id
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+  }
+  saveDepartment() {
     var data = {
       title: this.state.title,
       description: this.state.description,
-      location: this.state.location
+      purpose: this.state.purpose,
+      projectId: this.state.projectId
     };
-
-    ProjectDataService.create(data)
+    DepartmentDataService.create(data)
       .then(response => {
         this.setState({
           id: response.data.id,
           title: response.data.title,
           description: response.data.description,
-          location: response.data.location,
-          published: response.data.published,
+          purpose: response.data.purpose,
+          projectId: response.data.projectId,
 
           submitted: true
         });
@@ -69,13 +87,12 @@ export default class AddDepartment extends Component {
         console.log(e);
       });
   }
-
-  newProject() {
+  newDepartment() {
     this.setState({
       id: null,
       title: "",
       description: "",
-      location: "",
+      purpose: "",
       published: false,
 
       submitted: false
@@ -83,18 +100,19 @@ export default class AddDepartment extends Component {
   }
 
   render() {
+    const {lastproject, currentIndex, projectId} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
           <div>
             <h4>You add a Department successfully</h4>
            
-            <button className="btn btn-success" >
+            <button className="btn btn-success" onClick={this.newDepartment}  style={{ 'text-decoration': 'none' }}>
               Add Another Department
             </button>
-            <button className="btn btn-warning" >
-              Go To Milestone
-            </button>
+            <Link to={"/addmilestone/"+projectId} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
+                       Add Milestone
+                </Link>
           </div>
         ) : (
           <div class="container">
@@ -108,9 +126,9 @@ export default class AddDepartment extends Component {
                 type="text"
                 className="form-control"
                 id="title"
-                // required
-                // value={this.state.title}
-                // onChange={this.onChangeTitle}
+                required
+                value={this.state.title}
+                onChange={this.onChangeTitle}
                 name="title"
               />
             </div>
@@ -121,9 +139,9 @@ export default class AddDepartment extends Component {
                 type="text"
                 className="form-control"
                 id="description"
-                // required
-                // value={this.state.description}
-                // onChange={this.onChangeDescription}
+                required
+                value={this.state.description}
+                onChange={this.onChangeDescription}
                 name="description"
               />
             </div>
@@ -133,20 +151,16 @@ export default class AddDepartment extends Component {
               <input
                 type="text"
                 className="form-control"
-                id="location"
-                // required
-                // value={this.state.location}
-                // onChange={this.onChangeLocation}
-                name="location"
+                id="purpose"
+                required
+                value={this.state.purpose}
+                onChange={this.onChangePurpose}
+                name="purpose"
               />
             </div>
-
-           
-
-            {/* <a href="/adddrawing" onClick={this.saveProject} className="btn btn-success">
-              Submit
-            </a> */}
-            <a href="#" className="btn btn-primary">Next</a>
+            <button onClick={this.saveDepartment} className="btn btn-success">
+              Create Department
+            </button>
             </div>
             <div className="container col-4">
             <Timeline>
@@ -169,7 +183,6 @@ export default class AddDepartment extends Component {
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                
                 <TimelineContent><h6><strong>Step 3 :</strong>Define milestones</h6></TimelineContent>
               </TimelineItem>
               <TimelineItem>
@@ -180,7 +193,6 @@ export default class AddDepartment extends Component {
               </TimelineItem>
             </Timeline>
             </div>
-
           </div>
           </div>
         )}
