@@ -15,11 +15,21 @@ export default class Commitments extends Component {
     
     constructor(props) {
       super(props);
+     
+      this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
       this.retrieveCommitment = this.retrieveCommitment.bind(this);
+      this.refreshList = this.refreshList.bind(this);
+      this.setActiveCommitment = this.setActiveCommitment.bind(this);
+      this.searchTitle = this.searchTitle.bind(this);
+      this.deleteCommitment = this.deleteCommitment.bind(this);
+    
       this.state = {
         commitments: [],
+        currentCommitment: null,
         currentIndex: -1,
         content: "",
+        searchTitle: "",
+
         id: this.props.match.params.id
       };
     }
@@ -33,6 +43,15 @@ export default class Commitments extends Component {
     componentDidMount() {
       this.retrieveCommitment(this.props.match.params.id);
     }
+
+    onChangeSearchTitle(e) {
+      const searchTitle = e.target.value;
+  
+      this.setState({
+        searchTitle: searchTitle
+      });
+    }
+
     retrieveCommitment(id) {
       CommitmentDataService.getAll(id)
         .then(response => {
@@ -45,30 +64,110 @@ export default class Commitments extends Component {
           console.log(e);
         });
     }
+
+    refreshList() {
+      this.retrieveCommitment();
+      this.setState({
+        currentCommitment: null,
+        currentIndex: -1
+      });
+    }
+
+    setActiveCommitment(commitment, index) {
+      this.setState({
+        currentCommitment: commitment,
+        currentIndex: index
+      });
+    }
+
+    searchTitle() {
+      CommitmentDataService.findByTitle(this.state.searchTitle)
+        .then(response => {
+          this.setState({
+            commitments: response.data
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+
+    deleteCommitment() { 
+      //this.getCommitment();
+     
+      CommitmentDataService.delete(this.state.id)
+        .then(response => {
+          console.log(response.data);
+          //this.props.history.push('/commitment/'+this.state.projectId)
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+
+    getCommitment(id) {
+      CommitmentDataService.get(id)
+        .then(response => {
+          this.setState({
+            currentCommitment: response.data
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
     
     render() {
-        const { commitments ,currentIndex,id } = this.state;
+        const { searchTitle, commitments ,currentCommitment, currentIndex,id } = this.state;
         // const classes = useStyles();
         return (
             <div>
                <div className="container row">
-            <div className="col-12">
-            <h2>COMMITMENTS</h2>
-            <h6>See the status and current value of contracts and purchase orders.</h6>
-            <hr />
+                <div className="col-12">
+                <h2>COMMITMENTS</h2>
+                <h6>See the Status and Value of all the Contracts.</h6>
+                <hr />
+                </div>
             </div>
-           
-            </div>
+
             <div className="col-12 text-right">
-                
                 <Link className="btn btn-primary mr-2" to={"/addcommitment/"+id}>
-                Add New Commitment
+                + Create New Commitment
                 </Link>
             </div>
 
+            <div className="col-12 text-left">
+            <h5>Commited Contract Totals</h5><br></br>
+            <h6>Total Contracts : Rs. 44,446,000.00<br /></h6>
+            <h6>Payments Made : Rs. 44,446,000.00</h6><br />
+            </div>
 
             <div className="container">
-                <h4>Commitments List</h4>
+            <div className="form-row mt-3">
+            <div className="form-group col-md-8 text-left">
+                <h4>Commitments List</h4></div>
+                <div className="form-group col-md-3 text-right">
+                <input
+              type="text"
+              className="form-control"
+              placeholder="Search by title"
+              value={searchTitle}
+              onChange={this.onChangeSearchTitle}
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={this.searchTitle}
+              >
+                Search
+              </button>
+            </div>
+                      
+                      </div>
+                    </div>
             {/* Drawing List */}
             <ul className="list-group">
             {commitments &&
@@ -78,13 +177,13 @@ export default class Commitments extends Component {
                     "list-group-item row" +
                     (index === currentIndex ? "active" : "")
                     }
-                    // onClick={() => this.setActiveProject(project, index)}
+                    //onClick={() => this.setActiveCommmitment(commitment, index)}
                     key={index}
                 >
                 <div className="row">
                 <div className="col-10">
-                <h6>Title : {commitment.title}</h6>
-                    <h6>Contract Company :{commitment.contractCompany}</h6> 
+                <h6> {commitment.hash} - {commitment.title}</h6>
+                    <h6>Contract Company : {commitment.contractCompany}</h6> 
                     <h6>Status :  {commitment.status}</h6>
                     {/* Button Group */}
                     <Link to={"/viewcommitment/"+commitment.id}>
@@ -99,11 +198,11 @@ export default class Commitments extends Component {
                     </Button>*/}
                     </Link>
                     <Link to={"/viewcommitment/"+commitment.id}>
-                    <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
+                    <button className="btn btn-success m-2">Edit <UpdateIcon/> </button>
                     </Link>
-                    <Link to={"/viewcommitment/"+commitment.id}>
-                    <button className="btn btn-danger">Delete <DeleteIcon/> </button>
-                    </Link>
+                   
+                    <button className="btn btn-danger" onClick={this.deleteCommitment}>Delete <DeleteIcon/> </button>
+                    
                     
                 </div>
                 {/* <div className="col-2">

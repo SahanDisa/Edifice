@@ -48,6 +48,9 @@ db.demo = require("./demo.model")(sequelize, Sequelize);
 db.directcosts = require("./directcost.model.js")(sequelize, Sequelize);
 db.commitments = require("./commitment.model.js")(sequelize, Sequelize);
 db.sovs = require("./sov.model.js")(sequelize, Sequelize);
+db.primecontracts = require("./primecontract.model.js")(sequelize, Sequelize);
+db.invoices = require("./invoice.model.js")(sequelize, Sequelize);
+db.payments = require("./payment.model.js")(sequelize, Sequelize);
 
 //resource management
 db.equipments = require("./equipment.model")(sequelize, Sequelize);
@@ -147,12 +150,14 @@ db.biddings.belongsTo(db.projects, {
   as: "project",
 });
 
+
 // One project has one budget-should correct this
 db.projects.hasOne(db.budgets, { as: "budgets" });
 db.budgets.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
+
 
 //
 db.roles.belongsToMany(db.users, {
@@ -170,24 +175,42 @@ db.users.belongsToMany(db.roles, {
 
 // One project has one direct cost
 db.projects.hasOne(db.directcosts, { as: "directcosts" });
+//One project has many direct costs
+db.projects.hasMany(db.directcosts, { as: "directcosts" });
+
 db.directcosts.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
 
-// One project has many drawings
-db.projects.hasOne(db.commitments, { as: "commitments" });
+// One project has many 
+db.projects.hasMany(db.budgets, { as: "budgets" });
+db.budgets.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+
+/* One project has many commitments*/
+db.projects.hasMany(db.commitments, { as: "commitments" });
 db.commitments.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
 
 
-// One project has 
-db.projects.hasOne(db.sovs, { as: "sovs" });
-db.sovs.belongsTo(db.projects, {
-  foreignKey: "projectId",
-  as: "project",
+// One commitment has many sovs
+db.commitments.hasMany(db.sovs, { as: "sovs" });
+db.sovs.belongsTo(db.commitments, {
+  foreignKey: "commitmentId",
+  as: "commitment",
+});
+
+// One commitment has many sovs
+db.commitments.hasMany(db.payments, { as: "payments" });
+db.payments.belongsTo(db.commitments, {
+  foreignKey: "commitmentId",
+  as: "commitment",
 });
 
 //One category has many equipments
@@ -216,6 +239,20 @@ db.meetingcategory.hasMany(db.meetings, { as: "meetings" });
 db.meetings.belongsTo(db.meetingcategory, {
   foreignKey: "mcId",
   as: "mcategory",
+});
+
+// One project has many drawings
+db.projects.hasOne(db.primecontracts, { as: "primecontracts" });
+db.primecontracts.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+// One commitment has many invoices
+db.commitments.hasMany(db.invoices, { as: "invoices" });
+db.invoices.belongsTo(db.commitments, {
+  foreignKey: "commitmentId",
+  as: "commitment",
 });
 
 db.ROLES = ["user", "admin", "moderator"];

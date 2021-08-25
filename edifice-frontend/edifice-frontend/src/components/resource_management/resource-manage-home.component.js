@@ -71,7 +71,7 @@ export default class BoardUser extends Component {
                 </Card.Text>
               </Card.Body>
             </Card> </div></div>
-            <ResourceCard/>
+            <ResourceCard id= {id}/>
       </div>
     );
   }

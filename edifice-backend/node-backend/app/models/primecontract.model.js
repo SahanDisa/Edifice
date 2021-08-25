@@ -1,12 +1,18 @@
 module.exports = (sequelize, Sequelize) => {
-    const Commitment = sequelize.define("commitment", {
+    const PrimeContract = sequelize.define("primecontract", {
       hash: {
         type: Sequelize.STRING
       },
-      title: {
+      owner: {
         type: Sequelize.STRING
       },
-      contractCompany: {
+      contractor: {
+        type: Sequelize.STRING
+      },
+      engineer: {
+        type: Sequelize.STRING
+      },
+      title: {
         type: Sequelize.STRING
       },
       status: {
@@ -14,10 +20,10 @@ module.exports = (sequelize, Sequelize) => {
       },
       /*executed: {
         type: Sequelize.STRING
-      },
+      },*/
       defaultRetainage: {
         type: Sequelize.DECIMAL(10,2)
-      },*/
+      },
       description: {
         type: Sequelize.STRING
       },
@@ -45,5 +51,5 @@ module.exports = (sequelize, Sequelize) => {
         freezeTableName: true,
     });
   
-    return Commitment;
+    return PrimeContract;
 };

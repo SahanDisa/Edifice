@@ -3,10 +3,22 @@ module.exports = (sequelize, Sequelize) => {
       costCode: {
         type:Sequelize.STRING   
       },
+      description: {
+        type: Sequelize.STRING
+      },
       category: {
         type: Sequelize.STRING
       },
-      date: {
+      vendor: {
+        type: Sequelize.STRING
+      },
+      employee: {
+        type: Sequelize.STRING
+      },
+      receivedDate: {
+        type: Sequelize.DATEONLY
+      },
+      paidDate: {
         type: Sequelize.DATEONLY
       },
       ammount: {

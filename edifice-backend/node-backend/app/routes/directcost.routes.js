@@ -3,14 +3,23 @@ module.exports = app => {
   
     var router = require("express").Router();
   
-    // Create a new Budget
+    // Create a new direct cost
     router.post("/", directcost.create);
   
-    // Retrieve all Budgets for a project
+    // Retrieve all direct costs for a project
     router.get("/list/:id", directcost.findAll);
   
-    // Retrieve a single Budget with id
+    // Retrieve a single direct cost with id
     router.get("/:id", directcost.findOne);
+
+    /* Retrieve a single direct cost with id
+    router.get("/:projectId/:id", directcost.findOne);*/
+
+        // Update a direct cost with id
+  router.put("/:id", directcost.update);
+
+  // Delete a direct cost with id
+  router.delete("/:id", directcost.delete);
   
     app.use('/api/projects/directcost', router);
   };

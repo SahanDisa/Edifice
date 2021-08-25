@@ -15,6 +15,7 @@ import WarningIcon from '@material-ui/icons/Warning';
 import Employees from './core_tools/edifice-directory/employees.component'
 
 import UserService from "../services/user.service";
+import ProjectDataService from "../services/project.service";
 
 //css styles
 const cardStyle = {
@@ -32,16 +33,13 @@ export default class BoardUser extends Component {
   constructor(props) {
     super(props);
 
+    this.getprojectCount=this.getprojectCount.bind(this);
     this.state = {
       content: "",
+      projectCount: 0,
+      employeeCount: 0,
       id: "this.props.match.params.id"
     };
-
-    this.animationsomething();
-  }
-
-  animationsomething(e){
-    //
   }
 
   expand(card) {
@@ -78,10 +76,26 @@ export default class BoardUser extends Component {
         });
       }
     );
+
+    this.getprojectCount();
+  }
+
+  getprojectCount(){
+    //get Project count
+    ProjectDataService.getAll().then(response => {
+      this.setState({
+        projectCount: response.data.length
+      });
+      console.log(response.data.length);
+    })
+    .catch(e => {
+      console.log(e);
+    });
   }
 
   render() {
-    
+    const { projectCount,employeeCount } = this.state;
+
     return (
       `
     .card-hover:hover {
@@ -109,7 +123,7 @@ export default class BoardUser extends Component {
               <div className="card card-hover shadow-sm" style={cardStyle}>
               <a className="d-block nav-heading text-center mt-3 mb-1" style={linkText} href="/projects">
 
-                <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>11</h1>
+                <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
                 <h5> <HomeWorkIcon style={{ fontSize:25 }}/>  Projects</h5>
               </a>
               </div>
@@ -170,14 +184,14 @@ export default class BoardUser extends Component {
 
           </div>
         <div className="row">
-          <div className="col-2">
+          <div className="col-3">
             <div className="list-group" id="list-tab" role="tablist">
-              <a className="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-admin" role="tab" aria-controls="home">Admin</a>
-              <a className="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Project</a>
-              <a className="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-directory" role="tab" aria-controls="profile">Directory</a>
-              <a className="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-document" role="tab" aria-controls="messages">Document</a>
-              <a className="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-tasks" role="tab" aria-controls="settings">Task</a>
-              <a className="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-report" role="tab" aria-controls="settings">Reports</a>
+              <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="#list-report" role="tab" aria-controls="settings">Generate Report</a>
+            </div>
+          </div>
+          <div className="col-3">
+            <div className="list-group" id="list-tab" role="tablist">
+              <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="#list-report" role="tab" aria-controls="settings">Analytics</a>
             </div>
           </div>
           {/* Admin content */}

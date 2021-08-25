@@ -1,11 +1,11 @@
 const db = require("./../models/index");
-const Commitment = db.commitments;
-const Sov = db.sovs;
+const Project = db.projects;
+const PrimeContract = db.primecontracts;
 
 // create a drawing
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.ammount) {
+  if (!req.body.hash) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -13,19 +13,29 @@ exports.create = (req, res) => {
   }
 
   // Create a Project
-  const sov = {
-    costCode: req.body.costCode,
-    description:req.body.description,
-    ammount:req.body.ammount,
-    //billedToDate:req.body.billedToDate,
+  const primecontract = {
+    hash: req.body.hash,
+    owner: req.body.owner,
+    contractor: req.body.contractor,
+    engineer: req.body.engineer,
+    title:req.body.title,
+    status:req.body.status,
     //executed:req.body.executed,
-    //ammountRemaining:req.body.ammountRemaining,
+    defaultRetainage:req.body.defaultRetainage,
+    description:req.body.description,
+    startDate:req.body.startDate,
+    estimatedCompletionDate:req.body.estimatedCompletionDate,
+    actualCompletionDate:req.body.actualCompletionDate,
+    signedContractReceivedDate:req.body.signedContractReceivedDate,
+    inclusions:req.body.inclusions,
+    exclusions:req.body.exclusions,
 
-    commitmentId: req.body.commitmentId,
+
+    projectId: req.body.projectId,
   };
 
   // Save Project in the database
-  Sov.create(sov)
+  PrimeContract.create(primecontract)
     .then(data => {
       res.send(data);
     })
@@ -41,8 +51,8 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   const id = req.params.id;
 
-  Sov.findAll({ where: {
-    commitmentId: id
+  PrimeContract.findAll({ where: {
+    projectId: id
   }})
     .then(data => {
       res.send(data);
@@ -58,7 +68,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Sov.findByPk(id)
+  PrimeContract.findByPk(id)
     .then(data => {
       res.send(data);
     })

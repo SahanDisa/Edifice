@@ -1,14 +1,24 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DirectCostDataService from "./../../../services/directcost.service";
+import Timeline from '@material-ui/lab/Timeline';
+import TimelineItem from '@material-ui/lab/TimelineItem';
+import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
+import TimelineConnector from '@material-ui/lab/TimelineConnector';
+import TimelineContent from '@material-ui/lab/TimelineContent';
+import TimelineDot from '@material-ui/lab/TimelineDot';
 
 export default class AddDirectCost extends Component{
 
   constructor(props) {
     super(props);
     this.onChangeCostCode = this.onChangeCostCode.bind(this);
+    this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeCategory = this.onChangeCategory.bind(this);
-    this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangeVendor = this.onChangeVendor.bind(this);
+    this.onChangeEmployee = this.onChangeEmployee.bind(this);
+    this.onChangeReceivedDate = this.onChangeReceivedDate.bind(this);
+    this.onChangePaidDate = this.onChangePaidDate.bind(this);
     this.onChangeAmmount= this.onChangeAmmount.bind(this);
     this.saveDirectCost = this.saveDirectCost.bind(this);
     this.newDirectCost = this.newDirectCost.bind(this);
@@ -16,8 +26,12 @@ export default class AddDirectCost extends Component{
     this.state = {
       id: null,
       costCode :"",
+      description :"",
       category :"",
-      date :"",
+      vendor :"",
+      employee :"",
+      receivedDate :"",
+      paidDate :"",
       ammount: "",
       projectId: this.props.match.params.id,  
       submitted: false
@@ -30,14 +44,39 @@ export default class AddDirectCost extends Component{
     });
   }
 
+  onChangeDescription(e) {
+    this.setState({
+      description: e.target.value
+    });
+  }
+
   onChangeCategory(e) {
     this.setState({
       category: e.target.value
     });
   }
-  onChangeDate(e) {
+
+  onChangeVendor(e) {
     this.setState({
-      date: e.target.value
+      vendor: e.target.value
+    });
+  }
+
+  onChangeEmployee(e) {
+    this.setState({
+      employee: e.target.value
+    });
+  }
+
+  onChangeReceivedDate(e) {
+    this.setState({
+      receivedDate: e.target.value
+    });
+  }
+
+  onChangePaidDate(e) {
+    this.setState({
+      paidDate: e.target.value
     });
   }
 
@@ -51,8 +90,12 @@ export default class AddDirectCost extends Component{
     console.log("clicked");  
     var data = {
       costCode: this.state.costCode,
+      description: this.state.description,
       category: this.state.category,
-      date: this.state.date,
+      vendor: this.state.vendor,
+      employee: this.state.employee,
+      receivedDate: this.state.receivedDate,
+      paidDate: this.state.paidDate,
       ammount: this.state.ammount,
       projectId: this.state.projectId
     };
@@ -62,8 +105,12 @@ export default class AddDirectCost extends Component{
         this.setState({
           id: response.data.id,
           costCode: response.data.costCode,
+          description: response.data.description,
           category: response.data.category,
-            date: response.data.date,
+          vendor: response.data.vendor,
+          employee: response.data.employee,
+            receivedDate: response.data.receivedDate,
+            paidDate: response.data.paidDate,
             ammount: response.data.ammount,
             projectId: response.data.projectId,
           submitted: true
@@ -79,8 +126,12 @@ export default class AddDirectCost extends Component{
     this.setState({
       id: null,
       costCode: "",
+      desription: "",
       category: "",
-      date: "",
+      vendor: "",
+      employee: "",
+      receivedDate: "",
+      paidDate: "",
       ammount: "",
       projectId: this.props.match.params.id,
 
@@ -97,15 +148,17 @@ export default class AddDirectCost extends Component{
           <div>
             <h4>You submitted successfully!</h4>
             <button className="btn btn-success" onClick={this.newDirectCost}>
-              Add Another Direct Cost
+              + Add Another Direct Cost
             </button>&nbsp;&nbsp;
             <Link  to={"/directcost/"+projectId} className="btn btn-success">View Direct Costs</Link>
           </div>
         ) : (
           <div class="container">
-            <h2>Add New Direct Cost</h2>
+            <h2>New Direct Cost</h2>
+            <div className="row">
+       <div className="col-sm-6">
             <div className="form-group">
-              <label htmlFor="costCode">Cost Code</label>
+              <label htmlFor="costCode">Cost Code :</label>
              {/* <input
                 type="text"
                 className="form-control"
@@ -132,7 +185,20 @@ export default class AddDirectCost extends Component{
             </div>
 
             <div className="form-group">
-              <label htmlFor="category">Category</label>
+              <label htmlFor="amount">Description :</label>
+              <input
+                type="text"
+                className="form-control"
+                id="description"
+                required
+                value={this.state.description}
+                onChange={this.onChangeDescription}
+                name="description"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="category">Category :</label>
               {/*<input
                 type="text"
                 className="form-control"
@@ -157,19 +223,59 @@ export default class AddDirectCost extends Component{
             </div>
 
             <div className="form-group">
-              <label htmlFor="date">Date</label>
+              <label htmlFor="amount">Vendor :</label>
+              <input
+                type="text"
+                className="form-control"
+                id="vendor"
+                required
+                value={this.state.vendor}
+                onChange={this.onChangeVendor}
+                name="vendor"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="amount">Employee :</label>
+              <input
+                type="text"
+                className="form-control"
+                id="employee"
+                required
+                value={this.state.employee}
+                onChange={this.onChangeEmployee}
+                name="employee"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="date">Received Date :</label>
               <input
                 type="date"
                 className="form-control"
-                id="date"
+                id="receivedDate"
                 required
-                value={this.state.date}
-                onChange={this.onChangeDate}
-                name="date"
+                value={this.state.receivedDate}
+                onChange={this.onChangeReceivedDate}
+                name="receivedDate"
               />
             </div>
+
             <div className="form-group">
-              <label htmlFor="amount">Ammount</label>
+              <label htmlFor="date">Paid Date :</label>
+              <input
+                type="date"
+                className="form-control"
+                id="paidDate"
+                required
+                value={this.state.paidDate}
+                onChange={this.onChangePaidDate}
+                name="paidDate"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="amount">Ammount :</label>
               <input
                 type="text"
                 className="form-control"
@@ -180,9 +286,51 @@ export default class AddDirectCost extends Component{
                 name="ammount"
               />
             </div>
+            </div>
+            
+            <div className="col-sm-6">
+            <Timeline>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><h5><strong>Step 1</strong><br/>Create a Direct Cost</h5> </TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 2</strong><br/>Direct Cost will be automatically added to the Budget.</h6></TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 3</strong><br/>View the Direct Costs.</h6></TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                 
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 4</strong><br/>Edit/Delete a DirectCost.</h6></TimelineContent>
+              </TimelineItem>
+            </Timeline>
+            </div>
+            
+            
+            </div><br />
             <button onClick={this.saveDirectCost} className="btn btn-success">
-              Submit
+              Save
             </button>
+            &nbsp;&nbsp;
+            <Link to={"/directcost/" + projectId}>
+            <button className="btn btn-success">
+            Cancel
+            </button></Link>
           </div>
         )}
         <br /><br />

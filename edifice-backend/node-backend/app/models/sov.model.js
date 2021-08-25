@@ -9,12 +9,12 @@ module.exports = (sequelize, Sequelize) => {
       ammount : {
         type: Sequelize.DECIMAL(10,2)
       },
-      billedToDate : {
+      /*billedToDate : {
         type: Sequelize.DATEONLY
       },
       ammountRemaining : {
         type: Sequelize.DECIMAL(10,2)
-      }
+      }*/
     
     }, {
         freezeTableName: true,
