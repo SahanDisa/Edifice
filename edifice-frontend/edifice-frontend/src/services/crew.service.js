@@ -1,16 +1,17 @@
 import http from "../http-common.js";
 
-class EquipmentCategoryDataService {
-  getAll(id) {
-    return http.get("/categorys");
+class CrewDataService {
+ /* getAll() {
+    return http.get("/projects");
   }
 
   get(id) {
     return http.get(`/projects/${id}`);
   }
-  
+  */
   create(data) {
-    return http.post("/categorys", data);
+    return http.post("/crews", data);
+
   }
 /*
   update(id, data) {
@@ -36,4 +37,4 @@ class EquipmentCategoryDataService {
   // }
 }
 
-export default new EquipmentCategoryDataService();
+export default new CrewDataService();

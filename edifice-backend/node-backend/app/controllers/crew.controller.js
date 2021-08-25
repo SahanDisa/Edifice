@@ -1,8 +1,8 @@
 const db = require("./../models/index.js");
-const Category = db.categorys;
+const Crew = db.crews;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new category
+// Create and Save a new crew
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.name) {
@@ -12,103 +12,102 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a category
-  const category = {
+  // Create a crew
+  const crew = {
     name: req.body.name,
     total: req.body.total,
   };
-
-  // Save category in the database
-  Category.create(category)
+  // Save crew in the database
+  Crew.create(crew)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the category."
+          err.message || "Some error occurred while creating the crew."
       });
     });
 };
-
-// Retrieve all categorys from a given project
+/*
+// Retrieve all crews from the database.
 exports.findAll = (req, res) => {
-  const id = req.params.id;
+    const title = req.query.title;
+    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
   
-    category.findAll({ where: {
-      projectId: id
-    }})
+    crew.findAll({ where: condition })
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Project Drawings with id=" + id
+          message:
+            err.message || "Some error occurred while retrieving tutorials."
         });
       });
-};
+};*/
 /*
-// Find a single category with an id
+// Find a single crew with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    category.findByPk(id)
+    crew.findByPk(id)
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving category with id=" + id
+          message: "Error retrieving crew with id=" + id
         });
       });  
 };*/
 /*
-// Update a category by the id in the request
+// Update a crew by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    category.update(req.body, {
+    crew.update(req.body, {
       where: { id: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "category was updated successfully."
+            message: "crew was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update category with id=${id}. Maybe category was not found or req.body is empty!`
+            message: `Cannot update crew with id=${id}. Maybe crew was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating category with id=" + id
+          message: "Error updating crew with id=" + id
         });
       });
 };*/
 /*
-// Delete a category with the specified id in the request
+// Delete a crew with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    category.destroy({
+    crew.destroy({
       where: { id: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "category was deleted successfully!"
+            message: "crew was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete category with id=${id}. Maybe category was not found!`
+            message: `Cannot delete crew with id=${id}. Maybe crew was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete category with id=" + id
+          message: "Could not delete crew with id=" + id
         });
       });
 };*/
@@ -116,7 +115,7 @@ exports.delete = (req, res) => {
 /*
 // Delete all Tutorials from the database.
 exports.deleteAll = (req, res) => {
-    category.destroy({
+    crew.destroy({
         where: {},
         truncate: false
       })
@@ -133,7 +132,7 @@ exports.deleteAll = (req, res) => {
 /*
 // Find all published Tutorials
 exports.findAllPublished = (req, res) => {
-    category.findAll({ where: { published: true } })
+    equipment.findAll({ where: { published: true } })
     .then(data => {
       res.send(data);
     })

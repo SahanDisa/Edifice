@@ -54,6 +54,8 @@ db.payments = require("./payment.model.js")(sequelize, Sequelize);
 //resource management
 db.equipments = require("./equipment.model")(sequelize, Sequelize);
 db.categorys = require("./equipment-category.model")(sequelize, Sequelize);
+db.crews = require("./crew.model")(sequelize, Sequelize);
+db.workers = require("./worker.model")(sequelize, Sequelize);
 
 db.meetings = require("./meeting.model")(sequelize, Sequelize);
 db.meetingcategory = require("./meetingcategory.model")(sequelize, Sequelize);
@@ -192,11 +194,19 @@ db.payments.belongsTo(db.commitments, {
   as: "commitment",
 });
 
+//resource mgt
 //One category has many equipments
 db.categorys.hasMany(db.equipments, { as: "equipments" });
 db.equipments.belongsTo(db.categorys, {
-  foreignKey: "name",
+  foreignKey: "categoryId",
   as: "categories",
+});
+
+//One crew has many workers
+db.crews.hasMany(db.workers, { as: "workers" });
+db.workers.belongsTo(db.crews, {
+  foreignKey: "crewId",
+  as: "crew",
 });
 
 //One project has many meetings

@@ -5,10 +5,10 @@ module.exports = app => {
   
     // Create a new equipment
     router.post("/", categorys.create);
-/*  
-    // Retrieve all equipments
-    router.get("/", equipment.findAll);
-  
+ 
+    // Retrieve all equipments for a project
+    router.get("/list/:id", categorys.findAll);
+ /*  
     // Retrieve all published equipments
     router.get("/published", equipment.findAllPublished);
   
