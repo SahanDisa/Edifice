@@ -118,12 +118,14 @@ db.album.belongsTo(db.projects,{
   foreignKey: "projectId",
   as: "project",
 });
+
 // One project has many photos
 db.projects.hasMany(db.photo,{as: "photos"});
 db.photo.belongsTo(db.projects,{
   foreignKey: "projectId",
   as: "project",
 });
+
 // One project can has many directories
 db.projects.hasMany(db.directory,{as: "directory"});
 db.directory.belongsTo(db.projects,{
@@ -144,6 +146,7 @@ db.biddings.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
+
 // One project has one budget-should correct this
 db.projects.hasOne(db.budgets, { as: "budgets" });
 db.budgets.belongsTo(db.projects, {
@@ -151,18 +154,21 @@ db.budgets.belongsTo(db.projects, {
   as: "project",
 });
 
+//
 db.roles.belongsToMany(db.users, {
   through: "user_roles",
   foreignKey: "roleId",
   otherKey: "userId"
 });
+
+//
 db.users.belongsToMany(db.roles, {
   through: "user_roles",
   foreignKey: "userId",
   otherKey: "roleId"
 });
 
-/* One project has one direct cost*/
+// One project has one direct cost
 db.projects.hasOne(db.directcosts, { as: "directcosts" });
 db.directcosts.belongsTo(db.projects, {
   foreignKey: "projectId",

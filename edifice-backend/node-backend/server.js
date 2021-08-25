@@ -38,6 +38,7 @@ require("./app/routes/drawing-category.routes")(app);
 require("./app/routes/bidding.routes")(app);
 require("./app/routes/photo-album.routes")(app);
 // require("./app/routes/photo.routes")(app);
+require("./app/routes/photofile.routes")(app);
 require("./app/routes/uploadphoto.routes")(app);
 require('./app/routes/file.routes')(app);
 require('./app/routes/directory.routes')(app);
