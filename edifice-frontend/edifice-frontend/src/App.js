@@ -119,7 +119,7 @@ import SovHome from "./components/financial_management/commitments/sovs.componen
 import AddInvoice from "./components/financial_management/invoicing/addinvoice.component";
 import AddPayment from "./components/financial_management/commitments/addpayment.component";
 import PaymentHome from "./components/financial_management/commitments/payments.component";
-import Report from "./components/report/report.component";
+//import Report from "./components/report/report.component";
 
 class App extends Component {
   constructor(props) {
@@ -355,7 +355,6 @@ class App extends Component {
             <Route path="/addinvoice/:id" component={AddInvoice} />
             <Route path="/addpayment/:id" component={AddPayment} />
             <Route path="/viewpayment/:id" component={PaymentHome} />
-            <Route path="/reports" component={Report} />
            
           </Switch>
         </div>
