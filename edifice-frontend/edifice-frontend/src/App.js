@@ -115,13 +115,11 @@ import Pdfviewer from "./components/project_management/document/pdfviewer.compon
 
 import ViewSingleDirectCost from "./components/financial_management/direct-costs/directcost-singlepage.component";
 import SovHome from "./components/financial_management/commitments/sovs.component";
-<<<<<<< HEAD
-import Report from "./components/report/report.component";
-=======
+
 import AddInvoice from "./components/financial_management/invoicing/addinvoice.component";
 import AddPayment from "./components/financial_management/commitments/addpayment.component";
 import PaymentHome from "./components/financial_management/commitments/payments.component";
->>>>>>> e06e04e735001f63c2d4acc7c403a968e91eeb43
+import Report from "./components/report/report.component";
 
 class App extends Component {
   constructor(props) {
@@ -353,14 +351,11 @@ class App extends Component {
             <Route path="/viewdirectcost/:id" component={ViewSingleDirectCost} />
            {/* <Route path="/viewsov/:id" component={ViewSingleSov} />*/}
             <Route path="/viewsov/:id" component={SovHome} />
-<<<<<<< HEAD
 
-            <Route path="/reports" component={Report} />
-=======
             <Route path="/addinvoice/:id" component={AddInvoice} />
             <Route path="/addpayment/:id" component={AddPayment} />
             <Route path="/viewpayment/:id" component={PaymentHome} />
->>>>>>> e06e04e735001f63c2d4acc7c403a968e91eeb43
+            <Route path="/reports" component={Report} />
            
           </Switch>
         </div>
