@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -84,18 +85,15 @@ export default class AddPhoto extends Component {
   }
 
   render() {
-    const {projectId} = this.state;
+    const {projectId, name} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
           <div>
             <h4>File details successfully submitted!</h4>
-            <h4>Upload the file</h4>
-            <input type="file" />
-            <button type="upload" className="btn btn-warning">Upload</button>
-            <button className="btn btn-success" onClick={this.newDrawing}>
-            Add Another Photo
-            </button>
+            <Link to={"/uploadphoto/"+name+".png"} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
+              Upload Image
+            </Link>
           </div>
         ) : (
           <div class="container">
@@ -130,15 +128,6 @@ export default class AddPhoto extends Component {
 
             <div className="form-group">
               <label htmlFor="drawtype">Drawing Category</label>
-              {/* <input
-                type="text"
-                className="form-control"
-                id="datatype"
-                required
-                value={this.state.drawtype}
-                onChange={this.onChangeType}
-                name="drawtype"
-              /> */}
               <select 
                 className="form-control"
                 id="datatype"
@@ -153,7 +142,7 @@ export default class AddPhoto extends Component {
                 <option>Electrical</option>
               </select>
             </div>
-            <CameraCapture/>
+            {/* <CameraCapture/> */}
             </div>
             <div className="col-sm-4">
             <Timeline>

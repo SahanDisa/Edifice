@@ -7,6 +7,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import Typography from '@material-ui/core/Typography';
 import Icon1 from "././../../../assets/PM/photos/image1.jpg";
 import Icon2 from "././../../../assets/PM/photos/image2.jpg";
+import UploadPhotoService from "../../../services/photoupload.service";
 
 import Card from 'react-bootstrap/Card';
 import { Button } from 'react-bootstrap';
@@ -20,13 +21,28 @@ export default class PhotosHome extends Component {
         albums: [],
         currentIndex: -1,
         content: "",
-        id: this.props.match.params.id
+        id: this.props.match.params.id,
+        selectedFiles: undefined,
+        currentFile: undefined,
+        progress: 0,
+        message: "",
+
+        fileInfos: [],
       };
     }
     componentDidMount() {
       this.retriveAlbums(this.props.match.params.id);
+      UploadPhotoService.getFiles().then((response) => {
+        this.setState({
+          fileInfos: response.data,
+        });
+      });
     }
-  
+    selectFile(event) {
+      this.setState({
+        selectedFiles: event.target.files,
+      });
+    }
     retriveAlbums(id){
         AlbumDataService.getAll(id)
         .then(response => {
@@ -41,7 +57,7 @@ export default class PhotosHome extends Component {
     }
 
     render() {
-      const { albums, currentIndex,id } = this.state;
+      const { albums, currentIndex,id,fileInfos } = this.state;
       return (
         <div>
           <h2>Photos</h2>
@@ -90,12 +106,14 @@ export default class PhotosHome extends Component {
         {/* Photo div starts */}
         <div className="container">
           <h3>Photos</h3>
-            <a href="/addphoto" className="btn btn-primary">Add Photo</a>
+            <Link className="btn btn-primary mr-2" to={"/addphoto/"+id}>
+              Add Photo
+            </Link>
             <hr></hr>
           </div> 
           <div className="container">
             <h4>Recent Photos</h4>
-            <div className="row">
+            {/* <div className="row">
               <div className="col-sm-6">
               <Card style={{ width: '18rem' }}>
                 <Card.Img variant="top" src={Icon1} />
@@ -120,6 +138,26 @@ export default class PhotosHome extends Component {
                 </Card.Body>
               </Card>
               </div>
+            </div> */}
+            <div className="container row">
+            
+              {fileInfos &&
+                fileInfos.map((file, index) => (
+                  <div className="col-4" key={index}>
+                    {/* <a href={file.url}>{file.name}{" "}{file.url}</a>
+                    <img src={file.url} style={{'height':'300px'}}/> */}
+                    <Card style={{ width: '18rem' }}>
+                      <Card.Img variant="top" src={file.url} />
+                      <Card.Body>
+                        <Card.Title>{file.name}</Card.Title>
+                        <Card.Text>
+                        No caption
+                        </Card.Text>
+                        <Button variant="primary">view</Button>
+                      </Card.Body>
+                    </Card>
+                  </div>
+                ))}
             </div>
             <hr></hr>
         </div>
@@ -136,7 +174,7 @@ export default class PhotosHome extends Component {
                     </Link>
                     
               </div> */}
-        <WebcamCapture/>      
+        {/* <WebcamCapture/>       */}
         </Typography>
         </div>
         {/* <CameraViewer/>     */}
