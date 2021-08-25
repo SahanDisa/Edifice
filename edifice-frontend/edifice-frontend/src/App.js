@@ -353,6 +353,7 @@ class App extends Component {
             <Route path="/addpayment/:id" component={AddPayment} />
             <Route path="/viewpayment/:id" component={PaymentHome} />
            
+           
           </Switch>
         </div>
       </div>
