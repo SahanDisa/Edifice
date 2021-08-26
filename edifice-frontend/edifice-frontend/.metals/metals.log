@@ -64,3 +64,29 @@
 [0m2021.07.11 17:21:26 WARN  Build server is not auto-connectable.[0m
 [0m2021.07.11 17:21:26 WARN  no build tool detected in workspace 'E:\GitHub\Edifice\edifice-frontend\edifice-frontend'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
 [0m2021.07.11 17:27:57 INFO  shutting down Metals[0m
+[0m2021.07.12 23:27:01 INFO  Started: Metals version 0.10.4 in workspace 'E:\GitHub\Edifice\edifice-frontend\edifice-frontend' for client Visual Studio Code 1.58.0.[0m
+[0m2021.07.12 23:27:12 INFO  time: initialize in 11s[0m
+[0m2021.07.12 23:27:13 WARN  Build server is not auto-connectable.[0m
+[0m2021.07.12 23:27:13 WARN  no build tool detected in workspace 'E:\GitHub\Edifice\edifice-frontend\edifice-frontend'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+Jul 12, 2021 11:31:24 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+Jul 12, 2021 11:31:31 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+Jul 12, 2021 11:31:31 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+Jul 12, 2021 11:31:51 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+Jul 12, 2021 11:31:52 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+Jul 12, 2021 11:31:53 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+[0m2021.07.12 23:34:28 INFO  shutting down Metals[0m
+[0m2021.07.16 12:42:43 INFO  Started: Metals version 0.10.5 in workspace 'E:\GitHub\Edifice\edifice-frontend\edifice-frontend' for client Visual Studio Code 1.58.0.[0m
+[0m2021.07.16 12:42:45 INFO  time: initialize in 1.91s[0m
+[0m2021.07.16 12:42:50 WARN  Build server is not auto-connectable.[0m
+[0m2021.07.16 12:42:50 WARN  no build tool detected in workspace 'E:\GitHub\Edifice\edifice-frontend\edifice-frontend'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.08.19 23:42:39 INFO  Started: Metals version 0.10.5 in workspace 'E:\GitHub\Edifice\edifice-frontend\edifice-frontend' for client Visual Studio Code 1.59.0.[0m
+[0m2021.08.19 23:42:40 INFO  time: initialize in 1.37s[0m
+[0m2021.08.19 23:42:49 WARN  Build server is not auto-connectable.[0m
+[0m2021.08.19 23:42:49 WARN  no build tool detected in workspace 'E:\GitHub\Edifice\edifice-frontend\edifice-frontend'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.08.20 10:12:34 INFO  shutting down Metals[0m

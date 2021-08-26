@@ -10,8 +10,8 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING
       },
       path: {
-        type: Sequelize.STRING  
-      }
+        type: Sequelize.STRING
+      },
         }, {
         freezeTableName: true,
     });
