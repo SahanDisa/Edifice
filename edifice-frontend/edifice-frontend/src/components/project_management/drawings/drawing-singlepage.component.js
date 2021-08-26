@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 
-import GestureIcon from '@material-ui/icons/Gesture';
+import PdfIcon from '@material-ui/icons/PictureAsPdf';
 
 export default class ViewSingleDrawing extends Component {
     constructor(props) {
@@ -9,9 +10,12 @@ export default class ViewSingleDrawing extends Component {
       this.retrieveDrawing = this.retrieveDrawing.bind(this);
       this.state = {
         id: this.props.match.params.id,
-        name: "",
+        url: "http://localhost:8080/api/files/", 
+        title: "",
         description: "",
-        drawtype: "", 
+        category: "",
+        version: 1,
+        status: "", 
         projectId: ""
       };
     }
@@ -24,9 +28,10 @@ export default class ViewSingleDrawing extends Component {
         .then(response => {
           this.setState({
             id: response.data.id,
-            name: response.data.name,
+            title: response.data.title,
             description: response.data.description,
-            drawtype: response.data.drawtype,
+            category: response.data.category,
+            status: response.data.status,
             projectId: response.data.projectId,
           });
           console.log(response.data);
@@ -36,7 +41,7 @@ export default class ViewSingleDrawing extends Component {
         });
     }
     render() {
-        const { id,name,description,drawtype } = this.state;
+        const { id,title,description,category,version,status,url } = this.state;
         return (
             <div>
               <h2>Drawing Single Page</h2>
@@ -44,22 +49,31 @@ export default class ViewSingleDrawing extends Component {
               <hr></hr>
               <h3>File details</h3>
               <h6>Drawing Id : {id}</h6>
-              <h6>Name : {name}</h6>
+              <h6>Name : {title}</h6>
               <h6>Description : {description}</h6>
-              <h6>Drawing Type : {drawtype}</h6>
-              <hr></hr>
-              <h3>View File</h3>
-              <p>View the particular drawing in pdf format</p>
+              <h6>Drawing Type : {category}</h6>
+              <h6>Status : {status == "Not Complete" ? "🔴 NC": "🟡 Due" }</h6>
+            <hr></hr>
+            <h3>View & Manage Drawing</h3>
+            <p>View the particular drawing in pdf format</p>
             <div className="row">
             <div className="col-sm-10">
+            
             <embed
-                src="https://vancouver.ca/files/cov/sample-drawing-package-1and2family.pdf"
+                //src="https://vancouver.ca/files/cov/sample-drawing-package-1and2family.pdf"
+                src={"http://localhost:8080/api/files/"+title+".pdf"}
                 type="application/pdf"
                 frameBorder="0"
                 scrolling="auto"
                 height="700px"
                 width="100%"
             ></embed>
+            <h4>Full Screen</h4>
+            <a href={url+title+".pdf"} target="_blank" style={{'text-decoration': 'none'}}>
+            {/* {url+title+".pdf"} */}
+            <PdfIcon style={{ fontSize: 100 }} />
+            </a>
+            
             </div>
             <div className="col-sm-2">
               <div>
@@ -74,7 +88,7 @@ export default class ViewSingleDrawing extends Component {
               </div>
               <div>
                   <h4>Versions</h4>
-                  <h5>1.0.0</h5>
+                  <h5>{version}{".0.0"}</h5>
                   {/* <p>Make adjustments and keep the drawing upto date</p> */}
               </div> 
               </div>
