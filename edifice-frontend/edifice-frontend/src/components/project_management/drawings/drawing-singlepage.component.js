@@ -57,7 +57,7 @@ export default class ViewSingleDrawing extends Component {
             <h3>View & Manage Drawing</h3>
             <p>View the particular drawing in pdf format</p>
             <div className="row">
-            <div className="col-sm-10">
+            <div className="col-sm-9">
             
             <embed
                 //src="https://vancouver.ca/files/cov/sample-drawing-package-1and2family.pdf"
@@ -75,7 +75,7 @@ export default class ViewSingleDrawing extends Component {
             </a>
             
             </div>
-            <div className="col-sm-2">
+            <div className="col-sm-3">
               <div>
                   <h4>Measurements</h4>
                   <p>Main measurements : Area, Distance</p>

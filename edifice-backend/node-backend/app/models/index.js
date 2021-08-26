@@ -34,6 +34,7 @@ db.projectuser = require("./projectuser.model")(sequelize, Sequelize);
 // Drawing Component Model Classes
 db.drawingcategory = require("./drawing-category.model")(sequelize, Sequelize);
 db.drawings = require("./drawing.model.js")(sequelize, Sequelize);
+db.drawrevision = require("./drawrevision.model")(sequelize,Sequelize);
 // Bidding Component Model Classes
 db.biddings = require("./bidding.model")(sequelize, Sequelize);
 // Photo component Model Classes
@@ -113,6 +114,13 @@ db.projects.hasMany(db.drawings, { as: "drawings" });
 db.drawings.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
+});
+
+// One drawing has many revision comments add by the users
+db.drawings.hasMany(db.drawrevision,{as: "drawrevisions"});
+db.drawrevision.belongsTo(db.drawings,{
+  foreignKey: "drawingId",
+  as: "drawing",
 });
 
 // One project has many albums
