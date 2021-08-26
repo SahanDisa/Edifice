@@ -269,28 +269,28 @@ class App extends Component {
             <Route path="/dates" component={Dates} />
             <Route path="/defaults" component={Defaults} />
             <Route path="/roles" component={Roles} />
-            
+            {/* Tasks */}
             <Route path="/tasksconfiguration" component={TaskConfiguration} />
             <Route path="/managetasks" component={ManageTasks} />
             <Route path="/managestasks/update" component={UpdateTasks} />
             <Route path="/managestasks/view" component={ViewTasks} />
-            
+            {/* Meeting */}
             <Route path="/meetingsconfiguration" component={MeetingsConfig} />
             <Route path="/managemeetings" component={ManageMeetings} />
             <Route path="/managesmeetings/update" component={UpdateMeetings} />
             <Route path="/managesmeetings/view" component={ViewMeetings} />
-
+            {/* RFI */}
             <Route path="/rfi" component={rfiHome} />
             <Route path="/managerfi/create" component={CreateRFI} />
             <Route path="/managerfi/edit" component={EditRFI} />
             <Route path="/managerfi/view" component={ViewRFI} />
-
+            {/* Action Plan */}
             <Route path="/actionplan" component={actionplanHome} />
-
+            {/* Punch List */}
             <Route path="/punchlist" component={punchlistHome} />
             <Route path="/managepunchlist/view" component={ViewPL} />
             <Route path="/managepunchlist/create" component={CreatePL} />
-
+            {/* Daily Logs */}
             <Route path="/dailylogsconfiguration" component={DlsConfig} />
             <Route path="/managedailylogs" component={ManageDls} />
             <Route path="/managesdailylogs/update" component={UpdateDls} />
