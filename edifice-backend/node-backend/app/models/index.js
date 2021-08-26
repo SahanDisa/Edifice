@@ -38,6 +38,7 @@ db.drawings = require("./drawing.model.js")(sequelize, Sequelize);
 db.biddings = require("./bidding.model")(sequelize, Sequelize);
 // Photo component Model Classes
 db.album = require("./photo-album.model")(sequelize, Sequelize);
+db.photo = require("./photo.model.js")(sequelize, Sequelize);
 // Document component Model Classes
 db.directory = require("./directory.model")(sequelize, Sequelize);
 db.document = require("./document.model")(sequelize, Sequelize);
@@ -54,6 +55,8 @@ db.payments = require("./payment.model.js")(sequelize, Sequelize);
 //resource management
 db.equipments = require("./equipment.model")(sequelize, Sequelize);
 db.categorys = require("./equipment-category.model")(sequelize, Sequelize);
+db.crews = require("./crew.model")(sequelize, Sequelize);
+db.workers = require("./worker.model")(sequelize, Sequelize);
 
 db.meetings = require("./project_management/meeting.model")(sequelize, Sequelize);
 db.meetingcategory = require("./project_management/meetingcategory.model")(sequelize, Sequelize);
@@ -114,15 +117,19 @@ db.drawings.belongsTo(db.projects, {
   as: "project",
 });
 
-// One drawing has one drawing category
-
 // One project has many albums
 db.projects.hasMany(db.album,{as: "albums"});
 db.album.belongsTo(db.projects,{
   foreignKey: "projectId",
   as: "project",
 });
-// One album has many photos
+
+// One project has many photos
+db.projects.hasMany(db.photo,{as: "photos"});
+db.photo.belongsTo(db.projects,{
+  foreignKey: "projectId",
+  as: "project",
+});
 
 // One project can has many directories
 db.projects.hasMany(db.directory,{as: "directory"});
@@ -144,6 +151,8 @@ db.biddings.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
+
+
 // One project has one budget-should correct this
 db.projects.hasOne(db.budgets, { as: "budgets" });
 db.budgets.belongsTo(db.projects, {
@@ -151,20 +160,34 @@ db.budgets.belongsTo(db.projects, {
   as: "project",
 });
 
+
+//
 db.roles.belongsToMany(db.users, {
   through: "user_roles",
   foreignKey: "roleId",
   otherKey: "userId"
 });
+
+//
 db.users.belongsToMany(db.roles, {
   through: "user_roles",
   foreignKey: "userId",
   otherKey: "roleId"
 });
 
+// One project has one direct cost
+db.projects.hasOne(db.directcosts, { as: "directcosts" });
 //One project has many direct costs
 db.projects.hasMany(db.directcosts, { as: "directcosts" });
+
 db.directcosts.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+// One project has many 
+db.projects.hasMany(db.budgets, { as: "budgets" });
+db.budgets.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
@@ -192,11 +215,19 @@ db.payments.belongsTo(db.commitments, {
   as: "commitment",
 });
 
+//resource mgt
 //One category has many equipments
 db.categorys.hasMany(db.equipments, { as: "equipments" });
 db.equipments.belongsTo(db.categorys, {
-  foreignKey: "name",
+  foreignKey: "categoryId",
   as: "categories",
+});
+
+//One crew has many workers
+db.crews.hasMany(db.workers, { as: "workers" });
+db.workers.belongsTo(db.crews, {
+  foreignKey: "crewId",
+  as: "crew",
 });
 
 //One project has many meetings

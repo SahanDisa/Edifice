@@ -1,5 +1,4 @@
 const db = require("./../models/index");
-const Project = db.projects;
 const Album = db.album;
 
 // create a new album
@@ -47,3 +46,69 @@ exports.findAll = (req, res) => {
         });
       });  
   };
+
+//Find a single drawing by Id
+exports.findOne = (req, res) => {
+  const id = req.params.id;
+
+  Album.findByPk(id)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Directory with id=" + id
+      });
+    });  
+};
+
+
+// Update a Photo by the id in the request
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  Album.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Photo was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Photo with id=${id}. Maybe Photo was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Photo with id=" + id
+      });
+    });
+};
+
+// Delete a Photo with the specified id in the request
+exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  Album.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Photo was deleted successfully!"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Photo with id=${id}. Maybe Photo was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete Photo with id=" + id
+      });
+    });
+};

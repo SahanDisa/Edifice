@@ -186,7 +186,7 @@ export default class BoardUser extends Component {
         <div className="row">
           <div className="col-3">
             <div className="list-group" id="list-tab" role="tablist">
-              <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="#list-report" role="tab" aria-controls="settings">Generate Report</a>
+              <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="/reports" role="tab" aria-controls="settings">Generate Report</a>
             </div>
           </div>
           <div className="col-3">

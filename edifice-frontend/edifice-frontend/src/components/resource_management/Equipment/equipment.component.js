@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import EquipmentCategoryDataService from "./../../../services/equipment-category.service";
 
 
 import List from '@material-ui/core/List';
@@ -13,7 +14,35 @@ import AddEquip from './new-equipment.component';
 
 class Equipment extends Component {
 
+  constructor(props) {
+    super(props);
+    this.retrieveCategory = this.retrieveCategory.bind(this);
+
+    this.state = {
+      categorys: [],
+      currentIndex: -1,
+      content: "",
+      id: this.props.match.params.id
+    };
+  }
+
+  componentDidMount() {
+    this.retrieveCategory(this.props.match.params.id);
+  }
+  retrieveCategory(id) {
+    EquipmentCategoryDataService.getAll(id)
+      .then(response => {
+        this.setState({
+          categorys: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
     render() {
+      const { categorys ,currentIndex,id } = this.state;
         return (
           <div>
             <Card

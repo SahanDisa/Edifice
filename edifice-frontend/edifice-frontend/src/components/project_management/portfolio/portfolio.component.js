@@ -2,6 +2,7 @@ import React, { Component, PureComponent } from "react";
 import { PieChart, Pie, Sector, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
+import PortfolioDataService from "../../../services/portfolio.service";
 import Typography from '@material-ui/core/Typography';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -10,10 +11,11 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
-import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import AdjustSharpIcon from '@material-ui/icons/AdjustSharp';
 import Paper from '@material-ui/core/Paper';
 import { ProgressBar } from "react-bootstrap";
-import { Row, Col, Card } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 //styles classes
 const data = [
@@ -86,9 +88,13 @@ export default class PortfolioHome extends Component {
     constructor(props) {
       super(props);
       this.retrieveDrawing = this.retrieveDrawing.bind(this);
+      this.retrieveDepartments = this.retrieveDepartments.bind(this);
+      this.retriveMilestones = this.retriveMilestones.bind(this);
       
       this.state = {
         drawings: [],
+        departments: [],
+        milestones: [],
         currentIndex: -1,
         content: "",
         id: this.props.match.params.id,
@@ -97,6 +103,32 @@ export default class PortfolioHome extends Component {
   
     componentDidMount() {
       this.retrieveDrawing(this.props.match.params.id);
+      this.retrieveDepartments(this.props.match.params.id);
+      this.retriveMilestones(this.props.match.params.id);
+    }
+    retrieveDepartments(id){
+      PortfolioDataService.getAllDep(id)
+        .then(response => {
+          this.setState({
+            departments: response.data
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+    retriveMilestones(id){
+      PortfolioDataService.getAllMilestones(id)
+        .then(response => {
+          this.setState({
+            milestones: response.data
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
     retrieveDrawing(id) {
       DrawingDataService.getAll(id)
@@ -112,8 +144,7 @@ export default class PortfolioHome extends Component {
     }
  
     render() {
-        const { drawings ,currentIndex,id } = this.state;
-        // const classes = useStyles();
+        const { milestones, departments, currentIndex,id } = this.state;
         
         return (
             <div>
@@ -151,12 +182,6 @@ export default class PortfolioHome extends Component {
                     width={500}
                     height={300}
                     data={dataline}
-                    // margin={{
-                    //   top: 5,
-                    //   right: 30,
-                    //   left: 20,
-                    //   bottom: 5,
-                    // }}
                   >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
@@ -198,136 +223,82 @@ export default class PortfolioHome extends Component {
                 <h3>Project Departments</h3>
                 <p>Project Department details</p>
                 {/* Info */}
-                <Row>
-                  <Col sm>
-                  <Card>
-                  <Card.Body>
-                        <Card.Title><h4>Tower 1</h4></Card.Title>
-                        <Card.Text>
-                        
-                        </Card.Text>
-                    </Card.Body>
-                  </Card>
-                  </Col>
-                  <Col sm>
-                  <Card>
-                  <Card.Body>
-                        <Card.Title><h4>Tower 2</h4></Card.Title>
-                        <Card.Text>
-                        
-                        </Card.Text>
-                    </Card.Body>
-                  </Card>
-                  </Col>
-                  <Col sm>
-                  <Card>
-                  <Card.Body>
-                        <Card.Title><h4>Finishing</h4></Card.Title>
-                        <Card.Text>
-                        
-                        </Card.Text>
-                    </Card.Body>
-                  </Card>
-                  </Col>
-                </Row>   
+                <div className="row">
+                {departments &&
+                      departments.map((department, index) => (
+                          <div
+                          className={
+                          "container col-3" +
+                          (index === currentIndex ? "active" : "")
+                          }
+                          key={index}
+                      >
+                      {/* unit data */}
+                      
+                      <Card>
+                      <Card.Body>
+                            <Card.Title><h4>{department.title}</h4></Card.Title>
+                            <Card.Text>
+                            {department.description}
+                            </Card.Text>
+                        </Card.Body>
+                      </Card>
+                      </div>
+                  ))}
+                  </div>
             </div>
             <hr></hr>
             <div className="container">
-                <h3>Project Milestones</h3>
-                <p>conatines the project milestones and stages of the project</p>
-  
-                <Timeline align="alternate">
-                  <TimelineItem>
-                    <TimelineOppositeContent>
-                      <Typography variant="body2" color="textSecondary">
-                        3 months
-                      </Typography>
-                    </TimelineOppositeContent>
-                    <TimelineSeparator>
-                      <TimelineDot color="primary" variant="outlined">
-                        <EventAvailableIcon  />
-                      </TimelineDot>
-                      <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <Paper elevation={3}>
-                        <Typography variant="h6" component="h1">
-                          Milestone 1
-                        </Typography>
-                        <Typography>Insfrastructure</Typography>
-                      </Paper>
-                    </TimelineContent>
-                  </TimelineItem>
-                  <TimelineItem>
-                    <TimelineOppositeContent>
-                      <Typography variant="body2" color="textSecondary">
-                        4 months
-                      </Typography>
-                    </TimelineOppositeContent>
-                    <TimelineSeparator>
-                      <TimelineDot color="primary" variant="outlined">
-                        <EventAvailableIcon  />
-                      </TimelineDot>
-                      <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <Paper elevation={3}>
-                        <Typography variant="h6" component="h1">
-                          Milestone 2
-                        </Typography>
-                        <Typography>Initial Tower 1 construction</Typography>
-                      </Paper>
-                    </TimelineContent>
-                  </TimelineItem>
-                  <TimelineItem>
-                    <TimelineOppositeContent>
-                      <Typography variant="body2" color="textSecondary">
-                        8 months
-                      </Typography>
-                    </TimelineOppositeContent>
-                    <TimelineSeparator>
-                      <TimelineDot color="primary" variant="outlined">
-                        <EventAvailableIcon  />
-                      </TimelineDot>
-                      <TimelineConnector/>
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <Paper elevation={3}>
-                        <Typography variant="h6" component="h1">
-                          Milestone 3
-                        </Typography>
-                        <Typography>Initial Tower 2 construction</Typography>
-                      </Paper>
-                    </TimelineContent>
-                  </TimelineItem>
-                  <TimelineItem>
-                    <TimelineOppositeContent>
-                      <Typography variant="body2" color="textSecondary">
-                        8 months
-                      </Typography>
-                    </TimelineOppositeContent>
-                    <TimelineSeparator>
-                      <TimelineDot color="primary" variant="outlined">
-                        <EventAvailableIcon  />
-                      </TimelineDot>
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <Paper elevation={3}>
-                        <Typography variant="h6" component="h1">
-                          Finishing
-                        </Typography>
-                        <Typography>Finishing process</Typography>
-                      </Paper>
-                    </TimelineContent>
-                  </TimelineItem>
-                </Timeline>
-            </div>
-            
-            {/* stepper */}
+              <h3>Project Milestones</h3>
+              <p>conatines the project milestones and stages of the project</p>
+              <div className="container">
+               {/* stepper */}
             <div className="container">
-           
+            <Timeline align="alternate">
+            {milestones && milestones.map((milestone, index) => (
+              <TimelineItem key={index}>
+                <TimelineOppositeContent>
+                  <Typography variant="body2" color="textSecondary">
+                    {milestone.duration}
+                  </Typography>
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                  <TimelineDot variant="outlined" color="primary">
+                    <AssignmentIcon/>
+                  </TimelineDot>
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>
+                <Paper elevation={3} className="container">
+                  <Typography variant="h6" component="h1">
+                    {milestone.title}
+                  </Typography>
+                  <Typography>{milestone.description}</Typography>
+                </Paper>
+                </TimelineContent>
+              </TimelineItem>
+            ))}
+              <TimelineItem>
+                <TimelineSeparator>
+                  {/* <TimelineDot variant="outlined" color="secondary" /> */}
+                  {/* <TimelineConnector /> */}
+                </TimelineSeparator>
+                <TimelineDot variant="outlined" color="secondary">
+                  <AdjustSharpIcon />
+                </TimelineDot>
+                <TimelineContent>Finish</TimelineContent>
+              </TimelineItem>
+              {/* <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot variant="outlined" />
+                </TimelineSeparator>
+                <TimelineContent>Repeat</TimelineContent>
+              </TimelineItem> */}
+            </Timeline>
             </div>
-           
+              </div>
+            </div>
+            {/* End of Stepper */}
             </div>
         );
     }
