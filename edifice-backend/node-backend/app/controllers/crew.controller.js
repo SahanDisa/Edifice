@@ -29,23 +29,24 @@ exports.create = (req, res) => {
       });
     });
 };
-/*
-// Retrieve all crews from the database.
+
+// Retrieve all crews from a given project
 exports.findAll = (req, res) => {
-    const title = req.query.title;
-    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-  
-    crew.findAll({ where: condition })
+    //const id = req.query.id;
+      
+    Crew.findAll(/*{ where: {
+      projectId: id
+    }}*/)
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Some error occurred while retrieving data"
         });
       });
-};*/
+};
 /*
 // Find a single crew with an id
 exports.findOne = (req, res) => {

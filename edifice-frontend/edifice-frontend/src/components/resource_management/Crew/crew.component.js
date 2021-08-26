@@ -6,6 +6,8 @@ import ViewWorker from './view-worker.component';
 import  NewCrew from './new-crew.component';
 import Card from 'react-bootstrap/Card';
 
+import CrewDataService from "./../../../services/crew.service";
+
 const data = [
   {Id: 1, FirstName: 'randie',LastName:'pathirage',Mobile:'075 4344323',edit: <a href="#" className="btn btn-secondary" data-toggle="modal" data-target="#editWorker">edit</a>,More:<a href="#" className="btn btn-primary" data-toggle="modal" data-target="#viewWorker">More</a>},
   {Id: 2, FirstName: 'abc', LastName:'iyanage',Mobile:'071 4325431',  edit: <a href="#" className="btn btn-secondary" data-toggle="modal" data-target="#editWorker">edit</a>,More:<a href="#" className="btn btn-primary" data-toggle="modal" data-target="#viewWorker">More</a>},
@@ -48,7 +50,36 @@ const columns = [
 
 class Crew extends Component {
 
+  constructor(props) {
+    super(props);
+    this.retrieveCrew = this.retrieveCrew.bind(this);
+    this.state = {
+      crews: [],
+      currentIndex: -1,
+      content: "",
+      id: this.props.match.params.id
+    };
+  }
+
+  componentDidMount() {
+    this.retrieveCrew(this.props.match.params.id);
+  }
+
+  retrieveCrew(id) {
+    CrewDataService.getAll(id)
+      .then(response => {
+        this.setState({
+          crews: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
     render() {
+      const { crews ,currentIndex,id } = this.state;
       return (
         <div>
           <Card
@@ -77,12 +108,15 @@ class Crew extends Component {
                             </div>
                         </form>
 
+
+
                         <div class="accordion" id="accordionExample">
+                          {crews && crews.map((crew, index) => (
                             <div class="card">
                                 <div class="card-header" id="headingOne">
                                     <h2 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Concrete Crew</button>
-                                        <span class="badge bg-success rounded-pill">14</span>
+                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">{crew.name}</button>
+                                      <span class="badge bg-success rounded-pill">{crew.total}</span>
                                     </h2>
                                 </div>
                                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
@@ -102,31 +136,7 @@ class Crew extends Component {
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="card">
-                                <div class="card-header" id="headingTwo">
-                                    <h2 class="mb-0">
-                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Welder</button>
-                                        <span class="badge bg-success rounded-pill">5</span>
-                                    </h2>
-                                </div>
-                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        <div className="">
-                                            <div class="col-md-12 text-right mb-2">
-                                            <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#addWorker">+ Add Worker</a>
-                                            </div>
-                                            <BootstrapTable 
-                                                hover
-                                                keyField='location'
-                                                data={ data }
-                                                columns={ columns } 
-                                                cellEdit={ false }
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>  
+                          ))}  
                         </div>
                     </div>
                     
