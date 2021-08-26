@@ -16,6 +16,14 @@ class DrawingDataService {
   getCat(id){
     return http.get(`/projects/drawing/cat/${id}`);
   }
+
+  update(id, data) {
+    return http.put(`/projects/drawing/${id}`, data);
+  }
+
+  delete(id) {
+    return http.delete(`/projects/drawing/${id}`);
+  }
 }
 
 export default new DrawingDataService();

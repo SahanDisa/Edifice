@@ -34,6 +34,7 @@ db.projectuser = require("./projectuser.model")(sequelize, Sequelize);
 // Drawing Component Model Classes
 db.drawingcategory = require("./drawing-category.model")(sequelize, Sequelize);
 db.drawings = require("./drawing.model.js")(sequelize, Sequelize);
+db.drawrevision = require("./drawrevision.model")(sequelize,Sequelize);
 // Bidding Component Model Classes
 db.biddings = require("./bidding.model")(sequelize, Sequelize);
 // Photo component Model Classes
@@ -117,6 +118,13 @@ db.drawings.belongsTo(db.projects, {
   as: "project",
 });
 
+// One drawing has many revision comments add by the users
+db.drawings.hasMany(db.drawrevision,{as: "drawrevisions"});
+db.drawrevision.belongsTo(db.drawings,{
+  foreignKey: "drawingId",
+  as: "drawing",
+});
+
 // One project has many albums
 db.projects.hasMany(db.album,{as: "albums"});
 db.album.belongsTo(db.projects,{
@@ -153,12 +161,12 @@ db.biddings.belongsTo(db.projects, {
 });
 
 
-// One project has one budget-should correct this
-db.projects.hasOne(db.budgets, { as: "budgets" });
-db.budgets.belongsTo(db.projects, {
-  foreignKey: "projectId",
-  as: "project",
-});
+// // One project has one budget-should correct this
+// db.projects.hasOne(db.budgets, { as: "budgets" });
+// db.budgets.belongsTo(db.projects, {
+//   foreignKey: "projectId",
+//   as: "project",
+// });
 
 
 //
@@ -175,17 +183,15 @@ db.users.belongsToMany(db.roles, {
   otherKey: "roleId"
 });
 
-// One project has one direct cost
-db.projects.hasOne(db.directcosts, { as: "directcosts" });
+
 //One project has many direct costs
 db.projects.hasMany(db.directcosts, { as: "directcosts" });
-
 db.directcosts.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
 
-// One project has many 
+// One project has many budgets
 db.projects.hasMany(db.budgets, { as: "budgets" });
 db.budgets.belongsTo(db.projects, {
   foreignKey: "projectId",
@@ -264,7 +270,11 @@ db.invoices.belongsTo(db.commitments, {
   foreignKey: "commitmentId",
   as: "commitment",
 });
-
+//Role description 
+//admin - edifice admin
+// moderator - manager level
+// user - enginner level
+// 
 db.ROLES = ["user", "admin", "moderator"];
 
 module.exports = db;

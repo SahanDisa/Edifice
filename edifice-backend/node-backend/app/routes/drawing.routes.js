@@ -14,6 +14,13 @@ module.exports = app => {
 
     // Get all category drawings
     router.get("/cat/:id", drawing.findAllCat);
+
+    // Update a Drawing with id
+    router.put("/:id", drawing.update);
+    
+    // Delete a Drawing with id
+    router.delete("/:id/", drawing.delete);
+
   
     app.use('/api/projects/drawing', router);
   };
