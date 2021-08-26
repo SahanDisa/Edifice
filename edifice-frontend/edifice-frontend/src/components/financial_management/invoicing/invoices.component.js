@@ -1,38 +1,36 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
-import BudgetDataService from "./../../../services/budget.service";
+import InvoiceDataService from "./../../../services/invoice.service";
 import { useTable } from "react-table";
 import { Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-
-
-const BudgetList = (props) => {
+const InvoiceList = (props) => {
   const {id}= useParams();
-  const [budgets, setBudgets] = useState([]);
-  const [searchCostCode, setSearchCostCode] = useState("");
-  const budgetsRef = useRef();
+  const [invoices, setInvoices] = useState([]);
+  const [searchFrom, setSearchFrom] = useState("");
+  const invoicesRef = useRef();
 
   
  
-  budgetsRef.current = budgets;
+  invoicesRef.current = invoices;
 
   useEffect(() => {
-    retrieveBudgets();
+    retrieveInvoices();
   }, []);
 
 
-  const onChangeSearchCostCode = (e) => {
-    const searchCostCode = e.target.value;
-    setSearchCostCode(searchCostCode);
+  const onChangeSearchFrom = (e) => {
+    const searchFrom = e.target.value;
+    setSearchFrom(searchFrom);
   };
 
-  const retrieveBudgets = () => {
+  const retrieveInvoices = () => {
     
-    BudgetDataService.getAll(id)//passing project id as id
+    InvoiceDataService.getAll(id)//passing project id as id
       .then((response) => {
-        setBudgets(response.data);
+        setInvoices(response.data);
       })
       .catch((e) => {
         console.log(e);
@@ -40,41 +38,39 @@ const BudgetList = (props) => {
   };
 
   const refreshList = () => {
-    retrieveBudgets();
+    retrieveInvoices();
   };
 
-  const findByCostCode = () => {
-    BudgetDataService.findByCostCode(searchCostCode)
+  const findByFrom = () => {
+    InvoiceDataService.findByFrom(searchFrom)
       .then((response) => {
-        setBudgets(response.data);
+        setInvoices(response.data);
       })
       .catch((e) => {
         console.log(e);
       });
   };
 
-  const openBudget = (rowIndex) => {
-    const id = budgetsRef.current[rowIndex].id;
-    //const projectId = directcostsRef.current[rowIndex].projectId;
+  const openInvoice = (rowIndex) => {
+    const id = invoicesRef.current[rowIndex].id;
 
-    props.history.push("/viewbudget/"+ id);//here id is direct cost id
+    props.history.push("/viewinvoice/" + id);//here id is direct cost id
   };
 
 
 
-  const deleteBudget = (rowIndex) => {
-    const id = budgetsRef.current[rowIndex].id;
-    //const projectId = directcostsRef.current[rowIndex].projectId;
+  const deleteInvoice = (rowIndex) => {
+    const id = invoicesRef.current[rowIndex].id;
 
-    BudgetDataService.remove(id)
+    InvoiceDataService.remove(id)
       .then((response) => {
         
         //props.history.push("/directcost/"+id);
 
-        let newBudgets = [...budgetsRef.current];
-        newBudgets.splice(rowIndex, 1);
+        let newInvoices = [...invoicesRef.current];
+        newInvoices.splice(rowIndex, 1);
 
-        setBudgets(newBudgets);
+        setInvoices(newInvoices);
       })
       .catch((e) => {
         console.log(e);
@@ -84,37 +80,47 @@ const BudgetList = (props) => {
   const columns = useMemo(
     () => [
       {
-        Header: "Cost Code",
-        accessor: "costCode",
+        Header: "#",
+        accessor: "hash",
       },
       {
-        Header: "Estimated Budget Ammount",
-        accessor: "estimatedBudget",
+        Header: "Invoice Date",
+        accessor: "date",
       },
       {
-        Header: "Revised Budget Ammount",
-        accessor: "revisedBudget",
-      },
-      {
-        Header: "Current Budget Ammount",
-        accessor: "currentBudget",
-      },
-      {
-        Header: "Projected Over/Under",
-        accessor: "overUnder",
+        Header: "Contract Company",
+        accessor: "to",
       },
       {
         Header: "",
+        accessor: "from",
+      },
+      {
+        Header: "Description",
+        accessor: "description",
+      },
+
+  {
+        Header: "Ammount for work completed",
+        accessor: "workCompleted",
+      },
+      
+  {
+    Header: "Ammount Due",
+    accessor: "ammountDue",
+  },
+      {
+        Header: "Actions",
         accessor: "actions",
         Cell: (props) => {
           const rowIdx = props.row.id;
           return (
             <div>
-              <span onClick={() => openBudget(rowIdx)}>
+              <span onClick={() => openInvoice(rowIdx)}>
               <EditIcon></EditIcon>&nbsp;&nbsp;
               </span>
 
-              <span onClick={() => deleteBudget(rowIdx)}>
+              <span onClick={() => deleteInvoice(rowIdx)}>
                 <DeleteIcon></DeleteIcon>
               </span>
             </div>
@@ -133,23 +139,23 @@ const BudgetList = (props) => {
     prepareRow,
   } = useTable({
     columns,
-    data: budgets,
+    data: invoices,
   });
 
   return (
     <div>
-        <h3> BUDGET</h3>
-               <h6>Setup and manage a comprehensive budget throughout the life cycle of the project.</h6><hr />
+        <h3> INVOICES</h3>
+               <h6>Track all direct costs that are not associated with commitments.</h6><hr />
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
-            <Link className="btn btn-primary mr-2" to={"/addbudget/"+id}>{/*check this again*/}
+            <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+id}>{/*check this again*/}
                 + Create
                 </Link>
                 <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
-                Import 
+                Import
                 </Link>
                 <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
-                Export 
+                Export
                 </Link>
                 </div>
       <div className="form-group col-md-4">
@@ -157,15 +163,15 @@ const BudgetList = (props) => {
           <input
             type="text"
             className="form-control"
-            placeholder="Search by cost code"
-            value={searchCostCode}
-            onChange={onChangeSearchCostCode}
+            placeholder="Search by contract company"
+            value={searchFrom}
+            onChange={onChangeSearchFrom}
           />
           <div className="input-group-append">
             <button
               className="btn btn-outline-secondary"
               type="button"
-              onClick={findByCostCode}
+              onClick={findByFrom}
             >
               Search
             </button>
@@ -209,4 +215,4 @@ const BudgetList = (props) => {
   );
 };
 
-export default BudgetList;
+export default InvoiceList;

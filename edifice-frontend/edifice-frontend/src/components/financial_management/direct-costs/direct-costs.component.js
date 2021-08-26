@@ -1,114 +1,226 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import DirectCostDataService from "./../../../services/directcost.service";
-import Button from '@material-ui/core/Button';
+import { useTable } from "react-table";
+import { Route, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import UpdateIcon from '@material-ui/icons/Update';
-import BootstrapTable from 'react-bootstrap-table-next';
-
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
 
 
-//styles classes
 
-export default class Budget extends Component {
-    constructor(props) {
-      super(props);
-      this.retrieveDirectCost = this.retrieveDirectCost.bind(this);
-      this.state = {
-        directcosts: [],
-        columns: [{
-            dataField: 'costCode',
-            text: 'Cost Code'
-          },
-          {
-            dataField: 'category',
-            text: 'Category'
-          }, {
-            dataField: 'date',
-            text: 'Date',
-          },
-          {
-            dataField: 'ammount',
-            text: 'Amount',
-          }
-        ],
-        currentIndex: -1,
-        content: "",
-        id: this.props.match.params.id
-      };
-    }
+const DirectCostList = (props) => {
+  const {id}= useParams();
+  const [directcosts, setDirectCosts] = useState([]);
+  const [searchCostCode, setSearchCostCode] = useState("");
+  const directcostsRef = useRef();
 
-    // makeStyles((theme) => ({
-    //     button: {
-    //       margin: theme.spacing(1),
-    //     },
-    //   }));
   
-    componentDidMount() {
-      this.retrieveDirectCost(this.props.match.params.id);
-    }
-    retrieveDirectCost(id) {
-      DirectCostDataService.getAll(id)
-        .then(response => {
-          this.setState({
-            directcosts: response.data
-          });
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    }
-    render() {
-        const { directcosts ,currentIndex,id } = this.state;
-        // const classes = useStyles();
-        return (
+ 
+  directcostsRef.current = directcosts;
+
+  useEffect(() => {
+    retrieveDirectCosts();
+  }, []);
+
+
+  const onChangeSearchCostCode = (e) => {
+    const searchCostCode = e.target.value;
+    setSearchCostCode(searchCostCode);
+  };
+
+  const retrieveDirectCosts = () => {
+    
+    DirectCostDataService.getAll(id)//passing project id as id
+      .then((response) => {
+        setDirectCosts(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const refreshList = () => {
+    retrieveDirectCosts();
+  };
+
+  const findByCostCode = () => {
+    DirectCostDataService.findByCostCode(searchCostCode)
+      .then((response) => {
+        setDirectCosts(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const openDirectCost = (rowIndex) => {
+    const id = directcostsRef.current[rowIndex].id;
+    //const projectId = directcostsRef.current[rowIndex].projectId;
+
+    props.history.push("/viewdirectcost/"+ id);//here id is direct cost id
+  };
+
+
+
+  const deleteDirectCost = (rowIndex) => {
+    const id = directcostsRef.current[rowIndex].id;
+    //const projectId = directcostsRef.current[rowIndex].projectId;
+
+    DirectCostDataService.remove(id)
+      .then((response) => {
+        
+        //props.history.push("/directcost/"+id);
+
+        let newDirectCosts = [...directcostsRef.current];
+        newDirectCosts.splice(rowIndex, 1);
+
+        setDirectCosts(newDirectCosts);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Cost Code",
+        accessor: "costCode",
+      },
+      {
+        Header: "Description",
+        accessor: "description",
+      },
+      {
+        Header: "Category",
+        accessor: "category",
+      },
+      {
+        Header: "Vendor",
+        accessor: "vendor",
+      },
+      {
+        Header: "Employee",
+        accessor: "employee",
+      },
+
+  {
+        Header: "Received Date",
+        accessor: "receivedDate",
+      },
+      
+  {
+    Header: "Paid Date",
+    accessor: "paidDate",
+  },
+  {
+        Header: "Ammount (Rs.)",
+        accessor: "ammount",
+      },
+      {
+        Header: "",
+        accessor: "actions",
+        Cell: (props) => {
+          const rowIdx = props.row.id;
+          return (
             <div>
-               <h3> DIRECT COSTS</h3>
-               <h6>Track all direct costs that are not associated with commitments.</h6><hr />
-            <div className="col-md-12 text-left">
-            <div class="dropdown">
-  <button class="btn btn-primary mr-2 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-   Export
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    <li><a class="dropdown-item" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Another action</a></li>
-    <li><a class="dropdown-item" href="#">Something else here</a></li>
-  </ul>
-  <Link className="btn btn-primary mr-2" to={"#"}>
-                Import
-                </Link>
-</div>
+              <span onClick={() => openDirectCost(rowIdx)}>
+              <EditIcon></EditIcon>&nbsp;&nbsp;
+              </span>
+
+              <span onClick={() => deleteDirectCost(rowIdx)}>
+                <DeleteIcon></DeleteIcon>
+              </span>
             </div>
-            <hr/>
-            <div className="form-row mt-3">
+          );
+        },
+      },
+    ],
+    []
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = useTable({
+    columns,
+    data: directcosts,
+  });
+
+  return (
+    <div>
+        <h3> DIRECT COSTS</h3>
+               <h6>Track all direct costs that are not associated with commitments.</h6><hr />
+               <div className="form-row mt-3">
             <div className="col-md-12 text-right">
-            <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+id}>
+            <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+id}>{/*check this again*/}
                 + Create
                 </Link>
+                <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
+                Import 
+                </Link>
+                <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
+                Export 
+                </Link>
                 </div>
-            <div className="form-group col-md-4">
-                      <input className="form-control" type="text" placeholder="Search" />
-                    </div>
-                    <a href="#" className="btn btn-outline-dark mb-3">Add Filter</a>
-                    </div>
-                  <hr/>
-            <div className="container">
-                <h4>SUMMARY</h4>
-            {/* Drawing List */}
-           {/* <ul className="list-group">*/}
-           <BootstrapTable 
-        striped
-        hover
-        keyField='id' 
-        data={ this.state.directcosts } 
-        columns={ this.state.columns } />
-            </div> 
-            </div>
-        );
-    }
-}
+      <div className="form-group col-md-4">
+        <div className="input-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search by cost code"
+            value={searchCostCode}
+            onChange={onChangeSearchCostCode}
+          />
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={findByCostCode}
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="container">
+        <table
+          className="table table-striped table-bordered"
+          {...getTableProps()}
+        >
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps()}>
+                    {column.render("Header")}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row, i) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+  </div>
+  </div>
+  );
+};
+
+export default DirectCostList;

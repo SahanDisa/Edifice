@@ -17,7 +17,7 @@ export default class CreatePrimeContracts extends Component{
     this.onChangeContractCompany = this.onChangeContractCompany.bind(this);
     this.onChangeStatus = this.onChangeStatus.bind(this);
     //this.onChangeExecuted = this.onChangeExecuted.bind(this);
-    this.onChangeDefaultRetainage = this.onChangeDefaultRetainage.bind(this);
+    //this.onChangeDefaultRetainage = this.onChangeDefaultRetainage.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     //this.onChangeAttachments = this.onChangeAttachments.bind(this);
     this.onChangeStartDate = this.onChangeStartDate.bind(this);
@@ -36,7 +36,7 @@ export default class CreatePrimeContracts extends Component{
       contractCompany: "",
       status: "", 
       //executed:"",
-      defaultRetainage :"",
+      //defaultRetainage :"",
       description:"",
       /*attachments:"",*/
       startDate: "",
@@ -75,12 +75,12 @@ export default class CreatePrimeContracts extends Component{
     this.setState({
       executed: e.target.value
     });
-  }*/
+  }
   onChangeDefaultRetainage(e) {
     this.setState({
       defaultRetainage: e.target.value
     });
-  }
+  }*/
   onChangeDescription(e) {
     this.setState({
      description: e.target.value
@@ -127,7 +127,7 @@ export default class CreatePrimeContracts extends Component{
       contractCompany: this.state.contractCompany,     
       status: this.state.status,
       //executed:this.state.executed,
-      defaultRetainage:this.state.defaultRetainage,
+      //defaultRetainage:this.state.defaultRetainage,
       description:this.state.description,
       //attachments:this.state.attachments,
       startDate: this.state.startDate,
@@ -147,7 +147,7 @@ export default class CreatePrimeContracts extends Component{
       contractCompany: response.data.contractCompany,      
       status:response.data.status,
       //executed:response.data.executed,
-      defaultRetainage:response.data.defaultRetainage,
+      //defaultRetainage:response.data.defaultRetainage,
       description:response.data.description,
       //attachments:response.data.attachments,
       startDate:response.data.startDate,
@@ -176,7 +176,7 @@ export default class CreatePrimeContracts extends Component{
       contractCompany: "",
       status: "", 
       //executed:false,
-      defaultRetainage :"",
+      //defaultRetainage :"",
       description:"",
       //attachments:"",
       startDate: "",
@@ -276,7 +276,7 @@ export default class CreatePrimeContracts extends Component{
                 onChange={this.onChangeExecuted}
                 name="executed"
               />
-        </div>*/}
+        </div>
          
               <div className="form-group">
                 <label htmlFor="defaultRetainage">Default Retainage % :</label>
@@ -289,7 +289,7 @@ export default class CreatePrimeContracts extends Component{
                 onChange={this.onChangeDefaultRetainage}
                 name="defaultRetainage"
               />
-              </div>
+              </div> */}
               <div className="form-group">
                 <label htmlFor="description">Description :</label>
  
@@ -410,8 +410,23 @@ export default class CreatePrimeContracts extends Component{
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot />
+                  <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 2</strong><br/>Add SoV to a Commitment</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 2</strong><br/>View the created Commitment</h6></TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 3</strong><br/>Add SoV to the Commitment</h6></TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 4</strong><br/>Get contractor approval.</h6></TimelineContent>
               </TimelineItem>
             </Timeline>
             </div>
@@ -424,9 +439,10 @@ export default class CreatePrimeContracts extends Component{
             <button onClick={this.saveCommitment} className="btn btn-success">
               Save
             </button>&nbsp;&nbsp;
-            <button onClick={this.saveCommitment} className="btn btn-success">
+            <Link to={"/commitment/" + projectId}>
+            <button className="btn btn-success">
             Cancel
-            </button>&nbsp;&nbsp;
+            </button></Link>&nbsp;&nbsp;
            &nbsp;&nbsp;
             <br /><br /><br />
             </div>

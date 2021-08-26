@@ -1,38 +1,39 @@
 const db = require("./../models/index");
 const Commitment = db.commitments;
-const Sov = db.sovs;
+const Payment = db.payments;
 
 // create a drawing
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.ammount) {
+  if (!req.body.note) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
     return;
   }
 
-  // Create a Project
-  const sov = {
-    costCode: req.body.costCode,
-    description:req.body.description,
+  // Create a Payment
+  const payment = {
+    invoice: req.body.invoice,
+    paymentMethod:req.body.paymentMethod,
+    date:req.body.date,
+    paymentHash:req.body.paymentHash,
+    invoiceHash:req.body.invoiceHash,
+    note:req.body.note,
     ammount:req.body.ammount,
-    //billedToDate:req.body.billedToDate,
-    //executed:req.body.executed,
-    //ammountRemaining:req.body.ammountRemaining,
 
     commitmentId: req.body.commitmentId,
   };
 
   // Save Project in the database
-  Sov.create(sov)
+  Payment.create(payment)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Project."
+          err.message || "Some error occurred while creating the Payment."
       });
     });
 };
@@ -41,7 +42,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   const id = req.params.id;
 
-  Sov.findAll({ where: {
+ Payment.findAll({ where: {
     commitmentId: id
   }})
     .then(data => {
@@ -49,7 +50,7 @@ exports.findAll = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Project Drawings with id=" + id
+        message: "Error retrieving Contract Payments with id=" + id
       });
     });  
 };
@@ -58,13 +59,13 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Sov.findByPk(id)
+  Payment.findByPk(id)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Project with id=" + id
+        message: "Error retrieving Payment with id=" + id
       });
     });  
 };

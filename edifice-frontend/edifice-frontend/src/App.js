@@ -78,10 +78,10 @@ import UpdateMeetings from "./components/project_management/meetings/update.comp
 import ViewMeetings from "./components/project_management/meetings/view.component";
 
 import BudgetHome from "./components/financial_management/budget/budget.component";
-import PrimeContracts from "./components/financial_management/prime-contracts/prime-contracts.component";
-import CreatePrimeContracts from "./components/financial_management/prime-contracts/createPrimeContracts.component";
+import PrimeContracts from "./components/financial_management/prime-contracts/primecontracts.component";
+import CreatePrimeContracts from "./components/financial_management/prime-contracts/addprimecontract.component";
 import DirectCostHome from "./components/financial_management/direct-costs/direct-costs.component";
-import Invoicing from "./components/financial_management/invoicing/invoicing.component";
+import InvoiceHome from "./components/financial_management/invoicing/invoices.component";
 
 import rfiHome from "./components/project_management/rfi/rfi.component";
 import CreateRFI from "./components/project_management/rfi/create.component";
@@ -116,7 +116,11 @@ import AddCommitment from "./components/financial_management/commitments/addcomm
 import ViewSingleCommitment from "./components/financial_management/commitments/commitment-singlepage.component";
 import AddSov from "./components/financial_management/commitments/addsov.component";
 
-
+import ViewSingleDirectCost from "./components/financial_management/direct-costs/directcost-singlepage.component";
+import SovHome from "./components/financial_management/commitments/sovs.component";
+import AddInvoice from "./components/financial_management/invoicing/addinvoice.component";
+import AddPayment from "./components/financial_management/commitments/addpayment.component";
+import PaymentHome from "./components/financial_management/commitments/payments.component";
 
 class App extends Component {
   constructor(props) {
@@ -322,18 +326,18 @@ class App extends Component {
 			      <Route path="/budget/:id" component={BudgetHome} />
             <Route path="/addbudget/:id" component={AddBudget} />
             <Route path="/prime-contracts" component={PrimeContracts} />
-            <Route path="/create-prime-contracts" component={CreatePrimeContracts} />
+            <Route path="/addprimecontract/:id" component={CreatePrimeContracts} />
             <Route path="/directcost/:id" component={DirectCostHome} />
-            <Route path="/invoicing" component={Invoicing} />
+            <Route path="/invoice/:id" component={InvoiceHome} />
             
-            <Route path="/prime-contracts" component={PrimeContracts} />
+            <Route path="/primecontract/:id" component={PrimeContracts} />
 
             {/*resource management */}
-            <Route path="/timesheet" component={Timesheet} />
+            <Route path="/timesheet/:id" component={Timesheet} />
             <Route path="/customize" component={Customize} />
             <Route path="/crew" component={Crew} />
-            <Route path="/schedule" component={Schedule} />
-            <Route path="/equipments" component={Equipments} />
+            <Route path="/schedule/:id" component={Schedule} />
+            <Route path="/equipments/:id" component={Equipments} />
             <Route path="/equipDetails" component={EquipDetails} />
             <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
 
@@ -347,6 +351,13 @@ class App extends Component {
             {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
             <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
             <Route path="/addsov/:id" component={AddSov} />
+            <Route path="/viewdirectcost/:id" component={ViewSingleDirectCost} />
+           {/* <Route path="/viewsov/:id" component={ViewSingleSov} />*/}
+            <Route path="/viewsov/:id" component={SovHome} />
+            <Route path="/addinvoice/:id" component={AddInvoice} />
+            <Route path="/addpayment/:id" component={AddPayment} />
+            <Route path="/viewpayment/:id" component={PaymentHome} />
+           
           </Switch>
         </div>
       </div>

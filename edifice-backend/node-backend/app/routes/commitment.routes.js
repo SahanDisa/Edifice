@@ -3,14 +3,20 @@ module.exports = app => {
   
     var router = require("express").Router();
   
-    // Create a new Drawing
+    // Create a new Commitment
     router.post("/", commitment.create);
   
-    // Retrieve all Drawings for a project
+    // Retrieve all Commitments for a project
     router.get("/list/:id", commitment.findAll);
   
-    // Retrieve a single Drawing with id
+    // Retrieve a single Commitment with id
     router.get("/:id", commitment.findOne);
+
+     // Update a Commitment with id
+  router.put("/:id", commitment.update);
+
+  // Delete a Commitment with id
+  router.delete("/:id", commitment.delete);
   
     app.use('/api/projects/commitment', router);
   };
