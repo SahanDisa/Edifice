@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
-    const Category = sequelize.define("category", {
+    const Crew = sequelize.define("crew", {
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       total: {
         type: Sequelize.INTEGER,
@@ -10,5 +10,5 @@ module.exports = (sequelize, Sequelize) => {
         freezeTableName: true,
     });
   
-    return Category;
+    return Crew;
   };
