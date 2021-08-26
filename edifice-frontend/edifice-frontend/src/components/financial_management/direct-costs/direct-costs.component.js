@@ -44,9 +44,16 @@ const DirectCostList = (props) => {
   };
 
   const findByCostCode = () => {
-    DirectCostDataService.findByCostCode(searchCostCode)
+  
+
+    DirectCostDataService.findByCostCode(id,searchCostCode)//searchCostCode
       .then((response) => {
         setDirectCosts(response.data);
+        console.log("clicked")
+        console.log(response.data)
+        console.log(searchCostCode)
+        console.log(id)
+        console.log(response)
       })
       .catch((e) => {
         console.log(e);
@@ -159,22 +166,47 @@ const DirectCostList = (props) => {
             <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+id}>{/*check this again*/}
                 + Create
                 </Link>
-                <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
+                
+              <input type="file"/>
+              <button className="btn btn-primary mr-2">
+             Import
+            </button>
+              {/*  <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
                 Import 
-                </Link>
+  </Link>*/}
                 <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
                 Export 
                 </Link>
                 </div>
       <div className="form-group col-md-4">
         <div className="input-group mb-3">
-          <input
+         {/* <input
             type="text"
             className="form-control"
             placeholder="Search by cost code"
             value={searchCostCode}
             onChange={onChangeSearchCostCode}
-          />
+          />*/}
+ <select 
+                
+                id="costCode"
+           
+                
+                name="costCode"
+                className="form-control"
+            placeholder="Search by cost code"
+            value={searchCostCode}
+            onChange={onChangeSearchCostCode}
+              >
+              <option  selected value="">All</option>
+                <option>010-Maintenance Equipment</option>
+                <option>924-Sodding</option>
+                <option>100-Visual Display Boards</option>
+                <option>230-Site Clearing</option>
+                <option>240-Dewatering</option>
+             
+              </select>
+
           <div className="input-group-append">
             <button
               className="btn btn-outline-secondary"

@@ -1,5 +1,9 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+//import { Route, useParams } from "react-router-dom";
 import DirectCostDataService from "./../../../services/directcost.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -8,155 +12,116 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 
-export default class AddDirectCost extends Component{
+const AddDirectCost = (props) => {
 
-  constructor(props) {
-    super(props);
-    this.onChangeCostCode = this.onChangeCostCode.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeCategory = this.onChangeCategory.bind(this);
-    this.onChangeVendor = this.onChangeVendor.bind(this);
-    this.onChangeEmployee = this.onChangeEmployee.bind(this);
-    this.onChangeReceivedDate = this.onChangeReceivedDate.bind(this);
-    this.onChangePaidDate = this.onChangePaidDate.bind(this);
-    this.onChangeAmmount= this.onChangeAmmount.bind(this);
-    this.saveDirectCost = this.saveDirectCost.bind(this);
-    this.newDirectCost = this.newDirectCost.bind(this);
+  /**validation */
+  const validationSchema = Yup.object().shape({
+    costCode: Yup.string().required('Cost Code is required'),
+    description: Yup.string().required('Description is required'),
+    category: Yup.string().required('Category is required'),
+    vendor: Yup.string().required('Category is required'),
+    employee: Yup.string().required('Category is required'),
+    receivedDate: Yup.string().required('Category is required'),
+    paidDate: Yup.string().required('Category is required'),
+    ammount: Yup.string().required('Category is required'),
+  });
 
-    this.state = {
-      id: null,
-      costCode :"",
-      description :"",
-      category :"",
-      vendor :"",
-      employee :"",
-      receivedDate :"",
-      paidDate :"",
-      ammount: "",
-      projectId: this.props.match.params.id,  
-      submitted: false
-    };
-  }
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validationSchema)
+  });
 
-  onChangeCostCode(e) {
-    this.setState({
-      costCode: e.target.value
-    });
-  }
+  const onSubmit = data => {
+    console.log(JSON.stringify(data, null, 2));
+  };
+/**End of validation */
 
-  onChangeDescription(e) {
-    this.setState({
-      description: e.target.value
-    });
-  }
+  //const {pid}= useParams();
 
-  onChangeCategory(e) {
-    this.setState({
-      category: e.target.value
-    });
-  }
+  const initialDirectCostState = {
+    id: null,
+    costCode :"",
+    description :"",
+    category :"",
+    vendor :"",
+    employee :"",
+    receivedDate :"",
+    paidDate :"",
+    ammount: "",
+    projectId:props.match.params.id,  
+    
+  };
+  const [directcost, setDirectCost] = useState(initialDirectCostState);
+  const [submitted, setSubmitted] = useState(false);
 
-  onChangeVendor(e) {
-    this.setState({
-      vendor: e.target.value
-    });
-  }
+  const handleInputChange = event => {
+    const { name, value } = event.target;
+    setDirectCost({ ...directcost, [name]: value });
+  };
 
-  onChangeEmployee(e) {
-    this.setState({
-      employee: e.target.value
-    });
-  }
-
-  onChangeReceivedDate(e) {
-    this.setState({
-      receivedDate: e.target.value
-    });
-  }
-
-  onChangePaidDate(e) {
-    this.setState({
-      paidDate: e.target.value
-    });
-  }
-
-  onChangeAmmount(e) {
-    this.setState({
-      ammount: e.target.value
-    });
-  }
-
-  saveDirectCost() {
-    console.log("clicked");  
+  const saveDirectCost = () => {
     var data = {
-      costCode: this.state.costCode,
-      description: this.state.description,
-      category: this.state.category,
-      vendor: this.state.vendor,
-      employee: this.state.employee,
-      receivedDate: this.state.receivedDate,
-      paidDate: this.state.paidDate,
-      ammount: this.state.ammount,
-      projectId: this.state.projectId
+      costCode: directcost.costCode,
+      description: directcost.description,
+      category: directcost.category,
+      vendor: directcost.vendor,
+      employee: directcost.employee,
+      receivedDate: directcost.receivedDate,
+      paidDate: directcost.paidDate,
+      ammount: directcost.ammount,
+      projectId: directcost.projectId,
     };
 
     DirectCostDataService.create(data)
       .then(response => {
-        this.setState({
+        setDirectCost({
           id: response.data.id,
           costCode: response.data.costCode,
           description: response.data.description,
           category: response.data.category,
           vendor: response.data.vendor,
           employee: response.data.employee,
-            receivedDate: response.data.receivedDate,
-            paidDate: response.data.paidDate,
-            ammount: response.data.ammount,
-            projectId: response.data.projectId,
-          submitted: true
+          receivedDate: response.data.receivedDate,
+          paidDate: response.data.paidDate,
+          ammount: response.data.ammount,
+          projectId: response.data.projectId,
+     
         });
+        setSubmitted(true);
         console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
-  }
+  };
 
-  newDirectCost() {
-    this.setState({
-      id: null,
-      costCode: "",
-      desription: "",
-      category: "",
-      vendor: "",
-      employee: "",
-      receivedDate: "",
-      paidDate: "",
-      ammount: "",
-      projectId: this.props.match.params.id,
-
-      submitted: false
-    });
-  }
+  const newDirectCost = () => {
+    setDirectCost(initialDirectCostState);
+    setSubmitted(false);
+  };
 
  
-  render() {
-    const {projectId} = this.state;
-    return (
+  return (
         <div className="container">
-        {this.state.submitted ? (
+       
+        {submitted ? (
           <div>
             <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={this.newDirectCost}>
+            <button className="btn btn-success" onClick={newDirectCost}>
               + Add Another Direct Cost
             </button>&nbsp;&nbsp;
-            <Link  to={"/directcost/"+projectId} className="btn btn-success">View Direct Costs</Link>
+          <Link  to={"/directcost/"+directcost.projectId} className="btn btn-success">View Direct Costs</Link>
           </div>
         ) : (
           <div class="container">
             <h2>New Direct Cost</h2>
             <div className="row">
        <div className="col-sm-6">
+       <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
               <label htmlFor="costCode">Cost Code :</label>
              {/* <input
@@ -169,32 +134,42 @@ export default class AddDirectCost extends Component{
                 name="costCode"
              />*/}
                 <select 
-                className="form-control"
+                
                 id="costCode"
-                required
-                value={this.state.costCode}
-                onChange={this.onChangeCostCode}
+           
+                
                 name="costCode"
+                {...register('costCode')}
+                value={directcost.costCode}
+                onChange={handleInputChange}
+                className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
               >
+                
                 <option>010-Maintenance Equipment</option>
                 <option>924-Sodding</option>
                 <option>100-Visual Display Boards</option>
                 <option>230-Site Clearing</option>
                 <option>240-Dewatering</option>
+             
               </select>
+              <div className="invalid-feedback">{errors.costCode?.message}</div>
             </div>
 
             <div className="form-group">
               <label htmlFor="amount">Description :</label>
               <input
                 type="text"
-                className="form-control"
+            
                 id="description"
-                required
-                value={this.state.description}
-                onChange={this.onChangeDescription}
+                
+           
                 name="description"
+                {...register('description')}
+                value={directcost.description}
+                onChange={handleInputChange}
+                className={`form-control ${errors.description ? 'is-invalid' : ''}`}
               />
+               <div className="invalid-feedback">{errors.description?.message}</div>
             </div>
 
             <div className="form-group">
@@ -209,83 +184,125 @@ export default class AddDirectCost extends Component{
                 name="category"
               />*/}
   <select 
-                className="form-control"
+                
                 id="category"
-                required
-                value={this.state.category}
-                onChange={this.onChangeCategory}
+                
                 name="category"
+                {...register('category')}
+                value={directcost.category}
+                onChange={handleInputChange}
+                className={`form-control ${errors.category ? 'is-invalid' : ''}`}
               >
                 <option>Expense</option>
                 <option>Invoice</option>
                 <option>Payroll</option>
               </select>
+              <div className="invalid-feedback">{errors.category?.message}</div>
             </div>
 
             <div className="form-group">
               <label htmlFor="amount">Vendor :</label>
               <input
                 type="text"
-                className="form-control"
+                
                 id="vendor"
-                required
-                value={this.state.vendor}
-                onChange={this.onChangeVendor}
+              
+               
                 name="vendor"
+                {...register('vendor')}
+                className={`form-control ${errors.vendor ? 'is-invalid' : ''}`}
+                value={directcost.vendor}
+                onChange={handleInputChange}
+                
               />
+               <div className="invalid-feedback">{errors.vendor?.message}</div>
             </div>
 
             <div className="form-group">
               <label htmlFor="amount">Employee :</label>
               <input
                 type="text"
-                className="form-control"
+               
                 id="employee"
-                required
-                value={this.state.employee}
-                onChange={this.onChangeEmployee}
+                
+               
                 name="employee"
+                {...register('employee')}
+                value={directcost.employee}
+                onChange={handleInputChange}
+                className={`form-control ${errors.employee ? 'is-invalid' : ''}`}
               />
+               <div className="invalid-feedback">{errors.employee?.message}</div>
             </div>
 
             <div className="form-group">
               <label htmlFor="date">Received Date :</label>
               <input
                 type="date"
-                className="form-control"
+                
                 id="receivedDate"
-                required
-                value={this.state.receivedDate}
-                onChange={this.onChangeReceivedDate}
+                
+               
                 name="receivedDate"
+                {...register('receivedDate')}
+                value={directcost.receivedDate}
+                onChange={handleInputChange}
+                className={`form-control ${errors.receivedDate ? 'is-invalid' : ''}`}
               />
+               <div className="invalid-feedback">{errors.receivedDate?.message}</div>
             </div>
 
             <div className="form-group">
               <label htmlFor="date">Paid Date :</label>
               <input
                 type="date"
-                className="form-control"
+                
                 id="paidDate"
-                required
-                value={this.state.paidDate}
-                onChange={this.onChangePaidDate}
+                
+                
                 name="paidDate"
+                {...register('paidDate')}
+                value={directcost.paidDate}
+                onChange={handleInputChange}
+                className={`form-control ${errors.paidDate ? 'is-invalid' : ''}`}
               />
+               <div className="invalid-feedback">{errors.paidDate?.message}</div>
             </div>
 
             <div className="form-group">
               <label htmlFor="amount">Ammount :</label>
               <input
                 type="text"
-                className="form-control"
+               
                 id="ammount"
-                required
-                value={this.state.ammount}
-                onChange={this.onChangeAmmount}
+             
+              
                 name="ammount"
+                {...register('ammount')}
+                value={directcost.ammount}
+                onChange={handleInputChange}
+                className={`form-control ${errors.ammount ? 'is-invalid' : ''}`}
               />
+               <div className="invalid-feedback">{errors.ammount?.message}</div>
             </div>
+            <div className="form-group">
+            <button type="submit" onClick={saveDirectCost} className="btn btn-success">
+              Save
+            </button>
+            &nbsp;&nbsp;
+            <button
+            type="button"
+            onClick={() => reset()}
+            className="btn btn-warning float-right"
+          >
+            Reset
+          </button>&nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
+            <Link to={"/directcost/" + directcost.projectId}>
+            <button className="btn btn-success">
+            Cancel
+            </button></Link>
+            </div>
+            </form>
             </div>
             
             <div className="col-sm-6">
@@ -323,19 +340,12 @@ export default class AddDirectCost extends Component{
             
             
             </div><br />
-            <button onClick={this.saveDirectCost} className="btn btn-success">
-              Save
-            </button>
-            &nbsp;&nbsp;
-            <Link to={"/directcost/" + projectId}>
-            <button className="btn btn-success">
-            Cancel
-            </button></Link>
+          {/** */} 
           </div>
         )}
         <br /><br />
       </div>
-    );
-  }
+  );
 };
 
+export default AddDirectCost;
