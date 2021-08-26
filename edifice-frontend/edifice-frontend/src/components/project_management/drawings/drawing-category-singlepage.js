@@ -69,9 +69,10 @@ export default class ViewSingleDrawingCategory extends Component {
                 <thead>
                   <tr>
                     <th>Index</th>
-                    <th>Name</th>
+                    <th>Title</th>
                     <th>Description</th>
                     <th>Type</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -88,9 +89,10 @@ export default class ViewSingleDrawingCategory extends Component {
                         key={index}
                     >
                     <td>{drawing.id}</td>
-                    <td>{drawing.name}</td>
+                    <td>{drawing.title}</td>
                     <td>{drawing.description}</td>
                     <td>{title}</td>
+                    <td>{drawing.status == "Not Complete" ? "🔴 NC": "🟡 Due" }</td>
                     <td>   
                         {/* Button Group */}
                         <Link to={"/viewdrawing/"+drawing.id}>
