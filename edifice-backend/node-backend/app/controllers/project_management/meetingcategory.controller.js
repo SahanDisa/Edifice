@@ -1,4 +1,4 @@
-const db = require("./../models/index.js");
+const db = require("../../models/index.js");
 const Meetingcategory = db.meetingcategory;
 const Op = db.Sequelize.Op;
 

@@ -51,14 +51,14 @@ require('./app/routes/sov.routes')(app);
 
 require('./app/routes/equipment.routes')(app);
 require('./app/routes/equipment-category.routes')(app);
-require('./app/routes/crew.routes')(app);
 
-require('./app/routes/meeting.routes')(app);
-require('./app/routes/meetingcategory.routes')(app);
+require('./app/routes/crew.routes')(app);
 require('./app/routes/primecontract.routes')(app);
 require('./app/routes/invoice.routes')(app);
 require('./app/routes/payment.routes')(app);
 
+require('./app/routes/project_management/meeting.routes')(app);
+require('./app/routes/project_management/meetingcategory.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {
