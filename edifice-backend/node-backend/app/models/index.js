@@ -34,6 +34,7 @@ db.projectuser = require("./projectuser.model")(sequelize, Sequelize);
 // Drawing Component Model Classes
 db.drawingcategory = require("./drawing-category.model")(sequelize, Sequelize);
 db.drawings = require("./drawing.model.js")(sequelize, Sequelize);
+db.drawrevision = require("./drawrevision.model")(sequelize,Sequelize);
 // Bidding Component Model Classes
 db.biddings = require("./bidding.model")(sequelize, Sequelize);
 // Photo component Model Classes
@@ -57,7 +58,7 @@ db.primecontracts = require("./primecontract.model.js")(sequelize, Sequelize);
 db.invoices = require("./invoice.model.js")(sequelize, Sequelize);
 db.payments = require("./payment.model.js")(sequelize, Sequelize);
 
-//resource management
+// Resource management
 db.equipments = require("./equipment.model")(sequelize, Sequelize);
 db.categorys = require("./equipment-category.model")(sequelize, Sequelize);
 db.crews = require("./crew.model")(sequelize, Sequelize);
@@ -118,6 +119,13 @@ db.projects.hasMany(db.drawings, { as: "drawings" });
 db.drawings.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
+});
+
+// One drawing has many revision comments add by the users
+db.drawings.hasMany(db.drawrevision,{as: "drawrevisions"});
+db.drawrevision.belongsTo(db.drawings,{
+  foreignKey: "drawingId",
+  as: "drawing",
 });
 
 // One project has many albums
@@ -265,8 +273,26 @@ db.workers.belongsTo(db.crews, {
   foreignKey: "crewId",
   as: "crew",
 });
+
+// One project has many drawings
+db.projects.hasOne(db.primecontracts, { as: "primecontracts" });
+db.primecontracts.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+// One commitment has many invoices
+db.commitments.hasMany(db.invoices, { as: "invoices" });
+db.invoices.belongsTo(db.commitments, {
+  foreignKey: "commitmentId",
+  as: "commitment",
+});
 // ----------- Resource Management Ends --------
 
+//Role description 
+//admin - edifice admin
+// moderator - manager level
+// user - enginner level
 db.ROLES = ["user", "admin", "moderator"];
 
 module.exports = db;
