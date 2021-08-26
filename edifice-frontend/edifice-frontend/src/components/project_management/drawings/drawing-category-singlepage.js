@@ -98,7 +98,7 @@ export default class ViewSingleDrawingCategory extends Component {
                         <Link to={"/viewdrawing/"+drawing.id}>
                         <button className="btn btn-primary">View <VisibilityIcon/> </button>
                         </Link>
-                        <Link to={"/viewdrawing/"+drawing.id}>
+                        <Link to={"/updatedrawing/"+drawing.id}>
                         <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
                         </Link>
                         <Link to={"/viewdrawing/"+drawing.id}>
