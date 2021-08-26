@@ -40,6 +40,8 @@ import AddPhoto from "./components/project_management/photos/addphoto.component"
 import UploadPhotos from "./components/project_management/photos/uploadphoto.component";
 import PhotosHome from "./components/project_management/photos/photos.component";
 import AddAlbum from "./components/project_management/photos/addalbum.component";
+import ViewSingleAlbum from "./components/project_management/photos/album-singlepage.component";
+
 import BiddingHome from "./components/project_management/biddings/bidding.component";
 import AddBidding from "./components/project_management/biddings/addbidding.component";
 import ViewSpec from "./components/project_management/biddings/viewspec.component";
@@ -310,6 +312,7 @@ class App extends Component {
             <Route path="/photos/:id" component={PhotosHome} />
             <Route path="/addphoto/:id" component={AddPhoto}/>
             <Route path="/uploadphoto/:name" component={UploadPhotos}/>
+            <Route path="/viewalbum/:id" component={ViewSingleAlbum}/>
             <Route path="/addalbum/:id" component={AddAlbum}/>
             {/* Bidding Component Routes  */}
             <Route path="/bidding/:id" component={BiddingHome} /> 

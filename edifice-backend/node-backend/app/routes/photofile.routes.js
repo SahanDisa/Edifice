@@ -11,6 +11,9 @@ module.exports = app => {
   
     // Retrieve a single Tutorial with id
     router.get("/:id", projects.findOne);
+
+    // Get all category drawings
+    router.get("/cat/:id", projects.findAllCat);
   
     // Update a Tutorial with id
     router.put("/:id", projects.update);

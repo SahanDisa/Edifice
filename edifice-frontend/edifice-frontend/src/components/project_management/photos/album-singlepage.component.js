@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AlbumDataService from "./../../../services/album.service";
-import DrawingCategoryDataService from "./../../../services/drawing-category.service";
+import PhotoDataService from "./../../../services/photo.service";
 import Table from 'react-bootstrap/Table';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -10,10 +10,10 @@ import UpdateIcon from '@material-ui/icons/Update';
 export default class ViewSingleAlbum extends Component {
     constructor(props) {
       super(props);
-      this.retrieveCategoryDrawing = this.retrieveCategoryDrawing.bind(this);
+      this.retrievePhotoAlbum = this.retrievePhotoAlbum.bind(this);
       this.state = {
         id: this.props.match.params.id,
-        drawings: [],
+        photos: [],
         title: "",
         description: "", 
         projectId: ""
@@ -21,11 +21,11 @@ export default class ViewSingleAlbum extends Component {
     }
   
     componentDidMount() {
-      this.retrieveCategoryDrawing(this.props.match.params.id);
-      this.retriveCategoryInfo(this.props.match.params.id);
+      this.retrievePhotoAlbum(this.props.match.params.id);
+      this.retriveAlbumInfo(this.props.match.params.id);
     }
-    retriveCategoryInfo(id){
-      DrawingCategoryDataService.getOne(id)
+    retriveAlbumInfo(id){
+      AlbumDataService.getOne(id)
       .then(response => {
         this.setState({
           id: response.data.id,
@@ -39,11 +39,11 @@ export default class ViewSingleAlbum extends Component {
         console.log(e);
       });
     }
-    retrieveCategoryDrawing(id) {
-      DrawingDataService.getCat(id)
+    retrievePhotoAlbum(id) {
+      PhotoDataService.getCat(id)
         .then(response => {
           this.setState({
-            drawings: response.data
+            photos: response.data
           });
           console.log(response.data);
         })
@@ -52,7 +52,7 @@ export default class ViewSingleAlbum extends Component {
         });
     }
     render() {
-        const { id,title,description,drawings,currentIndex } = this.state;
+        const { id,title,description,photos,currentIndex } = this.state;
         return (
             <div>
               <h2>Drawing Category Single Page</h2>
@@ -77,8 +77,8 @@ export default class ViewSingleAlbum extends Component {
                 </thead>
                 {/* Functional for table data */}
                 <tbody>
-                {drawings &&
-                    drawings.map((drawing, index) => (
+                {photos &&
+                    photos.map((photo, index) => (
                     <tr
                         // className={
                         // "list-group-item row" +
@@ -87,19 +87,19 @@ export default class ViewSingleAlbum extends Component {
                         // onClick={() => this.setActiveProject(project, index)}
                         key={index}
                     >
-                    <td>{drawing.id}</td>
-                    <td>{drawing.name}</td>
-                    <td>{drawing.description}</td>
+                    <td>{photo.id}</td>
+                    <td>{photo.title}</td>
+                    <td>{photo.description}</td>
                     <td>{title}</td>
                     <td>   
                         {/* Button Group */}
-                        <Link to={"/viewdrawing/"+drawing.id}>
+                        <Link to={"/viewdrawing/"+photo.id}>
                         <button className="btn btn-primary">View <VisibilityIcon/> </button>
                         </Link>
-                        <Link to={"/viewdrawing/"+drawing.id}>
+                        <Link to={"/viewdrawing/"+photo.id}>
                         <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
                         </Link>
-                        <Link to={"/viewdrawing/"+drawing.id}>
+                        <Link to={"/viewdrawing/"+photo.id}>
                         <button className="btn btn-danger">Delete <DeleteIcon/> </button>
                         </Link>
                     </td>    

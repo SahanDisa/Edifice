@@ -82,7 +82,7 @@ export default class PhotosHome extends Component {
                     key={index}
                 >
                 {/* unit data */}
-                <Link to={"/viewdrawingcategory/"+id}>
+                <Link to={"/viewalbum/"+album.id}>
                   <Card
                     bg={'secondary'}
                     text={'dark'}
@@ -112,7 +112,7 @@ export default class PhotosHome extends Component {
             <hr></hr>
           </div> 
           <div className="container">
-            <h4>Recent Photos</h4>
+            <h4>Recent Uploaded Photos</h4>
             {/* <div className="row">
               <div className="col-sm-6">
               <Card style={{ width: '18rem' }}>

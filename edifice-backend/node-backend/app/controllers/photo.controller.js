@@ -83,6 +83,23 @@ exports.findLastOne = (req,res) =>{
   });
 }
 
+// Get drawings for a given category
+exports.findAllCat = (req, res) => {
+    const id = req.params.id;
+  
+    Photo.findAll({ where: {
+      category: id
+    }})
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Error retrieving Project Album with id=" + id
+        });
+      });  
+  };
+
 // Update a Photo by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
