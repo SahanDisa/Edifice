@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DrawingDataService from "./../../../services/drawing.service";
+import DrawingCategoryService from "../../../services/drawing-category.service";
 
 export default class UpdateDrawing extends Component {
   constructor(props) {
@@ -23,12 +24,15 @@ export default class UpdateDrawing extends Component {
         
       },
       message: "",
-      temp: this.props.match.params.id
+      temp: this.props.match.params.id,
+      pid: this.props.match.params.pid,
+      drawingcategories: [],
     };
   }
 
   componentDidMount() {
     this.getDrawing(this.props.match.params.id);
+    this.retriveDrawingCategory(this.props.match.params.pid);
   }
 
   onChangeTitle(e) {
@@ -76,7 +80,18 @@ export default class UpdateDrawing extends Component {
       }
     }));
   }
-
+  retriveDrawingCategory(id){
+    DrawingCategoryService.getAll(id)
+    .then(response => {
+        this.setState({
+          drawingcategories: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
   getDrawing(id) {
     DrawingDataService.get(id)
       .then(response => {
@@ -142,7 +157,7 @@ export default class UpdateDrawing extends Component {
   }
 
     render() {
-      const { currentDrawing, temp} = this.state;
+      const { currentDrawing, temp, drawingcategories} = this.state;
   
       return (
         <div>
@@ -171,7 +186,7 @@ export default class UpdateDrawing extends Component {
                     onChange={this.onChangeDescription}
                   />
                 </div>
-                <div className="form-group">
+                {/* <div className="form-group">
                   <label htmlFor="description">Category</label>
                   <input
                     type="text"
@@ -180,6 +195,29 @@ export default class UpdateDrawing extends Component {
                     value={currentDrawing.category}
                     onChange={this.onChangeCategory}
                   />
+                </div> */}
+                <div className="form-group">
+                <label htmlFor="category">Drawing Category</label>
+                <select 
+                    className="form-control"
+                    id="category"
+                    required
+                    name="category"
+                    value={this.state.category}
+                    onChange={this.onChangeCategory}
+                >
+                    {drawingcategories &&
+                    drawingcategories.map((drawingcategory, index) => (
+                    <option
+                        value={drawingcategory.id}
+                        onChange={this.onChangeCategory}
+                        key={index}
+                    >
+                    {/* unit data */}
+                    {drawingcategory.title}
+                    </option>
+                    ))}
+                </select>
                 </div>
   
                 <div className="form-group">
@@ -192,7 +230,7 @@ export default class UpdateDrawing extends Component {
 
               {currentDrawing.status == "Not Complete" ? (
                 <button
-                  className="btn btn-pending mr-2"
+                  className="btn btn-warning mr-2"
                   onClick={() => this.updatePublished("Pending")}
                 >
                   Set Pending
