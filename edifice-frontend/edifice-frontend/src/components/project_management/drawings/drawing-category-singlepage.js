@@ -92,7 +92,7 @@ export default class ViewSingleDrawingCategory extends Component {
                     <td>{drawing.title}</td>
                     <td>{drawing.description}</td>
                     <td>{title}</td>
-                    <td>{drawing.status == "Not Complete" ? "🔴 NC": "🟡 Due" }</td>
+                    <td>{drawing.status == "Not Complete" ? "🔴 NC": drawing.status == "Pending" ? "🟡 Pending": "🟢 Complete"}</td>
                     <td>   
                         {/* Button Group */}
                         <Link to={"/viewdrawing/"+drawing.id}>

@@ -260,7 +260,11 @@ db.invoices.belongsTo(db.commitments, {
   foreignKey: "commitmentId",
   as: "commitment",
 });
-
+//Role description 
+//admin - edifice admin
+// moderator - manager level
+// user - enginner level
+// 
 db.ROLES = ["user", "admin", "moderator"];
 
 module.exports = db;
