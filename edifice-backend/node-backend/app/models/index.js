@@ -151,12 +151,12 @@ db.biddings.belongsTo(db.projects, {
 });
 
 
-// One project has one budget-should correct this
-db.projects.hasOne(db.budgets, { as: "budgets" });
-db.budgets.belongsTo(db.projects, {
-  foreignKey: "projectId",
-  as: "project",
-});
+// // One project has one budget-should correct this
+// db.projects.hasOne(db.budgets, { as: "budgets" });
+// db.budgets.belongsTo(db.projects, {
+//   foreignKey: "projectId",
+//   as: "project",
+// });
 
 
 //
@@ -173,17 +173,15 @@ db.users.belongsToMany(db.roles, {
   otherKey: "roleId"
 });
 
-// One project has one direct cost
-db.projects.hasOne(db.directcosts, { as: "directcosts" });
+
 //One project has many direct costs
 db.projects.hasMany(db.directcosts, { as: "directcosts" });
-
 db.directcosts.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
 
-// One project has many 
+// One project has many budgets
 db.projects.hasMany(db.budgets, { as: "budgets" });
 db.budgets.belongsTo(db.projects, {
   foreignKey: "projectId",
