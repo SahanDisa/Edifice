@@ -30,6 +30,7 @@ exports.create = (req, res) => {
       });
     });
 };
+
 // Get all albums for a given project
 exports.findAll = (req, res) => {
     const id = req.params.id;
@@ -47,7 +48,7 @@ exports.findAll = (req, res) => {
       });  
   };
 
-  //Find a single drawing by Id
+//Find a single drawing by Id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 

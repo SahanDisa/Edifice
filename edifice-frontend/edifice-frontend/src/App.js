@@ -34,10 +34,14 @@ import DrawingHome from "./components/project_management/drawings/drawings.compo
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
 import AddDrawingCategory from "./components/project_management/drawings/adddrawingcategory.component";
 import ViewSingleDrawingCategory from "./components/project_management/drawings/drawing-category-singlepage";
-import AddPhoto from "./components/project_management/photos/addphoto.component";
 import ViewSingleDrawing from "./components/project_management/drawings/drawing-singlepage.component";
+
+import AddPhoto from "./components/project_management/photos/addphoto.component";
+import UploadPhotos from "./components/project_management/photos/uploadphoto.component";
 import PhotosHome from "./components/project_management/photos/photos.component";
 import AddAlbum from "./components/project_management/photos/addalbum.component";
+import ViewSingleAlbum from "./components/project_management/photos/album-singlepage.component";
+
 import BiddingHome from "./components/project_management/biddings/bidding.component";
 import AddBidding from "./components/project_management/biddings/addbidding.component";
 import ViewSpec from "./components/project_management/biddings/viewspec.component";
@@ -111,7 +115,6 @@ import CommitmentHome from "./components/financial_management/commitments/commit
 import AddCommitment from "./components/financial_management/commitments/addcommitment.component";
 import ViewSingleCommitment from "./components/financial_management/commitments/commitment-singlepage.component";
 import AddSov from "./components/financial_management/commitments/addsov.component";
-import Pdfviewer from "./components/project_management/document/pdfviewer.component";
 
 import ViewSingleDirectCost from "./components/financial_management/direct-costs/directcost-singlepage.component";
 import SovHome from "./components/financial_management/commitments/sovs.component";
@@ -311,7 +314,9 @@ class App extends Component {
             <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
             {/* Photo Component Routes */}
             <Route path="/photos/:id" component={PhotosHome} />
-            <Route path="/addphoto" component={AddPhoto}/>
+            <Route path="/addphoto/:id" component={AddPhoto}/>
+            <Route path="/uploadphoto/:name" component={UploadPhotos}/>
+            <Route path="/viewalbum/:id" component={ViewSingleAlbum}/>
             <Route path="/addalbum/:id" component={AddAlbum}/>
             {/* Bidding Component Routes  */}
             <Route path="/bidding/:id" component={BiddingHome} /> 
@@ -340,8 +345,8 @@ class App extends Component {
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
             <Route path="/editprimecontracts/:id" component={EditPrimeContracts} />
             <Route path="/adddirectcost/:id" component={AddDirectCost} />
-               {/* Commitment Component Routes  */}
-               <Route path="/commitment/:id" component={CommitmentHome} />
+            {/* Commitment Component Routes  */}
+            <Route path="/commitment/:id" component={CommitmentHome} />
             <Route path="/addcommitment/:id" component={AddCommitment} />
             {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
             <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
