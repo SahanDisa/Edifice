@@ -35,6 +35,7 @@ import AddDrawing from "./components/project_management/drawings/adddrawing.comp
 import AddDrawingCategory from "./components/project_management/drawings/adddrawingcategory.component";
 import ViewSingleDrawingCategory from "./components/project_management/drawings/drawing-category-singlepage";
 import ViewSingleDrawing from "./components/project_management/drawings/drawing-singlepage.component";
+import UpdateDrawing from "./components/project_management/drawings/updatedrawing.component";
 
 import AddPhoto from "./components/project_management/photos/addphoto.component";
 import UploadPhotos from "./components/project_management/photos/uploadphoto.component";
@@ -268,28 +269,28 @@ class App extends Component {
             <Route path="/dates" component={Dates} />
             <Route path="/defaults" component={Defaults} />
             <Route path="/roles" component={Roles} />
-            
+            {/* Tasks */}
             <Route path="/tasksconfiguration" component={TaskConfiguration} />
             <Route path="/managetasks" component={ManageTasks} />
             <Route path="/managestasks/update" component={UpdateTasks} />
             <Route path="/managestasks/view" component={ViewTasks} />
-            
+            {/* Meeting */}
             <Route path="/meetingsconfiguration" component={MeetingsConfig} />
             <Route path="/managemeetings" component={ManageMeetings} />
             <Route path="/managesmeetings/update" component={UpdateMeetings} />
             <Route path="/managesmeetings/view" component={ViewMeetings} />
-
+            {/* RFI */}
             <Route path="/rfi" component={rfiHome} />
             <Route path="/managerfi/create" component={CreateRFI} />
             <Route path="/managerfi/edit" component={EditRFI} />
             <Route path="/managerfi/view" component={ViewRFI} />
-
+            {/* Action Plan */}
             <Route path="/actionplan" component={actionplanHome} />
-
+            {/* Punch List */}
             <Route path="/punchlist" component={punchlistHome} />
             <Route path="/managepunchlist/view" component={ViewPL} />
             <Route path="/managepunchlist/create" component={CreatePL} />
-
+            {/* Daily Logs */}
             <Route path="/dailylogsconfiguration" component={DlsConfig} />
             <Route path="/managedailylogs" component={ManageDls} />
             <Route path="/managesdailylogs/update" component={UpdateDls} />
@@ -314,6 +315,7 @@ class App extends Component {
             <Route path="/viewdrawingcategory/:id" component={ViewSingleDrawingCategory}/>
             <Route path="/adddrawing/:id" component={AddDrawing} />
             <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
+            <Route exact path="/updatedrawing/:id/:pid" component={UpdateDrawing}/>
             {/* Photo Component Routes */}
             <Route path="/photos/:id" component={PhotosHome} />
             <Route path="/addphoto/:id" component={AddPhoto}/>

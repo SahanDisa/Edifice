@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Punchlists = sequelize.define("punchlists", {
+    const Punchlists = sequelize.define("punchlist", {
         no: {
             type: Sequelize.INTEGER,
             primaryKey: true,

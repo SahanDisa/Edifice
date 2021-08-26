@@ -35,6 +35,7 @@ require('./app/routes/department.routes')(app);
 require("./app/routes/milestone.routes")(app);
 require("./app/routes/drawing.routes")(app);
 require("./app/routes/drawing-category.routes")(app);
+require("./app/routes/drawrevision.routes")(app);
 require("./app/routes/bidding.routes")(app);
 require("./app/routes/photo-album.routes")(app);
 // require("./app/routes/photo.routes")(app);
