@@ -13,12 +13,21 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DECIMAL(10, 2)
       }
       ,
-      revisedBudget: {
-        type: Sequelize.DECIMAL(10, 2)
-      },
-      currentBudget: {
+      directCosts: {
         type: Sequelize.DECIMAL(10, 2)
       }
+      ,
+      commitedCosts: {
+        type: Sequelize.DECIMAL(10, 2)
+      }
+      ,
+      currentBudget: {
+        type: Sequelize.DECIMAL(10, 2)
+      },
+      revisedBudget: {
+        type: Sequelize.DECIMAL(10, 2)
+      }
+   
     
     }, {
         freezeTableName: true,

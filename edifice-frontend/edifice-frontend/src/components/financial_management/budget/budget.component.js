@@ -92,13 +92,22 @@ const BudgetList = (props) => {
         accessor: "estimatedBudget",
       },
       {
-        Header: "Revised Budget Amount",
-        accessor: "revisedBudget",
+        Header: "Direct Costs",
+        accessor: "directCosts",
+      },
+      {
+        Header: "Commited Costs",
+        accessor: "commitedCosts",
       },
       {
         Header: "Current Budget Amount",
         accessor: "currentBudget",
       },
+      {
+        Header: "Revised Budget Amount",
+        accessor: "revisedBudget",
+      },
+    
       {
         Header: "Projected Over/Under",
         accessor: "overUnder",
