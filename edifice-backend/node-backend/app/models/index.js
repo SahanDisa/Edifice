@@ -187,7 +187,7 @@ db.sovs.belongsTo(db.commitments, {
   as: "commitment",
 });
 
-// One commitment has many sovs
+// One commitment has many 
 db.commitments.hasMany(db.payments, { as: "payments" });
 db.payments.belongsTo(db.commitments, {
   foreignKey: "commitmentId",

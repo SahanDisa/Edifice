@@ -6,16 +6,12 @@ module.exports = (sequelize, Sequelize) => {
       description : {
         type: Sequelize.STRING
       },
-      ammount : {
+      amount : {
         type: Sequelize.DECIMAL(10,2)
       },
-      /*billedToDate : {
+      date : {
         type: Sequelize.DATEONLY
       },
-      ammountRemaining : {
-        type: Sequelize.DECIMAL(10,2)
-      }*/
-    
     }, {
         freezeTableName: true,
     });

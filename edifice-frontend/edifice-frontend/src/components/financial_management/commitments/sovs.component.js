@@ -40,7 +40,7 @@ const SovList = (props) => {
   };
 
   const findByCostCode = () => {
-    SovDataService.findByCostCode(searchCostCode)
+    SovDataService.findByCostCode(id,searchCostCode)
       .then((response) => {
         setSovs(response.data);
       })
@@ -52,7 +52,7 @@ const SovList = (props) => {
   const openSov = (rowIndex) => {
     const id = sovsRef.current[rowIndex].id;
 
-    props.history.push("/viewsov/" + id);
+    props.history.push("/viewsinglesov/" + id);
   };
 
 
@@ -85,8 +85,12 @@ const SovList = (props) => {
         accessor: "description",
       },
       {
-        Header: "Ammount",
-        accessor: "ammount",
+        Header: "Date",
+        accessor: "date",
+      },
+      {
+        Header: "Amount",
+        accessor: "amount",
       },
       /*{
         Header: "Billed To Date",

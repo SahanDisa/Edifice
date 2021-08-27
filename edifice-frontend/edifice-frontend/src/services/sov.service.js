@@ -26,12 +26,16 @@ removeAll(){
   return http.delete(`/commitments/sov`);
 }
 
-findByCostCode(costCode){
-  return http.get(`/commitments/sov?costCode=${costCode}`);
+findByCostCode(id,costCode){
+  //return http.get(`/projects/directcost?costCode=${costCode}`);
+  //return http.get(`/projects/directcost/list/${id}?costCode=${costCode}`);
+  return http.get(`/commitmentss/sov/list/${id}/${costCode}`);
+  //return http.get(`/projects/directcost?costcode=${costCode}`);
+
 }
 
 
-/*added new*/
+/*end of added new*/
 
 }
 

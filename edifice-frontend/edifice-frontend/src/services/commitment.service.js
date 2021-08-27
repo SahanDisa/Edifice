@@ -21,8 +21,8 @@ class CommitmentDataService {
     return http.delete(`/projects/commitment/${id}`);
   }
 
-  findByTitle(title) {
-    return http.get(`/projects/commitment?title=${title}`);
+  findByContractCompany(id,contractCompany) {
+    return http.get(`/projects/commitment/list/${id}/${contractCompany}`);
   }
 
 

@@ -131,3 +131,25 @@ exports.update = (req, res) => {
       });
     });
 };
+
+/*********************************************** */
+exports.findByContractCompany= (req, res) => {
+  const id = req.params.id;
+  //const costCode = req.query.costCode;
+  const contractCompany = req.params.contractCompany;
+    //var condition = costCode ? { costCode: { [Op.like]: `%${costCode}%` } } : null;
+
+  Commitment.findAll({ where: {
+    projectId: id,
+    //condition:condition
+    contractCompany : contractCompany
+  }})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Project Budget with id=" + id
+      });
+    });  
+};
