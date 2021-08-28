@@ -13,3 +13,5 @@ edifice-backend/node-backend/.metals/metals.h2.db
 #ignore node modules
 edifice-backend/node-backend/node_modules
 edifice-frontend/edifice-frontend/node_modules
+
+
