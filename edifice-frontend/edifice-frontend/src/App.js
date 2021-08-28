@@ -34,10 +34,15 @@ import DrawingHome from "./components/project_management/drawings/drawings.compo
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
 import AddDrawingCategory from "./components/project_management/drawings/adddrawingcategory.component";
 import ViewSingleDrawingCategory from "./components/project_management/drawings/drawing-category-singlepage";
-import AddPhoto from "./components/project_management/photos/addphoto.component";
 import ViewSingleDrawing from "./components/project_management/drawings/drawing-singlepage.component";
+import UpdateDrawing from "./components/project_management/drawings/updatedrawing.component";
+
+import AddPhoto from "./components/project_management/photos/addphoto.component";
+import UploadPhotos from "./components/project_management/photos/uploadphoto.component";
 import PhotosHome from "./components/project_management/photos/photos.component";
 import AddAlbum from "./components/project_management/photos/addalbum.component";
+import ViewSingleAlbum from "./components/project_management/photos/album-singlepage.component";
+
 import BiddingHome from "./components/project_management/biddings/bidding.component";
 import AddBidding from "./components/project_management/biddings/addbidding.component";
 import ViewSpec from "./components/project_management/biddings/viewspec.component";
@@ -111,15 +116,16 @@ import CommitmentHome from "./components/financial_management/commitments/commit
 import AddCommitment from "./components/financial_management/commitments/addcommitment.component";
 import ViewSingleCommitment from "./components/financial_management/commitments/commitment-singlepage.component";
 import AddSov from "./components/financial_management/commitments/addsov.component";
-import Pdfviewer from "./components/project_management/document/pdfviewer.component";
 
 import ViewSingleDirectCost from "./components/financial_management/direct-costs/directcost-singlepage.component";
 import SovHome from "./components/financial_management/commitments/sovs.component";
+
 import AddInvoice from "./components/financial_management/invoicing/addinvoice.component";
 import AddPayment from "./components/financial_management/commitments/addpayment.component";
 import PaymentHome from "./components/financial_management/commitments/payments.component";
 import EditSingleCommitment from "./components/financial_management/commitments/commitment-edit.component";
 import ViewSingleSov from "./components/financial_management/commitments/sov-singlepage.component";
+//import Report from "./components/report/report.component";
 
 class App extends Component {
   constructor(props) {
@@ -252,7 +258,7 @@ class App extends Component {
             <Route path="/addmilestone/:id" component={AddMilestone}/>
             {/* <Route path="/projectmanagementhome" component={ProjectManagementHome} /> */}
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
-            <Route path="/portfolio" component={PortfolioHome} />
+            <Route path="/portfolio/:id" component={PortfolioHome} />
             <Route path="/portstepper" component={PortfolioStepper} />
 
             <Route path="/resource" component={BoardResource} />
@@ -265,28 +271,28 @@ class App extends Component {
             <Route path="/dates" component={Dates} />
             <Route path="/defaults" component={Defaults} />
             <Route path="/roles" component={Roles} />
-            
+            {/* Tasks */}
             <Route path="/tasksconfiguration" component={TaskConfiguration} />
             <Route path="/managetasks" component={ManageTasks} />
             <Route path="/managestasks/update" component={UpdateTasks} />
             <Route path="/managestasks/view" component={ViewTasks} />
-            
+            {/* Meeting */}
             <Route path="/meetingsconfiguration" component={MeetingsConfig} />
             <Route path="/managemeetings" component={ManageMeetings} />
             <Route path="/managesmeetings/update" component={UpdateMeetings} />
             <Route path="/managesmeetings/view" component={ViewMeetings} />
-
+            {/* RFI */}
             <Route path="/rfi" component={rfiHome} />
             <Route path="/managerfi/create" component={CreateRFI} />
             <Route path="/managerfi/edit" component={EditRFI} />
             <Route path="/managerfi/view" component={ViewRFI} />
-
+            {/* Action Plan */}
             <Route path="/actionplan" component={actionplanHome} />
-
+            {/* Punch List */}
             <Route path="/punchlist" component={punchlistHome} />
             <Route path="/managepunchlist/view" component={ViewPL} />
             <Route path="/managepunchlist/create" component={CreatePL} />
-
+            {/* Daily Logs */}
             <Route path="/dailylogsconfiguration" component={DlsConfig} />
             <Route path="/managedailylogs" component={ManageDls} />
             <Route path="/managesdailylogs/update" component={UpdateDls} />
@@ -311,9 +317,12 @@ class App extends Component {
             <Route path="/viewdrawingcategory/:id" component={ViewSingleDrawingCategory}/>
             <Route path="/adddrawing/:id" component={AddDrawing} />
             <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
+            <Route exact path="/updatedrawing/:id/:pid" component={UpdateDrawing}/>
             {/* Photo Component Routes */}
             <Route path="/photos/:id" component={PhotosHome} />
-            <Route path="/addphoto" component={AddPhoto}/>
+            <Route path="/addphoto/:id" component={AddPhoto}/>
+            <Route path="/uploadphoto/:name" component={UploadPhotos}/>
+            <Route path="/viewalbum/:id" component={ViewSingleAlbum}/>
             <Route path="/addalbum/:id" component={AddAlbum}/>
             {/* Bidding Component Routes  */}
             <Route path="/bidding/:id" component={BiddingHome} /> 
@@ -342,8 +351,8 @@ class App extends Component {
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
             <Route path="/editprimecontracts/:id" component={EditPrimeContracts} />
             <Route path="/adddirectcost/:id" component={AddDirectCost} />
-               {/* Commitment Component Routes  */}
-               <Route path="/commitment/:id" component={CommitmentHome} />
+            {/* Commitment Component Routes  */}
+            <Route path="/commitment/:id" component={CommitmentHome} />
             <Route path="/addcommitment/:id" component={AddCommitment} />
             {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
             <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
@@ -351,6 +360,7 @@ class App extends Component {
             <Route path="/viewdirectcost/:id" component={ViewSingleDirectCost} />
            {/* <Route path="/viewsov/:id" component={ViewSingleSov} />*/}
             <Route path="/viewsov/:id" component={SovHome} />
+
             <Route path="/addinvoice/:id" component={AddInvoice} />
             <Route path="/addpayment/:id" component={AddPayment} />
             <Route path="/viewpayment/:id" component={PaymentHome} />

@@ -35,8 +35,12 @@ require('./app/routes/department.routes')(app);
 require("./app/routes/milestone.routes")(app);
 require("./app/routes/drawing.routes")(app);
 require("./app/routes/drawing-category.routes")(app);
+require("./app/routes/drawrevision.routes")(app);
 require("./app/routes/bidding.routes")(app);
 require("./app/routes/photo-album.routes")(app);
+// require("./app/routes/photo.routes")(app);
+require("./app/routes/photofile.routes")(app);
+require("./app/routes/uploadphoto.routes")(app);
 require('./app/routes/file.routes')(app);
 require('./app/routes/directory.routes')(app);
 require('./app/routes/document.routes')(app);
@@ -45,14 +49,17 @@ require('./app/routes/budget.routes')(app);
 require('./app/routes/directcost.routes')(app);
 require('./app/routes/commitment.routes')(app);
 require('./app/routes/sov.routes')(app);
+
 require('./app/routes/equipment.routes')(app);
 require('./app/routes/equipment-category.routes')(app);
-require('./app/routes/meeting.routes')(app);
-require('./app/routes/meetingcategory.routes')(app);
+
+require('./app/routes/crew.routes')(app);
 require('./app/routes/primecontract.routes')(app);
 require('./app/routes/invoice.routes')(app);
 require('./app/routes/payment.routes')(app);
 
+require('./app/routes/project_management/meeting.routes')(app);
+require('./app/routes/project_management/meetingcategory.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {

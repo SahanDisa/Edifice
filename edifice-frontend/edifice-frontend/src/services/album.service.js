@@ -8,6 +8,10 @@ class AlbumDataService {
   create(data) {
     return http.post(`/projects/photo-album/`, data);
   }
+
+  getOne(id){
+    return http.get(`/projects/photo-album/single/${id}`);
+  }
 }
 
 export default new AlbumDataService();
