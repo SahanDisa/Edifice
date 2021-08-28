@@ -48,9 +48,8 @@ db.meetings = require("./project_management/meeting.model")(sequelize, Sequelize
 db.meetingcategory = require("./project_management/meetingcategory.model")(sequelize, Sequelize);
 // Punch list component Model Classes
 db.punchlist = require("./project_management/punchlist.model")(sequelize, Sequelize);
-
+// Finance Model Classes
 db.budgets = require("./budget.model.js")(sequelize, Sequelize);
-db.demo = require("./demo.model")(sequelize, Sequelize);
 db.directcosts = require("./directcost.model.js")(sequelize, Sequelize);
 db.commitments = require("./commitment.model.js")(sequelize, Sequelize);
 db.sovs = require("./sov.model.js")(sequelize, Sequelize);
@@ -65,6 +64,7 @@ db.crews = require("./crew.model")(sequelize, Sequelize);
 db.workers = require("./worker.model")(sequelize, Sequelize);
 
 //This section is for testing purposes
+db.demo = require("./demo.model")(sequelize, Sequelize);
 db.demo1 = require("./demo1.model")(sequelize, Sequelize);
 db.demo2 = require("./demo2.model")(sequelize, Sequelize);
 
