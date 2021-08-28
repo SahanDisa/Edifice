@@ -244,12 +244,7 @@ db.payments.belongsTo(db.commitments, {
   as: "commitment",
 });
 
-// One project has many primecontracts
-db.projects.hasOne(db.primecontracts, { as: "primecontracts" });
-db.primecontracts.belongsTo(db.projects, {
-  foreignKey: "projectId",
-  as: "project",
-});
+
 
 // One commitment has many invoices
 db.commitments.hasMany(db.invoices, { as: "invoices" });
@@ -274,19 +269,8 @@ db.workers.belongsTo(db.crews, {
   as: "crew",
 });
 
-// One project has many drawings
-db.projects.hasOne(db.primecontracts, { as: "primecontracts" });
-db.primecontracts.belongsTo(db.projects, {
-  foreignKey: "projectId",
-  as: "project",
-});
 
-// One commitment has many invoices
-db.commitments.hasMany(db.invoices, { as: "invoices" });
-db.invoices.belongsTo(db.commitments, {
-  foreignKey: "commitmentId",
-  as: "commitment",
-});
+
 // ----------- Resource Management Ends --------
 
 //Role description 
