@@ -8,6 +8,7 @@ export default class UpdateDrawing extends Component {
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeCategory = this.onChangeCategory.bind(this);
+    this.onChangeVersion = this.onChangeVersion.bind(this);
     this.getDrawing = this.getDrawing.bind(this);
     this.updatePublished = this.updatePublished.bind(this);
     this.updateDrawing = this.updateDrawing.bind(this);
@@ -20,6 +21,7 @@ export default class UpdateDrawing extends Component {
         description: "",
         category: "",
         status: "",
+        version: 0,
         published: false
         
       },
@@ -69,7 +71,6 @@ export default class UpdateDrawing extends Component {
       }
     }));
   }
-
   onChangeStatus(e) {
     const status = e.target.value;
     
@@ -80,6 +81,18 @@ export default class UpdateDrawing extends Component {
       }
     }));
   }
+
+  onChangeVersion(e) {
+    const version = e.target.value;
+    
+    this.setState(prevState => ({
+      currentDrawing: {
+        ...prevState.currentDrawing,
+        version: version
+      }
+    }));
+  }
+
   retriveDrawingCategory(id){
     DrawingCategoryService.getAll(id)
     .then(response => {
@@ -92,6 +105,7 @@ export default class UpdateDrawing extends Component {
         console.log(e);
       });
   }
+
   getDrawing(id) {
     DrawingDataService.get(id)
       .then(response => {
@@ -130,14 +144,19 @@ export default class UpdateDrawing extends Component {
   }
 
   updateDrawing() {
-    DrawingDataService.update(
-      this.state.currentDrawing.id,
-      this.state.currentDrawing
-    )
+    var data = {
+      id: this.state.currentDrawing.id,
+      title: this.state.currentDrawing.title,
+      description: this.state.currentDrawing.description,
+      category: this.state.currentDrawing.category,
+      status: this.state.currentDrawing.status,
+      version: this.state.currentDrawing.version,
+    };
+    DrawingDataService.update(this.state.currentDrawing.id,data)
       .then(response => {
         console.log(response.data);
         this.setState({
-          message: "The project was updated successfully!"
+          message: "The drawing was updated successfully!"
         });
       })
       .catch(e => {
@@ -219,7 +238,17 @@ export default class UpdateDrawing extends Component {
                     ))}
                 </select>
                 </div>
-  
+                <div className="form-group">
+                  <label htmlFor="description">Version</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="category"
+                    value={currentDrawing.version + 1}
+                    onChange={this.onChangeVersion}
+                    disabled
+                  />
+                </div>
                 <div className="form-group">
                   <label>
                     <strong>Status:</strong>
@@ -230,7 +259,7 @@ export default class UpdateDrawing extends Component {
 
               {currentDrawing.status == "Not Complete" ? (
                 <button
-                  className="btn btn-warning mr-2"
+                  className="btn btn-primary mr-2"
                   onClick={() => this.updatePublished("Pending")}
                 >
                   Set Pending
@@ -238,7 +267,7 @@ export default class UpdateDrawing extends Component {
               ) : 
               (currentDrawing.status == "Pending" ?
                 <button
-                  className="btn btn-success mr-2"
+                  className="btn btn-primary mr-2"
                   onClick={() => this.updatePublished("Complete")}
                 >
                   Set Complete
@@ -246,7 +275,7 @@ export default class UpdateDrawing extends Component {
               :
               (
                 <button
-                  className="btn btn-danger mr-2"
+                  className="btn btn-success mr-2"
                   onClick={() => this.updatePublished("Not Complete")}
                 >
                   Set Incomplete

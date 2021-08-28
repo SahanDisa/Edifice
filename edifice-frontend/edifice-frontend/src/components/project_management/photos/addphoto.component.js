@@ -288,7 +288,7 @@ export default class AddPhoto extends Component {
                 <TimelineSeparator>
                   <TimelineDot />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 2</strong><br/>Upload File</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 2</strong><br/>Submit</h6></TimelineContent>
               </TimelineItem>
             </Timeline>
             </div>
