@@ -8,22 +8,8 @@ import UpdateIcon from '@material-ui/icons/Update';
 export default class ViewSingleCommitment extends Component {
   constructor(props) {
     super(props);
- this.onChangeHash = this.onChangeHash.bind(this);
-    this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeContractCompany = this.onChangeContractCompany.bind(this);
- this.onChangeStatus = this.onChangeStatus.bind(this);
- //this.onChangeDefaultRetainage = this.onChangeDefaultRetainage.bind(this);
- this.onChangeDescription = this.onChangeDescription.bind(this);
- this.onChangeStartDate = this.onChangeStartDate.bind(this);
- this.onChangeEstimatedCompletionDate = this.onChangeEstimatedCompletionDate.bind(this);
- this.onChangeActualCompletionDate = this.onChangeActualCompletionDate.bind(this);
- this.onChangeSignedContractReceivedDate = this.onChangeSignedContractReceivedDate .bind(this);
- this.onChangeInclusions = this.onChangeExclusions .bind(this);
-
 
     this.getCommitment = this.getCommitment.bind(this);
-    this.updateCommitment = this.updateCommitment.bind(this);
-    this.deleteCommitment = this.deleteCommitment.bind(this);
 
     this.state = {
       currentCommitment: {
@@ -52,151 +38,7 @@ export default class ViewSingleCommitment extends Component {
     this.getCommitment(this.props.match.params.id);
   }
 
-  onChangeHash(e) {
-    const hash = e.target.value;
-
-    this.setState(function(prevState) {
-      return {
-        currentCommitment: {
-          ...prevState.currentCommitment,
-          hash : hash
-        }
-      };
-    });
-  }
-
-
-
-  onChangeTitle(e) {
-    const title = e.target.value;
-
-    this.setState(function(prevState) {
-      return {
-        currentCommitment: {
-          ...prevState.currentCommitment,
-          title: title
-        }
-      };
-    });
-  }
-
-  onChangeContractCompany(e) {
-    const contractCompany = e.target.value;
-
-    this.setState(function(prevState) {
-      return {
-        currentCommitment: {
-          ...prevState.currentCommitment,
-         contractCompany : contractCompany
-        }
-      };
-    });
-  }
-
-  onChangeStatus(e) {
-    const status = e.target.value;
-
-    this.setState(function(prevState) {
-      return {
-        currentCommitment: {
-          ...prevState.currentCommitment,
-          status : status
-        }
-      };
-    });
-  }
-
-  /*onChangeDefaultRetainage(e) {
-    const defaultRetainage = e.target.value;
-
-    this.setState(function(prevState) {
-      return {
-        currentCommitment: {
-          ...prevState.currentCommitment,
-          defaultRetainage : defaultRetainage
-        }
-      };
-    });
-  }*/
-
-  onChangeDescription(e) {
-    const description = e.target.value;
-    
-    this.setState(prevState => ({
-      currentCommitment: {
-        ...prevState.currentCommitment,
-        description: description
-      }
-    }));
-  }
-
-  onChangeStartDate(e) {
-    const startDate = e.target.value;
-    
-    this.setState(prevState => ({
-      currentCommitment: {
-        ...prevState.currentCommitment,
-       startDate : startDate
-      }
-    }));
-  }
-
- onChangeEstimatedCompletionDate(e) {
-    const estimatedCompletionDate = e.target.value;
-    
-    this.setState(prevState => ({
-      currentCommitment: {
-        ...prevState.currentCommitment,
-     estimatedCompletionDate : estimatedCompletionDate
-      }
-    }));
-  }
-
- onChangeActualCompletionDate(e) {
-    const actualCompletionDate = e.target.value;
-    
-    this.setState(prevState => ({
-      currentCommitment: {
-        ...prevState.currentCommitment,
-    actualCompletionDate : actualCompletionDate
-      }
-    }));
-  }
-
- onChangeSignedContractReceivedDate(e) {
-    const signedContractReceivedDate = e.target.value;
-    
-    this.setState(prevState => ({
-      currentCommitment: {
-        ...prevState.currentCommitment,
-   signedContractReceivedDate : signedContractReceivedDate
-      }
-    }));
-  }
-
- onChangeInclusions(e) {
-    const inclusions = e.target.value;
-    
-    this.setState(prevState => ({
-      currentCommitment: {
-        ...prevState.currentCommitment,
-  inclusions : inclusions
-      }
-    }));
-  }
-
- onChangeExclusions(e) {
-    const exclusions = e.target.value;
-    
-    this.setState(prevState => ({
-      currentCommitment: {
-        ...prevState.currentCommitment,
-exclusions : exclusions
-      }
-    }));
-  }
-
-
+ 
   getCommitment(id) {
     CommitmentDataService.get(id)
       .then(response => {
@@ -204,33 +46,6 @@ exclusions : exclusions
           currentCommitment: response.data
         });
         console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
-
-  updateCommitment() {
-    CommitmentDataService.update(
-      this.state.currentCommitment.id,
-      this.state.currentCommitment
-    )
-      .then(response => {
-        console.log(response.data);
-        this.setState({
-          message: "The commitment was updated successfully!"
-        });
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
-
-  deleteCommitment() {    
-    CommitmentDataService.delete(this.state.currentCommitment.id)
-      .then(response => {
-        console.log(response.data);
-        this.props.history.push('/commitment/'+this.state.currentCommitment.projectId)
       })
       .catch(e => {
         console.log(e);
@@ -256,9 +71,10 @@ exclusions : exclusions
          type="text"
          className="form-control"
          id="hash"
-         required
+     
          value={currentCommitment.hash}
-         onChange={this.onChangeHash}
+        
+         readonly
          name="hash"
        />
        </div>
@@ -269,7 +85,7 @@ exclusions : exclusions
                   className="form-control"
                   id="title"
                   value={currentCommitment.title}
-                  onChange={this.onChangeTitle}
+                  readonly
                 />
               </div>
               <div className="form-group">
@@ -279,9 +95,9 @@ exclusions : exclusions
                 type="text"
                 className="form-control"
                 id="contractCompany"
-                required
+              
                 value={currentCommitment.contractCompany}
-                onChange={this.onChangeContractCompany}
+                readonly
                 name="contractCompany"
               />
               </div>
@@ -292,9 +108,9 @@ exclusions : exclusions
                 type="text"
                 className="form-control"
                 id="status"
-                required
+               
                 value={currentCommitment.status}
-                onChange={this.onChangeStatus}
+                readonly
                 name="status"
               />
               </div>
@@ -317,7 +133,7 @@ exclusions : exclusions
                   className="form-control"
                   id="description"
                   value={currentCommitment.description}
-                  onChange={this.onChangeDescription}
+                  readonly
                 />
               </div>
               <div className="form-group">
@@ -327,9 +143,9 @@ exclusions : exclusions
                 type="date"
                 className="form-control"
                 id="startDate"
-                required
+               
                 value={currentCommitment.startDate}
-                onChange={this.onChangeStartDate}
+                readonly
                 name="startDate"
               />
               </div> 
@@ -340,9 +156,9 @@ exclusions : exclusions
                 type="date"
                 className="form-control"
                 id="estimatedCompletionDate"
-                required
+                
                 value={currentCommitment.estimatedCompletionDate}
-                onChange={this.onChangeEstimatedCompletionDate}
+                readonly
                 name="estimatedCompletionDate"
               />
               </div>
@@ -356,7 +172,7 @@ exclusions : exclusions
                 id="actualCompletionDate"
              
                 value={currentCommitment.actualCompletionDate}
-                onChange={this.onChangeActualCompletionDate}
+                readonly
                 name="actualCompletionDate"
               />
               </div>
@@ -369,7 +185,7 @@ exclusions : exclusions
                 id="signedContractReceivedDate"
                 
                 value={currentCommitment.signedContractReceivedDate}
-                onChange={this.onChangeSignedContractReceivedDate}
+                readonly
                 name="signedContractReceivedDate"
               />
               </div>
@@ -384,7 +200,7 @@ exclusions : exclusions
                 id="inclusions"
               
                 value={currentCommitment.inclusions}
-                onChange={this.onChangeInclusions}
+                readonly
                 name="inclusions"
               />
               </div>
@@ -398,7 +214,7 @@ exclusions : exclusions
                 id="exclusions"
              
                 value={currentCommitment.exclusions}
-                onChange={this.onChangeExclusions}
+                readonly
                 name="exclusions"
               />
    </div>
@@ -414,7 +230,7 @@ exclusions : exclusions
       </Link><br />*/}
 
                     <Link to={"/viewsov/"+currentCommitment.id}>
-                    <button className="btn btn-success m-2">View SoVs </button>
+                    <button className="btn btn-success m-2">SoVs </button>
                     </Link><br />
 
                    {/* <Link to={"/addpayment/"+currentCommitment.id}>
@@ -422,37 +238,16 @@ exclusions : exclusions
     </Link><br />*/}
 
                     <Link to={"/viewpayment/"+currentCommitment.id}>
-                    <button className="btn btn-success m-2">View Payments </button>
+                    <button className="btn btn-success m-2">Payments </button>
                     </Link><br />
 
 
                     <Link to={"/addinvoice/"+currentCommitment.id}>
-                    <button className="btn btn-success m-2">+ Create Invoice </button>
-                    </Link><br />
-
-                    <Link to={"/addsov/"+currentCommitment.id}>
-                    <button className="btn btn-success m-2">Email Contract </button>
-                    </Link><br />
-
-                    <Link to={"/addsov/"+currentCommitment.id}>
-                    <button className="btn btn-success m-2">Export PDF </button>
+                    <button className="btn btn-success m-2">Invoices </button>
                     </Link><br />
             </div>
             </div>
-            <button
-              className="btn btn-danger"
-              onClick={this.deleteCommitment}
-            >
-              Delete <DeleteIcon/> 
-            </button>
-
-            <button
-              type="submit"
-              className="btn btn-success m-2"
-              onClick={this.updateCommitment}
-            >
-              Update <UpdateIcon/>
-            </button>
+       
             <p>{this.state.message}</p>
           </div>
         ) : (
