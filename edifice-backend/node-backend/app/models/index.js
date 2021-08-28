@@ -209,7 +209,7 @@ db.punchlist.belongsTo(db.projects, {
 // ----------- Project Management Ends -------------
 
 // ----------- Finance Management Starts -----------
-// One project has one direct cost
+// One project has many direct cost
 db.projects.hasMany(db.directcosts, { as: "directcosts" });
 db.directcosts.belongsTo(db.projects, {
   foreignKey: "projectId",
