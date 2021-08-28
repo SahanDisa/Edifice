@@ -150,4 +150,20 @@ exports.findByCostCode= (req, res) => {
     });  
 };
 
+/**added aug 27*/
+exports.getDTotalOfCostCodes = () => {
+directcost.findAll({
+  attributes: ['costCode', [sequelize.fn('sum', sequelize.col('ammount')), 'total']],
+  group : ['directcost.costCode'],
+  raw: true,
+})
+.then(data => {
+  res.send(data);
+})
+.catch(err => {
+  res.status(500).send({
+    message: "Error retrieving Project Budget with id=" 
+  });
+});  
 
+};

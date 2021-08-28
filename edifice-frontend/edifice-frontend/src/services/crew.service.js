@@ -1,11 +1,14 @@
 import http from "../http-common.js";
 
 class CrewDataService {
- /* getAll() {
-    return http.get("/projects");
+  getAll(id) {
+    return http.get(`/crews/list/${id}`);
   }
 
-  get(id) {
+  getAll() {
+    return http.get(`/crews/list/`);
+  }
+  /*  get(id) {
     return http.get(`/projects/${id}`);
   }
   */

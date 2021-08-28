@@ -44,7 +44,7 @@ const BudgetList = (props) => {
   };
 
   const findByCostCode = () => {
-    BudgetDataService.findByCostCode(searchCostCode)
+    BudgetDataService.findByCostCode(id,searchCostCode)
       .then((response) => {
         setBudgets(response.data);
       })
@@ -88,17 +88,26 @@ const BudgetList = (props) => {
         accessor: "costCode",
       },
       {
-        Header: "Estimated Budget Ammount",
+        Header: "Estimated Budget Amount",
         accessor: "estimatedBudget",
       },
       {
-        Header: "Revised Budget Ammount",
-        accessor: "revisedBudget",
+        Header: "Direct Costs",
+        accessor: "directCosts",
       },
       {
-        Header: "Current Budget Ammount",
+        Header: "Commited Costs",
+        accessor: "commitedCosts",
+      },
+      {
+        Header: "Current Budget Amount",
         accessor: "currentBudget",
       },
+      {
+        Header: "Revised Budget Amount",
+        accessor: "revisedBudget",
+      },
+    
       {
         Header: "Projected Over/Under",
         accessor: "overUnder",

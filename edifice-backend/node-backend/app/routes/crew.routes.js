@@ -5,10 +5,10 @@ module.exports = app => {
   
     // Create a new crew
     router.post("/", crews.create);
-/*  
-    // Retrieve all crews
-    router.get("/", crew.findAll);
   
+    // Retrieve all crews
+    router.get("/list/", crews.findAll);
+/*  
     // Retrieve all published crews
     router.get("/published", crew.findAllPublished);
   
