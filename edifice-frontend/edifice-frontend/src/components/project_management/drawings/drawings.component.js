@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import DrawingCategoryService from "../../../services/drawing-category.service";
-import DeleteIcon from '@material-ui/icons/Delete';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import UpdateIcon from '@material-ui/icons/Update';
+// import DeleteIcon from '@material-ui/icons/Delete';
+// import VisibilityIcon from '@material-ui/icons/Visibility';
+// import UpdateIcon from '@material-ui/icons/Update';
 import Pdfviewer from "./pdfviewer.component";
 import Card from 'react-bootstrap/Card';
-//styles classes
+import drawingcover from "././../../../assets/PM/photos/drawing.jpg";
 
 export default class Drawings extends Component {
     constructor(props) {
@@ -90,14 +90,15 @@ export default class Drawings extends Component {
                         bg={'secondary'}
                         text={'dark'}
                         style={{ width: '15rem' }}
-                        className="mb-2"
+                        className="bg-dark mb-2"
                         >
-                        <Card.Body>
-                            <Card.Title><h4>{drawingcategory.title}</h4></Card.Title>
-                            <Card.Text>
-                            
-                            </Card.Text>
-                        </Card.Body>
+                        <Card.Img src={drawingcover} alt="Card image" />
+                        <Card.ImgOverlay>
+                        <Card.Title><h4>{drawingcategory.title}</h4></Card.Title>
+                        <Card.Text>
+                           {drawingcategory.description == "" ? "No Description" : drawingcategory.description} 
+                        </Card.Text>
+                        </Card.ImgOverlay>
                         </Card>
                 </Link>
                 </div>

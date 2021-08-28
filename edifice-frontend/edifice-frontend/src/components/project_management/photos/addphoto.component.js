@@ -9,7 +9,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
-import CameraCapture from './cameracpature.component';
+// import CameraCapture from './cameracpature.component';
 
 export default class AddPhoto extends Component {
   constructor(props) {
