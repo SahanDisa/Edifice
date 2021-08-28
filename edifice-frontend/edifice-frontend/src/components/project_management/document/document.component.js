@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import DirectoryService from "../../../services/directory.service";
 import Card from 'react-bootstrap/Card';
 import UploadFiles from "./fileupload.component";
+import directorycover from "././../../../assets/PM/photos/directory.jpg";
 
 export default class Documents extends Component {
   constructor(props) {
@@ -44,11 +45,9 @@ export default class Documents extends Component {
           <Link className="btn btn-primary mr-2" to={"/directory/"+id}>
                 Add Directory
           </Link>
-          <Link className="btn btn-primary" to={"/adddocument/"+id}>
-                Add Document
-          </Link>
           <hr></hr>
-          <h3>Directory List</h3>
+
+          <p>Manage your document by clicking on a directory</p>
           <div className="container">
           <div className="container row">
             {directories &&
@@ -65,22 +64,28 @@ export default class Documents extends Component {
                         <Card
                         bg={'secondary'}
                         text={'dark'}
-                        style={{ width: '15rem' }}
+                        style={{ width: '14rem' }}
                         className="mb-2"
                         >
-                        <Card.Body>
-                            <Card.Title><h4>{directory.title}</h4></Card.Title>
-                            <Card.Text>
-                            
-                            </Card.Text>
-                        </Card.Body>
+                        <Card.Img src={directorycover} alt="Card image" />
+                        <Card.ImgOverlay>
+                        <Card.Title><h4>{directory.title}</h4></Card.Title>
+                        <Card.Text>
+                           {directory.description == "" ? "No Description" : directory.description} 
+                        </Card.Text>
+                        </Card.ImgOverlay>
                         </Card>
                 </Link>
                 </div>
             ))}
             </div>
         </div>
-            
+        <hr></hr>
+        <h3>Documents</h3>
+        <p>Manage your document by adding it to the system</p>
+        <Link className="btn btn-primary" to={"/adddocument/"+id}>
+                Add Document
+        </Link>
             {/* <embed
                 src="https://www.pearsonhighered.com/assets/samplechapter/0/1/3/4/0134454170.pdf"
                 type="application/pdf"

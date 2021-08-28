@@ -56,16 +56,16 @@ export default class ViewDirectory extends Component {
           return (
               <div>
                 <h2>Directory Single Page</h2>
-                <p>Manage the document in each drawing category</p>
+                <p>Manage the document in each document category</p>
                 <hr></hr>
                 <h3>Category details</h3>
                 <h6>Name : {title}</h6>
                 <h6>Description : {description}</h6>
                 <hr></hr>
                 
-                <h3>Drawing List</h3>
+                <h3>Document List</h3>
                 {/* Drawing List */}
-                <Table striped bordered hover variant="dark" responsive>
+                <Table striped bordered hover variant="secondary" responsive>
                   <thead>
                     <tr>
                       <th>Index</th>
@@ -78,7 +78,7 @@ export default class ViewDirectory extends Component {
                   {/* Functional for table data */}
                   <tbody>
                   {documents &&
-                      documents.map((drawing, index) => (
+                      documents.map((doc, index) => (
                       <tr
                           // className={
                           // "list-group-item row" +
@@ -87,20 +87,23 @@ export default class ViewDirectory extends Component {
                           // onClick={() => this.setActiveProject(project, index)}
                           key={index}
                       >
-                      <td>{drawing.id}</td>
-                      <td>{drawing.title}</td>
-                      <td>{drawing.description}</td>
+                      <td>{doc.id}</td>
+                      <td>{doc.title}</td>
+                      <td>{doc.description}</td>
                       <td>{title}</td>
                       <td>   
                           {/* Button Group */}
-                          {/* <Link to={"/viewdrawing/"+drawing.id}>
+                          {/* <Link to={"/viewdoc/"+doc.id}>
                           <button className="btn btn-primary">View <VisibilityIcon/> </button>
                           </Link> */}
-                          <a className="btn btn-primary" href={"http://localhost:8080/api/files/"+drawing.title+".pdf"} target="_blank">View<VisibilityIcon/></a>
-                          <Link to={"/viewdrawing/"+drawing.id}>
+                          {/* <a className="btn btn-primary" href={"http://localhost:8080/api/files/"+doc.title+".pdf"} target="_blank">View<VisibilityIcon/></a> */}
+                          <Link to={"/viewsingledocument/"+doc.id}>
+                          <button className="btn btn-primary m-2">View <VisibilityIcon/> </button>
+                          </Link>
+                          <Link to={"/viewdrawing/"+doc.id}>
                           <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
                           </Link>
-                          <Link to={"/viewdrawing/"+drawing.id}>
+                          <Link to={"/viewdrawing/"+doc.id}>
                           <button className="btn btn-danger">Delete <DeleteIcon/> </button>
                           </Link>
                       </td>    

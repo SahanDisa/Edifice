@@ -71,6 +71,7 @@ import ViewTasks from "./components/core_tools/tasks/view.component";
 import DocumentHome from "./components/project_management/document/document.component";
 import UploadDocFiles from "./components/project_management/document/adddocument.component";
 import UploadDocment from "./components/project_management/document/uploaddocument.component";
+import ViewSingleDocument from "./components/project_management/document/viewsingledocument.component";
 import PdfViewerComponent from "./components/project_management/document/viewpdf.component";
 
 import MeetingsConfig from "./components/project_management/meetings/configuration.component";
@@ -307,6 +308,7 @@ class App extends Component {
             <Route path="/uploaddocument/:name" component={UploadDocment}/>
             <Route path={"/viewdocument"} component={PdfViewerComponent}/>
             <Route path={"/viewdirectory/:id"} component={ViewDirectory}/>
+            <Route path={"/viewsingledocument/:id"} component={ViewSingleDocument}/>
             {/* Drawing Component Routes  */}
             <Route path="/drawing/:id" component={DrawingHome} />
             <Route path="/adddrawingcategory/:id" component={AddDrawingCategory} />

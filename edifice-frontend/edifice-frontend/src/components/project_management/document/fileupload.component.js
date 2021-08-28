@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import UploadService from "./../../../services/document.service";
-
-//
 // Import the main component
 import { Viewer } from '@react-pdf-viewer/core';
 // Plugins
@@ -11,11 +9,9 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 // Worker
 import { Worker } from '@react-pdf-viewer/core';
-//
+// Readers
 import { MobilePDFReader } from 'reactjs-pdf-reader';
 import { PDFReader } from 'reactjs-pdf-reader';
-
-
 
 const UploadFiles = () => {
   
@@ -115,17 +111,18 @@ const UploadFiles = () => {
     //end viewer
     return (
         <div>
-        
-        <hr></hr>
-        <h3>Document View and Download</h3>  
+        <br></br>
         <div className="card">
             <div className="card-header"><h5>Recent List</h5></div>
             <ul className="list-group list-group-flush">
               {fileInfos &&
                 fileInfos.map((file, index) => (
+                  index < 5 ?
                   <li className="list-group-item" key={index}>
-                    <a href={file.url} target="_blank">{file.name}{" "}{file.url}</a>
-                    
+                    <a href={file.url} target="_blank">{file.name}</a>
+                  </li>
+                  :
+                  <li className="list-group-item">
                   </li>
                 ))}
             </ul>

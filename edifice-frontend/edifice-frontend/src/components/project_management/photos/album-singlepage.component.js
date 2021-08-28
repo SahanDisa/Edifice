@@ -65,7 +65,7 @@ export default class ViewSingleAlbum extends Component {
               
               <h3>Drawing List</h3>
               {/* Drawing List */}
-              <Table striped bordered hover variant="dark" responsive>
+              <Table striped bordered hover variant="secondary" responsive>
                 <thead>
                   <tr>
                     <th>Index</th>

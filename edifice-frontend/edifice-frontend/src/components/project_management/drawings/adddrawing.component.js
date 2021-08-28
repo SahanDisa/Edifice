@@ -33,7 +33,7 @@ export default class AddDrawing extends Component {
       
       drawingcategories: [],
       currentIndex: -1,
-      submitted: true,
+      submitted: false,
 
       //file
       selectedFiles: undefined,
