@@ -57,6 +57,7 @@ export default class ViewSingleDrawing extends Component {
             description: response.data.description,
             category: response.data.category,
             status: response.data.status,
+            version: response.data.version,
             projectId: response.data.projectId,
           });
           console.log(response.data);
@@ -190,8 +191,8 @@ export default class ViewSingleDrawing extends Component {
                     <button className="btn btn-primary">Add</button>
                 </div>
                 <div>
-                    <h4>Versions</h4>
-                    <h5>{version}{".0.0"}</h5>
+                    <h4>Version</h4>
+                    <h5>{version}{".0"}</h5>
                     
                 </div> 
               </div>

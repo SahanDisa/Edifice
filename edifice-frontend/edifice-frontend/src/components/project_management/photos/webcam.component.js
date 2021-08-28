@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import {base64StringToBlob} from 'blob-util';
 import Webcam from "react-webcam";
-
+import UploadService from "./../../../services/photoupload.service";
+import CameraAltIcon from '@material-ui/icons/CameraAlt';
 
 const WebcamComponent = () => <Webcam />;
 
@@ -14,26 +16,74 @@ export const WebcamCapture = () => {
 
     const [image,setImage]=useState('');
     const webcamRef = React.useRef(null);
+    const [progress, setProgress] = useState(0);
+    const [message, setMessage] = useState("");
+    const [currentFile, setCurrentFile] = useState(undefined);
 
     
     const capture = React.useCallback(
         () => {
         const imageSrc = webcamRef.current.getScreenshot();
-        setImage(imageSrc)
-        });
+        setImage(imageSrc);
+        console.log(imageSrc.slice(22));
+    });
 
+    const upload = () => {
+        let b64Data = image.slice(22);
+        console.log(b64Data);
+        // const contentType = 'image/png';
+        const currentFile = base64StringToBlob(b64Data,'image/png');
+        let filename = "";
+        const min = 10000000000000;
+        const max = 20000000000000;
+        const rand = Math.floor(Math.random() * (max - min + 1)) + min;
+        console.log(rand);
+        filename = "oncapture" + rand + ".png";
+        console.log(filename);
+        console.log(currentFile);
+
+        setProgress(0);
+        setCurrentFile(currentFile);
+        console.log(currentFile.name);
+    
+        UploadService.upload(currentFile, filename, (event) => {
+          setProgress(Math.round((100 * event.loaded) / event.total));
+        })
+          .then((response) => {
+            setMessage(response.data.message);
+            return UploadService.getFiles();
+          })
+          .then((files) => {
+            console.log(files.data);
+            // setFileInfos(files.data);
+          })
+          .catch(() => {
+            setProgress(0);
+            setMessage("Could not upload the file!");
+            setCurrentFile(undefined);
+          });
+          window.location.reload();
+        // setSelectedFiles(undefined);
+    };
+    
+    // useEffect(() => {
+    //     UploadService.getFiles().then((response) => {
+    //       setFileInfos(response.data);
+    //     });
+    // }, []);
 
     return (
         <div className="webcam-container">
             <div className="webcam-img">
-            <h4>Capture Display</h4>
+            <h3>Onsite Capturing</h3>
+            <p>Press Capture button to take an image and press Retake to undo the operation.</p>
             <center>
                 {image == '' ? <Webcam
                     audio={false}
                     height={500}
                     ref={webcamRef}
-                    screenshotFormat="image/jpeg"
-                    width={720}
+                    screenshotFormat="image/png"
+                    width={500}
                     videoConstraints={videoConstraints}
                 /> : <img src={image} />}
             </center>
@@ -48,13 +98,35 @@ export const WebcamCapture = () => {
                     }}
                         className="btn btn-primary">
                         Retake Image</button>
-                        <a className="btn btn-success m-2" href="#">Save</a>
+                        <button onClick={(e) => {
+                        e.preventDefault();
+                        upload();
+                    }}
+                        className="btn btn-success m-2">Save Image</button>
+                        <h4>Upload Status</h4>
+                        {image != '' && (
+                        <div className="progress">
+                        
+                        <div
+                            className="progress-bar progress-bar-info progress-bar-striped"
+                            role="progressbar"
+                            aria-valuenow={progress}
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            style={{ width: progress + "%" }}
+                        >
+                            {progress}%
+                        </div>
+                        </div>)}
                 </div> :
-                    <button onClick={(e) => {
+                <center>
+                <button onClick={(e) => {
                         e.preventDefault();
                         capture();
                     }}
-                        className="btn btn-primary">Capture</button>
+                        className="btn btn-primary"><CameraAltIcon/>Capture</button>
+                </center>
+                    
                 }
             </div>
         </div>

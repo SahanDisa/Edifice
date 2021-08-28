@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DocumentDataService from "./../../../services/documentfile.service";
 import DirectoryDataService from "./../../../services/directory.service";
+import UploadService from "./../../../services/document.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -18,6 +19,8 @@ export default class AddDocument extends Component {
     this.onChangePath = this.onChangePath.bind(this);
     this.saveDocument = this.saveDocument.bind(this);
     this.newDocument = this.newDocument.bind(this);
+    this.selectFile = this.selectFile.bind(this);
+    this.upload = this.upload.bind(this);
 
     this.state = {
       id: null,
@@ -29,7 +32,13 @@ export default class AddDocument extends Component {
       
       directory: [],
       currentIndex: -1,
-      submitted: false
+      submitted: false,
+
+      //file
+      selectedFiles: undefined,
+      currentFile: undefined,
+      progress: 0,
+      message: "",
     };
   }
   componentDidMount() {
@@ -107,18 +116,70 @@ export default class AddDocument extends Component {
       submitted: false
     });
   }
+  selectFile(event) {
+    this.setState({
+      selectedFiles: event.target.files,
+    });
+  }
+  upload() {
+    let currentFile = this.state.selectedFiles[0];
+    let fileName = this.state.title+".pdf";
+    console.log(currentFile);
+    console.log(fileName);
+    
+    this.setState({
+      progress: 0,
+      currentFile: currentFile,
+    });
+
+    UploadService.upload(currentFile, fileName, (event) => {
+      this.setState({
+        progress: Math.round((100 * event.loaded) / event.total),
+      });
+    })
+      .then((response) => {
+        this.setState({
+          message: response.data.message,
+        });
+        return UploadService.getFiles();
+      })
+      .then((files) => {
+        this.setState({
+          fileInfos: files.data,
+        });
+      })
+      .catch(() => {
+        this.setState({
+          progress: 0,
+          message: "Could not upload the file!",
+          currentFile: undefined,
+        });
+      });
+
+    this.setState({
+      selectedFiles: undefined,
+    });
+  }
 
   render() {
-    const {projectId, title,currentIndex, directory} = this.state;
+    const {projectId, title,currentIndex, directory,selectedFiles,
+      currentFile,
+      progress,
+      message,
+    } = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
           <div>
-            <h4>File details successfully submitted!</h4>
-            <h4>Upload the file</h4>
-            <Link to={"/uploaddocument/"+title+".pdf"} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
-              Upload File
+          <center>
+            <h4>Document details successfully submitted!</h4>
+            <Link to={"/document/"+projectId} className="btn btn-primary mr-2"  style={{ 'text-decoration': 'none' }}>
+              Back Home
             </Link>
+            <Link to={"/adddocument/"+projectId} className="btn btn-primary mr-2"  style={{ 'text-decoration': 'none' }}>
+              Add Document
+            </Link>
+          </center>
           </div>
         ) : (
           <div class="container">
@@ -173,7 +234,45 @@ export default class AddDocument extends Component {
                 </option>
                 ))}
               </select>
-            </div>  
+            </div>
+            <div>
+              <h5>Upload the Document source</h5>
+              <p>Document name : - {title}{".pdf"}</p>
+              {/* Div starts */}
+              <div>
+                {currentFile && (
+                  <div className="progress">
+                    <div
+                      className="progress-bar progress-bar-info progress-bar-striped"
+                      role="progressbar"
+                      aria-valuenow={progress}
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      style={{ width: progress + "%" }}
+                    >
+                      {progress}%
+                    </div>
+                  </div>
+                )}
+
+                <label className="btn btn-default">
+                  <input type="file" onChange={this.selectFile} />
+                </label>
+
+                <button className="btn btn-success"
+                  disabled={!selectedFiles}
+                  onClick={this.upload}
+                >
+                  Upload
+                </button>
+
+                <div className="alert alert-light" role="alert">
+                  {message}
+                </div>
+                {/*Ends div here  */}
+                </div>
+            {/* End the container uploading here */}
+            </div>   
             </div>
             <div className="col-sm-4">
             <Timeline>
@@ -188,7 +287,7 @@ export default class AddDocument extends Component {
                 <TimelineSeparator>
                   <TimelineDot />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 2</strong><br/>Upload File</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 2</strong><br/>Submit</h6></TimelineContent>
               </TimelineItem>
             </Timeline>
             </div>

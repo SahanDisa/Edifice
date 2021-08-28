@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import DrawingCategoryService from "../../../services/drawing-category.service";
 import UploadService from "./../../../services/document.service";
@@ -153,7 +154,7 @@ export default class AddDrawing extends Component {
       category: "",
       projectId: this.props.match.params.id,
       
-      submitted: false
+      submitted: true
     });
   }
 
@@ -168,20 +169,15 @@ export default class AddDrawing extends Component {
       <div className="container">
         {this.state.submitted ? (
           <div>
-            <h4>File details successfully submitted!</h4>
-            {/* <h4>Upload the file</h4>
-            <input type="file" />
-            <button type="upload" className="btn btn-warning">Upload</button> */}
-            <button className="btn btn-success" onClick={this.newDrawing}>
-            Add Another Drawing
-            </button>
-             {/* <div>
-            <h4>File details successfully submitted!</h4>
-            <h4>Upload the Drawing file</h4>
-            <Link to={"/uploaddocument/"+title+".pdf"} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
-              Upload the DrawingFile
+          <center>
+            <h4>Drawing details successfully submitted!</h4>
+            <Link to={"/drawing/"+projectId} className="btn btn-primary mr-2"  style={{ 'text-decoration': 'none' }}>
+              Back Home
             </Link>
-          </div> */}
+            <Link to={"/adddrawing/"+projectId} className="btn btn-primary mr-2"  style={{ 'text-decoration': 'none' }}>
+              Add Drawing
+            </Link>
+          </center>
           </div>
         ) : (
           <div class="container">
