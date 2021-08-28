@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PhotoFileDataService from "./../../../services/photo.service";
 import AlbumService from "../../../services/album.service";
+import UploadService from "./../../../services/photoupload.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -19,6 +20,8 @@ export default class AddPhoto extends Component {
     this.onChangePath = this.onChangePath.bind(this);
     this.savePhoto = this.savePhoto.bind(this);
     this.newPhoto = this.newPhoto.bind(this);
+    this.selectFile = this.selectFile.bind(this);
+    this.upload = this.upload.bind(this);
 
     this.state = {
       id: null,
@@ -30,7 +33,13 @@ export default class AddPhoto extends Component {
       
       albums: [],
       currentIndex: -1,
-      submitted: false
+      submitted: false,
+
+      //file
+      selectedFiles: undefined,
+      currentFile: undefined,
+      progress: 0,
+      message: "",
     };
   }
   componentDidMount() {
@@ -108,18 +117,70 @@ export default class AddPhoto extends Component {
       submitted: false
     });
   }
+  selectFile(event) {
+    this.setState({
+      selectedFiles: event.target.files,
+    });
+  }
+  upload() {
+    let currentFile = this.state.selectedFiles[0];
+    let fileName = this.state.title+".png";
+    console.log(currentFile);
+    console.log(fileName);
+    
+    this.setState({
+      progress: 0,
+      currentFile: currentFile,
+    });
+
+    UploadService.upload(currentFile, fileName, (event) => {
+      this.setState({
+        progress: Math.round((100 * event.loaded) / event.total),
+      });
+    })
+      .then((response) => {
+        this.setState({
+          message: response.data.message,
+        });
+        return UploadService.getFiles();
+      })
+      .then((files) => {
+        this.setState({
+          fileInfos: files.data,
+        });
+      })
+      .catch(() => {
+        this.setState({
+          progress: 0,
+          message: "Could not upload the file!",
+          currentFile: undefined,
+        });
+      });
+
+    this.setState({
+      selectedFiles: undefined,
+    });
+  }
 
   render() {
-    const {projectId, title,currentIndex, albums} = this.state;
+    const {projectId, title,currentIndex, albums,selectedFiles,
+      currentFile,
+      progress,
+      message,
+      fileInfos,} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
           <div>
-            <h4>File details successfully submitted!</h4>
-            <h4>Upload the image source</h4>
-            <Link to={"/uploadphoto/"+title+".png"} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
-              Upload Image
+          <center>
+            <h4>Photo details successfully submitted!</h4>
+            <Link to={"/photos/"+projectId} className="btn btn-primary mr-2"  style={{ 'text-decoration': 'none' }}>
+              Back Home
             </Link>
+            <Link to={"/addphoto/"+projectId} className="btn btn-primary mr-2"  style={{ 'text-decoration': 'none' }}>
+              Add Photo
+            </Link>
+          </center>
           </div>
         ) : (
           <div class="container">
@@ -175,6 +236,44 @@ export default class AddPhoto extends Component {
                 ))}
               </select>
             </div>  
+            <div>
+              <h5>Upload the Image Source</h5>
+              <p>File source document : - {title}{".png"}</p>
+              {/* Div starts */}
+              <div>
+                {currentFile && (
+                  <div className="progress">
+                    <div
+                      className="progress-bar progress-bar-info progress-bar-striped"
+                      role="progressbar"
+                      aria-valuenow={progress}
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      style={{ width: progress + "%" }}
+                    >
+                      {progress}%
+                    </div>
+                  </div>
+                )}
+
+                <label className="btn btn-default">
+                  <input type="file" onChange={this.selectFile} />
+                </label>
+
+                <button className="btn btn-success"
+                  disabled={!selectedFiles}
+                  onClick={this.upload}
+                >
+                  Upload
+                </button>
+
+                <div className="alert alert-light" role="alert">
+                  {message}
+                </div>
+                {/*Ends div here  */}
+                </div>
+            {/* End the container uploading here */}
+            </div> 
             </div>
             <div className="col-sm-4">
             <Timeline>
