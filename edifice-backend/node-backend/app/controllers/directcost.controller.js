@@ -150,20 +150,44 @@ exports.findByCostCode= (req, res) => {
     });  
 };
 
-/**added aug 27*/
-exports.getDTotalOfCostCodes = () => {
-directcost.findAll({
-  attributes: ['costCode', [sequelize.fn('sum', sequelize.col('ammount')), 'total']],
-  group : ['directcost.costCode'],
-  raw: true,
-})
-.then(data => {
-  res.send(data);
-})
-.catch(err => {
-  res.status(500).send({
-    message: "Error retrieving Project Budget with id=" 
-  });
-});  
+/**added aug 27
+exports.getDTotalOfCostCodes = (req, res) => {
+  const id = req.params.id;
+  const costCode = req.params.costCode;
+  DirectCost.findAll({where:{
+    costCode:costCode,
+    projectId:id},
+    attributes: [sequelize.fn('sum', sequelize.col('ammount')), 'total'],
+    raw:true
+  })
+  .then(  
+    data => {
+    res.send(data);
+    console.log(total)
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Error retrieving Project Budget with id=" 
+    });
+  });  
+  
+  };*/
 
-};
+  exports.getDTotalOfCostCodes = (req, res) => {
+    const id = req.params.id;
+    const costCode = req.params.costCode;
+    const sum = res.params.sum;
+    DirectCost.sum('ammount', { where: { 
+      costCode:costCode,
+      projectId:id } } )
+      .then(sum => {
+        res.send(sum);
+  })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Project Budget with id=" 
+      });
+    });  
+    
+    };
+
