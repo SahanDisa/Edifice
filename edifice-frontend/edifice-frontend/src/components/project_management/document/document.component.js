@@ -38,15 +38,15 @@ export default class Documents extends Component {
       return (
           <div>
           <h2>Document</h2>
-          <p>Manage project specific documents in one place</p>
-          <hr></hr>
-          <h3>Directory</h3>
-          <p>Manage the related documents in one place using directory</p>
+          <h6>Manage project specific documents and organise with directories in here</h6>
           <Link className="btn btn-primary mr-2" to={"/directory/"+id}>
                 Add Directory
           </Link>
+          <Link className="btn btn-primary mr-2" to={"/adddocument/"+id}>
+                Add Document
+          </Link>
           <hr></hr>
-
+          <h3>Directory</h3>
           <p>Manage your document by clicking on a directory</p>
           <div className="container">
           <div className="container row">
@@ -54,7 +54,7 @@ export default class Documents extends Component {
               directories.map((directory, index) => (
                     <div
                     className={
-                    "container col-3" +
+                    "container col-2" +
                     (index === currentIndex ? "active" : "")
                     }
                     key={index}
@@ -64,7 +64,7 @@ export default class Documents extends Component {
                         <Card
                         bg={'secondary'}
                         text={'dark'}
-                        style={{ width: '14rem' }}
+                        style={{ width: '12rem' }}
                         className="mb-2"
                         >
                         <Card.Img src={directorycover} alt="Card image" />
@@ -83,9 +83,6 @@ export default class Documents extends Component {
         <hr></hr>
         <h3>Documents</h3>
         <p>Manage your document by adding it to the system</p>
-        <Link className="btn btn-primary" to={"/adddocument/"+id}>
-                Add Document
-        </Link>
             {/* <embed
                 src="https://www.pearsonhighered.com/assets/samplechapter/0/1/3/4/0134454170.pdf"
                 type="application/pdf"
