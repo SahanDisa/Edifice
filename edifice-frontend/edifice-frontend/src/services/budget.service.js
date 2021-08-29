@@ -36,6 +36,14 @@ findByCostCode(id,costCode){
 
 
 }
+
+getDTotalOfCostCodes(id,costCode){
+
+  return http.get(`/projects/budget/list/${id}/${costCode}`);
+
+}
+
+
 }
 export default new BudgetDataService();
 
