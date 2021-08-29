@@ -1,5 +1,5 @@
 const db = require("./../models/index.js");
-const workers = db.workers;
+const Worker = db.workers;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new worker
