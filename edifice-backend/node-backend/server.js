@@ -60,6 +60,7 @@ require('./app/routes/payment.routes')(app);
 
 require('./app/routes/project_management/meeting.routes')(app);
 require('./app/routes/project_management/meetingcategory.routes')(app);
+require('./app/routes/vendor.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {
