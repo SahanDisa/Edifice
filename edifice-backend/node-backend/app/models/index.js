@@ -61,6 +61,9 @@ db.workers = require("./worker.model")(sequelize, Sequelize);
 db.meetings = require("./project_management/meeting.model")(sequelize, Sequelize);
 db.meetingcategory = require("./project_management/meetingcategory.model")(sequelize, Sequelize);
 
+//for core class vendors and employees
+db.vendor=require("./vendor.model")(sequelize, Sequelize);
+
 //This section is for testing purposes
 db.demo1 = require("./demo1.model")(sequelize, Sequelize);
 db.demo2 = require("./demo2.model")(sequelize, Sequelize);
@@ -154,11 +157,11 @@ db.biddings.belongsTo(db.projects, {
 
 
 // One project has one budget-should correct this
-db.projects.hasOne(db.budgets, { as: "budgets" });
-db.budgets.belongsTo(db.projects, {
-  foreignKey: "projectId",
-  as: "project",
-});
+//db.projects.hasOne(db.budgets, { as: "budgets" });
+//db.budgets.belongsTo(db.projects, {
+//  foreignKey: "projectId",
+//  as: "project",
+//});
 
 
 //
@@ -176,7 +179,7 @@ db.users.belongsToMany(db.roles, {
 });
 
 // One project has one direct cost
-db.projects.hasOne(db.directcosts, { as: "directcosts" });
+//db.projects.hasOne(db.directcosts, { as: "directcosts" });
 //One project has many direct costs
 db.projects.hasMany(db.directcosts, { as: "directcosts" });
 
