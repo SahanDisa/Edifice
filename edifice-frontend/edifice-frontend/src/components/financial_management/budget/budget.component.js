@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import BudgetDataService from "./../../../services/budget.service";
+import DirectCostDataService from "./../../../services/directcost.service";
 import { useTable } from "react-table";
 import { Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -11,6 +12,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 const BudgetList = (props) => {
   const {id}= useParams();
   const [budgets, setBudgets] = useState([]);
+  const [directcosts, setDirectCosts] = useState([]);
   const [searchCostCode, setSearchCostCode] = useState("");
   const budgetsRef = useRef();
 
@@ -81,6 +83,29 @@ const BudgetList = (props) => {
       });
   };
 
+
+  const retrieveTotalDirectCosts = (rowIndex) => {
+    const id = budgetsRef.current[rowIndex].projectId;
+    const costCode = budgetsRef.current[rowIndex].costCode;
+  const est=budgetsRef.current[rowIndex].estimatedBudget;
+
+    DirectCostDataService.getDTotalOfCostCodes (id,costCode)
+      .then((response) => {
+        setDirectCosts(response.sum);
+        //document.write(response.data);
+        console.log("working")
+        console.log(costCode)
+        console.log(est)
+      
+        console.log(id)
+        console.log(response.sum)
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -94,6 +119,16 @@ const BudgetList = (props) => {
       {
         Header: "Direct Costs",
         accessor: "directCosts",
+        Cell: (props) => {
+          const rowIdx = props.row.id;
+       
+return(
+  <div>
+  {retrieveTotalDirectCosts(rowIdx)}
+  </div>
+  );
+      
+        },
       },
       {
         Header: "Commited Costs",
@@ -142,7 +177,7 @@ const BudgetList = (props) => {
     prepareRow,
   } = useTable({
     columns,
-    data: budgets,
+    data: budgets
   });
 
   return (
