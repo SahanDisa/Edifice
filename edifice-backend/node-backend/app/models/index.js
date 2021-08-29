@@ -49,9 +49,9 @@ db.meetingcategory = require("./project-management/meetingcategory.model")(seque
 // Punch list component Model Classes
 db.punchlist = require("./project-management/punchlist.model")(sequelize, Sequelize);
 db.punchlisttypes = require("./project-management/punchlisttypes.model")(sequelize, Sequelize);
-
+db.punchlist = require("./project_management/punchlist.model")(sequelize, Sequelize);
+// Finance Model Classes
 db.budgets = require("./budget.model.js")(sequelize, Sequelize);
-db.demo = require("./demo.model")(sequelize, Sequelize);
 db.directcosts = require("./directcost.model.js")(sequelize, Sequelize);
 db.commitments = require("./commitment.model.js")(sequelize, Sequelize);
 db.sovs = require("./sov.model.js")(sequelize, Sequelize);
@@ -65,7 +65,15 @@ db.categorys = require("./equipment-category.model")(sequelize, Sequelize);
 db.crews = require("./crew.model")(sequelize, Sequelize);
 db.workers = require("./worker.model")(sequelize, Sequelize);
 
+db.meetings = require("./project_management/meeting.model")(sequelize, Sequelize);
+db.meetingcategory = require("./project_management/meetingcategory.model")(sequelize, Sequelize);
+
+//for core class vendors and employees
+db.vendor=require("./vendor.model")(sequelize, Sequelize);
+
+
 //This section is for testing purposes
+db.demo = require("./demo.model")(sequelize, Sequelize);
 db.demo1 = require("./demo1.model")(sequelize, Sequelize);
 db.demo2 = require("./demo2.model")(sequelize, Sequelize);
 
@@ -252,12 +260,7 @@ db.payments.belongsTo(db.commitments, {
   as: "commitment",
 });
 
-// One project has many primecontracts
-db.projects.hasOne(db.primecontracts, { as: "primecontracts" });
-db.primecontracts.belongsTo(db.projects, {
-  foreignKey: "projectId",
-  as: "project",
-});
+
 
 // One commitment has many invoices
 db.commitments.hasMany(db.invoices, { as: "invoices" });
@@ -281,14 +284,6 @@ db.workers.belongsTo(db.crews, {
   foreignKey: "crewId",
   as: "crew",
 });
-
-// // One project has many drawings
-// db.projects.hasOne(db.primecontracts, { as: "primecontracts" });
-// db.primecontracts.belongsTo(db.projects, {
-//   foreignKey: "projectId",
-//   as: "project",
-// });
-
 // ----------- Resource Management Ends --------
 
 //Role description 

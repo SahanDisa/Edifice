@@ -1,6 +1,7 @@
 const db = require("./../models/index");
 const Project = db.projects;
 const Budget = db.budgets;
+const DirectCost = db.directcosts;
 
 // create a budget 
 exports.create = (req, res) => {
@@ -149,5 +150,29 @@ exports.findByCostCode= (req, res) => {
       });
     });  
 };
+
+
+/**added aug 27*/
+exports.getDTotalOfCostCodes = (req, res) => {
+  const id = req.params.id;
+  const costCode = req.params.costCode;
+  DirectCost.findAll({where:{
+    costCode:costCode,
+    projectId:id},
+    attributes: [sequelize.fn('sum', sequelize.col('ammount')), 'total'],
+    raw:true
+  })
+  .then(  
+    data => {
+    res.send(data);
+    console.log(total)
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Error retrieving Project Budget with id=" 
+    });
+  });  
+  
+  };
 
 

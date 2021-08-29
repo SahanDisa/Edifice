@@ -27,6 +27,7 @@ module.exports = app => {
   router.delete("/:id", directcost.delete);
 
  
+  router.get("/list/:id/:costCode", directcost.getDTotalOfCostCodes);
   
     app.use('/api/projects/directcost', router);
   };

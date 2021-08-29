@@ -16,6 +16,7 @@ import Employees from './core_tools/edifice-directory/employees.component'
 
 import UserService from "../services/user.service";
 import ProjectDataService from "../services/project.service";
+import projectService from "../services/project.service";
 
 //css styles
 const cardStyle = {
@@ -34,12 +35,16 @@ export default class BoardUser extends Component {
     super(props);
 
     this.getprojectCount=this.getprojectCount.bind(this);
+    this.getprojectDetails=this.getprojectCount.bind(this);
     this.state = {
       content: "",
       projectCount: 0,
       employeeCount: 0,
+      currProjectId: 0,
       id: "this.props.match.params.id"
     };
+
+    //console.log(this.getprojectDetails());
   }
 
   expand(card) {
@@ -78,23 +83,56 @@ export default class BoardUser extends Component {
     );
 
     this.getprojectCount();
+    //console.log(projectCount);
+    for(let i=0;i<5;i++){
+      //this.getprojectDetails(i);
+    }
+    
   }
 
   getprojectCount(){
     //get Project count
     ProjectDataService.getAll().then(response => {
       this.setState({
-        projectCount: response.data.length
+        projectCount: response.data.length,
+        
       });
-      console.log(response.data.length);
+      //console.log(projectDetails);
     })
     .catch(e => {
       console.log(e);
     });
   }
 
+  //private  var projectDetails=[];
+  getprojectDetails(id){
+    //get Project count
+    console.log(id);
+    ProjectDataService.get(id).then(response => {
+      //console.log( response.data[id]["id"]);
+      this.setState({
+        
+      })
+      console.log(id);
+    })
+    //GOLDEN CODE
+    //projectDetails.then(function(result) {
+      //console.log(result) // "Some User token"
+   //})
+    
+  }
+
   render() {
-    const { projectCount,employeeCount } = this.state;
+    const { projectDetails,projectCount,employeeCount } = this.state;
+    var elements = {};
+    //this.getprojectDetails(elements);
+    //console.log(elements);
+    const items = []
+
+    //this.getprojectDetails(1);
+    //for (const [index, value] of elements.entries()) {
+    //  items.push(<li key={index}>{value}</li>)
+    //}
 
     return (
       `
@@ -154,7 +192,7 @@ export default class BoardUser extends Component {
               <h3> Ongoing Projects:</h3>
             </div>
           <div classname="row">
-
+            
             <div className="card card-hover shadow-sm col-lg-12 pt-1 mb-3 pb-3" id="project1">
               <a className="d-block nav-heading text-left ml-4 mt-3 mb-1 pb-3" href="#">
                   <div classname="row">
@@ -246,6 +284,8 @@ export default class BoardUser extends Component {
               <div className="tab-pane fade" id="list-report" role="tabpanel" aria-labelledby="list-settings-list">This is report</div>
             </div>
           </div>
+          {/*  debug stuff DELETE*/}
+          <div><p>sfdsfds</p></div>
           
         </div>
         {/* <Defaults /><Dates /><Roles /> */}
