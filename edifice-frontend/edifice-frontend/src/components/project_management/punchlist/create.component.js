@@ -7,6 +7,7 @@ class ViewAP extends Component {
         super(props);
         this.onChangeDuedate = this.onChangeDuedate.bind(this);
         this.onChangeTitle = this.onChangeTitle.bind(this);
+        this.onChangeType = this.onChangeType.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
         // this.onChangePunchmanager = this.onChangePunchmanager.bind(this);
         // this.onChangeAssignee = this.onChangeAssignee.bind(this);
@@ -16,7 +17,7 @@ class ViewAP extends Component {
 
         this.state = {
             no: null,
-            status: "",
+            status: "Initiated",
             duedate: "",
             title: "",
             location: "",
@@ -30,19 +31,25 @@ class ViewAP extends Component {
 
     onChangeDuedate(e) {
         this.setState({
-            title: e.target.value
+            duedate: e.target.value
         });
     }
 
     onChangeTitle(e) {
         this.setState({
-            description: e.target.value
+            title: e.target.value
+        });
+    }
+
+    onChangeType(e) {
+        this.setState({
+            type: e.target.value
         });
     }
 
     onChangeLocation(e) {
         this.setState({
-            title: e.target.value
+            location: e.target.value
         });
     }
 
@@ -53,25 +60,27 @@ class ViewAP extends Component {
     }
 
     savePunchListItem() {
-        console.log("click kala");  
+        console.log("save wunoo");  
         var data = {
-            no: this.state.no,
             status: this.state.status,
             duedate: this.state.duedate,
             title: this.state.title,
-            location: this.body.location,
+            type: this.state.type,
+            location: this.state.location,
             // punchmanager: this.state.punchmanager,
             // assignee: this.state.assignee,
             description: this.state.description,
             projectId: this.state.projectId
         };
 
-        PunchlistDataService.create(data).then(response => {
+        PunchlistDataService.create(data)
+        .then(response => {
             this.setState({
                 no: response.data.no,
                 status: response.data.status,
                 duedate: response.data.duedate,
                 title: response.data.title,
+                type: response.data.type,
                 location: response.data.location,
                 // punchmanager: response.data.punchmanager,
                 // assignee: response.data.assignee,
@@ -90,7 +99,6 @@ class ViewAP extends Component {
     newPunchListItem() {
         this.setState({
             no: null,
-            status: "",
             duedate: "",
             title: "",
             location: "",
@@ -98,6 +106,7 @@ class ViewAP extends Component {
             // assignee: "",
             description: "",
             projectId: this.props.match.params.id,
+
             submitted: false
         });
     }
@@ -107,7 +116,29 @@ class ViewAP extends Component {
         <div className="">
             {this.state.submitted ? (
                 <div>
-                    <h4>Category details successfully submitted!</h4>
+                    <div>
+                        <h4>Category details successfully submitted!</h4>
+                        <button className="btn btn-success" onClick={this.newPunchListItem}>Add Another punch list</button>
+                    </div>
+                    {/* <div className="modal fade" id="successfullyaddedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div className="modal-dialog modal-dialog-centered" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalCenterTitle">Choose what you want to do?</h5>
+                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> */}
+                    
                 </div>
             ) : (
             <div className="">
@@ -115,16 +146,15 @@ class ViewAP extends Component {
                 <div className="mb-3">
                     <div>
                         <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="detailsT" data-toggle="tab" href="#det" aria-controls="det" aria-selected="true">Details</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="assigneesT" data-toggle="tab" href="#assign" aria-controls="assign" aria-selected="true">Assignees</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" id="detailsT" data-toggle="tab" href="#det" aria-controls="det" aria-selected="true">Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="assigneesT" data-toggle="tab" href="#assign" aria-controls="assign" aria-selected="true">Assignees</a>
+                            </li>
                         </ul>
                         
                         <div class="tab-content" id="myTabContent">
-                        
                             <div class="tab-pane fade show active" id="det" role="tabpanel" aria-labelledby="Details">
                                 <form>
                                     <div className="form-row">
@@ -144,6 +174,7 @@ class ViewAP extends Component {
                                                 className="form-control"
                                                 name="location"
                                                 value={this.state.location}
+                                                onChange={this.onChangeLocation}
                                                 type="text"
                                                 required
                                             />
@@ -223,7 +254,11 @@ class ViewAP extends Component {
                                             </div>
                                         </div>  
                                     </div>
-                                    <a href="#" className="btn btn-primary mt-2 mr-2">Next: Add Assignees</a>
+                                    <button
+                                    type="button" 
+                                    // data-toggle="modal" 
+                                    // data-target="#successfullyaddedModal" 
+                                    onClick={this.savePunchListItem} className="btn btn-primary mt-2 mr-2">Next: Add Assignees</button>
                                     <a href="/punchlist" className="">Cancel</a>
                                 </form>
                             </div>          
@@ -238,7 +273,7 @@ class ViewAP extends Component {
                                         </Card>
                                     </div>
                                 </div>
-                                <a href="/punchlist" className="btn btn-primary mt-2 mr-2">Save</a>
+                                <button className="btn btn-primary mt-2 mr-2">Save</button>
                                 <a href="/punchlist" className="">Cancel</a>
                             </div>
                         </div>
