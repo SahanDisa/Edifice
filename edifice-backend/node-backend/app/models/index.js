@@ -44,10 +44,10 @@ db.photo = require("./photo.model.js")(sequelize, Sequelize);
 db.directory = require("./directory.model")(sequelize, Sequelize);
 db.document = require("./document.model")(sequelize, Sequelize);
 // Meeting component Model Classes
-db.meetings = require("./project_management/meeting.model")(sequelize, Sequelize);
-db.meetingcategory = require("./project_management/meetingcategory.model")(sequelize, Sequelize);
+db.meetings = require("./project-management/meeting.model")(sequelize, Sequelize);
+db.meetingcategory = require("./project-management/meetingcategory.model")(sequelize, Sequelize);
 // Punch list component Model Classes
-db.punchlist = require("./project_management/punchlist.model")(sequelize, Sequelize);
+db.punchlist = require("./project-management/punchlist.model")(sequelize, Sequelize);
 
 db.budgets = require("./budget.model.js")(sequelize, Sequelize);
 db.demo = require("./demo.model")(sequelize, Sequelize);
@@ -274,19 +274,13 @@ db.workers.belongsTo(db.crews, {
   as: "crew",
 });
 
-// One project has many drawings
-db.projects.hasOne(db.primecontracts, { as: "primecontracts" });
-db.primecontracts.belongsTo(db.projects, {
-  foreignKey: "projectId",
-  as: "project",
-});
+// // One project has many drawings
+// db.projects.hasOne(db.primecontracts, { as: "primecontracts" });
+// db.primecontracts.belongsTo(db.projects, {
+//   foreignKey: "projectId",
+//   as: "project",
+// });
 
-// One commitment has many invoices
-db.commitments.hasMany(db.invoices, { as: "invoices" });
-db.invoices.belongsTo(db.commitments, {
-  foreignKey: "commitmentId",
-  as: "commitment",
-});
 // ----------- Resource Management Ends --------
 
 //Role description 
