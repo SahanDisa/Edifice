@@ -65,7 +65,7 @@ export default class ViewSingleDrawingCategory extends Component {
               
               <h3>Drawing List</h3>
               {/* Drawing List */}
-              <Table striped bordered hover variant="light" responsive>
+              <Table striped bordered hover variant="secondary" responsive>
                 <thead>
                   <tr>
                     <th>Index</th>

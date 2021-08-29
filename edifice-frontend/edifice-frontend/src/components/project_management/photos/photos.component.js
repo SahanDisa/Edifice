@@ -6,11 +6,9 @@ import { CameraViewer } from "./viewphoto.component";
 import Accordion from 'react-bootstrap/Accordion';
 import Typography from '@material-ui/core/Typography';
 import Icon1 from "././../../../assets/PM/photos/image1.jpg";
-import Icon2 from "././../../../assets/PM/photos/image2.jpg";
+import Icon2 from "././../../../assets/PM/photos/albumicon.jpg";
 import UploadPhotoService from "../../../services/photoupload.service";
-
 import Card from 'react-bootstrap/Card';
-import { Button } from 'react-bootstrap';
 
 export default class PhotosHome extends Component {
   
@@ -66,11 +64,13 @@ export default class PhotosHome extends Component {
           {/* Album division starts */}
           <div className="container">
             <h3>Albums</h3>
+            <p>Manage your photo by adding it into albums</p>
             <Link className="btn btn-primary mr-2" to={"/addalbum/"+id}>
               Add Album
             </Link>
             <hr></hr>
             <h4>Recent Albums</h4>
+            <p>Click on Albums to manage your photos</p>
             <div className="container row">
             {albums &&
                 albums.map((album, index) => (
@@ -82,19 +82,15 @@ export default class PhotosHome extends Component {
                     key={index}
                 >
                 {/* unit data */}
-                <Link to={"/viewalbum/"+album.id}>
-                  <Card
-                    bg={'secondary'}
-                    text={'dark'}
-                    style={{ width: '15rem' }}
-                    className="mb-2"
-                  >
-                    <Card.Body>
-                       <Card.Title><h4>{album.title}</h4></Card.Title>
+                <Link to={"/viewalbum/"+album.id} style={{'text-decoration': 'none'}}>
+                  <Card className="bg-light text-white">
+                    <Card.Img src={Icon2} alt="Card image" />
+                    <Card.ImgOverlay>
+                      <Card.Title>{album.title}</Card.Title>
                       <Card.Text>
-                            description
+                        {album.description}
                       </Card.Text>
-                    </Card.Body>
+                    </Card.ImgOverlay>
                   </Card>
                 </Link>
                 </div>
@@ -106,76 +102,40 @@ export default class PhotosHome extends Component {
         {/* Photo div starts */}
         <div className="container">
           <h3>Photos</h3>
+          <p>Manage your photos by uploading it to the system</p>
             <Link className="btn btn-primary mr-2" to={"/addphoto/"+id}>
               Add Photo
             </Link>
             <hr></hr>
           </div> 
           <div className="container">
-            <h4>Recent Uploaded Photos</h4>
-            {/* <div className="row">
-              <div className="col-sm-6">
-              <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src={Icon1} />
-                <Card.Body>
-                  <Card.Title>Image 1</Card.Title>
-                  <Card.Text>
-                  No caption
-                  </Card.Text>
-                  <Button variant="primary">view</Button>
-                </Card.Body>
-              </Card>
-              </div>
-              <div className="col-sm-6">
-              <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src={Icon2} />
-                <Card.Body>
-                  <Card.Title>Image 2</Card.Title>
-                  <Card.Text>
-                    No caption
-                  </Card.Text>
-                  <Button variant="primary">view</Button>
-                </Card.Body>
-              </Card>
-              </div>
-            </div> */}
+            <h4>Recent Photos</h4>
             <div className="container row">
             
               {fileInfos &&
                 fileInfos.map((file, index) => (
-                  <div className="col-4" key={index}>
+                  <div className="container col-4 mt-1" key={index}>
                     {/* <a href={file.url}>{file.name}{" "}{file.url}</a>
                     <img src={file.url} style={{'height':'300px'}}/> */}
-                    <Card style={{ width: '18rem' }}>
-                      <Card.Img variant="top" src={file.url} />
-                      <Card.Body>
-                        <Card.Title>{file.name}</Card.Title>
-                        <Card.Text>
-                        No caption
-                        </Card.Text>
-                        <Button variant="primary">view</Button>
-                      </Card.Body>
-                    </Card>
+                    <Card className="bg-dark text-white">
+                    <Card.Img src={file.url} alt="Card image" style={{'width': '320px', 'height': '300px'}}/>
+                    <Card.ImgOverlay>
+                      <Card.Title>{file.name}</Card.Title>
+                      <Card.Text>
+                        {file.description}
+                      </Card.Text>
+                    </Card.ImgOverlay>
+                  </Card>
                   </div>
                 ))}
             </div>
             <hr></hr>
         </div>
-        {/* photo div ends */}
+        {/* onsite capturing component import dynamically*/}
         <div className="container">
-        <h3>Onsite Capturing</h3>
-        <Typography>
-              {/* <div className="container">
-                  <h5>Press + button to capture images</h5>
-                  <Link to={"/adddrawing/"}>
-                    <Fab color="primary" aria-label="add" >
-                        <AddIcon />
-                    </Fab>
-                    </Link>
-                    
-              </div> */}
-        {/* <WebcamCapture/>       */}
-        </Typography>
+          <Typography>
+          <WebcamCapture/>      
+          </Typography>
         </div>
         {/* <CameraViewer/>     */}
       </div>

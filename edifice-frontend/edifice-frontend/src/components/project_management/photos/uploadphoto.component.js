@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import UploadPhotoService from "../../../services/photoupload.service";
+import UploadPhotoService from "./../../../services/photoupload.service";
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 
 export default class UploadPhotos extends Component {
