@@ -65,8 +65,11 @@ require('./app/routes/primecontract.routes')(app);
 require('./app/routes/invoice.routes')(app);
 require('./app/routes/payment.routes')(app);
 
-require('./app/routes/project_management/meeting.routes')(app);
-require('./app/routes/project_management/meetingcategory.routes')(app);
+require('./app/routes/project-management/meeting.routes')(app);
+require('./app/routes/project-management/meetingcategory.routes')(app);
+
+require('./app/routes/project-management/punchlist.routes')(app);
+require('./app/routes/project-management/punchlisttypes.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {
@@ -79,7 +82,6 @@ app.listen(PORT, () => {
   console.log(`-------------------Welcome to Edifice Backend--------------------`)  
   console.log(`---------------Server is running on port ${PORT}-----------------`);
 });
-
 
 // initial data
 function initial() {

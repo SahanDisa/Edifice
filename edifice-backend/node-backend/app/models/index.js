@@ -44,9 +44,11 @@ db.photo = require("./photo.model.js")(sequelize, Sequelize);
 db.directory = require("./directory.model")(sequelize, Sequelize);
 db.document = require("./document.model")(sequelize, Sequelize);
 // Meeting component Model Classes
-db.meetings = require("./project_management/meeting.model")(sequelize, Sequelize);
-db.meetingcategory = require("./project_management/meetingcategory.model")(sequelize, Sequelize);
+db.meetings = require("./project-management/meeting.model")(sequelize, Sequelize);
+db.meetingcategory = require("./project-management/meetingcategory.model")(sequelize, Sequelize);
 // Punch list component Model Classes
+db.punchlist = require("./project-management/punchlist.model")(sequelize, Sequelize);
+db.punchlisttypes = require("./project-management/punchlisttypes.model")(sequelize, Sequelize);
 db.punchlist = require("./project_management/punchlist.model")(sequelize, Sequelize);
 // Finance Model Classes
 db.budgets = require("./budget.model.js")(sequelize, Sequelize);
@@ -213,6 +215,13 @@ db.punchlist.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
+
+// One project has many punch lists types
+db.projects.hasMany(db.punchlisttypes, { as: "punchlisttypes" });
+db.punchlisttypes.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
 // ----------- Project Management Ends -------------
 
 // ----------- Finance Management Starts -----------
@@ -275,9 +284,6 @@ db.workers.belongsTo(db.crews, {
   foreignKey: "crewId",
   as: "crew",
 });
-
-
-
 // ----------- Resource Management Ends --------
 
 //Role description 

@@ -1,6 +1,5 @@
 const db = require("../../models/index.js");
 const Punchlist = db.punchlist;
-const Op = db.Sequelize.Op;
 
 // Create and Save a new Punchlist
 exports.create = (req, res) => {
@@ -13,18 +12,19 @@ exports.create = (req, res) => {
     }
 
     // Create a Punchlist
-    const Punchlist = {
+    const pl = {
         status: req.body.status,
         duedate: req.body.duedate,
         title: req.body.title,
+        type: req.body.type,
         location: req.body.location,
-        punchmanager: req.body.punchmanager,
-        assignee: req.body.assignee,
+        // punchmanager: req.body.punchmanager,
+        // assignee: req.body.assignee,
         description: req.body.description
     };
 
     // Save Punchlist in the database
-    Punchlist.create(Punchlist)
+    Punchlist.create(pl)
         .then(data => {
             res.send(data);
         })

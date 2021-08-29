@@ -21,16 +21,18 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false
         },
-        punchmanager: {
-            type: Sequelize.INTEGER,
+        type: {
+            type: Sequelize.STRING,
             allowNull: false
+        },
+        punchmanager: {
+            type: Sequelize.INTEGER
         },
         assignee: {
-            type: Sequelize.INTEGER,
-            allowNull: false
+            type: Sequelize.INTEGER
         },
         finalapprover: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER
         },
         description: {
             type: Sequelize.STRING
