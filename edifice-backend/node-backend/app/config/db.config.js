@@ -1,8 +1,8 @@
 module.exports = {
     HOST: "localhost",
     USER: "root",
-    PASSWORD: "",
-    // PASSWORD: "malithya",
+    // PASSWORD: "",
+    PASSWORD: "malithya",
     DB: "edificedb_node",
     dialect: "mysql",
     pool: {

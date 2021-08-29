@@ -65,13 +65,14 @@ export default class ViewSingleDrawingCategory extends Component {
               
               <h3>Drawing List</h3>
               {/* Drawing List */}
-              <Table striped bordered hover variant="dark" responsive>
+              <Table striped bordered hover variant="secondary" responsive>
                 <thead>
                   <tr>
                     <th>Index</th>
-                    <th>Name</th>
+                    <th>Title</th>
                     <th>Description</th>
                     <th>Type</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -88,20 +89,21 @@ export default class ViewSingleDrawingCategory extends Component {
                         key={index}
                     >
                     <td>{drawing.id}</td>
-                    <td>{drawing.name}</td>
+                    <td>{drawing.title}</td>
                     <td>{drawing.description}</td>
                     <td>{title}</td>
+                    <td>{drawing.status == "Not Complete" ? "🔴 NC": drawing.status == "Pending" ? "🟡 Pending": "🟢 Complete"}</td>
                     <td>   
                         {/* Button Group */}
                         <Link to={"/viewdrawing/"+drawing.id}>
                         <button className="btn btn-primary">View <VisibilityIcon/> </button>
                         </Link>
-                        <Link to={"/viewdrawing/"+drawing.id}>
+                        <Link to={"/updatedrawing/"+drawing.id+"/"+id}>
                         <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
                         </Link>
-                        <Link to={"/viewdrawing/"+drawing.id}>
+                        {/* <Link to={"/viewdrawing/"+drawing.id}>
                         <button className="btn btn-danger">Delete <DeleteIcon/> </button>
-                        </Link>
+                        </Link> */}
                     </td>    
                     </tr>
                     ))}

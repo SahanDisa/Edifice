@@ -17,6 +17,8 @@ module.exports = app => {
 
   // Delete a Commitment with id
   router.delete("/:id", commitment.delete);
+
+  router.get("/list/:id/:contractCompany", commitment.findByContractCompany);
   
     app.use('/api/projects/commitment', router);
   };

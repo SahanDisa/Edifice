@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import DrawingCategoryService from "../../../services/drawing-category.service";
+import UploadService from "./../../../services/document.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -8,8 +10,6 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 
-//JSX(Javascript XML)
-//https://addrwaing/projectId?=1
 export default class AddDrawing extends Component {
   constructor(props) {
     super(props);
@@ -18,17 +18,28 @@ export default class AddDrawing extends Component {
     this.onChangeType = this.onChangeType.bind(this);
     this.saveDrawing = this.saveDrawing.bind(this);
     this.newDrawing = this.newDrawing.bind(this);
+    this.selectFile = this.selectFile.bind(this);
+    this.upload = this.upload.bind(this);
 
     this.state = {
       id: null,
-      name: "",
+      title: "",
       description: "",
-      drawtype: "1", 
+      // category default value is 1(gallery mode)
+      category: "1",
+      status: "Not Complete",
+      version: 1, 
       projectId: this.props.match.params.id, 
       
       drawingcategories: [],
       currentIndex: -1,
-      submitted: false
+      submitted: false,
+
+      //file
+      selectedFiles: undefined,
+      currentFile: undefined,
+      progress: 0,
+      message: "",
     };
   }
   componentDidMount() {
@@ -36,7 +47,7 @@ export default class AddDrawing extends Component {
   }
   onChangeName(e) {
     this.setState({
-      name: e.target.value
+      title: e.target.value
     });
   }
 
@@ -47,7 +58,7 @@ export default class AddDrawing extends Component {
   }
   onChangeType(e) {
     this.setState({
-      drawtype: e.target.value
+      category: e.target.value
     });
   }
   retriveDrawingCategory(id){
@@ -64,9 +75,11 @@ export default class AddDrawing extends Component {
   }
   saveDrawing() {  
     var data = {
-      name: this.state.name,
+      title: this.state.title,
       description: this.state.description,
-      drawtype: this.state.drawtype,
+      category: this.state.category,
+      version: this.state.version,
+      status: this.state.status,
       projectId: this.state.projectId
     };
 
@@ -74,9 +87,11 @@ export default class AddDrawing extends Component {
       .then(response => {
         this.setState({
           id: response.data.id,
-          name: response.data.name,
+          title: response.data.title,
           description: response.data.description,
-          drawtype: response.data.drawtype,
+          category: response.data.category,
+          version: response.data.version,
+          status: response.data.status,
           projectId: response.data.projectId,
 
           submitted: true
@@ -87,33 +102,82 @@ export default class AddDrawing extends Component {
         console.log(e);
       });
   }
+  selectFile(event) {
+    this.setState({
+      selectedFiles: event.target.files,
+    });
+  }
+  upload() {
+    let currentFile = this.state.selectedFiles[0];
+    let fileName = this.state.title+".pdf";
+    console.log(currentFile);
+    console.log(fileName);
+    
+    this.setState({
+      progress: 0,
+      currentFile: currentFile,
+    });
 
+    UploadService.upload(currentFile, fileName, (event) => {
+      this.setState({
+        progress: Math.round((100 * event.loaded) / event.total),
+      });
+    })
+      .then((response) => {
+        this.setState({
+          message: response.data.message,
+        });
+        return UploadService.getFiles();
+      })
+      .then((files) => {
+        this.setState({
+          fileInfos: files.data,
+        });
+      })
+      .catch(() => {
+        this.setState({
+          progress: 0,
+          message: "Could not upload the file!",
+          currentFile: undefined,
+        });
+      });
+
+    this.setState({
+      selectedFiles: undefined,
+    });
+  }
   newDrawing() {
     this.setState({
       id: null,
-      name: "",
+      title: "",
       description: "",
-      drawtype: "",
+      category: "",
       projectId: this.props.match.params.id,
       
-      submitted: false
+      submitted: true
     });
   }
 
   render() {
-    const {projectId, currentIndex, drawingcategories} = this.state;
+    const {projectId, currentIndex, drawingcategories,selectedFiles,
+      currentFile,
+      progress,
+      message,
+      fileInfos,
+      title} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
           <div>
-            <h4>File details successfully submitted!</h4>
-            <h4>Upload the file</h4>
-            <input type="file" />
-            <button type="upload" className="btn btn-warning">Upload</button>
-            <button className="btn btn-success" onClick={this.newDrawing}>
-            
-            Add Another Drawing
-            </button>
+          <center>
+            <h4>Drawing details successfully submitted!</h4>
+            <Link to={"/drawing/"+projectId} className="btn btn-primary mr-2"  style={{ 'text-decoration': 'none' }}>
+              Back Home
+            </Link>
+            <Link to={"/adddrawing/"+projectId} className="btn btn-primary mr-2"  style={{ 'text-decoration': 'none' }}>
+              Add Drawing
+            </Link>
+          </center>
           </div>
         ) : (
           <div class="container">
@@ -121,15 +185,15 @@ export default class AddDrawing extends Component {
             <div className="row">
             <div className="col-sm-8">
             <div className="form-group">
-              <label htmlFor="name">Name</label>
+              <label htmlFor="title">Name</label>
               <input
                 type="text"
                 className="form-control"
-                id="name"
+                id="title"
                 required
-                value={this.state.name}
+                value={this.state.title}
                 onChange={this.onChangeName}
-                name="name"
+                name="title"
               />
             </div>
 
@@ -147,13 +211,13 @@ export default class AddDrawing extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="drawtype">Drawing Category</label>
+              <label htmlFor="category">Drawing Category</label>
               <select 
                 className="form-control"
                 id="datatype"
                 required
-                name="drawtype"
-                value={this.state.drawtype}
+                name="category"
+                value={this.state.category}
                 onChange={this.onChangeType}
               >
                 {drawingcategories &&
@@ -168,7 +232,63 @@ export default class AddDrawing extends Component {
                 </option>
                 ))}
               </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="description">Version</label>
+              <input
+                type="text"
+                className="form-control"
+                value="1.0.0"
+                disabled
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="description">Status</label>
+              <input
+                type="text"
+                className="form-control"
+                value="Not Complete 🔴"
+                disabled
+              />
             </div>  
+            <div>
+              <h5>Upload the Drawing Source</h5>
+              <p>File source document : - {title}{".pdf"}</p>
+              {/* Div starts */}
+              <div>
+                {currentFile && (
+                  <div className="progress">
+                    <div
+                      className="progress-bar progress-bar-info progress-bar-striped"
+                      role="progressbar"
+                      aria-valuenow={progress}
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      style={{ width: progress + "%" }}
+                    >
+                      {progress}%
+                    </div>
+                  </div>
+                )}
+
+                <label className="btn btn-default">
+                  <input type="file" onChange={this.selectFile} />
+                </label>
+
+                <button className="btn btn-success"
+                  disabled={!selectedFiles}
+                  onClick={this.upload}
+                >
+                  Upload
+                </button>
+
+                <div className="alert alert-light" role="alert">
+                  {message}
+                </div>
+                {/*Ends div here  */}
+                </div>
+            {/* End the container uploading here */}
+            </div> 
             </div>
             <div className="col-sm-4">
             <Timeline>

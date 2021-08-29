@@ -35,6 +35,7 @@ import AddDrawing from "./components/project_management/drawings/adddrawing.comp
 import AddDrawingCategory from "./components/project_management/drawings/adddrawingcategory.component";
 import ViewSingleDrawingCategory from "./components/project_management/drawings/drawing-category-singlepage";
 import ViewSingleDrawing from "./components/project_management/drawings/drawing-singlepage.component";
+import UpdateDrawing from "./components/project_management/drawings/updatedrawing.component";
 
 import AddPhoto from "./components/project_management/photos/addphoto.component";
 import UploadPhotos from "./components/project_management/photos/uploadphoto.component";
@@ -70,6 +71,7 @@ import ViewTasks from "./components/core_tools/tasks/view.component";
 import DocumentHome from "./components/project_management/document/document.component";
 import UploadDocFiles from "./components/project_management/document/adddocument.component";
 import UploadDocment from "./components/project_management/document/uploaddocument.component";
+import ViewSingleDocument from "./components/project_management/document/viewsingledocument.component";
 import PdfViewerComponent from "./components/project_management/document/viewpdf.component";
 
 import MeetingsConfig from "./components/project_management/meetings/configuration.component";
@@ -122,6 +124,8 @@ import SovHome from "./components/financial_management/commitments/sovs.componen
 import AddInvoice from "./components/financial_management/invoicing/addinvoice.component";
 import AddPayment from "./components/financial_management/commitments/addpayment.component";
 import PaymentHome from "./components/financial_management/commitments/payments.component";
+import EditSingleCommitment from "./components/financial_management/commitments/commitment-edit.component";
+import ViewSingleSov from "./components/financial_management/commitments/sov-singlepage.component";
 //import Report from "./components/report/report.component";
 
 class App extends Component {
@@ -268,28 +272,28 @@ class App extends Component {
             <Route path="/dates" component={Dates} />
             <Route path="/defaults" component={Defaults} />
             <Route path="/roles" component={Roles} />
-            
+            {/* Tasks */}
             <Route path="/tasksconfiguration" component={TaskConfiguration} />
             <Route path="/managetasks" component={ManageTasks} />
             <Route path="/managestasks/update" component={UpdateTasks} />
             <Route path="/managestasks/view" component={ViewTasks} />
-            
+            {/* Meeting */}
             <Route path="/meetingsconfiguration" component={MeetingsConfig} />
             <Route path="/managemeetings" component={ManageMeetings} />
             <Route path="/managesmeetings/update" component={UpdateMeetings} />
             <Route path="/managesmeetings/view" component={ViewMeetings} />
-
+            {/* RFI */}
             <Route path="/rfi" component={rfiHome} />
             <Route path="/managerfi/create" component={CreateRFI} />
             <Route path="/managerfi/edit" component={EditRFI} />
             <Route path="/managerfi/view" component={ViewRFI} />
-
+            {/* Action Plan */}
             <Route path="/actionplan" component={actionplanHome} />
-
+            {/* Punch List */}
             <Route path="/punchlist" component={punchlistHome} />
             <Route path="/managepunchlist/view" component={ViewPL} />
             <Route path="/managepunchlist/create" component={CreatePL} />
-
+            {/* Daily Logs */}
             <Route path="/dailylogsconfiguration" component={DlsConfig} />
             <Route path="/managedailylogs" component={ManageDls} />
             <Route path="/managesdailylogs/update" component={UpdateDls} />
@@ -308,12 +312,14 @@ class App extends Component {
             <Route path="/uploaddocument/:name" component={UploadDocment}/>
             <Route path={"/viewdocument"} component={PdfViewerComponent}/>
             <Route path={"/viewdirectory/:id"} component={ViewDirectory}/>
+            <Route path={"/viewsingledocument/:id"} component={ViewSingleDocument}/>
             {/* Drawing Component Routes  */}
             <Route path="/drawing/:id" component={DrawingHome} />
             <Route path="/adddrawingcategory/:id" component={AddDrawingCategory} />
             <Route path="/viewdrawingcategory/:id" component={ViewSingleDrawingCategory}/>
             <Route path="/adddrawing/:id" component={AddDrawing} />
             <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
+            <Route exact path="/updatedrawing/:id/:pid" component={UpdateDrawing}/>
             {/* Photo Component Routes */}
             <Route path="/photos/:id" component={PhotosHome} />
             <Route path="/addphoto/:id" component={AddPhoto}/>
@@ -360,7 +366,8 @@ class App extends Component {
             <Route path="/addinvoice/:id" component={AddInvoice} />
             <Route path="/addpayment/:id" component={AddPayment} />
             <Route path="/viewpayment/:id" component={PaymentHome} />
-           
+            <Route path="/editcommitment/:id" component={EditSingleCommitment} />
+            <Route path="/viewsinglesov/:id" component={ViewSingleSov} />
            
           </Switch>
         </div>
