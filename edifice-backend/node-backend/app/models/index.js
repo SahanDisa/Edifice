@@ -64,6 +64,13 @@ db.categorys = require("./equipment-category.model")(sequelize, Sequelize);
 db.crews = require("./crew.model")(sequelize, Sequelize);
 db.workers = require("./worker.model")(sequelize, Sequelize);
 
+db.meetings = require("./project_management/meeting.model")(sequelize, Sequelize);
+db.meetingcategory = require("./project_management/meetingcategory.model")(sequelize, Sequelize);
+
+//for core class vendors and employees
+db.vendor=require("./vendor.model")(sequelize, Sequelize);
+
+
 //This section is for testing purposes
 db.demo1 = require("./demo1.model")(sequelize, Sequelize);
 db.demo2 = require("./demo2.model")(sequelize, Sequelize);
