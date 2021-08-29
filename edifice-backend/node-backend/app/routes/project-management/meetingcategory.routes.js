@@ -1,5 +1,5 @@
 module.exports = app => {
-  const meetingcategory = require("../../controllers/project_management/meetingcategory.controller.js");
+  const meetingcategory = require("../../controllers/project-management/meetingcategory.controller.js");
 
   var router = require("express").Router();
 

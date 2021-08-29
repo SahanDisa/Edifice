@@ -88,10 +88,11 @@ class Crew extends Component {
             className="mb-2">
                 
             <Card.Body>
-              <Card.Title><h4>Schedule</h4></Card.Title>
+              <Card.Title><h4>Crews</h4></Card.Title>
             </Card.Body>
           </Card> 
           <br/>
+          
             <div>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="status" role="tabpanel" aria-labelledby="allmeetings">  
@@ -115,11 +116,11 @@ class Crew extends Component {
                             <div class="card">
                                 <div class="card-header" id="headingOne">
                                     <h2 class="mb-0">
-                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">{crew.name}</button>
+                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${index}`} aria-expanded="true" aria-controls="collapseOne">{crew.name}</button>
                                       <span class="badge bg-success rounded-pill">{crew.total}</span>
                                     </h2>
                                 </div>
-                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div id={`collapse${index}`} class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div className="">
                                             <div class="col-md-12 text-right mb-2">

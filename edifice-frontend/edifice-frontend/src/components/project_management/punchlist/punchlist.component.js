@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
+import PunchlistDataService from "./../../../services/project_management/punchlist.service.js";
+import PunchListTypesDataService from "./../../../services/project_management/punchlisttypes.service.js";
 
 class PunchList extends Component {
 
@@ -41,7 +43,9 @@ class PunchList extends Component {
                         </Card>
                     </div> 
                 </div>
-                <h4>All the Punch Lists</h4><hr/>
+                <h4>Punch List Types</h4><hr/>
+                
+                <h4>Punch Lists Items</h4><hr/>
                 <ul className="list-group">
                     <li className="list-group-item ">
                         <a href="/managepunchlist/view" style={{ 'text-decoration': 'none'}}>1 - Replace the Broken Switch Plate</a>
