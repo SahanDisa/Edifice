@@ -4,7 +4,6 @@ module.exports = app => {
     var router = require("express").Router();
   
     // Create a new Drawing Category
-    console.log("malithya route ekat aawa");
     router.post("/", drawingcategory.create);
   
     // Retrieve all Drawings category for a project

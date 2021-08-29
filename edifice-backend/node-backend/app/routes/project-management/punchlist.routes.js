@@ -4,7 +4,6 @@ module.exports = app => {
     var router = require("express").Router();
   
     // Create a new meeting
-    console.log("malithya route ekat aawa");
     router.post("/", punchlist.create);
 
     // Retrieve all punchlist for a project

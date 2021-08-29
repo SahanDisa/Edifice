@@ -48,6 +48,7 @@ db.meetings = require("./project-management/meeting.model")(sequelize, Sequelize
 db.meetingcategory = require("./project-management/meetingcategory.model")(sequelize, Sequelize);
 // Punch list component Model Classes
 db.punchlist = require("./project-management/punchlist.model")(sequelize, Sequelize);
+db.punchlisttypes = require("./project-management/punchlisttypes.model")(sequelize, Sequelize);
 
 db.budgets = require("./budget.model.js")(sequelize, Sequelize);
 db.demo = require("./demo.model")(sequelize, Sequelize);
@@ -203,6 +204,13 @@ db.meetings.belongsTo(db.meetingcategory, {
 // One project has many punch lists
 db.projects.hasMany(db.punchlist, { as: "punchlist" });
 db.punchlist.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+// One project has many punch lists types
+db.projects.hasMany(db.punchlisttypes, { as: "punchlisttypes" });
+db.punchlisttypes.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
