@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import DirectCostDataService from "./../../../services/directcost.service";
+import ExcelDataService from "./../../../services/excel.service";
 import { useTable } from "react-table";
 import { Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -14,8 +15,7 @@ const DirectCostList = (props) => {
   const [searchCostCode, setSearchCostCode] = useState("");
   const directcostsRef = useRef();
 
-  
- 
+
   directcostsRef.current = directcosts;
 
   useEffect(() => {
@@ -87,6 +87,24 @@ const DirectCostList = (props) => {
         console.log(e);
       });
   };
+
+
+  //added new
+  
+ const exportDirectCosts = () => {
+    
+  ExcelDataService.download(id)
+    .then((response) => {
+      console.log(response.data)
+
+      //setDirectCosts(response.data);
+      //var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      //filesaver.saveAs(blob, 'fixi.xlsx');
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
 
   const columns = useMemo(
     () => [
@@ -167,14 +185,15 @@ const DirectCostList = (props) => {
                 + Create
                 </Link>
                 
-              <input type="file"/>
-              <button className="btn btn-primary mr-2">
+              <input type="file" id="excelImport" name="excelImport"/>
+              <button className="btn btn-primary mr-2" >
              Import
             </button>
+            
               {/*  <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
                 Import 
   </Link>*/}
-                <button className="btn btn-primary mr-2" /*onClick={export}*/>
+                <button className="btn btn-primary mr-2" onClick={exportDirectCosts}>
                 Export 
                 </button>
                 </div>
