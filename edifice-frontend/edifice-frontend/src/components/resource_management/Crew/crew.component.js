@@ -9,7 +9,7 @@ import  NewCrew from './new-crew.component';
 import Card from 'react-bootstrap/Card';
 
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import UpdateIcon from '@material-ui/icons/Update';
+import EditIcon from '@material-ui/icons/Edit';
 
 import CrewDataService from "./../../../services/crew.service";
 import WorkersDataService from "./../../../services/worker.service";
@@ -129,7 +129,7 @@ class Crew extends Component {
                                                       // (index === currentIndex ? "active" : "")
                                                       // }
                                                       // onClick={() => this.setActiveProject(project, index)}
-                                                      key={index}
+                                                      key={worker.crewId}
                                                   >
                                                   <td>{worker.wId}</td>
                                                   <td>{worker.firstName}</td>
@@ -137,8 +137,8 @@ class Crew extends Component {
                                                   <td>{worker.mobile}</td>
                                                   <td>
                                             
-                                                    <button className="btn btn-primary" data-toggle="modal" data-target="#editWorker">View <VisibilityIcon/> </button>
-                                                    <button className="btn btn-success m-2" data-toggle="modal" data-target="#viewWorker">Update <UpdateIcon/> </button>
+                                                    <button className="btn btn-primary" data-toggle="modal" data-target="#editWorker">Edit <EditIcon/> </button>
+                                                    <button className="btn btn-success m-2" data-toggle="modal" data-target="#viewWorker">View <VisibilityIcon/> </button>
                                                   
                                                   </td>    
                                                   </tr>
