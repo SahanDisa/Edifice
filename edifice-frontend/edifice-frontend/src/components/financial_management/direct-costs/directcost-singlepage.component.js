@@ -132,6 +132,7 @@ const DirectCost = props => {
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
                 name="costCode"
               >
+                <option></option>
                 <option>010-Maintenance Equipment</option>
                 <option>924-Sodding</option>
                 <option>100-Visual Display Boards</option>
@@ -174,6 +175,7 @@ const DirectCost = props => {
                 className={`form-control ${errors.category ? 'is-invalid' : ''}`}
                 name="category"
               >
+                 <option></option>
                 <option>Expense</option>
                 <option>Invoice</option>
                 <option>Payroll</option>
@@ -286,14 +288,14 @@ const DirectCost = props => {
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 1</strong><br/>Create a Direct Cost</h6> </TimelineContent>
+                <TimelineContent><h6><strong>Step 1</strong><br/>Edit a Direct Cost</h6> </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 2</strong><br/>Direct Cost will be automatically added to the Budget.</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 2</strong><br/>Direct Cost amount will be automatically updated in the Budget.</h6></TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
@@ -324,7 +326,7 @@ const DirectCost = props => {
       ) : (
         <div>
           <br />
-          <p>Please click on a Tutorial...</p>
+          <p>Please click on a direct Cost...</p>
         </div>
       )}
     </div>

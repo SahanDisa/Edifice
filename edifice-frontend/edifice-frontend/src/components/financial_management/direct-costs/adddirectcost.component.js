@@ -144,7 +144,7 @@ const AddDirectCost = (props) => {
                 onChange={handleInputChange}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
               >
-                
+                <option></option>
                 <option>010-Maintenance Equipment</option>
                 <option>924-Sodding</option>
                 <option>100-Visual Display Boards</option>
@@ -193,6 +193,7 @@ const AddDirectCost = (props) => {
                 onChange={handleInputChange}
                 className={`form-control ${errors.category ? 'is-invalid' : ''}`}
               >
+                <option></option>
                 <option>Expense</option>
                 <option>Invoice</option>
                 <option>Payroll</option>
