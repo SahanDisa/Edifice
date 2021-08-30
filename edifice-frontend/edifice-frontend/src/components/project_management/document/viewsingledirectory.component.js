@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import DocumentDataService from "./../../../services/documentfile.service";
-import DirectoryDataService from "./../../../services/directory.service";
+import DocumentDataService from "../../../services/documentfile.service";
+import DirectoryDataService from "../../../services/directory.service";
 import Table from 'react-bootstrap/Table';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
