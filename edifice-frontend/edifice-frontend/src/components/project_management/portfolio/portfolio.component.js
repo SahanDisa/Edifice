@@ -97,6 +97,9 @@ export default class PortfolioHome extends Component {
         milestones: [],
         currentIndex: -1,
         content: "",
+        drawingComplete: 0,
+        drawingPending: 0,
+        drawingIncomplete: 0,
         id: this.props.match.params.id,
       };
     }
@@ -144,7 +147,9 @@ export default class PortfolioHome extends Component {
     }
  
     render() {
-        const { milestones, departments, currentIndex,id } = this.state;
+        const { milestones, departments, currentIndex,id,drawingComplete,
+          drawingPending,
+          drawingIncomplete, drawings } = this.state;
         
         return (
             <div>
@@ -195,6 +200,20 @@ export default class PortfolioHome extends Component {
                 </div>   
             </div>
             <hr></hr>
+            {drawings &&
+                drawings.map((drawing, index) => (
+                <div
+                    className={
+                    "container col-3" +
+                    (index === currentIndex ? "active" : "")
+                    }
+                    key={index}
+                >
+                {drawing.status}
+                {drawing.status == "Complete" ? this.onCountComplete :  this.onCountComplete }
+                </div>
+            ))}
+            {drawingComplete}{" "}{drawingPending}{" "}{drawingIncomplete}
             <div className="container">
                 <h3>Project Profile & Team</h3>
                 <Card>
@@ -308,15 +327,15 @@ export default class PortfolioHome extends Component {
               <div className="container">
                 <h6>Drawing</h6>
                 <ProgressBar>
-                  <ProgressBar variant="success" now={35} key={1} label="Complete" />
+                  <ProgressBar variant="success" now={65} key={1} label="Complete" />
                   <ProgressBar variant="warning" now={20} key={2} label="Pending" />
-                  <ProgressBar variant="danger" now={10} key={3}  label="Not Complete"/>
+                  <ProgressBar variant="danger" now={15} key={3}  label="Not Complete"/>
                 </ProgressBar>
                 <h6>Punch List</h6>
                 <ProgressBar>
-                  <ProgressBar variant="success" now={35} key={1} label="Complete"/>
-                  <ProgressBar variant="warning" now={20} key={2} label="Pending" />
-                  <ProgressBar variant="danger" now={10} key={3}  label="Not Complete"/>
+                  <ProgressBar variant="success" now={45} key={1} label="Complete"/>
+                  <ProgressBar variant="warning" now={30} key={2} label="Pending" />
+                  <ProgressBar variant="danger" now={25} key={3}  label="Not Complete"/>
                 </ProgressBar>
               </div>
             </div>
