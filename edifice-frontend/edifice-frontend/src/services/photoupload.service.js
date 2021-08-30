@@ -18,6 +18,10 @@ class UploadPhotoService {
     return http.get("/photos");
   }
 
+  getCaptures(){
+    return http.get("/capture");
+  }
+
   uploadcapture(file, title, onUploadProgress){
     let formData = new FormData();
 

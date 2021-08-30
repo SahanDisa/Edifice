@@ -7,15 +7,16 @@ let storage = multer.diskStorage({
     cb(null, __basedir + "/resources/static/assets/capture/");
   },
   filename: (req, file, cb) => {
+    console.log("capture the name");
     console.log(file.originalname);
     cb(null, file.originalname);
   },
 });
 
-let uploadFile = multer({
+let uploadCapture = multer({
   storage: storage,
   limits: { fileSize: maxSize },
 }).single("file");
 
-let uploadFileMiddleware = util.promisify(uploadFile);
-module.exports = uploadFileMiddleware;
+let uploadCaptureMiddleware = util.promisify(uploadCapture);
+module.exports = uploadCaptureMiddleware;

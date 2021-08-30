@@ -1,6 +1,8 @@
 const uploadFile = require("./../middleware/uploadImage");
+const uploadCapture = require("./../middleware/uploadCapture");
 const fs = require('fs');
 const baseUrl = "http://localhost:8080/api/photos/";
+const baseCaptureUrl = "http://localhost:8080/api/capture/";
 
 const upload = async (req, res) => {
   try {
@@ -75,8 +77,8 @@ const getListFiles = (req, res) => {
   });
 };
 
-const getListCaptures = (req, res) => {
-  const directoryPath = __basedir + "/resources/static/assets/photos/capture";
+const getListCapture = (req, res) => {
+  const directoryPath = __basedir + "/resources/static/assets/capture";
 
   fs.readdir(directoryPath, function (err, files) {
     if (err) {
@@ -90,7 +92,7 @@ const getListCaptures = (req, res) => {
     files.forEach((file) => {
       fileInfos.push({
         name: file,
-        url: baseUrl + file,
+        url: baseCaptureUrl + file,
       });
     });
     
@@ -105,10 +107,18 @@ const download = (req, res) => {
   res.sendFile(directoryPath+fileName);
 };
 
+const getCapture = (req, res) => {
+  
+  const fileName = req.params.name;
+  const directoryPath = __basedir + "/resources/static/assets/capture/";
+  res.sendFile(directoryPath+fileName);
+};
+
 module.exports = {
   upload,
   capture,
   getListFiles,
-  getListCaptures,
+  getListCapture,
   download,
+  getCapture
 };

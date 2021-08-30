@@ -72,6 +72,7 @@ export default class ViewSingleAlbum extends Component {
                     <th>Name</th>
                     <th>Description</th>
                     <th>Type</th>
+                    <th>Resource</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -80,22 +81,21 @@ export default class ViewSingleAlbum extends Component {
                 {photos &&
                     photos.map((photo, index) => (
                     <tr
-                        // className={
-                        // "list-group-item row" +
-                        // (index === currentIndex ? "active" : "")
-                        // }
-                        // onClick={() => this.setActiveProject(project, index)}
                         key={index}
                     >
                     <td>{photo.id}</td>
                     <td>{photo.title}</td>
                     <td>{photo.description}</td>
                     <td>{title}</td>
+                    <td>
+                      {/* Button Group */}
+                      <img src={"http://localhost:8080/api/photos/"+photo.title+".png"} alt="Card image" style={{'width': '200px', 'height': '200px'}}/>
+                    </td>
                     <td>   
-                        {/* Button Group */}
-                        <Link to={"/viewdrawing/"+photo.id}>
+                        
+                        <a href={"http://localhost:8080/api/photos/"+photo.title+".png"} style={{'text-decoration':'none'}} target="_blank">
                         <button className="btn btn-primary">View <VisibilityIcon/> </button>
-                        </Link>
+                        </a>
                         <Link to={"/viewdrawing/"+photo.id}>
                         <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
                         </Link>
