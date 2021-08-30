@@ -33,7 +33,7 @@ module.exports = app => {
 
 
   //export
-  router.get("/download", excelController.download);
+  router.get("/list/:id/download", excelController.download);
 
  
   
