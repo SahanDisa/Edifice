@@ -1,4 +1,4 @@
-import React, { Component, PureComponent } from "react";
+import React, { Component } from "react";
 import { PieChart, Pie, Sector, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
@@ -252,53 +252,74 @@ export default class PortfolioHome extends Component {
               <h3>Project Milestones</h3>
               <p>conatines the project milestones and stages of the project</p>
               <div className="container">
-               {/* stepper */}
-            <div className="container">
-            <Timeline align="alternate">
-            {milestones && milestones.map((milestone, index) => (
-              <TimelineItem key={index}>
-                <TimelineOppositeContent>
-                  <Typography variant="body2" color="textSecondary">
-                    {milestone.duration}
-                  </Typography>
-                </TimelineOppositeContent>
-                <TimelineSeparator>
-                  <TimelineDot variant="outlined" color="primary">
-                    <AssignmentIcon/>
-                  </TimelineDot>
-                  <TimelineConnector />
-                </TimelineSeparator>
-                <TimelineContent>
-                <Paper elevation={3} className="container">
-                  <Typography variant="h6" component="h1">
-                    {milestone.title}
-                  </Typography>
-                  <Typography>{milestone.description}</Typography>
-                </Paper>
-                </TimelineContent>
-              </TimelineItem>
-            ))}
-              <TimelineItem>
-                <TimelineSeparator>
-                  {/* <TimelineDot variant="outlined" color="secondary" /> */}
-                  {/* <TimelineConnector /> */}
-                </TimelineSeparator>
-                <TimelineDot variant="outlined" color="secondary">
-                  <AdjustSharpIcon />
-                </TimelineDot>
-                <TimelineContent>Finish</TimelineContent>
-              </TimelineItem>
-              {/* <TimelineItem>
-                <TimelineSeparator>
-                  <TimelineDot variant="outlined" />
-                </TimelineSeparator>
-                <TimelineContent>Repeat</TimelineContent>
-              </TimelineItem> */}
-            </Timeline>
-            </div>
+                {/* stepper */}
+                <div>
+                <Timeline align="alternate">
+                <TimelineItem>
+                    <TimelineSeparator>
+                      <TimelineDot variant="outlined" color="secondary">
+                        <AdjustSharpIcon />
+                      </TimelineDot>
+                      <TimelineConnector />
+                    </TimelineSeparator>
+                    <TimelineContent>Start</TimelineContent>
+                </TimelineItem>
+                {milestones && milestones.map((milestone, index) => (
+                  <TimelineItem key={index}>
+                    <TimelineOppositeContent>
+                      <Typography variant="body2" color="textSecondary">
+                        {milestone.duration}
+                      </Typography>
+                    </TimelineOppositeContent>
+                    <TimelineSeparator>
+                      <TimelineDot variant="outlined" color="primary">
+                        <AssignmentIcon/>
+                      </TimelineDot>
+                      <TimelineConnector />
+                    </TimelineSeparator>
+                    <TimelineContent>
+                    <Paper elevation={3} className="container">
+                      <Typography variant="h6" component="h1">
+                        {milestone.title}
+                      </Typography>
+                      <Typography>{milestone.description}</Typography>
+                    </Paper>
+                    </TimelineContent>
+                  </TimelineItem>
+                ))}
+                  <TimelineItem>
+                    <TimelineSeparator>
+                      {/* <TimelineDot variant="outlined" color="secondary" /> */}
+                      {/* <TimelineConnector /> */}
+                    </TimelineSeparator>
+                    <TimelineDot variant="outlined" color="secondary">
+                      <AdjustSharpIcon />
+                    </TimelineDot>
+                    <TimelineContent>Finish</TimelineContent>
+                  </TimelineItem>
+                </Timeline>
+                </div>
               </div>
             </div>
-            {/* End of Stepper */}
+            {/* Progress Tab */}
+            <div className="container">
+              <h3>Progress</h3>
+              <p>Visulize the progress of all the activities</p>
+              <div className="container">
+                <h6>Drawing</h6>
+                <ProgressBar>
+                  <ProgressBar variant="success" now={35} key={1} label="Complete" />
+                  <ProgressBar variant="warning" now={20} key={2} label="Pending" />
+                  <ProgressBar variant="danger" now={10} key={3}  label="Not Complete"/>
+                </ProgressBar>
+                <h6>Punch List</h6>
+                <ProgressBar>
+                  <ProgressBar variant="success" now={35} key={1} label="Complete"/>
+                  <ProgressBar variant="warning" now={20} key={2} label="Pending" />
+                  <ProgressBar variant="danger" now={10} key={3}  label="Not Complete"/>
+                </ProgressBar>
+              </div>
+            </div>
             </div>
         );
     }
