@@ -19,11 +19,11 @@ const AddDirectCost = (props) => {
     costCode: Yup.string().required('Cost Code is required'),
     description: Yup.string().required('Description is required'),
     category: Yup.string().required('Category is required'),
-    vendor: Yup.string().required('Category is required'),
-    employee: Yup.string().required('Category is required'),
-    receivedDate: Yup.string().required('Category is required'),
-    paidDate: Yup.string().required('Category is required'),
-    ammount: Yup.string().required('Category is required'),
+    vendor: Yup.string().required('Vendor is required'),
+    employee: Yup.string().required('Employee is required'),
+    receivedDate: Yup.string().required('Received Date is required'),
+    paidDate: Yup.string().required('Paid Date is required'),
+    amount: Yup.string().required('Amount is required'),
   });
 
   const {
@@ -51,7 +51,7 @@ const AddDirectCost = (props) => {
     employee :"",
     receivedDate :"",
     paidDate :"",
-    ammount: "",
+    amount: "",
     projectId:props.match.params.id,  
     
   };
@@ -72,7 +72,7 @@ const AddDirectCost = (props) => {
       employee: directcost.employee,
       receivedDate: directcost.receivedDate,
       paidDate: directcost.paidDate,
-      ammount: directcost.ammount,
+      amount: directcost.amount,
       projectId: directcost.projectId,
     };
 
@@ -87,7 +87,7 @@ const AddDirectCost = (props) => {
           employee: response.data.employee,
           receivedDate: response.data.receivedDate,
           paidDate: response.data.paidDate,
-          ammount: response.data.ammount,
+          amount: response.data.amount,
           projectId: response.data.projectId,
      
         });
@@ -270,20 +270,20 @@ const AddDirectCost = (props) => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="amount">Ammount :</label>
+              <label htmlFor="amount">Amount :</label>
               <input
                 type="text"
                
-                id="ammount"
+                id="amount"
              
               
-                name="ammount"
-                {...register('ammount')}
-                value={directcost.ammount}
+                name="amount"
+                {...register('amount')}
+                value={directcost.amount}
                 onChange={handleInputChange}
-                className={`form-control ${errors.ammount ? 'is-invalid' : ''}`}
+                className={`form-control ${errors.amount ? 'is-invalid' : ''}`}
               />
-               <div className="invalid-feedback">{errors.ammount?.message}</div>
+               <div className="invalid-feedback">{errors.amount?.message}</div>
             </div>
             <div className="form-group">
             <button type="submit" onClick={saveDirectCost} className="btn btn-success">

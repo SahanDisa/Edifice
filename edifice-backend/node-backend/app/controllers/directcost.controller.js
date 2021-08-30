@@ -21,7 +21,7 @@ exports.create = (req, res) => {
     employee: req.body.employee,
     receivedDate: req.body.receivedDate,
     paidDate: req.body.paidDate,
-    ammount: req.body.ammount,
+    amount: req.body.amount,
     projectId: req.body.projectId,
   };
 
@@ -173,21 +173,40 @@ exports.getDTotalOfCostCodes = (req, res) => {
   
   };*/
 
-  exports.getDTotalOfCostCodes = (req, res) => {
+  /*exports.getDTotalOfCostCodes = (req, res) => {
     const id = req.params.id;
     const costCode = req.params.costCode;
-    const sum = res.params.sum;
-    DirectCost.sum('ammount', { where: { 
-      costCode:costCode,
-      projectId:id } } )
-      .then(sum => {
-        res.send(sum);
-  })
+    //const sum = res.params.sum;
+    const tot = DirectCost.findAll(
+      { 
+      where: { costCode:costCode,projectId:id } ,
+      attributes: [[sequelize.fn('sum', sequelize.col('ammount')), 'total']]
+      } ,
+      console.log(tot)
+      )
+      .then(data => {
+        res.send(tot);
+      })
     .catch(err => {
       res.status(500).send({
         message: "Error retrieving Project Budget with id=" 
       });
     });  
     
+    };*/
+
+
+    exports.getDTotalOfCostCodes = (req, res) => {
+      const id = req.params.id;
+      const costCode = req.params.costCode;
+      DirectCost.sum(
+        'amount',
+       {  where: { costCode:costCode,projectId:id } }
+       )
+       .then(sum => {
+       res.send(sum);
+        //console.log(sum)
+      })
+      
     };
 

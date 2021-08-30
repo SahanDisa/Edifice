@@ -121,8 +121,8 @@ const DirectCostList = (props) => {
     accessor: "paidDate",
   },
   {
-        Header: "Ammount (Rs.)",
-        accessor: "ammount",
+        Header: "Amount (Rs.)",
+        accessor: "amount",
       },
       {
         Header: "",
@@ -174,9 +174,9 @@ const DirectCostList = (props) => {
               {/*  <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
                 Import 
   </Link>*/}
-                <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
+                <button className="btn btn-primary mr-2" /*onClick={export}*/>
                 Export 
-                </Link>
+                </button>
                 </div>
       <div className="form-group col-md-4">
         <div className="input-group mb-3">

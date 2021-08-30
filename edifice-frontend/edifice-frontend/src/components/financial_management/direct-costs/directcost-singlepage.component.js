@@ -22,11 +22,11 @@ const DirectCost = props => {
     costCode: Yup.string().required('Cost Code is required'),
     description: Yup.string().required('Description is required'),
     category: Yup.string().required('Category is required'),
-    vendor: Yup.string().required('Category is required'),
-    employee: Yup.string().required('Category is required'),
-    receivedDate: Yup.string().required('Category is required'),
-    paidDate: Yup.string().required('Category is required'),
-    ammount: Yup.string().required('Category is required'),
+    vendor: Yup.string().required('Vendor is required'),
+    employee: Yup.string().required('Employee is required'),
+    receivedDate: Yup.string().required('Received Date is required'),
+    paidDate: Yup.string().required('Paid Date is required'),
+    amount: Yup.string().required('Amount is required'),
   });
 
   const {
@@ -54,7 +54,7 @@ const DirectCost = props => {
     employee: "",
     receivedDate: "",
     paidDate: "",
-    ammount: "",
+    amount: "",
     projectId:""
   };
   const [currentDirectCost, setCurrentDirectCost] = useState(initialDirectCostState);
@@ -241,18 +241,18 @@ const DirectCost = props => {
               <div className="invalid-feedback">{errors.paidDate?.message}</div>
             </div>
             <div className="form-group">
-              <label htmlFor="description">Ammount</label>
+              <label htmlFor="description">Amount</label>
               <input
                 type="text"
                
-                id="ammount"
-                name="ammount"
-                {...register('ammount')}
-                value={currentDirectCost.ammount}
+                id="amount"
+                name="amount"
+                {...register('amount')}
+                value={currentDirectCost.amount}
                 onChange={handleInputChange}
-                className={`form-control ${errors.ammount ? 'is-invalid' : ''}`}
+                className={`form-control ${errors.amount ? 'is-invalid' : ''}`}
               />
-              <div className="invalid-feedback">{errors.ammount?.message}</div>
+              <div className="invalid-feedback">{errors.amount?.message}</div>
             </div>
             <div className="form-group">
 

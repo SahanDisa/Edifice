@@ -1,5 +1,6 @@
 module.exports = app => {
     const directcost = require("./../controllers/directcost.controller");
+    const excelController = require("./../controllers/excel.controller");
   
     var router = require("express").Router();
 
@@ -27,7 +28,14 @@ module.exports = app => {
   router.delete("/:id", directcost.delete);
 
  
-  router.get("/list/:id/:costCode", directcost.getDTotalOfCostCodes);
+  //router.get("/list/:id/:costCode", directcost.getDTotalOfCostCodes);
+  router.get("/:id/:costCode", directcost.getDTotalOfCostCodes);
+
+
+  //export
+  router.get("/download", excelController.download);
+
+ 
   
     app.use('/api/projects/directcost', router);
   };
