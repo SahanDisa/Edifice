@@ -60,6 +60,19 @@ export default class ViewSingleCommitment extends Component {
         {currentCommitment ? (
           <div class="container">
             <h4>{currentCommitment.hash} - {currentCommitment.title}</h4>
+            <div className="col-12 text-right">
+              <div className="row col-12 text-right">
+            <Link to={"/viewsov/"+currentCommitment.id}>
+                    <button className="btn btn-success m-2">SoVs </button>
+                    </Link><br />
+                    <Link to={"/viewpayment/"+currentCommitment.id}>
+                    <button className="btn btn-success m-2">Payments </button>
+                    </Link><br />
+                    <Link to={"/addinvoice/"+currentCommitment.id}>
+                    <button className="btn btn-success m-2">Invoices </button>
+                    </Link></div>
+                    </div>
+                    <hr />
             <div className="row">
        <div className="col-sm-6">
        <div className="form-group">
@@ -227,15 +240,15 @@ export default class ViewSingleCommitment extends Component {
           <div className="col-sm-6">
         { /* <Link to={"/addsov/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">+ Create SoV </button>
-      </Link><br />*/}
+      </Link><br />
 
                     <Link to={"/viewsov/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">SoVs </button>
-                    </Link><br />
+                    </Link><br />*/}
 
                    {/* <Link to={"/addpayment/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">+ Create Payment </button>
-    </Link><br />*/}
+    </Link><br />
 
                     <Link to={"/viewpayment/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">Payments </button>
@@ -244,7 +257,7 @@ export default class ViewSingleCommitment extends Component {
 
                     <Link to={"/addinvoice/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">Invoices </button>
-                    </Link><br />
+                    </Link><br />*/}
             </div>
             </div>
        
