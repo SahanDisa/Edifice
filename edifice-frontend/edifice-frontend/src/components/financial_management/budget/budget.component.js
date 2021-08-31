@@ -12,10 +12,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 const BudgetList = (props) => {
   const {id}= useParams();
   const [budgets, setBudgets] = useState([]);
-  const [directcosts, setDirectCosts] = useState([]);
+  const [total, setTotal] = useState(0);
   const [searchCostCode, setSearchCostCode] = useState("");
   const budgetsRef = useRef();
-
+const sum ="";
   
  
   budgetsRef.current = budgets;
@@ -87,22 +87,9 @@ const BudgetList = (props) => {
   const retrieveTotalDirectCosts = (rowIndex) => {
     const id = budgetsRef.current[rowIndex].projectId;
     const costCode = budgetsRef.current[rowIndex].costCode;
-  const est=budgetsRef.current[rowIndex].estimatedBudget;
 
     DirectCostDataService.getDTotalOfCostCodes (id,costCode)
-      .then((response) => {
-        setDirectCosts(response.sum);
-        //document.write(response.data);
-        console.log("working")
-        console.log(costCode)
-        console.log(est)
-      
-        console.log(id)
-        console.log(response.sum)
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    
 
   };
 
@@ -121,13 +108,10 @@ const BudgetList = (props) => {
         accessor: "directCosts",
         Cell: (props) => {
           const rowIdx = props.row.id;
-       
-return(
-  <div>
-  {retrieveTotalDirectCosts(rowIdx)}
-  </div>
-  );
-      
+          //retrieveTotalDirectCosts(rowIdx); 
+          return(
+            <div>{sum}</div>
+          );
         },
       },
       {
@@ -221,7 +205,7 @@ return(
           className="table table-striped table-bordered"
           {...getTableProps()}
         >
-          <thead>
+          <thead className="Table-header">
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (

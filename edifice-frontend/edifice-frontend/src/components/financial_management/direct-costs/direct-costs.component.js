@@ -89,7 +89,7 @@ const DirectCostList = (props) => {
   };
 
 
-  //added new
+  /*added new
   
  const exportDirectCosts = () => {
     
@@ -104,7 +104,7 @@ const DirectCostList = (props) => {
     .catch((e) => {
       console.log(e);
     });
-};
+};*/
 
   const columns = useMemo(
     () => [
@@ -193,7 +193,7 @@ const DirectCostList = (props) => {
               {/*  <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
                 Import 
   </Link>*/}
-                <button className="btn btn-primary mr-2" onClick={exportDirectCosts}>
+                <button className="btn btn-primary mr-2">
                 Export 
                 </button>
                 </div>
@@ -242,7 +242,7 @@ const DirectCostList = (props) => {
           className="table table-striped table-bordered"
           {...getTableProps()}
         >
-          <thead>
+          <thead className="Table-header">
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
