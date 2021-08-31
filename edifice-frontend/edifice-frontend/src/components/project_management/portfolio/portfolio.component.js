@@ -21,7 +21,6 @@ import { Card } from "react-bootstrap";
 const data = [
   { name: 'Completed', value: 400 },
   { name: 'Pending', value: 300 },
-  // { name: 'Group C', value: 300 },
   { name: 'Not Completed', value: 200 },
 ];
 const dataline = [
@@ -87,7 +86,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 export default class PortfolioHome extends Component {
     constructor(props) {
       super(props);
-      this.retrieveDrawing = this.retrieveDrawing.bind(this);
+      this.retrieveComplete = this.retrieveComplete.bind(this);
       this.retrieveDepartments = this.retrieveDepartments.bind(this);
       this.retriveMilestones = this.retriveMilestones.bind(this);
       
@@ -105,7 +104,7 @@ export default class PortfolioHome extends Component {
     }
   
     componentDidMount() {
-      this.retrieveDrawing(this.props.match.params.id);
+      this.retrieveComplete();
       this.retrieveDepartments(this.props.match.params.id);
       this.retriveMilestones(this.props.match.params.id);
     }
@@ -133,11 +132,34 @@ export default class PortfolioHome extends Component {
           console.log(e);
         });
     }
-    retrieveDrawing(id) {
-      DrawingDataService.getAll(id)
+    retrieveComplete() {
+      DrawingDataService.getStatus("Complete")
         .then(response => {
           this.setState({
-            drawings: response.data
+            drawingComplete: response.data.length,
+            // dataPie: response.data.length,
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        DrawingDataService.getStatus("Pending")
+        .then(response => {
+          this.setState({
+            drawingPending: response.data.length,
+            //dataPie: response.data.length,
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        DrawingDataService.getStatus("Not Complete")
+        .then(response => {
+          this.setState({
+            drawingIncomplete: response.data.length,
+            //dataPie: response.data.length,
           });
           console.log(response.data);
         })
@@ -149,7 +171,13 @@ export default class PortfolioHome extends Component {
     render() {
         const { milestones, departments, currentIndex,id,drawingComplete,
           drawingPending,
-          drawingIncomplete, drawings } = this.state;
+          drawingIncomplete} = this.state;
+        
+        const dataPie = [
+            { name: 'Completed', value:  drawingComplete*100},
+            { name: 'Pending', value: drawingPending*100 },
+            { name: 'Not Completed', value: drawingIncomplete*100 },
+        ];
         
         return (
             <div>
@@ -166,7 +194,7 @@ export default class PortfolioHome extends Component {
                     <Tooltip />
                     <Legend />
                     <Pie
-                      data={data}
+                      data={dataPie}
                       cx="50%"
                       cy="50%"
                       labelLine={false}
@@ -175,7 +203,7 @@ export default class PortfolioHome extends Component {
                       fill="#8884d8"
                       dataKey="value"
                     >
-                      {data.map((entry, index) => (
+                      {dataPie.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>
@@ -200,20 +228,26 @@ export default class PortfolioHome extends Component {
                 </div>   
             </div>
             <hr></hr>
-            {drawings &&
-                drawings.map((drawing, index) => (
-                <div
-                    className={
-                    "container col-3" +
-                    (index === currentIndex ? "active" : "")
-                    }
-                    key={index}
-                >
-                {drawing.status}
-                {drawing.status == "Complete" ? this.onCountComplete :  this.onCountComplete }
-                </div>
-            ))}
-            {drawingComplete}{" "}{drawingPending}{" "}{drawingIncomplete}
+            
+            {/* Progress Tab */}
+            <div className="container">
+              <h3>Progress by Activities</h3>
+              <p>Visulize the progress of all the activities</p>
+              <div className="container">
+                <h6>Drawing</h6>
+                <ProgressBar>
+                  <ProgressBar variant="success" now={(drawingComplete)/(drawingComplete + drawingPending + drawingIncomplete)*100} key={1} label="Complete" />
+                  <ProgressBar variant="warning" now={(drawingPending)/(drawingComplete + drawingPending + drawingIncomplete)*100} key={2} label="Pending" />
+                  <ProgressBar variant="danger" now={(drawingIncomplete)/(drawingComplete + drawingPending + drawingIncomplete)*100} key={3}  label="Not Complete"/>
+                </ProgressBar>
+                <h6>Punch List</h6>
+                <ProgressBar>
+                  <ProgressBar variant="success" now={45} key={1} label="Complete"/>
+                  <ProgressBar variant="warning" now={30} key={2} label="Pending" />
+                  <ProgressBar variant="danger" now={25} key={3}  label="Not Complete"/>
+                </ProgressBar>
+              </div>
+            </div>
             <div className="container">
                 <h3>Project Profile & Team</h3>
                 <Card>
@@ -318,25 +352,6 @@ export default class PortfolioHome extends Component {
                   </TimelineItem>
                 </Timeline>
                 </div>
-              </div>
-            </div>
-            {/* Progress Tab */}
-            <div className="container">
-              <h3>Progress</h3>
-              <p>Visulize the progress of all the activities</p>
-              <div className="container">
-                <h6>Drawing</h6>
-                <ProgressBar>
-                  <ProgressBar variant="success" now={65} key={1} label="Complete" />
-                  <ProgressBar variant="warning" now={20} key={2} label="Pending" />
-                  <ProgressBar variant="danger" now={15} key={3}  label="Not Complete"/>
-                </ProgressBar>
-                <h6>Punch List</h6>
-                <ProgressBar>
-                  <ProgressBar variant="success" now={45} key={1} label="Complete"/>
-                  <ProgressBar variant="warning" now={30} key={2} label="Pending" />
-                  <ProgressBar variant="danger" now={25} key={3}  label="Not Complete"/>
-                </ProgressBar>
               </div>
             </div>
             </div>
