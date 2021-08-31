@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
       category:{
         type: Sequelize.STRING
       },
-      path: {
+      status: {
         type: Sequelize.STRING  
       }
         }, {

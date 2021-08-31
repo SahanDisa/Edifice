@@ -16,7 +16,7 @@ exports.create = (req, res) => {
     title: req.body.title,
     description: req.body.description,
     category: req.body.category,
-    path: req.body.path,
+    status: req.body.status,
     projectId: req.body.projectId,
   };
 
@@ -77,6 +77,72 @@ exports.findOne = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message: "Error retrieving Document with id=" + id
+      });
+    });  
+};
+
+
+// Update a Document by the id in the request
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  Document.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Document was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Document with id=${id}. Maybe Document was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Document with id=" + id
+      });
+    });
+};
+
+// Delete a Document with the specified id in the request
+exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  Document.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Document was deleted successfully!"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Document with id=${id}. Maybe Document was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete Document with id=" + id
+      });
+    });
+};
+// Get drawings for a given category
+exports.findAllbyStatus = (req, res) => {
+  const status = req.params.status;
+  Document.findAll({ where: {
+    status: status
+  }})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Complete Drawings with id=" + id
       });
     });  
 };

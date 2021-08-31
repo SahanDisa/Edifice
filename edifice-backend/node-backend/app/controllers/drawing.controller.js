@@ -131,3 +131,18 @@ exports.delete = (req, res) => {
       });
     });
 };
+// Get drawings for a given category
+exports.findAllbyStatus = (req, res) => {
+  const status = req.params.status;
+  Drawing.findAll({ where: {
+    status: status
+  }})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Complete Drawings with id=" + id
+      });
+    });  
+};
