@@ -181,8 +181,8 @@ export default class BoardUser extends Component {
               <div className="card card-hover shadow-sm" style={cardStyle}>
               <a className="d-block nav-heading text-center mt-3 mb-1" style={linkText} href="#">
 
-                <h3 className="nav-heading-title mb-0" style={{ fontSize:55 }}><span style={{ fontSize:18 }}>Rs. </span>48M</h3>
-                <h5> <HomeWorkIcon style={{ fontSize:25 }}/>  Capital</h5>
+                <h3 className="nav-heading-title mb-0" style={{ fontSize:55 }}>5</h3>
+                <h5> <SupervisorAccountIcon style={{ fontSize:25 }}/>  Pending Tasks</h5>
               </a>
               </div>
             </div>
@@ -191,37 +191,7 @@ export default class BoardUser extends Component {
             <div classname-="mb-2">
               <h3> Ongoing Projects:</h3>
             </div>
-          <div classname="row">
-            
-            <div className="card card-hover shadow-sm col-lg-12 pt-1 mb-3 pb-3" id="project1">
-              <a className="d-block nav-heading text-left ml-4 mt-3 mb-1 pb-3" href="#">
-                  <div classname="row">
-                    <h4 style={{color: "#273F7D"}} className="mb-6">Port City</h4>
-                        <div className="col-sm-6 mb-2" id="project1">
-                          <ProgressBar now={20} label="20" />
-                        </div>
-                      <div className="col-sm-6" id="project1_d">
-                        <h5 mb-0> <SupervisorAccountIcon style={{ fontSize:24 }}/>  31</h5>
-
-                      </div>
-                  </div>
-              </a>
-            </div>
-
-            <div className="card card-hover shadow-sm col-lg-12 pt-1 mb-3 pb-3" id="project2">
-              <a className="d-block nav-heading text-left ml-4 mt-3 mb-1 pb-3" href="#">
-                  <h4 style={{color: "#273F7D"}} className="mb-6">Anilana</h4>
-                    <div className="col-sm-6 ml-6 mr-6 mt-6 pt-6 mb-2" id="project2">
-                      <ProgressBar now={40} label="40" variant="warning" />
-                    </div>
-                    <div className="col-sm-2 mb-grid-gutter" id="project1_d">
-                      <h5 mb-0> <SupervisorAccountIcon style={{ fontSize:24 }}/>  12</h5>
-                    </div>
-              </a>
-            </div>
-
-          </div>
-        <div className="row">
+          <div className="row">
           <div className="col-3">
             <div className="list-group" id="list-tab" role="tablist">
               <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="/reports" role="tab" aria-controls="settings">Generate Report</a>
@@ -232,6 +202,45 @@ export default class BoardUser extends Component {
               <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="#list-report" role="tab" aria-controls="settings">Analytics</a>
             </div>
           </div>
+          <div classname="row">
+            
+            <div className="card card-hover shadow-sm col-lg-12 pt-1 mb-3 pb-3" id="project1">
+              <a style={{ textDecoration: 'none' }} className="d-block nav-heading text-left ml-4 mt-3 mb-1 pb-3" href="projectmanagementhome/1">
+                  <div classname="row">
+                    <h4 style={{color: "#273F7D"}} className="mb-6">Project Demo #1 Colombo</h4>
+                        <div className="col-sm-6 mb-2" id="project1">
+                          <ProgressBar now={20} label="20" />
+                        </div>
+                      <div className="col-sm-6" id="project1_d">
+                        <h5 mb-0> <SupervisorAccountIcon style={{ fontSize:24 }}/>  31</h5>
+
+                      </div>
+                      <div className="col-2">
+                        <div className="list-group" id="list-tab" role="tablist"></div>
+                          <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="/reports" role="tab" aria-controls="settings">Report</a>
+                      </div>
+                  </div>
+              </a>
+            </div>
+
+            <div className="card card-hover shadow-sm col-lg-12 pt-1 mb-3 pb-3" id="project2">
+              <a style={{ textDecoration: 'none' }} className="d-block nav-heading text-left ml-4 mt-3 mb-1 pb-3" href="#">
+                  <h4 style={{color: "#273F7D"}} className="mb-6">Anilana</h4>
+                    <div className="col-sm-6 ml-6 mr-6 mt-6 pt-6 mb-2" id="project2">
+                      <ProgressBar now={40} label="40" variant="warning" />
+                    </div>
+                    <div className="col-sm-2 mb-grid-gutter" id="project1_d">
+                      <h5 mb-0> <SupervisorAccountIcon style={{ fontSize:24 }}/>  12</h5>
+                    </div>
+                    <div className="col-2">
+                        <div className="list-group" id="list-tab" role="tablist"></div>
+                          <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="/reports" role="tab" aria-controls="settings">Report</a>
+                      </div>
+              </a>
+            </div>
+
+          </div>
+        
           {/* Admin content */}
           <div className="col-10">
             <div className="tab-content" id="nav-tabContent">
