@@ -30,7 +30,7 @@ exports.create = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Project."
+          err.message || "Some error occurred while creating vendor."
       });
     });
 };
@@ -40,7 +40,7 @@ exports.findAll = (req, res) => {
     const Id = req.query.id;
     //var condition = 
   
-    Vendor.findAll({ where: {id:Id} })
+    Vendor.findAll()
       .then(data => {
         res.send(data);
       })
