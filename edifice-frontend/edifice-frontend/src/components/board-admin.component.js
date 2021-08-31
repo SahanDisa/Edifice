@@ -147,9 +147,9 @@ export default class BoardUser extends Component {
         <h3> Core tools home</h3>
         <p>Current statistics of ongoing projects </p>
         <div className="row">
-            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2" id="employeecard">
+            <div className="col-lg-3 col-sm-6 pb-2" id="employeecard">
               <div className="card card-hover shadow-sm" style={cardStyle}>
-              <a className="d-block nav-heading text-center mt-3 mb-1" href="/employees" style={linkText}>
+              <a className="d-block nav-heading text-center mt-3" href="/employees" style={linkText}>
 
                 <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>148</h1>
                 <h5 mb-0> <SupervisorAccountIcon style={{ fontSize:25 }}/>  Employees</h5>
@@ -157,9 +157,9 @@ export default class BoardUser extends Component {
               </div>
             </div>
 
-            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-5" id="projectcard">
+            <div className="col-lg-3 col-sm-6 pb-5" id="projectcard">
               <div className="card card-hover shadow-sm" style={cardStyle}>
-              <a className="d-block nav-heading text-center mt-3 mb-1" style={linkText} href="/projects">
+              <a className="d-block nav-heading text-center mt-3" style={linkText} href="/projects">
 
                 <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
                 <h5> <HomeWorkIcon style={{ fontSize:25 }}/>  Projects</h5>
@@ -167,9 +167,9 @@ export default class BoardUser extends Component {
               </div>
             </div>
 
-            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2" id="vendorcard">
+            <div className="col-lg-3 col-sm-6 pb-2" id="vendorcard">
               <div className="card card-hover shadow-sm" style={cardStyle}>
-              <a className="d-block nav-heading text-center mt-3 mb-1" style={linkText} href="/vendor">
+              <a className="d-block nav-heading text-center mt-3" style={linkText} href="/vendor">
 
                 <h1 className="nav-heading-title mb-1" style={{ fontSize:55 }}>56</h1>
                 <h6> <HomeWorkIcon style={{ fontSize:25 }}/>  Vendors & Subcontractors</h6>
@@ -177,9 +177,9 @@ export default class BoardUser extends Component {
               </div>
             </div>
 
-            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2" id="capitalcard">
+            <div className="col-lg-3 col-sm-6 pb-2" id="capitalcard">
               <div className="card card-hover shadow-sm" style={cardStyle}>
-              <a className="d-block nav-heading text-center mt-3 mb-1" style={linkText} href="#">
+              <a className="d-block nav-heading text-center mt-3" style={linkText} href="#">
 
                 <h3 className="nav-heading-title mb-0" style={{ fontSize:55 }}>5</h3>
                 <h5> <SupervisorAccountIcon style={{ fontSize:25 }}/>  Pending Tasks</h5>
@@ -187,21 +187,20 @@ export default class BoardUser extends Component {
               </div>
             </div>
 
-          </div>
-            <div classname-="mb-2">
-              <h3> Ongoing Projects:</h3>
-            </div>
-          <div className="row">
-          <div className="col-3">
+          <div className="col-4 mb-4">
             <div className="list-group" id="list-tab" role="tablist">
               <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="/reports" role="tab" aria-controls="settings">Generate Report</a>
             </div>
           </div>
-          <div className="col-3">
+          <div className="col-4">
             <div className="list-group" id="list-tab" role="tablist">
               <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="#list-report" role="tab" aria-controls="settings">Analytics</a>
             </div>
           </div>
+          </div>
+            <div classname-="mt-2 mb-2">
+              <h3> Ongoing Projects:</h3>
+            </div>
           <div classname="row">
             
             <div className="card card-hover shadow-sm col-lg-12 pt-1 mb-3 pb-3" id="project1">
@@ -240,7 +239,8 @@ export default class BoardUser extends Component {
             </div>
 
           </div>
-        
+        <div className="row">
+          
           {/* Admin content */}
           <div className="col-10">
             <div className="tab-content" id="nav-tabContent">
