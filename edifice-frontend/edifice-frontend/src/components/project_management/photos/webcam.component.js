@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {base64StringToBlob} from 'blob-util';
 import Webcam from "react-webcam";
 import UploadService from "./../../../services/photoupload.service";
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
+import { Card } from 'react-bootstrap';
 
 const WebcamComponent = () => <Webcam />;
 
@@ -19,7 +20,7 @@ export const WebcamCapture = () => {
     const [progress, setProgress] = useState(0);
     const [message, setMessage] = useState("");
     const [currentFile, setCurrentFile] = useState(undefined);
-
+    const [fileInfos, setFileInfos] = useState([]);
     
     const capture = React.useCallback(
         () => {
@@ -46,31 +47,31 @@ export const WebcamCapture = () => {
         setCurrentFile(currentFile);
         console.log(currentFile.name);
     
-        UploadService.upload(currentFile, filename, (event) => {
+        UploadService.uploadcapture(currentFile, filename, (event) => {
           setProgress(Math.round((100 * event.loaded) / event.total));
         })
           .then((response) => {
             setMessage(response.data.message);
-            return UploadService.getFiles();
+            return UploadService.getCaptures();
           })
           .then((files) => {
             console.log(files.data);
-            // setFileInfos(files.data);
+            setFileInfos(files.data);
           })
           .catch(() => {
             setProgress(0);
             setMessage("Could not upload the file!");
             setCurrentFile(undefined);
           });
-          window.location.reload();
+          //window.location.reload();
         // setSelectedFiles(undefined);
     };
     
-    // useEffect(() => {
-    //     UploadService.getFiles().then((response) => {
-    //       setFileInfos(response.data);
-    //     });
-    // }, []);
+    useEffect(() => {
+        UploadService.getCaptures().then((response) => {
+          setFileInfos(response.data);
+        });
+    }, []);
 
     return (
         <div className="webcam-container">
@@ -128,6 +129,25 @@ export const WebcamCapture = () => {
                 </center>
                     
                 }
+                <div className="container">
+                    <h3>Recent Captures</h3>
+                    <div className="row">
+                    {fileInfos &&
+                            fileInfos.map((file, index) => (
+                            <div className="container col-2 mt-1" key={index}>
+                                <Card className="bg-dark text-white">
+                                <Card.Img src={file.url} alt="Card image" style={{'width': '150px', 'height': '150px'}}/>
+                                <Card.ImgOverlay>
+                                {/* <Card.Title>{file.name}</Card.Title>
+                                <Card.Text>
+                                    {file.description}
+                                </Card.Text> */}
+                                </Card.ImgOverlay>
+                            </Card>
+                            </div>
+                            ))}
+                    </div>
+                </div>
             </div>
         </div>
     );

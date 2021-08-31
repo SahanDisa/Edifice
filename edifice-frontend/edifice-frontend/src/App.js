@@ -17,7 +17,7 @@ import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Profile from "./components/profile.component";
-import BoardUser from "./components/board-user.component";
+import BoardUser from "./components/board-project.component";
 import BoardResource from "./components/board-resource.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
@@ -28,7 +28,7 @@ import AddMilestone from "./components/core_tools/admin/add-milestone.component"
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
 import AddDirectory from "./components/project_management/document/adddirectory.component";
-import ViewDirectory from "./components/project_management/document/directorysinglepage";
+import ViewDirectory from "./components/project_management/document/viewsingledirectory.component";
 
 import DrawingHome from "./components/project_management/drawings/drawings.component";
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
@@ -72,7 +72,7 @@ import DocumentHome from "./components/project_management/document/document.comp
 import UploadDocFiles from "./components/project_management/document/adddocument.component";
 import UploadDocment from "./components/project_management/document/uploaddocument.component";
 import ViewSingleDocument from "./components/project_management/document/viewsingledocument.component";
-import PdfViewerComponent from "./components/project_management/document/viewpdf.component";
+import UpdateDocument from "./components/project_management/document/updatedocument.component";
 
 import MeetingsConfig from "./components/project_management/meetings/configuration.component";
 import ManageMeetings from "./components/project_management/meetings/manage.component";
@@ -310,8 +310,8 @@ class App extends Component {
             <Route path="/document/:id" component={DocumentHome} />
             <Route path="/adddocument/:id" component={UploadDocFiles} />
             <Route path="/uploaddocument/:name" component={UploadDocment}/>
-            <Route path={"/viewdocument"} component={PdfViewerComponent}/>
-            <Route path={"/viewdirectory/:id"} component={ViewDirectory}/>
+            <Route exact path="/updatedocument/:pid/:id" component={UpdateDocument}/>
+            <Route exact path={"/viewdirectory/:pid/:id"} component={ViewDirectory}/>
             <Route path={"/viewsingledocument/:id"} component={ViewSingleDocument}/>
             {/* Drawing Component Routes  */}
             <Route path="/drawing/:id" component={DrawingHome} />

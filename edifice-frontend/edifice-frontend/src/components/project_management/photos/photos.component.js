@@ -26,6 +26,7 @@ export default class PhotosHome extends Component {
         message: "",
 
         fileInfos: [],
+        Captures: [],
       };
     }
     componentDidMount() {
@@ -33,6 +34,11 @@ export default class PhotosHome extends Component {
       UploadPhotoService.getFiles().then((response) => {
         this.setState({
           fileInfos: response.data,
+        });
+      });
+      UploadPhotoService.getCaptures().then((response) => {
+        this.setState({
+          Captures: response.data,
         });
       });
     }
@@ -55,7 +61,7 @@ export default class PhotosHome extends Component {
     }
 
     render() {
-      const { albums, currentIndex,id,fileInfos } = this.state;
+      const { albums, currentIndex,id,fileInfos, Captures } = this.state;
       return (
         <div>
           <h2>Photos</h2>
