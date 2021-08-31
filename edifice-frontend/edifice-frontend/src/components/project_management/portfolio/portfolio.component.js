@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { PieChart, Pie, Sector, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Sector, Cell, LineChart, Line, Label , XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import PortfolioDataService from "../../../services/portfolio.service";
@@ -213,10 +213,12 @@ export default class PortfolioHome extends Component {
           documentComplete,documentPending,documentIncomplete} = this.state;
         
         const dataPie = [
-            { name: 'Completed', value:  (drawingComplete+documentComplete)*100},
-            { name: 'Pending', value: (drawingPending + documentPending)*100 },
-            { name: 'Not Completed', value: (drawingIncomplete + documentIncomplete)*100 },
+            { name: 'Completed', value:  (drawingComplete+documentComplete)},
+            { name: 'Pending', value: (drawingPending + documentPending)},
+            { name: 'Not Completed', value: (drawingIncomplete + documentIncomplete)},
         ];
+
+        const total = drawingComplete + drawingPending + drawingIncomplete + documentComplete + documentPending + documentIncomplete;
         
         return (
             <div>
@@ -244,6 +246,8 @@ export default class PortfolioHome extends Component {
                     >
                       {dataPie.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+
+                        
                       ))}
                     </Pie>
                   </PieChart>
@@ -275,20 +279,20 @@ export default class PortfolioHome extends Component {
               <div className="container">
                 <h6>Drawing</h6>
                 <ProgressBar>
-                  <ProgressBar variant="success" now={(drawingComplete)/(drawingComplete + drawingPending + drawingIncomplete)*100} key={1} label="Complete" />
-                  <ProgressBar variant="warning" now={(drawingPending)/(drawingComplete + drawingPending + drawingIncomplete)*100} key={2} label="Pending" />
+                  <ProgressBar variant="primary" now={(drawingComplete)/(drawingComplete + drawingPending + drawingIncomplete)*100} key={1} label="Complete" />
+                  <ProgressBar variant="success" now={(drawingPending)/(drawingComplete + drawingPending + drawingIncomplete)*100} key={2} label="Pending" />
                   <ProgressBar variant="danger" now={(drawingIncomplete)/(drawingComplete + drawingPending + drawingIncomplete)*100} key={3}  label="Not Complete"/>
                 </ProgressBar>
                 <h6>Document</h6>
                 <ProgressBar>
-                <ProgressBar variant="success" now={(documentComplete)/(documentComplete + documentPending + documentIncomplete)*100} key={1} label="Complete" />
-                  <ProgressBar variant="warning" now={(documentPending)/(documentComplete + documentPending + documentIncomplete)*100} key={2} label="Pending" />
+                <ProgressBar variant="primary" now={(documentComplete)/(documentComplete + documentPending + documentIncomplete)*100} key={1} label="Complete" />
+                  <ProgressBar variant="success" now={(documentPending)/(documentComplete + documentPending + documentIncomplete)*100} key={2} label="Pending" />
                   <ProgressBar variant="danger" now={(documentIncomplete)/(documentComplete + documentPending + documentIncomplete)*100} key={3}  label="Not Complete"/>
                 </ProgressBar>
                 <h6>Punch List</h6>
                 <ProgressBar>
-                  <ProgressBar variant="success" now={45} key={1} label="Complete"/>
-                  <ProgressBar variant="warning" now={30} key={2} label="Pending" />
+                  <ProgressBar variant="primary" now={45} key={1} label="Complete"/>
+                  <ProgressBar variant="success" now={30} key={2} label="Pending" />
                   <ProgressBar variant="danger" now={25} key={3}  label="Not Complete"/>
                 </ProgressBar>
               </div>
