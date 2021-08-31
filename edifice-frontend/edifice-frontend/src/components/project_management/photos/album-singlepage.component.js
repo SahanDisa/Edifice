@@ -89,19 +89,30 @@ export default class ViewSingleAlbum extends Component {
                     <td>{title}</td>
                     <td>
                       {/* Button Group */}
+                      {photo.title.substring(0, 9) == "oncapture" ? 
+                      <img src={"http://localhost:8080/api/capture/"+photo.title} alt="Card image" style={{'width': '200px', 'height': '200px'}}/>
+                      : 
                       <img src={"http://localhost:8080/api/photos/"+photo.title+".png"} alt="Card image" style={{'width': '200px', 'height': '200px'}}/>
+                      }
                     </td>
                     <td>   
-                        
+                        {photo.title.substring(0,9) == "oncapture" ?
+                        <a href={"http://localhost:8080/api/capture/"+photo.title} style={{'text-decoration':'none'}} target="_blank">
+                        <button className="btn btn-primary">View <VisibilityIcon/></button>
+                        </a>
+                        :
                         <a href={"http://localhost:8080/api/photos/"+photo.title+".png"} style={{'text-decoration':'none'}} target="_blank">
                         <button className="btn btn-primary">View <VisibilityIcon/> </button>
                         </a>
+                        }
+                        
+                        
                         <Link to={"/viewdrawing/"+photo.id}>
                         <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
                         </Link>
-                        <Link to={"/viewdrawing/"+photo.id}>
+                        {/* <Link to={"/viewdrawing/"+photo.id}>
                         <button className="btn btn-danger">Delete <DeleteIcon/> </button>
-                        </Link>
+                        </Link> */}
                     </td>    
                     </tr>
                     ))}
