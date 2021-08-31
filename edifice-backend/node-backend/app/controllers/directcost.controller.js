@@ -1,6 +1,7 @@
 const db = require("./../models/index");
 const Project = db.projects;
 const DirectCost = db.directcosts;
+const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
   // Validate request
@@ -20,7 +21,7 @@ exports.create = (req, res) => {
     employee: req.body.employee,
     receivedDate: req.body.receivedDate,
     paidDate: req.body.paidDate,
-    ammount: req.body.ammount,
+    amount: req.body.amount,
     projectId: req.body.projectId,
   };
 
@@ -40,9 +41,11 @@ exports.create = (req, res) => {
 // Get direct costs for a given project
 exports.findAll = (req, res) => {
   const id = req.params.id;
+  
 
   DirectCost.findAll({ where: {
     projectId: id
+  
   }})
     .then(data => {
       res.send(data);
@@ -124,3 +127,86 @@ exports.update = (req, res) => {
       });
     });
 };
+
+/*********************************************** */
+exports.findByCostCode= (req, res) => {
+  const id = req.params.id;
+  //const costCode = req.query.costCode;
+  const costCode = req.params.costCode;
+    //var condition = costCode ? { costCode: { [Op.like]: `%${costCode}%` } } : null;
+
+  DirectCost.findAll({ where: {
+    projectId: id,
+    //condition:condition
+    costCode:costCode
+  }})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Project Budget with id=" + id
+      });
+    });  
+};
+
+/**added aug 27
+exports.getDTotalOfCostCodes = (req, res) => {
+  const id = req.params.id;
+  const costCode = req.params.costCode;
+  DirectCost.findAll({where:{
+    costCode:costCode,
+    projectId:id},
+    attributes: [sequelize.fn('sum', sequelize.col('ammount')), 'total'],
+    raw:true
+  })
+  .then(  
+    data => {
+    res.send(data);
+    console.log(total)
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Error retrieving Project Budget with id=" 
+    });
+  });  
+  
+  };*/
+
+  /*exports.getDTotalOfCostCodes = (req, res) => {
+    const id = req.params.id;
+    const costCode = req.params.costCode;
+    //const sum = res.params.sum;
+    const tot = DirectCost.findAll(
+      { 
+      where: { costCode:costCode,projectId:id } ,
+      attributes: [[sequelize.fn('sum', sequelize.col('ammount')), 'total']]
+      } ,
+      console.log(tot)
+      )
+      .then(data => {
+        res.send(tot);
+      })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Project Budget with id=" 
+      });
+    });  
+    
+    };*/
+
+
+    exports.getDTotalOfCostCodes = (req, res) => {
+      const id = req.params.id;
+      const costCode = req.params.costCode;
+      DirectCost.sum(
+        'amount',
+       {  where: { costCode:costCode,projectId:id } }
+       )
+       .then(sum => {
+       res.send(sum);
+        //console.log(sum)
+      })
+      
+    };
+

@@ -30,23 +30,23 @@ exports.create = (req, res) => {
       });
     });
 };
-/*
-// Retrieve all categorys from the database.
+
+// Retrieve all categorys from a given project
 exports.findAll = (req, res) => {
-    const title = req.query.title;
-    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const id = req.params.id;
   
-    category.findAll({ where: condition })
+    category.findAll({ where: {
+      projectId: id
+    }})
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving tutorials."
+          message: "Error retrieving Project Drawings with id=" + id
         });
       });
-};*/
+};
 /*
 // Find a single category with an id
 exports.findOne = (req, res) => {

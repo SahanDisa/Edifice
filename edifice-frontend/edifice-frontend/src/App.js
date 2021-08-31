@@ -121,9 +121,13 @@ import AddSov from "./components/financial_management/commitments/addsov.compone
 
 import ViewSingleDirectCost from "./components/financial_management/direct-costs/directcost-singlepage.component";
 import SovHome from "./components/financial_management/commitments/sovs.component";
+
 import AddInvoice from "./components/financial_management/invoicing/addinvoice.component";
 import AddPayment from "./components/financial_management/commitments/addpayment.component";
 import PaymentHome from "./components/financial_management/commitments/payments.component";
+import EditSingleCommitment from "./components/financial_management/commitments/commitment-edit.component";
+import ViewSingleSov from "./components/financial_management/commitments/sov-singlepage.component";
+//import Report from "./components/report/report.component";
 
 class App extends Component {
   constructor(props) {
@@ -269,28 +273,28 @@ class App extends Component {
             <Route path="/dates" component={Dates} />
             <Route path="/defaults" component={Defaults} />
             <Route path="/roles" component={Roles} />
-            
+            {/* Tasks */}
             <Route path="/tasksconfiguration" component={TaskConfiguration} />
             <Route path="/managetasks" component={ManageTasks} />
             <Route path="/managestasks/update" component={UpdateTasks} />
             <Route path="/managestasks/view" component={ViewTasks} />
-            
+            {/* Meeting */}
             <Route path="/meetingsconfiguration" component={MeetingsConfig} />
             <Route path="/managemeetings" component={ManageMeetings} />
             <Route path="/managesmeetings/update" component={UpdateMeetings} />
             <Route path="/managesmeetings/view" component={ViewMeetings} />
-
+            {/* RFI */}
             <Route path="/rfi" component={rfiHome} />
             <Route path="/managerfi/create" component={CreateRFI} />
             <Route path="/managerfi/edit" component={EditRFI} />
             <Route path="/managerfi/view" component={ViewRFI} />
-
+            {/* Action Plan */}
             <Route path="/actionplan" component={actionplanHome} />
-
+            {/* Punch List */}
             <Route path="/punchlist" component={punchlistHome} />
             <Route path="/managepunchlist/view" component={ViewPL} />
             <Route path="/managepunchlist/create" component={CreatePL} />
-
+            {/* Daily Logs */}
             <Route path="/dailylogsconfiguration" component={DlsConfig} />
             <Route path="/managedailylogs" component={ManageDls} />
             <Route path="/managesdailylogs/update" component={UpdateDls} />
@@ -298,7 +302,7 @@ class App extends Component {
             
             <Route path="/addUser" component={AddUser} />
             <Route path="/editUser" component={EditUser} />
-            <Route path="/vendors" component={Vendors} />
+            <Route path="/vendor" component={Vendors} />
             <Route path="/employees" component={Emp} />
             <Route path="/addVendor" component={AddVendor} />
             <Route path="/editVendor" component={EditVendor} />
@@ -360,9 +364,12 @@ class App extends Component {
             <Route path="/viewdirectcost/:id" component={ViewSingleDirectCost} />
            {/* <Route path="/viewsov/:id" component={ViewSingleSov} />*/}
             <Route path="/viewsov/:id" component={SovHome} />
+
             <Route path="/addinvoice/:id" component={AddInvoice} />
             <Route path="/addpayment/:id" component={AddPayment} />
             <Route path="/viewpayment/:id" component={PaymentHome} />
+            <Route path="/editcommitment/:id" component={EditSingleCommitment} />
+            <Route path="/viewsinglesov/:id" component={ViewSingleSov} />
            
           </Switch>
         </div>

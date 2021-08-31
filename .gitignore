@@ -4,3 +4,14 @@ edifice-backend/node-backend/app/config/db.config.js
 edifice-backend/node-backend/.metals/
 #ignore frontend metals
 edifice-frontend/edifice-frontend/.metals/
+edifice-backend/node-backend/.metals/metals.h2.db
+edifice-frontend/edifice-frontend/.metals/metals.log
+edifice-frontend/edifice-frontend/.metals/metals.lock.db
+edifice-frontend/edifice-frontend/.metals/metals.h2.db
+edifice-backend/node-backend/.metals/metals.lock.db
+edifice-backend/node-backend/.metals/metals.h2.db
+#ignore node modules
+edifice-backend/node-backend/node_modules
+edifice-frontend/edifice-frontend/node_modules
+
+

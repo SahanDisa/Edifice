@@ -16,6 +16,7 @@ import Employees from './core_tools/edifice-directory/employees.component'
 
 import UserService from "../services/user.service";
 import ProjectDataService from "../services/project.service";
+import projectService from "../services/project.service";
 
 //css styles
 const cardStyle = {
@@ -34,12 +35,16 @@ export default class BoardUser extends Component {
     super(props);
 
     this.getprojectCount=this.getprojectCount.bind(this);
+    this.getprojectDetails=this.getprojectCount.bind(this);
     this.state = {
       content: "",
       projectCount: 0,
       employeeCount: 0,
+      currProjectId: 0,
       id: "this.props.match.params.id"
     };
+
+    //console.log(this.getprojectDetails());
   }
 
   expand(card) {
@@ -78,23 +83,56 @@ export default class BoardUser extends Component {
     );
 
     this.getprojectCount();
+    //console.log(projectCount);
+    for(let i=0;i<5;i++){
+      //this.getprojectDetails(i);
+    }
+    
   }
 
   getprojectCount(){
     //get Project count
     ProjectDataService.getAll().then(response => {
       this.setState({
-        projectCount: response.data.length
+        projectCount: response.data.length,
+        
       });
-      console.log(response.data.length);
+      //console.log(projectDetails);
     })
     .catch(e => {
       console.log(e);
     });
   }
 
+  //private  var projectDetails=[];
+  getprojectDetails(id){
+    //get Project count
+    console.log(id);
+    ProjectDataService.get(id).then(response => {
+      //console.log( response.data[id]["id"]);
+      this.setState({
+        
+      })
+      console.log(id);
+    })
+    //GOLDEN CODE
+    //projectDetails.then(function(result) {
+      //console.log(result) // "Some User token"
+   //})
+    
+  }
+
   render() {
-    const { projectCount,employeeCount } = this.state;
+    const { projectDetails,projectCount,employeeCount } = this.state;
+    var elements = {};
+    //this.getprojectDetails(elements);
+    //console.log(elements);
+    const items = []
+
+    //this.getprojectDetails(1);
+    //for (const [index, value] of elements.entries()) {
+    //  items.push(<li key={index}>{value}</li>)
+    //}
 
     return (
       `
@@ -131,7 +169,7 @@ export default class BoardUser extends Component {
 
             <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2" id="vendorcard">
               <div className="card card-hover shadow-sm" style={cardStyle}>
-              <a className="d-block nav-heading text-center mt-3 mb-1" style={linkText} href="/vendors">
+              <a className="d-block nav-heading text-center mt-3 mb-1" style={linkText} href="/vendor">
 
                 <h1 className="nav-heading-title mb-1" style={{ fontSize:55 }}>56</h1>
                 <h6> <HomeWorkIcon style={{ fontSize:25 }}/>  Vendors & Subcontractors</h6>
@@ -154,7 +192,7 @@ export default class BoardUser extends Component {
               <h3> Ongoing Projects:</h3>
             </div>
           <div classname="row">
-
+            
             <div className="card card-hover shadow-sm col-lg-12 pt-1 mb-3 pb-3" id="project1">
               <a className="d-block nav-heading text-left ml-4 mt-3 mb-1 pb-3" href="#">
                   <div classname="row">
@@ -186,7 +224,7 @@ export default class BoardUser extends Component {
         <div className="row">
           <div className="col-3">
             <div className="list-group" id="list-tab" role="tablist">
-              <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="#list-report" role="tab" aria-controls="settings">Generate Report</a>
+              <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="/reports" role="tab" aria-controls="settings">Generate Report</a>
             </div>
           </div>
           <div className="col-3">
@@ -227,7 +265,7 @@ export default class BoardUser extends Component {
                 <p>View Employee Directory</p>
                 <a href="/employees" className="btn btn-outline-primary"> Employees</a>
                 <p>View Vendor Directory</p>
-                <a href="/vendors" className="btn btn-outline-primary"> Vendors</a>
+                <a href="/vendor" className="btn btn-outline-primary"> Vendors</a>
                 <p>View Project Directory</p>
                 <a href="/projects" className="btn btn-outline-primary"> Projects</a>
               </div>
@@ -246,6 +284,8 @@ export default class BoardUser extends Component {
               <div className="tab-pane fade" id="list-report" role="tabpanel" aria-labelledby="list-settings-list">This is report</div>
             </div>
           </div>
+          {/*  debug stuff DELETE*/}
+          <div><p>sfdsfds</p></div>
           
         </div>
         {/* <Defaults /><Dates /><Roles /> */}

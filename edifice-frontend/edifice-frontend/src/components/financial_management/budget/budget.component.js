@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import BudgetDataService from "./../../../services/budget.service";
+import DirectCostDataService from "./../../../services/directcost.service";
 import { useTable } from "react-table";
 import { Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -11,9 +12,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 const BudgetList = (props) => {
   const {id}= useParams();
   const [budgets, setBudgets] = useState([]);
+  const [total, setTotal] = useState(0);
   const [searchCostCode, setSearchCostCode] = useState("");
   const budgetsRef = useRef();
-
+const sum ="";
   
  
   budgetsRef.current = budgets;
@@ -44,7 +46,7 @@ const BudgetList = (props) => {
   };
 
   const findByCostCode = () => {
-    BudgetDataService.findByCostCode(searchCostCode)
+    BudgetDataService.findByCostCode(id,searchCostCode)
       .then((response) => {
         setBudgets(response.data);
       })
@@ -81,6 +83,16 @@ const BudgetList = (props) => {
       });
   };
 
+
+  const retrieveTotalDirectCosts = (rowIndex) => {
+    const id = budgetsRef.current[rowIndex].projectId;
+    const costCode = budgetsRef.current[rowIndex].costCode;
+
+    DirectCostDataService.getDTotalOfCostCodes (id,costCode)
+    
+
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -88,17 +100,33 @@ const BudgetList = (props) => {
         accessor: "costCode",
       },
       {
-        Header: "Estimated Budget Ammount",
+        Header: "Estimated Budget Amount",
         accessor: "estimatedBudget",
       },
       {
-        Header: "Revised Budget Ammount",
-        accessor: "revisedBudget",
+        Header: "Direct Costs",
+        accessor: "directCosts",
+        Cell: (props) => {
+          const rowIdx = props.row.id;
+          //retrieveTotalDirectCosts(rowIdx); 
+          return(
+            <div>{sum}</div>
+          );
+        },
       },
       {
-        Header: "Current Budget Ammount",
+        Header: "Commited Costs",
+        accessor: "commitedCosts",
+      },
+      {
+        Header: "Current Budget Amount",
         accessor: "currentBudget",
       },
+      {
+        Header: "Revised Budget Amount",
+        accessor: "revisedBudget",
+      },
+    
       {
         Header: "Projected Over/Under",
         accessor: "overUnder",
@@ -133,7 +161,7 @@ const BudgetList = (props) => {
     prepareRow,
   } = useTable({
     columns,
-    data: budgets,
+    data: budgets
   });
 
   return (
@@ -177,7 +205,7 @@ const BudgetList = (props) => {
           className="table table-striped table-bordered"
           {...getTableProps()}
         >
-          <thead>
+          <thead className="Table-header">
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (

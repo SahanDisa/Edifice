@@ -13,28 +13,37 @@ class BudgetDataService {
     return http.post(`/projects/budget/`, data);
   }
 
-  /*added new*/
-  update(id, data){
-    return http.put(`/projects/budget/${id}`, data);
-  }
-  
-  remove(id){
-    return http.delete(`/projects/budget/${id}`);
-  }
-  
-  removeAll(){
-    return http.delete(`/projects/budget`);
-  }
-  
-  findByCostCode(costCode){
-    return http.get(`/projects/budget?costCode=${costCode}`);
-  }
-  
-  
+ /*added new*/
+update(id, data){
+  return http.put(`/projects/budget/${id}`, data);
+}
+
+remove(id){
+  return http.delete(`/projects/budget/${id}`);
+}
+
+removeAll(){
+  return http.delete(`/projects/budget`);
+}
+
+findByCostCode(id,costCode){
+  //return http.get(`/projects/directcost?costCode=${costCode}`);
+  //return http.get(`/projects/directcost/list/${id}?costCode=${costCode}`);
+  return http.get(`/projects/budget/list/${id}/${costCode}`);
+  //return http.get(`/projects/directcost?costcode=${costCode}`);
+
   /*end of added new*/
 
 
 }
 
+getDTotalOfCostCodes(id,costCode){
+
+  return http.get(`/projects/budget/list/${id}/${costCode}`);
+
+}
+
+
+}
 export default new BudgetDataService();
 

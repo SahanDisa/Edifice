@@ -1,54 +1,67 @@
 import React, { Component } from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
+import Table from 'react-bootstrap/Table';
+import { Link } from "react-router-dom";
+
 import AddWorker from './add-worker.component';
 import EditWorker from './edit-worker.component';
 import ViewWorker from './view-worker.component';
 import  NewCrew from './new-crew.component';
 import Card from 'react-bootstrap/Card';
 
-const data = [
-  {Id: 1, FirstName: 'randie',LastName:'pathirage',Mobile:'075 4344323',edit: <a href="#" className="btn btn-secondary" data-toggle="modal" data-target="#editWorker">edit</a>,More:<a href="#" className="btn btn-primary" data-toggle="modal" data-target="#viewWorker">More</a>},
-  {Id: 2, FirstName: 'abc', LastName:'iyanage',Mobile:'071 4325431',  edit: <a href="#" className="btn btn-secondary" data-toggle="modal" data-target="#editWorker">edit</a>,More:<a href="#" className="btn btn-primary" data-toggle="modal" data-target="#viewWorker">More</a>},
-  {Id: 3, FirstName: 'kumara', LastName:'Dharampala',Mobile:'071 4532765',  edit: <a href="#" className="btn btn-secondary" data-toggle="modal" data-target="#editWorker">edit</a>,More:<a href="#" className="btn btn-primary" data-toggle="modal" data-target="#viewWorker">More</a>}
-];
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import EditIcon from '@material-ui/icons/Edit';
 
-const columns = [
-   {
-    dataField: 'Id',
-    text: 'Id No',
-    headerStyle: (column, colIndex) => {
-    return { width: '5%', textAlign: 'center' };}
-  }, {
-    dataField: 'FirstName',
-    text: 'First Name',
-    headerStyle: (column, colIndex) => {
-        return { width: '10%', textAlign: 'center' };}
-  }, {
-    dataField: 'LastName',
-    text: 'Last Name',
-    headerStyle: (column, colIndex) => {
-    return { width: '10%', textAlign: 'center' };}
-  }, {
-    dataField: 'Mobile',
-    text: 'Mobile Number',
-    headerStyle: (column, colIndex) => {
-    return { width: '10%', textAlign: 'center' };}
-  },{
-    dataField: 'edit',
-    text: '',
-    headerStyle: (column, colIndex) => {
-        return { width: '3%', textAlign: 'center' };}
-  }, {
-    dataField: 'More',
-    text: '',
-    headerStyle: (column, colIndex) => {
-    return { width: '3%', textAlign: 'center' };}
-  },
-];
+import CrewDataService from "./../../../services/crew.service";
+import WorkersDataService from "./../../../services/worker.service";
 
 class Crew extends Component {
 
+  constructor(props) {
+    super(props);
+    this.retrieveCrew = this.retrieveCrew.bind(this);
+    this.retrieveWorkers = this.retrieveWorkers.bind(this);
+    this.state = {
+      crews: [],
+      workers: [],
+      currentIndex: -1,
+      content: "",
+      id: this.props.match.params.id
+    };
+  }
+
+  componentDidMount() {
+    this.retrieveCrew(this.props.match.params.id);
+    this.retrieveWorkers(this.props.match.params.id);
+  }
+
+  retrieveCrew(id) {
+    CrewDataService.getAll(id)
+      .then(response => {
+        this.setState({
+          crews: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
+  retrieveWorkers(id) {
+    WorkersDataService.getAll(id)
+      .then(response => {
+        this.setState({
+          workers: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
     render() {
+      const { crews ,currentIndex,id, workers } = this.state;
       return (
         <div>
           <Card
@@ -57,10 +70,11 @@ class Crew extends Component {
             className="mb-2">
                 
             <Card.Body>
-              <Card.Title><h4>Schedule</h4></Card.Title>
+              <Card.Title><h4>Crews</h4></Card.Title>
             </Card.Body>
           </Card> 
           <br/>
+          
             <div>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="status" role="tabpanel" aria-labelledby="allmeetings">  
@@ -77,56 +91,66 @@ class Crew extends Component {
                             </div>
                         </form>
 
+
+
                         <div class="accordion" id="accordionExample">
+                          {crews && crews.map((crew, index) => (
                             <div class="card">
                                 <div class="card-header" id="headingOne">
                                     <h2 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Concrete Crew</button>
-                                        <span class="badge bg-success rounded-pill">14</span>
+                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${index}`} aria-expanded="true" aria-controls="collapseOne">{crew.name}</button>
+                                      <span class="badge bg-success rounded-pill">{crew.total}</span>
                                     </h2>
                                 </div>
-                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div id={`collapse${index}`} class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div className="">
                                             <div class="col-md-12 text-right mb-2">
                                                 <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#addWorker">+ Add Worker</a>
                                             </div>
-                                            <BootstrapTable 
-                                                hover
-                                                keyField='location'
-                                                data={ data }
-                                                columns={ columns } 
-                                                cellEdit={ false }
-                                            />
+                                            <Table responsive>
+                                              <thead>
+                                                <tr>
+                                                  <th>Id</th>
+                                                  <th>First Name</th>
+                                                  <th>Last Name</th>
+                                                  <th>Mobile</th>
+                                                  <th></th>
+                                                  <th></th>
+                                                </tr>
+                                              </thead>
+                                              {/* Functional for table data */}
+                                              <tbody>
+                                              {workers &&
+                                                  workers.map((worker, index) => (
+                                                  <tr
+                                                      // className={
+                                                      // "list-group-item row" +
+                                                      // (index === currentIndex ? "active" : "")
+                                                      // }
+                                                      // onClick={() => this.setActiveProject(project, index)}
+                                                      key={worker.crewId}
+                                                  >
+                                                  <td>{worker.wId}</td>
+                                                  <td>{worker.firstName}</td>
+                                                  <td>{worker.lastName}</td>
+                                                  <td>{worker.mobile}</td>
+                                                  <td>
+                                            
+                                                    <button className="btn btn-primary" data-toggle="modal" data-target="#editWorker">Edit <EditIcon/> </button>
+                                                    <button className="btn btn-success m-2" data-toggle="modal" data-target="#viewWorker">View <VisibilityIcon/> </button>
+                                                  
+                                                  </td>    
+                                                  </tr>
+                                                  ))}
+                                              </tbody>
+                                              {/*Ends */}
+                                            </Table>   
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="card">
-                                <div class="card-header" id="headingTwo">
-                                    <h2 class="mb-0">
-                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Welder</button>
-                                        <span class="badge bg-success rounded-pill">5</span>
-                                    </h2>
-                                </div>
-                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        <div className="">
-                                            <div class="col-md-12 text-right mb-2">
-                                            <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#addWorker">+ Add Worker</a>
-                                            </div>
-                                            <BootstrapTable 
-                                                hover
-                                                keyField='location'
-                                                data={ data }
-                                                columns={ columns } 
-                                                cellEdit={ false }
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>  
+                          ))}  
                         </div>
                     </div>
                     

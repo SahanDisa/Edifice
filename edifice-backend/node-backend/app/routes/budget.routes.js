@@ -9,19 +9,25 @@ module.exports = app => {
     // Retrieve all Budgets for a project
     router.get("/list/:id", budget.findAll);
   
-    // Retrieve a single Budget with id
+   // Retrieve all direct costs for a project
+     //router.get("/list/:id?costCode=[keyword]", directcost.findByCode);
+     router.get("/list/:id/:costCode", budget.findByCostCode);
+     //router.get("/list/:id?:costCode", directcost.findByCode);
+    
+    // Retrieve a single direct cost with id
     router.get("/:id", budget.findOne);
 
- /* Retrieve a single direct cost with id
+    /* Retrieve a single direct cost with id
     router.get("/:projectId/:id", directcost.findOne);*/
 
         // Update a direct cost with id
-        router.put("/:id", budget.update);
+  router.put("/:id", budget.update);
 
-        // Delete a direct cost with id
-        router.delete("/:id", budget.delete);
+  // Delete a direct cost with id
+  router.delete("/:id", budget.delete);
 
 
-  
+  router.get("/list/:id/:costCode", budget.getDTotalOfCostCodes);
+
     app.use('/api/projects/budget', router);
   };

@@ -1,10 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
-    const Category = sequelize.define("categorys", {
+    const Category = sequelize.define("category", {
       name: {
         type: Sequelize.STRING
       },
       total: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       }},{
         freezeTableName: true,
     });

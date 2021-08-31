@@ -1,5 +1,9 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+//import { Route, useParams } from "react-router-dom";
 import CommitmentDataService from "./../../../services/commitment.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -8,246 +12,177 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 
+const AddCommitment = (props) => {
 
-export default class CreatePrimeContracts extends Component{
-  constructor(props) {
-    super(props);
-    this.onChangeHash = this.onChangeHash.bind(this);
-    this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeContractCompany = this.onChangeContractCompany.bind(this);
-    this.onChangeStatus = this.onChangeStatus.bind(this);
-    //this.onChangeExecuted = this.onChangeExecuted.bind(this);
-    //this.onChangeDefaultRetainage = this.onChangeDefaultRetainage.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    //this.onChangeAttachments = this.onChangeAttachments.bind(this);
-    this.onChangeStartDate = this.onChangeStartDate.bind(this);
-    this.onChangeEstimatedCompletionDate = this.onChangeEstimatedCompletionDate.bind(this);
-    this.onChangeActualCompletionDate = this.onChangeActualCompletionDate.bind(this);
-    this.onChangeSignedContractReceivedDate = this.onChangeSignedContractReceivedDate.bind(this);
-    this.onChangeInclusions = this.onChangeInclusions.bind(this);
-    this.onChangeExclusions = this.onChangeExclusions.bind(this);
-    this.saveCommitment = this.saveCommitment.bind(this);
-    this.newCommitment = this.newCommitment.bind(this);
+  /**validation */
+  const validationSchema = Yup.object().shape({
+    hash: Yup.string().required('Hash is required'),
+    title: Yup.string().required('Title is required'),
+    contractCompany: Yup.string().required('Contract Company is required'),
+    status: Yup.string().required('Status is required'),
+    description: Yup.string().required('Description is required'),
+    startDate: Yup.string().required('Start Date is required'),
+    estimatedCompletionDate: Yup.string().required('Estimated Copletion Date is required'),
+ actualCompletionDate: Yup.string().required('Actual Completion Date is required'),
+ signedContractReceivedDate: Yup.string().required('Signed Contract Received Date is required'),
+    inclusions: Yup.string().required('Inclusions are required'),
+exclusions: Yup.string().required('Exclusions are required'),
+  });
 
-    this.state = {
-      id: null,
-      hash: "",
-      title: "",
-      contractCompany: "",
-      status: "", 
-      //executed:"",
-      //defaultRetainage :"",
-      description:"",
-      /*attachments:"",*/
-      startDate: "",
-      estimatedCompletionDate : "",
-      actualCompletionDate : "",
-      signedContractReceivedDate : "",
-      inclusions:"",
-      exclusions:"",
-      
-      projectId: this.props.match.params.id,  
-      submitted: false
-    };
-  }
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validationSchema)
+  });
 
-  onChangeHash(e) {
-    this.setState({
-      hash: e.target.value
-    });
-  }
-  onChangeTitle (e) {
-    this.setState({
-      title: e.target.value
-    });
-  }
-  onChangeContractCompany(e) {
-    this.setState({
-      contractCompany: e.target.value
-    });
-  }
-  onChangeStatus (e) {
-    this.setState({
-      status: e.target.value
-    });
-  }
- /* onChangeExecuted(e) {
-    this.setState({
-      executed: e.target.value
-    });
-  }
-  onChangeDefaultRetainage(e) {
-    this.setState({
-      defaultRetainage: e.target.value
-    });
-  }*/
-  onChangeDescription(e) {
-    this.setState({
-     description: e.target.value
-    });
-  }
- /* onChangeAttachments(e) {
-    this.setState({
-      attachments: e.target.value
-    });
-  }*/
-  onChangeStartDate(e) {
-    this.setState({
-      startDate: e.target.value
-    });
-  }onChangeEstimatedCompletionDate(e) {
-    this.setState({
-      estimatedCompletionDate: e.target.value
-    });
-  }
-  onChangeActualCompletionDate(e) {
-    this.setState({
-      actualCompletionDate: e.target.value
-    });
-  }
-  onChangeSignedContractReceivedDate(e) {
-    this.setState({
-      signedContractReceivedDate: e.target.value
-    });
-  }onChangeInclusions(e) {
-    this.setState({
-     inclusions: e.target.value
-    });
-  }onChangeExclusions(e) {
-    this.setState({
-      exclusions: e.target.value
-    });
-  } 
+  const onSubmit = data => {
+    console.log(JSON.stringify(data, null, 2));
+  };
+/**End of validation */
 
-  saveCommitment() {
-    console.log("clicked");  
+  //const {pid}= useParams();
+
+  const initialCommitmentState = {
+    id: null,
+    hash :"",
+    title :"",
+    contractCompany :"",
+    status :"",
+    description :"",
+    startDate :"",
+    estimatedCompletionDate :"",
+actualCompletionDate :"",
+signedContractReceivedDate :"",
+    inclusions: "",
+exclusions:"",
+    projectId:props.match.params.id,  
+    
+  };
+  const [commitment, setCommitment] = useState(initialCommitmentState);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleInputChange = event => {
+    const { name, value } = event.target;
+    setCommitment({ ...commitment, [name]: value });
+  };
+
+  const saveCommitment = () => {
     var data = {
-      hash: this.state.hash,
-      title: this.state.title,
-      contractCompany: this.state.contractCompany,     
-      status: this.state.status,
-      //executed:this.state.executed,
-      //defaultRetainage:this.state.defaultRetainage,
-      description:this.state.description,
-      //attachments:this.state.attachments,
-      startDate: this.state.startDate,
-      estimatedCompletionDate: this.state.estimatedCompletionDate,
-      actualCompletionDate:this.state.actualCompletionDate,
-      signedContractReceivedDate: this.state.signedContractReceivedDate,
-      inclusions:this.state.inclusions,
-      exclusions:this.state.exclusions,
-      projectId: this.state.projectId
+      hash: commitment.hash,
+title: commitment.title,
+contractCompany:commitment.contractCompany,
+status: commitment.status,
+description:commitment.description,
+startDate:commitment.startDate,
+estimatedCompletionDate: commitment.estimatedCompletionDate,
+actualCompletionDate:commitment.actualCompletionDate,
+signedContractReceivedDate:commitment.signedContractReceivedDate,
+inclusions:commitment.inclusions,
+exclusions:commitment.exclusions,
+  
+
+      projectId: commitment.projectId,
     };
 
     CommitmentDataService.create(data)
       .then(response => {
-        this.setState({
-        hash: response.data.hash,
-        title: response.data.title,
-      contractCompany: response.data.contractCompany,      
-      status:response.data.status,
-      //executed:response.data.executed,
-      //defaultRetainage:response.data.defaultRetainage,
-      description:response.data.description,
-      //attachments:response.data.attachments,
-      startDate:response.data.startDate,
-      estimatedCompletionDate: response.data.estimatedCompletionDate,
-      actualCompletionDate:response.data.actualCompletionDate,
-      signedContractReceivedDate: response.data.signedContractReceivedDate,
-      inclusions:response.data.inclusions,
-      exclusions:response.data.exclusions,
-     
-          projectId: response.data.projectId,
+        setCommitment({
+          id: response.data.id,
+        hash:response.data.hash,
+title:response.data.title,
+contractCompany:response.data.contractCompany,
+status:response.data.status,
+description:response.data.description,
+startDate:response.data.startDate,
+estimatedCompletionDate: response.data.estimatedCompletionDate,
+actualCompletionDate:response.data.actualCompletionDate,
+signedContractReceivedDate:response.data.signedContractReceivedDate,
+inclusions:response.data.inclusions,
+exclusions:response.data.exclusions,
 
-          submitted: true
+          projectId: response.data.projectId,
+     
         });
+        setSubmitted(true);
         console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
-  }
+  };
 
-  newCommitment() {
-    this.setState({
-      id: null,
-      hash: "",
-      title: "",
-      contractCompany: "",
-      status: "", 
-      //executed:false,
-      //defaultRetainage :"",
-      description:"",
-      //attachments:"",
-      startDate: "",
-      estimatedCompletionDate : "",
-      actualCompletionDate : "",
-      signedContractReceivedDate : "",
-      inclusions:"",
-      exclusions:"",
-      projectId: this.props.match.params.id,
+  const newCommitment = () => {
+    setCommitment(initialCommitmentState);
+    setSubmitted(false);
+  };
 
-      submitted: false
-    });
-  }
-
-  render() {
-    const {projectId} = this.state;
-    return (
+ 
+  return (
         <div className="container">
-        {this.state.submitted ? (
+       
+        {submitted ? (
           <div>
             <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={this.newCommitment}>
-             Create Another Commitment
+            <button className="btn btn-success" onClick={newCommitment}>
+              + Add Another Commitment
             </button>&nbsp;&nbsp;
-            <Link  to={"/commitment/"+projectId} className="btn btn-success">View Commitments</Link>
+          <Link  to={"/commitment/"+commitment.projectId} className="btn btn-success">View Commitments</Link>
           </div>
         ) : (
-            <div class="container">
-       <h2>Create New Commitment </h2><hr/>
-       <div className="row">
+          <div class="container">
+            <h2>New Commitment</h2>
+            <div className="row">
        <div className="col-sm-6">
-          <div className="form-group">
+       <form onSubmit={handleSubmit(onSubmit)}>
+   <div className="form-group">
          
                 <label htmlFor="hash"># :</label> 
              
   
               <input
                 type="text"
-                className="form-control"
+            
                 id="hash"
-                required
-                value={this.state.hash}
-                onChange={this.onChangeHash}
+                {...register('hash')}
+                value={commitment.hash}
+                onChange={handleInputChange}
                 name="hash"
+className={`form-control ${errors.hash ? 'is-invalid' : ''}`}
               />
+<div className="invalid-feedback">{errors.hash?.message}</div>
               </div>
               <div className="form-group">
                 <label htmlFor="title">Title :</label>
     
               <input
                 type="text"
-                className="form-control"
+            
                 id="title"
-                required
-                value={this.state.title}
-                onChange={this.onChangeTitle}
+               {...register('title')}
+                value={commitment.title}
+                onChange={handleInputChange}
                 name="title"
+className={`form-control ${errors.title ? 'is-invalid' : ''}`}
               />
+<div className="invalid-feedback">{errors.title?.message}</div>
               </div>
               <div className="form-group">
                 <label htmlFor="contractCompany">Contract Company :</label>
              
                 <input
                 type="text"
-                className="form-control"
+       
                 id="contractCompany"
-                required
-                value={this.state.contractCompany}
-                onChange={this.onChangeContractCompany}
+               {...register('contractCompany')}
+                value={commitment.contractCompany}
+                onChange={handleInputChange}
                 name="contractCompany"
+className={`form-control ${errors.contractCompany ? 'is-invalid' : ''}`}
               />
+<div className="invalid-feedback">{errors.contractCompany?.message}</div>
               </div>
             
             <div className="form-group">
@@ -255,13 +190,15 @@ export default class CreatePrimeContracts extends Component{
             
               <input
                 type="text"
-                className="form-control"
+
                 id="status"
-                required
-                value={this.state.status}
-                onChange={this.onChangeStatus}
+                {...register('status')}
+                value={commitment.status}
+                onChange={handleInputChange}
                 name="status"
+className={`form-control ${errors.status ? 'is-invalid' : ''}`}
               />
+<div className="invalid-feedback">{errors.status?.message}</div>
               </div>
            
            {/*<div className="form-group">
@@ -276,6 +213,7 @@ export default class CreatePrimeContracts extends Component{
                 onChange={this.onChangeExecuted}
                 name="executed"
               />
+
         </div>
          
               <div className="form-group">
@@ -295,13 +233,15 @@ export default class CreatePrimeContracts extends Component{
  
               <input
                 type="textarea"
-                className="form-control"
+            
                 id="description"
-                required
-                value={this.state.description}
-                onChange={this.onChangeDescription}
+                {...register('description')}
+                value={commitment.description}
+                onChange={handleInputChange}
                 name="description"
+className={`form-control ${errors.description ? 'is-invalid' : ''}`}
               />
+<div className="invalid-feedback">{errors.description?.message}</div>
               </div> 
           {/* <div className="form-group">
                 <label htmlFor="attachments">Attachments</label>
@@ -321,26 +261,30 @@ export default class CreatePrimeContracts extends Component{
             
               <input
                 type="date"
-                className="form-control"
+           
                 id="startDate"
-                required
-                value={this.state.startDate}
-                onChange={this.onChangeStartDate}
+              {...register('startDate')}
+                value={commitment.startDate}
+                onChange={handleInputChange}
                 name="startDate"
+className={`form-control ${errors.startDate? 'is-invalid' : ''}`}
               />
+<div className="invalid-feedback">{errors.startDate?.message}</div>
               </div> 
               <div className="form-group">
                 <label htmlFor="estimatedCompletionDate">Estimated Completion Date :</label>
 
               <input
                 type="date"
-                className="form-control"
+            
                 id="estimatedCompletionDate"
-                required
-                value={this.state.estimatedCompletionDate}
-                onChange={this.onChangeEstimatedCompletionDate}
+                {...register('estimatedCompletionDate')}
+                value={commitment.estimatedCompletionDate}
+                onChange={handleInputChange}
                 name="estimatedCompletionDate"
+className={`form-control ${errors.estimatedCompletionDate ? 'is-invalid' : ''}`}
               />
+<div className="invalid-feedback">{errors.estimatedCompletionDate?.message}</div>
               </div>
              
             <div className="form-group">
@@ -348,26 +292,30 @@ export default class CreatePrimeContracts extends Component{
  
               <input
                 type="date"
-                className="form-control"
+            
                 id="actualCompletionDate"
-             
-                value={this.state.actualCompletionDate}
-                onChange={this.onChangeActualCompletionDate}
+              {...register('actualCompletionDate')}
+                value={commitment.actualCompletionDate}
+                onChange={handleInputChange}
                 name="actualCompletionDate"
+className={`form-control ${errors.actualCompletionDate ? 'is-invalid' : ''}`}
               />
+<div className="invalid-feedback">{errors.actualCompletionDate?.message}</div>
               </div>
               <div className="form-group">
                 <label htmlFor="signedContractReceivedDate">Signed Contract Received Date :</label>
  
               <input
                 type="date"
-                className="form-control"
+              
                 id="signedContractReceivedDate"
-                
-                value={this.state.signedContractReceivedDate}
-                onChange={this.onChangeSignedContractReceivedDate}
+                 {...register('signedContractReceivedDate')}
+                value={commitment.signedContractReceivedDate}
+                onChange={handleInputChange}
                 name="signedContractReceivedDate"
+className={`form-control ${errors.signedContractReceivedDate ? 'is-invalid' : ''}`}
               />
+<div className="invalid-feedback">{errors.signedContractReceivedDate?.message}</div>
               </div>
              
             
@@ -376,13 +324,15 @@ export default class CreatePrimeContracts extends Component{
 
               <input
                 type="textarea"
-                className="form-control"
+           
                 id="inclusions"
-              
-                value={this.state.inclusions}
-                onChange={this.onChangeInclusions}
+               {...register('inclusions')}
+                value={commitment.inclusions}
+                onChange={handleInputChange}
                 name="inclusions"
+className={`form-control ${errors.inclusions ? 'is-invalid' : ''}`}
               />
+<div className="invalid-feedback">{errors.inclusions?.message}</div>
               </div>
             
             <div className="form-group">
@@ -390,15 +340,39 @@ export default class CreatePrimeContracts extends Component{
               
               <input
                 type="textarea"
-                className="form-control"
+    
                 id="exclusions"
-             
-                value={this.state.exclusions}
-                onChange={this.onChangeExclusions}
+                 {...register('exclusions')}
+                value={commitment.exclusions}
+                onChange={handleInputChange}
                 name="exclusions"
+className={`form-control ${errors.exclusions ? 'is-invalid' : ''}`}
               />
-   </div></div>
-<div className="col-sm-6">
+<div className="invalid-feedback">{errors.exclusions?.message}</div>
+   </div>            
+
+
+            <div className="form-group">
+            <button type="submit" onClick={saveCommitment} className="btn btn-success">
+              Save
+            </button>
+            &nbsp;&nbsp;
+            <button
+            type="button"
+            onClick={() => reset()}
+            className="btn btn-warning float-right"
+          >
+            Reset
+          </button>&nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
+            <Link to={"/commitment/" + commitment.projectId}>
+            <button className="btn btn-success">
+            Cancel
+            </button></Link>
+            </div>
+            </form>
+            </div>
+            
+            <div className="col-sm-6">
             <Timeline>
               <TimelineItem>
                 <TimelineSeparator>
@@ -412,44 +386,33 @@ export default class CreatePrimeContracts extends Component{
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 2</strong><br/>View the created Commitment</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 2</strong><br/>Add SoVs</h6></TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 3</strong><br/>Add SoV to the Commitment</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 3</strong><br/>Values will be automatically added to the Budget</h6></TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot />
-                
+                 
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 4</strong><br/>Get contractor approval.</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 4</strong><br/>Edit/Delete a Commitment.</h6></TimelineContent>
               </TimelineItem>
             </Timeline>
             </div>
-
-</div>
-           
-           
-           
-         
-            <button onClick={this.saveCommitment} className="btn btn-success">
-              Save
-            </button>&nbsp;&nbsp;
-            <Link to={"/commitment/" + projectId}>
-            <button className="btn btn-success">
-            Cancel
-            </button></Link>&nbsp;&nbsp;
-           &nbsp;&nbsp;
-            <br /><br /><br />
-            </div>
-        )}
+            
+            
+            </div><br />
+          {/** */} 
           </div>
+        )}
+        <br /><br />
+      </div>
+  );
+};
 
-
-    );
-  }
-}
+export default AddCommitment;

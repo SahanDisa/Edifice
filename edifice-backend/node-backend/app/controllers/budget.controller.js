@@ -1,6 +1,7 @@
 const db = require("./../models/index");
 const Project = db.projects;
 const Budget = db.budgets;
+const DirectCost = db.directcosts;
 
 // create a budget 
 exports.create = (req, res) => {
@@ -15,9 +16,13 @@ exports.create = (req, res) => {
   // Create a Budget Line Item
   const budget = {
     costCode: req.body.costCode,
+    description: req.body.description,
+    date: req.body.date,
     estimatedBudget: req.body.estimatedBudget,
-    revisedBudget: req.body.revisedBudget,
+    directCosts:req.body.directCosts,
+    commitedCosts:req.body.commitedCosts,
     currentBudget: req.body.currentBudget,
+    revisedBudget: req.body.revisedBudget,
    
     projectId: req.body.projectId,
   };
@@ -62,7 +67,7 @@ exports.findOne = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Project with id=" + id
+        message: "Error retrieving Project Budget with id=" + id
       });
     });  
 };
@@ -82,17 +87,17 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Direct Cost was deleted successfully!"
+          message: "Budget Line Item was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete Direct Cost with id=${id}. Maybe Direct Cost was not found!`
+          message: `Cannot delete Budget Line Item with id=${id}. Maybe Budget Line Item was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Direct Cost with id=" + id
+        message: "Could not delete Budget Line Item with id=" + id
       });
     });
 };
@@ -109,17 +114,65 @@ exports.update = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Direct Cost was updated successfully."
+          message: "Budget Line Item was updated successfully."
         });
       } else {
         res.send({
-          message: `Cannot update Direct Cost with id=${id}. Maybe Direct Cost  was not found or req.body is empty!`
+          message: `Cannot update Budget Line Item with id=${id}. Maybe Budget Line Item was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Direct Cost with id=" + id
+        message: "Error updating Budget Line Item with id=" + id
       });
     });
 };
+
+/*********************************************** */
+exports.findByCostCode= (req, res) => {
+  const id = req.params.id;
+  //const costCode = req.query.costCode;
+  const costCode = req.params.costCode;
+    //var condition = costCode ? { costCode: { [Op.like]: `%${costCode}%` } } : null;
+
+  Budget.findAll({ where: {
+    projectId: id,
+    //condition:condition
+    costCode:costCode
+  }})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Budget Line Item with id=" + id
+      });
+    });  
+};
+
+
+/**added aug 27*/
+exports.getDTotalOfCostCodes = (req, res) => {
+  const id = req.params.id;
+  const costCode = req.params.costCode;
+  DirectCost.findAll({where:{
+    costCode:costCode,
+    projectId:id},
+    attributes: [sequelize.fn('sum', sequelize.col('ammount')), 'total'],
+    raw:true
+  })
+  .then(  
+    data => {
+    res.send(data);
+    console.log(total)
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Error retrieving Project Budget with id=" 
+    });
+  });  
+  
+  };
+
+

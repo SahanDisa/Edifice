@@ -45,18 +45,33 @@ require('./app/routes/file.routes')(app);
 require('./app/routes/directory.routes')(app);
 require('./app/routes/document.routes')(app);
 require('./app/routes/projectuser.routes')(app);
+
 require('./app/routes/budget.routes')(app);
 require('./app/routes/directcost.routes')(app);
 require('./app/routes/commitment.routes')(app);
 require('./app/routes/sov.routes')(app);
+require('./app/routes/primecontract.routes')(app);
+require('./app/routes/invoice.routes')(app);
+require('./app/routes/payment.routes')(app);
+require('./app/routes/excel.routes')(app);
+
 require('./app/routes/equipment.routes')(app);
 require('./app/routes/equipment-category.routes')(app);
-require('./app/routes/meeting.routes')(app);
-require('./app/routes/meetingcategory.routes')(app);
+require('./app/routes/crew.routes')(app);
+require('./app/routes/equipment-category.routes')(app);
+require('./app/routes/worker.routes')(app);
+
+
 require('./app/routes/primecontract.routes')(app);
 require('./app/routes/invoice.routes')(app);
 require('./app/routes/payment.routes')(app);
 
+require('./app/routes/project-management/meeting.routes')(app);
+require('./app/routes/project-management/meetingcategory.routes')(app);
+
+require('./app/routes/project-management/punchlist.routes')(app);
+require('./app/routes/project-management/punchlisttypes.routes')(app);
+require('./app/routes/vendor.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {
@@ -69,7 +84,6 @@ app.listen(PORT, () => {
   console.log(`-------------------Welcome to Edifice Backend--------------------`)  
   console.log(`---------------Server is running on port ${PORT}-----------------`);
 });
-
 
 // initial data
 function initial() {

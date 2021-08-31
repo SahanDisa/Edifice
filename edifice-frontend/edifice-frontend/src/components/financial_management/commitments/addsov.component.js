@@ -1,5 +1,9 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+import { Route, useParams } from "react-router-dom";
 import SovDataService from "./../../../services/sov.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -8,130 +12,103 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 
+const AddSov = (props) => {
 
-export default class CreatePrimeContracts extends Component{
-  constructor(props) {
-    super(props);
-    this.onChangeCostCode = this.onChangeCostCode.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeAmmount = this.onChangeAmmount.bind(this);
-    //this.onChangeBilledToDate = this.onChangeBilledToDate.bind(this);
-    //this.onChangeAmmountRemaining = this.onChangeAmmountRemaining.bind(this);
+  /**validation */
+  const validationSchema = Yup.object().shape({
+    costCode: Yup.string().required('Cost Code is required'),
+    description: Yup.string().required('Description is required'),
+    date: Yup.string().required('Date is required'),
+    amount: Yup.string().required('Amount is required'),
+  });
 
-    this.saveSov = this.saveSov.bind(this);
-    this.newSov = this.newSov.bind(this);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validationSchema)
+  });
 
-    this.state = {
-      id: null,
-      costCode: "",
-      description: "",
-      ammount: "",
-      //billedToDate: "", 
-      //ammountRemaining :"",
+  const onSubmit = data => {
+    console.log(JSON.stringify(data, null, 2));
+  };
+/**End of validation */
 
-      projectId: this.props.match.params.id, 
-      commitmentId: this.props.match.params.id,   
-      submitted: false
-    };
-  }
+  const {cid}= useParams();
 
-  onChangeCostCode(e) {
-    this.setState({
-      costCode: e.target.value
-    });
-  }
-  onChangeDescription (e) {
-    this.setState({
-      description: e.target.value
-    });
-  }
-  onChangeAmmount(e) {
-    this.setState({
-      ammount: e.target.value
-    });
-  }
-  /*onChangeBilledToDate (e) {
-    this.setState({
-        billedToDate: e.target.value
-    });
-  }
-  onChangeAmmountRemaining(e) {
-    this.setState({
-        ammountRemaining: e.target.value
-    });
-  }*/
-  
-  saveSov(){
-    console.log("clicked");  
+  const initialSovState = {
+    id: null,
+    costCode :"",
+    description :"",
+    date :"",
+    amount: "",
+     commitmentId:props.match.params.id,  
+    
+  };
+  const [sov, setSov] = useState(initialSovState);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleInputChange = event => {
+    const { name, value } = event.target;
+    setSov({ ...sov, [name]: value });
+  };
+
+  const saveSov = () => {
     var data = {
-      costCode: this.state.costCode,
-      description: this.state.description,
-      ammount: this.state.ammount,     
-      //billedToDate: this.state.billedToDate,
-      //ammountRemaining:this.state.ammountRemaining,
-      
-      projectId: this.state.projectId,
-      commitmentId: this.state.commitmentId
+      costCode: sov.costCode,
+      description: sov.description,
+      date: sov.date,
+      amount: sov.amount,
+       commitmentId: sov.commitmentId,
     };
 
     SovDataService.create(data)
       .then(response => {
-        this.setState({
-        costCode: response.data.costCode,
-        description: response.data.description,
-      ammount:response.data.ammount,      
-      //billedToDate:response.data.billedToDate,
-      //ammountRemaining:response.data.ammountRemaining,
-          
-          projectId: response.data.projectId,
+        setSov({
+          id: response.data.id,
+          costCode: response.data.costCode,
+          description: response.data.description,
+          date: response.data.date,
+          amount: response.data.amount,
           commitmentId: response.data.commitmentId,
-
-          submitted: true
+     
         });
+        setSubmitted(true);
         console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
-  }
+  };
 
-  newSov() {
-    this.setState({
-      id: null,
-      costCode: "",
-      ammount: "",
-      //billedToDate: "",
-      //ammountRemaining: "", 
-      
-      projectId: this.props.match.params.id,
-      commitmentId: this.props.match.params.id,
+  const newSov = () => {
+    setSov(initialSovState);
+    setSubmitted(false);
+  };
 
-      submitted: false
-    });
-  }
-
-  render() {
-    const {projectId, commitmentId} = this.state;
-    return (
+ 
+  return (
         <div className="container">
-        {this.state.submitted ? (
+       
+        {submitted ? (
           <div>
             <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={this.newSov}>
-             Create Another SoV
+            <button className="btn btn-success" onClick={newSov}>
+              + Add Another SoV
             </button>&nbsp;&nbsp;
-            <Link  to={"/viewsov/"+commitmentId} className="btn btn-success">View SoVs</Link>&nbsp;&nbsp;
-           
+          <Link  to={"/viewsov/"+sov.commitmentId} className="btn btn-success">View SoVs</Link>
           </div>
         ) : (
-            <div class="container">
-       <h2>Create New SoV</h2><hr/>
-       <div className="row">
+          <div class="container">
+            <h2>New SoV</h2>
+            <div className="row">
        <div className="col-sm-6">
-          <div className="form-group">
-         
-                <label htmlFor="hash">Cost Code :</label> 
-             {/*<input
+       <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-group">
+              <label htmlFor="costCode">Cost Code :</label>
+             {/* <input
                 type="text"
                 className="form-control"
                 id="costCode"
@@ -139,76 +116,100 @@ export default class CreatePrimeContracts extends Component{
                 value={this.state.costCode}
                 onChange={this.onChangeCostCode}
                 name="costCode"
-        />*/}
-                  <select 
-                className="form-control"
+             />*/}
+                <select 
+                
                 id="costCode"
-                required
-                value={this.state.costCode}
-                onChange={this.onChangeCostCode}
+           
+                
                 name="costCode"
+                {...register('costCode')}
+                value={sov.costCode}
+                onChange={handleInputChange}
+                className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
               >
-                <option>000-General</option>
-                <option>200-Site Preparation</option>
-                <option>220-Site Demolition</option>
+                
+                <option>010-Maintenance Equipment</option>
+                <option>924-Sodding</option>
+                <option>100-Visual Display Boards</option>
                 <option>230-Site Clearing</option>
                 <option>240-Dewatering</option>
+             
               </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="title">Description :</label>
-    
+              <div className="invalid-feedback">{errors.costCode?.message}</div>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="amount">Description :</label>
               <input
                 type="text"
-                className="form-control"
+            
                 id="description"
-                required
-                value={this.state.description}
-                onChange={this.onChangeDescription}
+                
+           
                 name="description"
+                {...register('description')}
+                value={sov.description}
+                onChange={handleInputChange}
+                className={`form-control ${errors.description ? 'is-invalid' : ''}`}
               />
-              </div>
-              <div className="form-group">
-                <label htmlFor="contractCompany">Ammount :</label>
-             
-                <input
-                type="text"
-                className="form-control"
-                id="ammount"
-                required
-                value={this.state.ammount}
-                onChange={this.onChangeAmmount}
-                name="ammount"
-              />
-              </div>
-            
-           { /*<div className="form-group">
-                <label htmlFor="status">Billed To Date :</label>
-            
+               <div className="invalid-feedback">{errors.description?.message}</div>
+            </div>
+
+          
+            <div className="form-group">
+              <label htmlFor="date">Date :</label>
               <input
                 type="date"
-                className="form-control"
-                id="billedToDate"
-                required
-                value={this.state.billedToDate}
-                onChange={this.onChangeBilledToDate}
-                name="billedToDate"
+                
+                id="date"
+                
+                
+                name="date"
+                {...register('date')}
+                value={sov.date}
+                onChange={handleInputChange}
+                className={`form-control ${errors.date ? 'is-invalid' : ''}`}
               />
-              </div>
+               <div className="invalid-feedback">{errors.date?.message}</div>
+            </div>
 
-              <div className="form-group">
-                <label htmlFor="defaultRetainage">Ammount Remaining :</label>
-                <input
+            <div className="form-group">
+              <label htmlFor="amount">Amount :</label>
+              <input
                 type="text"
-                className="form-control"
-                id="ammountRemaining"
-                required
-                value={this.state.ammountRemaining}
-                onChange={this.onChangeAmmountRemaining}
-                name="ammountRemaining"
+               
+                id="amount"
+             
+              
+                name="amount"
+                {...register('amount')}
+                value={sov.amount}
+                onChange={handleInputChange}
+                className={`form-control ${errors.amount ? 'is-invalid' : ''}`}
               />
-      </div>*/}
-              </div>
+               <div className="invalid-feedback">{errors.amount?.message}</div>
+            </div>
+            <div className="form-group">
+            <button type="submit" onClick={saveSov} className="btn btn-success">
+              Save
+            </button>
+            &nbsp;&nbsp;
+            <button
+            type="button"
+            onClick={() => reset()}
+            className="btn btn-warning float-right"
+          >
+            Reset
+          </button>&nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
+            <Link to={"/sov/" + sov.commitmentId}>
+            <button className="btn btn-success">
+            Cancel
+            </button></Link>
+            </div>
+            </form>
+            </div>
+            
 <div className="col-sm-6">
             <Timeline>
               <TimelineItem>
@@ -234,20 +235,15 @@ export default class CreatePrimeContracts extends Component{
               </TimelineItem>
             </Timeline>
             </div>
-
-</div>
-           
-            <button onClick={this.saveSov} className="btn btn-success">
-              Save
-            </button>&nbsp;&nbsp;
             
-           &nbsp;&nbsp;
-            <br /><br /><br />
-            </div>
-        )}
+            
+            </div><br />
+          {/** */} 
           </div>
+        )}
+        <br /><br />
+      </div>
+  );
+};
 
-
-    );
-  }
-}
+export default AddSov;

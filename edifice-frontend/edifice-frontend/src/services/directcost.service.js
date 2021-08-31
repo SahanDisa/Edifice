@@ -26,12 +26,21 @@ removeAll(){
   return http.delete(`/projects/directcost`);
 }
 
-findByCostCode(costCode){
-  return http.get(`/projects/directcost?costCode=${costCode}`);
+findByCostCode(id,costCode){
+  //return http.get(`/projects/directcost?costCode=${costCode}`);
+  //return http.get(`/projects/directcost/list/${id}?costCode=${costCode}`);
+  return http.get(`/projects/directcost/list/${id}/${costCode}`);
+  //return http.get(`/projects/directcost?costcode=${costCode}`);
+
 }
 
 
 /*end of added new*/
+getDTotalOfCostCodes(id,costCode,sum){
+
+  return http.get(`/projects/directcost/list/${id}/${costCode}`,sum);
+
+}
 
 }
 

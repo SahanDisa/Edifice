@@ -1,26 +1,20 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import CommitmentDataService from "./../../../services/commitment.service";
-import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
-import BootstrapTable from 'react-bootstrap-table-next';
-
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
-
 
 export default class Commitments extends Component {
     
     constructor(props) {
       super(props);
      
-      this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
+      this.onChangeSearchContractCompany = this.onChangeSearchContractCompany.bind(this);
       this.retrieveCommitment = this.retrieveCommitment.bind(this);
       this.refreshList = this.refreshList.bind(this);
       this.setActiveCommitment = this.setActiveCommitment.bind(this);
-      this.searchTitle = this.searchTitle.bind(this);
+      this.searchContractCompany  = this.searchContractCompany.bind(this);
       this.deleteCommitment = this.deleteCommitment.bind(this);
     
       this.state = {
@@ -28,7 +22,7 @@ export default class Commitments extends Component {
         currentCommitment: null,
         currentIndex: -1,
         content: "",
-        searchTitle: "",
+        searchContractCompany : "",
 
         id: this.props.match.params.id
       };
@@ -44,11 +38,11 @@ export default class Commitments extends Component {
       this.retrieveCommitment(this.props.match.params.id);
     }
 
-    onChangeSearchTitle(e) {
-      const searchTitle = e.target.value;
+    onChangeSearchContractCompany (e) {
+      const searchContractCompany  = e.target.value;
   
       this.setState({
-        searchTitle: searchTitle
+        searchContractCompany : searchContractCompany 
       });
     }
 
@@ -80,8 +74,8 @@ export default class Commitments extends Component {
       });
     }
 
-    searchTitle() {
-      CommitmentDataService.findByTitle(this.state.searchTitle)
+    searchContractCompany () {
+      CommitmentDataService.findByContractCompany (this.state.id, this.state.searchContractCompany )
         .then(response => {
           this.setState({
             commitments: response.data
@@ -93,6 +87,7 @@ export default class Commitments extends Component {
         });
     }
 
+    //not working:/
     deleteCommitment() { 
       //this.getCommitment();
      
@@ -120,7 +115,7 @@ export default class Commitments extends Component {
     }
     
     render() {
-        const { searchTitle, commitments ,currentCommitment, currentIndex,id } = this.state;
+        const { searchContractCompany , commitments ,currentCommitment, currentIndex,id } = this.state;
         // const classes = useStyles();
         return (
             <div>
@@ -134,41 +129,42 @@ export default class Commitments extends Component {
 
             <div className="col-12 text-right">
                 <Link className="btn btn-primary mr-2" to={"/addcommitment/"+id}>
-                + Create New Commitment
+                + New Commitment
                 </Link>
             </div>
 
             <div className="col-12 text-left">
-            <h5>Commited Contract Totals</h5><br></br>
-            <h6>Total Contracts : Rs. 44,446,000.00<br /></h6>
-            <h6>Payments Made : Rs. 44,446,000.00</h6><br />
+            <h5>Commited Contracts Total</h5><br></br>
+            <h6>Total Contracts Amount (Rs.): Rs. 44,446,000.00<br /></h6>
+            <h6>Payments Made  (Rs.) : Rs. 44,446,000.00</h6><br />
             </div>
 
             <div className="container">
             <div className="form-row mt-3">
             <div className="form-group col-md-8 text-left">
                 <h4>Commitments List</h4></div>
-                <div className="form-group col-md-3 text-right">
+                <div className="col-md-4">
+                <div className="input-group mb-3">
                 <input
               type="text"
               className="form-control"
-              placeholder="Search by title"
-              value={searchTitle}
-              onChange={this.onChangeSearchTitle}
+              placeholder="Search by Contract Company"
+              value={searchContractCompany}
+              onChange={this.onChangeSearchContractCompany}
             />
             <div className="input-group-append">
               <button
                 className="btn btn-outline-secondary"
                 type="button"
-                onClick={this.searchTitle}
+                onClick={this.searchContractCompany}
               >
                 Search
               </button>
             </div>
                       
-                      </div>
+                      </div></div>
                     </div>
-            {/* Drawing List */}
+            {/* Commitments List */}
             <ul className="list-group">
             {commitments &&
                 commitments.map((commitment, index) => (
@@ -197,7 +193,7 @@ export default class Commitments extends Component {
                         View 
                     </Button>*/}
                     </Link>
-                    <Link to={"/viewcommitment/"+commitment.id}>
+                    <Link to={"/editcommitment/"+commitment.id}>
                     <button className="btn btn-success m-2">Edit <UpdateIcon/> </button>
                     </Link>
                    

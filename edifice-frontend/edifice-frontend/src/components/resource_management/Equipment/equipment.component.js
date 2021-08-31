@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import EquipmentCategoryDataService from "./../../../services/equipment-category.service";
 
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Card from 'react-bootstrap/Card';
 
@@ -11,9 +11,38 @@ import  NewCategory from './new-category.component';
 import AddEquip from './new-equipment.component';
 
 
+
 class Equipment extends Component {
 
+  constructor(props) {
+    super(props);
+    this.retrieveCategory = this.retrieveCategory.bind(this);
+
+    this.state = {
+      categorys: [],
+      currentIndex: -1,
+      content: "",
+      id: this.props.match.params.id
+    };
+  }
+
+  componentDidMount() {
+    this.retrieveCategory(this.props.match.params.id);
+  }
+  retrieveCategory(id) {
+    EquipmentCategoryDataService.getAll(id)
+      .then(response => {
+        this.setState({
+          categorys: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
     render() {
+      const { categorys ,currentIndex,id } = this.state;
         return (
           <div>
             <Card
@@ -40,7 +69,7 @@ class Equipment extends Component {
                               </div>
                               <a href="#" className="btn btn-outline-dark mb-3">Filter</a>
                               <div class="col-md-7 text-right">
-                              <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCategory">Add New Category</a>
+                              <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#addEquip">Add New</a>
                               </div>
                             </div>
                         </form>
@@ -60,25 +89,20 @@ class Equipment extends Component {
                                     <div class="card-body">
                                         <div className="">
                                             <div class="col-md-12 text-right mb-2">
-                                            <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#addEquip">+ Add New</a>
                                             
                                               <List component="nav" aria-label="mailbox folders">
                                                 <ListItem button>
-                                                <a href="#" className="btn btn-primary mr-3" data-toggle="modal" data-target="#addEquip">Allocate</a>
                                                   <a href="/equipDetails" >235E - ExcavatorABC</a>
                                                 </ListItem>
                                                 <Divider />
                                                   <ListItem button divider>
-                                                  <a href="#" className="btn btn-primary mr-3" data-toggle="modal" data-target="#addEquip">Allocate</a>
                                                     <a href="#" >432E - Excavator cataplller</a>
                                                   </ListItem>
                                                   <ListItem button>
-                                                  <a href="#" className="btn btn-primary mr-3" data-toggle="modal" data-target="#addEquip">Allocate</a>
                                                     <a href="#" >542E - ikon2</a>
                                                   </ListItem>
                                                 <Divider light />
                                                 <ListItem button>
-                                                <a href="#" className="btn btn-primary mr-3" data-toggle="modal" data-target="#addEquip">Allocate</a>
                                                   <a href="#" >098E - Arko</a>
                                                 </ListItem>
                                             </List>                            
@@ -101,7 +125,6 @@ class Equipment extends Component {
                                     <div class="card-body">
                                         <div className="">
                                             <div class="col-md-12 text-right mb-2">
-                                            <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#addWorker">+ Add Worker</a>
                                             </div>
                       
                                         </div>
@@ -123,6 +146,8 @@ class Equipment extends Component {
                     <AddEquip />        
                   </div>
                 {/* New Equipment Ends */}
+
+
           </div>
 
 

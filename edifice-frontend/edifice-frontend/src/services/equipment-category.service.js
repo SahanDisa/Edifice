@@ -1,14 +1,14 @@
 import http from "../http-common.js";
 
 class EquipmentCategoryDataService {
- /* getAll() {
-    return http.get("/projects");
+  getAll(id) {
+    return http.get("/categorys");
   }
 
   get(id) {
     return http.get(`/projects/${id}`);
   }
-  */
+  
   create(data) {
     return http.post("/categorys", data);
   }
