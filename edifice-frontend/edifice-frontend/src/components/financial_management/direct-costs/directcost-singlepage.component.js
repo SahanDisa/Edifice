@@ -133,11 +133,11 @@ const DirectCost = props => {
                 name="costCode"
               >
                 <option></option>
-                <option>010-Maintenance Equipment</option>
-                <option>924-Sodding</option>
-                <option>100-Visual Display Boards</option>
-                <option>230-Site Clearing</option>
-                <option>240-Dewatering</option>
+                <option>001-Maintenance Equipment</option>
+                <option>002-Sodding</option>
+                <option>003-Visual Display Boards</option>
+                <option>004-Site Clearing</option>
+                <option>005-Dewatering</option>
               </select>
               <div className="invalid-feedback">{errors.costCode?.message}</div>
             </div>
