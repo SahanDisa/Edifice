@@ -174,7 +174,7 @@ const SovList = (props) => {
           className="table table-striped table-bordered"
           {...getTableProps()}
         >
-          <thead>
+          <thead className="Table-header">
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (

@@ -21,7 +21,7 @@ module.exports = (sequelize, Sequelize) => {
       paidDate: {
         type: Sequelize.DATEONLY
       },
-      ammount: {
+      amount: {
         type: Sequelize.DECIMAL(10, 2) 
       },
     }, {
