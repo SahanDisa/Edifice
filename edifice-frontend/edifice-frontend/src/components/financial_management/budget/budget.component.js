@@ -8,7 +8,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 
-
 const BudgetList = (props) => {
   const {id}= useParams();
   const [budgets, setBudgets] = useState([]);
@@ -100,36 +99,41 @@ const sum ="";
         accessor: "costCode",
       },
       {
-        Header: "Estimated Budget Amount",
+        Header: "Estimated Budget Amount(Rs.)",
         accessor: "estimatedBudget",
       },
       {
-        Header: "Direct Costs",
+        Header: "Direct Costs(Rs.)",
         accessor: "directCosts",
-        Cell: (props) => {
+        /*Cell: (props) => {
           const rowIdx = props.row.id;
           //retrieveTotalDirectCosts(rowIdx); 
           return(
             <div>{sum}</div>
           );
-        },
+        },*/
       },
       {
-        Header: "Commited Costs",
+        Header: "Commited Costs(Rs.)",
         accessor: "commitedCosts",
       },
       {
-        Header: "Current Budget Amount",
+        Header: "Total Cost(Rs.)",
         accessor: "currentBudget",
       },
       {
-        Header: "Revised Budget Amount",
+        Header: "Revised Budget Amount(Rs.)",
         accessor: "revisedBudget",
       },
     
       {
-        Header: "Projected Over/Under",
+        Header: "↑↓",
         accessor: "overUnder",
+        Cell: (props) => {
+          return (
+            <div>🟢</div>
+          );
+        },
       },
       {
         Header: "",
@@ -167,30 +171,31 @@ const sum ="";
   return (
     <div>
         <h3> BUDGET</h3>
-               <h6>Setup and manage a comprehensive budget throughout the life cycle of the project.</h6><hr />
+               <h6>Setup and Manage a Comprehensive Budget throughout the Life Cycle of the Project.</h6> 
+                <hr /><br />
                <div className="row" style={{alignItems: "center"}} >
-          <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-            <div className="card card-hover shadow-sm">
+          <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2" >
+            <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Estimated Budget</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. 123,456,789.00</span>
+                <span className="fs-sm fw-normal text-muted">Rs. 250,000,000.00</span>
               </div>
             </div>
-<div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-            <div className="card card-hover shadow-sm">
+<div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Direct Costs</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. 123,456,789.00.</span>
+                <span className="fs-sm fw-normal text-muted">Rs. 100,000,000.00</span>
               </div>
     </div>
-          <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-            <div className="card card-hover shadow-sm">
+          <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Commited Costs</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. 123,456,789.00.</span>
+                <span className="fs-sm fw-normal text-muted">Rs. 125,000,000.00</span>
               </div>
             </div>
-            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm">
-                <h3 className="h5 nav-heading-title mb-0">Total Budget</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. 123,456,789.00.</span>
+            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
+                <h3 className="h5 nav-heading-title mb-0">Total Cost</h3>
+                <span className="fs-sm fw-normal text-muted">Rs. 225,000,000.00</span>
               </div>
             </div>
           </div>
@@ -208,13 +213,32 @@ const sum ="";
                 </div>
       <div className="form-group col-md-4">
         <div className="input-group mb-3">
-          <input
+         {/* <input
             type="text"
             className="form-control"
             placeholder="Search by cost code"
             value={searchCostCode}
             onChange={onChangeSearchCostCode}
-          />
+          />*/}
+           <select 
+                
+                id="costCode"
+           
+                
+                name="costCode"
+                className="form-control"
+            placeholder="Search by cost code"
+            value={searchCostCode}
+            onChange={onChangeSearchCostCode}
+              >
+              <option  selected value="">All</option>
+                <option>001-Maintenance Equipment</option>
+                <option>002-Sodding</option>
+                <option>003-Visual Display Boards</option>
+                <option>004-Site Clearing</option>
+                <option>005-Dewatering</option>
+             
+              </select>
           <div className="input-group-append">
             <button
               className="btn btn-outline-secondary"

@@ -25,6 +25,7 @@ module.exports = (sequelize, Sequelize) => {
       ,
       currentBudget: {
         type: Sequelize.DECIMAL(10, 2),
+        defaultValue: "0"
       
       },
       revisedBudget: {
