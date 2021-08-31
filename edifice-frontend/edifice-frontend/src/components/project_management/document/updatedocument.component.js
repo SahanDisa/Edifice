@@ -1,21 +1,21 @@
 import React, { Component } from "react";
-import DrawingDataService from "./../../../services/drawing.service";
-import DrawingCategoryService from "../../../services/drawing-category.service";
+import DocumentDataService from "./../../../services/documentfile.service";
+import DirectoryCategoryService from "../../../services/directory.service";
 
-export default class UpdateDrawing extends Component {
+export default class UpdateDocument extends Component {
   constructor(props) {
     super(props);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeCategory = this.onChangeCategory.bind(this);
     this.onChangeVersion = this.onChangeVersion.bind(this);
-    this.getDrawing = this.getDrawing.bind(this);
+    this.getDocument = this.getDocument.bind(this);
     this.updatePublished = this.updatePublished.bind(this);
-    this.updateDrawing = this.updateDrawing.bind(this);
-    this.deleteDrawing = this.deleteDrawing.bind(this);
+    this.updateDocument = this.updateDocument.bind(this);
+    this.deleteDocument = this.deleteDocument.bind(this);
 
     this.state = {
-      currentDrawing: {
+      currentDocument: {
         id: null,
         title: "",
         description: "",
@@ -33,8 +33,8 @@ export default class UpdateDrawing extends Component {
   }
 
   componentDidMount() {
-    this.getDrawing(this.props.match.params.id);
-    this.retriveDrawingCategory(this.props.match.params.pid);
+    this.getDocument(this.props.match.params.id);
+    this.retriveDocumentCategory(this.props.match.params.pid);
   }
 
   onChangeTitle(e) {
@@ -42,8 +42,8 @@ export default class UpdateDrawing extends Component {
 
     this.setState(function(prevState) {
       return {
-        currentDrawing: {
-          ...prevState.currentDrawing,
+        currentDocument: {
+          ...prevState.currentDocument,
           title: title
         }
       };
@@ -54,8 +54,8 @@ export default class UpdateDrawing extends Component {
     const description = e.target.value;
     
     this.setState(prevState => ({
-      currentDrawing: {
-        ...prevState.currentDrawing,
+      currentDocument: {
+        ...prevState.currentDocument,
         description: description
       }
     }));
@@ -65,8 +65,8 @@ export default class UpdateDrawing extends Component {
     const category = e.target.value;
     
     this.setState(prevState => ({
-      currentDrawing: {
-        ...prevState.currentDrawing,
+      currentDocument: {
+        ...prevState.currentDocument,
         category: category
       }
     }));
@@ -75,8 +75,8 @@ export default class UpdateDrawing extends Component {
     const status = e.target.value;
     
     this.setState(prevState => ({
-      currentDrawing: {
-        ...prevState.currentDrawing,
+      currentDocument: {
+        ...prevState.currentDocument,
         status: status
       }
     }));
@@ -86,15 +86,15 @@ export default class UpdateDrawing extends Component {
     const version = e.target.value;
     
     this.setState(prevState => ({
-      currentDrawing: {
-        ...prevState.currentDrawing,
+      currentDocument: {
+        ...prevState.currentDocument,
         version: version
       }
     }));
   }
 
-  retriveDrawingCategory(id){
-    DrawingCategoryService.getAll(id)
+  retriveDocumentCategory(id){
+    DirectoryCategoryService.getAll(id)
     .then(response => {
         this.setState({
           drawingcategories: response.data
@@ -106,11 +106,11 @@ export default class UpdateDrawing extends Component {
       });
   }
 
-  getDrawing(id) {
-    DrawingDataService.get(id)
+  getDocument(id) {
+    DocumentDataService.get(id)
       .then(response => {
         this.setState({
-          currentDrawing: response.data
+          currentDocument: response.data
         });
         console.log(response.data);
       })
@@ -121,18 +121,18 @@ export default class UpdateDrawing extends Component {
 
   updatePublished(status) {
     var data = {
-      id: this.state.currentDrawing.id,
-      title: this.state.currentDrawing.title,
-      description: this.state.currentDrawing.description,
-      category: this.state.currentDrawing.category,
+      id: this.state.currentDocument.id,
+      title: this.state.currentDocument.title,
+      description: this.state.currentDocument.description,
+      category: this.state.currentDocument.category,
       status: status
     };
 
-    DrawingDataService.update(this.state.currentDrawing.id, data)
+    DocumentDataService.update(this.state.currentDocument.id, data)
       .then(response => {
         this.setState(prevState => ({
-          currentDrawing: {
-            ...prevState.currentDrawing,
+          currentDocument: {
+            ...prevState.currentDocument,
             status: status
           }
         }));
@@ -143,16 +143,16 @@ export default class UpdateDrawing extends Component {
       });
   }
 
-  updateDrawing() {
+  updateDocument() {
     var data = {
-      id: this.state.currentDrawing.id,
-      title: this.state.currentDrawing.title,
-      description: this.state.currentDrawing.description,
-      category: this.state.currentDrawing.category,
-      status: this.state.currentDrawing.status,
-      version: this.state.currentDrawing.version,
+      id: this.state.currentDocument.id,
+      title: this.state.currentDocument.title,
+      description: this.state.currentDocument.description,
+      category: this.state.currentDocument.category,
+      status: this.state.currentDocument.status,
+      version: this.state.currentDocument.version,
     };
-    DrawingDataService.update(this.state.currentDrawing.id,data)
+    DocumentDataService.update(this.state.currentDocument.id,data)
       .then(response => {
         console.log(response.data);
         this.setState({
@@ -164,11 +164,11 @@ export default class UpdateDrawing extends Component {
       });
   }
 
-  deleteDrawing() {    
-    DrawingDataService.delete(this.state.currentDrawing.id)
+  deleteDocument() {    
+    DocumentDataService.delete(this.state.currentDocument.id)
       .then(response => {
         console.log(response.data);
-        this.props.history.push('/drawings/'+this.state.pid);
+        this.props.history.push('/projects')
       })
       .catch(e => {
         console.log(e);
@@ -176,14 +176,14 @@ export default class UpdateDrawing extends Component {
   }
 
     render() {
-      const { currentDrawing, temp, drawingcategories} = this.state;
+      const { currentDocument, temp, drawingcategories} = this.state;
   
       return (
         <div>
-          {currentDrawing ? (
+          {currentDocument ? (
             <div className="container">
-              <h2>Update a Drawing</h2>
-              <h4>Drawing Id : {temp}</h4>
+              <h2>Update a Document</h2>
+              <h4>Document Id : {temp}</h4>
               <form>
                 <div className="form-group">
                   <label htmlFor="title">Title</label>
@@ -191,7 +191,7 @@ export default class UpdateDrawing extends Component {
                     type="text"
                     className="form-control"
                     id="title"
-                    value={currentDrawing.title}
+                    value={currentDocument.title}
                     onChange={this.onChangeTitle}
                   />
                 </div>
@@ -201,7 +201,7 @@ export default class UpdateDrawing extends Component {
                     type="text"
                     className="form-control"
                     id="description"
-                    value={currentDrawing.description}
+                    value={currentDocument.description}
                     onChange={this.onChangeDescription}
                   />
                 </div>
@@ -211,12 +211,12 @@ export default class UpdateDrawing extends Component {
                     type="text"
                     className="form-control"
                     id="category"
-                    value={currentDrawing.category}
+                    value={currentDocument.category}
                     onChange={this.onChangeCategory}
                   />
                 </div> */}
                 <div className="form-group">
-                <label htmlFor="category">Drawing Category</label>
+                <label htmlFor="category">Document Category</label>
                 <select 
                     className="form-control"
                     id="category"
@@ -244,7 +244,7 @@ export default class UpdateDrawing extends Component {
                     type="text"
                     className="form-control"
                     id="category"
-                    value={currentDrawing.version + 1}
+                    value={currentDocument.version + 1}
                     onChange={this.onChangeVersion}
                     disabled
                   />
@@ -253,11 +253,11 @@ export default class UpdateDrawing extends Component {
                   <label>
                     <strong>Status:</strong>
                   </label>
-                  {currentDrawing.status}
+                  {currentDocument.status}
                 </div>
               </form>
 
-              {currentDrawing.status == "Not Complete" ? (
+              {currentDocument.status == "Not Complete" ? (
                 <button
                   className="btn btn-primary mr-2"
                   onClick={() => this.updatePublished("Pending")}
@@ -265,7 +265,7 @@ export default class UpdateDrawing extends Component {
                   Set Pending
                 </button>
               ) : 
-              (currentDrawing.status == "Pending" ?
+              (currentDocument.status == "Pending" ?
                 <button
                   className="btn btn-primary mr-2"
                   onClick={() => this.updatePublished("Complete")}
@@ -284,7 +284,7 @@ export default class UpdateDrawing extends Component {
   
               <button
                 className="btn btn-danger  mr-2"
-                onClick={this.deleteDrawing}
+                onClick={this.deleteDocument}
               >
                 Delete
               </button>
@@ -292,7 +292,7 @@ export default class UpdateDrawing extends Component {
               <button
                 type="submit"
                 className="btn btn-warning mr-2"
-                onClick={this.updateDrawing}
+                onClick={this.updateDocument}
               >
                 Update
               </button>
@@ -301,7 +301,7 @@ export default class UpdateDrawing extends Component {
           ) : (
             <div>
               <br />
-              <p>Please click on a Drawing...</p>
+              <p>Please click on a Document...</p>
             </div>
           )}
         </div>

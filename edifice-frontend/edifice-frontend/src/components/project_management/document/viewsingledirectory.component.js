@@ -12,6 +12,7 @@ export default class ViewDirectory extends Component {
         super(props);
         this.retrieveCategoryDocument = this.retrieveCategoryDocument.bind(this);
         this.state = {
+          pid: this.props.match.params.pid,
           id: this.props.match.params.id,
           documents: [],
           title: "",
@@ -52,7 +53,7 @@ export default class ViewDirectory extends Component {
           });
       }
       render() {
-          const { id,title,description,documents,currentIndex } = this.state;
+          const { pid,id,title,description,documents,currentIndex } = this.state;
           return (
               <div>
                 <h2>Directory Single Page</h2>
@@ -100,7 +101,7 @@ export default class ViewDirectory extends Component {
                           <Link to={"/viewsingledocument/"+doc.id}>
                           <button className="btn btn-primary m-2">View <VisibilityIcon/> </button>
                           </Link>
-                          <Link to={"/viewdrawing/"+doc.id}>
+                          <Link to={"/updatedocument/"+pid +"/"+doc.id}>
                           <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
                           </Link>
                           <Link to={"/viewdrawing/"+doc.id}>

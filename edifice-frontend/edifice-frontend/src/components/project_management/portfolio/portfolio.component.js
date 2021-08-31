@@ -3,6 +3,7 @@ import { PieChart, Pie, Sector, Cell, LineChart, Line, XAxis, YAxis, CartesianGr
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import PortfolioDataService from "../../../services/portfolio.service";
+import DocumentDataService from "./../../../services/documentfile.service";
 import Typography from '@material-ui/core/Typography';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -86,7 +87,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 export default class PortfolioHome extends Component {
     constructor(props) {
       super(props);
-      this.retrieveComplete = this.retrieveComplete.bind(this);
+      this.retrieveDrawingStatus = this.retrieveDrawingStatus.bind(this);
       this.retrieveDepartments = this.retrieveDepartments.bind(this);
       this.retriveMilestones = this.retriveMilestones.bind(this);
       
@@ -99,12 +100,16 @@ export default class PortfolioHome extends Component {
         drawingComplete: 0,
         drawingPending: 0,
         drawingIncomplete: 0,
+        documentComplete: 0,
+        documentPending: 0,
+        documentIncomplete: 0,
         id: this.props.match.params.id,
       };
     }
   
     componentDidMount() {
-      this.retrieveComplete();
+      this.retrieveDrawingStatus();
+      this.retrieveDocumentStatus();
       this.retrieveDepartments(this.props.match.params.id);
       this.retriveMilestones(this.props.match.params.id);
     }
@@ -132,7 +137,7 @@ export default class PortfolioHome extends Component {
           console.log(e);
         });
     }
-    retrieveComplete() {
+    retrieveDrawingStatus() {
       DrawingDataService.getStatus("Complete")
         .then(response => {
           this.setState({
@@ -167,16 +172,50 @@ export default class PortfolioHome extends Component {
           console.log(e);
         });
     }
+    retrieveDocumentStatus() {
+      DocumentDataService.getStatus("Complete")
+        .then(response => {
+          this.setState({
+            documentComplete: response.data.length,
+            // dataPie: response.data.length,
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        DocumentDataService.getStatus("Pending")
+        .then(response => {
+          this.setState({
+            documentPending: response.data.length,
+            //dataPie: response.data.length,
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        DocumentDataService.getStatus("Not Complete")
+        .then(response => {
+          this.setState({
+            documentIncomplete: response.data.length,
+            //dataPie: response.data.length,
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
  
     render() {
-        const { milestones, departments, currentIndex,id,drawingComplete,
-          drawingPending,
-          drawingIncomplete} = this.state;
+        const { milestones, departments, currentIndex,id,drawingComplete,drawingPending,drawingIncomplete,
+          documentComplete,documentPending,documentIncomplete} = this.state;
         
         const dataPie = [
-            { name: 'Completed', value:  drawingComplete*100},
-            { name: 'Pending', value: drawingPending*100 },
-            { name: 'Not Completed', value: drawingIncomplete*100 },
+            { name: 'Completed', value:  (drawingComplete+documentComplete)*100},
+            { name: 'Pending', value: (drawingPending + documentPending)*100 },
+            { name: 'Not Completed', value: (drawingIncomplete + documentIncomplete)*100 },
         ];
         
         return (
@@ -240,6 +279,12 @@ export default class PortfolioHome extends Component {
                   <ProgressBar variant="warning" now={(drawingPending)/(drawingComplete + drawingPending + drawingIncomplete)*100} key={2} label="Pending" />
                   <ProgressBar variant="danger" now={(drawingIncomplete)/(drawingComplete + drawingPending + drawingIncomplete)*100} key={3}  label="Not Complete"/>
                 </ProgressBar>
+                <h6>Document</h6>
+                <ProgressBar>
+                <ProgressBar variant="success" now={(documentComplete)/(documentComplete + documentPending + documentIncomplete)*100} key={1} label="Complete" />
+                  <ProgressBar variant="warning" now={(documentPending)/(documentComplete + documentPending + documentIncomplete)*100} key={2} label="Pending" />
+                  <ProgressBar variant="danger" now={(documentIncomplete)/(documentComplete + documentPending + documentIncomplete)*100} key={3}  label="Not Complete"/>
+                </ProgressBar>
                 <h6>Punch List</h6>
                 <ProgressBar>
                   <ProgressBar variant="success" now={45} key={1} label="Complete"/>
@@ -248,6 +293,7 @@ export default class PortfolioHome extends Component {
                 </ProgressBar>
               </div>
             </div>
+            <hr></hr>
             <div className="container">
                 <h3>Project Profile & Team</h3>
                 <Card>

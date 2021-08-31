@@ -72,7 +72,7 @@ import DocumentHome from "./components/project_management/document/document.comp
 import UploadDocFiles from "./components/project_management/document/adddocument.component";
 import UploadDocment from "./components/project_management/document/uploaddocument.component";
 import ViewSingleDocument from "./components/project_management/document/viewsingledocument.component";
-// import PdfViewerComponent from "./components/project_management/document/viewpdf.component";
+import UpdateDocument from "./components/project_management/document/updatedocument.component";
 
 import MeetingsConfig from "./components/project_management/meetings/configuration.component";
 import ManageMeetings from "./components/project_management/meetings/manage.component";
@@ -306,8 +306,8 @@ class App extends Component {
             <Route path="/document/:id" component={DocumentHome} />
             <Route path="/adddocument/:id" component={UploadDocFiles} />
             <Route path="/uploaddocument/:name" component={UploadDocment}/>
-            {/* <Route path={"/viewdocument"} component={PdfViewerComponent}/> */}
-            <Route path={"/viewdirectory/:id"} component={ViewDirectory}/>
+            <Route exact path="/updatedocument/:pid/:id" component={UpdateDocument}/>
+            <Route exact path={"/viewdirectory/:pid/:id"} component={ViewDirectory}/>
             <Route path={"/viewsingledocument/:id"} component={ViewSingleDocument}/>
             {/* Drawing Component Routes  */}
             <Route path="/drawing/:id" component={DrawingHome} />

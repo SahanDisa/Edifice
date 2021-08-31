@@ -60,7 +60,7 @@ export default class Documents extends Component {
                     key={index}
                 >
                 {/* unit data */}
-                <Link to={"/viewdirectory/"+directory.id} style={{'text-decoration': 'none'}}>
+                <Link to={"/viewdirectory/"+id+"/"+directory.id} style={{'text-decoration': 'none'}}>
                         <Card
                         bg={'secondary'}
                         text={'dark'}
