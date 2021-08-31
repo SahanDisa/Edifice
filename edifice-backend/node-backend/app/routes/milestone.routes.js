@@ -17,6 +17,9 @@ module.exports = app => {
   
     // Delete a Tutorial with id
     router.delete("/:id/", milestone.delete);
+
+    // Retrieve all published Tutorials
+    router.get("/completed/:id", milestone.findAllComplete);
   
     app.use('/api/projects/milestone', router);
   };
