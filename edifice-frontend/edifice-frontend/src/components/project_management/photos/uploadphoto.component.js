@@ -116,18 +116,6 @@ export default class UploadPhotos extends Component {
         <div className="alert alert-light" role="alert">
           {message}
         </div>
-
-        {/* <div className="card">
-          <div className="card-header">List of Files</div>
-          <ul className="list-group list-group-flush">
-            {fileInfos &&
-              fileInfos.map((file, index) => (
-                <li className="list-group-item" key={index}>
-                  <a href={file.url} target="_blank">{file.name}</a>
-                </li>
-              ))}
-          </ul>
-          </div>*/}
         </div>
         {/* <button onClick={() => useHistory.goBack()} >Go Back</button> */}
       </div>

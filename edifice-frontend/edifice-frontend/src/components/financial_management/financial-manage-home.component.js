@@ -112,11 +112,11 @@ export default class BoardUser extends Component {
               <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/commitment/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={commitmentsIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Commitments</h3>
-                <span className="fs-sm fw-normal text-muted">See the Status and Value of all the Contracts.</span>
+                <span className="fs-sm fw-normal text-muted">See the Status and Schedule of Values of all the Contracts.</span>
               </Link>
               </div>
             </div>
-          <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+         {/* <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm">
               <Link className="d-block nav-heading text-center mt-2 mb-2" to={"/invoice/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={invoiceIcon} alt="" width="50"/>
@@ -124,7 +124,7 @@ export default class BoardUser extends Component {
                 <span className="fs-sm fw-normal text-muted">View and review the invoice collection of the project.</span>
               </Link>
               </div>
-            </div>
+  </div>*/}
           </div>
       </div>
     );

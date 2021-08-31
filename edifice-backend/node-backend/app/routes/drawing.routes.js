@@ -15,6 +15,9 @@ module.exports = app => {
     // Get all category drawings
     router.get("/cat/:id", drawing.findAllCat);
 
+    //Get Complete/Pending/Incomplete drawings
+    router.get("/status/:status",drawing.findAllbyStatus);
+
     // Update a Drawing with id
     router.put("/:id", drawing.update);
     

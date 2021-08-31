@@ -1,8 +1,9 @@
-import React, { Component, PureComponent } from "react";
-import { PieChart, Pie, Sector, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React, { Component } from "react";
+import { PieChart, Pie, Sector, Cell, LineChart, Line, Label , XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import PortfolioDataService from "../../../services/portfolio.service";
+import DocumentDataService from "./../../../services/documentfile.service";
 import Typography from '@material-ui/core/Typography';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -21,7 +22,6 @@ import { Card } from "react-bootstrap";
 const data = [
   { name: 'Completed', value: 400 },
   { name: 'Pending', value: 300 },
-  // { name: 'Group C', value: 300 },
   { name: 'Not Completed', value: 200 },
 ];
 const dataline = [
@@ -87,7 +87,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 export default class PortfolioHome extends Component {
     constructor(props) {
       super(props);
-      this.retrieveDrawing = this.retrieveDrawing.bind(this);
+      this.retrieveDrawingStatus = this.retrieveDrawingStatus.bind(this);
       this.retrieveDepartments = this.retrieveDepartments.bind(this);
       this.retriveMilestones = this.retriveMilestones.bind(this);
       
@@ -97,12 +97,19 @@ export default class PortfolioHome extends Component {
         milestones: [],
         currentIndex: -1,
         content: "",
+        drawingComplete: 0,
+        drawingPending: 0,
+        drawingIncomplete: 0,
+        documentComplete: 0,
+        documentPending: 0,
+        documentIncomplete: 0,
         id: this.props.match.params.id,
       };
     }
   
     componentDidMount() {
-      this.retrieveDrawing(this.props.match.params.id);
+      this.retrieveDrawingStatus();
+      this.retrieveDocumentStatus();
       this.retrieveDepartments(this.props.match.params.id);
       this.retriveMilestones(this.props.match.params.id);
     }
@@ -130,11 +137,69 @@ export default class PortfolioHome extends Component {
           console.log(e);
         });
     }
-    retrieveDrawing(id) {
-      DrawingDataService.getAll(id)
+    retrieveDrawingStatus() {
+      DrawingDataService.getStatus("Complete")
         .then(response => {
           this.setState({
-            drawings: response.data
+            drawingComplete: response.data.length,
+            // dataPie: response.data.length,
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        DrawingDataService.getStatus("Pending")
+        .then(response => {
+          this.setState({
+            drawingPending: response.data.length,
+            //dataPie: response.data.length,
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        DrawingDataService.getStatus("Not Complete")
+        .then(response => {
+          this.setState({
+            drawingIncomplete: response.data.length,
+            //dataPie: response.data.length,
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+    retrieveDocumentStatus() {
+      DocumentDataService.getStatus("Complete")
+        .then(response => {
+          this.setState({
+            documentComplete: response.data.length,
+            // dataPie: response.data.length,
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        DocumentDataService.getStatus("Pending")
+        .then(response => {
+          this.setState({
+            documentPending: response.data.length,
+            //dataPie: response.data.length,
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        DocumentDataService.getStatus("Not Complete")
+        .then(response => {
+          this.setState({
+            documentIncomplete: response.data.length,
+            //dataPie: response.data.length,
           });
           console.log(response.data);
         })
@@ -144,7 +209,16 @@ export default class PortfolioHome extends Component {
     }
  
     render() {
-        const { milestones, departments, currentIndex,id } = this.state;
+        const { milestones, departments, currentIndex,id,drawingComplete,drawingPending,drawingIncomplete,
+          documentComplete,documentPending,documentIncomplete} = this.state;
+        
+        const dataPie = [
+            { name: 'Completed', value:  (drawingComplete+documentComplete)},
+            { name: 'Pending', value: (drawingPending + documentPending)},
+            { name: 'Not Completed', value: (drawingIncomplete + documentIncomplete)},
+        ];
+
+        const total = drawingComplete + drawingPending + drawingIncomplete + documentComplete + documentPending + documentIncomplete;
         
         return (
             <div>
@@ -161,7 +235,7 @@ export default class PortfolioHome extends Component {
                     <Tooltip />
                     <Legend />
                     <Pie
-                      data={data}
+                      data={dataPie}
                       cx="50%"
                       cy="50%"
                       labelLine={false}
@@ -170,8 +244,10 @@ export default class PortfolioHome extends Component {
                       fill="#8884d8"
                       dataKey="value"
                     >
-                      {data.map((entry, index) => (
+                      {dataPie.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+
+                        
                       ))}
                     </Pie>
                   </PieChart>
@@ -193,6 +269,33 @@ export default class PortfolioHome extends Component {
                   </LineChart>
                   </div>
                 </div>   
+            </div>
+            <hr></hr>
+            
+            {/* Progress Tab */}
+            <div className="container">
+              <h3>Progress by Activities</h3>
+              <p>Visulize the progress of all the activities</p>
+              <div className="container">
+                <h6>Drawing</h6>
+                <ProgressBar>
+                  <ProgressBar variant="primary" now={(drawingComplete)/(drawingComplete + drawingPending + drawingIncomplete)*100} key={1} label="Complete" />
+                  <ProgressBar variant="success" now={(drawingPending)/(drawingComplete + drawingPending + drawingIncomplete)*100} key={2} label="Pending" />
+                  <ProgressBar variant="danger" now={(drawingIncomplete)/(drawingComplete + drawingPending + drawingIncomplete)*100} key={3}  label="Not Complete"/>
+                </ProgressBar>
+                <h6>Document</h6>
+                <ProgressBar>
+                <ProgressBar variant="primary" now={(documentComplete)/(documentComplete + documentPending + documentIncomplete)*100} key={1} label="Complete" />
+                  <ProgressBar variant="success" now={(documentPending)/(documentComplete + documentPending + documentIncomplete)*100} key={2} label="Pending" />
+                  <ProgressBar variant="danger" now={(documentIncomplete)/(documentComplete + documentPending + documentIncomplete)*100} key={3}  label="Not Complete"/>
+                </ProgressBar>
+                <h6>Punch List</h6>
+                <ProgressBar>
+                  <ProgressBar variant="primary" now={45} key={1} label="Complete"/>
+                  <ProgressBar variant="success" now={30} key={2} label="Pending" />
+                  <ProgressBar variant="danger" now={25} key={3}  label="Not Complete"/>
+                </ProgressBar>
+              </div>
             </div>
             <hr></hr>
             <div className="container">
@@ -252,53 +355,55 @@ export default class PortfolioHome extends Component {
               <h3>Project Milestones</h3>
               <p>conatines the project milestones and stages of the project</p>
               <div className="container">
-               {/* stepper */}
-            <div className="container">
-            <Timeline align="alternate">
-            {milestones && milestones.map((milestone, index) => (
-              <TimelineItem key={index}>
-                <TimelineOppositeContent>
-                  <Typography variant="body2" color="textSecondary">
-                    {milestone.duration}
-                  </Typography>
-                </TimelineOppositeContent>
-                <TimelineSeparator>
-                  <TimelineDot variant="outlined" color="primary">
-                    <AssignmentIcon/>
-                  </TimelineDot>
-                  <TimelineConnector />
-                </TimelineSeparator>
-                <TimelineContent>
-                <Paper elevation={3} className="container">
-                  <Typography variant="h6" component="h1">
-                    {milestone.title}
-                  </Typography>
-                  <Typography>{milestone.description}</Typography>
-                </Paper>
-                </TimelineContent>
-              </TimelineItem>
-            ))}
-              <TimelineItem>
-                <TimelineSeparator>
-                  {/* <TimelineDot variant="outlined" color="secondary" /> */}
-                  {/* <TimelineConnector /> */}
-                </TimelineSeparator>
-                <TimelineDot variant="outlined" color="secondary">
-                  <AdjustSharpIcon />
-                </TimelineDot>
-                <TimelineContent>Finish</TimelineContent>
-              </TimelineItem>
-              {/* <TimelineItem>
-                <TimelineSeparator>
-                  <TimelineDot variant="outlined" />
-                </TimelineSeparator>
-                <TimelineContent>Repeat</TimelineContent>
-              </TimelineItem> */}
-            </Timeline>
-            </div>
+                {/* stepper */}
+                <div>
+                <Timeline align="alternate">
+                <TimelineItem>
+                    <TimelineSeparator>
+                      <TimelineDot variant="outlined" color="secondary">
+                        <AdjustSharpIcon />
+                      </TimelineDot>
+                      <TimelineConnector />
+                    </TimelineSeparator>
+                    <TimelineContent>Start</TimelineContent>
+                </TimelineItem>
+                {milestones && milestones.map((milestone, index) => (
+                  <TimelineItem key={index}>
+                    <TimelineOppositeContent>
+                      <Typography variant="body2" color="textSecondary">
+                        {milestone.duration}
+                      </Typography>
+                    </TimelineOppositeContent>
+                    <TimelineSeparator>
+                      <TimelineDot variant="outlined" color="primary">
+                        <AssignmentIcon/>
+                      </TimelineDot>
+                      <TimelineConnector />
+                    </TimelineSeparator>
+                    <TimelineContent>
+                    <Paper elevation={3} className="container">
+                      <Typography variant="h6" component="h1">
+                        {milestone.title}
+                      </Typography>
+                      <Typography>{milestone.description}</Typography>
+                    </Paper>
+                    </TimelineContent>
+                  </TimelineItem>
+                ))}
+                  <TimelineItem>
+                    <TimelineSeparator>
+                      {/* <TimelineDot variant="outlined" color="secondary" /> */}
+                      {/* <TimelineConnector /> */}
+                    </TimelineSeparator>
+                    <TimelineDot variant="outlined" color="secondary">
+                      <AdjustSharpIcon />
+                    </TimelineDot>
+                    <TimelineContent>Finish</TimelineContent>
+                  </TimelineItem>
+                </Timeline>
+                </div>
               </div>
             </div>
-            {/* End of Stepper */}
             </div>
         );
     }

@@ -169,7 +169,7 @@ export default class BoardUser extends Component {
 
             <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2" id="vendorcard">
               <div className="card card-hover shadow-sm" style={cardStyle}>
-              <a className="d-block nav-heading text-center mt-3 mb-1" style={linkText} href="/vendors">
+              <a className="d-block nav-heading text-center mt-3 mb-1" style={linkText} href="/vendor">
 
                 <h1 className="nav-heading-title mb-1" style={{ fontSize:55 }}>56</h1>
                 <h6> <HomeWorkIcon style={{ fontSize:25 }}/>  Vendors & Subcontractors</h6>
@@ -265,7 +265,7 @@ export default class BoardUser extends Component {
                 <p>View Employee Directory</p>
                 <a href="/employees" className="btn btn-outline-primary"> Employees</a>
                 <p>View Vendor Directory</p>
-                <a href="/vendors" className="btn btn-outline-primary"> Vendors</a>
+                <a href="/vendor" className="btn btn-outline-primary"> Vendors</a>
                 <p>View Project Directory</p>
                 <a href="/projects" className="btn btn-outline-primary"> Projects</a>
               </div>

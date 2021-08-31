@@ -53,6 +53,7 @@ require('./app/routes/sov.routes')(app);
 require('./app/routes/primecontract.routes')(app);
 require('./app/routes/invoice.routes')(app);
 require('./app/routes/payment.routes')(app);
+require('./app/routes/excel.routes')(app);
 
 require('./app/routes/equipment.routes')(app);
 require('./app/routes/equipment-category.routes')(app);
@@ -69,6 +70,7 @@ require('./app/routes/project-management/meetingcategory.routes')(app);
 
 require('./app/routes/project-management/punchlist.routes')(app);
 require('./app/routes/project-management/punchlisttypes.routes')(app);
+require('./app/routes/vendor.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {

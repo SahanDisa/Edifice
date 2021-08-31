@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 //import { Route, useParams } from "react-router-dom";
-import DirectCostDataService from "./../../../services/directcost.service";
+import CommitmentDataService from "./../../../services/commitment.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -87,7 +87,7 @@ exclusions:commitment.exclusions,
       projectId: commitment.projectId,
     };
 
-    DirectCostDataService.create(data)
+    CommitmentDataService.create(data)
       .then(response => {
         setCommitment({
           id: response.data.id,

@@ -27,7 +27,7 @@ export default class AddDocument extends Component {
       title: "",
       description: "",
       category: "1",
-      path: "http://localhost:8080/api/files/", 
+      status: "Not Complete",
       projectId: this.props.match.params.id, 
       
       directory: [],
@@ -68,7 +68,7 @@ export default class AddDocument extends Component {
     DirectoryDataService.getAll(id)
     .then(response => {
         this.setState({
-          directory: response.data
+          directory: response.data,
         });
         console.log(response.data);
       })
@@ -81,7 +81,7 @@ export default class AddDocument extends Component {
       title: this.state.title,
       description: this.state.description,
       category: this.state.category,
-      path: this.state.path,
+      status: this.state.status,
       projectId: this.state.projectId
     };
 
@@ -92,7 +92,7 @@ export default class AddDocument extends Component {
           title: response.data.title,
           description: response.data.description,
           category: response.data.category,
-          path: response.data.path,
+          status: response.data.status,
           projectId: response.data.projectId,
 
           submitted: true
@@ -110,7 +110,7 @@ export default class AddDocument extends Component {
       title: "",
       description: "",
       category: "",
-      path: "",
+      status: "Not Complete",
       projectId: this.props.match.params.id,
       
       submitted: false
@@ -235,6 +235,15 @@ export default class AddDocument extends Component {
                 ))}
               </select>
             </div>
+            <div className="form-group">
+              <label htmlFor="description">Status</label>
+              <input
+                type="text"
+                className="form-control"
+                value="Not Complete 🔴"
+                disabled
+              />
+            </div>  
             <div>
               <h5>Upload the Document source</h5>
               <p>Document name : - {title}{".pdf"}</p>

@@ -3,6 +3,7 @@ const Project = db.projects;
 const DirectCost = db.directcosts;
 
 const readXlsxFile = require("read-excel-file/node");
+const excel = require("exceljs");
 
 const upload = async (req, res) => {
   try {
@@ -69,7 +70,67 @@ const getDirectCosts = (req, res) => {
     });
 };
 
+/*------------------------------------------------------------------------------------------------------------------------------ */
+const download = (req, res) => {
+  const id = req.params.id;
+  DirectCost.findAll({ where: {
+    projectId: id
+  
+  }}).then((objs) => {
+    let directcosts = [];
+
+    objs.forEach((obj) => {
+      directcosts.push({
+        id: obj.id,
+        costCode:  obj.costCode,
+        description:  obj.description,
+        category:  obj.category,
+        vendor:  obj.vendor,
+        employee:  obj.employee,
+        receivedDate:  obj.receivedDate,
+        paidDate:  obj.paidDate,
+        amount:  obj.amount
+      });
+    });
+
+    let workbook = new excel.Workbook();
+    let worksheet = workbook.addWorksheet("DirectCost");
+
+    worksheet.columns = [
+      { header: "Id", key: "id", width: 5 },
+      { header: "Cost Code", key: "costCode", width: 25 },
+      { header: "Description", key: "description", width: 25 },
+      { header: "Category", key: "category", width: 10 },
+      { header: "Vendor", key: "vendor", width: 10 },
+      { header: "Employee", key: "employee", width: 10 },
+      { header: "Received Date", key: "receivedDate", width: 10 },
+      { header: "Paid Date", key: "paidDate", width: 10 },
+      { header: "Amount", key: "amount", width: 10 },
+    ];
+
+    // Add Array Rows
+    worksheet.addRows(directcosts);
+
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=" + "directcosts.xlsx"
+    );
+
+    return workbook.xlsx.write(res).then(function () {
+      res.status(200).end();
+    });
+  });
+};
+
+
+/*------------------------------------------------------------------------------------------------------------------------------ */
+
 module.exports = {
   upload,
+  download,
   getDirectCosts,
 };
