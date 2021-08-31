@@ -301,7 +301,7 @@ class App extends Component {
             
             <Route path="/addUser" component={AddUser} />
             <Route path="/editUser" component={EditUser} />
-            <Route path="/vendors" component={Vendors} />
+            <Route path="/vendor" component={Vendors} />
             <Route path="/employees" component={Emp} />
             <Route path="/addVendor" component={AddVendor} />
             <Route path="/editVendor" component={EditVendor} />

@@ -1,7 +1,8 @@
 module.exports = (sequelize, Sequelize) => {
     const Vendor = sequelize.define("vendor", {
       id: {
-        type:Sequelize.INTEGER   
+        type:Sequelize.INTEGER,
+        primaryKey: true   
       },
       companyName: {
         type: Sequelize.STRING
@@ -23,5 +24,5 @@ module.exports = (sequelize, Sequelize) => {
         freezeTableName: true,
     });
   
-    return DirectCost;
+    return Vendor;
 };
