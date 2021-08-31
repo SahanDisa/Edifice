@@ -168,6 +168,32 @@ const sum ="";
     <div>
         <h3> BUDGET</h3>
                <h6>Setup and manage a comprehensive budget throughout the life cycle of the project.</h6><hr />
+               <div className="row" style={{alignItems: "center"}} >
+          <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm">
+                <h3 className="h5 nav-heading-title mb-0">Total Estimated Budget</h3>
+                <span className="fs-sm fw-normal text-muted">Rs. 123,456,789.00</span>
+              </div>
+            </div>
+<div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm">
+                <h3 className="h5 nav-heading-title mb-0">Total Direct Costs</h3>
+                <span className="fs-sm fw-normal text-muted">Rs. 123,456,789.00.</span>
+              </div>
+    </div>
+          <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm">
+                <h3 className="h5 nav-heading-title mb-0">Total Commited Costs</h3>
+                <span className="fs-sm fw-normal text-muted">Rs. 123,456,789.00.</span>
+              </div>
+            </div>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+                <h3 className="h5 nav-heading-title mb-0">Total Budget</h3>
+                <span className="fs-sm fw-normal text-muted">Rs. 123,456,789.00.</span>
+              </div>
+            </div>
+          </div>
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
             <Link className="btn btn-primary mr-2" to={"/addbudget/"+id}>{/*check this again*/}
