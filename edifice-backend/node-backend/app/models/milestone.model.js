@@ -10,6 +10,9 @@ module.exports = (sequelize, Sequelize) => {
       },
       duration:{
         type: Sequelize.STRING    
+      },
+      completed:{
+        type: Sequelize.BOOLEAN
       }}, {
         freezeTableName: true,
     });

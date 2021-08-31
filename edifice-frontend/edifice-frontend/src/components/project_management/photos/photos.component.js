@@ -112,6 +112,9 @@ export default class PhotosHome extends Component {
             <Link className="btn btn-primary mr-2" to={"/addphoto/"+id}>
               Add Photo
             </Link>
+            <Link className="btn btn-primary mr-2" to={"/movecapture/"+id}>
+              Move Captures
+            </Link>
             <hr></hr>
           </div> 
           <div className="container">
