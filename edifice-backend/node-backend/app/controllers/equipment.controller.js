@@ -15,11 +15,11 @@ exports.create = (req, res) => {
   // Create a equipment
   const equipment = {
     code: req.body.code,
-    brand: req.body.brand,
-    date_issued: req.body.date_issued,
+    date: req.body.date,
     condition:req.body.condition,
     category: req.body.category, 
-    description: req.body.description
+    description: req.body.description,
+    projectId: req.body.projectId
   };
 
   // Save equipment in the database

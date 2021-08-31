@@ -52,9 +52,10 @@ class AddWorker extends Component {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       mobile: this.state.mobile,
-      crewId: '1',
+      crewId: this.state.crewId,
       projectId: this.state.projectId
     };
+
 
     WorkerDataService.create(data)
       .then(response => {
@@ -63,7 +64,7 @@ class AddWorker extends Component {
           firstName: response.data.firstName,
           lastName: response.data.lastName,
           mobile: response.data.mobile,
-          crewId: '1',
+          crewId: response.data.crewId,
           projectId: this.state.projectId,
 
           submitted: true

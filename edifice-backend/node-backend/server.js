@@ -57,7 +57,6 @@ require('./app/routes/payment.routes')(app);
 require('./app/routes/equipment.routes')(app);
 require('./app/routes/equipment-category.routes')(app);
 require('./app/routes/crew.routes')(app);
-require('./app/routes/equipment-category.routes')(app);
 require('./app/routes/worker.routes')(app);
 
 

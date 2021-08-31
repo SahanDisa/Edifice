@@ -272,9 +272,9 @@ db.invoices.belongsTo(db.commitments, {
 
 // ----------- Resource Management Starts --------
 //One category has many equipments
-db.categorys.hasMany(db.equipments, { as: "equipments" });
-db.equipments.belongsTo(db.categorys, {
-  foreignKey: "categoryId",
+db.projects.hasMany(db.equipments, { as: "equipments" });
+db.equipments.belongsTo(db.projects, {
+  foreignKey: "projectId",
   as: "categories",
 });
 
