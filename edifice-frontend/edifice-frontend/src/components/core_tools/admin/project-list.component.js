@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ProjectDataService from "./../../../services/project.service";
 import { Link } from "react-router-dom";
+import { ListGroup } from "react-bootstrap";
 
 export default class ProjectsList extends Component {
   constructor(props) {
@@ -120,21 +121,22 @@ export default class ProjectsList extends Component {
             Add Project
           </a>
 
-          <ul className="list-group">
+          <ListGroup as="ul">
             {projects &&
               projects.map((project, index) => (
-                <li
-                  className={
-                    "list-group-item" +
-                    (index === currentIndex ? "active" : "")
-                  }
+                <ListGroup.Item as="li"
+                  // className={
+                  //   "list-group-item" +
+                  //   (index === currentIndex ? "active" : "")}
+                  action
                   onClick={() => this.setActiveProject(project, index)}
                   key={index}
+                  
                 >
                   {project.title}
-                </li>
+                </ListGroup.Item>
               ))}
-          </ul>
+            </ListGroup>
 
           <button
             className="m-3 btn btn-sm btn-danger"
@@ -193,7 +195,7 @@ export default class ProjectsList extends Component {
             </div>
           ) : (
             <div>
-              <br />
+              <br/>
               <p>Please click on a Project...</p>
             </div>
           )}

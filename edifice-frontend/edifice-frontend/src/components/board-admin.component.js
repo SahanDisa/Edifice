@@ -285,7 +285,7 @@ export default class BoardUser extends Component {
             </div>
           </div>
           {/*  debug stuff DELETE*/}
-          <div><p>sfdsfds</p></div>
+          {/* <div><p>sfdsfds</p></div> */}
           
         </div>
         {/* <Defaults /><Dates /><Roles /> */}

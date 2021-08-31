@@ -275,6 +275,7 @@ export default class PortfolioHome extends Component {
             {/* Progress Tab */}
             <div className="container">
               <h3>Progress by Activities</h3>
+              {/* {drawingComplete+" "+drawingPending+" "+drawingIncomplete} */}
               <p>Visulize the progress of all the activities</p>
               <div className="container">
                 <h6>Drawing</h6>
