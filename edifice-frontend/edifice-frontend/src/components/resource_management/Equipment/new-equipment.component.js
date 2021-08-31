@@ -18,7 +18,7 @@ class NewEquip extends Component {
                   <div class="container">                                
                     <div class="row">
                       <div class="col-6">
-                        <label htmlFor="">Id</label>
+                        <label htmlFor="">Category</label>
                         <input className="form-control" type="text" required/>
                       </div>
 

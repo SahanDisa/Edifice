@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import WorkersDataService from "./../../../services/worker.service";
 
 class EditWorker extends Component {
     render() {

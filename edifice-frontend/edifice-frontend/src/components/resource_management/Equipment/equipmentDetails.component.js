@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Card from 'react-bootstrap/Card';
 
+import AllocateEquip from './allocateEquipment.component';
+
 class EquipDetails extends Component {
 
   render() {
@@ -16,14 +18,15 @@ class EquipDetails extends Component {
           </Card.Body>
         </Card>
         <div className="text-right">
-                    <from>
+                    <form>
                       <a href="#" className="btn btn-success mr-3">Edit</a>
-                      <a href="#" className="btn btn-primary">View Usage</a>
-                    </from>
+                      <a href="#" className="btn btn-primary mr-3">View Usage</a>
+                      
+                    </form>
                   </div>
 
         <div class="container">                                
-                    <div class="row">
+                    <div class="row">                      
                       <div class="col-6">
                         <label htmlFor="">Id</label>
                         <input className="form-control" type="text" required/>
@@ -35,6 +38,30 @@ class EquipDetails extends Component {
                       </div>
                    </div>
                   </div>
+                  <div class="container">                                
+                    <div class="row">
+                      <div class="col-6">
+                        <label htmlFor="">Category</label>
+                        <input className="form-control" type="text" required/>
+                      </div>
+
+                      <div class="col-6">
+                        <label htmlFor="">Assiged Project</label>
+                        <form>
+                          <div className="form-row">
+                            <div className="form-group col-md-10">
+                              <input className="form-control" type="text" required/>
+                            </div>
+                            <div className="form-group col-md-2">
+                            <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#allocateEquip">Change</a>
+                            </div>
+                            
+                            </div>
+                        </form>
+                      </div>
+                   </div>
+                  </div>
+
                   <div class="container">                                
                     <div class="row">
                       <div class="col-6">
@@ -57,6 +84,12 @@ class EquipDetails extends Component {
                     <input className="form-control" type="text" required/>
                   </div>
                   <br/>
+
+                  {/* Allocate Equipment Starts */}
+                    <div className="modal fade" id="allocateEquip" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <AllocateEquip />        
+                  </div>
+                {/* Allocate Equipment Ends */}
       </div>
     );
   }
