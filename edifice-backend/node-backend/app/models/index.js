@@ -69,7 +69,7 @@ db.meetings = require("./project-management/meeting.model")(sequelize, Sequelize
 db.meetingcategory = require("./project-management/meetingcategory.model")(sequelize, Sequelize);
 
 //for core class vendors and employees
-//db.vendor=require("./vendor.model")(sequelize, Sequelize);
+db.vendor=require("./vendor.model")(sequelize, Sequelize);
 
 
 //This section is for testing purposes

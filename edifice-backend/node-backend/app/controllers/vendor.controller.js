@@ -56,7 +56,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Project.findByPk(id)
+    Vendor.findByPk(id)
       .then(data => {
         res.send(data);
       })
