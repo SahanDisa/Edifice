@@ -16,7 +16,7 @@ class AddVendor extends Component {
 
   render() {
     return (
-      <div className="">
+      <div className="container">
         <h2>New Vendor</h2><hr/>
         <div className="vendorBox" >
           <h5>Enter necessary vendor details</h5>

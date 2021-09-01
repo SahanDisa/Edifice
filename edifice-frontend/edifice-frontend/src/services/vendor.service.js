@@ -21,6 +21,10 @@ class VendorDataService {
     return http.delete(`/vendor/${id}`);
   }
 
+  findByName(companyName) {
+    return http.get(`/vendor?name=${companyName}`);
+  }
+
   deleteAll() {
     return http.delete(`/vendor`);
   } 

@@ -7,35 +7,35 @@ import VendorDataService from "./../../../services/vendor.service";
     dataField: 'id',
     text: 'Id',
     headerStyle: (column, colIndex) => {
-        return { width: '10%', textAlign: 'center' };}
+        return { width: '5%', textAlign: 'center' };}
   }, {
     dataField: 'companyName',
     text: 'Company Name',
     headerStyle: (column, colIndex) => {
-        return { width: '20%', textAlign: 'center' };}
+        return { width: '15%', textAlign: 'left' };}
   }, {
     dataField: 'type',
     text: 'Type',
     headerStyle: (column, colIndex) => {
-        return { width: '30%', textAlign: 'center' };}
+        return { width: '12%', textAlign: 'center' };}
   },
   {
-    dataField: '',
+    dataField: 'contactNo',
     text: 'Contact No',
     headerStyle: (column, colIndex) => {
-        return { width: '40%', textAlign: 'center' };}
+        return { width: '15%', textAlign: 'center' };}
   },
   {
-  dataField: '',
+  dataField: 'email',
   text: 'Email',
   headerStyle: (column, colIndex) => {
-      return { width: '20%', textAlign: 'center' };}
+      return { width: '20%', textAlign: 'center',  };}
   },
   {
-    dataField: '',
+    dataField: 'contactPersonName',
     text: 'contact person name',
     headerStyle: (column, colIndex) => {
-        return { width: '50%', textAlign: 'center' };}
+        return { width: '20%', textAlign: 'center' };}
   },
   {
     dataField: 'edit',
@@ -56,6 +56,7 @@ class Vendors extends Component {
         vendors: [],
         currentVendor: null,
         currentId: -1,
+        searchName: ""
         
       },
       message: "",
@@ -67,11 +68,20 @@ class Vendors extends Component {
     this.getVendors(this.props.match.params.id);
   }
 
+  onChangeSearchName(e) {
+    const searchName = e.target.value;
+
+    this.setState({
+      searchName: searchName
+    });
+  }
+
   refreshList() {
     this.getVendors();
     this.setState({
       currentProject: null,
-      currentIndex: -1
+      currentIndex: -1,
+      searchName: ""
     });
   }
 
@@ -88,18 +98,18 @@ class Vendors extends Component {
       });
   }
 
-  retrieveVendors(id){
-    VendorDataService.getAll(id)
-    .then(response => {
+  searchName() {
+    VendorDataService.findByTitle(this.state.searchTitle)
+      .then(response => {
         this.setState({
           vendors: response.data
         });
-        console.log(response.data.length);
+        console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
-}
+  }
   render() {
 
     const {vendors, currentVendor, currentIndex } = this.state;
@@ -109,13 +119,14 @@ class Vendors extends Component {
     var temp={};
     {vendors &&
       vendors.map((vendor, index) => (
-        //data1=vendor,
+        temp={},
         temp.id=vendor.id,
         temp.companyName= vendor.companyName,
         temp.type=vendor.type,
         temp.contactNo=vendor.contactNo,
         temp.email=vendor.email,
         temp.contactPersonName=vendor.contactPersonName,
+        temp.edit=<a href={'/editVendor/'+vendor.id} className="btn btn-primary"> edit</a>,
         data1.push(temp)
       )
       )}
