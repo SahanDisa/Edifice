@@ -25,10 +25,10 @@ import BoardAdmin from "./components/board-admin.component";
 import AddProject from './components/core_tools/admin/add-project.component';
 import AddDepartment from "./components/core_tools/admin/add-department.component";
 import AddMilestone from "./components/core_tools/admin/add-milestone.component";
+import AssignUserProject from "./components/core_tools/admin/add-projectuser.component";
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
-import AddDirectory from "./components/project_management/document/adddirectory.component";
-import ViewDirectory from "./components/project_management/document/viewsingledirectory.component";
+
 
 import DrawingHome from "./components/project_management/drawings/drawings.component";
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
@@ -70,6 +70,8 @@ import UpdateTasks from "./components/core_tools/tasks/update.component";
 import ViewTasks from "./components/core_tools/tasks/view.component";
 
 import DocumentHome from "./components/project_management/document/document.component";
+import AddDirectory from "./components/project_management/document/adddirectory.component";
+import ViewDirectory from "./components/project_management/document/viewsingledirectory.component";
 import UploadDocFiles from "./components/project_management/document/adddocument.component";
 import UploadDocment from "./components/project_management/document/uploaddocument.component";
 import ViewSingleDocument from "./components/project_management/document/viewsingledocument.component";
@@ -258,10 +260,8 @@ class App extends Component {
             <Route path="/projectmanagement" component={BoardUser} />
             <Route path="/adddepartment/:id" component={AddDepartment} />
             <Route path="/addmilestone/:id" component={AddMilestone}/>
-            {/* <Route path="/projectmanagementhome" component={ProjectManagementHome} /> */}
+            <Route path="/assignuser/:id" component={AssignUserProject} />
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
-            <Route path="/portfolio/:id" component={PortfolioHome} />
-            <Route path="/portstepper" component={PortfolioStepper} />
 
             <Route path="/resource" component={BoardResource} />
             <Route path="/financialmanagement" component={BoardModerator} />
@@ -273,6 +273,9 @@ class App extends Component {
             <Route path="/dates" component={Dates} />
             <Route path="/defaults" component={Defaults} />
             <Route path="/roles" component={Roles} />
+            {/* Porfolio */}
+            <Route path="/portfolio/:id" component={PortfolioHome} />
+            <Route path="/portstepper" component={PortfolioStepper} />
             {/* Tasks */}
             <Route path="/tasksconfiguration" component={TaskConfiguration} />
             <Route path="/managetasks" component={ManageTasks} />

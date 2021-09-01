@@ -89,7 +89,7 @@ export default class ProjectsList extends Component {
     const { searchTitle, projects, currentProject, currentIndex } = this.state;
 
     return (
-      <div className="list row">
+      <div className="row">
       <h2>Project Dashboard</h2>
         
         <div className="col-md-10">
@@ -177,20 +177,20 @@ export default class ProjectsList extends Component {
 
               <Link
                 to={"/projects/" + currentProject.id}
-                className="btn btn-primary"
+                className="m-1 btn btn-sm btn-warning"
               >
                 Edit
               </Link>
               <Link
                 to={"#"}
-                className="btn btn-secondary"
+                className="m-1 btn btn-sm btn-success"
                 >
                 Department
               </Link>
               <Link
-                to={"#"}
-                className="btn btn-success">
-                Connect Users
+                to={"/assignuser/"+ currentProject.id}
+                className="m-1 btn btn-sm btn-primary">
+                Assign Users
               </Link>
             </div>
           ) : (
