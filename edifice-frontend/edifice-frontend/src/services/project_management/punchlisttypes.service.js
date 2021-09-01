@@ -6,6 +6,7 @@ class PunchListTypesDataService {
     }
 
     create(data) {
+        console.log("methentath aawoo");
         return http.post(`/projects/punchlist-type/`, data);
     }
 
