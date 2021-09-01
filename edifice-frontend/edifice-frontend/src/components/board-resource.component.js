@@ -106,15 +106,17 @@ export default class BoardUser extends Component {
                 // onClick={() => this.setActiveProject(project, index)}
                 key={index}
               >
-              <div className="row">
+              <div className="container row">
                 <div className="col-7">
-                  {this.retriveSingleProject(project.projectuserId)}
-                  <h5>{uprojects.title}</h5>
+                  {/* {this.retriveSingleProject(project.projectuserId)} */}
+                  {/* <h5>{uprojects.title}</h5>
                   <h6>Breif : {uprojects.description}</h6>
-                  <p>Location : {uprojects.location}</p>
-                  
+                  <p>Location : {uprojects.location}</p> */}
+                  <h4>Project : {index + 1}</h4>
+                  <h6>Name : {project.firstname}{" "}{project.lastname}</h6>
+                  <h6>Position : {project.position}</h6>
                   <Link
-                    to={"/resourcemanagementhome/" + uprojects.id}
+                    to={"/projectmanagementhome/" + project.projectuserId}
                     className="btn btn-primary"
                   >
                     Manage
