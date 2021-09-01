@@ -90,24 +90,16 @@ class Equipment extends Component {
                                     <div class="card-body">
                                         <div className="">
                                             <div class="col-md-12 text-right mb-2">
+                                            {equipments && equipments.map((equipment, currentIndex) => (
                                             
                                               <List component="nav" aria-label="mailbox folders">
                                                 <ListItem button>
-                                                  <a href="/equipDetails" >235E - ExcavatorABC</a>
+                                                  <a href="/equipDetails" >{equipment.code} {equipment.description}</a>
                                                 </ListItem>
                                                 <Divider />
-                                                  <ListItem button divider>
-                                                    <a href="#" >432E - Excavator cataplller</a>
-                                                  </ListItem>
-                                                  <ListItem button>
-                                                    <a href="#" >542E - ikon2</a>
-                                                  </ListItem>
                                                 <Divider light />
-                                                <ListItem button>
-                                                  <a href="#" >098E - Arko</a>
-                                                </ListItem>
                                             </List>                            
- 
+                                            ))} 
                                           </div>
       
                                         </div>
