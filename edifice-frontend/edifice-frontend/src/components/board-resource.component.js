@@ -116,7 +116,7 @@ export default class BoardUser extends Component {
                   <h6>Name : {project.firstname}{" "}{project.lastname}</h6>
                   <h6>Position : {project.position}</h6>
                   <Link
-                    to={"/projectmanagementhome/" + project.projectuserId}
+                    to={"/resourcemanagementhome/" + project.projectuserId}
                     className="btn btn-primary"
                   >
                     Manage
