@@ -158,10 +158,10 @@ class Crew extends Component {
 
             </div>
 
-            {/* Add Worker Starts */}
-            <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <AddWorker/>        
-            </div>
+          {/* Add Worker Starts */}
+          <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <AddWorker/>   
+          </div>
           {/* Add Worker Ends */}
 
           {/* Edit Worker Starts */}
@@ -178,7 +178,7 @@ class Crew extends Component {
 
           {/* New Crew Starts */}
             <div className="modal fade" id="newCrew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <NewCrew />        
+            <NewCrew />
           </div>
           {/* New Crew Ends */}
 
