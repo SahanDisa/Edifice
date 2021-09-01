@@ -1,21 +1,17 @@
 module.exports = (sequelize, Sequelize) => {
     const ProjectUser = sequelize.define("projectuser", {
-      firstname: {
-        type: Sequelize.STRING
+      userId: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
-      lastname: {
-        type: Sequelize.STRING
+      department: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
-      gender: {
-        type: Sequelize.STRING
-      },
-      email: {
-        type: Sequelize.STRING  
-      },
-      position:{
-        type: Sequelize.STRING  
-      }
-      }, {
+      position: {
+        type: Sequelize.STRING,
+        allowNull: false
+      }}, {
         freezeTableName: true,
     });
   

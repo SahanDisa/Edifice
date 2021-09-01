@@ -1,36 +1,25 @@
 const db = require("./../models/index");
 const ProjectUser = db.projectuser;
-const Project = db.projects;
 
 // create a user
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.firstname && !req.body.lastname && !req.body.email) {
+  if (!req.body.userId && !req.body.projectId) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Assigning incorrect! Check projectuserId and userId!"
     });
     return;
   }
-  if(!req.body.projectuserId && !req.body.userId){
-    res.status(400).send({
-        message: "Assigning incorrect! Check projectuserId and userId!"
-      });
-      return; 
-  }
 
-  // Create a Project
+  // Create a ProjectUser
   const projectuser = {
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    gender: req.body.gender,
-    email: req.body.email,
+    userId: req.body.userId,
+    department: req.body.department,
     position: req.body.position,
-    drawtype: req.body.drawtype,
-    projectuserId: req.body.projectuserId,
-    userId: req.body.userId
+    projectId: req.body.projectId,
   };
 
-  // Save Project in the database
+  // Save ProjectUser in the database
   ProjectUser.create(projectuser)
     .then(data => {
       res.send(data);
@@ -38,7 +27,7 @@ exports.create = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Project."
+          err.message || "Some error occurred while creating the ProjectUser."
       });
     });
 };
@@ -55,7 +44,7 @@ exports.findAll = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Project Aassigned for user with id=" + id
+        message: "Error retrieving ProjectUser Aassigned for user with id=" + id
       });
     });  
 };
@@ -75,49 +64,70 @@ exports.findOne = (req, res) => {
     });  
 };
 
-//Find project Details of a particular user
-exports.findProjects = (req,res) =>{
-    const id = req.params.id;
+// Get drawings for a given project
+exports.findProjectUsers = (req, res) => {
+  const id = req.params.id;
 
-    ProjectUser.findAll({
-        include: [{
-            model: Project,
-            as: "projectusers",
-            attributes: ["id", "title", "description"],
-            through: {
-              attributes: [],
-            }
-        }]
-    }).then(data => {
-        res.send(data);
-      })
-      .catch((err) => {
-        console.log(">> Error while retrieving Tags: ", err);
-      });  
-};
-//Add project to a user
-exports.addProject = (req,res) => {
-    userId = req.params.id,
-    projectId = req.params.pid
-
-    return ProjectUser.findByPk(userId)
-      .then((projectuser) => {
-        if (!projectuser) {
-          console.log("User not found!");
-          return null;
-        }
-        return Project.findByPk(projectId).then((project) => {
-          if (!project) {
-            console.log("Tutorial not found!");
-            return null;
-          }
-  
-          projectuser.setProjects(project);
-          console.log(`>> added Project id=${project.id} to User id=${projectuser.id}`);
-          return projectuser;
-        });
-      })
-      .catch((err) => {
-        console.log(">> Error while adding Project to User: ", err);
+  ProjectUser.findAll({ where: {
+    projectId: id
+  }})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Users for project id=" + id
       });
-  };
+    });  
+};
+
+
+// Update a ProjectUser by the id in the request
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  ProjectUser.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "ProjectUser was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update ProjectUser with id=${id}. Maybe ProjectUser was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating ProjectUser with id=" + id
+      });
+    });
+};
+
+// Delete a ProjectUser with the specified id in the request
+exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  ProjectUser.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "ProjectUser was deleted successfully!"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete ProjectUser with id=${id}. Maybe ProjectUser was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete ProjectUser with id=" + id
+      });
+    });
+};
