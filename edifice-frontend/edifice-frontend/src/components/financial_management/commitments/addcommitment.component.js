@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 //import { Route, useParams } from "react-router-dom";
-import DirectCostDataService from "./../../../services/directcost.service";
+import CommitmentDataService from "./../../../services/commitment.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -87,7 +87,7 @@ exclusions:commitment.exclusions,
       projectId: commitment.projectId,
     };
 
-    DirectCostDataService.create(data)
+    CommitmentDataService.create(data)
       .then(response => {
         setCommitment({
           id: response.data.id,
@@ -188,8 +188,8 @@ className={`form-control ${errors.contractCompany ? 'is-invalid' : ''}`}
             <div className="form-group">
                 <label htmlFor="status">Status :</label>
             
-              <input
-                type="text"
+              <select
+            
 
                 id="status"
                 {...register('status')}
@@ -197,7 +197,11 @@ className={`form-control ${errors.contractCompany ? 'is-invalid' : ''}`}
                 onChange={handleInputChange}
                 name="status"
 className={`form-control ${errors.status ? 'is-invalid' : ''}`}
-              />
+              >
+<option></option>
+<option>Ongoing 🔴</option>
+<option>Completed 🟢</option>
+                </select>
 <div className="invalid-feedback">{errors.status?.message}</div>
               </div>
            

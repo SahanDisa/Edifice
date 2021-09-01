@@ -200,25 +200,26 @@ export default class BoardUser extends Component {
           {showModeratorBoard && (
           <div className="mt-2">  
            <h3>Financial Tools</h3>
-           <div className="row">
+           <div className="row" style={{alignItems: "center"}} >
           <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" title="">
               <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/budget/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={budgetIcon} alt="" width="50"/><br />
                 <h3 className="h5 nav-heading-title mb-0">Budget</h3>
-                <span className="fs-sm fw-normal text-muted">Set up and manage a comprehensive budget throughout the lifecycle of a project.</span>
+                <span className="fs-sm fw-normal text-muted">Set up and manage a comprehensive budget throughout the lifecycle of the project.</span>
               </Link>
               </div>
             </div>
-          <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-            <div className="card card-hover shadow-sm" title="">
-              <a className="d-block nav-heading text-center mb-2 mt-2" href="/prime-contracts" style={{ 'text-decoration': 'none' }}>
+
+         {/* <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm">
+            <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/primecontract/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={primecontractsIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Prime Contracts</h3>
                 <span className="fs-sm fw-normal text-muted">Easily create and manage contracts with the clients.</span>
-              </a>
+                </Link>
               </div>
-            </div>
+    </div>*/}
           <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" title="">
               <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/directcost/" + id} style={{ 'text-decoration': 'none' }}>
@@ -228,6 +229,19 @@ export default class BoardUser extends Component {
                 </Link>
               </div>
             </div>
+
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm">
+              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/commitment/" + id} style={{ 'text-decoration': 'none' }}>
+                <img src={commitmentsIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Commitments</h3>
+                <span className="fs-sm fw-normal text-muted">See the Status and Schedule of Values of all the Contracts.</span>
+              </Link>
+              </div>
+            </div>
+         {/* <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm">
+              <Link className="d-block nav-heading text-center mt-2 mb-2" to={"/invoice/" + id} style={{ 'text-decoration': 'none' }}>
           <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" title="">
                 <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/commitment/" + id} style={{ 'text-decoration': 'none' }}>
@@ -240,12 +254,13 @@ export default class BoardUser extends Component {
           <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" title="">
               <Link className="d-block nav-heading text-center mt-2 mb-2" to={"/invoicing/" + id} style={{ 'text-decoration': 'none' }}>
+
                 <img src={invoiceIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Invoicing</h3>
-                <span className="fs-sm fw-normal text-muted">Streamline the invoice collection, review, and approval process on all of the projects</span>
+                <span className="fs-sm fw-normal text-muted">View and review the invoice collection of the project.</span>
               </Link>
               </div>
-            </div>
+  </div>*/}
           </div>
           </div>  
             )}

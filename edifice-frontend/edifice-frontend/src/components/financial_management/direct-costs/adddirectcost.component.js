@@ -19,11 +19,11 @@ const AddDirectCost = (props) => {
     costCode: Yup.string().required('Cost Code is required'),
     description: Yup.string().required('Description is required'),
     category: Yup.string().required('Category is required'),
-    vendor: Yup.string().required('Category is required'),
-    employee: Yup.string().required('Category is required'),
-    receivedDate: Yup.string().required('Category is required'),
-    paidDate: Yup.string().required('Category is required'),
-    ammount: Yup.string().required('Category is required'),
+    vendor: Yup.string().required('Vendor is required'),
+    employee: Yup.string().required('Employee is required'),
+    receivedDate: Yup.string().required('Received Date is required'),
+    paidDate: Yup.string().required('Paid Date is required'),
+    amount: Yup.string().required('Amount is required'),
   });
 
   const {
@@ -51,7 +51,7 @@ const AddDirectCost = (props) => {
     employee :"",
     receivedDate :"",
     paidDate :"",
-    ammount: "",
+    amount: "",
     projectId:props.match.params.id,  
     
   };
@@ -72,7 +72,7 @@ const AddDirectCost = (props) => {
       employee: directcost.employee,
       receivedDate: directcost.receivedDate,
       paidDate: directcost.paidDate,
-      ammount: directcost.ammount,
+      amount: directcost.amount,
       projectId: directcost.projectId,
     };
 
@@ -87,7 +87,7 @@ const AddDirectCost = (props) => {
           employee: response.data.employee,
           receivedDate: response.data.receivedDate,
           paidDate: response.data.paidDate,
-          ammount: response.data.ammount,
+          amount: response.data.amount,
           projectId: response.data.projectId,
      
         });
@@ -144,12 +144,12 @@ const AddDirectCost = (props) => {
                 onChange={handleInputChange}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
               >
-                
-                <option>010-Maintenance Equipment</option>
-                <option>924-Sodding</option>
-                <option>100-Visual Display Boards</option>
-                <option>230-Site Clearing</option>
-                <option>240-Dewatering</option>
+                <option></option>
+                <option>001-Maintenance Equipment</option>
+                <option>002-Sodding</option>
+                <option>003-Visual Display Boards</option>
+                <option>004-Site Clearing</option>
+                <option>005-Dewatering</option>
              
               </select>
               <div className="invalid-feedback">{errors.costCode?.message}</div>
@@ -193,6 +193,7 @@ const AddDirectCost = (props) => {
                 onChange={handleInputChange}
                 className={`form-control ${errors.category ? 'is-invalid' : ''}`}
               >
+                <option></option>
                 <option>Expense</option>
                 <option>Invoice</option>
                 <option>Payroll</option>
@@ -270,20 +271,20 @@ const AddDirectCost = (props) => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="amount">Ammount :</label>
+              <label htmlFor="amount">Amount :</label>
               <input
                 type="text"
                
-                id="ammount"
+                id="amount"
              
               
-                name="ammount"
-                {...register('ammount')}
-                value={directcost.ammount}
+                name="amount"
+                {...register('amount')}
+                value={directcost.amount}
                 onChange={handleInputChange}
-                className={`form-control ${errors.ammount ? 'is-invalid' : ''}`}
+                className={`form-control ${errors.amount ? 'is-invalid' : ''}`}
               />
-               <div className="invalid-feedback">{errors.ammount?.message}</div>
+               <div className="invalid-feedback">{errors.amount?.message}</div>
             </div>
             <div className="form-group">
             <button type="submit" onClick={saveDirectCost} className="btn btn-success">

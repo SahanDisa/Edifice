@@ -19,12 +19,14 @@ module.exports = (sequelize, Sequelize) => {
       }
       ,
       commitedCosts: {
-        type: Sequelize.DECIMAL(10, 2)
+        type: Sequelize.DECIMAL(10, 2),
+        defaultValue: "0"
       }
       ,
       currentBudget: {
         type: Sequelize.DECIMAL(10, 2),
-        
+        defaultValue: "0"
+      
       },
       revisedBudget: {
         type: Sequelize.DECIMAL(10, 2),

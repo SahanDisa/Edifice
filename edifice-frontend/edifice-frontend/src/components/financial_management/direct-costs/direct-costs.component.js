@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import DirectCostDataService from "./../../../services/directcost.service";
+import ExcelDataService from "./../../../services/excel.service";
 import { useTable } from "react-table";
 import { Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -14,8 +15,7 @@ const DirectCostList = (props) => {
   const [searchCostCode, setSearchCostCode] = useState("");
   const directcostsRef = useRef();
 
-  
- 
+
   directcostsRef.current = directcosts;
 
   useEffect(() => {
@@ -88,6 +88,24 @@ const DirectCostList = (props) => {
       });
   };
 
+
+  /*added new
+  
+ const exportDirectCosts = () => {
+    
+  ExcelDataService.download(id)
+    .then((response) => {
+      console.log(response.data)
+
+      //setDirectCosts(response.data);
+      //var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      //filesaver.saveAs(blob, 'fixi.xlsx');
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};*/
+
   const columns = useMemo(
     () => [
       {
@@ -121,8 +139,8 @@ const DirectCostList = (props) => {
     accessor: "paidDate",
   },
   {
-        Header: "Ammount (Rs.)",
-        accessor: "ammount",
+        Header: "Amount (Rs.)",
+        accessor: "amount",
       },
       {
         Header: "",
@@ -167,16 +185,17 @@ const DirectCostList = (props) => {
                 + Create
                 </Link>
                 
-              <input type="file"/>
-              <button className="btn btn-primary mr-2">
+              <input type="file" id="excelImport" name="excelImport"/>
+              <button className="btn btn-primary mr-2" >
              Import
             </button>
+            
               {/*  <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
                 Import 
   </Link>*/}
-                <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
+                <button className="btn btn-primary mr-2">
                 Export 
-                </Link>
+                </button>
                 </div>
       <div className="form-group col-md-4">
         <div className="input-group mb-3">
@@ -199,11 +218,11 @@ const DirectCostList = (props) => {
             onChange={onChangeSearchCostCode}
               >
               <option  selected value="">All</option>
-                <option>010-Maintenance Equipment</option>
-                <option>924-Sodding</option>
-                <option>100-Visual Display Boards</option>
-                <option>230-Site Clearing</option>
-                <option>240-Dewatering</option>
+                <option>001-Maintenance Equipment</option>
+                <option>002-Sodding</option>
+                <option>003-Visual Display Boards</option>
+                <option>004-Site Clearing</option>
+                <option>005-Dewatering</option>
              
               </select>
 
@@ -223,7 +242,7 @@ const DirectCostList = (props) => {
           className="table table-striped table-bordered"
           {...getTableProps()}
         >
-          <thead>
+          <thead className="Table-header">
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (

@@ -66,7 +66,7 @@ db.crews = require("./crew.model")(sequelize, Sequelize);
 db.workers = require("./worker.model")(sequelize, Sequelize);
 
 //for core class vendors and employees
-// db.vendor=require("./vendor.model")(sequelize, Sequelize);
+//db.vendor=require("./vendor.model")(sequelize, Sequelize);
 
 //This section is for testing purposes
 db.demo = require("./demo.model")(sequelize, Sequelize);
@@ -268,10 +268,10 @@ db.invoices.belongsTo(db.commitments, {
 
 // ----------- Resource Management Starts --------
 //One category has many equipments
-db.categorys.hasMany(db.equipments, { as: "equipments" });
-db.equipments.belongsTo(db.categorys, {
-  foreignKey: "categoryId",
-  as: "categories",
+db.projects.hasMany(db.equipments, { as: "equipments" });
+db.equipments.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
 });
 
 //One crew has many workers
@@ -280,6 +280,15 @@ db.workers.belongsTo(db.crews, {
   foreignKey: "crewId",
   as: "crew",
 });
+
+//One project has many crews
+db.projects.hasMany(db.crews, { as: "crews" });
+db.crews.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+
 // ----------- Resource Management Ends --------
 
 //Role description 

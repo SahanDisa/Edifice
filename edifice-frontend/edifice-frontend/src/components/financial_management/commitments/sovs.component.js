@@ -151,13 +151,20 @@ const SovList = (props) => {
                 </div>
       <div className="form-group col-md-4">
         <div className="input-group mb-3">
-          <input
+          <select
             type="text"
             className="form-control"
             placeholder="Search by cost code"
             value={searchCostCode}
             onChange={onChangeSearchCostCode}
-          />
+          >
+             <option  selected value="">All</option>
+                <option>001-Maintenance Equipment</option>
+                <option>002-Sodding</option>
+                <option>003-Visual Display Boards</option>
+                <option>004-Site Clearing</option>
+                <option>005-Dewatering</option>
+            </select>
           <div className="input-group-append">
             <button
               className="btn btn-outline-secondary"
@@ -174,7 +181,7 @@ const SovList = (props) => {
           className="table table-striped table-bordered"
           {...getTableProps()}
         >
-          <thead>
+          <thead className="Table-header">
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (

@@ -16,6 +16,7 @@ exports.create = (req, res) => {
   const crew = {
     name: req.body.name,
     total: req.body.total,
+    projectId: req.body.projectId
   };
   // Save crew in the database
   Crew.create(crew)

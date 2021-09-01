@@ -22,11 +22,11 @@ const DirectCost = props => {
     costCode: Yup.string().required('Cost Code is required'),
     description: Yup.string().required('Description is required'),
     category: Yup.string().required('Category is required'),
-    vendor: Yup.string().required('Category is required'),
-    employee: Yup.string().required('Category is required'),
-    receivedDate: Yup.string().required('Category is required'),
-    paidDate: Yup.string().required('Category is required'),
-    ammount: Yup.string().required('Category is required'),
+    vendor: Yup.string().required('Vendor is required'),
+    employee: Yup.string().required('Employee is required'),
+    receivedDate: Yup.string().required('Received Date is required'),
+    paidDate: Yup.string().required('Paid Date is required'),
+    amount: Yup.string().required('Amount is required'),
   });
 
   const {
@@ -54,7 +54,7 @@ const DirectCost = props => {
     employee: "",
     receivedDate: "",
     paidDate: "",
-    ammount: "",
+    amount: "",
     projectId:""
   };
   const [currentDirectCost, setCurrentDirectCost] = useState(initialDirectCostState);
@@ -132,11 +132,12 @@ const DirectCost = props => {
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
                 name="costCode"
               >
-                <option>010-Maintenance Equipment</option>
-                <option>924-Sodding</option>
-                <option>100-Visual Display Boards</option>
-                <option>230-Site Clearing</option>
-                <option>240-Dewatering</option>
+                <option></option>
+                <option>001-Maintenance Equipment</option>
+                <option>002-Sodding</option>
+                <option>003-Visual Display Boards</option>
+                <option>004-Site Clearing</option>
+                <option>005-Dewatering</option>
               </select>
               <div className="invalid-feedback">{errors.costCode?.message}</div>
             </div>
@@ -174,6 +175,7 @@ const DirectCost = props => {
                 className={`form-control ${errors.category ? 'is-invalid' : ''}`}
                 name="category"
               >
+                 <option></option>
                 <option>Expense</option>
                 <option>Invoice</option>
                 <option>Payroll</option>
@@ -241,18 +243,18 @@ const DirectCost = props => {
               <div className="invalid-feedback">{errors.paidDate?.message}</div>
             </div>
             <div className="form-group">
-              <label htmlFor="description">Ammount</label>
+              <label htmlFor="description">Amount</label>
               <input
                 type="text"
                
-                id="ammount"
-                name="ammount"
-                {...register('ammount')}
-                value={currentDirectCost.ammount}
+                id="amount"
+                name="amount"
+                {...register('amount')}
+                value={currentDirectCost.amount}
                 onChange={handleInputChange}
-                className={`form-control ${errors.ammount ? 'is-invalid' : ''}`}
+                className={`form-control ${errors.amount ? 'is-invalid' : ''}`}
               />
-              <div className="invalid-feedback">{errors.ammount?.message}</div>
+              <div className="invalid-feedback">{errors.amount?.message}</div>
             </div>
             <div className="form-group">
 
@@ -286,14 +288,14 @@ const DirectCost = props => {
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 1</strong><br/>Create a Direct Cost</h6> </TimelineContent>
+                <TimelineContent><h6><strong>Step 1</strong><br/>Edit a Direct Cost</h6> </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 2</strong><br/>Direct Cost will be automatically added to the Budget.</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 2</strong><br/>Direct Cost amount will be automatically updated in the Budget.</h6></TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
@@ -324,7 +326,7 @@ const DirectCost = props => {
       ) : (
         <div>
           <br />
-          <p>Please click on a Tutorial...</p>
+          <p>Please click on a direct Cost...</p>
         </div>
       )}
     </div>

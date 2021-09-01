@@ -14,6 +14,16 @@ module.exports = app => {
 
     // Get all category Docs
     router.get("/cat/:id", documents.findAllCat);
+
+    //Get Complete/Pending/Incomplete drawings
+    router.get("/status/:status",documents.findAllbyStatus);
+
+    // Update a Drawing with id
+    router.put("/:id", documents.update);
+    
+    // Delete a Drawing with id
+    router.delete("/:id/", documents.delete);
+
   
     app.use('/api/projects/documents', router);
   };

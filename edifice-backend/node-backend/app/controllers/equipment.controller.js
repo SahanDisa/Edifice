@@ -15,11 +15,11 @@ exports.create = (req, res) => {
   // Create a equipment
   const equipment = {
     code: req.body.code,
-    brand: req.body.brand,
-    date_issued: req.body.date_issued,
+    date: req.body.date,
     condition:req.body.condition,
     category: req.body.category, 
-    description: req.body.description
+    description: req.body.description,
+    projectId: req.body.projectId
   };
 
   // Save equipment in the database
@@ -34,23 +34,23 @@ exports.create = (req, res) => {
       });
     });
 };
-/*
-// Retrieve all equipments from the database.
+
+// Retrieve all equipments from a given equipment.
 exports.findAll = (req, res) => {
-    const title = req.query.title;
-    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+    //const id = req.query.id;
+    //var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
   
-    equipment.findAll({ where: condition })
+    Equipment.findAll(/*{ where: condition }*/)
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Some error occurred while retrieving data."
         });
       });
-};*/
+};
 /*
 // Find a single equipment with an id
 exports.findOne = (req, res) => {

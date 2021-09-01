@@ -168,7 +168,7 @@ export default class UpdateDrawing extends Component {
     DrawingDataService.delete(this.state.currentDrawing.id)
       .then(response => {
         console.log(response.data);
-        this.props.history.push('/projects')
+        this.props.history.push('/drawings/'+this.state.pid);
       })
       .catch(e => {
         console.log(e);

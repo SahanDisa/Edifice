@@ -59,7 +59,7 @@ class Vendors extends Component {
   
   constructor(props) {
     super(props);
-    this.retriveVendors = this.retriveVendors.bind(this);
+    this.retriveVendors = this.retrieveVendors.bind(this);
     this.state = {
       vendors: [],
       currentIndex: -1,
@@ -68,16 +68,16 @@ class Vendors extends Component {
     };
   }
   componentDidMount() {
-    this.retriveVendors(this.props.match.params.id);
+    this.retrieveVendors(this.props.match.params.id);
   }
 
-  retriveVendors(id){
+  retrieveVendors(id){
     VendorDataService.getAll(id)
     .then(response => {
         this.setState({
           vendors: response.data
         });
-        console.log(response.data);
+        console.log(response.data.length);
       })
       .catch(e => {
         console.log(e);

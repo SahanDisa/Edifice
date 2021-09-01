@@ -16,6 +16,18 @@ class DocumentDataService {
   getCat(id){
     return http.get(`/projects/documents/cat/${id}`);
   }
+
+  getStatus(status){
+    return http.get(`/projects/documents/status/${status}`);
+  }
+
+  update(id, data) {
+    return http.put(`/projects/documents/${id}`, data);
+  }
+
+  delete(id) {
+    return http.delete(`/projects/documents/${id}`);
+  }
 }
 
 export default new DocumentDataService();

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import DirectoryService from "../../../services/directory.service";
 import Card from 'react-bootstrap/Card';
 import UploadFiles from "./fileupload.component";
-import directorycover from "././../../../assets/PM/photos/directory.jpg";
+import directorycover from "././../../../assets/PM/photos/directory1.jpg";
 
 export default class Documents extends Component {
   constructor(props) {
@@ -54,26 +54,27 @@ export default class Documents extends Component {
               directories.map((directory, index) => (
                     <div
                     className={
-                    "container col-2" +
+                    "container col-3" +
                     (index === currentIndex ? "active" : "")
                     }
                     key={index}
                 >
                 {/* unit data */}
-                <Link to={"/viewdirectory/"+directory.id}>
+                <Link to={"/viewdirectory/"+id+"/"+directory.id} style={{'text-decoration': 'none'}}>
                         <Card
                         bg={'secondary'}
                         text={'dark'}
-                        style={{ width: '12rem' }}
+                        style={{ width: '14rem' }}
                         className="mb-2"
                         >
                         <Card.Img src={directorycover} alt="Card image" />
                         <Card.ImgOverlay>
-                        <Card.Title><h4>{directory.title}</h4></Card.Title>
-                        <Card.Text>
+                        {/* <Card.Title><h4>{directory.title}</h4></Card.Title> */}
+                        {/* <Card.Text>
                            {directory.description == "" ? "No Description" : directory.description} 
-                        </Card.Text>
+                        </Card.Text> */}
                         </Card.ImgOverlay>
+                        <Card.Title><h4>{directory.title}</h4></Card.Title>
                         </Card>
                 </Link>
                 </div>

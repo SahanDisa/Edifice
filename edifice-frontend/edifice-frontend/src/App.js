@@ -17,7 +17,7 @@ import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Profile from "./components/profile.component";
-import BoardUser from "./components/board-user.component";
+import BoardUser from "./components/board-project.component";
 import BoardResource from "./components/board-resource.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
@@ -25,10 +25,10 @@ import BoardAdmin from "./components/board-admin.component";
 import AddProject from './components/core_tools/admin/add-project.component';
 import AddDepartment from "./components/core_tools/admin/add-department.component";
 import AddMilestone from "./components/core_tools/admin/add-milestone.component";
+import AssignUserProject from "./components/core_tools/admin/add-projectuser.component";
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
-import AddDirectory from "./components/project_management/document/adddirectory.component";
-import ViewDirectory from "./components/project_management/document/directorysinglepage";
+
 
 import DrawingHome from "./components/project_management/drawings/drawings.component";
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
@@ -42,6 +42,7 @@ import UploadPhotos from "./components/project_management/photos/uploadphoto.com
 import PhotosHome from "./components/project_management/photos/photos.component";
 import AddAlbum from "./components/project_management/photos/addalbum.component";
 import ViewSingleAlbum from "./components/project_management/photos/album-singlepage.component";
+import MoveCapturetoAlbum from "./components/project_management/photos/movecapturestoalbum.component";
 
 import BiddingHome from "./components/project_management/biddings/bidding.component";
 import AddBidding from "./components/project_management/biddings/addbidding.component";
@@ -69,10 +70,12 @@ import UpdateTasks from "./components/core_tools/tasks/update.component";
 import ViewTasks from "./components/core_tools/tasks/view.component";
 
 import DocumentHome from "./components/project_management/document/document.component";
+import AddDirectory from "./components/project_management/document/adddirectory.component";
+import ViewDirectory from "./components/project_management/document/viewsingledirectory.component";
 import UploadDocFiles from "./components/project_management/document/adddocument.component";
 import UploadDocment from "./components/project_management/document/uploaddocument.component";
 import ViewSingleDocument from "./components/project_management/document/viewsingledocument.component";
-import PdfViewerComponent from "./components/project_management/document/viewpdf.component";
+import UpdateDocument from "./components/project_management/document/updatedocument.component";
 
 import MeetingsConfig from "./components/project_management/meetings/configuration.component";
 import ManageMeetings from "./components/project_management/meetings/manage.component";
@@ -127,6 +130,7 @@ import AddPayment from "./components/financial_management/commitments/addpayment
 import PaymentHome from "./components/financial_management/commitments/payments.component";
 import EditSingleCommitment from "./components/financial_management/commitments/commitment-edit.component";
 import ViewSingleSov from "./components/financial_management/commitments/sov-singlepage.component";
+import ViewSingleBudget from "./components/financial_management/budget/budget-singlepage.component";
 //import Report from "./components/report/report.component";
 
 class App extends Component {
@@ -258,10 +262,8 @@ class App extends Component {
             <Route path="/projectmanagement" component={BoardUser} />
             <Route path="/adddepartment/:id" component={AddDepartment} />
             <Route path="/addmilestone/:id" component={AddMilestone}/>
-            {/* <Route path="/projectmanagementhome" component={ProjectManagementHome} /> */}
+            <Route path="/assignuser/:id" component={AssignUserProject} />
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
-            <Route path="/portfolio/:id" component={PortfolioHome} />
-            <Route path="/portstepper" component={PortfolioStepper} />
 
             <Route path="/resource" component={BoardResource} />
             <Route path="/financialmanagement" component={BoardModerator} />
@@ -273,6 +275,9 @@ class App extends Component {
             <Route path="/dates" component={Dates} />
             <Route path="/defaults" component={Defaults} />
             <Route path="/roles" component={Roles} />
+            {/* Porfolio */}
+            <Route path="/portfolio/:id" component={PortfolioHome} />
+            <Route path="/portstepper" component={PortfolioStepper} />
             {/* Tasks */}
             <Route path="/tasksconfiguration" component={TaskConfiguration} />
             <Route path="/managetasks" component={ManageTasks} />
@@ -303,7 +308,7 @@ class App extends Component {
             
             <Route path="/addUser" component={AddUser} />
             <Route path="/editUser" component={EditUser} />
-            <Route path="/vendors" component={Vendors} />
+            <Route path="/vendor" component={Vendors} />
             <Route path="/employees" component={Emp} />
             <Route path="/addVendor" component={AddVendor} />
             <Route path="/editVendor" component={EditVendor} />
@@ -312,8 +317,8 @@ class App extends Component {
             <Route path="/document/:id" component={DocumentHome} />
             <Route path="/adddocument/:id" component={UploadDocFiles} />
             <Route path="/uploaddocument/:name" component={UploadDocment}/>
-            <Route path={"/viewdocument"} component={PdfViewerComponent}/>
-            <Route path={"/viewdirectory/:id"} component={ViewDirectory}/>
+            <Route exact path="/updatedocument/:pid/:id" component={UpdateDocument}/>
+            <Route exact path={"/viewdirectory/:pid/:id"} component={ViewDirectory}/>
             <Route path={"/viewsingledocument/:id"} component={ViewSingleDocument}/>
             {/* Drawing Component Routes  */}
             <Route path="/drawing/:id" component={DrawingHome} />
@@ -328,6 +333,7 @@ class App extends Component {
             <Route path="/uploadphoto/:name" component={UploadPhotos}/>
             <Route path="/viewalbum/:id" component={ViewSingleAlbum}/>
             <Route path="/addalbum/:id" component={AddAlbum}/>
+            <Route path="/movecapture/:id" component={MoveCapturetoAlbum}/>
             {/* Bidding Component Routes  */}
             <Route path="/bidding/:id" component={BiddingHome} /> 
             <Route path="/addbidding" component={AddBidding} /> 
@@ -370,6 +376,7 @@ class App extends Component {
             <Route path="/viewpayment/:id" component={PaymentHome} />
             <Route path="/editcommitment/:id" component={EditSingleCommitment} />
             <Route path="/viewsinglesov/:id" component={ViewSingleSov} />
+            <Route path="/viewbudget/:id" component={ViewSingleBudget} />
            
           </Switch>
         </div>

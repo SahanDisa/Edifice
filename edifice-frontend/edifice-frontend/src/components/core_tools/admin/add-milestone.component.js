@@ -110,7 +110,7 @@ export default class AddMilestone extends Component {
             <button className="btn btn-success" onClick={this.newMilestone}  style={{ 'text-decoration': 'none' }}>
               Add Another Milestone
             </button>
-            <Link to={"/addmilestone/"+projectId} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
+            <Link to={"/assignuser/"+projectId} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
               Assign Users
             </Link>
           </div>
@@ -119,7 +119,7 @@ export default class AddMilestone extends Component {
           <div className="row">
             <div className="container col-8">
             <h2>Add New Milestone</h2>
-            <h5>Step 2 : Define Milestones</h5>
+            <h5>Step 3 : Define Milestones</h5>
             <div className="form-group">
               <label htmlFor="title">Title</label>
               <input
@@ -176,14 +176,14 @@ export default class AddMilestone extends Component {
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 2 </strong>Define departments</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 2 :</strong>Define departments</h6></TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h5><strong>Step 3 :</strong>Define milestones</h5></TimelineContent>
+                <TimelineContent><h5><strong>Step 3 </strong>Define milestones</h5></TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
