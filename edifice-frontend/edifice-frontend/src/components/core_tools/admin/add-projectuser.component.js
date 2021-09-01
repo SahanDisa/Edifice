@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ProjectUserDataService from "./../../../services/projectuser.service";
-import ProjectDataService from "./../../../services/project.service";
+import PortfolioDataService from "./../../../services/portfolio.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -13,70 +13,68 @@ import TimelineDot from '@material-ui/lab/TimelineDot';
 export default class AssignUserProject extends Component {
   constructor(props) {
     super(props);
-    this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeDuration = this.onChangeDuration.bind(this);
+    this.onChangeUserID = this.onChangeUserID.bind(this);
+    this.onChangeDepartment = this.onChangeDepartment.bind(this);
+    this.onChangePosition = this.onChangePosition.bind(this);
     this.saveProjectUser = this.saveProjectUser.bind(this);
     this.newProjectUser = this.newProjectUser.bind(this);
 
     this.state = {
       id: null,
-      lastproject: [],
-      title: "",
-      description: "",
-      duration: "", 
+      userId: "",
+      department: "",
+      position: "", 
       currentIndex: -1,
       projectId: this.props.match.params.id,
+      departments: [],
 
       submitted: false
     };
   }
   componentDidMount() {
-    //this.getLastProjectID();
+    this.retrieveDepartments(this.props.match.params.id);
   }
-  onChangeTitle(e) {
+  onChangeUserID(e) {
     this.setState({
-      title: e.target.value
+      userId: e.target.value
     });
   }
-
-  onChangeDescription(e) {
+  onChangeDepartment(e) {
     this.setState({
-      description: e.target.value
+      department: e.target.value
     });
   }
-  onChangeDuration(e) {
+  onChangePosition(e) {
     this.setState({
-      duration: e.target.value
+      position: e.target.value
     });
   }
-//   getLastProjectID(){
-//     ProjectDataService.findlastProject()
-//       .then(response => {
-//           this.setState({
-//             lastproject: response.data,
-//             projectId: response.data[0].id
-//           });
-//           console.log(response.data);
-//         })
-//         .catch(e => {
-//           console.log(e);
-//         });
-//   }
+  retrieveDepartments(id){
+    PortfolioDataService.getAllDep(id)
+      .then(response => {
+        this.setState({
+          departments: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
   saveProjectUser() {
     var data = {
-      title: this.state.title,
-      description: this.state.description,
-      duration: this.state.duration,
+      userId: this.state.userId,
+      department: this.state.department,
+      position: this.state.position,
       projectId: this.state.projectId
     };
     ProjectUserDataService.create(data)
       .then(response => {
         this.setState({
           id: response.data.id,
-          title: response.data.title,
-          description: response.data.description,
-          duration: response.data.duration,
+          userId: response.data.userId,
+          department: response.data.department,
+          position: response.data.position,
           projectId: response.data.projectId,
 
           submitted: true
@@ -90,29 +88,32 @@ export default class AssignUserProject extends Component {
   newProjectUser() {
     this.setState({
       id: null,
-      title: "",
-      description: "",
-      duration: "",
-      published: false,
+      userId: "",
+      department: "",
+      position: "",
 
       submitted: false
     });
   }
 
   render() {
-    const {lastproject, currentIndex, projectId} = this.state;
+    const {departments, currentIndex, projectId} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
           <div>
+          <center>
             <h4>You add a ProjectUser successfully</h4>
-           
             <button className="btn btn-success" onClick={this.newProjectUser}  style={{ 'text-decoration': 'none' }}>
               Add Another ProjectUser
             </button>
-            <Link to={"/addmilestone/"+projectId} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
-              Assign Users
+            <Link to={"/projects/"} className="btn btn-primary mr-2"  style={{ 'text-decoration': 'none' }}>
+              Back Home
             </Link>
+            {/* <Link to={"/adddrawing/"+projectId} className="btn btn-primary mr-2"  style={{ 'text-decoration': 'none' }}>
+              Add Drawing
+            </Link> */}
+          </center>
           </div>
         ) : (
           <div class="container">
@@ -127,8 +128,8 @@ export default class AssignUserProject extends Component {
                 id="datatype"
                 required
                 name="category"
-                value={this.state.category}
-                onChange={this.onChangeType}
+                value={this.state.userId}
+                onChange={this.onChangeUserID}
               >
                 {/* {drawingcategories &&
                 drawingcategories.map((drawingcategory, index) => (
@@ -141,11 +142,11 @@ export default class AssignUserProject extends Component {
                 {drawingcategory.title}
                 </option>
                 ))} */}
-                <option>1 - John Doe</option>
-                <option>2 - Steve Smith</option>
-                <option>3 - Kamal Perera</option>
-                <option>4 - Saman Dissanayaka</option>
-                <option>5 - Ranjith Weerasuriya</option>
+                <option value={1} onChange={this.onChangeUserID}>1 - John Doe</option>
+                <option value={2} onChange={this.onChangeUserID}>2 - Steve Smith</option>
+                <option value={3} onChange={this.onChangeUserID}>3 - Kamal Perera</option>
+                <option value={4} onChange={this.onChangeUserID}>4 - Saman Dissanayaka</option>
+                <option value={5} onChange={this.onChangeUserID}>5 - Ranjith Weerasuriya</option>
               </select>
             </div>
 
@@ -156,40 +157,53 @@ export default class AssignUserProject extends Component {
                 id="datatype"
                 required
                 name="category"
-                value={this.state.category}
-                onChange={this.onChangeType}
+                value={this.state.position}
+                onChange={this.onChangePosition}
               >
-                {/* {drawingcategories &&
-                drawingcategories.map((drawingcategory, index) => (
+                <option value={"Project Manager"} onChange={this.onChangePosition}>1 - Project Manager</option>
+                <option value={"Senior Architect"} onChange={this.onChangePosition}>2 - Senior Enginner</option>
+                <option value={"Senior Enginner"} onChange={this.onChangePosition}>3 - Senior Architect</option>
+                <option value={"Enginner"} onChange={this.onChangePosition}>3 - Enginner</option>
+                <option value={"Architect"} onChange={this.onChangePosition}>2 - Architect</option>
+                <option value={"QA Enginner"} onChange={this.onChangePosition}>4 - QA Enginner</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="department">Department</label>
+              <select 
+                className="form-control"
+                id="datatype"
+                required
+                name="category"
+                value={this.state.department}
+                onChange={this.onChangeDepartment}
+              >
+                {departments &&
+                departments.map((department, index) => (
                 <option
-                    value={drawingcategory.id}
-                    onChange={this.onChangeType}
+                    value={department.name}
+                    onChange={this.onChangeDepartment}
                     key={index}
                 >
                 
-                {drawingcategory.title}
+                {department.title}
                 </option>
-                ))} */}
-                <option>1 - Project Manager</option>
-                <option>2 - Senior Enginner</option>
-                <option>3 - Senior Architect</option>
-                <option>3 - Enginner</option>
-                <option>2 - Architect</option>
-                <option>4 - QA Enginner</option>
+                ))}
               </select>
             </div>
 
             <div className="form-group">
-              <label htmlFor="description">Project ID</label>
+              <label htmlFor="projectID">Project ID</label>
               <input
                 type="text"
                 className="form-control"
-                id="duration"
+                id="projectID"
                 required
-                // value={this.state.duration}
-                // onChange={this.onChangeDuration}
-                // name="duration"
+                // value={this.state.projectID}
+                // onChange={this.onChangePosition}
+                name="projectID"
                 value = {this.state.projectId}
+                disabled
               />
             </div>
             <button onClick={this.saveProjectUser} className="btn btn-success">
