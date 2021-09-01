@@ -40,20 +40,7 @@ export default class BoardUser extends Component {
         });
       }
     );
-    //this.retrieveProjects();
     this.retrieveProjects(this.state.currentUser.id);
-  }
-  retrieveProjects() {
-    ProjectDataService.getAll()
-      .then(response => {
-        this.setState({
-          projects: response.data
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
   }
   retrieveProjects(id) {
     ProjectDataService.userProjects(id)
@@ -171,15 +158,17 @@ export default class BoardUser extends Component {
                 // onClick={() => this.setActiveProject(project, index)}
                 key={index}
               >
-              <div className="row">
+              <div className="container row">
                 <div className="col-7">
-                  {this.retriveSingleProject(project.projectuserId)}
-                  <h5>{uprojects.title}</h5>
+                  {/* {this.retriveSingleProject(project.projectuserId)} */}
+                  {/* <h5>{uprojects.title}</h5>
                   <h6>Breif : {uprojects.description}</h6>
-                  <p>Location : {uprojects.location}</p>
-                  
+                  <p>Location : {uprojects.location}</p> */}
+                  <h4>Project : {index + 1}</h4>
+                  <h6>Name : {project.firstname}{" "}{project.lastname}</h6>
+                  <h6>Position : {project.position}</h6>
                   <Link
-                    to={"/projectmanagementhome/" + uprojects.id}
+                    to={"/projectmanagementhome/" + project.projectuserId}
                     className="btn btn-primary"
                   >
                     Manage
