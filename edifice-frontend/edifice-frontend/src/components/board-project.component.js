@@ -3,6 +3,7 @@ import { Switch, Route, Link } from "react-router-dom";
 import UserService from "../services/user.service";
 import AuthService from "../services/auth.service";
 import ProjectDataService from "../services/project.service";
+import ProjectUserService from "../services/projectuser.service";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import Card from 'react-bootstrap/Card';
@@ -10,13 +11,14 @@ import Card from 'react-bootstrap/Card';
 export default class BoardUser extends Component {
   constructor(props) {
     super(props);
-    this.retrieveProjects = this.retrieveProjects.bind(this);
+    this.retriveUserProjects = this.retriveUserProjects.bind(this);
     this.state = {
       projects: [],
       uprojects: [],
       currentIndex: -1,
       content: "",
       currentUser:  AuthService.getCurrentUser() ,
+      usercount: 0,
       showModeratorBoard: false,
     };
   }
@@ -40,13 +42,13 @@ export default class BoardUser extends Component {
         });
       }
     );
-    this.retrieveProjects(this.state.currentUser.id);
+    this.retriveUserProjects(this.state.currentUser.id);
   }
-  retrieveProjects(id) {
-    ProjectDataService.userProjects(id)
+  retrieveUserProjectCount(id) {
+    ProjectUserService.userProjects(id)
       .then(response => {
         this.setState({
-          projects: response.data
+          usercount: response.data.length
         });
         console.log(response.data);
       })
@@ -54,8 +56,8 @@ export default class BoardUser extends Component {
         console.log(e);
       });
   }
-  retriveSingleProject(id){
-    ProjectDataService.get(id)
+  retriveUserProjects(id){
+    ProjectUserService.getAll(id)
     .then(response => {
       this.setState({
         uprojects: response.data
@@ -68,7 +70,7 @@ export default class BoardUser extends Component {
   }
 
   render() {
-    const { projects,uprojects,currentIndex } = this.state;
+    const { uprojects,currentIndex } = this.state;
     return (
       <div className="container">
           <h3>Project Management Home</h3>
@@ -148,8 +150,8 @@ export default class BoardUser extends Component {
         <h4>My Projects List</h4>
 
         <ul className="list-group">
-          {projects &&
-            projects.map((project, index) => (
+          {uprojects &&
+            uprojects.map((project, index) => (
               <li
                 className={
                   "list-group-item " +
@@ -165,10 +167,10 @@ export default class BoardUser extends Component {
                   <h6>Breif : {uprojects.description}</h6>
                   <p>Location : {uprojects.location}</p> */}
                   <h4>Project : {index + 1}</h4>
-                  <h6>Name : {project.firstname}{" "}{project.lastname}</h6>
+                  <h6>Working Department : {project.department}</h6>
                   <h6>Position : {project.position}</h6>
                   <Link
-                    to={"/projectmanagementhome/" + project.projectuserId}
+                    to={"/projectmanagementhome/" + project.projectId}
                     className="btn btn-primary"
                   >
                     Manage
