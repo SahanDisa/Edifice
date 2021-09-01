@@ -275,7 +275,7 @@ db.invoices.belongsTo(db.commitments, {
 db.projects.hasMany(db.equipments, { as: "equipments" });
 db.equipments.belongsTo(db.projects, {
   foreignKey: "projectId",
-  as: "categories",
+  as: "project",
 });
 
 //One crew has many workers
@@ -284,6 +284,15 @@ db.workers.belongsTo(db.crews, {
   foreignKey: "crewId",
   as: "crew",
 });
+
+//One project has many crews
+db.projects.hasMany(db.crews, { as: "crews" });
+db.crews.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+
 // ----------- Resource Management Ends --------
 
 //Role description 

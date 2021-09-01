@@ -11,6 +11,7 @@ class AddWorker extends Component {
     this.onChangelastName =this.onChangelastName.bind(this);
     this.onChangemobile =this.onChangemobile.bind(this);
     this.saveWorker = this.saveWorker.bind(this);
+    
 
     this.state = {
       wId: null,
@@ -45,6 +46,8 @@ class AddWorker extends Component {
       mobile: e.target.value
     });
   }
+
+
 
   saveWorker() {
     var data = {

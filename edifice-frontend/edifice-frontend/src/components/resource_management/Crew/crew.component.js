@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
-import { Link } from "react-router-dom";
 
 import AddWorker from './add-worker.component';
 import EditWorker from './edit-worker.component';
@@ -91,8 +90,6 @@ class Crew extends Component {
                             </div>
                         </form>
 
-
-
                         <div class="accordion" id="accordionExample">
                           {crews && crews.map((crew, index) => (
                             <div class="card">
@@ -152,10 +149,8 @@ class Crew extends Component {
                             </div>
                           ))}  
                         </div>
-                    </div>
-                    
+                    </div>                  
                 </div>
-
             </div>
 
             {/* Add Worker Starts */}

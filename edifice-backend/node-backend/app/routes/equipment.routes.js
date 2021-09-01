@@ -5,10 +5,10 @@
   
     // Create a new equipment
     router.post("/", equipments.create);
-/*  
-    // Retrieve all equipments
-    router.get("/", equipment.findAll);
   
+    // Retrieve all equipments
+    router.get("/list/", equipments.findAll);
+/*  
     // Retrieve all published equipments
     router.get("/published", equipment.findAllPublished);
   
