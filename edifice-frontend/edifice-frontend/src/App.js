@@ -129,6 +129,7 @@ import AddPayment from "./components/financial_management/commitments/addpayment
 import PaymentHome from "./components/financial_management/commitments/payments.component";
 import EditSingleCommitment from "./components/financial_management/commitments/commitment-edit.component";
 import ViewSingleSov from "./components/financial_management/commitments/sov-singlepage.component";
+import ViewSingleBudget from "./components/financial_management/budget/budget-singlepage.component";
 //import Report from "./components/report/report.component";
 
 class App extends Component {
@@ -373,6 +374,7 @@ class App extends Component {
             <Route path="/viewpayment/:id" component={PaymentHome} />
             <Route path="/editcommitment/:id" component={EditSingleCommitment} />
             <Route path="/viewsinglesov/:id" component={ViewSingleSov} />
+            <Route path="/viewbudget/:id" component={ViewSingleBudget} />
            
           </Switch>
         </div>

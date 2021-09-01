@@ -188,8 +188,8 @@ className={`form-control ${errors.contractCompany ? 'is-invalid' : ''}`}
             <div className="form-group">
                 <label htmlFor="status">Status :</label>
             
-              <input
-                type="text"
+              <select
+            
 
                 id="status"
                 {...register('status')}
@@ -197,7 +197,11 @@ className={`form-control ${errors.contractCompany ? 'is-invalid' : ''}`}
                 onChange={handleInputChange}
                 name="status"
 className={`form-control ${errors.status ? 'is-invalid' : ''}`}
-              />
+              >
+<option></option>
+<option>Ongoing 🔴</option>
+<option>Completed 🟢</option>
+                </select>
 <div className="invalid-feedback">{errors.status?.message}</div>
               </div>
            

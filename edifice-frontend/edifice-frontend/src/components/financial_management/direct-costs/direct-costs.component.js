@@ -218,11 +218,11 @@ const DirectCostList = (props) => {
             onChange={onChangeSearchCostCode}
               >
               <option  selected value="">All</option>
-                <option>010-Maintenance Equipment</option>
-                <option>924-Sodding</option>
-                <option>100-Visual Display Boards</option>
-                <option>230-Site Clearing</option>
-                <option>240-Dewatering</option>
+                <option>001-Maintenance Equipment</option>
+                <option>002-Sodding</option>
+                <option>003-Visual Display Boards</option>
+                <option>004-Site Clearing</option>
+                <option>005-Dewatering</option>
              
               </select>
 

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-//import { Route, useParams } from "react-router-dom";
 import BudgetDataService from "./../../../services/budget.service";
+import DeleteIcon from '@material-ui/icons/Delete';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import UpdateIcon from '@material-ui/icons/Update';
+import { Route, useParams } from "react-router-dom";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -12,14 +14,15 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 
-const AddBudget = (props) => {
+
+const Budget = props => {
 
   /**validation */
   const validationSchema = Yup.object().shape({
     costCode: Yup.string().required('Cost Code is required'),
     description: Yup.string().required('Description is required'),
     date: Yup.string().required('Date is required'),
-estimatedBudget: Yup.string().required('Budget Amount is required'),
+    estimatedBudget: Yup.string().required('Amount is required'),
   });
 
   const {
@@ -36,46 +39,23 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
   };
 /**End of validation */
 
-  //const {pid}= useParams();
 
+  //const {projectId}= useParams();
   const initialBudgetState = {
     id: null,
-    costCode :"",
-    description :"",
-    date :"",
+    costCode: "",
+    description: "",
+    date: "",
     estimatedBudget: "",
-    projectId:props.match.params.id,  
-    
+    projectId:""
   };
-  const [budget, setBudget] = useState(initialBudgetState);
-  const [submitted, setSubmitted] = useState(false);
+  const [currentBudget, setCurrentBudget] = useState(initialBudgetState);
+  const [message, setMessage] = useState("");
 
-  const handleInputChange = event => {
-    const { name, value } = event.target;
-    setBudget({ ...budget, [name]: value });
-  };
-
-  const saveBudget = () => {
-    var data = {
-      costCode: budget.costCode,
-      description: budget.description,
-      date: budget.date,
-      estimatedBudget: budget.estimatedBudget,
-      projectId: budget.projectId,
-    };
-
-    BudgetDataService.create(data)
+  const getBudget = id => {
+    BudgetDataService.get(id)
       .then(response => {
-        setBudget({
-          id: response.data.id,
-          costCode: response.data.costCode,
-          description: response.data.description,
-          date: response.data.date,
-          estimatedBudget: response.data.estimatedBudget,
-          projectId: response.data.projectId,
-     
-        });
-        setSubmitted(true);
+        setCurrentBudget(response.data);
         console.log(response.data);
       })
       .catch(e => {
@@ -83,31 +63,49 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
       });
   };
 
-  const newBudget = () => {
-    setBudget(initialBudgetState);
-    setSubmitted(false);
+  useEffect(() => {
+    getBudget(props.match.params.id);
+  },[props.match.params.id]);
+
+  const handleInputChange = event => {
+    const { name, value } = event.target;
+    setCurrentBudget({ ...currentBudget, [name]: value });
   };
 
- 
+
+
+  const updateBudget = () => {
+    BudgetDataService.update(currentBudget.id, currentBudget)
+      .then(response => {
+        console.log(response.data);
+        setMessage("The budget line item was updated successfully!");
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  const deleteBudget = () => {
+    BudgetDataService.remove(currentBudget.id)
+      .then(response => {
+        console.log(response.data);
+        props.history.push("/budget/"+currentBudget.projectId);//check this again
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
   return (
-        <div className="container">
-       
-        {submitted ? (
-          <div>
-            <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={newBudget}>
-              + Add Another Budget Line Item
-            </button>&nbsp;&nbsp;
-          <Link  to={"/budget/"+budget.projectId} className="btn btn-success">View Budget</Link>
-          </div>
-        ) : (
-          <div class="container">
-            <h2>New Budget Line Item</h2>
-            <div className="row">
+    <div className="container">
+      {currentBudget ? (
+        <div class="container">
+          <h4>Budget Line Item</h4>
+          <div className="row">
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
-              <label htmlFor="costCode">Cost Code :</label>
+              <label htmlFor="costCode">Cost Code</label>
              {/* <input
                 type="text"
                 className="form-control"
@@ -118,113 +116,105 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
                 name="costCode"
              />*/}
                 <select 
-                
+               
                 id="costCode"
-           
-                
-                name="costCode"
                 {...register('costCode')}
-                value={budget.costCode}
+                value={currentBudget.costCode}
                 onChange={handleInputChange}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
+                name="costCode"
               >
-                
+                <option></option>
                 <option>001-Maintenance Equipment</option>
                 <option>002-Sodding</option>
                 <option>003-Visual Display Boards</option>
                 <option>004-Site Clearing</option>
                 <option>005-Dewatering</option>
-             
               </select>
               <div className="invalid-feedback">{errors.costCode?.message}</div>
             </div>
-
             <div className="form-group">
-              <label htmlFor="amount">Description :</label>
+              <label htmlFor="title">Description</label>
               <input
                 type="text"
-            
-                id="description"
                 
-           
+                id="description"
                 name="description"
                 {...register('description')}
-                value={budget.description}
+                value={currentBudget.description}
                 onChange={handleInputChange}
                 className={`form-control ${errors.description ? 'is-invalid' : ''}`}
               />
-               <div className="invalid-feedback">{errors.description?.message}</div>
+              <div className="invalid-feedback">{errors.description?.message}</div>
             </div>
-
-   
             <div className="form-group">
-              <label htmlFor="date">Date :</label>
+              <label htmlFor="description"> Date</label>
               <input
                 type="date"
-                
+               
                 id="date"
-                
-                
                 name="date"
                 {...register('date')}
-                value={budget.date}
+                value={currentBudget.date}
                 onChange={handleInputChange}
                 className={`form-control ${errors.date ? 'is-invalid' : ''}`}
               />
-               <div className="invalid-feedback">{errors.date?.message}</div>
+              <div className="invalid-feedback">{errors.date?.message}</div>
             </div>
-
             <div className="form-group">
-              <label htmlFor="amount">Amount :</label>
+              <label htmlFor="description">Estimated Budget Amount</label>
               <input
                 type="text"
                
                 id="estimatedBudget"
-             
-              
                 name="estimatedBudget"
                 {...register('estimatedBudget')}
-                value={budget.estimatedBudget}
+                value={currentBudget.estimatedBudget}
                 onChange={handleInputChange}
                 className={`form-control ${errors.estimatedBudget ? 'is-invalid' : ''}`}
               />
-               <div className="invalid-feedback">{errors.estimatedBudget?.message}</div>
+              <div className="invalid-feedback">{errors.estimatedBudget?.message}</div>
             </div>
             <div className="form-group">
-            <button type="submit" onClick={saveBudget} className="btn btn-success">
-              Save
-            </button>
-            &nbsp;&nbsp;
-            <button
+
+            <button className="btn btn-danger" onClick={deleteBudget}>
+            Delete <DeleteIcon/> 
+          </button>
+
+          <button
+            type="submit"
+            className="btn btn-success m-2"
+            onClick={updateBudget}
+          >
+            Update <UpdateIcon/>
+          </button>
+          <button
             type="button"
             onClick={() => reset()}
             className="btn btn-warning float-right"
           >
             Reset
-          </button>&nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
-            <Link to={"/budget/" + budget.projectId}>
-            <button className="btn btn-success">
-            Cancel
-            </button></Link>
+          </button>
+
             </div>
-            </form>
-            </div>
-            
-            <div className="col-sm-6">
+</form>
+          </div>
+          
+          <div className="col-sm-6">
             <Timeline>
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h5><strong>Step 1</strong><br/>Create a Budget Line Item</h5> </TimelineContent>
+                <TimelineContent><h6><strong>Step 1</strong><br/>Edit a Budget Line Item</h6> </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 2</strong><br/>Budget Line Item will be automatically added to the Estimated Budget.</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 2</strong><br/>Estimated Budget Amount will be automatically updated in the Budget.</h6></TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
@@ -238,20 +228,28 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
                   <TimelineDot />
                  
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 4</strong><br/>Edit/Delete a Budget Line Item.</h6></TimelineContent>
+                <TimelineContent><h5><strong>Step 4</strong><br/>Edit/Delete a Budget Line Item.</h5></TimelineContent>
               </TimelineItem>
             </Timeline>
             </div>
             
-            
-            </div><br />
-          {/** */} 
+          
+          
           </div>
-        )}
-        <br /><br />
-      </div>
+          
+
+
+     
+          <p>{message}</p>
+        </div>
+      ) : (
+        <div>
+          <br />
+          <p>Please click on a budget line item...</p>
+        </div>
+      )}
+    </div>
   );
 };
 
-export default AddBudget ;
-
+export default Budget;
