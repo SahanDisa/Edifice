@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import EquipmentCategoryDataService from "./../../../services/equipment-category.service";
+import EquipmentDataService from "./../../../services/equipment.service";
 
 
 import List from '@material-ui/core/List';
@@ -16,10 +16,10 @@ class Equipment extends Component {
 
   constructor(props) {
     super(props);
-    this.retrieveCategory = this.retrieveCategory.bind(this);
+    this.retrieveEquipment = this.retrieveEquipment.bind(this);
 
     this.state = {
-      categorys: [],
+      equipments: [],
       currentIndex: -1,
       content: "",
       id: this.props.match.params.id
@@ -27,13 +27,13 @@ class Equipment extends Component {
   }
 
   componentDidMount() {
-    this.retrieveCategory(this.props.match.params.id);
+    this.retrieveEquipment(this.props.match.params.id);
   }
-  retrieveCategory(id) {
-    EquipmentCategoryDataService.getAll(id)
+  retrieveEquipment(id) {
+    EquipmentDataService.getAll(id)
       .then(response => {
         this.setState({
-          categorys: response.data
+          equipments: response.data
         });
         console.log(response.data);
       })
@@ -42,7 +42,7 @@ class Equipment extends Component {
       });
   }
     render() {
-      const { categorys ,currentIndex,id } = this.state;
+      const { equipments ,currentIndex,id } = this.state;
         return (
           <div>
             <Card
@@ -78,14 +78,15 @@ class Equipment extends Component {
                         <br/>
 
                         <div class="accordion" id="accordionExample">
+                        {equipments && equipments.map((equipment, currentIndex) => (
                             <div class="card">
                                 <div class="card-header" id="headingOne">
                                     <h2 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Excavator</button>
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${currentIndex}`} aria-expanded="true" aria-controls="collapseOne">{equipment.category}</button>
                                         <span class="badge bg-primary rounded-pill">14</span>
                                     </h2>
                                 </div>
-                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div id={`collapse${currentIndex}`} class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div className="">
                                             <div class="col-md-12 text-right mb-2">
@@ -112,25 +113,8 @@ class Equipment extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="card">
-                                <div class="card-header" id="headingTwo">
-                                    <h2 class="mb-0">
-                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Crane</button>
-                                        <span class="badge bg-primary rounded-pill">5</span>
-                                    </h2>
-                                </div>
-                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        <div className="">
-                                            <div class="col-md-12 text-right mb-2">
-                                            </div>
-                      
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>  
+                            </div> 
+                           ))}  
                         </div>
                     </div>                    
                 </div>

@@ -11,7 +11,7 @@ class NewCrew extends Component {
     this.state = {
       id: null,
       name: "",
-     // projectId: this.props.match.params.id,  
+      projectId: "1",  
       submitted: false
     };
   }
@@ -25,7 +25,7 @@ class NewCrew extends Component {
   saveCrew() {
     var data = {
       name: this.state.name,
-      projectId: this.state.projectId
+      projectId: "1"
     };
 
     CrewDataService.create(data)
