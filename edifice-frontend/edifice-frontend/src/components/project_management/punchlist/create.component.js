@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Card from 'react-bootstrap/Card';
 import PunchlistDataService from "./../../../services/project_management/punchlist.service.js";
 
-class ViewAP extends Component {
+class CreatePL extends Component {
     constructor(props) {
         super(props);
         this.onChangeDuedate = this.onChangeDuedate.bind(this);
@@ -129,10 +129,8 @@ class ViewAP extends Component {
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div className="modal-body">
-                                    
-                                </div>
                                 <div className="modal-footer">
+                                    <button type="button" className="btn btn-success" onClick={this.newPunchListItem}>Add Another punch list</button>
                                     <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
@@ -255,10 +253,12 @@ class ViewAP extends Component {
                                         </div>  
                                     </div>
                                     <button
-                                    type="button" 
-                                    // data-toggle="modal" 
-                                    // data-target="#successfullyaddedModal" 
-                                    onClick={this.savePunchListItem} className="btn btn-primary mt-2 mr-2">Next: Add Assignees</button>
+                                        type="button"
+                                        // data-toggle="modal"
+                                        // data-target="#successfullyaddedModal"
+                                        onClick={this.savePunchListItem}
+                                        className="btn btn-primary mt-2 mr-2"
+                                    >Next: Add Assignees</button>
                                     <a href="/punchlist" className="">Cancel</a>
                                 </form>
                             </div>          
@@ -286,4 +286,4 @@ class ViewAP extends Component {
     }
 }
 
-export default ViewAP;
+export default CreatePL;
