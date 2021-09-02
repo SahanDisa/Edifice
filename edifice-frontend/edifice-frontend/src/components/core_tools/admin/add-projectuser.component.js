@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import MilestoneDataService from "./../../../services/milestone.service";
+import ProjectUserDataService from "./../../../services/projectuser.service";
 import ProjectDataService from "./../../../services/project.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -10,14 +10,14 @@ import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 
 
-export default class AddMilestone extends Component {
+export default class AssignUserProject extends Component {
   constructor(props) {
     super(props);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeDuration = this.onChangeDuration.bind(this);
-    this.saveMilestone = this.saveMilestone.bind(this);
-    this.newMilestone = this.newMilestone.bind(this);
+    this.saveProjectUser = this.saveProjectUser.bind(this);
+    this.newProjectUser = this.newProjectUser.bind(this);
 
     this.state = {
       id: null,
@@ -26,13 +26,13 @@ export default class AddMilestone extends Component {
       description: "",
       duration: "", 
       currentIndex: -1,
-      projectId: "",
+      projectId: this.props.match.params.id,
 
       submitted: false
     };
   }
   componentDidMount() {
-    this.getLastProjectID();
+    //this.getLastProjectID();
   }
   onChangeTitle(e) {
     this.setState({
@@ -50,27 +50,27 @@ export default class AddMilestone extends Component {
       duration: e.target.value
     });
   }
-  getLastProjectID(){
-    ProjectDataService.findlastProject()
-      .then(response => {
-          this.setState({
-            lastproject: response.data,
-            projectId: response.data[0].id
-          });
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-  }
-  saveMilestone() {
+//   getLastProjectID(){
+//     ProjectDataService.findlastProject()
+//       .then(response => {
+//           this.setState({
+//             lastproject: response.data,
+//             projectId: response.data[0].id
+//           });
+//           console.log(response.data);
+//         })
+//         .catch(e => {
+//           console.log(e);
+//         });
+//   }
+  saveProjectUser() {
     var data = {
       title: this.state.title,
       description: this.state.description,
       duration: this.state.duration,
       projectId: this.state.projectId
     };
-    MilestoneDataService.create(data)
+    ProjectUserDataService.create(data)
       .then(response => {
         this.setState({
           id: response.data.id,
@@ -87,7 +87,7 @@ export default class AddMilestone extends Component {
         console.log(e);
       });
   }
-  newMilestone() {
+  newProjectUser() {
     this.setState({
       id: null,
       title: "",
@@ -105,12 +105,12 @@ export default class AddMilestone extends Component {
       <div className="container">
         {this.state.submitted ? (
           <div>
-            <h4>You add a Milestone successfully</h4>
+            <h4>You add a ProjectUser successfully</h4>
            
-            <button className="btn btn-success" onClick={this.newMilestone}  style={{ 'text-decoration': 'none' }}>
-              Add Another Milestone
+            <button className="btn btn-success" onClick={this.newProjectUser}  style={{ 'text-decoration': 'none' }}>
+              Add Another ProjectUser
             </button>
-            <Link to={"/assignuser/"+projectId} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
+            <Link to={"/addmilestone/"+projectId} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
               Assign Users
             </Link>
           </div>
@@ -118,48 +118,82 @@ export default class AddMilestone extends Component {
           <div class="container">
           <div className="row">
             <div className="container col-8">
-            <h2>Add New Milestone</h2>
-            <h5>Step 3 : Define Milestones</h5>
+            <h2>Assign User To the Project</h2>
+            <h5>Step 4 : Assign Users to the project by giving the position</h5>
             <div className="form-group">
-              <label htmlFor="title">Title</label>
-              <input
-                type="text"
+              <label htmlFor="category">User ID</label>
+              <select 
                 className="form-control"
-                id="title"
+                id="datatype"
                 required
-                value={this.state.title}
-                onChange={this.onChangeTitle}
-                name="title"
-              />
+                name="category"
+                value={this.state.category}
+                onChange={this.onChangeType}
+              >
+                {/* {drawingcategories &&
+                drawingcategories.map((drawingcategory, index) => (
+                <option
+                    value={drawingcategory.id}
+                    onChange={this.onChangeType}
+                    key={index}
+                >
+                
+                {drawingcategory.title}
+                </option>
+                ))} */}
+                <option>1 - John Doe</option>
+                <option>2 - Steve Smith</option>
+                <option>3 - Kamal Perera</option>
+                <option>4 - Saman Dissanayaka</option>
+                <option>5 - Ranjith Weerasuriya</option>
+              </select>
             </div>
 
             <div className="form-group">
-              <label htmlFor="description">Description</label>
-              <input
-                type="text"
+              <label htmlFor="description">Position</label>
+              <select 
                 className="form-control"
-                id="description"
+                id="datatype"
                 required
-                value={this.state.description}
-                onChange={this.onChangeDescription}
-                name="description"
-              />
+                name="category"
+                value={this.state.category}
+                onChange={this.onChangeType}
+              >
+                {/* {drawingcategories &&
+                drawingcategories.map((drawingcategory, index) => (
+                <option
+                    value={drawingcategory.id}
+                    onChange={this.onChangeType}
+                    key={index}
+                >
+                
+                {drawingcategory.title}
+                </option>
+                ))} */}
+                <option>1 - Project Manager</option>
+                <option>2 - Senior Enginner</option>
+                <option>3 - Senior Architect</option>
+                <option>3 - Enginner</option>
+                <option>2 - Architect</option>
+                <option>4 - QA Enginner</option>
+              </select>
             </div>
 
             <div className="form-group">
-              <label htmlFor="description">Duration</label>
+              <label htmlFor="description">Project ID</label>
               <input
                 type="text"
                 className="form-control"
                 id="duration"
                 required
-                value={this.state.duration}
-                onChange={this.onChangeDuration}
-                name="duration"
+                // value={this.state.duration}
+                // onChange={this.onChangeDuration}
+                // name="duration"
+                value = {this.state.projectId}
               />
             </div>
-            <button onClick={this.saveMilestone} className="btn btn-success">
-              Create Milestone
+            <button onClick={this.saveProjectUser} className="btn btn-success">
+              Assign User
             </button>
             </div>
             <div className="container col-4">
@@ -183,13 +217,13 @@ export default class AddMilestone extends Component {
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h5><strong>Step 3 </strong>Define milestones</h5></TimelineContent>
+                <TimelineContent><h6><strong>Step 3 :</strong>Define milestones</h6></TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 4 :</strong>Assign users for the project</h6></TimelineContent>
+                <TimelineContent><h5><strong>Step 4 </strong>Assign users for the project</h5></TimelineContent>
               </TimelineItem>
             </Timeline>
             </div>

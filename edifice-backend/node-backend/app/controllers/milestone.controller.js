@@ -17,7 +17,8 @@ exports.create = (req, res) => {
     title: req.body.title,
     description: req.body.description,
     duration: req.body.duration,
-    projectId: req.body.projectId
+    completed: req.body.completed ? req.body.completed : false,
+    projectId: req.body.projectId,
   }
 
   // Save Milestone in the database
@@ -113,4 +114,19 @@ exports.delete = (req, res) => {
           message: "Could not delete Milestone with id=" + id
         });
       });
+};
+
+// Find all published Milestones
+exports.findAllComplete = (req, res) => {
+  const id = req.params.id;
+  Milestone.findAll({ where: { completed: true, projectId: id } })
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving projects."
+    });
+  });
 };

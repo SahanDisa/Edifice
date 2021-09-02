@@ -134,9 +134,12 @@ export default class Commitments extends Component {
             </div>
 
             <div className="col-12 text-left">
-            <h5>Commited Contracts Total</h5><br></br>
-            <h6>Total Contracts Amount (Rs.): Rs. 44,446,000.00<br /></h6>
-            <h6>Payments Made  (Rs.) : Rs. 44,446,000.00</h6><br />
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
+                <h3 className="h5 nav-heading-title mb-0">Total Commited Costs</h3>
+                <span className="fs-sm fw-normal text-muted">Rs. 125,000,000.00</span>
+              </div>
+            </div>
             </div>
 
             <div className="container">
@@ -145,13 +148,17 @@ export default class Commitments extends Component {
                 <h4>Commitments List</h4></div>
                 <div className="col-md-4">
                 <div className="input-group mb-3">
-                <input
-              type="text"
+                <select
+              id="contractCompany"
               className="form-control"
               placeholder="Search by Contract Company"
               value={searchContractCompany}
               onChange={this.onChangeSearchContractCompany}
-            />
+            >
+              <option  selected value="">All</option>
+<option>Chance Electric Company (Pvt) Ltd</option>
+<option>XYZ Company (Pvt) Ltd</option>
+              </select>
             <div className="input-group-append">
               <button
                 className="btn btn-outline-secondary"

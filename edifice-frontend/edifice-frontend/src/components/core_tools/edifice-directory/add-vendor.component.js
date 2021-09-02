@@ -3,15 +3,26 @@ import VendorDataService from "./../../../services/vendor.service";
 
 class AddVendor extends Component {
 
+  constructor(props) {
+    super(props);
+    //this.retriveVendors = this.retrieveVendors.bind(this);
+    this.state = {
+      vendors: [],
+      currentIndex: -1,
+      content: "",
+      id: this.props.match.params.id
+    };
+  }
+
   render() {
     return (
       <div className="">
         <h2>New Vendor</h2><hr/>
-        <div className="">
-          <h5>Enter vendor details</h5>
+        <div className="vendorBox" >
+          <h5>Enter necessary vendor details</h5>
 
-          <label htmlFor="">Id</label>
-          <input className="form-control" type="number" required/>
+          <label htmlFor="" hidden>Id</label>
+          <input className="form-control" type="number" hidden/>
           <br/>
 
           <label htmlFor="">Company Name</label>
@@ -27,7 +38,7 @@ class AddVendor extends Component {
           </select><br />
 
           <label htmlFor="">Contact No</label>
-          <input className="form-control" type="number" required/>
+          <input className="form-control" type="text" required/>
           <br/>
 
           <label htmlFor="">Email</label>
@@ -41,10 +52,10 @@ class AddVendor extends Component {
           <br/>
 
           <div>
-          <a href="#" className="btn btn-success">Add</a>
+          <a href="/vendor" className="btn btn-success">Add</a>
           </div>
           <div>
-          <a href="/vendors" className="btn btn-success">Cancel</a>
+          <a className="btn btn-secondary" type="reset">Cancel</a>
           </div>
         </div>
         

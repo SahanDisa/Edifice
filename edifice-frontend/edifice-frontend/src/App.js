@@ -25,10 +25,10 @@ import BoardAdmin from "./components/board-admin.component";
 import AddProject from './components/core_tools/admin/add-project.component';
 import AddDepartment from "./components/core_tools/admin/add-department.component";
 import AddMilestone from "./components/core_tools/admin/add-milestone.component";
+import AssignUserProject from "./components/core_tools/admin/add-projectuser.component";
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
-import AddDirectory from "./components/project_management/document/adddirectory.component";
-import ViewDirectory from "./components/project_management/document/viewsingledirectory.component";
+
 
 import DrawingHome from "./components/project_management/drawings/drawings.component";
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
@@ -42,6 +42,7 @@ import UploadPhotos from "./components/project_management/photos/uploadphoto.com
 import PhotosHome from "./components/project_management/photos/photos.component";
 import AddAlbum from "./components/project_management/photos/addalbum.component";
 import ViewSingleAlbum from "./components/project_management/photos/album-singlepage.component";
+import MoveCapturetoAlbum from "./components/project_management/photos/movecapturestoalbum.component";
 
 import BiddingHome from "./components/project_management/biddings/bidding.component";
 import AddBidding from "./components/project_management/biddings/addbidding.component";
@@ -69,6 +70,8 @@ import UpdateTasks from "./components/core_tools/tasks/update.component";
 import ViewTasks from "./components/core_tools/tasks/view.component";
 
 import DocumentHome from "./components/project_management/document/document.component";
+import AddDirectory from "./components/project_management/document/adddirectory.component";
+import ViewDirectory from "./components/project_management/document/viewsingledirectory.component";
 import UploadDocFiles from "./components/project_management/document/adddocument.component";
 import UploadDocment from "./components/project_management/document/uploaddocument.component";
 import ViewSingleDocument from "./components/project_management/document/viewsingledocument.component";
@@ -100,6 +103,7 @@ import ViewDls from "./components/project_management/dailylog/view.component";
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
 import ViewPL from "./components/project_management/punchlist/view.component";
 import CreatePL from "./components/project_management/punchlist/create.component";
+import CreatePLT from "./components/project_management/punchlist/addtypes.component";
 
 import ResourceManagementHome from "./components/resource_management/resource-manage-home.component";
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
@@ -127,6 +131,7 @@ import AddPayment from "./components/financial_management/commitments/addpayment
 import PaymentHome from "./components/financial_management/commitments/payments.component";
 import EditSingleCommitment from "./components/financial_management/commitments/commitment-edit.component";
 import ViewSingleSov from "./components/financial_management/commitments/sov-singlepage.component";
+import ViewSingleBudget from "./components/financial_management/budget/budget-singlepage.component";
 //import Report from "./components/report/report.component";
 
 class App extends Component {
@@ -258,10 +263,8 @@ class App extends Component {
             <Route path="/projectmanagement" component={BoardUser} />
             <Route path="/adddepartment/:id" component={AddDepartment} />
             <Route path="/addmilestone/:id" component={AddMilestone}/>
-            {/* <Route path="/projectmanagementhome" component={ProjectManagementHome} /> */}
+            <Route path="/assignuser/:id" component={AssignUserProject} />
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
-            <Route path="/portfolio/:id" component={PortfolioHome} />
-            <Route path="/portstepper" component={PortfolioStepper} />
 
             <Route path="/resource" component={BoardResource} />
             <Route path="/financialmanagement" component={BoardModerator} />
@@ -273,6 +276,9 @@ class App extends Component {
             <Route path="/dates" component={Dates} />
             <Route path="/defaults" component={Defaults} />
             <Route path="/roles" component={Roles} />
+            {/* Porfolio */}
+            <Route path="/portfolio/:id" component={PortfolioHome} />
+            <Route path="/portstepper" component={PortfolioStepper} />
             {/* Tasks */}
             <Route path="/tasksconfiguration" component={TaskConfiguration} />
             <Route path="/managetasks" component={ManageTasks} />
@@ -294,6 +300,7 @@ class App extends Component {
             <Route path="/punchlist" component={punchlistHome} />
             <Route path="/managepunchlist/view" component={ViewPL} />
             <Route path="/managepunchlist/create" component={CreatePL} />
+            <Route path="/managepunchlist/createtype" component={CreatePLT} />
             {/* Daily Logs */}
             <Route path="/dailylogsconfiguration" component={DlsConfig} />
             <Route path="/managedailylogs" component={ManageDls} />
@@ -327,6 +334,7 @@ class App extends Component {
             <Route path="/uploadphoto/:name" component={UploadPhotos}/>
             <Route path="/viewalbum/:id" component={ViewSingleAlbum}/>
             <Route path="/addalbum/:id" component={AddAlbum}/>
+            <Route path="/movecapture/:id" component={MoveCapturetoAlbum}/>
             {/* Bidding Component Routes  */}
             <Route path="/bidding/:id" component={BiddingHome} /> 
             <Route path="/addbidding" component={AddBidding} /> 
@@ -370,6 +378,7 @@ class App extends Component {
             <Route path="/viewpayment/:id" component={PaymentHome} />
             <Route path="/editcommitment/:id" component={EditSingleCommitment} />
             <Route path="/viewsinglesov/:id" component={ViewSingleSov} />
+            <Route path="/viewbudget/:id" component={ViewSingleBudget} />
            
           </Switch>
         </div>
