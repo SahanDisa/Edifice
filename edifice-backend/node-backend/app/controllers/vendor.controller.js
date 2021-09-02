@@ -5,9 +5,10 @@ const Op = db.Sequelize.Op;
 // Create and Save a new vendor
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.type) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Content can not be empty!",
+      cat:req.body
     });
     return;
   }
@@ -66,6 +67,38 @@ exports.findOne = (req, res) => {
         });
       });  
 };
+
+// Find a vendor similar to name
+exports.findOne = (req, res) => {
+  const id = req.params.id;
+
+  Vendor.findByPk(id)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving vendor with id=" + id
+      });
+    });  
+};
+
+//
+exports.findLastOne = (req,res) =>{
+  Vendor.findAll({
+    limit: 1,
+    order: [['id', 'DESC']]
+  })
+  .then(data => {
+   res.send(data);
+ })
+ .catch(err => {
+   res.status(500).send({
+     message:
+       err.message || "Some error occurred while retrieving projects."
+   });
+ });
+}
 
 // Update a Vendor by the id in the request
 exports.update = (req, res) => {
