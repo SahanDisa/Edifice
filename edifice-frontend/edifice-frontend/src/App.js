@@ -102,7 +102,7 @@ import ViewDls from "./components/project_management/dailylog/view.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
 import ViewPL from "./components/project_management/punchlist/view.component";
-import CreatePL from "./components/project_management/punchlist/create.component";
+import CreatePL from "./components/project_management/punchlist/create-basic.component";
 import CreatePLT from "./components/project_management/punchlist/addtypes.component";
 
 import ResourceManagementHome from "./components/resource_management/resource-manage-home.component";
