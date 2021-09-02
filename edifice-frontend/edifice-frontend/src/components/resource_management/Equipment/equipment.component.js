@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import EquipmentDataService from "./../../../services/equipment.service";
 
 
@@ -47,6 +48,7 @@ class Equipment extends Component {
     render() {
       const { equipments ,currentIndex,id, categorys } = this.state;
       //console.log(equipments[0])
+
         return (
           <div>
             <Card
@@ -100,7 +102,8 @@ class Equipment extends Component {
                                             
                                               <List component="nav" aria-label="mailbox folders">
                                                 <ListItem button>
-                                                  <a href="/equipDetails" >{equipmentList.code} {equipmentList.description}</a>
+        
+                                                  <Link to=/*{"/equipDetails/"+id+"/"+equipment.code}*/{"/equipDetails/"+equipment.code}>{equipmentList.code} {equipmentList.description}</Link>
                                                 </ListItem>
                                                 <Divider />
                                                 <Divider light />

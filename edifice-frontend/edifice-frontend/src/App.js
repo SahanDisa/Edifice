@@ -356,8 +356,10 @@ class App extends Component {
             <Route path="/newCrew/:id" component={NewCrew}/>
             <Route path="/schedule/:id" component={Schedule} />
             <Route path="/equipments/:id" component={Equipments} />
-            <Route path="/equipDetails" component={EquipDetails} />
+            <Route path="/equipDetails/:code" component={EquipDetails} />
+            {/*<Route path="/equipDetails/:id/:code" component={EquipDetails} />*/}
             <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
+                    
 
             {/*financial management */}
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />

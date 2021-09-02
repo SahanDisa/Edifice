@@ -18,7 +18,7 @@ class NewEquip extends Component {
       condition:"",
       category:"",
       description:"",
-      projectId: this.props.projectId,  
+      //projectId: this.props.projectId,  
       submitted: false
     };
   }
