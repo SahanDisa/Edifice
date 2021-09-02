@@ -18,8 +18,7 @@ class NewEquip extends Component {
       condition:"",
       category:"",
       description:"",
-
-     // projectId: this.props.match.params.id,  
+      projectId: this.props.projectId,  
       submitted: false
     };
   }
@@ -61,7 +60,7 @@ class NewEquip extends Component {
       condition: this.state.condition,
       category: this.state.category,
       description: this.state.description,
-      projectId: "1"
+      projectId: this.state.projectId
 
     };
 
@@ -147,6 +146,7 @@ class NewEquip extends Component {
                         id="condition"
                         value={this.state.condition}
                         onChange={this.onChangeCondition}>
+                          <option value="good">- - </option>
                             <option value="good">Good(New)</option>
                             <option value="fair">Fair</option>
                             <option value="poor">Poor</option>

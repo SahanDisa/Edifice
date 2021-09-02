@@ -119,7 +119,7 @@ class Equipment extends Component {
 
                 {/* New Equipment Starts */}
                   <div className="modal fade" id="addEquip" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <AddEquip />        
+                    <AddEquip projectId ={id} />        
                   </div>
                 {/* New Equipment Ends */}
 
