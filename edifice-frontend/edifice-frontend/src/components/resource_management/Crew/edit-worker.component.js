@@ -2,7 +2,21 @@ import React, { Component } from 'react';
 import WorkersDataService from "./../../../services/worker.service";
 
 class EditWorker extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      //crews: [],
+      //workers: [],
+      //currentIndex: -1,
+      //content: "",
+      wId: this.props.id,
+      fristName:this.props.fName,
+      lastName:this.props.lName,
+      mobile:this.props.mobile
+    };
+  }
     render() {
+      const { wId,fristName,lastName, mobile} = this.state;
         return (  
         <div>
             <div className="modal-dialog modal-dialog-centered" role="document">
@@ -17,16 +31,36 @@ class EditWorker extends Component {
                   
                     <div>
 
+                        
+                        <label htmlFor="">Id</label>
+                        <input 
+                        className="form-control" 
+                        type="text" 
+                        required
+                        value={wId}/>
+
                         <label htmlFor="">First Name</label>
-                        <input className="form-control" type="text" required/>
+                        <input 
+                        className="form-control" 
+                        type="text" 
+                        required
+                        value={fristName}/>
                         <br/>
 
                         <label htmlFor="">Last Name</label>
-                        <input className="form-control" type="text" required/>
+                        <input 
+                        className="form-control" 
+                        type="text" 
+                        required
+                        value={lastName}/>
                         <br/>
 
-                        <label htmlFor="">Id</label>
-                        <input className="form-control" type="text" required/>
+                        <label htmlFor="">Mobile</label>
+                        <input 
+                        className="form-control" 
+                        type="text" 
+                        required
+                        value={mobile}/>
                         <br/>
                     </div>
                 </div>

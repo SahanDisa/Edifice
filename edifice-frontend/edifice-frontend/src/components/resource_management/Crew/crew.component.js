@@ -147,6 +147,18 @@ class Crew extends Component {
                                                   <td>
                                             
                                                     <button className="btn btn-primary" data-toggle="modal" data-target="#editWorker">Edit <EditIcon/> </button>
+
+                                                    {/* Edit Worker Starts */}
+                                                    <div className="modal fade" id="editWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                      <EditWorker
+                                                      id={worker.wId}
+                                                      fName={worker.firstName}
+                                                      lName={worker.lastName}
+                                                      mobile={worker.mobile}/>        
+                                                    </div>
+                                                    {/* Edit Worker Ends */}
+
+
                                                     <button className="btn btn-success m-2" data-toggle="modal" data-target="#viewWorker">View <VisibilityIcon/> </button>
                                                     
                                                     {/* View Worker Starts */}
@@ -178,11 +190,7 @@ class Crew extends Component {
 
           {/* Add Worker Ends */}
 
-          {/* Edit Worker Starts */}
-          <div className="modal fade" id="editWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <EditWorker/>        
-          </div>
-          {/* Edit Worker Ends */}
+
 
 
           {/* New Crew Starts */}
