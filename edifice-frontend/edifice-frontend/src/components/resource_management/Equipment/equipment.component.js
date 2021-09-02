@@ -90,15 +90,16 @@ class Equipment extends Component {
                                     <div class="card-body">
                                         <div className="">
                                             <div class="col-md-12 text-right mb-2">
-                                            {equipments && equipments.map((equipment, currentIndex) => (
+                                            {equipments && equipments.map((equipmentList, currentIndex) => (
+                                              equipment.category === equipmentList.category ?
                                             
                                               <List component="nav" aria-label="mailbox folders">
                                                 <ListItem button>
-                                                  <a href="/equipDetails" >{equipment.code} {equipment.description}</a>
+                                                  <a href="/equipDetails" >{equipmentList.code} {equipmentList.description}</a>
                                                 </ListItem>
                                                 <Divider />
                                                 <Divider light />
-                                            </List>                            
+                                            </List> :""                           
                                             ))} 
                                           </div>
       
