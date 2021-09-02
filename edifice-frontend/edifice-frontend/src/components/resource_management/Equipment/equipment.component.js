@@ -20,6 +20,7 @@ class Equipment extends Component {
 
     this.state = {
       equipments: [],
+      categorys:[],
       currentIndex: -1,
       content: "",
       id: this.props.match.params.id
@@ -40,9 +41,12 @@ class Equipment extends Component {
       .catch(e => {
         console.log(e);
       });
+      
   }
+
     render() {
-      const { equipments ,currentIndex,id } = this.state;
+      const { equipments ,currentIndex,id, categorys } = this.state;
+      //console.log(equipments[0])
         return (
           <div>
             <Card
@@ -79,11 +83,12 @@ class Equipment extends Component {
 
                         <div class="accordion" id="accordionExample">
                         {equipments && equipments.map((equipment, currentIndex) => (
+                          categorys.includes(equipment.category)? null : categorys.push(equipment.category) &&
                             <div class="card">
                                 <div class="card-header" id="headingOne">
+                
                                     <h2 class="mb-0">
                                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${currentIndex}`} aria-expanded="true" aria-controls="collapseOne">{equipment.category}</button>
-                                        <span class="badge bg-primary rounded-pill">14</span>
                                     </h2>
                                 </div>
                                 <div id={`collapse${currentIndex}`} class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">

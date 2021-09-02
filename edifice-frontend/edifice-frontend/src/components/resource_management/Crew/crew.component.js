@@ -12,7 +12,6 @@ import EditIcon from '@material-ui/icons/Edit';
 
 import CrewDataService from "./../../../services/crew.service";
 import WorkersDataService from "./../../../services/worker.service";
-import { Link } from 'react-router-dom';
 
 class Crew extends Component {
 
