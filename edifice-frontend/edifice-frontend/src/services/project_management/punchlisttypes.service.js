@@ -2,16 +2,16 @@ import http from "../../http-common.js";
 
 class PunchListTypesDataService {
     getAll(id) {
-        return http.get(`/projects/punchlist-type/${id}`);
+        return http.get(`/projects/punchlisttype/${id}`);
     }
 
     create(data) {
-        console.log("methentath aawoo");
-        return http.post(`/projects/punchlist-type/`, data);
+        console.log("222222");
+        return http.post(`/projects/punchlisttype/`, data);
     }
 
     getOne(id){
-        return http.get(`/projects/punchlist-type/single/${id}`);
+        return http.get(`/projects/punchlisttype/single/${id}`);
     }
 }
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
-import PunchlistDataService from "./../../../services/project_management/punchlist.service.js";
+import { Link } from "react-router-dom";
+// import PunchlistDataService from "./../../../services/project_management/punchlist.service.js";
 import PunchListTypesDataService from "./../../../services/project_management/punchlisttypes.service.js";
 
 class PunchList extends Component {
@@ -8,7 +9,7 @@ class PunchList extends Component {
         super(props);
         this.onChangeTitle = this.onChangeTitle.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
-        this.savePunchListTypes = this.savePunchListTypes.bind(this);
+        this.savePunchListType = this.savePunchListType.bind(this);
         this.newPunchListType = this.newPunchListType.bind(this);
 
         this.state = {
@@ -32,7 +33,7 @@ class PunchList extends Component {
         });
     }
 
-    savePunchListTypes() {
+    savePunchListType() {
         console.log("save wuna");
         var data = {
             title : this.state.title,
@@ -47,10 +48,13 @@ class PunchList extends Component {
             title: response.data.title,
             description: response.data.description,
             projectId: response.data.projectId,
-
             submitted: true
             });
+        console.log(response.data);
         })
+        .catch(e => {
+            console.log(e);
+        });
     }
 
     newPunchListType() {
@@ -59,22 +63,22 @@ class PunchList extends Component {
             title: "",
             description: "",
             projectId: this.props.match.params.id,
-
             submitted: false
         });
     }
 
     render() {
+        const {projectId} = this.state;
         return (
             <div className="">
-                {this.state.submitted ? (
+                {/* {this.state.submitted ? (
                     <div>
                         <div>
                             <h4>Punch List Type added successfully!</h4>
                             <button className="btn btn-success" onClick={this.newPunchListType}>Add Another punch list type</button>
                         </div>
                     </div>
-                ) : (
+                ) : ( */}
                 <div>
                 <h2>Punch Lists</h2><hr/>
                 <div className="container row">
@@ -112,7 +116,7 @@ class PunchList extends Component {
                     </div> 
                 </div>
                 <h4>Punch List Types</h4><hr/>
-                <form action="">
+                {/* <form action="">
                     <div className="form-row">
                         <div className="form-group col-md-3">
                             <label htmlFor="">Title</label>
@@ -138,15 +142,18 @@ class PunchList extends Component {
                         </div>
                         <div className="form-group col-md-1">
                             <label htmlFor="">.</label>
-                            <button className="btn btn-primary" onClick={this.savePunchListTypes}>Add</button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={this.savePunchListType}
+                            >Add</button>
                         </div>
-                    </div>
-                    <a href="/managepunchlist/createtype" className="btn btn-primary mt-2">+ Add Another Punch List Type</a>
-                </form>
+                    </div> */}
+                    <Link to={"/managepunchlist/createtype/"+projectId} className="btn btn-primary mt-2">+ Add Another Punch List Type</Link>
+                {/* </form> */}
                 <h4>Punch Lists Items</h4><hr/>
                 <ul className="list-group">
                     <li className="list-group-item ">
-                        <a href="/managepunchlist/view" style={{ 'text-decoration': 'none'}}>1 - Replace the Broken Switch Plate</a>
+                        <Link to={"/managepunchlist/view/"+projectId} style={{ 'text-decoration': 'none'}}>1 - Replace the Broken Switch Plate</Link>
                     </li>
                     <li className="list-group-item ">
                         <a href="#" style={{ 'text-decoration': 'none'}}>2 - Paint Touch up</a>
@@ -158,9 +165,9 @@ class PunchList extends Component {
                         <a href="#" style={{ 'text-decoration': 'none'}}>4 - Door Frame Damage</a>
                     </li>
                 </ul>
-                <a href="/managepunchlist/create" className="btn btn-primary mt-2">+ Add Another Punch List Item</a>
+                <Link to={"/managepunchlist/create/"+projectId} className="btn btn-primary mt-2">+ Add Another Punch List Item</Link>
                 </div>
-                )}
+                {/* )} */}
             </div>
         );
     }

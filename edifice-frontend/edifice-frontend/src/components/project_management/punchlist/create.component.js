@@ -60,7 +60,6 @@ class CreatePL extends Component {
     }
 
     savePunchListItem() {
-        console.log("save wunoo");  
         var data = {
             status: this.state.status,
             duedate: this.state.duedate,
@@ -135,8 +134,7 @@ class CreatePL extends Component {
                                 </div>
                             </div>
                         </div>
-                    </div> */}
-                    
+                    </div> */}                    
                 </div>
             ) : (
             <div className="">

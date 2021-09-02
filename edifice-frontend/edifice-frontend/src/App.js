@@ -296,15 +296,15 @@ class App extends Component {
             {/* Action Plan */}
             <Route path="/actionplan" component={actionplanHome} />
             {/* Punch List */}
-            <Route path="/punchlist" component={punchlistHome} />
-            <Route path="/managepunchlist/view" component={ViewPL} />
-            <Route path="/managepunchlist/create" component={CreatePL} />
-            <Route path="/managepunchlist/createtype" component={CreatePLT} />
+            <Route path="/punchlist/:id" component={punchlistHome} />
+            <Route path="/managepunchlist/view/:id" component={ViewPL} />
+            <Route path="/managepunchlist/create/:id" component={CreatePL} />
+            <Route path="/managepunchlist/createtype/:id" component={CreatePLT} />
             {/* Daily Logs */}
-            <Route path="/dailylogsconfiguration" component={DlsConfig} />
-            <Route path="/managedailylogs" component={ManageDls} />
-            <Route path="/managesdailylogs/update" component={UpdateDls} />
-            <Route path="/managesdailylogs/view" component={ViewDls} />
+            <Route path="/dailylogsconfiguration/:id" component={DlsConfig} />
+            <Route path="/managedailylogs/:id" component={ManageDls} />
+            <Route path="/managesdailylogs/update/:id" component={UpdateDls} />
+            <Route path="/managesdailylogs/view/:id" component={ViewDls} />
             
             <Route path="/addUser" component={AddUser} />
             <Route path="/editUser" component={EditUser} />
