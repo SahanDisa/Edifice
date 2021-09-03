@@ -133,7 +133,7 @@ import EditSingleCommitment from "./components/financial_management/commitments/
 import ViewSingleSov from "./components/financial_management/commitments/sov-singlepage.component";
 import ViewSingleBudget from "./components/financial_management/budget/budget-singlepage.component";
 //import Report from "./components/report/report.component";
-import NewCrew from "./components/resource_management/Crew/new-crew.component";
+//import NewCrew from "./components/resource_management/Crew/new-crew.component";
 
 class App extends Component {
   constructor(props) {
