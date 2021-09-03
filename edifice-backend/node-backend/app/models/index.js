@@ -64,6 +64,8 @@ db.equipments = require("./equipment.model")(sequelize, Sequelize);
 db.categorys = require("./equipment-category.model")(sequelize, Sequelize);
 db.crews = require("./crew.model")(sequelize, Sequelize);
 db.workers = require("./worker.model")(sequelize, Sequelize);
+db.timesheets = require("./timesheet.model")(sequelize, Sequelize);
+db.workedHours = require("./worked_hours.model")(sequelize, Sequelize);
 
 //for core class vendors and employees
 db.vendor=require("./vendor.model")(sequelize, Sequelize);
@@ -275,6 +277,27 @@ db.projects.hasMany(db.crews, { as: "crews" });
 db.crews.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
+});
+
+//One project has many timesheets
+db.projects.hasMany(db.timesheets, { as: "timesheets" });
+db.timesheets.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+//One workedhours has many workers
+db.workers.hasMany(db.workedHours, { as: "workersHours" });
+db.workedHours.belongsTo(db.workers, {
+  foreignKey: "workerWId",
+  as: "worker",
+});
+
+//One workedhours has many timesheets
+db.timesheets.hasMany(db.workedHours, { as: "workedhourstimesheet" });
+db.workedHours.belongsTo(db.timesheets, {
+  foreignKey: "timesheetId",
+  as: "timesheet",
 });
 
 

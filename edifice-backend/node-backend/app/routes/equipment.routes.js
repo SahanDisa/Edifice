@@ -16,10 +16,10 @@
     router.get("/:id", equipment.findOne);*/
   
     // Update a equipment with id
-    router.put("/:id", equipment.update);
+    router.put("/:id", equipments.update);
   
     // Delete a equipment with id
-    router.delete("/:id/", equipment.delete);
+    router.delete("/:id/", equipments.delete);
  /* 
     // Delete all equipments
     router.delete("/", equipment.deleteAll);
