@@ -1,6 +1,7 @@
 module.exports = app => {
     const directcost = require("./../controllers/directcost.controller");
     const excelController = require("./../controllers/excel.controller");
+   
   
     var router = require("express").Router();
 
@@ -14,7 +15,7 @@ module.exports = app => {
      //router.get("/list/:id?costCode=[keyword]", directcost.findByCode);
      router.get("/list/:id/:costCode", directcost.findByCostCode);
      //router.get("/list/:id?:costCode", directcost.findByCode);
-    
+     
     // Retrieve a single direct cost with id
     router.get("/:id", directcost.findOne);
 
@@ -29,7 +30,7 @@ module.exports = app => {
 
  
   //router.get("/list/:id/:costCode", directcost.getDTotalOfCostCodes);
-  router.get("/:id/:costCode", directcost.getDTotalOfCostCodes);
+  router.get("/:id/:costCode/total", directcost.getDTotalOfCostCodes);
 
 
   //export

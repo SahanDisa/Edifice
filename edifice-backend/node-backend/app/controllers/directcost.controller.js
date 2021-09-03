@@ -2,6 +2,7 @@ const db = require("./../models/index");
 const Project = db.projects;
 const DirectCost = db.directcosts;
 const Op = db.Sequelize.Op;
+const sequelize = require("sequelize");
 
 exports.create = (req, res) => {
   // Validate request
@@ -196,17 +197,22 @@ exports.getDTotalOfCostCodes = (req, res) => {
     };*/
 
 
-    exports.getDTotalOfCostCodes = (req, res) => {
-      const id = req.params.id;
-      const costCode = req.params.costCode;
-      DirectCost.sum(
-        'amount',
-       {  where: { costCode:costCode,projectId:id } }
-       )
-       .then(sum => {
-       res.send(sum);
-        //console.log(sum)
-      })
-      
-    };
+  
 
+exports.getDTotalOfCostCodes = (req,res)=>{
+  const id = req.params.id;
+  const costCode = req.params.costCode;
+DirectCost.findAll({
+where: { costCode:costCode,projectId:id },
+attributes: [[sequelize.fn('sum', sequelize.col('amount')), 'total']],
+raw: true,
+}).then(data => {
+res.send(data[0].total);
+console.log(data[0].total)
+})
+.catch(err => {
+res.status(500).send({
+  message: "Error retrieving total  "
+});
+});  
+}
