@@ -65,19 +65,28 @@ class Timesheet extends Component {
             </div>
             <hr />
 
-
-            <hr/>
-
             <div className="card">
                 <div className="card-header">
-                        <h5 >Date: 05/01/2021</h5>
-                        <a className="card-header" href="" className="btn btn-primary" data-toggle="modal" data-target="#addWorker"> +Add Worker</a>
-        
+                    <form className="row g-3">
+                        <div className="m-1">
+                            <h5 >Date: 05/01/2021</h5>
+                            <p>Code: 345 Eta</p>
+                        </div>
+                        <div className="m-3 align-items-right col-8">
+                            <button                         
+                            href=""
+                            className="btn btn-primary" 
+                            data-toggle="modal" 
+                            data-target="#addWorker">
+                                Add Workers
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
                 {/*------------------------------------ Add worker Starts------------------------------------------------------------------ */}
                 <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <AddWorker/>
+                    <AddWorker projectId={projectId}/>
                 </div>
                 {/*-------------------------------------Add worker Ends----------------------------------------------------------------------*/}
 

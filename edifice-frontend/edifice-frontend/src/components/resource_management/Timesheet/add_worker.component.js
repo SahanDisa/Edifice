@@ -1,7 +1,85 @@
 import React, { Component } from 'react';
 
+import CrewDataService from "./../../../services/crew.service";
+import WorkersDataService from "./../../../services/worker.service";
+import WorkedHoursDataService from "./../../../services/worked-hours.service";
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+
 class AddWorker extends Component {
+    constructor(props) {
+        super(props);
+        this.retrieveCrew = this.retrieveCrew.bind(this);
+        this.retrieveWorkers = this.retrieveWorkers.bind(this);
+        this.addWorker = this.addWorker.bind(this);
+        this.state = {
+          crews: [],
+          workers: [],
+          currentIndex: -1,
+          content: "",
+          date:"",
+          code:"",
+          status:"Pending",
+          id: this.props.projectId
+        };
+      }
+
+      componentDidMount() {
+        this.retrieveCrew(this.props.id);
+        this.retrieveWorkers(this.props.id);
+      }
+
+        //get data
+        retrieveCrew(id) {
+            CrewDataService.getAll(id)
+                .then(response => {
+                    this.setState({
+                    crews: response.data
+                    });
+                    console.log(response.data);
+                    })
+                  .catch(e => {
+                    console.log(e);
+            });
+        }
+        
+        retrieveWorkers(id) {
+            WorkersDataService.getAll(id)
+                .then(response => {
+                this.setState({
+                workers: response.data
+                });
+                console.log(response.data);
+                })
+                .catch(e => {
+                console.log(e);
+            });
+        }
+
+        
+      addWorker() {
+        var data = {
+          workerId: "12",
+          code:  this.state.code,
+        };
+    
+        WorkedHoursDataService.create(data)
+          .then(response => {
+            this.setState({
+                workerId: response.data.workerId,
+                code:  response.data.code,
+            });
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
+
+
     render() {
+        const { crews ,currentIndex,id, workers } = this.state;
         return (  
         <div>
             {/*------------------------------------ Add Emp Starts------------------------------------------------------------------ */}
@@ -9,55 +87,64 @@ class AddWorker extends Component {
                 <div className="modal-content">
 
                     <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalCenterTitle">Add Worker</h5>
+                        <h5 className="modal-title" id="exampleModalCenterTitle">Select Workers</h5>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
 
-                    <div className="modal-body">
+                    <div className="modal-body" align ="left">
 
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <input className="form-control" type="text" placeholder="Search"/>  
-                                </div>
-                                <div class="col">
-                                    <a href="" className="btn btn-success">search</a>
-                                </div>
-                            </div>
-                        </div>
-                        <hr/>
+                        <div class="accordion" id="accordionExample">
+                            {crews && crews.map((crew, index) => (
+                                <div class="card" key={index}>
+                                    <div class="card-header" id="headingOne">
+                                        <h2 class="mb-0">
+                                        <span class="badge bg-success rounded-pill">{crew.total}</span>
+                                        <button 
+                                        class="btn btn-link" 
+                                        type="button" 
+                                        data-toggle="collapse" 
+                                        data-target={`#collapse${index}`} 
+                                        aria-expanded="true" 
+                                        aria-controls="collapseOne">
+                                            {crew.name}
+                                        </button>
+                                        
+                                        </h2>
+                                    </div>
+                                    <div id={`collapse${index}`} className="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div className="">
 
-                        <div class="container">                                
-                            <div class="row">
-                                <div class="col-4">
-                                    <p>Crews</p>
-                                    <div class="list-group" id="list-tab" role="tablist">
-                                        <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#list-home" role="tab" aria-controls="list-home">Concrete Crew</a>
-                                        <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="list-profile">Welders</a>
-                                        <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="list-messages">Flooring Crew</a>
-                                        <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list" href="#list-settings" role="tab" aria-controls="list-settings">Carpenters</a>
+                                                {workers &&
+                                                    workers.map((worker) => (
+                                                        worker.crewId === index+1 ?
+
+                                                    <List component="nav" aria-label="mailbox folders" key={worker.crewId}>
+                                                        <div class="input-group-prepend">
+                                                            <ListItem button>
+                                                                <button 
+                                                                className="btn btn-success m-1"
+                                                                type="button"
+                                                                onClick={this.addWorker} >
+                                                                    Add 
+                                                                </button>
+
+                                                                {worker.firstName} {worker.lastName}
+                                                                
+                                                            </ListItem>
+                                                        </div>
+                                                    </List> :""                         
+                                                ))}
+                                                {/*Ends */}
+                                            
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="col-4">
-                                    
-                                    <div class="tab-content" id="nav-tabContent">
-                                        <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list"><p>Concrete Crew</p></div>
-                                        <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list"><p>Welders</p></div>
-                                        <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list"><p>Flooring Crew</p></div>
-                                        <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list"><p>Carpenters</p></div>
-                                    </div>
-                            
-                                </div>
-                            </div>
+                            ))}  
                         </div>
-                    </div>
-
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" className="btn btn-success" data-dismiss="modal">Add</button>
                     </div>
                 </div>
             </div>
