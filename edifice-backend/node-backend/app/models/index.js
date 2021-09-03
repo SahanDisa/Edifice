@@ -65,7 +65,7 @@ db.categorys = require("./equipment-category.model")(sequelize, Sequelize);
 db.crews = require("./crew.model")(sequelize, Sequelize);
 db.workers = require("./worker.model")(sequelize, Sequelize);
 db.timesheets = require("./timesheet.model")(sequelize, Sequelize);
-db.workedHours = require("./worked_hours.model")(sequelize, Sequelize);
+db.workedHours = require("./worked-hours.model")(sequelize, Sequelize);
 
 //for core class vendors and employees
 db.vendor=require("./vendor.model")(sequelize, Sequelize);
