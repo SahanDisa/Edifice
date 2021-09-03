@@ -93,23 +93,12 @@ db.milestones.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
-// One user has one project profile
-db.users.hasOne(db.projectuser, { as: "projectuser" });
-db.projectuser.belongsTo(db.users, {
-  foreignKey: "userId",
-  as: "user",
-});
-// One construction project can have many users
-db.projectuser.belongsToMany(db.projects, {
-  through: "project_user",
-  as: "projectusers",
-  foreignKey: "project_id",
-});
-// One user can involve with many projects
-db.projects.belongsToMany(db.projectuser, {
-  through: "project_user",
-  as: "projects",
-  foreignKey: "user_id",
+
+// One project has many project users as staff members
+db.projects.hasMany(db.projectuser, { as: "projectusers" });
+db.projectuser.belongsTo(db.projects, {
+  through: "projectId",
+  as: "project",
 });
 
 // One project has many drawing categories & one category has only one project

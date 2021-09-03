@@ -3,6 +3,7 @@ import { Switch, Route, Link } from "react-router-dom";
 import UserService from "./../services/user.service";
 import AuthService from "./../services/auth.service";
 import ProjectDataService from "./../services/project.service";
+import ProjectUserService from "../services/projectuser.service";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import Card from 'react-bootstrap/Card';
@@ -10,7 +11,7 @@ import Card from 'react-bootstrap/Card';
 export default class BoardUser extends Component {
   constructor(props) {
     super(props);
-    this.retrieveProjects = this.retrieveProjects.bind(this);
+    this.retriveUserProjects = this.retriveUserProjects.bind(this);
     this.state = {
       projects: [],
       uprojects: [],
@@ -38,31 +39,19 @@ export default class BoardUser extends Component {
         });
       }
     );
-    this.retrieveProjects(this.state.currentUser.id);
+    this.retriveUserProjects(this.state.currentUser.id);
   }
-  retrieveProjects() {
-    ProjectDataService.getAll()
-      .then(response => {
-        this.setState({
-          projects: response.data
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
+  retriveUserProjects(id){
+    ProjectUserService.getAll(id)
+    .then(response => {
+      this.setState({
+        uprojects: response.data
       });
-  }
-  retrieveProjects(id) {
-    ProjectDataService.userProjects(id)
-      .then(response => {
-        this.setState({
-          projects: response.data
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+      console.log(response.data);
+    })
+    .catch(e => {
+      console.log(e);
+    });
   }
   retriveSingleProject(id){
     ProjectDataService.get(id)
@@ -78,7 +67,7 @@ export default class BoardUser extends Component {
   }
   //UI component
   render() {
-    const { projects,uprojects,currentIndex } = this.state;
+    const { uprojects,currentIndex } = this.state;
     return (
       <div className="container">
   
@@ -89,8 +78,8 @@ export default class BoardUser extends Component {
         <h4>My Projects List</h4><br />
         
         <ul className="list-group">
-          {projects &&
-            projects.map((project, index) => (
+          {uprojects &&
+            uprojects.map((project, index) => (
               <li
                 className={
                   "list-group-item " +
@@ -99,17 +88,17 @@ export default class BoardUser extends Component {
                 // onClick={() => this.setActiveProject(project, index)}
                 key={index}
               >
-               <div className="container row">
+              <div className="container row">
                 <div className="col-7">
                   {/* {this.retriveSingleProject(project.projectuserId)} */}
                   {/* <h5>{uprojects.title}</h5>
                   <h6>Breif : {uprojects.description}</h6>
                   <p>Location : {uprojects.location}</p> */}
                   <h4>Project : {index + 1}</h4>
-                  <h6>Name : {project.firstname}{" "}{project.lastname}</h6>
+                  <h6>Working Department : {project.department}</h6>
                   <h6>Position : {project.position}</h6>
                   <Link
-                    to={"/financialmanagementhome/" + project.projectuserId}
+                    to={"/financialmanagementhome/" + project.projectId}
                     className="btn btn-primary"
                   >
                     Manage
