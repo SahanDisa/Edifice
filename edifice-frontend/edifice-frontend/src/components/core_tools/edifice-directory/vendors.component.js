@@ -3,49 +3,39 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import VendorDataService from "./../../../services/vendor.service";
 
-
-const data = [
-    {id: 1, companyName: 'pathirage',type:'', edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
-    {id: 2, companyName: 'liyanage', type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
-    {id: 3, companyName: 'abliyanage', type:'',  edit:<a href="/editVendor" className="btn btn-primary">edit</a>},
-    {id: 4, companyName: 'ldgrefiyanage', type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
-    {id: 5, companyName: 'rte', type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
-    {id: 6, companyName: 'conctr',type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
-    {id: 7, companyName: 'conctr',type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>}
-  ];
   const columns = [{
     dataField: 'id',
     text: 'Id',
     headerStyle: (column, colIndex) => {
-        return { width: '10%', textAlign: 'center' };}
+        return { width: '5%', textAlign: 'center' };}
   }, {
     dataField: 'companyName',
     text: 'Company Name',
     headerStyle: (column, colIndex) => {
-        return { width: '20%', textAlign: 'center' };}
+        return { width: '15%', textAlign: 'left' };}
   }, {
     dataField: 'type',
     text: 'Type',
     headerStyle: (column, colIndex) => {
-        return { width: '20%', textAlign: 'center' };}
+        return { width: '12%', textAlign: 'center' };}
   },
   {
-    dataField: '',
+    dataField: 'contactNo',
     text: 'Contact No',
     headerStyle: (column, colIndex) => {
-        return { width: '20%', textAlign: 'center' };}
+        return { width: '15%', textAlign: 'center' };}
   },
   {
-  dataField: '',
+  dataField: 'email',
   text: 'Email',
   headerStyle: (column, colIndex) => {
-      return { width: '20%', textAlign: 'center' };}
+      return { width: '20%', textAlign: 'center',  };}
   },
   {
-    dataField: '',
+    dataField: 'contactPersonName',
     text: 'contact person name',
     headerStyle: (column, colIndex) => {
-        return { width: '50%', textAlign: 'center' };}
+        return { width: '20%', textAlign: 'center' };}
   },
   {
     dataField: 'edit',
@@ -59,34 +49,102 @@ class Vendors extends Component {
   
   constructor(props) {
     super(props);
-    this.retriveVendors = this.retrieveVendors.bind(this);
+    this.getVendors = this.getVendors.bind(this);
+    console.log(this.getVendor);
     this.state = {
-      vendors: [],
-      currentIndex: -1,
-      content: "",
-      id: this.props.match.params.id
+      currentVendor: {
+        vendors: [],
+        currentVendor: null,
+        currentId: -1,
+        searchName: ""
+        
+      },
+      message: "",
+      temp: this.props.match.params.id
     };
   }
+
   componentDidMount() {
-    this.retrieveVendors(this.props.match.params.id);
+    this.getVendors(this.props.match.params.id);
   }
 
-  retrieveVendors(id){
-    VendorDataService.getAll(id)
-    .then(response => {
+  onChangeSearchName(e) {
+    const searchName = e.target.value;
+
+    this.setState({
+      searchName: searchName
+    });
+  }
+
+  refreshList() {
+    this.getVendors();
+    this.setState({
+      currentProject: null,
+      currentIndex: -1,
+      searchName: ""
+    });
+  }
+
+  getVendors() {
+    VendorDataService.getAll()
+      .then(response => {
         this.setState({
           vendors: response.data
         });
-        console.log(response.data.length);
+        console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
-}
+  }
+
+  searchName() {
+    VendorDataService.findByTitle(this.state.searchTitle)
+      .then(response => {
+        this.setState({
+          vendors: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
   render() {
+
+    const {vendors, currentVendor, currentIndex } = this.state;
+
+    //assigning table values
+    var data1=[];
+    var temp={};
+    {vendors &&
+      vendors.map((vendor, index) => (
+        temp={},
+        temp.id=vendor.id,
+        temp.companyName= vendor.companyName,
+        temp.type=vendor.type,
+        temp.contactNo=vendor.contactNo,
+        temp.email=vendor.email,
+        temp.contactPersonName=vendor.contactPersonName,
+        temp.edit=<a href={'/editVendor/'+vendor.id} className="btn btn-primary"> edit</a>,
+        data1.push(temp)
+      )
+      )}
+    console.log(vendors);
+    
+    const data = [
+      {id: 1, companyName: 'pathirage',type:'', edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
+      {id: 2, companyName: 'liyanage', type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
+      {id: 3, companyName: 'abliyanage', type:'',  edit:<a href="/editVendor" className="btn btn-primary">edit</a>},
+      {id: 4, companyName: 'ldgrefiyanage', type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
+      {id: 5, companyName: 'rte', type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
+      {id: 6, companyName: 'conctr',type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
+      {id: 7, companyName: 'conctr',type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>}
+    ];
+
     return (
       <div>
-      
+        
         <ul class="nav nav-tabs">
           <li class="nav-item">
             <a class="nav-link" href="/employees">Employees</a>
@@ -123,11 +181,15 @@ class Vendors extends Component {
         </form>
 
         <hr />
-          
+        <table>
+          <th>
+
+          </th>
+        </table>  
         <BootstrapTable 
               hover
               keyField='id'
-              data={ data }
+              data={ data1 }
               columns={ columns } 
               cellEdit={ false }
 

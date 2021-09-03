@@ -24,6 +24,7 @@ module.exports = app => {
     // Delete a Drawing with id
     router.delete("/:id/", drawing.delete);
 
+    router.get("/maxversion/version", drawing.findMaxVersion);
   
     app.use('/api/projects/drawing', router);
   };

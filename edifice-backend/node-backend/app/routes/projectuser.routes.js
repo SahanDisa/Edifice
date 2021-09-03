@@ -12,11 +12,14 @@ module.exports = app => {
     // Retrieve a single project user with id
     router.get("/:id", projectuser.findOne);
 
-    // Retrieve projects of user involved in
-    router.get("/detail/:id", projectuser.findProjects);
+    // Retrive users of a particular project
+    router.get("/project/:id",projectuser.findProjectUsers);
 
-    // Add projects to users
-    router.post("/:id/:pid",projectuser.addProject);
+    // Update a Tutorial with id
+    router.put("/:id", projectuser.update);
+  
+    // Delete a Tutorial with id
+    router.delete("/:id/", projectuser.delete);
   
     app.use('/api/projects/user', router);
   };

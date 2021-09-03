@@ -133,6 +133,7 @@ import EditSingleCommitment from "./components/financial_management/commitments/
 import ViewSingleSov from "./components/financial_management/commitments/sov-singlepage.component";
 import ViewSingleBudget from "./components/financial_management/budget/budget-singlepage.component";
 //import Report from "./components/report/report.component";
+import NewCrew from "./components/resource_management/Crew/new-crew.component";
 
 class App extends Component {
   constructor(props) {
@@ -169,7 +170,7 @@ class App extends Component {
       <div>
         <link rel="\public\icons\051-dumper truck.png" href=".\public\icons\051-dumper truck.png" type="image/x-icon" />
         <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <Link to={"/"} className="navbar-brand">
+          <Link to={"/home"} className="navbar-brand">
             <img
               src={mainIcon}
               style={{'width' : "50px", height: "50px"}}
@@ -253,7 +254,13 @@ class App extends Component {
             </div>
           )}
         </nav>
-
+        {!currentUser && (
+          <Switch>
+            <Route exact path={["/", "/home"]} component={Home} />
+            <Route exact path="/login" component={Login} />
+          </Switch>  
+        )}
+        {currentUser && (
         <div className="container mt-3">
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
@@ -384,6 +391,7 @@ class App extends Component {
            
           </Switch>
         </div>
+        )}
       </div>
     );
   }
