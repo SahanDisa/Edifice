@@ -66,7 +66,7 @@ exports.findOne = (req, res) => {
         });
       });  
 };*/
-/*
+
 // Update a equipment by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
@@ -90,8 +90,8 @@ exports.update = (req, res) => {
           message: "Error updating equipment with id=" + id
         });
       });
-};*/
-/*
+};
+
 // Delete a equipment with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
@@ -115,7 +115,7 @@ exports.delete = (req, res) => {
           message: "Could not delete equipment with id=" + id
         });
       });
-};*/
+};
 
 /*
 // Delete all Tutorials from the database.

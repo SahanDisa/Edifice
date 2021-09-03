@@ -19,6 +19,8 @@ class Timesheet extends Component {
             </Card> 
             <br/>
 
+            
+
             <div class="container">                                
                 <div class="row">   
                     <form className="row g-3">
@@ -39,7 +41,7 @@ class Timesheet extends Component {
                     <div class="col-6 align-items-end text-right">
                         <a href="/customize" className="btn btn-secondary mr-3"> Customize</a>
                         <a href="#" className="btn btn-secondary mr-3"> Export PDF</a>
-                        <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#createNew"> Create New</a>
+                        <button className="btn btn-primary" data-toggle="modal" data-target="#createNew"> Create New</button>
 
                         {/*------------------------------------ Add Emp Starts------------------------------------------------------------------ */}
                         <div className="modal fade" id="createNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
