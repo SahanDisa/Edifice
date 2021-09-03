@@ -18,6 +18,7 @@ class AddWorker extends Component {
       firstName: "",
       lastName:"",
       mobile:"",
+      crewId: this.props.crewId,
      // projectId: this.props.match.params.id,  
       submitted: false
     };

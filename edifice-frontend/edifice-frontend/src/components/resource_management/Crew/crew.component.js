@@ -92,7 +92,7 @@ class Crew extends Component {
 
                         <div class="accordion" id="accordionExample">
                           {crews && crews.map((crew, index) => (
-                            <div class="card">
+                            <div class="card" key={crew.id}>
                                 <div class="card-header" id="headingOne">
                                     <h2 class="mb-0">
                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${index}`} aria-expanded="true" aria-controls="collapseOne">{crew.name}</button>
@@ -105,6 +105,12 @@ class Crew extends Component {
                                             <div class="col-md-12 text-right mb-2">
                                                 <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#addWorker">+ Add Worker</a>
                                             </div>
+
+                                              {/* Add Worker Starts */}
+                                              <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                <AddWorker crewId={crew.id}/>        
+                                              </div>
+
                                             <Table responsive>
                                               <thead>
                                                 <tr>
@@ -117,9 +123,14 @@ class Crew extends Component {
                                                 </tr>
                                               </thead>
                                               {/* Functional for table data */}
+                                             { /*const newWorkers = workers.filter(worker => worker.crewId == index)
+
+                                             )*/}
                                               <tbody>
+
                                               {workers &&
-                                                  workers.map((worker, index) => (
+                                                  workers.map((worker) => (
+                                                    worker.crewId === index+1 ?
                                                   <tr
                                                       // className={
                                                       // "list-group-item row" +
@@ -135,10 +146,32 @@ class Crew extends Component {
                                                   <td>
                                             
                                                     <button className="btn btn-primary" data-toggle="modal" data-target="#editWorker">Edit <EditIcon/> </button>
+
+                                                    {/* Edit Worker Starts */}
+                                                    <div className="modal fade" id="editWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                      <EditWorker
+                                                      id={worker.wId}
+                                                      fName={worker.firstName}
+                                                      lName={worker.lastName}
+                                                      mobile={worker.mobile}/>        
+                                                    </div>
+                                                    {/* Edit Worker Ends */}
+
+
                                                     <button className="btn btn-success m-2" data-toggle="modal" data-target="#viewWorker">View <VisibilityIcon/> </button>
+                                                    
+                                                    {/* View Worker Starts */}
+                                                    <div className="modal fade" id="viewWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                      <ViewWorker 
+                                                      id={worker.wId}
+                                                      fName={worker.firstName}
+                                                      lName={worker.lastName}
+                                                      mobile={worker.mobile}/>        
+                                                    </div>
+                                                    {/* View Worker Ends */}
                                                   
                                                   </td>    
-                                                  </tr>
+                                                  </tr>:""
                                                   ))}
                                               </tbody>
                                               {/*Ends */}
@@ -153,27 +186,19 @@ class Crew extends Component {
                 </div>
             </div>
 
+
           {/* Add Worker Starts */}
           <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <AddWorker/>   
           </div>
           {/* Add Worker Ends */}
 
-          {/* Edit Worker Starts */}
-          <div className="modal fade" id="editWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <EditWorker/>        
-          </div>
-          {/* Edit Worker Ends */}
 
-          {/* View Worker Starts */}
-          <div className="modal fade" id="viewWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <ViewWorker/>        
-          </div>
-          {/* View Worker Ends */}
+
 
           {/* New Crew Starts */}
             <div className="modal fade" id="newCrew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <NewCrew />
+            <NewCrew projectId={id}/>          
           </div>
           {/* New Crew Ends */}
 
