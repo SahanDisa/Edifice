@@ -11,11 +11,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 const BudgetList = (props) => {
   const {id}= useParams();
   const [budgets, setBudgets] = useState([]);
-  const [total, setTotal] = useState(0);
+  //const [total,setTotal]=useState(0);
   const [searchCostCode, setSearchCostCode] = useState("");
   const budgetsRef = useRef();
-const sum ="";
   
+
  
   budgetsRef.current = budgets;
 
@@ -86,11 +86,23 @@ const sum ="";
   const retrieveTotalDirectCosts = (rowIndex) => {
     const id = budgetsRef.current[rowIndex].projectId;
     const costCode = budgetsRef.current[rowIndex].costCode;
-
+  
     DirectCostDataService.getDTotalOfCostCodes (id,costCode)
+    .then((response) => {
+      //setTotal(response.data);
+      //console.log(response.data);
     
-
-  };
+      //budgetsRef.current[rowIndex].directCosts=response.data;
+   //setTotal( budgetsRef.current[rowIndex].directCosts);
+         console.log(response.data);
+return response.data;
+     
+    })
+    .catch(e => {
+      console.log(e);
+    });
+  
+  }
 
   const columns = useMemo(
     () => [
@@ -105,13 +117,16 @@ const sum ="";
       {
         Header: "Direct Costs(Rs.)",
         accessor: "directCosts",
-        /*Cell: (props) => {
+        Cell: (props) => {
           const rowIdx = props.row.id;
-          //retrieveTotalDirectCosts(rowIdx); 
+          budgetsRef.current[rowIdx].directCosts=retrieveTotalDirectCosts(rowIdx);
+          const v=budgetsRef.current[rowIdx].directCosts;
+          //retrieveTotalDirectCosts(rowIdx);
           return(
-            <div>{sum}</div>
+            <div>{v}</div>
+           
           );
-        },*/
+        },
       },
       {
         Header: "Commited Costs(Rs.)",

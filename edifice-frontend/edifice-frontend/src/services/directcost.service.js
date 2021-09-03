@@ -36,9 +36,9 @@ findByCostCode(id,costCode){
 
 
 /*end of added new*/
-getDTotalOfCostCodes(id,costCode,sum){
+getDTotalOfCostCodes(id,costCode){
 
-  return http.get(`/projects/directcost/list/${id}/${costCode}`,sum);
+  return http.get(`/projects/directcost/${id}/${costCode}/total`);
 
 }
 
