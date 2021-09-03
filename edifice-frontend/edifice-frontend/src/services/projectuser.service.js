@@ -1,42 +1,29 @@
 import http from "./../http-common.js";
 
 class ProjectUserDataService {
-  getAll() {
-    return http.get("/projects");
+  create(data) {
+    return http.post("/projects/user", data);
+  }
+    
+  getAll(id) {
+    return http.get(`/projects/user/list/${id}`);
   }
 
   get(id) {
-    return http.get(`/projects/${id}`);
+    return http.get(`/projects/user/${id}`);
   }
 
-  create(data) {
-    return http.post("/projects", data);
+  getProjectUsers(id){
+    return http.get(`/projects/user/project/{$id}`)
   }
 
   update(id, data) {
-    return http.put(`/projects/${id}`, data);
+    return http.put(`/projects/user/${id}`, data);
   }
 
   delete(id) {
-    return http.delete(`/projects/${id}`);
+    return http.delete(`/projects/user/${id}`);
   }
-
-  deleteAll() {
-    return http.delete(`/projects`);
-  }
-
-  findByTitle(title) {
-    return http.get(`/projects?title=${title}`);
-  }
-  userProjects(id){
-    return http.get(`/projects/user/list/${id}`);
-  }
-  findlastProject(){
-    return http.get(`/projects/app/last`);
-  }
-  // findPublished(){
-  //   return http.get(`/projects?published=`)
-  // }
 }
 
 export default new ProjectUserDataService();

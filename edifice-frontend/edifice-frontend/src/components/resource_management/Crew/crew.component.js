@@ -187,6 +187,10 @@ class Crew extends Component {
             </div>
 
 
+          {/* Add Worker Starts */}
+          <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <AddWorker/>   
+          </div>
           {/* Add Worker Ends */}
 
 

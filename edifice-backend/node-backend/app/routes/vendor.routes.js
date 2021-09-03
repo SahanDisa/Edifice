@@ -20,6 +20,9 @@ module.exports = app => {
   
     // Delete all Tutorials
     router.delete("/", vendor.deleteAll);
+
+    // Find Last Vendor
+    router.get("/app/last/",vendor.findLastOne);
   
     app.use('/api/vendor', router);
   };
