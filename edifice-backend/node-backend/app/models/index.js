@@ -296,7 +296,7 @@ db.workedHours.belongsTo(db.workers, {
 //One workedhours has many timesheets
 db.timesheets.hasMany(db.workedHours, { as: "workedhourstimesheet" });
 db.workedHours.belongsTo(db.timesheets, {
-  foreignKey: "timesheetId",
+  foreignKey: "timesheetCode",
   as: "timesheet",
 });
 

@@ -2,22 +2,29 @@ import React, { Component } from 'react';
 
 import CrewDataService from "./../../../services/crew.service";
 import WorkersDataService from "./../../../services/worker.service";
+import TimesheetDataService from "./../../../services/timesheet.service";
+import WorkedHoursDataService from "./../../../services/worked-hours.service";
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
 
 class CreateTimesheet extends Component {
     constructor(props) {
         super(props);
         this.retrieveCrew = this.retrieveCrew.bind(this);
         this.retrieveWorkers = this.retrieveWorkers.bind(this);
+        this.onChangeDate = this.onChangeDate.bind(this);
+        this.onChangeCode = this.onChangeCode.bind(this);
+        this.saveTimesheet = this.saveTimesheet.bind(this);
         this.state = {
           crews: [],
           workers: [],
           currentIndex: -1,
           content: "",
-          id: this.props.id
+          date:"",
+          code:"",
+          status:"Pending",
+          id: this.props.projectId
         };
       }
 
@@ -26,6 +33,7 @@ class CreateTimesheet extends Component {
         this.retrieveWorkers(this.props.id);
       }
 
+      //get data
       retrieveCrew(id) {
         CrewDataService.getAll(id)
           .then(response => {
@@ -44,6 +52,43 @@ class CreateTimesheet extends Component {
           .then(response => {
             this.setState({
               workers: response.data
+            });
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
+
+      //create timesheet
+      onChangeDate(e) {
+        this.setState({
+          date: e.target.value
+        });
+      }
+
+      onChangeCode(e) {
+        this.setState({
+          code: e.target.value
+        });
+      }
+
+      saveTimesheet() {
+        var data = {
+          date: this.state.date,
+          status: "Pending",
+          projectId: this.props.projectId,
+          code: this.state.code
+        };
+    
+        TimesheetDataService.create(data)
+          .then(response => {
+            this.setState({
+              date: response.data.date,
+              status: response.data.status,
+              projectId: response.data.projectId,
+              code: response.data.code,
+    
             });
             console.log(response.data);
           })
@@ -76,12 +121,33 @@ class CreateTimesheet extends Component {
                     <div class="container">
                             <div class="row">
                                 <div className="col-auto">
-                                    <form className="row g-3">
+                                    <form className="row">
                                         <div className="col-auto">
                                             <label>Select Date</label>
                                         </div>
                                         <div className="col-auto">
-                                            <input className="form-control" type="date" id="date" name="date"/>
+                                            <input 
+                                            className="form-control" 
+                                            type="date" 
+                                            id="date" 
+                                            name="date"
+                                            value={this.state.date}
+                                            onChange={this.onChangeDate}
+                                            />
+                                        </div>
+
+                                        <div className="col-auto">
+                                            <label>Timesheet code</label>
+                                        </div>
+                                        <div className="col-auto">
+                                            <input 
+                                            className="form-control" 
+                                            type="text" 
+                                            id="code" 
+                                            name="code"
+                                            value={this.state.code}
+                                            onChange={this.onChangeCode}
+                                            />
                                         </div>
                                     </form>     
                                 </div>
@@ -138,7 +204,7 @@ class CreateTimesheet extends Component {
                     
                     <div class="accordion" id="accordionExample">
                           {crews && crews.map((crew, index) => (
-                            <div class="card" key={crew.id}>
+                            <div class="card" key={index}>
                                 <div class="card-header" id="headingOne">
                                     <h2 class="mb-0">
                                     <span class="badge bg-success rounded-pill">{crew.total}</span>
@@ -154,7 +220,7 @@ class CreateTimesheet extends Component {
                                       
                                     </h2>
                                 </div>
-                                <div id={`collapse${index}`} class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div id={`collapse${index}`} className="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div className="">
 
@@ -164,7 +230,9 @@ class CreateTimesheet extends Component {
                                                 <List component="nav" aria-label="mailbox folders" key={worker.crewId}>
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text mr-3">
-                                                            <input type="checkbox" />
+                                                            <input 
+                                                            type="checkbox"
+                                                             />
                                                         </div>
                                                         <ListItem button>
                                                          {worker.firstName} {worker.lastName}
@@ -188,7 +256,8 @@ class CreateTimesheet extends Component {
                         <button 
                         type="button" 
                         className="btn btn-success" 
-                        data-dismiss="modal">
+                        data-dismiss="modal"
+                        onClick={this.saveTimesheet}>
                             Create
                         </button>
                     </div>

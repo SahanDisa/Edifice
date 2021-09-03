@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new timesheet
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.date) {
+  if (!req.body.code) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -16,7 +16,8 @@ exports.create = (req, res) => {
   const timesheet = {
     date: req.body.date,
     status: req.body.status,
-    projectId: req.body.lastName
+    projectId: req.body.projectId,
+    code: req.body.code,
   };
   // Save timesheet in the database
   Timesheet.create(timesheet)
