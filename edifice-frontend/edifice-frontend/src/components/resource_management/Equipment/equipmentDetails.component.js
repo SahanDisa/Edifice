@@ -8,6 +8,13 @@ class EquipDetails extends Component {
   constructor(props) {
     super(props);
     this.retrieveEquipment = this.retrieveEquipment.bind(this);
+    this.onChangeCategory = this.onChangeCategory.bind(this);
+    this.onChangeProjectId = this.onChangeProjectId.bind(this);
+    this.onChangeCondition = this.onChangeCondition.bind(this);
+    this.onChangeDescription = this.onChangeDescription.bind(this);
+
+    this.updateEquipment = this.updateEquipment.bind(this);
+    this.deleteEquipment = this.deleteEquipment.bind(this);
 
     this.state = {
       equipments: [],
@@ -35,6 +42,56 @@ class EquipDetails extends Component {
       }); 
   }
 
+  onChangeCategory(e){
+    this.setState({
+      category: e.target.value
+    });
+  }
+  onChangeProjectId(e){
+    this.setState({
+      projectId: e.target.value
+    });
+  }
+
+  onChangeCondition(e){
+    this.setState({
+      condition: e.target.value
+    });
+  }
+
+  onChangeDescription(e){
+    this.setState({
+      description: e.target.value
+    });
+  }
+
+  updateEquipment(){
+    var data = {
+      category: this.state.category,
+      projectId: this.state.projectId,
+      condition: this.state.condition,
+      description: this.state.description,
+    };
+
+    EquipmentDataService.update(this.state.code, data)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+  deleteEquipment(){
+    EquipmentDataService.delete(this.props.match.params.code)
+    .then(response => {
+      console.log(response.data);
+      this.props.history.push('/equipments/'+this.props.match.params.code)
+    })
+    .catch(e => {
+      console.log(e);
+    });
+  }
+
   render() {
     const { equipCode,equipments } = this.state;
     return (
@@ -48,13 +105,7 @@ class EquipDetails extends Component {
              {/* <h5>235E - ExcavatorABC</h5>*/}
           </Card.Body>
         </Card>
-        <div className="text-right">
-                    <form>
-                      <a href="#" className="btn btn-success mr-3">Edit</a>
-                      <a href="#" className="btn btn-primary mr-3">View Usage</a>
-                      
-                    </form>
-          </div>
+
 
         {equipments && equipments.map((equipment) => (
           equipment.code === equipCode ?
@@ -67,6 +118,9 @@ class EquipDetails extends Component {
                         className="form-control" 
                         type="text" 
                         required
+                        disabled
+                        id="code" 
+                        name="code"
                         value={equipCode}
                         />
                       </div>
@@ -80,27 +134,24 @@ class EquipDetails extends Component {
                         className="form-control" 
                         type="text" 
                         required
-                        value={equipment.category}/>
+                        id="category" 
+                        name="category"
+                        value={equipment.category}
+                        onChange={this.onChangeCategory}/>
                       </div>
 
                       <div class="col-6">
                         <label htmlFor="">Assiged Project</label>
-                        <form>
-                          <div className="form-row">
-                            <div className="form-group col-md-10">
                               <input 
                               className="form-control" 
                               type="text" 
                               required
-                              value={equipment.projectId}/>
-                            </div>
-                            <div className="form-group col-md-2">
-                            <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#allocateEquip">Change</a>
-                            </div>
-                            
-                            </div>
-                        </form>
+                              id="projectId" 
+                              name="projectId"
+                              value={equipment.projectId}
+                              onChange={this.onChangeProjectId}/>
                       </div>
+
                    </div>
                   </div>
 
@@ -110,18 +161,23 @@ class EquipDetails extends Component {
                         <label htmlFor="">Date issued</label>
                         <input 
                         className="form-control" 
-                        type="date"
+                        type="text"
                         id="date" 
                         name="date"
+                        disabled
                         value={equipment.date}/>
                       </div>
 
                       <div class="col-6">
                         <label htmlFor="">Condition</label>
-                        <select className="form-control" name="" id="">
-                            <option value="role1">Good(New)</option>
-                            <option value="role2">Fair</option>
-                            <option value="role3">Poor</option>
+                        <select 
+                        className="form-control" 
+                        name="condition" 
+                        id="condition">
+                            <option value={equipment.condition} selected="selected" hidden="hidden">{equipment.condition}</option>
+                            <option value="Good">Good(New)</option>
+                            <option value="Fair">Fair</option>
+                            <option value="Poor">Poor</option>
                         </select>
                       </div>
                     </div>
@@ -132,11 +188,34 @@ class EquipDetails extends Component {
                     className="form-control" 
                     type="text" 
                     required
-                    value={equipment.description}/>
+                    id="description" 
+                    name="description"
+                    value={equipment.description}
+                    onChange={this.onChangeDescription}/>
                   </div>
                   </div>: null
                   ))} 
                   <br/>
+                  <div className="text-right">
+                    <form>
+                      <button  
+                      className="btn btn-danger mr-3" 
+                      onClick ={this.deleteEquipment}>
+                        Delete
+                      </button>
+
+                      <button  
+                      className="btn btn-primary mr-3">
+                        View Usage
+                      </button>
+
+                      <button  
+                      className="btn btn-success"
+                      onClick={this.updateEquipment}>
+                        Edit
+                      </button>
+                    </form>
+                  </div>
 
                   {/* Allocate Equipment Starts */}
                     <div className="modal fade" id="allocateEquip" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

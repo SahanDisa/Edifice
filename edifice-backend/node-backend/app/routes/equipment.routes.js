@@ -13,14 +13,14 @@
     router.get("/published", equipment.findAllPublished);
   
     // Retrieve a single equipment with id
-    router.get("/:id", equipment.findOne);
+    router.get("/:id", equipment.findOne);*/
   
     // Update a equipment with id
-    router.put("/:id", equipment.update);
+    router.put("/:id", equipments.update);
   
     // Delete a equipment with id
-    router.delete("/:id/", equipment.delete);
-  
+    router.delete("/:id/", equipments.delete);
+ /* 
     // Delete all equipments
     router.delete("/", equipment.deleteAll);
   */

@@ -1,126 +1,128 @@
 const db = require("./../models/index.js");
-const Equipment = db.equipments;
+const WorkedHours = db.workedHours;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new equipment
+// Create and Save a new workedhours
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.code) {
+  if (!req.body.timesheetId) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
     return;
   }
 
-  // Create a equipment
-  const equipment = {
-    code: req.body.code,
-    date: req.body.date,
-    condition:req.body.condition,
-    category: req.body.category, 
-    description: req.body.description,
-    projectId: req.body.projectId
-  };
+  // Create a workedHours
+  const workedHours = {
+    start: req.body.date,
+    lunch_start: req.body.lunch_start,
+    lunch_stop: req.body.lunch_stop,
+    tea_start: req.body.tea_start,
+    tea_end: req.body.tea_end,
+    stop: req.body.stop,
+    timeshhetId: req.body.timeshhetId
 
-  // Save equipment in the database
-  Equipment.create(equipment)
+  };
+  // Save workedHours in the database
+  WorkedHours.create(workedHours)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the equipment."
+          err.message || "Some error occurred while creating the workedHours."
       });
     });
 };
-
-// Retrieve all equipments from a given equipment.
+/*
+// Retrieve all workers from a given project
 exports.findAll = (req, res) => {
     //const id = req.query.id;
-    //var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-  
-    Equipment.findAll(/*{ where: condition }*/)
-      .then(data => {
+      
+    Worker.findAll(/*{ where: {
+      projectId: id
+   // }}*/ /*)
+     .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving data."
+            err.message || "Some error occurred while retrieving data"
         });
       });
-};
+};*/
 /*
-// Find a single equipment with an id
+// Find a single crew with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    equipment.findByPk(id)
+    crew.findByPk(id)
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving equipment with id=" + id
+          message: "Error retrieving crew with id=" + id
         });
       });  
 };*/
-
-// Update a equipment by the id in the request
+/*
+// Update a crew by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    equipment.update(req.body, {
+    crew.update(req.body, {
       where: { id: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "equipment was updated successfully."
+            message: "crew was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update equipment with id=${id}. Maybe equipment was not found or req.body is empty!`
+            message: `Cannot update crew with id=${id}. Maybe crew was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating equipment with id=" + id
+          message: "Error updating crew with id=" + id
         });
       });
-};
-
-// Delete a equipment with the specified id in the request
+};*/
+/*
+// Delete a crew with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    equipment.destroy({
+    crew.destroy({
       where: { id: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "equipment was deleted successfully!"
+            message: "crew was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete equipment with id=${id}. Maybe equipment was not found!`
+            message: `Cannot delete crew with id=${id}. Maybe crew was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete equipment with id=" + id
+          message: "Could not delete crew with id=" + id
         });
       });
-};
+};*/
 
 /*
 // Delete all Tutorials from the database.
 exports.deleteAll = (req, res) => {
-    equipment.destroy({
+    crew.destroy({
         where: {},
         truncate: false
       })
@@ -148,5 +150,3 @@ exports.findAllPublished = (req, res) => {
       });
     });
 };*/
-///////////////////////////////////
-// Improve for pagination as well

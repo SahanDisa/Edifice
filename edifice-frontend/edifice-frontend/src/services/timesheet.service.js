@@ -1,30 +1,31 @@
 import http from "../http-common.js";
 
-class EquipmentDataService {
+class TimesheetDataService {
   getAll(id) {
-    return http.get(`/equipments/list/${id}`);
+    return http.get(`/timesheets/list/${id}`);
   }
 
   getAll() {
-    return http.get(`/equipments/list/`);
+    return http.get(`/timesheets/list/`);
   }
   /*  get(id) {
     return http.get(`/projects/${id}`);
   }
   */
   create(data) {
-    return http.post("/equipments", data);
+    console.log(data)
+    return http.post("/timesheets", data);
 
   }
-
+/*
   update(id, data) {
-    return http.put(`/equipments/${id}`, data);
+    return http.put(`/projects/${id}`, data);
   }
 
   delete(id) {
-    return http.delete(`/equipments/${id}`);
+    return http.delete(`/projects/${id}`);
   }
-/*
+
   deleteAll() {
     return http.delete(`/projects`);
   }
@@ -40,4 +41,4 @@ class EquipmentDataService {
   // }
 }
 
-export default new EquipmentDataService();
+export default new TimesheetDataService();
