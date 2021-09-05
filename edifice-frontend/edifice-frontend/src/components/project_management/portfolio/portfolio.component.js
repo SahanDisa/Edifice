@@ -81,6 +81,7 @@ export default class PortfolioHome extends Component {
       this.retriveMilestones = this.retriveMilestones.bind(this);
       this.findCompleteCount = this.findCompleteCount.bind(this);
       this.checkMilestone = this.checkMilestone.bind(this);
+      this.getPoints = this.getPoints.bind(this);
       
       this.state = {
         drawings: [],
@@ -100,6 +101,8 @@ export default class PortfolioHome extends Component {
         documentIncomplete: 0,
         id: this.props.match.params.id,
         projectId: this.props.match.params.id,
+
+        points: [],
       };
     }
   
@@ -109,6 +112,19 @@ export default class PortfolioHome extends Component {
       this.retrieveDepartments(this.props.match.params.id);
       this.retriveMilestones(this.props.match.params.id);
       this.findCompleteCount(this.props.match.params.id);
+      this.getPoints(this.props.match.params.id);
+    }
+    getPoints(id){
+      PortfolioProgressService.getAll(id)
+        .then(response => {
+          this.setState({
+            points: response.data
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
     retrieveDepartments(id){
       PortfolioDataService.getAllDep(id)
@@ -130,7 +146,7 @@ export default class PortfolioHome extends Component {
             milestoneCount: response.data.length
           });
           console.log(response.data);
-          console.log("Milestone count : "+this.state.milestoneCount);
+          //console.log("Milestone count : "+this.state.milestoneCount);
         })
         .catch(e => {
           console.log(e);
@@ -212,7 +228,7 @@ export default class PortfolioHome extends Component {
           this.setState({
             completeMilestoneCount: response.data.length
           });
-          console.log("completeMilestoneCount : "+this.state.completeMilestoneCount);
+          //console.log("completeMilestoneCount : "+this.state.completeMilestoneCount);
         })
         .catch(e => {
           console.log(e);
@@ -258,6 +274,7 @@ export default class PortfolioHome extends Component {
       .catch(e => {
         console.log(e);
       });
+      window.location.reload();
     }
     
     uncheckMilestone(){
@@ -266,7 +283,7 @@ export default class PortfolioHome extends Component {
  
     render() {
         const { milestones, departments, currentIndex,id,drawingComplete,drawingPending,drawingIncomplete,
-          documentComplete,documentPending,documentIncomplete} = this.state;
+          documentComplete,documentPending,documentIncomplete,points} = this.state;
         
         const dataPie = [
             { name: 'Completed', value:  (drawingComplete+documentComplete)},
@@ -324,15 +341,16 @@ export default class PortfolioHome extends Component {
                   <LineChart
                     width={500}
                     height={300}
-                    data={dataline}
+                    data={points}
                   >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="pv" stroke="#273F7D" activeDot={{ r: 8 }} />
-                    <Line type="monotone" dataKey="uv" stroke="#EF253D" />
+                    {/* <Line type="monotone" dataKey="pv" stroke="#273F7D" activeDot={{ r: 8 }} /> */}
+                    {/* <Line type="monotone" dataKey="uv" stroke="#EF253D" /> */}
+                    <Line type="monotone" dataKey="progress" stroke="#273F7D" activeDot={{ r: 8 }} />
                   </LineChart>
                   </div>
                 </div>   
