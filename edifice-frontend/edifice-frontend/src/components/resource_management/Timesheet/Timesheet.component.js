@@ -5,20 +5,42 @@ import AddWorker from "./add_worker.component";
 import Approve from "./approve.component";
 import Card from 'react-bootstrap/Card';
 
+import TimesheetDataService from "./../../../services/timesheet.service";
 
 class Timesheet extends Component {
     constructor(props) {
         super(props);
-    
+        this.retrieveTimesheet = this.retrieveTimesheet.bind(this);
+
         this.state = {
           id: null,
           name: "", 
-          projectId: this.props.match.params.id
+          timesheets:[],
+          id: this.props.match.params.id
         };
       }
 
+      componentDidMount() {
+        this.retrieveTimesheet(this.props.match.params.id);
+      }
+
+      retrieveTimesheet(id){
+          TimesheetDataService.getAll(id)
+          .then(response => {
+              this.setState({
+                timesheets: response.data
+              });
+              console.log(response.data);
+              })
+            .catch(e => {
+              console.log(e);
+      });
+      }
+
     render() {
-        const {projectId} = this.state;
+        const {id , timesheets} = this.state;
+        
+        //console.log(timesheets)
         return (
           <div>
             <Card
@@ -30,8 +52,6 @@ class Timesheet extends Component {
               </Card.Body>
             </Card> 
             <br/>
-
-            
 
             <div className="container">                                
                 <div className="row">   
@@ -54,145 +74,120 @@ class Timesheet extends Component {
                         <a href="/customize" className="btn btn-secondary mr-3"> Customize</a>
                         <a href="#" className="btn btn-secondary mr-3"> Export PDF</a>
                         <button className="btn btn-primary" data-toggle="modal" data-target="#createNew"> Create New</button>
+                        
 
                         {/*------------------------------------ Add Emp Starts------------------------------------------------------------------ */}
                         <div className="modal fade" id="createNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <Create projectId={projectId}/>
+                            <Create projectId={id}/>
                         </div>
                         {/*-------------------------------------Add Emp Ends----------------------------------------------------------------------*/}
                     </div>
                 </div>
             </div>
             <hr />
-
-
-            <hr/>
-
-            <div className="card">
+            
+            {timesheets && timesheets.map((timesheet, index) => (
+              
+            <div className="card" key={timesheet.code}>
                 <div className="card-header">
-                        <h5 >Date: 05/01/2021</h5>
-                        <a className="card-header" href="" className="btn btn-primary" data-toggle="modal" data-target="#addWorker"> +Add Worker</a>
-        
-                </div>
+                
+                        <div className=" container">
+                            <div className="row">
+                                <div class="col-10">
+                                <h5 >Date: {timesheet.date}</h5>
+                                <p>Code: {timesheet.code}</p>
+                                </div>
 
+                                <div className="col-2 align-middle">
+                                    <button                         
+                                        className="btn btn-primary" 
+                                        data-toggle="modal" 
+                                        data-target="#addWorker">
+                                    Add Workers
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div> 
+                         
+                </div>
                 {/*------------------------------------ Add worker Starts------------------------------------------------------------------ */}
                 <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <AddWorker/>
+                   <AddWorker 
+                   timesheetId={timesheet.code}
+                   id={id}/> 
                 </div>
                 {/*-------------------------------------Add worker Ends----------------------------------------------------------------------*/}
 
 
             <div className="card-body">    
-                    <table className="table table-hover table-bordered align-middle">
-                        <thead>
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col" colspan="2">Lunch</th>
-                                    <th scope="col" colspan="2">Tea</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
+                    <table className="table table-bordered align-middle">
                             <thead>
                                 <tr>
-                                    <th scope="col">Crew</th>
-                                    <th scope="col">Employee Name</th>
-                                    <th scope="col">Location</th>
-                                    <th scope="col">Start</th>
-                                    <th scope="col">Stop</th>
-                                    <th scope="col">Start</th>
-                                    <th scope="col">Stop</th>
-                                    <th scope="col">Start</th>
-                                    <th scope="col">End</th>
+                                    <th className=" align-middle text-center"  rowspan="2">Crew</th>
+                                    <th  className=" align-middle text-center" rowspan="2">Employee Name</th>
+                                    <th  className=" align-middle text-center" rowspan="2">Location</th>
+                                    <th  className=" align-middle text-center" rowspan="2">Start</th>
+                                    <th className=" align-middle text-center" colspan="2">Lunch</th>
+                                    <th className=" align-middle text-center" colspan="2">Tea</th>
+                                    <th className=" align-middle text-center" rowspan="2">Leave</th>
+                                </tr>
+                                <tr>
+                                    <th className=" align-middle text-center" >Start</th>
+                                    <th className=" align-middle text-center" >End</th>
+                                    <th className=" align-middle text-center" >Start</th>
+                                    <th className=" align-middle text-center" >End</th>
                                 </tr>
                             </thead>
                         <tbody>
 
-                            <tr className="table-primary">
+                            <tr>
                                 <td>
-                                <select className="form-control" name="" id="">
-                                    <option value="role1">Concrete Crew</option>
-                                    <option value="role2">Welder</option>
-                                    <option value="role3">Flooring Crew</option>
-                                    <option value="role3">Carpenters</option>
-                                </select>
+                                    crename
                                 </td>
                                 <td>Randie pathirae</td>
                                 <td>First Floor</td>
-                                <td>
-                                    <div className="md-form md-outline">
-                                        <input type="time" id="default-picker" className="form-control" placeholder="Select time"/>
-                                    </div>
+                                <td>                                 
+                                    <input 
+                                    type="time" 
+                                    id="default-picker" 
+                                    className="form-control" 
+                                    placeholder="Select time"/>           
                                 </td>
                                 <td>
-                                    <div className="md-form md-outline">
-                                        <input type="time" id="default-picker" className="form-control" placeholder="Select time"/>
-                                    </div>
+                                    <input 
+                                    type="time" 
+                                    id="default-picker" 
+                                    className="form-control" 
+                                    placeholder="Select time"/>
                                 </td>
                                 <td>
-                                    <div className="md-form md-outline">
-                                        <input type="time" id="default-picker" className="form-control" placeholder="Select time"/>
-                                    </div>
+                                    <input 
+                                    type="time" 
+                                    id="default-picker" 
+                                    className="form-control" 
+                                    placeholder="Select time"/>
                                 </td>
                                 <td>
-                                    <div className="md-form md-outline">
-                                        <input type="time" id="default-picker" className="form-control" placeholder="Select time"/>
-                                    </div>
+                                    <input
+                                    type="time" 
+                                    id="default-picker" 
+                                    className="form-control" 
+                                    placeholder="Select time"/>
                                 </td>
                                 <td>
-                                    <div className="md-form md-outline">
-                                        <input type="time" id="default-picker" className="form-control" placeholder="Select time"/>
-                                    </div>
+                                    <input
+                                    type="time" 
+                                    id="default-picker" 
+                                    className="form-control" 
+                                    placeholder="Select time"/>
                                 </td>
                                 <td>
-                                    <div className="md-form md-outline">
-                                        <input type="time" id="default-picker" className="form-control" placeholder="Select time"/>
-                                    </div>
-                                </td>
-
-                            </tr>
-                            <tr className="table-primary">
-                            <td>
-                                <select className="form-control" name="" id="">
-                                    <option value="role1">Concrete Crew</option>
-                                    <option value="role2">Welder</option>
-                                    <option value="role3">Flooring Crew</option>
-                                    <option value="role3">Carpenters</option>
-                                </select>
-                            </td>
-                            <td>Jacob</td>
-                            <td>Ground Floor</td>
-                            <td>
-                                <div className="md-form md-outline">
-                                    <input type="time" id="default-picker" className="form-control" placeholder="Select time"/>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="md-form md-outline">
-                                    <input type="time" id="default-picker" className="form-control" placeholder="Select time"/>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="md-form md-outline">
-                                    <input type="time" id="default-picker" className="form-control" placeholder="Select time"/>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="md-form md-outline">
-                                    <input type="time" id="default-picker" className="form-control" placeholder="Select time"/>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="md-form md-outline">
-                                    <input type="time" id="default-picker" className="form-control" placeholder="Select time"/>
-                                </div>
-                            </td>
-                            <td>
-                                    <div className="md-form md-outline">
-                                        <input type="time" id="default-picker" className="form-control" placeholder="Select time"/>
-                                    </div>
+                                    <input
+                                    type="time" 
+                                    id="default-picker" 
+                                    className="form-control" 
+                                    placeholder="Select time"/>
                                 </td>
                             </tr>
                         </tbody>
@@ -205,13 +200,9 @@ class Timesheet extends Component {
                     <Approve/>
                     </div>
                     {/*-------------------------------------Add worker Ends----------------------------------------------------------------------*/}
-
-
-
-
-
                 </div>
             </div>
+            ))}
           </div>
           
         );
