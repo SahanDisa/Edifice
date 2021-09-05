@@ -109,6 +109,7 @@ import ResourceManagementHome from "./components/resource_management/resource-ma
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
 import Customize from "./components/resource_management/Timesheet/customize.component";
 import Crew from "./components/resource_management/Crew/crew.component";
+import NewCrew from "./components/resource_management/Crew/new-crew.component";
 import Schedule from "./components/resource_management/Schedule/schedule.component";
 import Equipments from "./components/resource_management/Equipment/equipment.component";
 import EquipDetails from "./components/resource_management/Equipment/equipmentDetails.component";
@@ -168,7 +169,7 @@ class App extends Component {
       <div>
         <link rel="\public\icons\051-dumper truck.png" href=".\public\icons\051-dumper truck.png" type="image/x-icon" />
         <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <Link to={"/"} className="navbar-brand">
+          <Link to={"/home"} className="navbar-brand">
             <img
               src={mainIcon}
               style={{'width' : "50px", height: "50px"}}
@@ -252,7 +253,13 @@ class App extends Component {
             </div>
           )}
         </nav>
-
+        {!currentUser && (
+          <Switch>
+            <Route exact path={["/", "/home"]} component={Home} />
+            <Route exact path="/login" component={Login} />
+          </Switch>  
+        )}
+        {currentUser && (
         <div className="container mt-3">
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
@@ -351,11 +358,14 @@ class App extends Component {
             {/*resource management */}
             <Route path="/timesheet/:id" component={Timesheet} />
             <Route path="/customize" component={Customize} />
-            <Route path="/crew" component={Crew} />
+            <Route path="/crew/:id" component={Crew} />
+            <Route path="/newCrew/:id" component={NewCrew}/>
             <Route path="/schedule/:id" component={Schedule} />
             <Route path="/equipments/:id" component={Equipments} />
-            <Route path="/equipDetails" component={EquipDetails} />
+            <Route path="/equipDetails/:code" component={EquipDetails} />
+            {/*<Route path="/equipDetails/:id/:code" component={EquipDetails} />*/}
             <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
+                    
 
             {/*financial management */}
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
@@ -380,6 +390,7 @@ class App extends Component {
            
           </Switch>
         </div>
+        )}
       </div>
     );
   }

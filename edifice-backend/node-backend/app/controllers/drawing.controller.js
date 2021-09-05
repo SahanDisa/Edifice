@@ -1,5 +1,6 @@
 const db = require("./../models/index");
 const Drawing = db.drawings;
+const sequelize = require("sequelize");
 
 // create a drawing
 exports.create = (req, res) => {
@@ -146,3 +147,17 @@ exports.findAllbyStatus = (req, res) => {
       });
     });  
 };
+
+exports.findMaxVersion = (req,res)=>{
+  Drawing.findAll({
+    attributes: [[sequelize.fn('sum', sequelize.col('version')), 'maxversion']],
+    raw: true,
+  }).then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Error retrieving Drawing Drawings with id=" + id
+    });
+  });  
+}

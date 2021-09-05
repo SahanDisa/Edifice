@@ -64,9 +64,11 @@ db.equipments = require("./equipment.model")(sequelize, Sequelize);
 db.categorys = require("./equipment-category.model")(sequelize, Sequelize);
 db.crews = require("./crew.model")(sequelize, Sequelize);
 db.workers = require("./worker.model")(sequelize, Sequelize);
+db.timesheets = require("./timesheet.model")(sequelize, Sequelize);
+db.workedHours = require("./worked-hours.model")(sequelize, Sequelize);
 
 //for core class vendors and employees
-//db.vendor=require("./vendor.model")(sequelize, Sequelize);
+db.vendor=require("./vendor.model")(sequelize, Sequelize);
 
 //This section is for testing purposes
 db.demo = require("./demo.model")(sequelize, Sequelize);
@@ -93,23 +95,12 @@ db.milestones.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
-// One user has one project profile
-db.users.hasOne(db.projectuser, { as: "projectuser" });
-db.projectuser.belongsTo(db.users, {
-  foreignKey: "userId",
-  as: "user",
-});
-// One construction project can have many users
-db.projectuser.belongsToMany(db.projects, {
-  through: "project_user",
-  as: "projectusers",
-  foreignKey: "project_id",
-});
-// One user can involve with many projects
-db.projects.belongsToMany(db.projectuser, {
-  through: "project_user",
-  as: "projects",
-  foreignKey: "user_id",
+
+// One project has many project users as staff members
+db.projects.hasMany(db.projectuser, { as: "projectusers" });
+db.projectuser.belongsTo(db.projects, {
+  through: "projectId",
+  as: "project",
 });
 
 // One project has many drawing categories & one category has only one project
@@ -286,6 +277,27 @@ db.projects.hasMany(db.crews, { as: "crews" });
 db.crews.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
+});
+
+//One project has many timesheets
+db.projects.hasMany(db.timesheets, { as: "timesheets" });
+db.timesheets.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+//One workedhours has many workers
+db.workers.hasMany(db.workedHours, { as: "workersHours" });
+db.workedHours.belongsTo(db.workers, {
+  foreignKey: "workerWId",
+  as: "worker",
+});
+
+//One workedhours has many timesheets
+db.timesheets.hasMany(db.workedHours, { as: "workedhourstimesheet" });
+db.workedHours.belongsTo(db.timesheets, {
+  foreignKey: "timesheetCode",
+  as: "timesheet",
 });
 
 

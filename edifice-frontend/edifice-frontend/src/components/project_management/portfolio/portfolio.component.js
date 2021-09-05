@@ -27,45 +27,45 @@ const data = [
 const dataline = [
   {
     name: 'January 2021',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
+    uv: 40,
+    pv: 24,
+    amt: 24,
   },
   {
     name: 'Feburary 2021',
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
+    uv: 30,
+    pv: 13.98,
+    amt: 22.10,
   },
   {
     name: 'March 2021',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
+    uv: 20,
+    pv: 98,
+    amt: 22.90,
   },
   {
     name: 'April 2021',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
+    uv: 27.80,
+    pv: 39.08,
+    amt: 20,
   },
   {
     name: 'May 2021',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
+    uv: 18.90,
+    pv: 48,
+    amt: 21.81,
   },
   {
     name: 'June 2021',
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
+    uv: 23.90,
+    pv: 38,
+    amt: 25,
   },
   {
     name: 'July 2021',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
+    uv: 34.90,
+    pv: 43,
+    amt: 21,
   },
 ];
 //yellow #FFBB28
@@ -245,9 +245,7 @@ export default class PortfolioHome extends Component {
                       dataKey="value"
                     >
                       {dataPie.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-
-                        
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />   
                       ))}
                     </Pie>
                   </PieChart>
@@ -277,6 +275,8 @@ export default class PortfolioHome extends Component {
               <h3>Progress by Activities</h3>
               {/* {drawingComplete+" "+drawingPending+" "+drawingIncomplete} */}
               <p>Visulize the progress of all the activities</p>
+              {(new Date().getFullYear())}{" "}{(new Date().toLocaleString('en-us', { month: 'long' }))}
+              
               <div className="container">
                 <h6>Drawing</h6>
                 <ProgressBar>

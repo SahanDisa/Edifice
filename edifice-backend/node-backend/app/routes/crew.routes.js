@@ -7,7 +7,7 @@ module.exports = app => {
     router.post("/", crews.create);
   
     // Retrieve all crews
-    router.get("/list/", crews.findAll);
+    router.get("/list/:id", crews.findAll);
 /*  
     // Retrieve all published crews
     router.get("/published", crew.findAllPublished);

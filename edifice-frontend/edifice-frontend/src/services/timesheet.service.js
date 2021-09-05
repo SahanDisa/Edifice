@@ -1,27 +1,28 @@
 import http from "../http-common.js";
 
-class WorkerDataService {
+class TimesheetDataService {
   getAll(id) {
-    return http.get(`/workers/list/${id}`);
-  }
-
-  getAll() {
-    return http.get(`/workers/list/`);
-  }
-  /*  get(id) {
-    return http.get(`/projects/${id}`);
-  }
-  */
-  create(data) {
-    console.log(data)
-    return http.post("/workers", data);
-
-  }
-
-  update(id, data) {
-    return http.put(`/workers/update/${id}`, data);
+    //console.log(id)
+    return http.get(`/timesheets/list/${id}`);
   }
 /*
+  getAll() {
+    return http.get(`/timesheets/list/`);
+  }
+  get(id) {
+    return http.get(`/timesheets/list/${id}`);
+  }*/
+
+  create(data) {
+    console.log(data)
+    return http.post("/timesheets", data);
+
+  }
+/*
+  update(id, data) {
+    return http.put(`/projects/${id}`, data);
+  }
+
   delete(id) {
     return http.delete(`/projects/${id}`);
   }
@@ -41,4 +42,4 @@ class WorkerDataService {
   // }
 }
 
-export default new WorkerDataService();
+export default new TimesheetDataService();

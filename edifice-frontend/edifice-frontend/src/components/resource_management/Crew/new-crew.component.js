@@ -10,8 +10,8 @@ class NewCrew extends Component {
 
     this.state = {
       id: null,
-      name: "",
-      projectId: "1",  
+      name: "", 
+      projectId: this.props.projectId,
       submitted: false
     };
   }
@@ -25,7 +25,7 @@ class NewCrew extends Component {
   saveCrew() {
     var data = {
       name: this.state.name,
-      projectId: "1"
+      projectId: this.props.projectId
     };
 
     CrewDataService.create(data)

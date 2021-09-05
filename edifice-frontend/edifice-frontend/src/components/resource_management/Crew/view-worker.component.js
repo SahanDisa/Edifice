@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
 
 class EditWorker extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      //crews: [],
+      //workers: [],
+      //currentIndex: -1,
+      //content: "",
+      wId: this.props.id,
+      fristName:this.props.fName,
+      lastName:this.props.lName,
+      mobile:this.props.mobile
+    };
+  }
+
+
     render() {
+      const { wId,fristName,lastName, mobile} = this.state;
+      //console.log(wId)
         return (  
         <div>
             <div className="modal-dialog modal-dialog-centered" role="document">
@@ -16,17 +33,13 @@ class EditWorker extends Component {
                   
                     <div>
 
-                        <label htmlFor="">First Name</label>
-                        <input className="form-control" type="text" required/>
-                        <br/>
+                        <label htmlFor=""><b>Id:</b> {wId}</label>
 
-                        <label htmlFor="">Last Name</label>
-                        <input className="form-control" type="text" required/>
-                        <br/>
+                        <label htmlFor=""><b>First Name:</b> {fristName}</label>
 
-                        <label htmlFor="">Id</label>
-                        <input className="form-control" type="text" required/>
-                        <br/>
+                        <label htmlFor=""><b>Last Name:</b> {lastName}</label>
+
+                        <label htmlFor=""><b>Mobile:</b> {mobile}</label>
                     </div>
                 </div>
                 <div className="modal-footer">

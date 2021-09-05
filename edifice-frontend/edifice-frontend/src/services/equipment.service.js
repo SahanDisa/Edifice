@@ -16,15 +16,15 @@ class EquipmentDataService {
     return http.post("/equipments", data);
 
   }
-/*
+
   update(id, data) {
-    return http.put(`/projects/${id}`, data);
+    return http.put(`/equipments/${id}`, data);
   }
 
   delete(id) {
-    return http.delete(`/projects/${id}`);
+    return http.delete(`/equipments/${id}`);
   }
-
+/*
   deleteAll() {
     return http.delete(`/projects`);
   }

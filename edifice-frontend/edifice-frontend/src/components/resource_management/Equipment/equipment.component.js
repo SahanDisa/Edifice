@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import EquipmentDataService from "./../../../services/equipment.service";
 
 
@@ -20,6 +21,7 @@ class Equipment extends Component {
 
     this.state = {
       equipments: [],
+      categorys:[],
       currentIndex: -1,
       content: "",
       id: this.props.match.params.id
@@ -40,9 +42,13 @@ class Equipment extends Component {
       .catch(e => {
         console.log(e);
       });
+      
   }
+
     render() {
-      const { equipments ,currentIndex,id } = this.state;
+      const { equipments ,currentIndex,id, categorys } = this.state;
+      //console.log(equipments[0])
+
         return (
           <div>
             <Card
@@ -79,35 +85,30 @@ class Equipment extends Component {
 
                         <div class="accordion" id="accordionExample">
                         {equipments && equipments.map((equipment, currentIndex) => (
+                          categorys.includes(equipment.category)? null : categorys.push(equipment.category) &&
                             <div class="card">
                                 <div class="card-header" id="headingOne">
+                
                                     <h2 class="mb-0">
                                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${currentIndex}`} aria-expanded="true" aria-controls="collapseOne">{equipment.category}</button>
-                                        <span class="badge bg-primary rounded-pill">14</span>
                                     </h2>
                                 </div>
                                 <div id={`collapse${currentIndex}`} class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div className="">
                                             <div class="col-md-12 text-right mb-2">
+                                            {equipments && equipments.map((equipmentList, currentIndex) => (
+                                              equipment.category === equipmentList.category ?
                                             
                                               <List component="nav" aria-label="mailbox folders">
                                                 <ListItem button>
-                                                  <a href="/equipDetails" >235E - ExcavatorABC</a>
+        
+                                                  <Link to=/*{"/equipDetails/"+id+"/"+equipment.code}*/{"/equipDetails/"+equipment.code}>{equipmentList.code} {equipmentList.description}</Link>
                                                 </ListItem>
                                                 <Divider />
-                                                  <ListItem button divider>
-                                                    <a href="#" >432E - Excavator cataplller</a>
-                                                  </ListItem>
-                                                  <ListItem button>
-                                                    <a href="#" >542E - ikon2</a>
-                                                  </ListItem>
                                                 <Divider light />
-                                                <ListItem button>
-                                                  <a href="#" >098E - Arko</a>
-                                                </ListItem>
-                                            </List>                            
- 
+                                            </List> :""                           
+                                            ))} 
                                           </div>
       
                                         </div>
@@ -127,7 +128,7 @@ class Equipment extends Component {
 
                 {/* New Equipment Starts */}
                   <div className="modal fade" id="addEquip" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <AddEquip />        
+                    <AddEquip projectId ={id} />        
                   </div>
                 {/* New Equipment Ends */}
 

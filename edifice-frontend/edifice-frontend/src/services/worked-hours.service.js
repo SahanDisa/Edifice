@@ -1,12 +1,12 @@
 import http from "../http-common.js";
 
-class WorkerDataService {
+class WorkedHoursDataService {
   getAll(id) {
-    return http.get(`/workers/list/${id}`);
+    return http.get(`/workedHours/list/${id}`);
   }
 
   getAll() {
-    return http.get(`/workers/list/`);
+    return http.get(`/workedHours/list/`);
   }
   /*  get(id) {
     return http.get(`/projects/${id}`);
@@ -14,14 +14,14 @@ class WorkerDataService {
   */
   create(data) {
     console.log(data)
-    return http.post("/workers", data);
+    return http.post("/workedHours", data);
 
-  }
-
-  update(id, data) {
-    return http.put(`/workers/update/${id}`, data);
   }
 /*
+  update(id, data) {
+    return http.put(`/projects/${id}`, data);
+  }
+
   delete(id) {
     return http.delete(`/projects/${id}`);
   }
@@ -41,4 +41,4 @@ class WorkerDataService {
   // }
 }
 
-export default new WorkerDataService();
+export default new WorkedHoursDataService();
