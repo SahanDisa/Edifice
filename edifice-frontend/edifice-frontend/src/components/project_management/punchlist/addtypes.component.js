@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import Card from 'react-bootstrap/Card';
 import PunchListTypesDataService from "./../../../services/project_management/punchlisttypes.service.js";
 
-class CreatePLT extends Component {
+class CreatePLTT extends Component {
     constructor(props) {
         super(props);
         this.onChangeTitle = this.onChangeTitle.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
-        this.savePunchListTypes = this.savePunchListTypes.bind(this);
+        this.savePunchListType = this.savePunchListType.bind(this);
         this.newPunchListType = this.newPunchListType.bind(this);
 
         this.state = {
@@ -21,22 +20,22 @@ class CreatePLT extends Component {
 
     onChangeTitle(e) {
         this.setState({
-        title: e.target.value
+            title: e.target.value
         });
     }
 
     onChangeDescription(e) {
         this.setState({
-        description: e.target.value
+            description: e.target.value
         });
     }
 
-    savePunchListTypes() {
-        console.log("save wuna");
+    savePunchListType() {
+        console.log("11111");
         var data = {
-        title : this.state.title,
-        description: this.state.description,
-        projectId: this.state.projectId
+            title : this.state.title,
+            description: this.state.description,
+            projectId: this.state.projectId
         };
 
         PunchListTypesDataService.create(data)
@@ -46,7 +45,6 @@ class CreatePLT extends Component {
             title: response.data.title,
             description: response.data.description,
             projectId: response.data.projectId,
-
             submitted: true
             });
         })
@@ -58,7 +56,6 @@ class CreatePLT extends Component {
             title: "",
             description: "",
             projectId: this.props.match.params.id,
-
             submitted: false
         });
     }
@@ -66,51 +63,54 @@ class CreatePLT extends Component {
     render() {
         return (
         <div className="">
-            {/* {this.state.submitted ? (
+            {this.state.submitted ? (
                 <div>
                     <div>
                         <h4>Punch List Type added successfully!</h4>
                         <button className="btn btn-success" onClick={this.newPunchListType}>Add Another punch list type</button>
                     </div>
                 </div>
-            ) : ( */}
+            ) : (
             <div className="">
                 <h2>Add New Punch List Type</h2><hr/>
-                <form action="">
-                <div className="form-row">
-                    <div className="form-group col-md-3">
-                        <label htmlFor="">Title</label>
-                        <input 
-                            className="form-control" 
-                            type="text"
-                            name="title"
-                            value={this.state.title}
-                            onChange={this.onChangeTitle}
-                            required
-                        />
-                    </div>
-                    <div className="form-group col-md-8">
-                        <label htmlFor="">Description</label>
-                        <input 
-                            className="form-control" 
-                            type="text"
-                            name="description"
-                            value={this.state.description}
-                            onChange={this.onChangeDescription}
-                            required
-                        />
-                    </div>
-                    <div className="form-group col-md-1">
-                        <label htmlFor="">.</label>
-                        <button className="btn btn-primary" onClick={this.savePunchListTypes}>Add</button>
+                <div className="container">
+                    <div className="form-row">
+                        <div className="form-group col-md-3">
+                            <label htmlFor="">Title</label>
+                            <input 
+                                className="form-control" 
+                                type="text"
+                                name="title"
+                                value={this.state.title}
+                                onChange={this.onChangeTitle}
+                                required
+                            />
+                        </div>
+                        <div className="form-group col-md-8">
+                            <label htmlFor="">Description</label>
+                            <input 
+                                className="form-control" 
+                                type="text"
+                                name="description"
+                                value={this.state.description}
+                                onChange={this.onChangeDescription}
+                                required
+                            />
+                        </div>
+                        <div className="form-group col-md-1">
+                            <label htmlFor="">.</label>
+                            <button
+                                className="btn btn-primary"
+                                onClick={this.savePunchListType}
+                            >Add</button>
+                        </div>
                     </div>
                 </div>
-                </form>
             </div>
-        {/* )} */}
+        )}
         </div>
         );
     }
 }
 
-export default CreatePLT;
+export default CreatePLTT;

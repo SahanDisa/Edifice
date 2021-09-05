@@ -63,7 +63,6 @@ require('./app/routes/worker.routes')(app);
 require('./app/routes/worked-hours.routes')(app);
 require('./app/routes/timesheet.routes')(app);
 
-
 require('./app/routes/primecontract.routes')(app);
 require('./app/routes/invoice.routes')(app);
 require('./app/routes/payment.routes')(app);

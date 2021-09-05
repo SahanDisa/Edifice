@@ -6,7 +6,7 @@ exports.create = (req, res) => {
     // Valipunchmanager request
     if (!req.body.title) {
         res.status(400).send({
-        message: "Content can not be empty!"
+            message: "Content can not be empty!"
         });
         return;
     }
@@ -20,7 +20,8 @@ exports.create = (req, res) => {
         location: req.body.location,
         // punchmanager: req.body.punchmanager,
         // assignee: req.body.assignee,
-        description: req.body.description
+        description: req.body.description,
+        projectId: req.body.id
     };
 
     // Save Punchlist in the database
