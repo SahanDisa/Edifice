@@ -26,6 +26,8 @@ db.sequelize = sequelize;
 
 db.users = require("./user.model.js")(sequelize, Sequelize);
 db.roles = require("./role.model.js")(sequelize, Sequelize);
+db.employee= require("./employee.model.js")(sequelize, Sequelize);
+
 // Project Component Model Classes
 db.projects = require("./project.model.js")(sequelize, Sequelize);
 db.departments = require("./department.model.js")(sequelize, Sequelize);
@@ -70,6 +72,7 @@ db.workedHours = require("./worked-hours.model")(sequelize, Sequelize);
 
 //for core class vendors and employees
 db.vendor=require("./vendor.model")(sequelize, Sequelize);
+db.employee=require("./employee.model")(sequelize, Sequelize);
 
 //This section is for testing purposes
 db.demo = require("./demo.model")(sequelize, Sequelize);
@@ -81,6 +84,12 @@ db.demo2.belongsTo(db.demo1,{
   foreignKey: "demo1Id",
   as: "demo1"
 })
+
+//db.employee.hasOne(db.users,{as: "users"});
+//db.users.belongsTo(db.employee,{
+//  foreignKey: "username",
+//  as: "username"
+//})
 //Testing section ends
 
 // ----------- Project Management Starts -------------

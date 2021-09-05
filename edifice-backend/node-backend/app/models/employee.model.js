@@ -2,7 +2,8 @@ module.exports = (sequelize, Sequelize) => {
     const Employee = sequelize.define("employee", {
       id: {
         type:Sequelize.INTEGER,
-        primaryKey: true   
+        primaryKey: true, 
+        allowNull: false  
       },
       name: {
         type: Sequelize.STRING
@@ -16,12 +17,16 @@ module.exports = (sequelize, Sequelize) => {
       mobile: {
         type: Sequelize.STRING
       },
-      projCountt:{
+      projCount:{
           type:Sequelize.INTEGER
       },
       other: {
         type: Sequelize.STRING
       },
+      username:{
+        type: Sequelize.STRING
+        
+      }
     }, {
         freezeTableName: true,
     });
