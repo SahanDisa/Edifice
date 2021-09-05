@@ -6,6 +6,7 @@ class PunchlistDataService {
     }
 
     create(data) {
+        console.log("create wena service ekata aawa")
         return http.post(`/projects/punchlist/`, data);
     }
 

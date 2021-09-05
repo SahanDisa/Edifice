@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import PortfolioDataService from "../../../services/portfolio.service";
 import DocumentDataService from "./../../../services/documentfile.service";
+import MilestoneService from "../../../services/milestone.service";
+import PortfolioProgressService from "../../../services/portfolioprogress.service";
 import Typography from '@material-ui/core/Typography';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -77,6 +79,9 @@ export default class PortfolioHome extends Component {
       this.retrieveDrawingStatus = this.retrieveDrawingStatus.bind(this);
       this.retrieveDepartments = this.retrieveDepartments.bind(this);
       this.retriveMilestones = this.retriveMilestones.bind(this);
+      this.findCompleteCount = this.findCompleteCount.bind(this);
+      this.checkMilestone = this.checkMilestone.bind(this);
+      this.getPoints = this.getPoints.bind(this);
       
       this.state = {
         drawings: [],
@@ -84,6 +89,10 @@ export default class PortfolioHome extends Component {
         milestones: [],
         currentIndex: -1,
         content: "",
+        milestoneCount: 0,
+        completeMilestoneCount: 0,
+
+
         drawingComplete: 0,
         drawingPending: 0,
         drawingIncomplete: 0,
@@ -91,6 +100,9 @@ export default class PortfolioHome extends Component {
         documentPending: 0,
         documentIncomplete: 0,
         id: this.props.match.params.id,
+        projectId: this.props.match.params.id,
+
+        points: [],
       };
     }
   
@@ -99,6 +111,20 @@ export default class PortfolioHome extends Component {
       this.retrieveDocumentStatus();
       this.retrieveDepartments(this.props.match.params.id);
       this.retriveMilestones(this.props.match.params.id);
+      this.findCompleteCount(this.props.match.params.id);
+      this.getPoints(this.props.match.params.id);
+    }
+    getPoints(id){
+      PortfolioProgressService.getAll(id)
+        .then(response => {
+          this.setState({
+            points: response.data
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
     retrieveDepartments(id){
       PortfolioDataService.getAllDep(id)
@@ -116,9 +142,11 @@ export default class PortfolioHome extends Component {
       PortfolioDataService.getAllMilestones(id)
         .then(response => {
           this.setState({
-            milestones: response.data
+            milestones: response.data,
+            milestoneCount: response.data.length
           });
           console.log(response.data);
+          //console.log("Milestone count : "+this.state.milestoneCount);
         })
         .catch(e => {
           console.log(e);
@@ -194,10 +222,68 @@ export default class PortfolioHome extends Component {
           console.log(e);
         });
     }
+    findCompleteCount(id){
+      MilestoneService.findCompleted(id)
+        .then(response => {
+          this.setState({
+            completeMilestoneCount: response.data.length
+          });
+          //console.log("completeMilestoneCount : "+this.state.completeMilestoneCount);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+    checkMilestone(event){
+      console.log("checked PrevCount : "+ this.state.completeMilestoneCount);
+      //console.log(event.target.value); // value of id
+      var data = {
+        id: event.target.value,
+        completed: true,
+      };
+      
+      MilestoneService.update(event.target.value, data)
+        .then(response => {
+          this.setState({
+            completeMilestoneCount: this.state.completeMilestoneCount + 1,
+            }
+          );
+          console.log(response.data);
+          console.log("New Count : "+this.state.completeMilestoneCount);
+        })
+        .catch(e => {
+          console.log(e);
+      });
+      var datapoint = {
+        name : (new Date().getFullYear()) + " "+(new Date().toLocaleString('en-us', { month: 'long' })),
+        progress: ( (this.state.completeMilestoneCount + 1)/this.state.milestoneCount).toFixed(3),
+        projectId: this.state.projectId,
+      }
+      console.log("Plot Function : "+datapoint.name+" "+datapoint.progress+" "+datapoint.projectId);
+
+      PortfolioProgressService.create(datapoint)
+      .then(response => {
+        this.setState({
+          id: response.data.id,
+          name: response.data.name,
+          progress: response.data.progress,
+          projectId: response.data.projectId,
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+      window.location.reload();
+    }
+    
+    uncheckMilestone(){
+      console.log("unchecked");
+    }
  
     render() {
         const { milestones, departments, currentIndex,id,drawingComplete,drawingPending,drawingIncomplete,
-          documentComplete,documentPending,documentIncomplete} = this.state;
+          documentComplete,documentPending,documentIncomplete,points} = this.state;
         
         const dataPie = [
             { name: 'Completed', value:  (drawingComplete+documentComplete)},
@@ -255,15 +341,16 @@ export default class PortfolioHome extends Component {
                   <LineChart
                     width={500}
                     height={300}
-                    data={dataline}
+                    data={points}
                   >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="pv" stroke="#273F7D" activeDot={{ r: 8 }} />
-                    <Line type="monotone" dataKey="uv" stroke="#EF253D" />
+                    {/* <Line type="monotone" dataKey="pv" stroke="#273F7D" activeDot={{ r: 8 }} /> */}
+                    {/* <Line type="monotone" dataKey="uv" stroke="#EF253D" /> */}
+                    <Line type="monotone" dataKey="progress" stroke="#273F7D" activeDot={{ r: 8 }} />
                   </LineChart>
                   </div>
                 </div>   
@@ -386,7 +473,13 @@ export default class PortfolioHome extends Component {
                       <Typography variant="h6" component="h1">
                         {milestone.title}
                       </Typography>
-                      <Typography>{milestone.description}</Typography>
+                      <Typography>
+                      {milestone.description}
+                      { milestone.completed ? 
+                      <input type="checkbox" name="check" value={milestone.id} onChange={this.uncheckMilestone} checked></input>
+                      : 
+                      <input type="checkbox" name="uncheck" value={milestone.id} onChange={this.checkMilestone}></input>}
+                      </Typography>
                     </Paper>
                     </TimelineContent>
                   </TimelineItem>

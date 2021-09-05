@@ -1,35 +1,37 @@
-const db = require("../../models/index");
+const db = require("../../models/index.js");
 const PunchListTypes = db.punchlisttypes;
 
 // create a new punch list types
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title && !req.body.description) {
+  if (!req.body.title) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
     return;
   }
 
-  // Create a Project
-  const punchlisttypes = {
+  // Create a Punch List Types
+  const plt = {
     title: req.body.title,
     description: req.body.description,
-    projectId: req.body.projectId,
+    projectId: req.body.id
   };
 
-  // Save Project in the database
-  PunchListTypes.create(punchlisttypes)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the punch list types."
-      });
+  // Save Punch List Type in the database
+  PunchListTypes.create(plt)
+  .then(data => {
+    console.log("controller ekata aawa");
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while creating the punch list types."
     });
+  });
 };
+
 // Get drawings category for a given project
 exports.findAll = (req, res) => {
     const id = req.params.id;
@@ -47,7 +49,7 @@ exports.findAll = (req, res) => {
       });  
   };
 
-//Find a single drawing by Id
+// Find a single drawing by Id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 

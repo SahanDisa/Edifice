@@ -4,47 +4,54 @@ import cellEditFactory from 'react-bootstrap-table2-editor';
 
 
 const data = [
-    {id: 1, name: 'randie pathirage',role:'Engineer', edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 2, name: 'Osumali Liyanage', role:'Project Manager',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 3, name: 'Shanuka Fernando', role:'Project Manager',  edit:<a href="/editUser" className="btn btn-primary">edit</a>},
-    {id: 4, name: 'Sahan Dissanayaka', role:'Quanttity Surveyor',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 5, name: 'Buddhika Ranasinghe', role:'Engineer',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>},
-    {id: 6, name: 'Malithya Fernando',role:'Administrator',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>}
+    {id: 1, name: 'randie pathirage',role:'Engineer',email:'cat@gmail.com',mobile:'0215448990', edit:<a href="/editUser" className="btn btn-primary"> edit</a>, delete:<a href="/deleteUser" className="btn btn-danger"> Delete</a>},
+    {id: 2, name: 'Osumali Liyanage', role:'Project Manager',email:'cat@gmail.com',mobile:'0215448990',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>, delete:<a href="/deleteUser" className="btn btn-danger"> Delete</a>},
+    {id: 3, name: 'Shanuka Fernando', role:'Project Manager',email:'cat@gmail.com',mobile:'0215448990',  edit:<a href="/editUser" className="btn btn-primary">edit</a>, delete:<a href="/deleteUser" className="btn btn-danger"> Delete</a>},
+    {id: 4, name: 'Sahan Dissanayaka', role:'Quanttity Surveyor',email:'cat@gmail.com',mobile:'0215448990',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>, delete:<a href="/deleteUser" className="btn btn-danger"> Delete</a>},
+    {id: 5, name: 'Buddhika Ranasinghe', role:'Engineer',email:'cat@gmail.com',mobile:'0215448990',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>, delete:<a href="/deleteUser" className="btn btn-danger"> Delete</a>},
+    {id: 6, name: 'Malithya Fernando',role:'Administrator',email:'cat@gmail.com',mobile:'0215448990',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>, delete:<a href="/deleteUser" className="btn btn-danger"> Delete</a>}
   ];
   const columns = [{
     dataField: 'id',
     text: 'Id',
     headerStyle: (column, colIndex) => {
-        return { width: '10%', textAlign: 'center' };}
+        return { width: '7%', textAlign: 'center' };}
   }, {
     dataField: 'name',
     text: 'Name',
     headerStyle: (column, colIndex) => {
-        return { width: '70%', textAlign: 'center' };}
+        return { width: '22%', textAlign: 'center' };}
   }, {
     dataField: 'role',
     text: 'Role',
     headerStyle: (column, colIndex) => {
-        return { width: '20%', textAlign: 'center' };}
+        return { width: '18%', textAlign: 'center' };}
   },
   {
-    dataField: '',
+    dataField: 'email',
     text: 'Email',
     headerStyle: (column, colIndex) => {
-        return { width: '20%', textAlign: 'center' };}
+        return { width: '18%', textAlign: 'center' };}
   },
   {
-    dataField: 'delete',
+    dataField: 'mobile',
     text: 'Mobile',
     headerStyle: (column, colIndex) => {
-        return { width: '20%', textAlign: 'center' };}
+        return { width: '13%', textAlign: 'center' };}
   },
   {
     dataField: 'edit',
     text: '',
     headerStyle: (column, colIndex) => {
-        return { width: '20%', textAlign: 'center' };}
-  }];
+        return { width: '10%', textAlign: 'center' };}
+  },
+  {
+    dataField: 'delete',
+    text: '',
+    headerStyle: (column, colIndex) => {
+        return { width: '10%', textAlign: 'center' };}
+  }  
+];
 
 
 class Emp extends Component {
@@ -57,7 +64,7 @@ class Emp extends Component {
                 <a class="nav-link active" aria-current="page" href="#">Employees</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/vendors">Vendors</a>
+                <a class="nav-link" href="/vendor">Vendors</a>
               </li>
             </ul>
 
