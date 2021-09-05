@@ -5,6 +5,7 @@ import DrawingDataService from "./../../../services/drawing.service";
 import PortfolioDataService from "../../../services/portfolio.service";
 import DocumentDataService from "./../../../services/documentfile.service";
 import MilestoneService from "../../../services/milestone.service";
+import PortfolioProgressService from "../../../services/portfolioprogress.service";
 import Typography from '@material-ui/core/Typography';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -98,6 +99,7 @@ export default class PortfolioHome extends Component {
         documentPending: 0,
         documentIncomplete: 0,
         id: this.props.match.params.id,
+        projectId: this.props.match.params.id,
       };
     }
   
@@ -217,24 +219,45 @@ export default class PortfolioHome extends Component {
         });
     }
     checkMilestone(event){
-      console.log("checked");
-      console.log(event.target.value);
+      console.log("checked PrevCount : "+ this.state.completeMilestoneCount);
+      //console.log(event.target.value); // value of id
       var data = {
         id: event.target.value,
         completed: true,
       };
-      console.log(data);
+      
       MilestoneService.update(event.target.value, data)
         .then(response => {
           this.setState({
-            completeMilestoneCount: this.state.milestoneCount + 1,
+            completeMilestoneCount: this.state.completeMilestoneCount + 1,
             }
           );
           console.log(response.data);
+          console.log("New Count : "+this.state.completeMilestoneCount);
         })
         .catch(e => {
           console.log(e);
+      });
+      var datapoint = {
+        name : (new Date().getFullYear()) + " "+(new Date().toLocaleString('en-us', { month: 'long' })),
+        progress: ( (this.state.completeMilestoneCount + 1)/this.state.milestoneCount).toFixed(3),
+        projectId: this.state.projectId,
+      }
+      console.log("Plot Function : "+datapoint.name+" "+datapoint.progress+" "+datapoint.projectId);
+
+      PortfolioProgressService.create(datapoint)
+      .then(response => {
+        this.setState({
+          id: response.data.id,
+          name: response.data.name,
+          progress: response.data.progress,
+          projectId: response.data.projectId,
         });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
     }
     
     uncheckMilestone(){
