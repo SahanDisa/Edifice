@@ -2,18 +2,20 @@ const db = require("./../models/index.js");
 const Employee = db.employee;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Project
+// Create and Save a new Employee
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.id) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Content can not be empty!",
+      //cat:req.body
     });
     return;
   }
 
   // Create Employee
   const employee = {
+    id:req.body.id,
     name: req.body.name,
     role: req.body.role,
     email: req.body.email,
@@ -23,7 +25,7 @@ exports.create = (req, res) => {
   };
 
   // Save Employee in database
-  Employee.create(project)
+  Employee.create(employee)
     .then(data => {
       res.send(data);
     })
@@ -47,7 +49,7 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving projects."
+            err.message || "Some error occurred while retrieving employees."
         });
       });
 };
@@ -62,7 +64,7 @@ exports.findOne = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Project with id=" + id
+          message: "Error retrieving Employee with id=" + id
         });
       });  
 };
@@ -79,7 +81,7 @@ exports.findLastOne = (req,res) =>{
   .catch(err => {
     res.status(500).send({
       message:
-        err.message || "Some error occurred while retrieving projects."
+        err.message || "Some error occurred while retrieving Employees."
     });
   });
 }
@@ -123,13 +125,13 @@ exports.delete = (req, res) => {
           });
         } else {
           res.send({
-            message: `Cannot delete Project with id=${id}. Maybe Project was not found!`
+            message: `Cannot delete Employee with id=${id}. Maybe Employee was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Project with id=" + id
+          message: "Could not delete Employee with id=" + id
         });
       });
 };
