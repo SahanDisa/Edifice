@@ -18,8 +18,9 @@ class AddWorker extends Component {
           workers: [],
           currentIndex: -1,
           content: "",
+          workerId:"",
           date:"",
-          code:"",
+          timesheetId:this.props.timesheetId,
           status:"Pending",
           id: this.props.projectId
         };
@@ -61,14 +62,14 @@ class AddWorker extends Component {
       addWorker() {
         var data = {
           workerId: "12",
-          code:  this.state.code,
+          timesheetId: this.state.timesheetId,
         };
     
         WorkedHoursDataService.create(data)
           .then(response => {
             this.setState({
                 workerId: response.data.workerId,
-                code:  response.data.code,
+                timesheetId:  response.data.timesheetId,
             });
             console.log(response.data);
           })
@@ -95,7 +96,7 @@ class AddWorker extends Component {
 
                     <div className="modal-body" align ="left">
 
-                        <div class="accordion" id="accordionExample">
+                      <div class="accordion" id="accordionExample">
                             {crews && crews.map((crew, index) => (
                                 <div class="card" key={index}>
                                     <div class="card-header" id="headingOne">
@@ -127,7 +128,8 @@ class AddWorker extends Component {
                                                                 <button 
                                                                 className="btn btn-success m-1"
                                                                 type="button"
-                                                                onClick={this.addWorker} >
+                                                                //onClick={this.addWorker(worker.wId)}
+                                                                onClick={this.addWorker}  >
                                                                     Add 
                                                                 </button>
 
@@ -144,7 +146,7 @@ class AddWorker extends Component {
                                     </div>
                                 </div>
                             ))}  
-                        </div>
+                                      </div>
                     </div>
                 </div>
             </div>

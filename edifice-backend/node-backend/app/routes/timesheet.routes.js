@@ -5,10 +5,10 @@ module.exports = app => {
   
     // Create a new timesheets
     router.post("/", timesheets.create);
-/*  
-    // Retrieve all timesheets
-    router.get("/list/", timesheets.findAll);
   
+    // Retrieve all timesheets
+    router.get("/list/:id", timesheets.findAll);
+ /* 
     // Retrieve all published workers
     router.get("/published", worker.findAllPublished);
   
