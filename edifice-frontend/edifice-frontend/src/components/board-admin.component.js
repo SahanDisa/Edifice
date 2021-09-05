@@ -38,6 +38,7 @@ export default class BoardUser extends Component {
     this.getVendorCount=this.getVendorCount.bind(this);
     this.getprojectDetails=this.getprojectCount.bind(this);
     this.state = {
+      projects:[],
       content: "",
       projectCount: 0,
       vendorCount: 0,
