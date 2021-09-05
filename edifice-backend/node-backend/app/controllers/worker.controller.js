@@ -65,31 +65,31 @@ exports.findOne = (req, res) => {
         });
       });  
 };*/
-/*
-// Update a crew by the id in the request
+
+// Update a worker by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    crew.update(req.body, {
+    Worker.update(req.body, {
       where: { id: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "crew was updated successfully."
+            message: "worker was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update crew with id=${id}. Maybe crew was not found or req.body is empty!`
+            message: `Cannot update crew with id=${id}. Maybe worker was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating crew with id=" + id
+          message: err
         });
       });
-};*/
+};
 /*
 // Delete a crew with the specified id in the request
 exports.delete = (req, res) => {
