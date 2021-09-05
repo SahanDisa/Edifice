@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import PortfolioDataService from "../../../services/portfolio.service";
 import DocumentDataService from "./../../../services/documentfile.service";
+import MilestoneService from "../../../services/milestone.service";
 import Typography from '@material-ui/core/Typography';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -77,6 +78,8 @@ export default class PortfolioHome extends Component {
       this.retrieveDrawingStatus = this.retrieveDrawingStatus.bind(this);
       this.retrieveDepartments = this.retrieveDepartments.bind(this);
       this.retriveMilestones = this.retriveMilestones.bind(this);
+      this.findCompleteCount = this.findCompleteCount.bind(this);
+      this.checkMilestone = this.checkMilestone.bind(this);
       
       this.state = {
         drawings: [],
@@ -84,6 +87,10 @@ export default class PortfolioHome extends Component {
         milestones: [],
         currentIndex: -1,
         content: "",
+        milestoneCount: 0,
+        completeMilestoneCount: 0,
+
+
         drawingComplete: 0,
         drawingPending: 0,
         drawingIncomplete: 0,
@@ -99,6 +106,7 @@ export default class PortfolioHome extends Component {
       this.retrieveDocumentStatus();
       this.retrieveDepartments(this.props.match.params.id);
       this.retriveMilestones(this.props.match.params.id);
+      this.findCompleteCount(this.props.match.params.id);
     }
     retrieveDepartments(id){
       PortfolioDataService.getAllDep(id)
@@ -116,9 +124,11 @@ export default class PortfolioHome extends Component {
       PortfolioDataService.getAllMilestones(id)
         .then(response => {
           this.setState({
-            milestones: response.data
+            milestones: response.data,
+            milestoneCount: response.data.length
           });
           console.log(response.data);
+          console.log("Milestone count : "+this.state.milestoneCount);
         })
         .catch(e => {
           console.log(e);
@@ -193,6 +203,42 @@ export default class PortfolioHome extends Component {
         .catch(e => {
           console.log(e);
         });
+    }
+    findCompleteCount(id){
+      MilestoneService.findCompleted(id)
+        .then(response => {
+          this.setState({
+            completeMilestoneCount: response.data.length
+          });
+          console.log("completeMilestoneCount : "+this.state.completeMilestoneCount);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+    checkMilestone(event){
+      console.log("checked");
+      console.log(event.target.value);
+      var data = {
+        id: event.target.value,
+        completed: true,
+      };
+      console.log(data);
+      MilestoneService.update(event.target.value, data)
+        .then(response => {
+          this.setState({
+            completeMilestoneCount: this.state.milestoneCount + 1,
+            }
+          );
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+    
+    uncheckMilestone(){
+      console.log("unchecked");
     }
  
     render() {
@@ -386,7 +432,13 @@ export default class PortfolioHome extends Component {
                       <Typography variant="h6" component="h1">
                         {milestone.title}
                       </Typography>
-                      <Typography>{milestone.description}</Typography>
+                      <Typography>
+                      {milestone.description}
+                      { milestone.completed ? 
+                      <input type="checkbox" name="check" value={milestone.id} onChange={this.uncheckMilestone} checked></input>
+                      : 
+                      <input type="checkbox" name="uncheck" value={milestone.id} onChange={this.checkMilestone}></input>}
+                      </Typography>
                     </Paper>
                     </TimelineContent>
                   </TimelineItem>
