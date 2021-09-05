@@ -90,31 +90,31 @@ exports.update = (req, res) => {
         });
       });
 };
-/*
-// Delete a crew with the specified id in the request
+
+// Delete a worker with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    crew.destroy({
-      where: { id: id }
+    Worker.destroy({
+      where: { wId: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "crew was deleted successfully!"
+            message: "worker was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete crew with id=${id}. Maybe crew was not found!`
+            message: `Cannot delete worker with id=${id}. Maybe worker was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete crew with id=" + id
+          message: "Could not delete worker with id=" + id
         });
       });
-};*/
+};
 
 /*
 // Delete all Tutorials from the database.
