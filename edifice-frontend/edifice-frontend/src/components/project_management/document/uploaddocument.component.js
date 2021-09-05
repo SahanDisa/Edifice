@@ -163,6 +163,7 @@ export default class UploadDocuments extends Component {
 //         })
 //           .then((response) => {
 //             setMessage(response.data.message);
+//             setNewMessage(response.data.message);
 //             return UploadService.getFiles();
 //           })
 //           .then((files) => {
