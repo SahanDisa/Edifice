@@ -71,6 +71,7 @@ db.workedHours = require("./worked-hours.model")(sequelize, Sequelize);
 
 //for core class vendors and employees
 db.vendor=require("./vendor.model")(sequelize, Sequelize);
+db.employee=require("./employee.model")(sequelize, Sequelize);
 
 //This section is for testing purposes
 db.demo = require("./demo.model")(sequelize, Sequelize);
@@ -82,6 +83,12 @@ db.demo2.belongsTo(db.demo1,{
   foreignKey: "demo1Id",
   as: "demo1"
 })
+
+//db.employee.hasOne(db.users,{as: "users"});
+//db.users.belongsTo(db.employee,{
+//  foreignKey: "username",
+//  as: "username"
+//})
 //Testing section ends
 
 // ----------- Project Management Starts -------------

@@ -132,6 +132,7 @@ import PaymentHome from "./components/financial_management/commitments/payments.
 import EditSingleCommitment from "./components/financial_management/commitments/commitment-edit.component";
 import ViewSingleSov from "./components/financial_management/commitments/sov-singlepage.component";
 import ViewSingleBudget from "./components/financial_management/budget/budget-singlepage.component";
+import AddEmployee from "./components/core_tools/edifice-directory/add-emp.component";
 //import Report from "./components/report/report.component";
 
 class App extends Component {
@@ -313,7 +314,7 @@ class App extends Component {
             <Route path="/managesdailylogs/update" component={UpdateDls} />
             <Route path="/managesdailylogs/view" component={ViewDls} />
             
-            <Route path="/addUser" component={AddUser} />
+            <Route path="/addUser" component={AddEmployee} />
             <Route path="/editUser" component={EditUser} />
             <Route path="/vendor" component={Vendors} />
             <Route path="/employees" component={Emp} />

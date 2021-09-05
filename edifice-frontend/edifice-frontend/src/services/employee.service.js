@@ -25,6 +25,10 @@ class EmployeeDataService {
     return http.delete(`/employee/${id}`);
   }
 
+  findlastEmployee(){
+    return http.get(`/employee/app/last`);
+  }
+
 }
 
 export default new EmployeeDataService();

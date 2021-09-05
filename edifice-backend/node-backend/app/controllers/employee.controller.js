@@ -21,7 +21,8 @@ exports.create = (req, res) => {
     email: req.body.email,
     mobile: req.body.mobile,
     projCount:req.body.projCount,
-    other:req.body.other
+    other:req.body.other,
+    userid:req.body.id
   };
 
   // Save Employee in database
