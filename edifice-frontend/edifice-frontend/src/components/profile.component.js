@@ -125,9 +125,9 @@ export default class Profile extends Component {
           <div className="col-6">
           <h3>My Account</h3>
           <p>
-            {/* <strong>Token:</strong>{" "}
+            <strong>Token:</strong>{" "}
             {currentUser.accessToken.substring(0, 20)} ...{" "}
-            {currentUser.accessToken.substr(currentUser.accessToken.length - 20)} */}
+            {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
           </p>
           <div className="form-group">
               <label htmlFor="startDate"><h6>Username : </h6></label>

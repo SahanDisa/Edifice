@@ -20,7 +20,8 @@ exports.create = (req, res) => {
     tea_start: req.body.tea_start,
     tea_end: req.body.tea_end,
     stop: req.body.stop,
-    timeshhetId: req.body.timeshhetId
+    timesheetCode: req.body.timesheetId,
+    workerWId: req.body.workerId
 
   };
   // Save workedHours in the database

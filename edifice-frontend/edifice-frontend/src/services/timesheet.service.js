@@ -2,16 +2,17 @@ import http from "../http-common.js";
 
 class TimesheetDataService {
   getAll(id) {
+    //console.log(id)
     return http.get(`/timesheets/list/${id}`);
   }
-
+/*
   getAll() {
     return http.get(`/timesheets/list/`);
   }
-  /*  get(id) {
-    return http.get(`/projects/${id}`);
-  }
-  */
+  get(id) {
+    return http.get(`/timesheets/list/${id}`);
+  }*/
+
   create(data) {
     console.log(data)
     return http.post("/timesheets", data);

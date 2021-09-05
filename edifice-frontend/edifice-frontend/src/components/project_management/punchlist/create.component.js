@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import Card from 'react-bootstrap/Card';
-import PunchlistDataService from "./../../../services/project_management/punchlist.service.js";
+import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
+import Timeline from '@material-ui/lab/Timeline';
+import TimelineItem from '@material-ui/lab/TimelineItem';
+import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
+import TimelineConnector from '@material-ui/lab/TimelineConnector';
+import TimelineContent from '@material-ui/lab/TimelineContent';
+import TimelineDot from '@material-ui/lab/TimelineDot';
 
 class CreatePL extends Component {
     constructor(props) {
@@ -60,7 +66,6 @@ class CreatePL extends Component {
     }
 
     savePunchListItem() {
-        console.log("save wunoo");  
         var data = {
             status: this.state.status,
             duedate: this.state.duedate,
@@ -135,28 +140,55 @@ class CreatePL extends Component {
                                 </div>
                             </div>
                         </div>
-                    </div> */}
-                    
+                    </div> */}  
+                    <div className="container row">
+                        {lastproject && lastproject.map((project, index) => (
+                            <div
+                                className={
+                                "container col-3" +  (index === currentIndex ? "active" : "")
+                                }
+                                key={index}
+                            >
+                            {/* unit data */}
+                            <Link to={"/adddepartment/"+project.id} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>Add Departments</Link>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             ) : (
             <div className="">
                 <h2>Add New Punch List Item</h2><hr/>
-                <div className="mb-3">
-                    <div>
-                        <ul class="nav nav-tabs">
+                <div className="row mb-3">
+                    <div className="col-sm-8">
+                    <h5>Step 1: Basic Details</h5>
+                        {/* <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <a class="nav-link active" id="detailsT" data-toggle="tab" href="#det" aria-controls="det" aria-selected="true">Details</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" id="photosT" data-toggle="tab" href="#photos" aria-controls="photos" aria-selected="true">Photos</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" id="assigneesT" data-toggle="tab" href="#assign" aria-controls="assign" aria-selected="true">Assignees</a>
                             </li>
-                        </ul>
+                        </ul> */}
                         
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="det" role="tabpanel" aria-labelledby="Details">
+                        {/* <div class="tab-content" id="myTabContent"> */}
+                            {/* <div class="tab-pane fade show active" id="det" role="tabpanel" aria-labelledby="Details"> */}
                                 <form>
                                     <div className="form-row">
-                                        <div className="form-group col-md-3">
+                                        <div className="form-group col-md-6">
+                                            <label htmlFor="">Title</label>
+                                            <input
+                                                className="form-control"
+                                                name="title"
+                                                value={this.state.title}
+                                                onChange={this.onChangeTitle}
+                                                type="text"
+                                                required
+                                            />
+                                        </div>
+                                        <div className="form-group col-md-6">
                                             <label htmlFor="">Status</label>
                                             <input
                                                 className="form-control"
@@ -166,7 +198,20 @@ class CreatePL extends Component {
                                                 readOnly
                                             />
                                         </div>
-                                        <div className="form-group col-md-3">
+                                    </div>
+                                    <div className="form-row">
+                                        <div className="form-group col-md-6">
+                                            <label htmlFor="">Type</label>
+                                            <input
+                                                className="form-control"
+                                                name="type"
+                                                value={this.state.type}
+                                                onChange={this.onChangeType}
+                                                type="text"
+                                                required
+                                            />
+                                        </div>
+                                        <div className="form-group col-md-6">
                                             <label htmlFor="">Location</label>
                                             <input
                                                 className="form-control"
@@ -177,13 +222,15 @@ class CreatePL extends Component {
                                                 required
                                             />
                                         </div>
-                                        <div className="form-group col-md-3">
-                                            <label htmlFor="">Type</label>
+                                    </div>
+                                    <div className="form-row">
+                                        <div className="form-group col-md-9">
+                                            <label htmlFor="">Description</label>
                                             <input
                                                 className="form-control"
-                                                name="type"
-                                                value={this.state.type}
-                                                onChange={this.onChangeType}
+                                                name="description"
+                                                value={this.state.description}
+                                                onChange={this.onChangeDescription}
                                                 type="text"
                                                 required
                                             />
@@ -201,82 +248,60 @@ class CreatePL extends Component {
                                             />
                                         </div>
                                     </div>
-                                    <div className="form-row">
-                                        <div className="form-group col-md-3">
-                                            <label htmlFor="">Title</label>
-                                            <input
-                                                className="form-control"
-                                                name="title"
-                                                value={this.state.title}
-                                                onChange={this.onChangeTitle}
-                                                type="text"
-                                                required
-                                            />
-                                        </div>
-                                        <div className="form-group col-md-9">
-                                            <label htmlFor="">Description</label>
-                                            <input
-                                                className="form-control"
-                                                name="description"
-                                                value={this.state.description}
-                                                onChange={this.onChangeDescription}
-                                                type="text"
-                                                required
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div class="accordion mt-2" id="accordionExample">
-                                        <div class="card">
-                                            <div class="card-header" id="headingOne">
-                                                <h2 class="mb-0">
-                                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Link Drawings</button>
-                                                </h2>
-                                            </div>
-                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                <div class="card-body">
-                                                    <a href="#" className="btn btn-success mt-2 mr-2">Add Drawings</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" id="headingTwo">
-                                                <h2 class="mb-0">
-                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Link Photos</button>
-                                                </h2>
-                                            </div>
-                                            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                                <div class="card-body">
-                                                    <a href="#" className="btn btn-success mt-2 mr-2">Add photos</a>
-                                                </div>
-                                            </div>
-                                        </div>  
-                                    </div>
+                                    <hr />
                                     <button
                                         type="button"
                                         // data-toggle="modal"
                                         // data-target="#successfullyaddedModal"
                                         onClick={this.savePunchListItem}
-                                        className="btn btn-primary mt-2 mr-2"
-                                    >Next: Add Assignees</button>
+                                        className="btn btn-primary mr-2"
+                                    >Next: Link Photos</button>
                                     <a href="/punchlist" className="">Cancel</a>
                                 </form>
-                            </div>          
-                            
-                            <div class="tab-pane fade" id="assign" role="tabpanel" aria-labelledby="Assignees">
+                            {/* </div> */}
+                            {/* <div class="tab-pane fade" id="photos" role="tabpanel" aria-labelledby="Photos"> */}
                                 <div className="row">
-                                    <div className="col-sm-3 mr-2">
-                                        <Card style={{ width: '18rem' }} className="mt-2">
-                                            <Card.Body>
-                                                <a href="#" className="btn btn-success">Add Assignees</a>
-                                            </Card.Body>
-                                        </Card>
+                                    <div className="col-md-12 mt-2">
+                                        <h6>You can add photos related to the punch item from here.</h6>
+                                    </div>
+                                    <div className="col-sm-3 mr-2 mb-2">
+                                        <a href="#" className="btn btn-success">+ Add</a>
                                     </div>
                                 </div>
-                                <button className="btn btn-primary mt-2 mr-2">Save</button>
+                                <hr />
+                                <button className="btn btn-primary mr-2">Next: Add Assignees</button>
                                 <a href="/punchlist" className="">Cancel</a>
-                            </div>
-                        </div>
+                            {/* </div> */}
+                            {/* <div class="tab-pane fade" id="assign" role="tabpanel" aria-labelledby="Assignees"> */}
+                                <div className="row">
+                                    <div className="col-md-12 mt-2">
+                                        <h6>You can assign an Engineer to co-ordinate this punch list it from here.</h6>
+                                    </div>
+                                    <div className="col-sm-3 mr-2 mb-2">
+                                        <a href="#" className="btn btn-success">+ Add</a>
+                                    </div>
+                                </div>
+                                <hr />
+                                <button className="btn btn-primary mr-2">Save</button>
+                                <a href="/punchlist" className="">Cancel</a>
+                            {/* </div> */}
+                        {/* </div> */}
+                    </div>
+                    <div className="col-sm-4">
+                        <Timeline>
+                            <TimelineItem>
+                                <TimelineSeparator><TimelineDot /><TimelineConnector /></TimelineSeparator>
+                                <TimelineContent><h5><strong>Step 1</strong><br/>Basic Details</h5></TimelineContent>
+                            </TimelineItem>
+                            <TimelineItem>
+                            <TimelineSeparator><TimelineDot /><TimelineConnector /></TimelineSeparator>
+                                <TimelineContent><h6><strong>Step 2</strong><br/>Link Photos</h6></TimelineContent>
+                            </TimelineItem>
+                            <TimelineItem>
+                                <TimelineSeparator><TimelineDot /></TimelineSeparator>
+                                <TimelineContent><h6><strong>Step 2</strong><br/>Add Assignees</h6></TimelineContent>
+                            </TimelineItem>
+                        </Timeline>
                     </div>
                 </div>
             </div>

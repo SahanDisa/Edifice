@@ -122,11 +122,11 @@ export default class BoardUser extends Component {
           </div> */}
           <div className="col-lg-3 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" title="Manage meetings">
-            <a className="d-block nav-heading text-center mb-2 mt-2" data-toggle="modal" data-target="#meetingModal" href="#" style={{ 'text-decoration': 'none' }}>
+            <Link className="d-block nav-heading text-center mb-2 mt-2" data-toggle="modal" data-target="#meetingModal" to="#" style={{ 'text-decoration': 'none' }}>
               <img src={meetingIcon} alt="" width="50"/>
               <h3 className="h5 nav-heading-title mb-0">Meetings</h3>                
               {/* <span className="fs-sm fw-normal text-muted">Manage all aspects of your project meetings from agenda distribution</span> */}
-            </a>
+            </Link>
             </div>
           </div>
           <div className="col-lg-3 mb-grid-gutter pb-2">
@@ -179,11 +179,11 @@ export default class BoardUser extends Component {
           </div>
           <div className="col-lg-3 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" title="Manage Punch Items">
-              <a className="d-block nav-heading text-center mb-2 mt-2" href="/punchlist" style={{ 'text-decoration': 'none' }}>
+              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/punchlist/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={punchlistIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Punch List</h3>
                 {/* <span className="fs-sm fw-normal text-muted">Manage punch items</span> */}
-              </a>
+              </Link>
             </div>
           </div>
           <div className="col-lg-3 mb-grid-gutter pb-2">
@@ -285,8 +285,8 @@ export default class BoardUser extends Component {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <a href="/meetingsconfiguration" className="btn btn-primary ml-5 mr-3"> Meeting Configuration</a>
-                  <a href="/managemeetings" className="btn btn-primary mr-6"> Manage Meetings</a>
+                  <Link to={"/meetingsconfiguration/"+id} className="btn btn-primary ml-5 mr-3"> Meeting Configuration</Link>
+                  <Link to={"/managemeetings/"+id} className="btn btn-primary mr-6"> Manage Meetings</Link>
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Close</button>

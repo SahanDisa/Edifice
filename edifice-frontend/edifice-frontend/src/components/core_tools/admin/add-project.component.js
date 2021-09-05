@@ -106,25 +106,19 @@ export default class AddProject extends Component {
         {this.state.submitted ? (
           <div>
             <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={this.newProject}>
-              Add Project
-            </button>
+            <button className="btn btn-success" onClick={this.newProject}>Add Project</button>
             <div className="container row">
-            {lastproject &&
-              lastproject.map((project, index) => (
+              {lastproject && lastproject.map((project, index) => (
                 <div
                     className={
-                    "container col-3" +
-                    (index === currentIndex ? "active" : "")
+                      "container col-3" +  (index === currentIndex ? "active" : "")
                     }
                     key={index}
                 >
-                {/* unit data */}
-                <Link to={"/adddepartment/"+project.id} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
-                       Add Departments
-                </Link>
+                  {/* unit data */}
+                  <Link to={"/adddepartment/"+project.id} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>Add Departments</Link>
                 </div>
-            ))}
+              ))}
             </div>
           </div>
         ) : (

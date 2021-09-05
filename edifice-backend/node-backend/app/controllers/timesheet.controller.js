@@ -31,14 +31,14 @@ exports.create = (req, res) => {
       });
     });
 };
-/*
-// Retrieve all workers from a given project
+
+// Retrieve all timesheets from a given project
 exports.findAll = (req, res) => {
-    //const id = req.query.id;
+    const id = req.query.id;
       
-    Worker.findAll(/*{ where: {
+    Timesheet.findAll(/*{ where: {
       projectId: id
-   // }}*/ /*)
+     }}*/)
      .then(data => {
         res.send(data);
       })
@@ -48,7 +48,7 @@ exports.findAll = (req, res) => {
             err.message || "Some error occurred while retrieving data"
         });
       });
-};*/
+};
 /*
 // Find a single crew with an id
 exports.findOne = (req, res) => {

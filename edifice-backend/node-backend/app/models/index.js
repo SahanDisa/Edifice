@@ -32,6 +32,7 @@ db.employee= require("./employee.model.js")(sequelize, Sequelize);
 db.projects = require("./project.model.js")(sequelize, Sequelize);
 db.departments = require("./department.model.js")(sequelize, Sequelize);
 db.milestones = require("./milestone.model.js")(sequelize, Sequelize);
+db.portfolioprogress = require("./portfolioprogress.model.js")(sequelize, Sequelize);
 db.projectuser = require("./projectuser.model")(sequelize, Sequelize);
 // Drawing Component Model Classes
 db.drawingcategory = require("./drawing-category.model")(sequelize, Sequelize);
@@ -101,6 +102,12 @@ db.departments.belongsTo(db.projects, {
 // One project has many milestones
 db.projects.hasMany(db.milestones, { as: "milestones" });
 db.milestones.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+db.projects.hasMany(db.portfolioprogress, { as: "progress" });
+db.portfolioprogress.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
@@ -181,6 +188,8 @@ db.users.belongsToMany(db.roles, {
   foreignKey: "userId",
   otherKey: "roleId"
 });
+
+
 
 // ---------------------------------------------------
 
