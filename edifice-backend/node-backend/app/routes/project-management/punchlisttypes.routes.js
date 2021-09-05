@@ -7,10 +7,10 @@ module.exports = app => {
     router.post("/", punchlisttypes.create);
   
     // Retrieve all Punch List Type for a project
-    // router.get("/:id", punchlisttypes.findAll);
+    router.get("/:id", punchlisttypes.findAll);
 
     // Retrive single Punch List Type for a project
-    // router.get("/single/:id", punchlisttypes.findOne);
+    router.get("/single/:id", punchlisttypes.findOne);
   
     app.use('/api/projects/punchlisttypes', router);
 };

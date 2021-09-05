@@ -11,12 +11,15 @@ class PunchList extends Component {
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.savePunchListType = this.savePunchListType.bind(this);
         this.newPunchListType = this.newPunchListType.bind(this);
+        this.retrievePLT = this.retrievePLT.bind(this);
 
         this.state = {
             id: null,
             title: "",
             description: "",
             projectId: this.props.match.params.id,
+            pltypes: [],
+            currentIndex: -1,
             submitted: false
         };
     }
@@ -53,7 +56,7 @@ class PunchList extends Component {
         console.log(response.data);
         })
         .catch(e => {
-            console.log(e);
+          console.log(e);
         });
     }
 
@@ -67,8 +70,25 @@ class PunchList extends Component {
         });
     }
 
+    componentDidMount() {
+        this.retrievePLT(this.props.match.params.id);
+    }
+
+    retrievePLT(projectId){
+        PunchListTypesDataService.getAll(projectId)
+        .then(response => {
+            this.setState({
+                pltypes: response.data
+            });
+        console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+
     render() {
-        const {projectId} = this.state;
+        const {projectId, pltypes, currentIndex} = this.state;
         return (
             <div className="">
                 {/* {this.state.submitted ? (
@@ -116,7 +136,7 @@ class PunchList extends Component {
                     </div> 
                 </div>
                 <h4>Punch List Types</h4><hr/>
-                {/* <form action="">
+                <div className="container">
                     <div className="form-row">
                         <div className="form-group col-md-3">
                             <label htmlFor="">Title</label>
@@ -144,12 +164,31 @@ class PunchList extends Component {
                             <label htmlFor="">.</label>
                             <button
                                 className="btn btn-primary"
-                                onClick={this.savePunchListType}
+                                onClick={()=>this.savePunchListType, this.newPunchListType}
                             >Add</button>
                         </div>
-                    </div> */}
-                    <Link to={"/managepunchlist/createtype/"+projectId} className="btn btn-primary mt-2">+ Add Another Punch List Type</Link>
-                {/* </form> */}
+                    </div>
+                    <div className="container row">
+                        {pltypes && pltypes.map((pltypes, index) => (
+                            <div className={"container col-3" + (index === currentIndex ? "active" : "")} key={index}>
+                                <Link to={"/punchlisttype/view/" + pltypes.id}>
+                                    <Card
+                                        bg={'secondary'}
+                                        text={'dark'}
+                                        style={{ width: '15rem' }}
+                                        className="bg-light mb-2"
+                                    >
+                                        {/* <Card.Img src={drawingcover} alt="Card image" />
+                                        <Card.ImgOverlay> */}
+                                            <Card.Title><h4>{pltypes.title}</h4></Card.Title>
+                                            <Card.Text>{pltypes.description == "" ? "No Description" : pltypes.description}</Card.Text>
+                                        {/* </Card.ImgOverlay> */}
+                                    </Card>
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                </div>
                 <h4>Punch Lists Items</h4><hr/>
                 <ul className="list-group">
                     <li className="list-group-item ">

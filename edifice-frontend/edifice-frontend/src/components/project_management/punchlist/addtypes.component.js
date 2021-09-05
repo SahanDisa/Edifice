@@ -63,17 +63,17 @@ class CreatePLTT extends Component {
     render() {
         return (
         <div className="">
-            {/* {this.state.submitted ? (
+            {this.state.submitted ? (
                 <div>
                     <div>
                         <h4>Punch List Type added successfully!</h4>
                         <button className="btn btn-success" onClick={this.newPunchListType}>Add Another punch list type</button>
                     </div>
                 </div>
-            ) : ( */}
+            ) : (
             <div className="">
                 <h2>Add New Punch List Type</h2><hr/>
-                <form action="">
+                <div className="container">
                     <div className="form-row">
                         <div className="form-group col-md-3">
                             <label htmlFor="">Title</label>
@@ -105,9 +105,9 @@ class CreatePLTT extends Component {
                             >Add</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
-        {/* )} */}
+        )}
         </div>
         );
     }
