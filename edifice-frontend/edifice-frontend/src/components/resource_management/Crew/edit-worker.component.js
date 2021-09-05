@@ -4,6 +4,12 @@ import WorkersDataService from "./../../../services/worker.service";
 class EditWorker extends Component {
   constructor(props) {
     super(props);
+    this.onChangeWId = this.onChangeWId.bind(this);
+    this.onChangeFirstName = this.onChangeFirstName.bind(this);
+    this.onChangeLastName = this.onChangeLastName.bind(this);
+    this.onChangeMobile = this.onChangeMobile.bind(this);
+    this.updateWorker=this.updateWorker.bind(this);
+
     this.state = {
       //crews: [],
       //workers: [],
@@ -15,6 +21,9 @@ class EditWorker extends Component {
       mobile:this.props.mobile
     };
   }
+  
+
+
     render() {
       const { wId,fristName,lastName, mobile} = this.state;
         return (  
