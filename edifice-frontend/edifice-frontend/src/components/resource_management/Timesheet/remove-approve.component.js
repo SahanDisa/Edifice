@@ -16,7 +16,7 @@ class Approve extends Component {
                     </div>
 
                     <div className="modal-body text-center">
-                        <p>Are you sure you want to aprove this timesheet?</p>
+                        <p>Are you sure you want to remove the aproval?</p>
                     </div>
 
                     <div className="modal-footer">

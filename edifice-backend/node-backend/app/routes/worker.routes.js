@@ -18,10 +18,10 @@ module.exports = app => {
     // Update a worker with id
     router.put("/update/:id", workers.update);
   
- /*   // Delete a worker with id
-    router.delete("/:id/", worker.delete);
+   // Delete a worker with id
+    router.delete("/delete/:id/", workers.delete);
   
-    // Delete all workers
+ /*    // Delete all workers
     router.delete("/", worker.deleteAll);
   */
     app.use('/api/workers', router);

@@ -11,10 +11,10 @@ module.exports = app => {
  /* 
     // Retrieve all published workers
     router.get("/published", worker.findAllPublished);
-  
-    // Retrieve a single worker with id
-    router.get("/:id", worker.findOne);
-  
+  */
+    // Retrieve a single timesheet with id
+    router.get("/:id", timesheets.findOne);
+ /* 
     // Update a worker with id
     router.put("/:id", worker.update);
   

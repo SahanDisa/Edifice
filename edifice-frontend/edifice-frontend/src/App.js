@@ -114,6 +114,7 @@ import NewCrew from "./components/resource_management/Crew/new-crew.component";
 import Schedule from "./components/resource_management/Schedule/schedule.component";
 import Equipments from "./components/resource_management/Equipment/equipment.component";
 import EquipDetails from "./components/resource_management/Equipment/equipmentDetails.component";
+import ViewTimesheet from "./components/resource_management/Timesheet/view-timesheet.component";
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
@@ -133,6 +134,7 @@ import PaymentHome from "./components/financial_management/commitments/payments.
 import EditSingleCommitment from "./components/financial_management/commitments/commitment-edit.component";
 import ViewSingleSov from "./components/financial_management/commitments/sov-singlepage.component";
 import ViewSingleBudget from "./components/financial_management/budget/budget-singlepage.component";
+import AddEmployee from "./components/core_tools/edifice-directory/add-emp.component";
 //import Report from "./components/report/report.component";
 
 class App extends Component {
@@ -315,7 +317,7 @@ class App extends Component {
             <Route path="/managesdailylogs/update/:id" component={UpdateDls} />
             <Route path="/managesdailylogs/view/:id" component={ViewDls} />
             
-            <Route path="/addUser" component={AddUser} />
+            <Route path="/addUser" component={AddEmployee} />
             <Route path="/editUser" component={EditUser} />
             <Route path="/vendor" component={Vendors} />
             <Route path="/employees" component={Emp} />
@@ -367,6 +369,7 @@ class App extends Component {
             <Route path="/equipDetails/:code" component={EquipDetails} />
             {/*<Route path="/equipDetails/:id/:code" component={EquipDetails} />*/}
             <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
+            <Route path="/viewTimesheet/:code" component={ViewTimesheet} />
                     
 
             {/*financial management */}

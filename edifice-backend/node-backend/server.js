@@ -33,6 +33,7 @@ require('./app/routes/user.routes')(app);
 require("./app/routes/project.routes")(app);
 require('./app/routes/department.routes')(app);
 require("./app/routes/milestone.routes")(app);
+require("./app/routes/portfolioprogress.routes")(app);
 require("./app/routes/drawing.routes")(app);
 require("./app/routes/drawing-category.routes")(app);
 require("./app/routes/drawrevision.routes")(app);
@@ -61,6 +62,7 @@ require('./app/routes/crew.routes')(app);
 require('./app/routes/worker.routes')(app);
 require('./app/routes/worked-hours.routes')(app);
 require('./app/routes/timesheet.routes')(app);
+require('./app/routes/employee.routes')(app);
 
 require('./app/routes/primecontract.routes')(app);
 require('./app/routes/invoice.routes')(app);
@@ -71,6 +73,10 @@ require('./app/routes/project-management/meetingcategory.routes')(app);
 
 require('./app/routes/project-management/punchlist.routes')(app);
 require('./app/routes/project-management/punchlisttypes.routes')(app);
+require('./app/routes/project-management/actionplantype.routes')(app);
+require('./app/routes/project-management/actionplan.routes')(app);
+require('./app/routes/project-management/actionplansection.routes')(app);
+require('./app/routes/project-management/actionplanitem.routes')(app);
 require('./app/routes/vendor.routes')(app);
 
 // simple route
