@@ -65,17 +65,18 @@ class EditWorker extends Component {
 
   updateWorker() {
     var data = {
-      wId:this.state.currentWorker.wId,
       firstName:this.state.currentWorker.firstName,
       lastName:this.state.currentWorker.lastName,
       mobile:this.state.currentWorker.mobile,
     };
     WorkerDataService.update(this.state.currentWorker.wId,data)
       .then(response => {
+        this.setState(prevState => ({
+          currentWorker: {
+            ...prevState.currentWorker,
+          }
+        }));
         console.log(response.data);
-        this.setState({
-          message: "The worker was updated successfully!"
-        });
       })
       .catch(e => {
         console.log(e);

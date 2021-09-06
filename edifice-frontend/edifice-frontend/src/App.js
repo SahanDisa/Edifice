@@ -113,6 +113,7 @@ import NewCrew from "./components/resource_management/Crew/new-crew.component";
 import Schedule from "./components/resource_management/Schedule/schedule.component";
 import Equipments from "./components/resource_management/Equipment/equipment.component";
 import EquipDetails from "./components/resource_management/Equipment/equipmentDetails.component";
+import ViewTimesheet from "./components/resource_management/Timesheet/view-timesheet.component";
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
@@ -366,6 +367,7 @@ class App extends Component {
             <Route path="/equipDetails/:code" component={EquipDetails} />
             {/*<Route path="/equipDetails/:id/:code" component={EquipDetails} />*/}
             <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
+            <Route path="/viewTimesheet/:code" component={ViewTimesheet} />
                     
 
             {/*financial management */}
