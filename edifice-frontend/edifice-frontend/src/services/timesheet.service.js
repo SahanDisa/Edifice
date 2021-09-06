@@ -8,10 +8,11 @@ class TimesheetDataService {
 /*
   getAll() {
     return http.get(`/timesheets/list/`);
-  }
-  get(id) {
-    return http.get(`/timesheets/list/${id}`);
   }*/
+
+  get(id) {
+    return http.get(`/timesheets/${id}`);
+  }
 
   create(data) {
     console.log(data)
