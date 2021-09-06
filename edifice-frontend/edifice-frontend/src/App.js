@@ -94,6 +94,8 @@ import EditRFI from "./components/project_management/rfi/edit.component";
 import ViewRFI from "./components/project_management/rfi/view.component";
 
 import actionplanHome from "./components/project_management/actionplan/actionplan.component";
+import AddActionPlan from "./components/project_management/actionplan/addactionplan.component";
+import AddActionPlanType from "./components/project_management/actionplan/addactionplantype.component";
 
 import DlsConfig from "./components/project_management/dailylog/configuration.component";
 import ManageDls from "./components/project_management/dailylog/manage.component";
@@ -104,6 +106,7 @@ import punchlistHome from "./components/project_management/punchlist/punchlist.c
 import ViewPL from "./components/project_management/punchlist/view.component";
 import CreatePL from "./components/project_management/punchlist/create-basic.component";
 import CreatePLT from "./components/project_management/punchlist/addtypes.component";
+import PLTView from "./components/project_management/punchlist/view.component";
 
 import ResourceManagementHome from "./components/resource_management/resource-manage-home.component";
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
@@ -113,6 +116,7 @@ import NewCrew from "./components/resource_management/Crew/new-crew.component";
 import Schedule from "./components/resource_management/Schedule/schedule.component";
 import Equipments from "./components/resource_management/Equipment/equipment.component";
 import EquipDetails from "./components/resource_management/Equipment/equipmentDetails.component";
+import ViewTimesheet from "./components/resource_management/Timesheet/view-timesheet.component";
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
@@ -302,12 +306,15 @@ class App extends Component {
             <Route path="/managerfi/edit" component={EditRFI} />
             <Route path="/managerfi/view" component={ViewRFI} />
             {/* Action Plan */}
-            <Route path="/actionplan" component={actionplanHome} />
+            <Route path="/actionplan/:id" component={actionplanHome} />
+            <Route path="/addactionplantype/:id" component={AddActionPlanType} />
+            <Route path="/addactionplan/:id" component={AddActionPlan} />
             {/* Punch List */}
             <Route path="/punchlist/:id" component={punchlistHome} />
             <Route path="/managepunchlist/view/:id" component={ViewPL} />
             <Route path="/managepunchlist/create/:id" component={CreatePL} />
             <Route path="/managepunchlist/createtype/:id" component={CreatePLT} />
+            <Route path="/punchlist/viewtype/:pltid" component={PLTView} />
             {/* Daily Logs */}
             <Route path="/dailylogsconfiguration/:id" component={DlsConfig} />
             <Route path="/managedailylogs/:id" component={ManageDls} />
@@ -366,6 +373,7 @@ class App extends Component {
             <Route path="/equipDetails/:code" component={EquipDetails} />
             {/*<Route path="/equipDetails/:id/:code" component={EquipDetails} />*/}
             <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
+            <Route path="/viewTimesheet/:code" component={ViewTimesheet} />
                     
 
             {/*financial management */}

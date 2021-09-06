@@ -49,21 +49,21 @@ exports.findAll = (req, res) => {
         });
       });
 };
-/*
-// Find a single crew with an id
+
+// Find a single timesheet with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    crew.findByPk(id)
+    Timesheet.findByPk(id)
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving crew with id=" + id
+          message: "Error retrieving timesheet with id=" + id
         });
       });  
-};*/
+};
 /*
 // Update a crew by the id in the request
 exports.update = (req, res) => {

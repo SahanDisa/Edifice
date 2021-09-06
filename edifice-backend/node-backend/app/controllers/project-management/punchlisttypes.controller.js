@@ -32,10 +32,9 @@ exports.create = (req, res) => {
   });
 };
 
-// Get drawings category for a given project
+// Get punch list types for a given project
 exports.findAll = (req, res) => {
     const id = req.params.id;
-  
     PunchListTypes.findAll({ where: {
       projectId: id
     }})
@@ -49,7 +48,7 @@ exports.findAll = (req, res) => {
       });  
   };
 
-// Find a single drawing by Id
+// Find a single punch list by Id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 

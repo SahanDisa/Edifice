@@ -4,6 +4,7 @@ import Create from "./create.component";
 import AddWorker from "./add_worker.component";
 import Approve from "./approve.component";
 import Card from 'react-bootstrap/Card';
+import { Link } from "react-router-dom";
 
 import TimesheetDataService from "./../../../services/timesheet.service";
 
@@ -48,7 +49,7 @@ class Timesheet extends Component {
               text={'white'}
               className="mb-2">    
               <Card.Body>
-                <Card.Title><h4>Timesheet</h4></Card.Title>
+                <Card.Title><h4>Timesheet </h4></Card.Title>
               </Card.Body>
             </Card> 
             <br/>
@@ -93,24 +94,37 @@ class Timesheet extends Component {
                 
                         <div className=" container">
                             <div className="row">
-                                <div class="col-10">
-                                <h5 >Date: {timesheet.date}</h5>
+                                <div class="col-6">
                                 <p>Code: {timesheet.code}</p>
+                                <h5 >Date: {timesheet.date}</h5>
+                                {timesheet.status == "Pending"?
+                                    <p>🔴 Not Approved</p>:<p>🟢 Approved</p>}
+                                
                                 </div>
 
-                                <div className="col-2 align-middle">
+                                <div className="col-6 text-right">
+                                <Link                         
+                                        className="btn btn-secondary" 
+                                        to={"/viewTimesheet/"+timesheet.code}>
+                                    View
+                                    </Link>
                                     <button                         
-                                        className="btn btn-primary" 
+                                        className="btn btn-primary m-3" 
                                         data-toggle="modal" 
                                         data-target="#addWorker">
                                     Add Workers
-                                    </button>
+                                    </button>    
                                 </div>
 
                             </div>
                         </div> 
                          
                 </div>
+                 {/*------------------------------------ approve timesheet Starts------------------------------------------------------------------ */}
+                 <div className="modal fade" id="approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <Approve/>
+                    </div>
+                    {/*-------------------------------------approve timesheet  Ends----------------------------------------------------------------------*/}
                 {/*------------------------------------ Add worker Starts------------------------------------------------------------------ */}
                 <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                    <AddWorker 
@@ -118,91 +132,9 @@ class Timesheet extends Component {
                    id={id}/> 
                 </div>
                 {/*-------------------------------------Add worker Ends----------------------------------------------------------------------*/}
-
-
-            <div className="card-body">    
-                    <table className="table table-bordered align-middle">
-                            <thead>
-                                <tr>
-                                    <th className=" align-middle text-center"  rowspan="2">Crew</th>
-                                    <th  className=" align-middle text-center" rowspan="2">Employee Name</th>
-                                    <th  className=" align-middle text-center" rowspan="2">Location</th>
-                                    <th  className=" align-middle text-center" rowspan="2">Start</th>
-                                    <th className=" align-middle text-center" colspan="2">Lunch</th>
-                                    <th className=" align-middle text-center" colspan="2">Tea</th>
-                                    <th className=" align-middle text-center" rowspan="2">Leave</th>
-                                </tr>
-                                <tr>
-                                    <th className=" align-middle text-center" >Start</th>
-                                    <th className=" align-middle text-center" >End</th>
-                                    <th className=" align-middle text-center" >Start</th>
-                                    <th className=" align-middle text-center" >End</th>
-                                </tr>
-                            </thead>
-                        <tbody>
-
-                            <tr>
-                                <td>
-                                    crename
-                                </td>
-                                <td>Randie pathirae</td>
-                                <td>First Floor</td>
-                                <td>                                 
-                                    <input 
-                                    type="time" 
-                                    id="default-picker" 
-                                    className="form-control" 
-                                    placeholder="Select time"/>           
-                                </td>
-                                <td>
-                                    <input 
-                                    type="time" 
-                                    id="default-picker" 
-                                    className="form-control" 
-                                    placeholder="Select time"/>
-                                </td>
-                                <td>
-                                    <input 
-                                    type="time" 
-                                    id="default-picker" 
-                                    className="form-control" 
-                                    placeholder="Select time"/>
-                                </td>
-                                <td>
-                                    <input
-                                    type="time" 
-                                    id="default-picker" 
-                                    className="form-control" 
-                                    placeholder="Select time"/>
-                                </td>
-                                <td>
-                                    <input
-                                    type="time" 
-                                    id="default-picker" 
-                                    className="form-control" 
-                                    placeholder="Select time"/>
-                                </td>
-                                <td>
-                                    <input
-                                    type="time" 
-                                    id="default-picker" 
-                                    className="form-control" 
-                                    placeholder="Select time"/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#approve"> Approve</a>
-
-
-                    {/*------------------------------------ Add worker Starts------------------------------------------------------------------ */}
-                    <div className="modal fade" id="approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <Approve/>
-                    </div>
-                    {/*-------------------------------------Add worker Ends----------------------------------------------------------------------*/}
-                </div>
             </div>
             ))}
+            
           </div>
           
         );

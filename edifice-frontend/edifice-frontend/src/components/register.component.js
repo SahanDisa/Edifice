@@ -3,6 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
+import mainIcon from "././../assets/logoedifice.png";
 
 import AuthService from "../services/auth.service";
 
@@ -125,9 +126,11 @@ export default class Register extends Component {
       <div className="col-md-12">
         <div className="card card-container">
           <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+            // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+            src={mainIcon}
             alt="profile-img"
             className="profile-img-card"
+            id="img"
           />
 
           <Form
