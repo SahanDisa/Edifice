@@ -9,6 +9,6 @@ module.exports = (sequelize, Sequelize) => {
       }}, {
         freezeTableName: true,
     });
-  
+
     return ActionPlanType;
   };

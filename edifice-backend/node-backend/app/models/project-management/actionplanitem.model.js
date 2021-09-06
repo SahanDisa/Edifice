@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const ActionPlanItem = sequelize.define("actionplantype", {
+    const ActionPlanItem = sequelize.define("actionplanitem", {
       title: {
         type: Sequelize.STRING,
         allowNull: false,
