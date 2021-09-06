@@ -116,7 +116,20 @@ exclusions:"",
     <div className="container">
       {currentCommitment ? (
         <div class="container">
-          <h4>Commitments</h4>
+          <h4>{currentCommitment.hash} - {currentCommitment.title}</h4>
+          <div className="col-12 text-right">
+              <div className="row col-12 text-right">
+            <Link to={"/viewsov/"+currentCommitment.id}>
+                    <button className="btn btn-success m-2">SoVs </button>
+                    </Link><br />
+                    <Link to={"/viewpayment/"+currentCommitment.id}>
+                    <button className="btn btn-success m-2">Payments </button>
+                    </Link><br />
+                    <Link to={"/addinvoice/"+currentCommitment.id}>
+                    <button className="btn btn-success m-2">Invoices </button>
+                    </Link></div>
+                    </div>
+                    <hr />
           <div className="row">
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>
@@ -325,26 +338,36 @@ exclusions:"",
           </div>
           
          <div className="col-sm-6">
-        { /* <Link to={"/addsov/"+currentCommitment.id}>
-                    <button className="btn btn-success m-2">+ Create SoV </button>
-      </Link><br />*/}
-
-                    <Link to={"/viewsov/"+currentCommitment.id}>
-                    <button className="btn btn-success m-2">SoVs </button>
-                    </Link><br />
-
-                   {/* <Link to={"/addpayment/"+currentCommitment.id}>
-                    <button className="btn btn-success m-2">+ Create Payment </button>
-    </Link><br />*/}
-
-                    <Link to={"/viewpayment/"+currentCommitment.id}>
-                    <button className="btn btn-success m-2">Payments </button>
-                    </Link><br />
-
-
-                    <Link to={"/addinvoice/"+currentCommitment.id}>
-                    <button className="btn btn-success m-2">Invoices </button>
-                    </Link><br />
+         <Timeline>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 1</strong><br/>Create a Commitment</h6> </TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 2</strong><br/>Add SoVs</h6></TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 3</strong><br/>Values will be automatically added to the Budget</h6></TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                 
+                </TimelineSeparator>
+                <TimelineContent><h5><strong>Step 4</strong><br/>Edit/Delete a Commitment.</h5></TimelineContent>
+              </TimelineItem>
+            </Timeline>
             </div>
             
           

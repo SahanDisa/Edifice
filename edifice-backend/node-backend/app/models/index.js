@@ -26,6 +26,8 @@ db.sequelize = sequelize;
 
 db.users = require("./user.model.js")(sequelize, Sequelize);
 db.roles = require("./role.model.js")(sequelize, Sequelize);
+db.employee= require("./employee.model.js")(sequelize, Sequelize);
+
 // Project Component Model Classes
 db.projects = require("./project.model.js")(sequelize, Sequelize);
 db.departments = require("./department.model.js")(sequelize, Sequelize);
@@ -71,13 +73,12 @@ db.equipments = require("./equipment.model")(sequelize, Sequelize);
 db.categorys = require("./equipment-category.model")(sequelize, Sequelize);
 db.crews = require("./crew.model")(sequelize, Sequelize);
 db.workers = require("./worker.model")(sequelize, Sequelize);
-
-db.meetings = require("./project-management/meeting.model")(sequelize, Sequelize);
-db.meetingcategory = require("./project-management/meetingcategory.model")(sequelize, Sequelize);
+db.timesheets = require("./timesheet.model")(sequelize, Sequelize);
+db.workedHours = require("./worked-hours.model")(sequelize, Sequelize);
 
 //for core class vendors and employees
-//db.vendor=require("./vendor.model")(sequelize, Sequelize);
-
+db.vendor=require("./vendor.model")(sequelize, Sequelize);
+db.employee=require("./employee.model")(sequelize, Sequelize);
 
 //This section is for testing purposes
 db.demo = require("./demo.model")(sequelize, Sequelize);
@@ -89,6 +90,12 @@ db.demo2.belongsTo(db.demo1,{
   foreignKey: "demo1Id",
   as: "demo1"
 })
+
+//db.employee.hasOne(db.users,{as: "users"});
+//db.users.belongsTo(db.employee,{
+//  foreignKey: "username",
+//  as: "username"
+//})
 //Testing section ends
 
 // ----------- Project Management Starts -------------
@@ -298,10 +305,10 @@ db.invoices.belongsTo(db.commitments, {
 
 // ----------- Resource Management Starts --------
 //One category has many equipments
-db.categorys.hasMany(db.equipments, { as: "equipments" });
-db.equipments.belongsTo(db.categorys, {
-  foreignKey: "categoryId",
-  as: "categories",
+db.projects.hasMany(db.equipments, { as: "equipments" });
+db.equipments.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
 });
 
 //One crew has many workers
@@ -310,6 +317,36 @@ db.workers.belongsTo(db.crews, {
   foreignKey: "crewId",
   as: "crew",
 });
+
+//One project has many crews
+db.projects.hasMany(db.crews, { as: "crews" });
+db.crews.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+//One project has many timesheets
+db.projects.hasMany(db.timesheets, { as: "timesheets" });
+db.timesheets.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+//One workedhours has many workers
+db.workers.hasMany(db.workedHours, { as: "workersHours" });
+db.workedHours.belongsTo(db.workers, {
+  foreignKey: "workerWId",
+  as: "worker",
+});
+
+//One workedhours has many timesheets
+db.timesheets.hasMany(db.workedHours, { as: "workedhourstimesheet" });
+db.workedHours.belongsTo(db.timesheets, {
+  foreignKey: "timesheetCode",
+  as: "timesheet",
+});
+
+
 // ----------- Resource Management Ends --------
 
 //Role description 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import EquipmentCategoryDataService from "./../../../services/equipment-category.service";
+import { Link } from "react-router-dom";
+import EquipmentDataService from "./../../../services/equipment.service";
 
 
 import List from '@material-ui/core/List';
@@ -16,10 +17,11 @@ class Equipment extends Component {
 
   constructor(props) {
     super(props);
-    this.retrieveCategory = this.retrieveCategory.bind(this);
+    this.retrieveEquipment = this.retrieveEquipment.bind(this);
 
     this.state = {
-      categorys: [],
+      equipments: [],
+      categorys:[],
       currentIndex: -1,
       content: "",
       id: this.props.match.params.id
@@ -27,22 +29,26 @@ class Equipment extends Component {
   }
 
   componentDidMount() {
-    this.retrieveCategory(this.props.match.params.id);
+    this.retrieveEquipment(this.props.match.params.id);
   }
-  retrieveCategory(id) {
-    EquipmentCategoryDataService.getAll(id)
+  retrieveEquipment(id) {
+    EquipmentDataService.getAll(id)
       .then(response => {
         this.setState({
-          categorys: response.data
+          equipments: response.data
         });
         console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
+      
   }
+
     render() {
-      const { categorys ,currentIndex,id } = this.state;
+      const { equipments ,currentIndex,id, categorys } = this.state;
+      //console.log(equipments[0])
+
         return (
           <div>
             <Card
@@ -78,59 +84,38 @@ class Equipment extends Component {
                         <br/>
 
                         <div class="accordion" id="accordionExample">
+                        {equipments && equipments.map((equipment, currentIndex) => (
+                          categorys.includes(equipment.category)? null : categorys.push(equipment.category) &&
                             <div class="card">
                                 <div class="card-header" id="headingOne">
+                
                                     <h2 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Excavator</button>
-                                        <span class="badge bg-primary rounded-pill">14</span>
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${currentIndex}`} aria-expanded="true" aria-controls="collapseOne">{equipment.category}</button>
                                     </h2>
                                 </div>
-                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div id={`collapse${currentIndex}`} class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div className="">
                                             <div class="col-md-12 text-right mb-2">
+                                            {equipments && equipments.map((equipmentList, currentIndex) => (
+                                              equipment.category === equipmentList.category ?
                                             
                                               <List component="nav" aria-label="mailbox folders">
                                                 <ListItem button>
-                                                  <a href="/equipDetails" >235E - ExcavatorABC</a>
+        
+                                                  <Link to=/*{"/equipDetails/"+id+"/"+equipment.code}*/{"/equipDetails/"+equipment.code}>{equipmentList.code} {equipmentList.description}</Link>
                                                 </ListItem>
                                                 <Divider />
-                                                  <ListItem button divider>
-                                                    <a href="#" >432E - Excavator cataplller</a>
-                                                  </ListItem>
-                                                  <ListItem button>
-                                                    <a href="#" >542E - ikon2</a>
-                                                  </ListItem>
                                                 <Divider light />
-                                                <ListItem button>
-                                                  <a href="#" >098E - Arko</a>
-                                                </ListItem>
-                                            </List>                            
- 
+                                            </List> :""                           
+                                            ))} 
                                           </div>
       
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="card">
-                                <div class="card-header" id="headingTwo">
-                                    <h2 class="mb-0">
-                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Crane</button>
-                                        <span class="badge bg-primary rounded-pill">5</span>
-                                    </h2>
-                                </div>
-                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        <div className="">
-                                            <div class="col-md-12 text-right mb-2">
-                                            </div>
-                      
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>  
+                            </div> 
+                           ))}  
                         </div>
                     </div>                    
                 </div>
@@ -143,7 +128,7 @@ class Equipment extends Component {
 
                 {/* New Equipment Starts */}
                   <div className="modal fade" id="addEquip" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <AddEquip />        
+                    <AddEquip projectId ={id} />        
                   </div>
                 {/* New Equipment Ends */}
 

@@ -102,15 +102,18 @@ import ViewDls from "./components/project_management/dailylog/view.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
 import ViewPL from "./components/project_management/punchlist/view.component";
-import CreatePL from "./components/project_management/punchlist/create.component";
+import CreatePL from "./components/project_management/punchlist/create-basic.component";
+import CreatePLT from "./components/project_management/punchlist/addtypes.component";
 
 import ResourceManagementHome from "./components/resource_management/resource-manage-home.component";
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
 import Customize from "./components/resource_management/Timesheet/customize.component";
 import Crew from "./components/resource_management/Crew/crew.component";
+import NewCrew from "./components/resource_management/Crew/new-crew.component";
 import Schedule from "./components/resource_management/Schedule/schedule.component";
 import Equipments from "./components/resource_management/Equipment/equipment.component";
 import EquipDetails from "./components/resource_management/Equipment/equipmentDetails.component";
+import ViewTimesheet from "./components/resource_management/Timesheet/view-timesheet.component";
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
@@ -129,8 +132,9 @@ import AddPayment from "./components/financial_management/commitments/addpayment
 import PaymentHome from "./components/financial_management/commitments/payments.component";
 import EditSingleCommitment from "./components/financial_management/commitments/commitment-edit.component";
 import ViewSingleSov from "./components/financial_management/commitments/sov-singlepage.component";
+import ViewSingleBudget from "./components/financial_management/budget/budget-singlepage.component";
+import AddEmployee from "./components/core_tools/edifice-directory/add-emp.component";
 //import Report from "./components/report/report.component";
-import NewCrew from "./components/resource_management/Crew/new-crew.component";
 
 class App extends Component {
   constructor(props) {
@@ -301,16 +305,17 @@ class App extends Component {
             {/* Action Plan */}
             <Route path="/actionplan" component={actionplanHome} />
             {/* Punch List */}
-            <Route path="/punchlist" component={punchlistHome} />
-            <Route path="/managepunchlist/view" component={ViewPL} />
-            <Route path="/managepunchlist/create" component={CreatePL} />
+            <Route path="/punchlist/:id" component={punchlistHome} />
+            <Route path="/managepunchlist/view/:id" component={ViewPL} />
+            <Route path="/managepunchlist/create/:id" component={CreatePL} />
+            <Route path="/managepunchlist/createtype/:id" component={CreatePLT} />
             {/* Daily Logs */}
-            <Route path="/dailylogsconfiguration" component={DlsConfig} />
-            <Route path="/managedailylogs" component={ManageDls} />
-            <Route path="/managesdailylogs/update" component={UpdateDls} />
-            <Route path="/managesdailylogs/view" component={ViewDls} />
+            <Route path="/dailylogsconfiguration/:id" component={DlsConfig} />
+            <Route path="/managedailylogs/:id" component={ManageDls} />
+            <Route path="/managesdailylogs/update/:id" component={UpdateDls} />
+            <Route path="/managesdailylogs/view/:id" component={ViewDls} />
             
-            <Route path="/addUser" component={AddUser} />
+            <Route path="/addUser" component={AddEmployee} />
             <Route path="/editUser" component={EditUser} />
             <Route path="/vendor" component={Vendors} />
             <Route path="/employees" component={Emp} />
@@ -355,11 +360,15 @@ class App extends Component {
             {/*resource management */}
             <Route path="/timesheet/:id" component={Timesheet} />
             <Route path="/customize" component={Customize} />
-            <Route path="/crew" component={Crew} />
+            <Route path="/crew/:id" component={Crew} />
+            <Route path="/newCrew/:id" component={NewCrew}/>
             <Route path="/schedule/:id" component={Schedule} />
             <Route path="/equipments/:id" component={Equipments} />
-            <Route path="/equipDetails" component={EquipDetails} />
+            <Route path="/equipDetails/:code" component={EquipDetails} />
+            {/*<Route path="/equipDetails/:id/:code" component={EquipDetails} />*/}
             <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
+            <Route path="/viewTimesheet/:code" component={ViewTimesheet} />
+                    
 
             {/*financial management */}
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
@@ -380,6 +389,7 @@ class App extends Component {
             <Route path="/viewpayment/:id" component={PaymentHome} />
             <Route path="/editcommitment/:id" component={EditSingleCommitment} />
             <Route path="/viewsinglesov/:id" component={ViewSingleSov} />
+            <Route path="/viewbudget/:id" component={ViewSingleBudget} />
            
           </Switch>
         </div>

@@ -17,15 +17,15 @@ class WorkerDataService {
     return http.post("/workers", data);
 
   }
-/*
+
   update(id, data) {
-    return http.put(`/projects/${id}`, data);
+    return http.put(`/workers/update/${id}`, data);
   }
 
   delete(id) {
-    return http.delete(`/projects/${id}`);
+    return http.delete(`/workers/delete/${id}`);
   }
-
+/*
   deleteAll() {
     return http.delete(`/projects`);
   }

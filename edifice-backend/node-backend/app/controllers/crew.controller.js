@@ -16,6 +16,7 @@ exports.create = (req, res) => {
   const crew = {
     name: req.body.name,
     total: req.body.total,
+    projectId: req.body.projectId
   };
   // Save crew in the database
   Crew.create(crew)
@@ -32,11 +33,11 @@ exports.create = (req, res) => {
 
 // Retrieve all crews from a given project
 exports.findAll = (req, res) => {
-    //const id = req.query.id;
+    const id = req.params.id;
       
-    Crew.findAll(/*{ where: {
+    Crew.findAll({ where: {
       projectId: id
-    }}*/)
+    }})
       .then(data => {
         res.send(data);
       })

@@ -3,48 +3,188 @@ import VendorDataService from "./../../../services/vendor.service";
 
 class AddVendor extends Component {
 
-  render() {
-    return (
-      <div className="">
-        <h2>New Vendor</h2><hr/>
-        <div className="">
-          <h5>Enter vendor details</h5>
+  constructor(props) {
+    super(props);
+    this.onChangeType = this.onChangeType.bind(this);
+    this.onChangeCompanyName = this.onChangeCompanyName.bind(this);
+    this.onChangeContactNo = this.onChangeContactNo.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
+    this.onChangeContactPersonName = this.onChangeContactPersonName.bind(this);
+    this.saveVendor = this.saveVendor.bind(this);
+    this.newVendor = this.newVendor.bind(this);
+    //this.retriveVendors = this.retrieveVendors.bind(this);
+    this.state = {
+      companyName: "",
+      type: "",
+      contactNo:"",
+      email:"",
+      contactPersonName: "",
 
-          <label htmlFor="">Id</label>
-          <input className="form-control" type="number" required/>
+      submitted: false,
+      lastVendor:[],
+      lastVendorID:undefined,
+      currentIndex: -1,
+      id: undefined
+    };
+  }
+
+  //onChange functions
+  onChangeCompanyName(e) {
+    this.setState({
+      companyName: e.target.value
+    });
+  }
+
+  onChangeType(e) {
+    this.setState({
+      type: e.target.value
+    });
+  }
+
+  onChangeContactNo(e) {
+    this.setState({
+      contactNo: e.target.value
+    });
+  }
+
+  onChangeEmail(e) {
+    this.setState({
+      email: e.target.value
+    });
+  }
+
+  onChangeContactPersonName(e) {
+    this.setState({
+      contactPersonName: e.target.value
+    });
+  }
+
+  saveVendor() {
+    this.getLastVendorID();
+    console.log(this.lastVendorID);
+    var data = {
+      id: this.state.lastVendorID+1,
+      companyName: this.state.companyName,
+      type: this.state.type,
+      contactNo:this.state.contactNo,
+      email:this.state.email,
+      contactPersonName: this.state.contactPersonName
+    };
+
+    //console.log(data);
+
+    VendorDataService.create(data)
+      .then(response => {
+        this.setState({
+          id: response.data.id,
+          type: response.data.type,
+          contactNo: response.data.contactNo,
+          email: response.data.email,
+          contactPersonName: response.data.contactPersonName,
+
+          submitted: true
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+        //console.log(data);
+      });
+    //this.state.getLastvendorID();
+  }
+
+  newVendor() {
+    this.setState({
+      id: null,
+      companyName: "",
+      type: "",
+      contactNo:"",
+      email:"",
+      contactPersonName: "",
+
+      submitted: false
+    });
+  }
+
+  getLastVendorID(){
+    VendorDataService.findlastVendor()
+      .then(response => {
+          this.setState({
+            lastVendorID: response.data[0].id
+          });
+          console.log(this.state);
+          //return response.data[0].id;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+  }
+
+  render() {
+    const {lastproject, currentIndex} = this.state;
+
+
+    return (
+      <div className="container ">
+        <h2>New Vendor </h2><hr/>
+        <div className="vendorBox" >
+          <h5>Enter necessary vendor details</h5>
+
+          <label htmlFor="" hidden>Id</label>
+          <input className="form-control" type="number" hidden/>
           <br/>
 
           <label htmlFor="">Company Name</label>
-          <input className="form-control" type="text" required/>
+          <input className="form-control" type="text" id="companyName"
+                required
+                value={this.state.companyName}
+                onChange={this.onChangeCompanyName}
+                name="companyName" required/>
           <br/>
 
           <label htmlFor="">Type</label>
 
-          <select className="form-control" name="" id="">
-            <option value="role1">concrete</option>
-            <option value="role2">electronic</option>
-            <option value="role3">other</option>
+          <select className="form-control" name="type" id="type"
+                required
+                value={this.state.type}
+                onChange={this.onChangeType}
+                name="companyName" required>
+            <option value="concrete">concrete</option>
+            <option value="electronic">electronic</option>
+            <option value="other">other</option>
           </select><br />
 
           <label htmlFor="">Contact No</label>
-          <input className="form-control" type="number" required/>
+          <input className="form-control" type="text" id="contactNo"
+                required
+                value={this.state.contactNo}
+                onChange={this.onChangeContactNo}
+                name="companyName" required/>
           <br/>
 
           <label htmlFor="">Email</label>
-          <input className="form-control" type="text" required/>
+          <input className="form-control" type="text"  id="email"
+                required
+                value={this.state.email}
+                onChange={this.onChangeEmail}
+                name="email" required/>
           <br/>
 
           
           <label htmlFor="">Contact Person Name</label>
-          <input className="form-control" type="text" required/>
+          <input className="form-control" type="text"  id="contactPersonName"
+                required
+                value={this.state.contactPersonName}
+                onChange={this.onChangeContactPersonName}
+                name="contactPersonName" required/>
           <br/>
           <br/>
 
           <div>
-          <a href="#" className="btn btn-success">Add</a>
+          <button value="Add" onClick={()=>{this.saveVendor(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastVendorID()}}className="btn btn-success"/>
           </div>
           <div>
-          <a href="/vendors" className="btn btn-success">Cancel</a>
+          <a className="btn btn-secondary" type="reset">Cancel</a>
           </div>
         </div>
         

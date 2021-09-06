@@ -5,10 +5,7 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         allowNull: false
       },
-      brand: {
-        type: Sequelize.STRING
-      },
-      date_issued:{
+      date:{
         type: Sequelize.DATE    
       },
       condition: {

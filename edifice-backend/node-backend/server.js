@@ -59,8 +59,10 @@ require('./app/routes/excel.routes')(app);
 require('./app/routes/equipment.routes')(app);
 require('./app/routes/equipment-category.routes')(app);
 require('./app/routes/crew.routes')(app);
-require('./app/routes/equipment-category.routes')(app);
 require('./app/routes/worker.routes')(app);
+require('./app/routes/worked-hours.routes')(app);
+require('./app/routes/timesheet.routes')(app);
+require('./app/routes/employee.routes')(app);
 
 require('./app/routes/primecontract.routes')(app);
 require('./app/routes/invoice.routes')(app);

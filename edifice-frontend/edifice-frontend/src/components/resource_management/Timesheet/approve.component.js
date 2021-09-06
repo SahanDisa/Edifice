@@ -15,7 +15,7 @@ class Approve extends Component {
                         </button>
                     </div>
 
-                    <div className="modal-body">
+                    <div className="modal-body text-center">
                         <p>Are you sure you want to aprove this timesheet?</p>
                     </div>
 

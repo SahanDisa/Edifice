@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
     const Worker = sequelize.define("worker", {
       wId: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         primaryKey: true
       },
       firstName: {

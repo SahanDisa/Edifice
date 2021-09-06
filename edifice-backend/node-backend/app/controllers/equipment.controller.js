@@ -15,11 +15,11 @@ exports.create = (req, res) => {
   // Create a equipment
   const equipment = {
     code: req.body.code,
-    brand: req.body.brand,
-    date_issued: req.body.date_issued,
+    date: req.body.date,
     condition:req.body.condition,
     category: req.body.category, 
-    description: req.body.description
+    description: req.body.description,
+    projectId: req.body.projectId
   };
 
   // Save equipment in the database
@@ -34,29 +34,29 @@ exports.create = (req, res) => {
       });
     });
 };
-/*
-// Retrieve all equipments from the database.
+
+// Retrieve all equipments from a given equipment.
 exports.findAll = (req, res) => {
-    const title = req.query.title;
-    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+    //const id = req.query.id;
+    //var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
   
-    equipment.findAll({ where: condition })
+    Equipment.findAll(/*{ where: condition }*/)
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Some error occurred while retrieving data."
         });
       });
-};*/
-/*
+};
+
 // Find a single equipment with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    equipment.findByPk(id)
+    Equipment.findByPk(id)
       .then(data => {
         res.send(data);
       })
@@ -65,14 +65,14 @@ exports.findOne = (req, res) => {
           message: "Error retrieving equipment with id=" + id
         });
       });  
-};*/
-/*
+};
+
 // Update a equipment by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    equipment.update(req.body, {
-      where: { id: id }
+    Equipment.update(req.body, {
+      where: { code: id }
     })
       .then(num => {
         if (num == 1) {
@@ -90,14 +90,14 @@ exports.update = (req, res) => {
           message: "Error updating equipment with id=" + id
         });
       });
-};*/
-/*
+};
+
 // Delete a equipment with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    equipment.destroy({
-      where: { id: id }
+    Equipment.destroy({
+      where: { code: id }
     })
       .then(num => {
         if (num == 1) {
@@ -115,7 +115,7 @@ exports.delete = (req, res) => {
           message: "Could not delete equipment with id=" + id
         });
       });
-};*/
+};
 
 /*
 // Delete all Tutorials from the database.
