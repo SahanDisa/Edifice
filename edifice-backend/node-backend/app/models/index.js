@@ -51,6 +51,12 @@ db.meetingcategory = require("./project-management/meetingcategory.model")(seque
 db.punchlist = require("./project-management/punchlist.model")(sequelize, Sequelize);
 db.punchlisttypes = require("./project-management/punchlisttypes.model")(sequelize, Sequelize);
 db.punchlist = require("./project-management/punchlist.model")(sequelize, Sequelize);
+// Action Plan Model Classes
+db.actionplantype = require("./project-management/actionplantype.model")(sequelize, Sequelize);
+db.actionplan = require("./project-management/actionplan.model")(sequelize, Sequelize);
+db.actionplansection = require("./project-management/actionplansection.model")(sequelize, Sequelize);
+db.actionplanitem = require("./project-management/actionplanitem.model")(sequelize, Sequelize);
+
 // Finance Model Classes
 db.budgets = require("./budget.model.js")(sequelize, Sequelize);
 db.directcosts = require("./directcost.model.js")(sequelize, Sequelize);
@@ -220,6 +226,28 @@ db.punchlisttypes.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
+
+// One project has many action plans
+db.projects.hasMany(db.actionplan, {as: "actionplans"});
+db.actionplan.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+// One actionplan has many action sections
+db.actionplan.hasMany(db.actionplansection, {as: "actionplansection"});
+db.actionplansection.belongsTo(db.actionplan, {
+  foreignKey: "actionplanId",
+  as: "actionplan",
+});
+
+// One actionplan section has many action plan items
+db.actionplansection.hasMany(db.actionplanitem, {as: "actionplanitems"});
+db.actionplanitem.belongsTo(db.actionplansection, {
+  foreignKey: "actionplansectionId",
+  as: "actionplansection",
+});
+
 // ----------- Project Management Ends -------------
 
 // ----------- Finance Management Starts -----------
