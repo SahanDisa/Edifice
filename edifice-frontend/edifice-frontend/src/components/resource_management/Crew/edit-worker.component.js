@@ -137,8 +137,9 @@ class EditWorker extends Component {
                 </div>
                 <div className="modal-footer">
                   <button 
-                  type="submit" 
+                  type="button" 
                   className="btn btn-success"
+                  data-dismiss="modal"
                   onClick={this.updateWorker}>
                     Update
                   </button>

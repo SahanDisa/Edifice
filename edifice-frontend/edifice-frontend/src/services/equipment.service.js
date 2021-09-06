@@ -8,21 +8,21 @@ class EquipmentDataService {
   getAll() {
     return http.get(`/equipments/list/`);
   }
-  /*  get(id) {
-    return http.get(`/projects/${id}`);
+    get(id) {
+    return http.get(`/equipments/${id}`);
   }
-  */
+  
   create(data) {
     return http.post("/equipments", data);
 
   }
 
   update(id, data) {
-    return http.put(`/equipments/${id}`, data);
+    return http.put(`/equipments/update/${id}`, data);
   }
 
   delete(id) {
-    return http.delete(`/equipments/${id}`);
+    return http.delete(`/equipments/delete/${id}`);
   }
 /*
   deleteAll() {
