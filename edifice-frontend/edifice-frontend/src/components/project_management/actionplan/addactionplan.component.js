@@ -17,7 +17,6 @@ export default class AddActionPlan extends Component {
     this.onChangeType = this.onChangeType.bind(this);
     this.saveDrawing = this.saveDrawing.bind(this);
     this.newDrawing = this.newDrawing.bind(this);
-    this.selectFile = this.selectFile.bind(this);
 
     this.state = {
       id: null,
@@ -33,11 +32,6 @@ export default class AddActionPlan extends Component {
       currentIndex: -1,
       submitted: false,
 
-      //file
-      selectedFiles: undefined,
-      currentFile: undefined,
-      progress: 0,
-      message: "",
     };
   }
   componentDidMount() {
@@ -100,11 +94,6 @@ export default class AddActionPlan extends Component {
         console.log(e);
       });
   }
-  selectFile(event) {
-    this.setState({
-      selectedFiles: event.target.files,
-    });
-  }
   
   newDrawing() {
     this.setState({
@@ -119,19 +108,18 @@ export default class AddActionPlan extends Component {
   }
 
   render() {
-    const {projectId, currentIndex, drawingcategories,
-      title} = this.state;
+    const {projectId, currentIndex, drawingcategories} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
           <div>
           <center>
-            <h4>Drawing details successfully submitted!</h4>
-            <Link to={"/drawing/"+projectId} className="btn btn-primary mr-2"  style={{ 'text-decoration': 'none' }}>
+            <h4>Action Plan details successfully submitted!</h4>
+            <Link to={"/actionplan/"+projectId} className="btn btn-primary mr-2"  style={{ 'text-decoration': 'none' }}>
               Back Home
             </Link>
-            <Link to={"/adddrawing/"+projectId} className="btn btn-primary mr-2"  style={{ 'text-decoration': 'none' }}>
-              Add Drawing
+            <Link to={"/addactionplan/"+projectId} className="btn btn-primary mr-2"  style={{ 'text-decoration': 'none' }}>
+              Add Action Plan
             </Link>
           </center>
           </div>
