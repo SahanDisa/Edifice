@@ -70,7 +70,7 @@ class AddEmployee extends Component {
     this.getLastEmployee();
     //console.log(this.lastEmployeeID);
     var data = {
-      id: this.state.lastEmployeeID+1,
+      id: this.getLastEmployee()+1,
       name: this.state.name,
       mobile: this.state.mobile,
       role: this.state.role,
@@ -188,7 +188,7 @@ class AddEmployee extends Component {
           <br/>
 
           <div>
-          <a onClick={()=>{this.saveEmployee(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastEmployee()}} className="btn btn-success">Add</a>
+          <a onClick={()=>{this.saveEmployee(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastEmployee()}} className="btn btn-success" data-toggle="modal">Add</a>
           <a href="/employees" className="btn btn-secondary" type="reset">Cancel</a>
           </div>
           <div>

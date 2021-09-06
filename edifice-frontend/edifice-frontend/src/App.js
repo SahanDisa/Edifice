@@ -60,7 +60,7 @@ import Roles from "./components/core_tools/admin/roles.component";
 import AddUser from "./components/core_tools/edifice-directory/add-emp.component";
 import EditUser from "./components/core_tools/edifice-directory/edit-emp.component";
 import Vendors from "./components/core_tools/edifice-directory/vendors.component";
-import Emp from "./components/core_tools/edifice-directory/employees.component";
+import Employee from "./components/core_tools/edifice-directory/employees.component";
 import AddVendor from "./components/core_tools/edifice-directory/add-vendor.component";
 import EditVendor from "./components/core_tools/edifice-directory/edit-vendor.component";
 
@@ -324,7 +324,7 @@ class App extends Component {
             <Route path="/addUser" component={AddEmployee} />
             <Route path="/editUser" component={EditUser} />
             <Route path="/vendor" component={Vendors} />
-            <Route path="/employees" component={Emp} />
+            <Route path="/employees" component={Employee} />
             <Route path="/addVendor" component={AddVendor} />
             <Route path="/editVendor" component={EditVendor} />
             {/* Document */}

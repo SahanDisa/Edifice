@@ -15,6 +15,7 @@ import WarningIcon from '@material-ui/icons/Warning';
 import Employees from './core_tools/edifice-directory/employees.component'
 
 import UserService from "../services/user.service";
+import EmployeeDataService from "../services/employee.service";
 import VendorDataService from "../services/vendor.service";
 import ProjectDataService from "../services/project.service";
 
@@ -36,6 +37,7 @@ export default class BoardUser extends Component {
 
     this.getprojectCount=this.getprojectCount.bind(this);
     this.getVendorCount=this.getVendorCount.bind(this);
+    this.getEmployeeCount=this.getEmployeeCount.bind(this);
     this.getprojectDetails=this.getprojectCount.bind(this);
     this.state = {
       projects:[],
@@ -87,7 +89,21 @@ export default class BoardUser extends Component {
 
     this.getprojectCount();
     this.getVendorCount();
-    
+    this.getEmployeeCount();
+  }
+
+  getEmployeeCount(){
+    //get Employee count
+    EmployeeDataService.getAll().then(response => {
+      this.setState({
+        employeeCount: response.data.length,
+        
+      });
+      //console.log(this.employeeCount);
+    })
+    .catch(e => {
+      console.log(e);
+    });
   }
 
   getprojectCount(){
@@ -164,7 +180,7 @@ export default class BoardUser extends Component {
               <div className="card card-hover shadow-sm" style={cardStyle}>
               <a className="d-block nav-heading text-center mt-3" href="/employees" style={linkText}>
 
-                <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>148</h1>
+                <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{employeeCount}</h1>
                 <h5 mb-0> <SupervisorAccountIcon style={{ fontSize:25 }}/>  Employees</h5>
               </a>
               </div>
