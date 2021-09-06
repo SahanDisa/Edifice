@@ -36,7 +36,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all ActionPlanSection from the database.
-exports.findAll = (req, res) => {
+exports.findAllSearch = (req, res) => {
     const title = req.query.title;
     var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
   
@@ -68,7 +68,7 @@ exports.findOne = (req, res) => {
 };
 
 //get the ActionPlanSection action
-exports.findAllProjectActSec = (req, res) => {
+exports.findAll= (req, res) => {
     const id = req.params.id;
   
     ActionPlanSection.findAll({ where: {
@@ -150,19 +150,3 @@ exports.deleteAll = (req, res) => {
           });
         });
 };
-
-// Find all published ActionPlanSection
-exports.findAllApproved = (req, res) => {
-    ActionPlanSection.findAll({ where: { isapprove: true } })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials."
-      });
-    });
-};
-/////////////////////////////////
-// Improve for pagination as well

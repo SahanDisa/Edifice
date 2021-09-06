@@ -37,7 +37,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Projects from the database.
-exports.findAll = (req, res) => {
+exports.findAllSearch = (req, res) => {
     const title = req.query.title;
     var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
   
@@ -69,7 +69,7 @@ exports.findOne = (req, res) => {
 };
 
 //get the ActionPlan action
-exports.findAllProjectActions = (req, res) => {
+exports.findAll = (req, res) => {
     const id = req.params.id;
   
     ActionPlan.findAll({ where: {
@@ -154,7 +154,8 @@ exports.deleteAll = (req, res) => {
 
 // Find all published ActionPlan
 exports.findAllApproved = (req, res) => {
-    ActionPlan.findAll({ where: { isapprove: true } })
+  const id = req.params.id;
+    ActionPlan.findAll({ where: { isapprove: true }, projectId: id })
     .then(data => {
       res.send(data);
     })

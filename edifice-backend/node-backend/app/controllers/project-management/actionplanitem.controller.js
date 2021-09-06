@@ -35,7 +35,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all ActionPlanItem from the database.
-exports.findAll = (req, res) => {
+exports.findAllSearch = (req, res) => {
     const title = req.query.title;
     var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
   
@@ -67,7 +67,7 @@ exports.findOne = (req, res) => {
 };
 
 //get the ActionPlanItem action
-exports.findAllProjectActSec = (req, res) => {
+exports.findAll = (req, res) => {
     const id = req.params.id;
   
     ActionPlanItem.findAll({ where: {

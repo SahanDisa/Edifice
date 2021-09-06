@@ -35,11 +35,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   const id = req.params.id;
 
-  ActionPlanType.findAll({ where: {
-    someAttribute: {
-        [sequelize.gt]: 0
-    }
-  }})
+  ActionPlanType.findAll()
     .then(data => {
       res.send(data);
     })
@@ -50,22 +46,6 @@ exports.findAll = (req, res) => {
     });  
 };
 
-// Get drawings for a given category
-exports.findAllCat = (req, res) => {
-  const id = req.params.id;
-
-  ActionPlanType.findAll({ where: {
-    category: id
-  }})
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error retrieving ActionPlanType Drawings with id=" + id
-      });
-    });  
-};
 //Find a single drawing by Id
 exports.findOne = (req, res) => {
   const id = req.params.id;
