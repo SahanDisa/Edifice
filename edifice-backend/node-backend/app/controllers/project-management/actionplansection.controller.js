@@ -1,4 +1,4 @@
-const db = require("./../models/index.js");
+const db = require("./../../models/index.js");
 const ActionPlanSection = db.actionplansection;
 const Op = db.Sequelize.Op;
 
