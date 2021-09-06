@@ -1,93 +1,108 @@
-import React, { Component } from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import DrawingDataService from "./../../../services/drawing.service";
+import DrawingCategoryService from "../../../services/drawing-category.service";
+import Card from 'react-bootstrap/Card';
+import drawingcover from "././../../../assets/PM/photos/drawing.jpg";
 
-const data = [
-    {view:<a href="#" className="btn btn-success">View</a>, No: 1, name: 'Action plan #1', time:'2 weeks', delete:<a href="#" className="btn btn-danger">Delete</a>},
-    {view:<a href="#" className="btn btn-success">View</a>, No: 2, name: 'Action plan #2', time:'1 month',  delete:<a href="#" className="btn btn-danger">Delete</a>}
-  ];
-  const columns = [
-  {
-    dataField: 'view',
-    text: '',
-    headerStyle: (column, colIndex) => {
-        return { width: '7%', textAlign: 'center' };}
-  },{
-    dataField: 'No',
-    text: 'No',
-    headerStyle: (column, colIndex) => {
-        return { width: '7%', textAlign: 'center' };}
-  }, {
-    dataField: 'name',
-    text: 'Name',
-    headerStyle: (column, colIndex) => {
-        return { width: '20%', textAlign: 'center' };}
-  }, {
-    dataField: 'description',
-    text: 'Description',
-    headerStyle: (column, colIndex) => {
-        return { width: '50%', textAlign: 'center' };}
-  }, {
-    dataField: 'time',
-    text: 'Time Duration',
-    headerStyle: (column, colIndex) => {
-        return { width: '50%', textAlign: 'center' };}
-  }, {
-    dataField: 'delete',
-    text: 'Delete',
-    headerStyle: (column, colIndex) => {
-        return { width: '7%', textAlign: 'center' };}
-  }];
+export default class Drawings extends Component {
+    constructor(props) {
+      super(props);
+      this.retrieveDrawing = this.retrieveDrawing.bind(this);
+      this.state = {
+        drawings: [],
+        drawingcategories: [],
+        currentIndex: -1,
+        content: "",
+        id: this.props.match.params.id
+      };
+    }
+    componentDidMount() {
+      this.retrieveDrawing(this.props.match.params.id);
+      this.retriveDrawingCategory(this.props.match.params.id);
+    }
+    retrieveDrawing(id) {
+      DrawingDataService.getAll(id)
+        .then(response => {
+          this.setState({
+            drawings: response.data
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+    retriveDrawingCategory(id){
+        DrawingCategoryService.getAll(id)
+        .then(response => {
+            this.setState({
+              drawingcategories: response.data
+            });
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+    }
 
-class ActionPlan extends Component {
-
-  render() {
-    return (
-      <div className="">
-        <h2>Action Plan</h2><hr/>
-        <h5>Add new Action Plan</h5>
-        <form action="">
-          <div className="form-row">
-              <div className="form-group col-md-2">
-                  <label htmlFor="">Name</label>
-                  <input className="form-control" type="text" required/>
-              </div>
-              <div className="form-group col-md-4">
-                  <label htmlFor="">Description</label>
-                  <input className="form-control" type="text" required/>
-              </div>
-              <div className="form-group col-md-4">
-                  <label htmlFor="">Time duration</label>
-                  <input className="form-control" type="text" required/>
-              </div>
-              <div className="form-group col-md-2">
-              <label htmlFor="">.</label>
-              <a href="#" className="btn btn-success mr-3">Create</a>
-              <a href="#" className="mt-1">Clear</a>
-              </div>
-          </div>
-        </form>
-        <hr />
-        <h5>Action Plans</h5>
-        {/* <div className="form-row mt-3">
-          <div className="form-group col-md-4">
-            <input className="form-control" type="text" />
-          </div>
-          <a href="#" className="btn btn-dark mb-3 mr-3">Search</a>
-          <a href="#" className="mt-1">Clear</a>
-        </div> */}
+    render() {
+        const { drawings , drawingcategories, currentIndex,id } = this.state;
+        return (
         <div>
-          <BootstrapTable 
-            hover
-            keyField='No'
-            data={ data }
-            columns={ columns } 
-            cellEdit={ false }
-          />
+            <div className="container row">
+                <div className="col-12">
+                    <h2>Action Plan</h2>
+                    <h6>Ensure that unique company and project specific requirements are clearly defined, centralized and organized</h6>
+                </div>
+            <hr></hr>
+            </div>
+            <div className="container">
+                
+                <Link className="btn btn-primary mr-2" to={"/addactionplantype/"+id}>
+                Create Action Plan Type
+                </Link>
+                <Link className="btn btn-primary" to={"/addactionplan/"+id}>
+                Create new Action Plan
+                </Link>
+                <hr></hr>
+            </div>
+        <div className="container">
+        <h3>Action Plans</h3>
+        <div className="container row">
+            {drawingcategories &&
+                drawingcategories.map((drawingcategory, index) => (
+                    <div
+                    className={
+                    "container col-3" +
+                    (index === currentIndex ? "active" : "")
+                    }
+                    key={index}
+                >
+                {/* unit data */}
+                <Link to={"/viewdrawingcategory/"+drawingcategory.id}>
+                        <Card
+                        bg={'secondary'}
+                        text={'dark'}
+                        style={{ width: '15rem' }}
+                        className="bg-dark mb-2"
+                        >
+                        <Card.Img src={drawingcover} alt="Card image" />
+                        <Card.ImgOverlay>
+                        <Card.Title><h4>{drawingcategory.title}</h4></Card.Title>
+                        <Card.Text>
+                           {drawingcategory.description == "" ? "No Description" : drawingcategory.description} 
+                        </Card.Text>
+                        </Card.ImgOverlay>
+                        </Card>
+                </Link>
+                </div>
+            ))}
+            </div>
         </div>
-      </div>
-    );
-  }
-  
+        <hr></hr>
+        
+        </div>
+        );
+    }
 }
-
-export default ActionPlan;
