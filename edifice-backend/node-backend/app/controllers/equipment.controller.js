@@ -51,12 +51,12 @@ exports.findAll = (req, res) => {
         });
       });
 };
-/*
+
 // Find a single equipment with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    equipment.findByPk(id)
+    Equipment.findByPk(id)
       .then(data => {
         res.send(data);
       })
@@ -65,14 +65,14 @@ exports.findOne = (req, res) => {
           message: "Error retrieving equipment with id=" + id
         });
       });  
-};*/
+};
 
 // Update a equipment by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    equipment.update(req.body, {
-      where: { id: id }
+    Equipment.update(req.body, {
+      where: { code: id }
     })
       .then(num => {
         if (num == 1) {
@@ -96,8 +96,8 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    equipment.destroy({
-      where: { id: id }
+    Equipment.destroy({
+      where: { code: id }
     })
       .then(num => {
         if (num == 1) {

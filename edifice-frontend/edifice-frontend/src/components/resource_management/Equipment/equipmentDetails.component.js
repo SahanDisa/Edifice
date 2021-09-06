@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Card from 'react-bootstrap/Card';
+import { Link } from "react-router-dom";
 
 import AllocateEquip from './allocateEquipment.component';
 import EquipmentDataService from "./../../../services/equipment.service";
@@ -17,23 +18,30 @@ class EquipDetails extends Component {
     this.deleteEquipment = this.deleteEquipment.bind(this);
 
     this.state = {
-      equipments: [],
-      categorys:[],
-      currentIndex: -1,
-      content: "",
-      equipCode: this.props.match.params.code,  
+     // equipments: [],
+     // categorys:[],
+     // currentIndex: -1,
+     // content: "",
+     currentEquipment:{
+      equipCode: this.props.match.params.code,
+      category:"",
+      projectId:"",
+      condition:"",
+      description:""
+     }
+
     };
   }
 
   componentDidMount() {
-    this.retrieveEquipment(this.props.match.params.id);
+    this.retrieveEquipment(this.props.match.params.code);
   }
 
   retrieveEquipment(id) {
-    EquipmentDataService.getAll(id)
+    EquipmentDataService.get(id)
       .then(response => {
         this.setState({
-          equipments: response.data
+          currentEquipment: response.data
         });
         console.log(response.data);
       })
@@ -43,38 +51,67 @@ class EquipDetails extends Component {
   }
 
   onChangeCategory(e){
-    this.setState({
-      category: e.target.value
+    const category=e.target.value
+    this.setState(function(prevState) {
+      return {
+        currentEquipment: {
+          ...prevState.currentEquipment,
+          category: category
+        }
+      };
     });
   }
   onChangeProjectId(e){
-    this.setState({
-      projectId: e.target.value
+    const projectId= e.target.value
+    this.setState(function(prevState) {
+      return {
+        currentEquipment: {
+          ...prevState.currentEquipment,
+          projectId: projectId
+        }
+      };
     });
   }
 
   onChangeCondition(e){
-    this.setState({
-      condition: e.target.value
+     const condition=e.target.value
+     this.setState(function(prevState) {
+      return {
+        currentEquipment: {
+          ...prevState.currentEquipment,
+          condition: condition
+        }
+      };
     });
   }
 
   onChangeDescription(e){
-    this.setState({
-      description: e.target.value
+    const description= e.target.value
+    this.setState(function(prevState) {
+      return {
+        currentEquipment: {
+          ...prevState.currentEquipment,
+          description: description
+        }
+      };
     });
   }
 
   updateEquipment(){
     var data = {
-      category: this.state.category,
-      projectId: this.state.projectId,
-      condition: this.state.condition,
-      description: this.state.description,
+      category: this.state.currentEquipment.category,
+      projectId: this.state.currentEquipment.projectId,
+      condition: this.state.currentEquipment.condition,
+      description: this.state.currentEquipment.description,
     };
 
-    EquipmentDataService.update(this.state.code, data)
+    EquipmentDataService.update(this.props.match.params.code, data)
       .then(response => {
+        this.setState(prevState => ({
+          currentEquipment: {
+            ...prevState.currentEquipment,
+          }
+        }));
         console.log(response.data);
       })
       .catch(e => {
@@ -85,7 +122,7 @@ class EquipDetails extends Component {
     EquipmentDataService.delete(this.props.match.params.code)
     .then(response => {
       console.log(response.data);
-      this.props.history.push('/equipments/'+this.props.match.params.code)
+      //this.props.history.push('/equipments/1');
     })
     .catch(e => {
       console.log(e);
@@ -93,7 +130,7 @@ class EquipDetails extends Component {
   }
 
   render() {
-    const { equipCode,equipments } = this.state;
+    const { equipCode,currentEquipment } = this.state;
     return (
       <div>
         <Card
@@ -107,8 +144,6 @@ class EquipDetails extends Component {
         </Card>
 
 
-        {equipments && equipments.map((equipment) => (
-          equipment.code === equipCode ?
         <div>
         <div class="container">                                
                     <div class="row">                     
@@ -121,7 +156,7 @@ class EquipDetails extends Component {
                         disabled
                         id="code" 
                         name="code"
-                        value={equipCode}
+                        value={currentEquipment.code}
                         />
                       </div>
                    </div>
@@ -136,8 +171,9 @@ class EquipDetails extends Component {
                         required
                         id="category" 
                         name="category"
-                        value={equipment.category}
-                        onChange={this.onChangeCategory}/>
+                        value={currentEquipment.category}
+                        onChange={this.onChangeCategory}
+                        />
                       </div>
 
                       <div class="col-6">
@@ -148,7 +184,7 @@ class EquipDetails extends Component {
                               required
                               id="projectId" 
                               name="projectId"
-                              value={equipment.projectId}
+                              value={currentEquipment.projectId}
                               onChange={this.onChangeProjectId}/>
                       </div>
 
@@ -165,7 +201,7 @@ class EquipDetails extends Component {
                         id="date" 
                         name="date"
                         disabled
-                        value={equipment.date}/>
+                        value={currentEquipment.date}/>
                       </div>
 
                       <div class="col-6">
@@ -174,7 +210,7 @@ class EquipDetails extends Component {
                         className="form-control" 
                         name="condition" 
                         id="condition">
-                            <option value={equipment.condition} selected="selected" hidden="hidden">{equipment.condition}</option>
+                            <option value={currentEquipment.condition} selected="selected" hidden="hidden">{currentEquipment.condition}</option>
                             <option value="Good">Good(New)</option>
                             <option value="Fair">Fair</option>
                             <option value="Poor">Poor</option>
@@ -188,13 +224,10 @@ class EquipDetails extends Component {
                     className="form-control" 
                     type="text" 
                     required
-                    id="description" 
-                    name="description"
-                    value={equipment.description}
+                    value={currentEquipment.description}
                     onChange={this.onChangeDescription}/>
                   </div>
-                  </div>: null
-                  ))} 
+                  </div>
                   <br/>
                   <div className="text-right">
                     <form>
@@ -203,17 +236,23 @@ class EquipDetails extends Component {
                       onClick ={this.deleteEquipment}>
                         Delete
                       </button>
-
+{/*
                       <button  
                       className="btn btn-primary mr-3">
                         View Usage
                       </button>
-
+*/}
                       <button  
-                      className="btn btn-success"
+                      className="btn btn-primary mr-3"
                       onClick={this.updateEquipment}>
-                        Edit
+                        Update
                       </button>
+
+                      <Link  
+                      className="btn btn-success"
+                      to={"/equipments/1"}>
+                        Back
+                      </Link>
                     </form>
                   </div>
 

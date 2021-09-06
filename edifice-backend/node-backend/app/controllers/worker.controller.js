@@ -71,7 +71,7 @@ exports.update = (req, res) => {
     const id = req.params.id;
 
     Worker.update(req.body, {
-      where: { id: id }
+      where: { wId: id }
     })
       .then(num => {
         if (num == 1) {
