@@ -10,8 +10,12 @@ class PunchlistDataService {
         return http.post(`/projects/punchlist/`, data);
     }
 
-    getOne(id){
+    getOne(id) {
         return http.get(`/projects/punchlist/single/${id}`);
+    }
+
+    getType(id) {
+        return http.get(`/projects/punchlist/type/${id}`);
     }
 }
 
