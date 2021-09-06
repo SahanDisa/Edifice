@@ -1,43 +1,28 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import DrawingDataService from "./../../../services/drawing.service";
-import DrawingCategoryService from "../../../services/drawing-category.service";
+import ActionPlanTypeService from "../../../services/project_management/actionplantype.service";
+import ActionPlanService from "../../../services/project_management/actionplan.service";
 import Card from 'react-bootstrap/Card';
 import drawingcover from "././../../../assets/PM/photos/drawing.jpg";
 
 export default class Drawings extends Component {
     constructor(props) {
       super(props);
-      this.retrieveDrawing = this.retrieveDrawing.bind(this);
       this.state = {
-        drawings: [],
-        drawingcategories: [],
+        actionplans: [],
         currentIndex: -1,
         content: "",
         id: this.props.match.params.id
       };
     }
     componentDidMount() {
-      this.retrieveDrawing(this.props.match.params.id);
-      this.retriveDrawingCategory(this.props.match.params.id);
+      this.retriveActionPlanTypes(this.props.match.params.id);
     }
-    retrieveDrawing(id) {
-      DrawingDataService.getAll(id)
-        .then(response => {
-          this.setState({
-            drawings: response.data
-          });
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    }
-    retriveDrawingCategory(id){
-        DrawingCategoryService.getAll(id)
+    retriveActionPlanTypes(id){
+      ActionPlanService.getAll(id)
         .then(response => {
             this.setState({
-              drawingcategories: response.data
+              actionplans: response.data
             });
             console.log(response.data);
           })
@@ -47,7 +32,7 @@ export default class Drawings extends Component {
     }
 
     render() {
-        const { drawings , drawingcategories, currentIndex,id } = this.state;
+        const { actionplans, currentIndex,id } = this.state;
         return (
         <div>
             <div className="container row">
@@ -69,32 +54,30 @@ export default class Drawings extends Component {
             </div>
         <div className="container">
         <h3>Action Plans</h3>
-        <div className="container row">
-            {drawingcategories &&
-                drawingcategories.map((drawingcategory, index) => (
-                    <div
-                    className={
-                    "container col-3" +
-                    (index === currentIndex ? "active" : "")
-                    }
-                    key={index}
+        <div className="container">
+            {actionplans &&
+              actionplans.map((actionplan, index) => (
+              <div
+                className={
+                  "container m-2" +
+                  (index === currentIndex ? "active" : "")
+                }
+                key={index}
                 >
                 {/* unit data */}
-                <Link to={"/viewdrawingcategory/"+drawingcategory.id}>
-                        <Card
-                        bg={'secondary'}
-                        text={'dark'}
-                        style={{ width: '15rem' }}
-                        className="bg-dark mb-2"
-                        >
-                        <Card.Img src={drawingcover} alt="Card image" />
-                        <Card.ImgOverlay>
-                        <Card.Title><h4>{drawingcategory.title}</h4></Card.Title>
-                        <Card.Text>
-                           {drawingcategory.description == "" ? "No Description" : drawingcategory.description} 
-                        </Card.Text>
-                        </Card.ImgOverlay>
-                        </Card>
+                <Link to={"/viewdrawingcategory/"+actionplans.id} style={{'text-decoration': 'none'}}>
+                <Card border="dark" style={{ width: '55rem' }}>
+                <Card.Header>{actionplan.actiontype}</Card.Header> 
+                <Card.Body>
+                  <Card.Title><h3>{actionplan.title}</h3></Card.Title>
+                  <Card.Text>
+                  <p>Description : {actionplan.description} </p>
+                  <p>Location : {actionplan.location}</p>
+                  <p>Plan Manager : {actionplan.planmanager}</p>
+                  {actionplan.isapprove == false ? "Not Approved 🔴" : "Approved 🟢"} 
+                  </Card.Text>
+                </Card.Body> 
+                </Card>
                 </Link>
                 </div>
             ))}

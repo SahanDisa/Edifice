@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import DrawingDataService from "./../../../services/drawing.service";
-import DrawingCategoryService from "../../../services/drawing-category.service";
+import ActionPlanDataService from "./../../../services/project_management/actionplan.service";
+import ActionPlanTypeDataService from "../../../services/project_management/actionplantype.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -14,28 +14,30 @@ export default class AddActionPlan extends Component {
     super(props);
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeType = this.onChangeType.bind(this);
+    this.onChangeActionType = this.onChangeActionType.bind(this);
+    this.onChangePlanManager = this.onChangePlanManager.bind(this);
+    this.onChangeLocation = this.onChangeLocation.bind(this);
     this.saveDrawing = this.saveDrawing.bind(this);
     this.newDrawing = this.newDrawing.bind(this);
 
     this.state = {
       id: null,
       title: "",
+      planmanager: "",
+      actiontype: "",
+      location: "",
       description: "",
-      // category default value is 1(gallery mode)
-      category: "1",
-      status: "Not Complete",
-      version: 1, 
+      approved: false,
       projectId: this.props.match.params.id, 
       
-      drawingcategories: [],
+      actionplantypes: [],
       currentIndex: -1,
       submitted: false,
 
     };
   }
   componentDidMount() {
-    this.retriveDrawingCategory(this.props.match.params.id);
+    this.getActionPlanTypes(this.props.match.params.id);
   }
   onChangeName(e) {
     this.setState({
@@ -48,16 +50,30 @@ export default class AddActionPlan extends Component {
       description: e.target.value
     });
   }
-  onChangeType(e) {
+
+  onChangeActionType(e) {
     this.setState({
-      category: e.target.value
+      actiontype: e.target.value
     });
   }
-  retriveDrawingCategory(id){
-    DrawingCategoryService.getAll(id)
+
+  onChangePlanManager(e) {
+    this.setState({
+      planmanager: e.target.value
+    });
+  }
+
+  onChangeLocation(e) {
+    this.setState({
+      location: e.target.value
+    });
+  }
+
+  getActionPlanTypes(id){
+    ActionPlanTypeDataService.getAll(id)
     .then(response => {
         this.setState({
-          drawingcategories: response.data
+          actionplantypes: response.data
         });
         console.log(response.data);
       })
@@ -68,22 +84,24 @@ export default class AddActionPlan extends Component {
   saveDrawing() {  
     var data = {
       title: this.state.title,
+      planmanager:this.state.planmanager,
+      actiontype: this.state.actiontype,
+      location: this.state.location,
       description: this.state.description,
-      category: this.state.category,
-      version: this.state.version,
-      status: this.state.status,
+      approved: this.state.approved,
       projectId: this.state.projectId
     };
 
-    DrawingDataService.create(data)
+    ActionPlanDataService.create(data)
       .then(response => {
         this.setState({
           id: response.data.id,
           title: response.data.title,
           description: response.data.description,
-          category: response.data.category,
-          version: response.data.version,
-          status: response.data.status,
+          actiontype: response.data.actiontype,
+          location: response.data.location,
+          description: response.data.description,
+          approved: response.data.approved,
           projectId: response.data.projectId,
 
           submitted: true
@@ -100,7 +118,9 @@ export default class AddActionPlan extends Component {
       id: null,
       title: "",
       description: "",
-      category: "",
+      actiontype: "",
+      location: "",
+      planmanager: "",
       projectId: this.props.match.params.id,
       
       submitted: true
@@ -108,7 +128,7 @@ export default class AddActionPlan extends Component {
   }
 
   render() {
-    const {projectId, currentIndex, drawingcategories} = this.state;
+    const {projectId, currentIndex, actionplantypes} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
@@ -129,7 +149,7 @@ export default class AddActionPlan extends Component {
             <div className="row">
             <div className="col-sm-8">
             <div className="form-group">
-              <label htmlFor="title">Name</label>
+              <label htmlFor="title">Title</label>
               <input
                 type="text"
                 className="form-control"
@@ -137,6 +157,57 @@ export default class AddActionPlan extends Component {
                 required
                 value={this.state.title}
                 onChange={this.onChangeName}
+                name="title"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="title">Plan Manager</label>
+              <input
+                type="text"
+                className="form-control"
+                id="title"
+                required
+                value={this.state.planmanager}
+                onChange={this.onChangePlanManager}
+                name="title"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="category">Action Plan Type</label>
+              <select 
+                className="form-control"
+                id="datatype"
+                required
+                name="category"
+                value={this.state.actiontype}
+                onChange={this.onChangeActionType}
+              >
+              <option></option>
+                {actionplantypes &&
+                actionplantypes.map((actionplantype, index) => (
+                <option
+                    value={actionplantype.title}
+                    onChange={this.onChangeActionType}
+                    key={index}
+                >
+                {/* unit data */}
+                {actionplantype.title}
+                </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="title">Location</label>
+              <input
+                type="text"
+                className="form-control"
+                id="title"
+                required
+                value={this.state.location}
+                onChange={this.onChangeLocation}
                 name="title"
               />
             </div>
@@ -155,43 +226,11 @@ export default class AddActionPlan extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="category">Drawing Category</label>
-              <select 
-                className="form-control"
-                id="datatype"
-                required
-                name="category"
-                value={this.state.category}
-                onChange={this.onChangeType}
-              >
-                {drawingcategories &&
-                drawingcategories.map((drawingcategory, index) => (
-                <option
-                    value={drawingcategory.id}
-                    onChange={this.onChangeType}
-                    key={index}
-                >
-                {/* unit data */}
-                {drawingcategory.title}
-                </option>
-                ))}
-              </select>
-            </div>
-            <div className="form-group">
-              <label htmlFor="description">Version</label>
+              <label htmlFor="description">Approved</label>
               <input
                 type="text"
                 className="form-control"
-                value="1.0.0"
-                disabled
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="description">Status</label>
-              <input
-                type="text"
-                className="form-control"
-                value="Not Complete 🔴"
+                value="No🔴"
                 disabled
               />
             </div>   
