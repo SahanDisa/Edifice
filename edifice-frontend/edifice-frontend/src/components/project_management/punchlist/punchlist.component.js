@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import Card from 'react-bootstrap/Card';
 import { Link } from "react-router-dom";
-// import PunchlistDataService from "./../../../services/project_management/punchlist.service.js";
+import Card from 'react-bootstrap/Card';
 import PunchListTypesDataService from "./../../../services/project_management/punchlisttypes.service.js";
 
 class PunchList extends Component {
@@ -171,18 +170,19 @@ class PunchList extends Component {
                     <div className="container row">
                         {pltypes && pltypes.map((pltypes, index) => (
                             <div className={"container col-3" + (index === currentIndex ? "active" : "")} key={index}>
-                                <Link to={"/punchlisttype/view/" + pltypes.id}>
+                                <Link to={"/punchlist/viewtype/" + pltypes.id}>
                                     <Card
-                                        bg={'secondary'}
+                                        bg={'light'}
                                         text={'dark'}
-                                        style={{ width: '15rem' }}
+                                        style={{ width: '17rem' }}
                                         className="bg-light mb-2"
+                                        variant="outline"
                                     >
-                                        {/* <Card.Img src={drawingcover} alt="Card image" />
-                                        <Card.ImgOverlay> */}
+                                        <Card.Body>
                                             <Card.Title><h4>{pltypes.title}</h4></Card.Title>
                                             <Card.Text>{pltypes.description == "" ? "No Description" : pltypes.description}</Card.Text>
-                                        {/* </Card.ImgOverlay> */}
+                                            <Card.Link variant="primary">Click to view</Card.Link>
+                                        </Card.Body>
                                     </Card>
                                 </Link>
                             </div>
@@ -192,7 +192,7 @@ class PunchList extends Component {
                 <h4>Punch Lists Items</h4><hr/>
                 <ul className="list-group">
                     <li className="list-group-item ">
-                        <Link to={"/managepunchlist/view/"+projectId} style={{ 'text-decoration': 'none'}}>1 - Replace the Broken Switch Plate</Link>
+                        <Link to={"/managepunchlist/view/" + projectId} style={{ 'text-decoration': 'none'}}>1 - Replace the Broken Switch Plate</Link>
                     </li>
                     <li className="list-group-item ">
                         <a href="#" style={{ 'text-decoration': 'none'}}>2 - Paint Touch up</a>
@@ -204,7 +204,7 @@ class PunchList extends Component {
                         <a href="#" style={{ 'text-decoration': 'none'}}>4 - Door Frame Damage</a>
                     </li>
                 </ul>
-                <Link to={"/managepunchlist/create/"+projectId} className="btn btn-primary mt-2">+ Add Another Punch List Item</Link>
+                <Link to={"/managepunchlist/create/" + projectId} className="btn btn-primary mt-2">+ Add Another Punch List Item</Link>
                 </div>
                 {/* )} */}
             </div>

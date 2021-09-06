@@ -9,9 +9,9 @@ class PunchListTypesDataService {
         return http.post("/projects/punchlisttypes/", data);
     }
 
-    // getOne(id){
-    //     return http.get(`/projects/punchlisttypes/single/${id}`);
-    // }
+    getOne(id){
+        return http.get(`/projects/punchlisttypes/single/${id}`);
+    }
 
     findlastItem(){
         return http.get(`/projects/punchlisttypes/last`);

@@ -234,6 +234,13 @@ db.punchlisttypes.belongsTo(db.projects, {
   as: "project",
 });
 
+//One punch list type has many punch list items
+// db.punchlist.hasMany(db.punchlisttypes, { as: "pltypeitems" });
+// db.punchlisttypes.belongsTo(db.punchlist, {
+//   foreignKey: "punchlisttypesId",
+//   as: "type",
+// });
+
 // One project has many action plans
 db.projects.hasMany(db.actionplan, {as: "actionplans"});
 db.actionplan.belongsTo(db.projects, {
