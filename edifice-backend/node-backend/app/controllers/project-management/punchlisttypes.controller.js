@@ -10,18 +10,15 @@ exports.create = (req, res) => {
     });
     return;
   }
-
   // Create a Punch List Types
   const plt = {
     title: req.body.title,
     description: req.body.description,
-    projectId: req.body.id
+    projectId: req.body.projectId
   };
-
   // Save Punch List Type in the database
   PunchListTypes.create(plt)
   .then(data => {
-    console.log("controller ekata aawa");
     res.send(data);
   })
   .catch(err => {

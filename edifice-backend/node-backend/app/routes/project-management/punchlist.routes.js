@@ -12,8 +12,11 @@ module.exports = app => {
     // Retrieve a single punch list with id
     router.get("/single/:id", punchlist.findOne);
 
-    // Get all drawings in that type
+    // Get all punch list in that type
     router.get("/type/:id", punchlist.findAllintype);
+
+    // Find Last punch list item
+    router.get("/last/",punchlist.findLastOne);
   
     app.use('/api/projects/punchlist', router);
   };

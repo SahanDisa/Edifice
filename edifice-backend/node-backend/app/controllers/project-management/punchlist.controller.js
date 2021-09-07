@@ -9,7 +9,6 @@ exports.create = (req, res) => {
         });
         return;
     }
-
     // Create a Punchlist
     const pl = {
         status: req.body.status,
@@ -22,7 +21,6 @@ exports.create = (req, res) => {
         description: req.body.description,
         projectId: req.body.id
     };
-
     // Save Punchlist in the database
     Punchlist.create(pl)
         .then(data => {
@@ -81,3 +79,19 @@ exports.findOne = (req, res) => {
         });
     });  
 };
+
+exports.findLastOne = (req,res) =>{
+    Punchlist.findAll({
+        limit: 1,
+        order: [['id', 'DESC']]
+    })
+    .then(data => {
+     res.send(data);
+    })
+    .catch(err => {
+    res.status(500).send({
+        message:
+            err.message || "Some error occurred while retrieving punch lists."
+        });
+    });
+}
