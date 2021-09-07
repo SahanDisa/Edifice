@@ -4,12 +4,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'bootstrap/dist/js/bootstrap.js';
-import $ from 'jquery';
-import Popper from 'popper.js';
+// import $ from 'jquery';
+// import Popper from 'popper.js';
 import "./App.css";
 import mainIcon from "././assets/Edifice.png";
 
-import NavDropdown from "react-bootstrap/NavDropdown"
+// import NavDropdown from "react-bootstrap/NavDropdown"
 
 import AuthService from "./services/auth.service";
 
@@ -25,6 +25,7 @@ import BoardAdmin from "./components/board-admin.component";
 import AddProject from './components/core_tools/admin/add-project.component';
 import AddDepartment from "./components/core_tools/admin/add-department.component";
 import AddMilestone from "./components/core_tools/admin/add-milestone.component";
+import AddMilestoneGeneral from "./components/core_tools/admin/add-milestone-custom.component";
 import AssignUserProject from "./components/core_tools/admin/add-projectuser.component";
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
@@ -274,6 +275,7 @@ class App extends Component {
             <Route path="/projectmanagement" component={BoardUser} />
             <Route path="/adddepartment/:id" component={AddDepartment} />
             <Route path="/addmilestone/:id" component={AddMilestone}/>
+            <Route path="/addmilestoneproject/:id" component={AddMilestoneGeneral}/>
             <Route path="/assignuser/:id" component={AssignUserProject} />
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
 
