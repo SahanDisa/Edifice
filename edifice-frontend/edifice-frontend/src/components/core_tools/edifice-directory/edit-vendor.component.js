@@ -39,11 +39,16 @@ class EditVendor extends Component {
           <br/>
           <br/>
 
-          <div>
-          <a href="#" className="btn btn-success">Update</a>
-          </div>
-          <div>
-          <a href="/vendors" className="btn btn-success">Cancel</a>
+          <div className="row">
+            <div>
+            <a href="#" className="btn btn-success">Update</a>
+            </div>
+            <div className="mx-3">
+            <a href="/vendors" className="btn btn-success">Cancel</a>
+            </div>
+            <div >
+            <a href="/deletevendor/" className="btn btn-danger">Delete</a>
+            </div>
           </div>
         </div>
         

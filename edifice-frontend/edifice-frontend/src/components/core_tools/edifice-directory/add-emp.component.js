@@ -28,6 +28,10 @@ class AddEmployee extends Component {
         id: undefined
       };
     }
+  
+  componentDidMount() {
+    this.getLastEmployee();
+  }
 
     //onChange functions
   onChangeID(e) {
@@ -67,10 +71,11 @@ class AddEmployee extends Component {
   }
 
   saveEmployee() {
-    this.getLastEmployee();
+    //var x=this.getLastEmployee();
     //console.log(this.lastEmployeeID);
+    //this.checkNotNull();
     var data = {
-      id: 5,
+      id: this.state.lastEmployeeID+1,
       name: this.state.name,
       mobile: this.state.mobile,
       role: this.state.role,
@@ -94,6 +99,7 @@ class AddEmployee extends Component {
         submitted: true
       });
       console.log(response.data);
+      this.getLastEmployee();
     })
     .catch(e => {
       console.log(e);
@@ -123,8 +129,8 @@ class AddEmployee extends Component {
             lastEmployeeID: response.data[0].id
           });
           //console.log(response.data[0].id);
-          //console.log(this.lastEmployeeID);
-          return response.data[0].id;
+          console.log(this.state.lastEmployeeID);
+          //return response.data[0].id;
         })
         .catch(e => {
           console.log(e);

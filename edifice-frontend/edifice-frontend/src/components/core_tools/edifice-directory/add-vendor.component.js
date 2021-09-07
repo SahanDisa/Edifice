@@ -27,6 +27,9 @@ class AddVendor extends Component {
       id: undefined
     };
   }
+  componentDidMount() {
+    this.getLastVendorID();
+  }
 
   //onChange functions
   onChangeCompanyName(e) {
@@ -60,7 +63,7 @@ class AddVendor extends Component {
   }
 
   saveVendor() {
-    this.getLastVendorID();
+    //this.getLastVendorID();
     console.log(this.lastVendorID);
     var data = {
       id: this.state.lastVendorID+1,
@@ -70,7 +73,7 @@ class AddVendor extends Component {
       email:this.state.email,
       contactPersonName: this.state.contactPersonName
     };
-
+    this.getLastVendorID();
     //console.log(data);
 
     VendorDataService.create(data)
