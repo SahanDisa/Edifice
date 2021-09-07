@@ -18,10 +18,10 @@ class EditUser extends Component {
           <br/>
           <label htmlFor="">Role</label>
 
-          <select className="form-control" name="" id="">
-            <option value="role1">civil engineer</option>
-            <option value="role2">Project manager</option>
-            <option value="role3">Site supervisor</option>
+          <select className="form-control" name="role" id="role">
+            <option value="Civil engineer">Civil engineer</option>
+            <option value="Project manager">Project manager</option>
+            <option value="Site supervisor">Site supervisor</option>
           </select><br />
 
           <label htmlFor="">Email</label>
@@ -33,11 +33,16 @@ class EditUser extends Component {
           <br/>
           <br/>
 
-          <div>
-          <a href="#" className="btn btn-success">Update</a>
-          </div>
-          <div>
-          <a href="/employees" className="btn btn-success">Cancel</a>
+          <div className="row">
+            <div>
+            <a href="#" className="btn btn-success">Update</a>
+            </div>
+            <div className="mx-3">
+            <a href="/employees" className="btn btn-success">Cancel</a>
+            </div>
+            <div >
+            <a href="/deleteuser/" className="btn btn-danger">Delete</a>
+            </div>
           </div>
           
         </div>
