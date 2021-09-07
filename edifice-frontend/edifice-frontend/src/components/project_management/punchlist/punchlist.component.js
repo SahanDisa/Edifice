@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
-import PunchListTypesDataService from "./../../../services/project_management/punchlisttypes.service.js";
+import PunchListTypesDataService  from "./../../../services/project_management/punchlisttypes.service.js";
 
 class PunchList extends Component {
     constructor(props) {
@@ -40,7 +40,7 @@ class PunchList extends Component {
         var data = {
             title : this.state.title,
             description: this.state.description,
-            projectId: this.state.projectId
+            projectId: this.props.match.params.id
         };
 
         PunchListTypesDataService.create(data)
@@ -57,6 +57,7 @@ class PunchList extends Component {
         .catch(e => {
           console.log(e);
         });
+        window.location.reload();
     }
 
     newPunchListType() {
@@ -74,6 +75,7 @@ class PunchList extends Component {
     }
 
     retrievePLT(projectId){
+        console.log("retrievePLT ekata aawa");
         PunchListTypesDataService.getAll(projectId)
         .then(response => {
             this.setState({
@@ -88,16 +90,9 @@ class PunchList extends Component {
 
     render() {
         const {projectId, pltypes, currentIndex} = this.state;
+        console.log(projectId);
         return (
             <div className="">
-                {/* {this.state.submitted ? (
-                    <div>
-                        <div>
-                            <h4>Punch List Type added successfully!</h4>
-                            <button className="btn btn-success" onClick={this.newPunchListType}>Add Another punch list type</button>
-                        </div>
-                    </div>
-                ) : ( */}
                 <div>
                 <h2>Punch Lists</h2><hr/>
                 <div className="container row">
@@ -163,14 +158,14 @@ class PunchList extends Component {
                             <label htmlFor="">.</label>
                             <button
                                 className="btn btn-primary"
-                                onClick={()=>this.savePunchListType, this.newPunchListType}
+                                onClick={this.savePunchListType}
                             >Add</button>
                         </div>
                     </div>
                     <div className="container row">
-                        {pltypes && pltypes.map((pltypes, index) => (
+                        {pltypes && pltypes.map((plt, index) => (
                             <div className={"container col-3" + (index === currentIndex ? "active" : "")} key={index}>
-                                <Link to={"/punchlist/viewtype/" + pltypes.id}>
+                                <Link to={"/punchlist/viewtype/" + plt.id}>
                                     <Card
                                         bg={'light'}
                                         text={'dark'}
@@ -179,8 +174,8 @@ class PunchList extends Component {
                                         variant="outline"
                                     >
                                         <Card.Body>
-                                            <Card.Title><h4>{pltypes.title}</h4></Card.Title>
-                                            <Card.Text>{pltypes.description == "" ? "No Description" : pltypes.description}</Card.Text>
+                                            <Card.Title><h4>{plt.title}</h4></Card.Title>
+                                            <Card.Text>{plt.description == "" ? "No Description" : plt.description}</Card.Text>
                                             <Card.Link variant="primary">Click to view</Card.Link>
                                         </Card.Body>
                                     </Card>
@@ -206,7 +201,6 @@ class PunchList extends Component {
                 </ul>
                 <Link to={"/managepunchlist/create/" + projectId} className="btn btn-primary mt-2">+ Add Another Punch List Item</Link>
                 </div>
-                {/* )} */}
             </div>
         );
     }

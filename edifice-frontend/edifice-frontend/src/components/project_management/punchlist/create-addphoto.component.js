@@ -13,7 +13,7 @@ class CreatePL extends Component {
     constructor(props) {
         super(props);
         this.onChangeDuedate = this.onChangeDuedate.bind(this);
-        this.onChangeTitle = this.onChangeTitle.bind(this);
+        this.onChangeName = this.onChangeName.bind(this);
         this.onChangeType = this.onChangeType.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
         // this.onChangePunchmanager = this.onChangePunchmanager.bind(this);
@@ -26,7 +26,7 @@ class CreatePL extends Component {
             no: null,
             status: "Initiated",
             duedate: "",
-            title: "",
+            name: "",
             location: "",
             // punchmanager: "",
             // assignee: "",
@@ -47,9 +47,9 @@ class CreatePL extends Component {
         });
     }
 
-    onChangeTitle(e) {
+    onChangeName(e) {
         this.setState({
-            title: e.target.value
+            name: e.target.value
         });
     }
 
@@ -75,7 +75,7 @@ class CreatePL extends Component {
         var data = {
             status: this.state.status,
             duedate: this.state.duedate,
-            title: this.state.title,
+            name: this.state.name,
             type: this.state.type,
             location: this.state.location,
             // punchmanager: this.state.punchmanager,
@@ -90,7 +90,7 @@ class CreatePL extends Component {
                 no: response.data.no,
                 status: response.data.status,
                 duedate: response.data.duedate,
-                title: response.data.title,
+                name: response.data.name,
                 type: response.data.type,
                 location: response.data.location,
                 // punchmanager: response.data.punchmanager,
@@ -111,7 +111,7 @@ class CreatePL extends Component {
         this.setState({
             no: null,
             duedate: "",
-            title: "",
+            name: "",
             location: "",
             // punchmanager: "",
             // assignee: "",
@@ -171,66 +171,20 @@ class CreatePL extends Component {
                 <h2>Add New Punch List Item</h2><hr/>
                 <div className="row mb-3">
                     <div className="col-sm-8">
-                    <h5>Step 1: Basic Details</h5>
+                    <h5>Step 1: Add Photos</h5>
                         <form>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="">Title</label>
+                                    <label htmlFor="">Name</label>
                                     <input
                                         className="form-control"
-                                        name="title"
-                                        value={this.state.title}
-                                        onChange={this.onChangeTitle}
+                                        name="name"
+                                        value={this.state.name}
+                                        onChange={this.onChangeName}
                                         type="text"
                                         required
                                     />
                                 </div>
-                                <div className="form-group col-md-6">
-                                    <label htmlFor="">Status</label>
-                                    <input
-                                        className="form-control"
-                                        name="status"
-                                        type="text"
-                                        value="Initiated"
-                                        readOnly
-                                    />
-                                </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <label htmlFor="">Type</label>
-                                    <select
-                                        className="form-control"
-                                        name="type"
-                                        value={this.state.type}
-                                        onChange={this.onChangeType}
-                                        type="text"
-                                        required
-                                    >
-                                        {pltypes && pltypes.map((pli, index) => (
-                                            <option
-                                                value={pli.id}
-                                                onChange={this.onChangeType}
-                                                key={index}
-                                            >
-                                                {pli.title}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <div className="form-group col-md-6">
-                                    <label htmlFor="">Location</label>
-                                    <input
-                                        className="form-control"
-                                        name="location"
-                                        value={this.state.location}
-                                        onChange={this.onChangeLocation}
-                                        type="text"
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div className="form-row">
                                 <div className="form-group col-md-9">
                                     <label htmlFor="">Description</label>
                                     <input
@@ -242,25 +196,13 @@ class CreatePL extends Component {
                                         required
                                     />
                                 </div>
-                                <div className="form-group col-md-3">
-                                    <label htmlFor="">Due Date</label>
-                                    <input
-                                        className="form-control"
-                                        name="duedate"
-                                        value={this.state.duedate}
-                                        onChange={this.onChangeDuedate}
-                                        type="date"
-                                        min=""
-                                        required
-                                    />
-                                </div>
                             </div>
                             <hr />
                             <button
                                 type="button"
                                 onClick={this.savePunchListItem}
                                 className="btn btn-primary mr-2"
-                            >Next: Link Photos</button>
+                            >Next: Add Assignees</button>
                             <a href="/punchlist" className="">Cancel</a>
                         </form>
                     </div>
@@ -268,11 +210,11 @@ class CreatePL extends Component {
                         <Timeline>
                             <TimelineItem>
                                 <TimelineSeparator><TimelineDot /><TimelineConnector /></TimelineSeparator>
-                                <TimelineContent><h5><strong>Step 1</strong><br/>Basic Details</h5></TimelineContent>
+                                <TimelineContent><h6><strong>Step 1</strong><br/>Basic Details</h6></TimelineContent>
                             </TimelineItem>
                             <TimelineItem>
                             <TimelineSeparator><TimelineDot /><TimelineConnector /></TimelineSeparator>
-                                <TimelineContent><h6><strong>Step 2</strong><br/>Link Photos</h6></TimelineContent>
+                                <TimelineContent><h5><strong>Step 2</strong><br/>Link Photos</h5></TimelineContent>
                             </TimelineItem>
                             <TimelineItem>
                                 <TimelineSeparator><TimelineDot /></TimelineSeparator>

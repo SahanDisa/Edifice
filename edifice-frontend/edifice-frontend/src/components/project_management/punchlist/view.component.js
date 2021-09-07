@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
-import PunchListTypesDataService from "./../../../services/project_management/punchlisttypes.service.js";
+import PunchListTypesDataService from "../../../services/project_management/punchlisttypes.service.js";
 import Table from 'react-bootstrap/Table';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
