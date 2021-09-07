@@ -28,13 +28,13 @@ module.exports = app => {
   // Delete a direct cost with id
   router.delete("/:id", directcost.delete);
 
- 
+// get total according to cost code
   //router.get("/list/:id/:costCode", directcost.getDTotalOfCostCodes);
   router.get("/:id/:costCode/total", directcost.getDTotalOfCostCodes);
 
+// get all total direct costs of a project
+  router.get("/:id/total", directcost.getTotalDirectCosts);
 
-  //export
-  router.get("/list/:id/download", excelController.download);
 
  
   
