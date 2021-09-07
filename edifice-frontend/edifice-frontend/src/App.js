@@ -366,10 +366,10 @@ class App extends Component {
             <Route path="/addcommitment/:id" component={AddCommitment} />
             {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
             <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
-            <Route path="/addsov/:id" component={AddSov} />
+            <Route exact path="/addsov/:pid/:id" component={AddSov} />
             <Route path="/viewdirectcost/:id" component={ViewSingleDirectCost} />
            {/* <Route path="/viewsov/:id" component={ViewSingleSov} />*/}
-            <Route path="/viewsov/:id" component={SovHome} />
+            <Route exact path="/viewsov/:pid/:id" component={SovHome} />
 
             <Route path="/addinvoice/:id" component={AddInvoice} />
             <Route path="/addpayment/:id" component={AddPayment} />

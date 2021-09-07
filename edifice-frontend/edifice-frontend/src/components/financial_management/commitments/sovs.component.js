@@ -8,6 +8,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 const SovList = (props) => {
   const {id}= useParams();
+  const {pid}= useParams();
   const [sovs, setSovs] = useState([]);
   const [searchCostCode, setSearchCostCode] = useState("");
   const sovsRef = useRef();
@@ -139,7 +140,7 @@ const SovList = (props) => {
                <h6>Track all direct costs that are not associated with commitments.</h6><hr />
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
-            <Link className="btn btn-primary mr-2" to={"/addsov/"+id}>
+            <Link className="btn btn-primary mr-2" to={"/addsov/"+pid+"/"+id}>
                 + Create
                 </Link>
                 <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
