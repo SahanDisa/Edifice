@@ -25,6 +25,7 @@ import BoardAdmin from "./components/board-admin.component";
 import AddProject from './components/core_tools/admin/add-project.component';
 import AddDepartment from "./components/core_tools/admin/add-department.component";
 import AddMilestone from "./components/core_tools/admin/add-milestone.component";
+import AddMilestoneGeneral from "./components/core_tools/admin/add-milestone-custom.component";
 import AssignUserProject from "./components/core_tools/admin/add-projectuser.component";
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
@@ -273,6 +274,7 @@ class App extends Component {
             <Route path="/projectmanagement" component={BoardUser} />
             <Route path="/adddepartment/:id" component={AddDepartment} />
             <Route path="/addmilestone/:id" component={AddMilestone}/>
+            <Route path="/addmilestoneproject/:id" component={AddMilestoneGeneral}/>
             <Route path="/assignuser/:id" component={AssignUserProject} />
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
 

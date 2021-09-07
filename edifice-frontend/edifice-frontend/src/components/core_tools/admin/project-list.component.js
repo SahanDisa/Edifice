@@ -174,7 +174,11 @@ export default class ProjectsList extends Component {
                 </label>{" "}
                 {currentProject.published ? "Published" : "Pending"}
               </div>
-
+              <Link
+                to={"/projectmanagementhome/"+ currentProject.id}
+                className="m-1 btn btn-sm btn-primary">
+                View
+              </Link>
               <Link
                 to={"/projects/" + currentProject.id}
                 className="m-1 btn btn-sm btn-warning"
@@ -188,10 +192,16 @@ export default class ProjectsList extends Component {
                 Department
               </Link>
               <Link
+                to={"/addmilestoneproject/"+ currentProject.id}
+                className="m-1 btn btn-sm btn-success">
+                Milestone
+              </Link>
+              <Link
                 to={"/assignuser/"+ currentProject.id}
                 className="m-1 btn btn-sm btn-primary">
                 Assign Users
               </Link>
+              
             </div>
           ) : (
             <div>
