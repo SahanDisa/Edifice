@@ -4,12 +4,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'bootstrap/dist/js/bootstrap.js';
-import $ from 'jquery';
-import Popper from 'popper.js';
+// import $ from 'jquery';
+// import Popper from 'popper.js';
 import "./App.css";
 import mainIcon from "././assets/Edifice.png";
 
-import NavDropdown from "react-bootstrap/NavDropdown"
+// import NavDropdown from "react-bootstrap/NavDropdown"
 
 import AuthService from "./services/auth.service";
 
@@ -26,6 +26,7 @@ import BoardAdmin from "./components/board-admin.component";
 import AddProject from './components/core_tools/admin/add-project.component';
 import AddDepartment from "./components/core_tools/admin/add-department.component";
 import AddMilestone from "./components/core_tools/admin/add-milestone.component";
+import AddMilestoneGeneral from "./components/core_tools/admin/add-milestone-custom.component";
 import AssignUserProject from "./components/core_tools/admin/add-projectuser.component";
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
@@ -61,7 +62,7 @@ import Roles from "./components/core_tools/admin/roles.component";
 import AddUser from "./components/core_tools/edifice-directory/add-emp.component";
 import EditUser from "./components/core_tools/edifice-directory/edit-emp.component";
 import Vendors from "./components/core_tools/edifice-directory/vendors.component";
-import Emp from "./components/core_tools/edifice-directory/employees.component";
+import Employee from "./components/core_tools/edifice-directory/employees.component";
 import AddVendor from "./components/core_tools/edifice-directory/add-vendor.component";
 import EditVendor from "./components/core_tools/edifice-directory/edit-vendor.component";
 
@@ -95,6 +96,8 @@ import EditRFI from "./components/project_management/rfi/edit.component";
 import ViewRFI from "./components/project_management/rfi/view.component";
 
 import actionplanHome from "./components/project_management/actionplan/actionplan.component";
+import AddActionPlan from "./components/project_management/actionplan/addactionplan.component";
+import AddActionPlanType from "./components/project_management/actionplan/addactionplantype.component";
 
 import DlsConfig from "./components/project_management/dailylog/configuration.component";
 import ManageDls from "./components/project_management/dailylog/manage.component";
@@ -274,6 +277,7 @@ class App extends Component {
             <Route path="/projectmanagement" component={BoardUser} />
             <Route path="/adddepartment/:id" component={AddDepartment} />
             <Route path="/addmilestone/:id" component={AddMilestone}/>
+            <Route path="/addmilestoneproject/:id" component={AddMilestoneGeneral}/>
             <Route path="/assignuser/:id" component={AssignUserProject} />
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
 
@@ -306,7 +310,9 @@ class App extends Component {
             <Route path="/managerfi/edit" component={EditRFI} />
             <Route path="/managerfi/view" component={ViewRFI} />
             {/* Action Plan */}
-            <Route path="/actionplan" component={actionplanHome} />
+            <Route path="/actionplan/:id" component={actionplanHome} />
+            <Route path="/addactionplantype/:id" component={AddActionPlanType} />
+            <Route path="/addactionplan/:id" component={AddActionPlan} />
             {/* Punch List */}
             <Route path="/punchlist/:id" component={punchlistHome} />
             {/* <Route path="/managepunchlist/view/:id" component={ViewPL} /> */}
@@ -322,7 +328,7 @@ class App extends Component {
             <Route path="/addUser" component={AddEmployee} />
             <Route path="/editUser" component={EditUser} />
             <Route path="/vendor" component={Vendors} />
-            <Route path="/employees" component={Emp} />
+            <Route path="/employees" component={Employee} />
             <Route path="/addVendor" component={AddVendor} />
             <Route path="/editVendor" component={EditVendor} />
             {/* Document */}
@@ -383,10 +389,10 @@ class App extends Component {
             <Route path="/addcommitment/:id" component={AddCommitment} />
             {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
             <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
-            <Route path="/addsov/:id" component={AddSov} />
+            <Route exact path="/addsov/:pid/:id" component={AddSov} />
             <Route path="/viewdirectcost/:id" component={ViewSingleDirectCost} />
            {/* <Route path="/viewsov/:id" component={ViewSingleSov} />*/}
-            <Route path="/viewsov/:id" component={SovHome} />
+            <Route exact path="/viewsov/:pid/:id" component={SovHome} />
 
             <Route path="/addinvoice/:id" component={AddInvoice} />
             <Route path="/addpayment/:id" component={AddPayment} />

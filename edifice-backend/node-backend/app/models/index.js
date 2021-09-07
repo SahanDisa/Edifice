@@ -293,6 +293,13 @@ db.sovs.belongsTo(db.commitments, {
   as: "commitment",
 });
 
+// One projects has many sovs
+db.projects.hasMany(db.sovs, { as: "sovs" });
+db.sovs.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
 // One commitment has many 
 db.commitments.hasMany(db.payments, { as: "payments" });
 db.payments.belongsTo(db.commitments, {

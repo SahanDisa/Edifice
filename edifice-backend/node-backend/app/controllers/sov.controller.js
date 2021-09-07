@@ -1,6 +1,8 @@
 const db = require("./../models/index");
+const Project = db.projects;
 const Commitment = db.commitments;
 const Sov = db.sovs;
+const sequelize = require("sequelize");
 
 // create a sov
 exports.create = (req, res) => {
@@ -20,6 +22,7 @@ exports.create = (req, res) => {
     date:req.body.date,
   
     commitmentId: req.body.commitmentId,
+    projectId: req.body.projectId,
   };
 
   // Save sov in the database
@@ -39,15 +42,17 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   const id = req.params.id;
 
+
   Sov.findAll({ where: {
-    commitmentId: id
+    commitmentId: id,
+
   }})
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving SoVs with id=" + id
+        message: "Error retrieving SoVs with id=" + id 
       });
     });  
 };
@@ -145,4 +150,39 @@ exports.findByCostCode= (req, res) => {
     });  
 };
 
+// total of all sovss according to project id
+exports.getTotalSovs = (req,res)=>{
+  const id = req.params.id;
+Sov.findAll({
+where: {projectId:id },
+attributes: [[sequelize.fn('sum', sequelize.col('amount')), 'total']],
+raw: true,
+}).then(data => {
+res.send(data[0].total);
+//console.log(data[0].total)
+})
+.catch(err => {
+res.status(500).send({
+  message: "Error retrieving total  "
+});
+});  
+}
 
+// total of sovs according to cost code
+exports.getSTotalOfCostCodes = (req,res)=>{
+  const id = req.params.id;
+  const costCode = req.params.costCode;
+Sov.findAll({
+where: { costCode:costCode,projectId:id },
+attributes: [[sequelize.fn('sum', sequelize.col('amount')), 'total']],
+raw: true,
+}).then(data => {
+res.send(data[0].total);
+console.log(data[0].total)
+})
+.catch(err => {
+res.status(500).send({
+  message: "Error retrieving total  "
+});
+});  
+}

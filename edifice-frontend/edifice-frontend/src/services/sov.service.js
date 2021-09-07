@@ -29,13 +29,26 @@ removeAll(){
 findByCostCode(id,costCode){
   //return http.get(`/projects/directcost?costCode=${costCode}`);
   //return http.get(`/projects/directcost/list/${id}?costCode=${costCode}`);
-  return http.get(`/commitmentss/sov/list/${id}/${costCode}`);
+  return http.get(`/commitments/sov/list/${id}/${costCode}`);
   //return http.get(`/projects/directcost?costcode=${costCode}`);
 
 }
 
 
 /*end of added new*/
+
+/*total sovs of a project*/
+getTotalSovs(id){
+
+  return http.get(`/commitments/sov/${id}/total`);
+
+}
+
+getSTotalOfCostCodes(id,costCode){
+
+  return http.get(`/commitments/sov/${id}/${costCode}/total`);
+
+}
 
 }
 
