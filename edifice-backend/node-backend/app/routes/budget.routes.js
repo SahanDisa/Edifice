@@ -12,7 +12,7 @@ module.exports = app => {
    // Retrieve all direct costs for a project
      //router.get("/list/:id?costCode=[keyword]", directcost.findByCode);
      router.get("/list/:id/:costCode", budget.findByCostCode);
-     //router.get("/list/:id?:costCode", directcost.findByCode);
+  
     
     // Retrieve a single direct cost with id
     router.get("/:id", budget.findOne);
@@ -26,8 +26,9 @@ module.exports = app => {
   // Delete a direct cost with id
   router.delete("/:id", budget.delete);
 
+  // get all total estimated budget of a project
+  router.get("/:id/total", budget.getTotalBudget);
 
-  router.get("/list/:id/:costCode", budget.getDTotalOfCostCodes);
 
     app.use('/api/projects/budget', router);
   };

@@ -62,7 +62,7 @@ export default class ViewSingleCommitment extends Component {
             <h4>{currentCommitment.hash} - {currentCommitment.title}</h4>
             <div className="col-12 text-right">
               <div className="row col-12 text-right">
-            <Link to={"/viewsov/"+currentCommitment.id}>
+            <Link to={"/viewsov/"+currentCommitment.projectId+"/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">SoVs </button>
                     </Link><br />
                     <Link to={"/viewpayment/"+currentCommitment.id}>
