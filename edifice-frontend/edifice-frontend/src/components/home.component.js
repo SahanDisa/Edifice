@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import UserService from "./../services/user.service";
 import ProjectDataService from "./../services/project.service";
 import AuthService from "./../services/auth.service";
-import HomeIcon from '@material-ui/icons/Home';
-import CategoryIcon from '@material-ui/icons/Category';
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
-import Paper from '@material-ui/core/Paper';
-import { Grid,Container,Card,LinearProgress } from '@material-ui/core';
+import { Card } from "react-bootstrap";
+import mainIcon from "././../assets/Edifice.png";
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import ProjectIcon from '@material-ui/icons/Apartment';
+import FinanceIcon from '@material-ui/icons/MonetizationOn';
+import ResourceIcon from '@material-ui/icons/EmojiTransportation';
 
 export default class Home extends Component {
   constructor(props) {
@@ -20,11 +20,24 @@ export default class Home extends Component {
       projects: [],
       currentIndex: -1,
       content: "",
-      currentUser: AuthService.getCurrentUser()
+      currentUser: AuthService.getCurrentUser(),
+      showEngineerBoard: false,
+      showManagerBoard: false,
+      showAdminBoard: false,
     };
   }
 
   componentDidMount() {
+    const user = AuthService.getCurrentUser();
+  
+    if (user) {
+      this.setState({
+        currentUser: user,
+        showEngineerBoard: user.roles.includes("ROLE_USER"),
+        showManagerBoard: user.roles.includes("ROLE_MODERATOR"),
+        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
+      });
+    }
     UserService.getPublicContent().then(
       response => {
         this.setState({
@@ -56,70 +69,226 @@ export default class Home extends Component {
   }
 
   render() {
-    const { projects,currentIndex,currentUser } = this.state;
+    const { currentIndex,currentUser, showEngineerBoard,showManagerBoard,showAdminBoard } = this.state;
     return (
       <div className="container">
-        <header className="jumbotron">
-          <h3> <HomeIcon color="primary" fontSize="large"/> Home</h3>
-          <h3>Projects</h3>
-          <h6>Projects that you are involved In</h6>
-          
-          {/* Display involved Project of a particular user */}
-          <ul className="list-group">
-            {projects &&
-              projects.map((project, index) => (
-                <li
-                  className={
-                    "list-group-item " +
-                    (index === currentIndex ? "active" : "")
-                  }
-                  // onClick={() => this.setActiveProject(project, index)}
-                  key={index}
-                >
-                  {project.firstname + " " + project.lastname}
-                  <h5>{project.position}</h5>
-                  <h6>{project.email}</h6>
-                 
-                <Link
-                  to={"/projectmanagementhome/" + project.projectuserId}
-                  className="btn btn-primary"
-                >
-                  Go To Project
-                </Link>
-                </li>
-                
-              ))}
-          </ul>
-          <h3>Puch List Items</h3>
-          <h6>Items that you need attention to</h6>
-          <ul className="list-group list-group-flush col-7">
-              <li className="list-group-item">Basement Plan Checking</li>
-              <li className="list-group-item">Inspect 2nd Floor Beam 2mm curving</li>
-              <li className="list-group-item">Bidding #23 awarding</li>
-          </ul>
-          <h3>Action Plans & Schedule</h3>
-          <h6>plans that you are contribution is assigned to</h6>
-          <ul className="list-group list-group-flush col-7">
-              <li className="list-group-item">
-              <h5>Basement Plan</h5>
-              Layer checking
-              </li>
-              <li className="list-group-item">
-              <h5>Foundation Plan #2</h5>
-              Concrete Bed inspect and quality check
-              </li>
-              <li className="list-group-item">
-              <h5>Foundation Plan #1</h5>
-              Layer 1 concrete + temperature check
-              </li>
-          </ul>
-          <Link to={"/projectmanagement"}>
-          <Fab color="primary" aria-label="add" >
-            <CategoryIcon />
-          </Fab>
-          </Link>
-        </header>
+        <center>
+        <h2>Hi Steve, Welcome to Edifice!</h2>
+        {showAdminBoard && showManagerBoard && showEngineerBoard &&
+        <h3>You are Login as <b>Admin</b></h3>
+        }
         
+        {!showAdminBoard && showManagerBoard && showEngineerBoard &&
+        <h3>You are Login as <b>Manager</b></h3>
+        }
+        {!showAdminBoard && !showManagerBoard && showEngineerBoard &&
+        <h3>You are Login as <b>Engineer</b></h3>
+        }
+          <img
+              src={mainIcon}
+              style={{'width' : "250px", height: "250px", 'border': '2px solid black'}}
+              alt="profile-img"
+              className = "mr-1"
+            />
+          <h5>Construction Project Management Tool</h5>  
+        </center>
+        
+          
+        {showAdminBoard && showManagerBoard && showEngineerBoard &&
+        <div className="row">
+        <div className="col-3">
+            <Card border="dark" style={{ width: '16rem' }}>
+                <Card.Header>Admin/Manager</Card.Header> 
+                <Card.Body>
+                  <Card.Title>
+                  <center>
+                  <DashboardIcon style={{ fontSize: 50 }}/>
+                  <Link to={"/admin/"} style={{'text-decoration': 'none'}}>
+                  <h3>Core Tool & Dashboard</h3>
+                  </Link>
+                  </center>
+                  </Card.Title>
+                  <Card.Text>
+                  </Card.Text>
+                </Card.Body> 
+            </Card>
+          </div>
+          <div className="col-3">
+            <Card border="dark" style={{ width: '16rem' }}>
+                <Card.Header>Manager/Enginner/Architect</Card.Header> 
+                <Card.Body>
+                  <Card.Title>
+                  <center>
+                  <ProjectIcon style={{ fontSize: 50 }}/>
+                  <Link to={"/projectmanagement/"} style={{'text-decoration': 'none'}}>
+                  <h3>Project Management</h3>
+                  </Link>
+                  </center>
+                  </Card.Title>
+                  <Card.Text>
+                  
+                  </Card.Text>
+                </Card.Body> 
+            </Card>
+          </div>
+          <div className="col-3">
+            <Card border="dark" style={{ width: '16rem' }}>
+                <Card.Header>Manager/Enginner/QS</Card.Header> 
+                <Card.Body>
+                  <Card.Title>
+                  <center>
+                  <FinanceIcon style={{ fontSize: 50 }}/>
+                  <Link to={"/financialmanagement/"} style={{'text-decoration': 'none'}}>
+                  <h3>Finance Management</h3>
+                  </Link>
+                  </center>
+                  </Card.Title>
+                  <Card.Text>
+                  
+                  </Card.Text>
+                </Card.Body> 
+            </Card>
+          </div>
+          <div className="col-3">
+            <Card border="dark" style={{ width: '16rem' }}>
+                <Card.Header>Manager/Enginner</Card.Header> 
+                <Card.Body>
+                  <Card.Title>
+                  <center>
+                  <ResourceIcon style={{ fontSize: 50 }}/>
+                  <Link to={"/resource/"} style={{'text-decoration': 'none'}}>
+                  <h3>Resource Management</h3>
+                  </Link>
+                  </center>
+                  </Card.Title>
+                  <Card.Text>
+                  
+                  </Card.Text>
+                </Card.Body> 
+            </Card>
+          </div>
+        </div>
+      }
+      {!showAdminBoard && showManagerBoard && showEngineerBoard &&
+      <center>
+        <div className="row">
+          <div className="col-4">
+            <Card border="dark" style={{ width: '16rem' }}>
+                <Card.Header>Manager/Enginner/Architect</Card.Header> 
+                <Card.Body>
+                  <Card.Title>
+                  <center>
+                  <ProjectIcon style={{ fontSize: 50 }}/>
+                  <Link to={"/projectmanagement/"} style={{'text-decoration': 'none'}}>
+                  <h3>Project Management</h3>
+                  </Link>
+                  </center>
+                  </Card.Title>
+                  <Card.Text>
+                  
+                  </Card.Text>
+                </Card.Body> 
+            </Card>
+          </div>
+          <div className="col-4">
+            <Card border="dark" style={{ width: '16rem' }}>
+                <Card.Header>Manager/Enginner/QS</Card.Header> 
+                <Card.Body>
+                  <Card.Title>
+                  <center>
+                  <FinanceIcon style={{ fontSize: 50 }}/>
+                  <Link to={"/financialmanagement/"} style={{'text-decoration': 'none'}}>
+                  <h3>Finance Management</h3>
+                  </Link>
+                  </center>
+                  </Card.Title>
+                  <Card.Text>
+                  
+                  </Card.Text>
+                </Card.Body> 
+            </Card>
+          </div>
+          <div className="col-4">
+            <Card border="dark" style={{ width: '16rem' }}>
+                <Card.Header>Manager/Enginner</Card.Header> 
+                <Card.Body>
+                  <Card.Title>
+                  <center>
+                  <ResourceIcon style={{ fontSize: 50 }}/>
+                  <Link to={"/resource/"} style={{'text-decoration': 'none'}}>
+                  <h3>Resource Management</h3>
+                  </Link>
+                  </center>
+                  </Card.Title>
+                  <Card.Text>
+                  
+                  </Card.Text>
+                </Card.Body> 
+            </Card>
+          </div>
+        </div>
+      </center>
+      }
+      {!showAdminBoard && !showManagerBoard && showEngineerBoard &&
+        <center>
+        <div className="row">
+          <div className="col-12">
+            <Card border="dark" style={{ width: '16rem' }}>
+                <Card.Header>Manager/Enginner/Architect</Card.Header> 
+                <Card.Body>
+                  <Card.Title>
+                  <center>
+                  <ProjectIcon style={{ fontSize: 50 }}/>
+                  <Link to={"/projectmanagement/"} style={{'text-decoration': 'none'}}>
+                  <h3>Project Management</h3>
+                  </Link>
+                  </center>
+                  </Card.Title>
+                  <Card.Text>
+                  
+                  </Card.Text>
+                </Card.Body> 
+            </Card>
+          </div>
+          {/* <div className="col-4">
+            <Card border="dark" style={{ width: '16rem' }}>
+                <Card.Header>Manager/Enginner/QS</Card.Header> 
+                <Card.Body>
+                  <Card.Title>
+                  <center>
+                  <FinanceIcon style={{ fontSize: 50 }}/>
+                  <Link to={"/financialmanagement/"} style={{'text-decoration': 'none'}}>
+                  <h3>Finance Management</h3>
+                  </Link>
+                  </center>
+                  </Card.Title>
+                  <Card.Text>
+                  
+                  </Card.Text>
+                </Card.Body> 
+            </Card>
+          </div>
+          <div className="col-4">
+            <Card border="dark" style={{ width: '16rem' }}>
+                <Card.Header>Manager/Enginner</Card.Header> 
+                <Card.Body>
+                  <Card.Title>
+                  <center>
+                  <ResourceIcon style={{ fontSize: 50 }}/>
+                  <Link to={"/resource/"} style={{'text-decoration': 'none'}}>
+                  <h3>Resource Management</h3>
+                  </Link>
+                  </center>
+                  </Card.Title>
+                  <Card.Text>
+                  
+                  </Card.Text>
+                </Card.Body> 
+            </Card>
+          </div> */}
+        </div>
+        </center>
+      }
       </div>
     );
   }

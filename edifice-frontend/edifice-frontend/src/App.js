@@ -4,12 +4,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'bootstrap/dist/js/bootstrap.js';
-import $ from 'jquery';
-import Popper from 'popper.js';
+// import $ from 'jquery';
+// import Popper from 'popper.js';
 import "./App.css";
 import mainIcon from "././assets/Edifice.png";
 
-import NavDropdown from "react-bootstrap/NavDropdown"
+// import NavDropdown from "react-bootstrap/NavDropdown"
 
 import AuthService from "./services/auth.service";
 
