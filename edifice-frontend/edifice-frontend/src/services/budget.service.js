@@ -31,15 +31,15 @@ findByCostCode(id,costCode){
   //return http.get(`/projects/directcost/list/${id}?costCode=${costCode}`);
   return http.get(`/projects/budget/list/${id}/${costCode}`);
   //return http.get(`/projects/directcost?costcode=${costCode}`);
+}
 
   /*end of added new*/
 
 
-}
+/*total budget of a project*/
+getTotalBudget(id){
 
-getDTotalOfCostCodes(id,costCode){
-
-  return http.get(`/projects/budget/list/${id}/${costCode}`);
+  return http.get(`/projects/budget/${id}/total`);
 
 }
 

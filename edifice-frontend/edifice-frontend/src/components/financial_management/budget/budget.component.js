@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import BudgetDataService from "./../../../services/budget.service";
 import DirectCostDataService from "./../../../services/directcost.service";
+import SovDataService from "./../../../services/sov.service";
 import { useTable } from "react-table";
 import { Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -11,16 +12,36 @@ import DeleteIcon from '@material-ui/icons/Delete';
 const BudgetList = (props) => {
   const {id}= useParams();
   const [budgets, setBudgets] = useState([]);
-  //const [total,setTotal]=useState(0);
   const [searchCostCode, setSearchCostCode] = useState("");
   const budgetsRef = useRef();
-  
-
- 
   budgetsRef.current = budgets;
 
+
+  const [currentDirectCost, setCurrentDirectCost] = useState("");
+  const [currentCommitedCost, setCurrentCommitedCost] = useState("");
+
+  const [directCostTotal, setDirectCostTotal] = useState("");
+  const [budgetTotal, setBudgetTotal] = useState("");
+  const [sovTotal, setSovTotal] = useState("");
+
+  /*const onChangeDirectCost = (e) => {
+    const currentDirectCost = e.target.value;
+    setCurrentDirectCost(currentDirectCost);
+  };
+
+  const handleInputChange = event => {
+    const { name, value } = event.target;
+    setCurrentDirectCost({ ...currentDirectCost, [name]: value });
+  };*/
+
+
+
   useEffect(() => {
+    calculateTotalDirectCosts();
+    calculateTotalSovs();
+    calculateTotalEstimatedBudget();
     retrieveBudgets();
+    
   }, []);
 
 
@@ -83,19 +104,67 @@ const BudgetList = (props) => {
   };
 
 
-  const retrieveTotalDirectCosts = (rowIndex) => {
+  const calculateTotalDirectCosts = () => {
+ 
+    DirectCostDataService.getTotalDirectCosts(id)
+    .then((response) => {
+    
+    setDirectCostTotal(response.data);
+
+    
+    })
+    .catch(e => {
+      console.log(e);
+    });
+  
+  }
+
+  const calculateTotalSovs = () => {
+ 
+    SovDataService.getTotalSovs(id)
+    .then((response) => {
+    
+    setSovTotal(response.data);
+
+    
+    })
+    .catch(e => {
+      console.log(e);
+    });
+  
+  }
+
+  const calculateTotalEstimatedBudget= () => {
+ 
+    BudgetDataService.getTotalBudget(id)
+    .then((response) => {
+    
+    setBudgetTotal(response.data);
+
+    
+    })
+    .catch(e => {
+      console.log(e);
+    });
+  
+  }
+
+
+
+  const retrieveTotalCommitedCosts = (rowIndex) => {
+ 
     const id = budgetsRef.current[rowIndex].projectId;
     const costCode = budgetsRef.current[rowIndex].costCode;
   
-    DirectCostDataService.getDTotalOfCostCodes (id,costCode)
+    SovDataService.getSTotalOfCostCodes (id,costCode)
     .then((response) => {
-      //setTotal(response.data);
-      //console.log(response.data);
     
-      //budgetsRef.current[rowIndex].directCosts=response.data;
-   //setTotal( budgetsRef.current[rowIndex].directCosts);
-         console.log(response.data);
-return response.data;
+    budgetsRef.current[rowIndex].commitedCosts=response.data;
+    //setCurrentCommitedCost(response.data);
+    //console.log(budgetsRef.current[rowIndex].commitedCosts);
+
+    //let newBudgets = [...budgetsRef.current];
+    //setBudgets(newBudgets);
      
     })
     .catch(e => {
@@ -103,6 +172,32 @@ return response.data;
     });
   
   }
+
+  const retrieveTotalDirectCosts = (rowIndex) => {
+ 
+    const id = budgetsRef.current[rowIndex].projectId;
+    const costCode = budgetsRef.current[rowIndex].costCode;
+  
+    DirectCostDataService.getDTotalOfCostCodes (id,costCode)
+    .then((response) => {
+    
+       //setCurrentDirectCost(response.data);
+    budgetsRef.current[rowIndex].directCosts=response.data;
+    //setCurrentResponse(response.data);
+    //setCurrentDirectCost(currentResponse);
+    //console.log(budgetsRef.current[rowIndex].directCosts);
+
+    //let newBudgets = [...budgetsRef.current];
+    //setBudgets(newBudgets);
+     
+    })
+    .catch(e => {
+      console.log(e);
+    });
+  
+  }
+
+  
 
   const columns = useMemo(
     () => [
@@ -119,11 +214,12 @@ return response.data;
         accessor: "directCosts",
         Cell: (props) => {
           const rowIdx = props.row.id;
-          budgetsRef.current[rowIdx].directCosts=retrieveTotalDirectCosts(rowIdx);
-          const v=budgetsRef.current[rowIdx].directCosts;
-          //retrieveTotalDirectCosts(rowIdx);
-          return(
-            <div>{v}</div>
+         retrieveTotalDirectCosts(rowIdx);
+         return(
+
+            <div>
+{budgetsRef.current[rowIdx].directCosts}
+            </div>
            
           );
         },
@@ -131,6 +227,19 @@ return response.data;
       {
         Header: "Commited Costs(Rs.)",
         accessor: "commitedCosts",
+        Cell: (props) => {
+          const rowIdx = props.row.id;
+         retrieveTotalCommitedCosts(rowIdx);
+         return(
+
+            // {currentDirectCost}
+          
+            <div>
+ {budgetsRef.current[rowIdx].commitedCosts}
+            </div>
+           
+          );
+        },
       },
       {
         Header: "Total Cost(Rs.)",
@@ -192,25 +301,25 @@ return response.data;
           <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2" >
             <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Estimated Budget</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. 250,000,000.00</span>
+                <span className="fs-sm fw-normal text-muted">Rs. {budgetTotal}</span>
               </div>
             </div>
 <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
-                <h3 className="h5 nav-heading-title mb-0">Total Direct Costs</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. 100,000,000.00</span>
+                <h3 className="h5 nav-heading-title mb-0">Total Direct Cost</h3>
+                <span className="fs-sm fw-normal text-muted">Rs. {directCostTotal}</span>
               </div>
     </div>
           <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
-                <h3 className="h5 nav-heading-title mb-0">Total Commited Costs</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. 125,000,000.00</span>
+                <h3 className="h5 nav-heading-title mb-0">Total Commited Cost</h3>
+                <span className="fs-sm fw-normal text-muted">Rs. {sovTotal} </span>
               </div>
             </div>
             <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Cost</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. 225,000,000.00</span>
+                <span className="fs-sm fw-normal text-muted">Rs. {sovTotal+directCostTotal}</span>
               </div>
             </div>
           </div>
