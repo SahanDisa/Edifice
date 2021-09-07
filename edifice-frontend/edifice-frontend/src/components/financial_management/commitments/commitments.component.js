@@ -132,12 +132,25 @@ export default class Commitments extends Component {
                 + New Commitment
                 </Link>
             </div>
+            <br />
 
-            <div className="col-12 text-left">
+            <div className="container row">
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
-                <h3 className="h5 nav-heading-title mb-0">Total Commited Costs</h3>
+                <h3 className="h5 nav-heading-title mb-0">Total Commited Cost</h3>
                 <span className="fs-sm fw-normal text-muted">Rs. 125,000,000.00</span>
+              </div>
+            </div>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
+                <h3 className="h5 nav-heading-title mb-0">Ongoing Commitments</h3>
+                <span className="fs-sm fw-normal text-muted">1</span>
+              </div>
+            </div>
+            <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
+                <h3 className="h5 nav-heading-title mb-0">Completed Commitments</h3>
+                <span className="fs-sm fw-normal text-muted">1</span>
               </div>
             </div>
             </div>
