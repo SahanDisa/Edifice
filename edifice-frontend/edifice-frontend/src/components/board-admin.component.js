@@ -9,11 +9,8 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import HomeWorkIcon from '@material-ui/icons/HomeWork';
-import WarningIcon from '@material-ui/icons/Warning';
-import Employees from './core_tools/edifice-directory/employees.component'
+//import LocationOnIcon from '@material-ui/icons/LocationOn';
+import {Assessment,HomeWork,LocationOn,Description,SupervisorAccount} from '@material-ui/icons';
 
 import UserService from "../services/user.service";
 import EmployeeDataService from "../services/employee.service";
@@ -180,7 +177,7 @@ export default class BoardUser extends Component {
               <a className="d-block nav-heading text-center mt-3" href="/employees" style={linkText}>
 
                 <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{employeeCount}</h1>
-                <h5 mb-0> <SupervisorAccountIcon style={{ fontSize:25 }}/>  Employees</h5>
+                <h5 mb-0> <SupervisorAccount style={{ fontSize:25 }}/>  Employees</h5>
               </a>
               </div>
             </div>
@@ -190,7 +187,7 @@ export default class BoardUser extends Component {
               <a className="d-block nav-heading text-center mt-3" style={linkText} href="/projects">
 
                 <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
-                <h5> <HomeWorkIcon style={{ fontSize:25 }}/>  Projects</h5>
+                <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>
               </a>
               </div>
             </div>
@@ -200,7 +197,7 @@ export default class BoardUser extends Component {
               <a className="d-block nav-heading text-center mt-3" style={linkText} href="/vendor">
 
                 <h1 className="nav-heading-title mb-1" style={{ fontSize:55 }}>{vendorCount}</h1>
-                <h6> <HomeWorkIcon style={{ fontSize:25 }}/>  Vendors & Subcontractors</h6>
+                <h6> <HomeWork style={{ fontSize:25 }}/>  Vendors & Subcontractors</h6>
               </a>
               </div>
             </div>
@@ -210,14 +207,14 @@ export default class BoardUser extends Component {
               <a className="d-block nav-heading text-center mt-3" style={linkText} href="#">
 
                 <h3 className="nav-heading-title mb-0" style={{ fontSize:55 }}>5</h3>
-                <h5> <SupervisorAccountIcon style={{ fontSize:25 }}/>  Pending Tasks</h5>
+                <h5> <SupervisorAccount style={{ fontSize:25 }}/>  Pending Tasks</h5>
               </a>
               </div>
             </div>
 
           <div className="col-4 mb-4 mr-5">
-            <a className="btn btn-primary p-2" id="list-settings-list" href="/report">Generate Report</a>
-            <a className="btn btn-primary p-2 ml-5" id="list-settings-list" href="/list-report">Analytics</a>
+            <a className="btn btn-primary p-2" id="list-settings-list" href="/report"><Description style={{ fontSize:20 }}/> Generate Report</a>
+            <a className="btn btn-primary p-2 ml-5" id="list-settings-list" href="/list-report"> <Assessment style={{ fontSize:20 }}/> Analytics</a>
           </div>
           </div>
             <div classname-="mt-2 mb-2">
@@ -233,8 +230,10 @@ export default class BoardUser extends Component {
                           <ProgressBar now={20} label="20" />
                         </div>
                       <div className="col-sm-6" id="project1_d">
-                        <h5 mb-0> <SupervisorAccountIcon style={{ fontSize:24 }}/>  31</h5>
-                        <h5 mb-0> <LocationOnIcon style={{ fontSize:24 }}/>  {project.location}</h5>
+                        <div className="row pb-2">
+                          <h5 className="pr-5 pl-2"> <SupervisorAccount style={{ fontSize:24 }}/>  31</h5>
+                          <h5> <LocationOn style={{ fontSize:24 }}/>  {project.location}</h5>
+                        </div>
                       </div>
                       <div className="col-2">
                         <div className="list-group" id="list-tab" role="tablist"></div>
