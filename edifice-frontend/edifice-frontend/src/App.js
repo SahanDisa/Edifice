@@ -324,7 +324,7 @@ class App extends Component {
             <Route path="/managesdailylogs/view/:id" component={ViewDls} />
             
             <Route path="/addUser" component={AddEmployee} />
-            <Route path="/editUser" component={EditUser} />
+            <Route path="/editUser/:id" component={EditUser} />
             <Route path="/vendor" component={Vendors} />
             <Route path="/employees" component={Employee} />
             <Route path="/addVendor" component={AddVendor} />

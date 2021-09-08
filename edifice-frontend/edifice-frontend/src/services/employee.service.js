@@ -1,7 +1,7 @@
 import http from "../http-common.js";
 
 class EmployeeDataService {
-  getAll(id) {
+  getOne(id) {
     return http.get(`/employee/${id}`);
   }
 
