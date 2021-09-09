@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
 import EmployeeDataService from "./../../../services/employee.service";
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -61,20 +62,8 @@ class EditUser extends Component {
   }
 
   displaySuccess(){
-    return(
-      <div className="modal fade" id="promptModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <p className="modal-title" id="exampleModalCenterTitle" style={{ fontSize:20 }}>Details of Mr.<b>{this.state.name}.</b> updated Successfuly! </p>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
+    
+    window.location.reload();
   }
 
   getEmployee(id){
@@ -119,6 +108,21 @@ class EditUser extends Component {
     });
 
     this.displaySuccess();
+  }
+
+  deleteEmployee(id){
+
+    EmployeeDataService.delete(id)
+    .then(response => {
+      console.log(response.data);
+      //this.getLastEmployee();
+    })
+    .catch(e => {
+      console.log(e);
+      //console.log(data);
+    });
+
+    window.location.href="/employees";
   }
 
   render() {
@@ -172,7 +176,7 @@ class EditUser extends Component {
             <button className="btn btn-success" disabled={this.state.disableButton} id="updateBtn" data-target="#promptModal" data-toggle="modal" >Update</button>
             </div>
             <div className="mx-3">
-            <a href="#" className="btn btn-success">Cancel</a>
+            <a href="/employee" className="btn btn-success">Cancel</a>
             </div>
             <div >
             <button className="btn btn-danger" id="updateBtn" data-target="#deleteModal" data-toggle="modal" ><DeleteIcon style={{ fontSize:15 }}/> Delete</button>
@@ -212,8 +216,8 @@ class EditUser extends Component {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <a  className="btn btn-danger pr-3 ml-2 mr-3"> Yes, Delete</a>
-                  <a className="btn btn-secondary ml-6 mr-6 pl-3" data-dismiss="modal"> Cancel</a>
+                  <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={() =>{this.deleteEmployee(id)}} > Yes, Delete</a>
+                  <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
                 </div>
               </div>
             </div>
