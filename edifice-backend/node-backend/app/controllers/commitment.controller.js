@@ -5,7 +5,7 @@ const Commitment = db.commitments;
 
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.hash) {
+  if (!req.body.title) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -14,7 +14,6 @@ exports.create = (req, res) => {
 
   // Create a commitment
   const commitment = {
-    hash: req.body.hash,
     title:req.body.title,
     contractCompany:req.body.contractCompany,
     status:req.body.status,
