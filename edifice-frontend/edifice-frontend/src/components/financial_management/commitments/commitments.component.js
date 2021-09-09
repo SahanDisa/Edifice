@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import CommitmentDataService from "./../../../services/commitment.service";
+import SovDataService from "./../../../services/sov.service";
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
@@ -122,7 +123,7 @@ export default class Commitments extends Component {
                <div className="container row">
                 <div className="col-12">
                 <h2>COMMITMENTS</h2>
-                <h6>See the Status and Value of all the Contracts.</h6>
+                <h6>See the Status and Value of all the Sub-Contracts.</h6>
                 <hr />
                 </div>
             </div>
@@ -138,7 +139,7 @@ export default class Commitments extends Component {
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Commited Cost</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. 125,000,000.00</span>
+                <span className="fs-sm fw-normal text-muted">Rs. 1365000.00</span>
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
@@ -198,12 +199,14 @@ export default class Commitments extends Component {
                 >
                 <div className="row">
                 <div className="col-10">
-                <h6> {commitment.hash} - {commitment.title}</h6>
+                <h6> {commitment.id} - {commitment.title}</h6>
                     <h6>Contract Company : {commitment.contractCompany}</h6> 
                     <h6>Status :  {commitment.status}</h6>
-                    {/* Button Group */}
-                    <Link to={"/viewcommitment/"+commitment.id}>
-                    <button className="btn btn-primary">View <VisibilityIcon/> </button>
+                    {/* Button Group 
+                    <Link to={"/viewcommitment/"+commitment.id}>*/}
+                     <Link to={"/editcommitment/"+commitment.id}>
+                   View <VisibilityIcon/> 
+                    </Link>
                     {/* <Button
                         variant="contained"
                         color="primary"
@@ -211,13 +214,13 @@ export default class Commitments extends Component {
                         endIcon={<VisibilityIcon/>}
                     >
                         View 
-                    </Button>*/}
+                    </Button>
                     </Link>
                     <Link to={"/editcommitment/"+commitment.id}>
                     <button className="btn btn-success m-2">Edit <UpdateIcon/> </button>
                     </Link>
                    
-                    <button className="btn btn-danger" onClick={this.deleteCommitment}>Delete <DeleteIcon/> </button>
+                    <button className="btn btn-danger" onClick={this.deleteCommitment}>Delete <DeleteIcon/> </button>*/}
                     
                     
                 </div>

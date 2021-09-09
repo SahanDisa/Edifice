@@ -16,7 +16,6 @@ const AddCommitment = (props) => {
 
   /**validation */
   const validationSchema = Yup.object().shape({
-    hash: Yup.string().required('Hash is required'),
     title: Yup.string().required('Title is required'),
     contractCompany: Yup.string().required('Contract Company is required'),
     status: Yup.string().required('Status is required'),
@@ -47,7 +46,6 @@ exclusions: Yup.string().required('Exclusions are required'),
 
   const initialCommitmentState = {
     id: null,
-    hash :"",
     title :"",
     contractCompany :"",
     status :"",
@@ -71,7 +69,6 @@ exclusions:"",
 
   const saveCommitment = () => {
     var data = {
-      hash: commitment.hash,
 title: commitment.title,
 contractCompany:commitment.contractCompany,
 status: commitment.status,
@@ -91,7 +88,6 @@ exclusions:commitment.exclusions,
       .then(response => {
         setCommitment({
           id: response.data.id,
-        hash:response.data.hash,
 title:response.data.title,
 contractCompany:response.data.contractCompany,
 status:response.data.status,
@@ -137,23 +133,6 @@ exclusions:response.data.exclusions,
             <div className="row">
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>
-   <div className="form-group">
-         
-                <label htmlFor="hash"># :</label> 
-             
-  
-              <input
-                type="text"
-            
-                id="hash"
-                {...register('hash')}
-                value={commitment.hash}
-                onChange={handleInputChange}
-                name="hash"
-className={`form-control ${errors.hash ? 'is-invalid' : ''}`}
-              />
-<div className="invalid-feedback">{errors.hash?.message}</div>
-              </div>
               <div className="form-group">
                 <label htmlFor="title">Title :</label>
     
