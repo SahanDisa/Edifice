@@ -1,8 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
     const Commitment = sequelize.define("commitment", {
-      hash: {
-        type: Sequelize.STRING
-      },
       title: {
         type: Sequelize.STRING
       },
