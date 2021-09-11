@@ -187,7 +187,7 @@ export default class Commitments extends Component {
 
             <div className="col-12 text-right">
                 <Link className="btn btn-primary mr-2" to={"/addcommitment/"+id}>
-                + New Commitment
+                + New Subcontract
                 </Link>
             </div>
             <br />
@@ -201,13 +201,13 @@ export default class Commitments extends Component {
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
-                <h3 className="h5 nav-heading-title mb-0">Ongoing Commitments</h3>
+                <h3 className="h5 nav-heading-title mb-0">Ongoing Subcontracts</h3>
                 <span className="fs-sm fw-normal text-muted">{ongoingCount}</span>
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
-                <h3 className="h5 nav-heading-title mb-0">Completed Commitments</h3>
+                <h3 className="h5 nav-heading-title mb-0">Completed Subcontracts</h3>
                 <span className="fs-sm fw-normal text-muted">{completedCount}</span>
               </div>
             </div>
@@ -216,7 +216,7 @@ export default class Commitments extends Component {
             <div className="container">
             <div className="form-row mt-3">
             <div className="form-group col-md-8 text-left">
-                <h4>Commitments List</h4></div>
+                <h4>Subcontracts List</h4></div>
                 <div className="col-md-4">
                 <div className="input-group mb-3">
                 <select
@@ -256,7 +256,7 @@ export default class Commitments extends Component {
                 >
                 <div className="row">
                 <div className="col-10">
-                <h6> {commitment.id} - {commitment.title}</h6>
+                <h6> #{commitment.id} - {commitment.title}</h6>
                     <h6>Contract Company : {commitment.contractCompany}</h6> 
                     <h6>Status :  {commitment.status}</h6>
                     {/* Button Group 
