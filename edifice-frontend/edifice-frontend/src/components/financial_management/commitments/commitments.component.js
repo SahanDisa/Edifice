@@ -17,13 +17,14 @@ export default class Commitments extends Component {
       this.setActiveCommitment = this.setActiveCommitment.bind(this);
       this.searchContractCompany  = this.searchContractCompany.bind(this);
       this.deleteCommitment = this.deleteCommitment.bind(this);
-    
+      this.calculateTotalSovs=this.calculateTotalSovs.bind(this);   
       this.state = {
         commitments: [],
         currentCommitment: null,
         currentIndex: -1,
         content: "",
         searchContractCompany : "",
+        sovTotal:"",
 
         id: this.props.match.params.id
       };
@@ -37,6 +38,7 @@ export default class Commitments extends Component {
   
     componentDidMount() {
       this.retrieveCommitment(this.props.match.params.id);
+      this.calculateTotalSovs(this.props.match.params.id);
     }
 
     onChangeSearchContractCompany (e) {
@@ -60,11 +62,28 @@ export default class Commitments extends Component {
         });
     }
 
+    calculateTotalSovs(id){
+ 
+      SovDataService.getTotalSovs(id)
+      .then((response) => {
+        this.setState({
+         sovTotal: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    
+    }
+
     refreshList() {
       this.retrieveCommitment();
+      this.calculateTotalSovs();
       this.setState({
         currentCommitment: null,
-        currentIndex: -1
+        currentIndex: -1,
+        totalSov:"",
       });
     }
 
@@ -116,7 +135,7 @@ export default class Commitments extends Component {
     }
     
     render() {
-        const { searchContractCompany , commitments ,currentCommitment, currentIndex,id } = this.state;
+        const { searchContractCompany , commitments ,currentCommitment, currentIndex,id,sovTotal } = this.state;
         // const classes = useStyles();
         return (
             <div>
@@ -139,7 +158,7 @@ export default class Commitments extends Component {
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Commited Cost</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. 1365000.00</span>
+                <span className="fs-sm fw-normal text-muted">Rs. {sovTotal}</span>
               </div>
             </div>
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
@@ -170,8 +189,8 @@ export default class Commitments extends Component {
               onChange={this.onChangeSearchContractCompany}
             >
               <option  selected value="">All</option>
-<option>Chance Electric Company (Pvt) Ltd</option>
-<option>XYZ Company (Pvt) Ltd</option>
+                <option>Chance Electric Company (Pvt) Ltd</option>
+                <option>XYZ Company (Pvt) Ltd</option>
               </select>
             <div className="input-group-append">
               <button
