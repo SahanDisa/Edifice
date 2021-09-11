@@ -74,7 +74,7 @@ class AddVendor extends Component {
       contactPersonName: this.state.contactPersonName
     };
     this.state.lastVendorID=data.id;
-    
+
     console.log(data);
 
     VendorDataService.create(data)
@@ -183,7 +183,7 @@ class AddVendor extends Component {
           <br/>
           <br/>
 
-          <div>
+          <div className="row">
           <a onClick={()=>{this.saveVendor(); setTimeout(this.setState.bind(this, {position:1}), 3000);}}className="btn btn-success">Add </a>
           </div>
           <div>
