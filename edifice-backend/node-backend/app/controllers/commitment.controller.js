@@ -152,3 +152,22 @@ exports.findByContractCompany= (req, res) => {
       });
     });  
 };
+
+exports.findByStatus= (req, res) => {
+  const id = req.params.id;
+  const status = req.params.status;
+
+  Commitment.findAll({ where: {
+    projectId: id,
+    status : status
+  }})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving status with id=" + id
+      });
+    });  
+};
+

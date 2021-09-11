@@ -19,6 +19,8 @@ module.exports = app => {
   router.delete("/:id", commitment.delete);
 
   router.get("/list/:id/:contractCompany", commitment.findByContractCompany);
+
+  router.get("/list/:id/:status", commitment.findByStatus);
   
     app.use('/api/projects/commitment', router);
   };
