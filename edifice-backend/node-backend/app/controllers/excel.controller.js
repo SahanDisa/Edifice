@@ -1,4 +1,4 @@
-const db = require("./../models/index");
+const db = require("./../models/index.js");
 const Project = db.projects;
 const DirectCost = db.directcosts;
 
@@ -37,24 +37,24 @@ const upload = async (req, res) => {
       });
 
       DirectCost.bulkCreate(directcosts)
-        .then(() => {
-          res.status(200).send({
-            message: "Uploaded the file successfully: " + req.file.originalname,
-          });
-        })
-        .catch((error) => {
-          res.status(500).send({
-            message: "Fail to import data into database!",
-            error: error.message,
-          });
+      .then(() => {
+        res.status(200).send({
+          message: "Uploaded the file successfully: " + req.file.originalname,
         });
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      message: "Could not upload the file: " + req.file.originalname,
-    });
-  }
+      })
+      .catch((error) => {
+        res.status(500).send({
+          message: "Fail to import data into database!",
+          error: error.message,
+        });
+      });
+  });
+} catch (error) {
+  console.log(error);
+  res.status(500).send({
+    message: "Could not upload the file: " + req.file.originalname,
+  });
+}
 };
 
 const getDirectCosts = (req, res) => {
@@ -69,7 +69,6 @@ const getDirectCosts = (req, res) => {
       });
     });
 };
-
 /*------------------------------------------------------------------------------------------------------------------------------ */
 const download = (req, res) => {
   const id = req.params.id;
