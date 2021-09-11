@@ -58,7 +58,7 @@ signedContractReceivedDate :"",
 exclusions:"",
     projectId:props.match.params.id,
     
-    commitmentStatuses: ["--","Ongoing 🔴", "Completed🟢"]
+    commitmentStatuses: ["--","Ongoing 🔴", "Completed 🟢"]
 /* should uncomment this after the subcontractor table
     subcontractors: [], */
     
