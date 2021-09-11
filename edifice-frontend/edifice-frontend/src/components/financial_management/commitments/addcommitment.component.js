@@ -142,13 +142,13 @@ exclusions:response.data.exclusions,
           <div>
             <h4>You submitted successfully!</h4>
             <button className="btn btn-success" onClick={newCommitment}>
-              + Add Another Commitment
+              + Add Another Subcontract
             </button>&nbsp;&nbsp;
-          <Link  to={"/commitment/"+commitment.projectId} className="btn btn-success">View Commitments</Link>
+          <Link  to={"/commitment/"+commitment.projectId} className="btn btn-success">View Subcontracts</Link>
           </div>
         ) : (
           <div class="container">
-            <h2>New Commitment</h2>
+            <h2>New Subcontract</h2>
             <div className="row">
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>
@@ -403,7 +403,7 @@ className={`form-control ${errors.exclusions ? 'is-invalid' : ''}`}
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h5><strong>Step 1</strong><br/>Create a Commitment</h5> </TimelineContent>
+                <TimelineContent><h5><strong>Step 1</strong><br/>Create a Subcontract</h5> </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
@@ -424,7 +424,7 @@ className={`form-control ${errors.exclusions ? 'is-invalid' : ''}`}
                   <TimelineDot />
                  
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 4</strong><br/>Edit/Delete a Commitment.</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 4</strong><br/>Edit/Delete a Subcontract.</h6></TimelineContent>
               </TimelineItem>
             </Timeline>
             </div>
