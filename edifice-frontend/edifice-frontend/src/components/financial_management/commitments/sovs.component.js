@@ -137,7 +137,7 @@ const SovList = (props) => {
   return (
     <div>
         <h3> Schedule of Values</h3>
-               <h6>Track all direct costs that are not associated with commitments.</h6><hr />
+               <h6>Track all SoVs associated with a Subcontract.</h6><hr />
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
             <Link className="btn btn-primary mr-2" to={"/addsov/"+pid+"/"+id}>

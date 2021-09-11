@@ -206,7 +206,7 @@ const AddSov = (props) => {
           >
             Reset
           </button>&nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
-            <Link to={"/sov/" + sov.commitmentId}>
+            <Link to={"/viewsov/" +sov.projectId+"/"+ sov.commitmentId}>
             <button className="btn btn-success">
             Cancel
             </button></Link>
@@ -221,7 +221,7 @@ const AddSov = (props) => {
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h5><strong>Step 1</strong><br/>Create SoV for the commitment</h5> </TimelineContent>
+                <TimelineContent><h5><strong>Step 1</strong><br/>Create SoV for the Subcontract</h5> </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
@@ -235,7 +235,7 @@ const AddSov = (props) => {
                   <TimelineDot />
                  
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 3</strong><br/>View the SoVs for the Commitment</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 3</strong><br/>View the SoVs for the Subcontract</h6></TimelineContent>
               </TimelineItem>
             </Timeline>
             </div>
