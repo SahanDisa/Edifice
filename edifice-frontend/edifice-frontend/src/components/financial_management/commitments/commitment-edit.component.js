@@ -99,11 +99,12 @@ exclusions:"",
       });
   };
 
+  //delete is working but when deleting, validation errors occur
   const deleteCommitment = () => {
-    CommitmentDataService.remove(currentCommitment.id)
+    CommitmentDataService.delete(currentCommitment.id)
       .then(response => {
         console.log(response.data);
-        props.history.push("/commitment/"+currentCommitment.projectId);//check this again
+        props.history.push("/commitment/"+currentCommitment.projectId);
       })
       .catch(e => {
         console.log(e);
