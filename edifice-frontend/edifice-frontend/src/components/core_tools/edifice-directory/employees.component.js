@@ -127,7 +127,7 @@ class Employee extends Component {
         temp.role=employee.role,
         temp.email=employee.email,
         temp.mobile=employee.mobile,
-        temp.edit=<a href="/editUser" className="btn btn-primary"> edit</a>,
+        temp.edit=<a href={"/editUser/"+temp.id} className="btn btn-primary"> edit</a>,
         temp.create=<a href={"/register/"+temp.id} className="btn btn-secondary"> Create Acc.</a>,
         data1.push(temp)
       )

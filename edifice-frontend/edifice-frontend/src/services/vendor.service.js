@@ -5,7 +5,7 @@ class VendorDataService {
     return http.get("/vendor");
   }
 
-  get(id) {
+  getOne(id) {
     return http.get(`/vendor/${id}`);
   }
 

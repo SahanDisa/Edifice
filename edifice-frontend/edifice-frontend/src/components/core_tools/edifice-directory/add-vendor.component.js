@@ -27,6 +27,9 @@ class AddVendor extends Component {
       id: undefined
     };
   }
+  componentDidMount() {
+    this.getLastVendorID();
+  }
 
   //onChange functions
   onChangeCompanyName(e) {
@@ -60,7 +63,7 @@ class AddVendor extends Component {
   }
 
   saveVendor() {
-    this.getLastVendorID();
+    //this.getLastVendorID();
     console.log(this.lastVendorID);
     var data = {
       id: this.state.lastVendorID+1,
@@ -70,7 +73,7 @@ class AddVendor extends Component {
       email:this.state.email,
       contactPersonName: this.state.contactPersonName
     };
-
+    this.getLastVendorID();
     //console.log(data);
 
     VendorDataService.create(data)
@@ -181,7 +184,7 @@ class AddVendor extends Component {
           <br/>
 
           <div>
-          <button value="Add" onClick={()=>{this.saveVendor(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastVendorID()}}className="btn btn-success"/>
+          <a onClick={()=>{this.saveVendor(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastVendorID()}}className="btn btn-success">Add </a>
           </div>
           <div>
           <a className="btn btn-secondary" type="reset">Cancel</a>
