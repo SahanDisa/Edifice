@@ -35,21 +35,6 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all punchlist from the database.
-exports.findAll = (req, res) => {
-    const no = req.query.no;
-  
-    Punchlist.findAll({ where: { projectId: id }})
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-            message: "Error retrieving Project Punch List Items Ctaegory with id=" + id
-        });
-    });
-};
-
-// Get punch list for a given type
 exports.findAllintype = (req, res) => {
     const id = req.params.id;
     Punchlist.findAll({ where: {
@@ -60,7 +45,23 @@ exports.findAllintype = (req, res) => {
     })
     .catch(err => {
         res.status(500).send({
-            message: "Error retrieving punch lists with id=" + id
+            message: "Error retrieving Punch List Items with category type=" + id
+        });
+    });
+};
+
+// Get punch list types for a given project
+exports.findAll = (req, res) => {
+    const id = req.params.id;
+    Punchlist.findAll({ where: {
+        projectId: id
+    }})
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: "Error retrieving Punch List Items with id=" + id
         });
     });  
 };

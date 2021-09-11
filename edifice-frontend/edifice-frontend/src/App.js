@@ -108,7 +108,8 @@ import punchlistHome from "./components/project_management/punchlist/punchlist.c
 // import ViewPL from "./components/project_management/punchlist/view.component";
 import CreatePL from "./components/project_management/punchlist/create-basic.component";
 import CreatePLT from "./components/project_management/punchlist/addtypes.component";
-import PLTView from "./components/project_management/punchlist/view.component";
+import PLTView from "./components/project_management/punchlist/viewtype.component";
+import PLIView from "./components/project_management/punchlist/view.component";
 
 import ResourceManagementHome from "./components/resource_management/resource-manage-home.component";
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
@@ -318,7 +319,8 @@ class App extends Component {
             {/* <Route path="/managepunchlist/view/:id" component={ViewPL} /> */}
             <Route path="/managepunchlist/create/:id" component={CreatePL} />
             <Route path="/managepunchlist/createtype/:id" component={CreatePLT} />
-            <Route path="/punchlist/viewtype/:pltid" component={PLTView} />
+            <Route path="/punchlist/viewtype/:id/:pltid" component={PLTView} />
+            <Route path="/punchlist/view/:id/:pliid" component={PLIView} />
             {/* Daily Logs */}
             <Route path="/dailylogsconfiguration/:id" component={DlsConfig} />
             <Route path="/managedailylogs/:id" component={ManageDls} />

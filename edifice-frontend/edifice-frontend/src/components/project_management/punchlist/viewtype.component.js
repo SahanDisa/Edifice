@@ -7,16 +7,16 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
 
-class PLIView extends Component {
+class PLTView extends Component {
     constructor(props) {
         super(props);
         this.retrievePLT = this.retrievePLT.bind(this);
         this.state = {
             id: this.props.match.params.pltid,
+            projectId: this.props.match.params.id,
             punchlist: [],
             title: "",
-            description: "", 
-            projectId: ""
+            description: ""
         };
     }
   
@@ -25,42 +25,31 @@ class PLIView extends Component {
         this.retriveTypeInfo(this.props.match.params.pltid);
     }
 
-    retriveTypeInfo(id){
-        PunchListTypesDataService.getOne(id)
+    retriveTypeInfo(pltid){
+        PunchListTypesDataService.getOne(pltid)
         .then(response => {
             this.setState({
-                id: response.data.id,
-                title: response.data.title,
-                description: response.data.description,
-                projectId: response.data.projectId,
+                pltype: response.data
             });
-            console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
         });
     }
 
-    retrievePLT(id) {
-        PunchlistDataService.getType(id)
+    retrievePLT(pltid) {
+        PunchlistDataService.getType(pltid)
         .then(response => {
-            console.log("Category eka gaththa");
+            console.log("Category eke eewa gaththa");
             this.setState({
-                punchlist: response.data
+                plitems: response.data
             });
-            console.log(response.data);
-            })
-        .catch(e => {
-            console.log(e);
         });
     }
 
     render() {
-        const { id, title, description, punchlist } = this.state;
+        const { projectId, pltype, plitems } = this.state;
         return (
             <div>
-              <h2>Punch List Type - {title}</h2>
-              <p>{description}</p>
+              <h2>Punch List Type - {pltype.title}</h2>
+              <p>{pltype.description}</p>
               <hr />
               <h6>Initiated - 🟡</h6>
               <h6>Work in Progress - 🟠</h6>
@@ -83,7 +72,7 @@ class PLIView extends Component {
                 </thead>
                 {/* Functional for table data */}
                 <tbody>
-                {punchlist && punchlist.map((pli, index) => (
+                {plitems && plitems.map((pli, index) => (
                     <tr
                         // className={
                         // "list-group-item row" +
@@ -92,7 +81,7 @@ class PLIView extends Component {
                         // onClick={() => this.setActiveProject(project, index)}
                         key={index}
                     >
-                    <td>{pli.id}</td>
+                    <td>{pli.no}</td>
                     <td>{pli.title}</td>
                     <td>{pli.description}</td>
                     <td>{pli.location}</td>
@@ -105,13 +94,13 @@ class PLIView extends Component {
                     }</td>
                     <td>{pli.assignee}</td>
                     <td>
-                        <Link to={"/viewpl/"+pli.id}>
+                        <Link to={"/viewpl/"+pli.no}>
                             <button className="btn btn-primary">View <VisibilityIcon/> </button>
                         </Link>
-                        <Link to={"/updatepl/"+pli.id+"/"+id}>
+                        <Link to={"/updatepl/" + projectId + "/" + pli.no}>
                             <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
                         </Link>
-                        <Link to={"/deletepl/"+pli.id+"/"+id}>
+                        <Link to={"/deletepl/" + projectId + "/" + pli.no}>
                             <button className="btn btn-danger m-2">Delete <DeleteIcon/> </button>
                         </Link>
                     </td>    
@@ -126,4 +115,4 @@ class PLIView extends Component {
     }
 }
 
-export default PLIView;
+export default PLTView;
