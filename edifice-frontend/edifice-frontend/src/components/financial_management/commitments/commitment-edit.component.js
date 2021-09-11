@@ -20,7 +20,6 @@ const EditCommitment = props => {
 
 /**validation */
   const validationSchema = Yup.object().shape({
-    hash: Yup.string().required('Hash is required'),
     title: Yup.string().required('Title is required'),
     contractCompany: Yup.string().required('Contract Company is required'),
     status: Yup.string().required('Status is required'),
@@ -51,7 +50,6 @@ exclusions: Yup.string().required('Exclusions are required'),
   //const {projectId}= useParams();
   const initialCommitmentState = {
     id: null,
-    hash :"",
     title :"",
     contractCompany :"",
     status :"",
@@ -101,11 +99,12 @@ exclusions:"",
       });
   };
 
+  //delete is working but when deleting, validation errors occur
   const deleteCommitment = () => {
-    CommitmentDataService.remove(currentCommitment.id)
+    CommitmentDataService.delete(currentCommitment.id)
       .then(response => {
         console.log(response.data);
-        props.history.push("/commitment/"+currentCommitment.projectId);//check this again
+        props.history.push("/commitment/"+currentCommitment.projectId);
       })
       .catch(e => {
         console.log(e);
@@ -116,40 +115,24 @@ exclusions:"",
     <div className="container">
       {currentCommitment ? (
         <div class="container">
-          <h4>{currentCommitment.hash} - {currentCommitment.title}</h4>
+          <h4>{currentCommitment.id} - {currentCommitment.title}</h4>
+          
           <div className="col-12 text-right">
-              <div className="row col-12 text-right">
-            <Link to={"/viewsov/"+currentCommitment.id}>
-                    <button className="btn btn-success m-2">SoVs </button>
+              
+            <Link to={"/viewsov/"+currentCommitment.projectId+"/"+currentCommitment.id}>
+                    <button className="btn btn-success m-2">View SoVs </button>
                     </Link><br />
-                    <Link to={"/viewpayment/"+currentCommitment.id}>
+                    {/*<Link to={"/viewpayment/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">Payments </button>
                     </Link><br />
                     <Link to={"/addinvoice/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">Invoices </button>
-                    </Link></div>
+                    </Link>*/}
                     </div>
                     <hr />
           <div className="row">
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>
-           <div className="form-group">
-         
-         <label htmlFor="hash"># :</label> 
-      
-
-       <input
-         type="text"
-   
-         id="hash"
- {...register('hash')}
-         value={currentCommitment.hash}
-         onChange={handleInputChange}
-         name="hash"
-  className={`form-control ${errors.hash ? 'is-invalid' : ''}`}
-       />
-<div className="invalid-feedback">{errors.hash?.message}</div>
-       </div>
               <div className="form-group">
                 <label htmlFor="title">Title</label>
                 <input
