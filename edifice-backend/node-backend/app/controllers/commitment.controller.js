@@ -153,9 +153,9 @@ exports.findByContractCompany= (req, res) => {
     });  
 };
 
-exports.findByStatus= (req, res) => {
+exports.findByStatusOngoing= (req, res) => {
   const id = req.params.id;
-  const status = req.params.status;
+  const status = req.params.ongoing;
 
   Commitment.findAll({ where: {
     projectId: id,
@@ -166,7 +166,7 @@ exports.findByStatus= (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving status with id=" + id
+        message: "Error retrieving status with id=" + id +" and status = "+status
       });
     });  
 };

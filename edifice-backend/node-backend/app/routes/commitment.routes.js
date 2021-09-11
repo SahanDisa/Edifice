@@ -18,9 +18,11 @@ module.exports = app => {
   // Delete a Commitment with id
   router.delete("/:id", commitment.delete);
 
+  router.get("/list/:id/:ongoing/status",commitment.findByStatusOngoing);
+
   router.get("/list/:id/:contractCompany", commitment.findByContractCompany);
 
-  router.get("/list/:id/:status", commitment.findByStatus);
+  
   
     app.use('/api/projects/commitment', router);
   };
