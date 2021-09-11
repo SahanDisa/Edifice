@@ -171,3 +171,21 @@ exports.findByStatusOngoing= (req, res) => {
     });  
 };
 
+exports.findByStatusCompleted = (req, res) => {
+  const id = req.params.id;
+  const status = req.params.completed;
+
+  Commitment.findAll({ where: {
+    projectId: id,
+    status : status
+  }})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving status with id=" + id +" and status = "+status
+      });
+    });  
+};
+
