@@ -308,6 +308,10 @@ exclusions:"",
           >
             Update <UpdateIcon/>
           </button>
+          <Link to={"/commitment/" + currentCommitment.projectId}>
+            <button className="btn btn-success">
+            Cancel
+            </button></Link>
           <button
             type="button"
             onClick={() => reset()}

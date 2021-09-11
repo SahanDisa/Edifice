@@ -104,7 +104,7 @@ export default class Commitments extends Component {
 
     searchContractCompany () {
      
-      CommitmentDataService.findByContractCompany (this.state.id, this.state.contractCompany )
+      CommitmentDataService.findByContractCompany (this.state.id, this.state.searchContractCompany )
         .then(response => {
           this.setState({
             commitments: response.data

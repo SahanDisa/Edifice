@@ -24,7 +24,5 @@ module.exports = app => {
 
   router.get("/list/:id/:contractCompany", commitment.findByContractCompany);
 
-  
-  
     app.use('/api/projects/commitment', router);
   };
