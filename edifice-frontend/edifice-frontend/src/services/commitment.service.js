@@ -24,6 +24,9 @@ class CommitmentDataService {
   findByContractCompany(id,contractCompany) {
     return http.get(`/projects/commitment/list/${id}/${contractCompany}`);
   }
+  findByStatusOngoing(id,status) {
+    return http.get(`/projects/commitment/list/${id}/${status}/status`);
+  }
 
 
 }
