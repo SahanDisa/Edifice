@@ -17,6 +17,7 @@ export default class Commitments extends Component {
       this.setActiveCommitment = this.setActiveCommitment.bind(this);
       this.searchContractCompany  = this.searchContractCompany.bind(this);
       this.getOngoingCount=this.getOngoingCount.bind(this);
+      this.getCompletedCount=this.getCompletedCount.bind(this);
       this.deleteCommitment = this.deleteCommitment.bind(this);
       this.calculateTotalSovs=this.calculateTotalSovs.bind(this);   
       this.state = {
@@ -27,6 +28,7 @@ export default class Commitments extends Component {
         searchContractCompany : "",
         sovTotal:"",
         ongoingCount: 0,
+        completedCount: 0,
         //ongoingStatus:"Ongoing 🔴",
 
         id: this.props.match.params.id
@@ -44,6 +46,7 @@ export default class Commitments extends Component {
       this.retrieveCommitment(this.props.match.params.id);
       this.calculateTotalSovs(this.props.match.params.id);
       this.getOngoingCount();
+      this.getCompletedCount();
     }
 
     onChangeSearchContractCompany (e) {
@@ -127,6 +130,20 @@ export default class Commitments extends Component {
         });
     }
 
+    getCompletedCount() {
+      const completedStatus ="Completed 🟢";
+      CommitmentDataService.findByStatusCompleted(this.state.id,completedStatus)
+        .then(response => {
+          this.setState({
+            completedCount: response.data.length
+          });
+          console.log(response.data.length);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+
 
     //not working:/
     deleteCommitment() { 
@@ -156,7 +173,7 @@ export default class Commitments extends Component {
     }
     
     render() {
-        const { searchContractCompany , commitments ,currentCommitment, currentIndex,id,sovTotal, ongoingCount} = this.state;
+        const { searchContractCompany , commitments ,currentCommitment, currentIndex,id,sovTotal, ongoingCount,completedCount} = this.state;
         // const classes = useStyles();
         return (
             <div>
@@ -191,7 +208,7 @@ export default class Commitments extends Component {
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Completed Commitments</h3>
-                <span className="fs-sm fw-normal text-muted">1</span>
+                <span className="fs-sm fw-normal text-muted">{completedCount}</span>
               </div>
             </div>
             </div>

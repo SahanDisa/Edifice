@@ -20,7 +20,7 @@ module.exports = app => {
 
   router.get("/list/:id/:ongoing/status",commitment.findByStatusOngoing);
 
-  router.get("/list/:id/:completed/status",commitment.findByStatusCompleted);
+  router.get("/list/:id/:completed/status/completed",commitment.findByStatusCompleted);
 
   router.get("/list/:id/:contractCompany", commitment.findByContractCompany);
 

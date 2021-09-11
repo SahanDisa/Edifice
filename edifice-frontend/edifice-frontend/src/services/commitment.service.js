@@ -28,6 +28,10 @@ class CommitmentDataService {
     return http.get(`/projects/commitment/list/${id}/${status}/status`);
   }
 
+  findByStatusCompleted(id,status) {
+    return http.get(`/projects/commitment/list/${id}/${status}/status/completed`);
+  }
+
 
 }
 
