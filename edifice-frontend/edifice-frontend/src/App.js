@@ -399,7 +399,10 @@ class App extends Component {
             <Route path="/editcommitment/:id" component={EditSingleCommitment} />
             <Route path="/viewsinglesov/:id" component={ViewSingleSov} />
             <Route path="/viewbudget/:id" component={ViewSingleBudget} />
-            <Route path="/excelupload" component={UploadExcel} />
+            <Route path="/excelupload/:id" component={UploadExcel} />
+
+            {/*Report and PDF */}
+            <Route path="/report/" component={Report} />
            
           </Switch>
         </div>
