@@ -71,9 +71,7 @@ class AddEmployee extends Component {
   }
 
   saveEmployee() {
-    //var x=this.getLastEmployee();
-    //console.log(this.lastEmployeeID);
-    //this.checkNotNull();
+    
     var data = {
       id: this.state.lastEmployeeID+1,
       name: this.state.name,
@@ -96,7 +94,6 @@ class AddEmployee extends Component {
         email: response.data.email,
         projCount: response.data.projCount,
         other: response.data.other,
-        submitted: true
       });
       console.log(response.data);
       this.getLastEmployee();
@@ -105,7 +102,7 @@ class AddEmployee extends Component {
       console.log(e);
       //console.log(data);
     });
-      //this.state.getLastvendorID();
+      this.getLastEmployee();
   }
 
   newEmployee() {

@@ -73,19 +73,19 @@ class AddVendor extends Component {
       email:this.state.email,
       contactPersonName: this.state.contactPersonName
     };
-    this.getLastVendorID();
-    //console.log(data);
+    this.state.lastVendorID=data.id;
+
+    console.log(data);
 
     VendorDataService.create(data)
       .then(response => {
         this.setState({
           id: response.data.id,
+          companyName: response.data.companyName,
           type: response.data.type,
           contactNo: response.data.contactNo,
           email: response.data.email,
-          contactPersonName: response.data.contactPersonName,
-
-          submitted: true
+          contactPersonName: response.data.contactPersonName
         });
         console.log(response.data);
       })
@@ -183,8 +183,8 @@ class AddVendor extends Component {
           <br/>
           <br/>
 
-          <div>
-          <a onClick={()=>{this.saveVendor(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastVendorID()}}className="btn btn-success">Add </a>
+          <div className="row">
+          <a onClick={()=>{this.saveVendor(); setTimeout(this.setState.bind(this, {position:1}), 3000);}}className="btn btn-success">Add </a>
           </div>
           <div>
           <a className="btn btn-secondary" type="reset">Cancel</a>
