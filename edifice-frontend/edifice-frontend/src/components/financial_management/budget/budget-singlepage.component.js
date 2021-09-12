@@ -115,7 +115,7 @@ const Budget = props => {
                 onChange={this.onChangeCostCode}
                 name="costCode"
              />*/}
-                <select 
+                <input
                
                 id="costCode"
                 {...register('costCode')}
@@ -123,14 +123,8 @@ const Budget = props => {
                 onChange={handleInputChange}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
                 name="costCode"
-              >
-                <option></option>
-                <option>001-Maintenance Equipment</option>
-                <option>002-Sodding</option>
-                <option>003-Visual Display Boards</option>
-                <option>004-Site Clearing</option>
-                <option>005-Dewatering</option>
-              </select>
+              />
+
               <div className="invalid-feedback">{errors.costCode?.message}</div>
             </div>
             <div className="form-group">

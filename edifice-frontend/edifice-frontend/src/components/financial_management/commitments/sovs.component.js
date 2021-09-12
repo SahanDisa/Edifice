@@ -5,6 +5,7 @@ import { Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import BudgetDataService from "./../../../services/budget.service";
 
 const SovList = (props) => {
   const {id}= useParams();
@@ -12,6 +13,7 @@ const SovList = (props) => {
   const [sovs, setSovs] = useState([]);
   const [searchCostCode, setSearchCostCode] = useState("");
   const sovsRef = useRef();
+  const [budgets, setBudgets] = useState([]);
 
   //const {cId}= useParams();
  
@@ -19,7 +21,20 @@ const SovList = (props) => {
 
   useEffect(() => {
     retrieveSovs();
+    retrieveBudgets();   
   }, []);
+
+  const retrieveBudgets = () => {
+    
+    BudgetDataService.getAll(pid)//passing project id as id
+      .then((response) => {
+        setBudgets(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
 
   const onChangeSearchCostCode = (e) => {
     const searchCostCode = e.target.value;
@@ -159,12 +174,25 @@ const SovList = (props) => {
             value={searchCostCode}
             onChange={onChangeSearchCostCode}
           >
-             <option  selected value="">All</option>
+            <option  selected value="">All</option>
+             {budgets &&
+                budgets.map((budget, index) => (
+                <option
+                    //value={budget.id}
+                    //onChange={onChangeSearchCostCode}
+                    key={index}
+                >
+                {/* unit data */}
+                {budget.costCode}
+                </option>
+                ))}
+
+                {/*<option></option>
                 <option>001-Maintenance Equipment</option>
                 <option>002-Sodding</option>
                 <option>003-Visual Display Boards</option>
                 <option>004-Site Clearing</option>
-                <option>005-Dewatering</option>
+                <option>005-Dewatering</option>*/}
             </select>
           <div className="input-group-append">
             <button
