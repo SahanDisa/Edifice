@@ -73,6 +73,77 @@ export default class BoardUser extends Component {
   
           <h3>Financial Management Home</h3>
           <p>Select the Project and Start Working on Your Project Financials Smoothly.</p>
+          <div className="container row">
+            <div className="container col-3">
+            <a href="/projectmanagementhome/1">
+            <Card
+              bg={'success'}
+              text={'white'}
+              style={{ width: '14rem' }}
+              className="mb-2"
+            >
+              
+              <Card.Body>
+                <Card.Title><h1>1</h1></Card.Title>
+                <Card.Text>
+                 Involved Projects
+                </Card.Text>
+              </Card.Body>
+            </Card>
+            </a>
+            </div>
+            <div className="container col-3">
+            <Card
+              bg={'success'}
+              text={'light'}
+              style={{ width: '14rem' }}
+              className="mb-2"
+              background-color={'#3F51B5'}
+            >
+              
+              <Card.Body>
+                <Card.Title><h1>3</h1></Card.Title>
+                <Card.Text>
+                 Today Meetings
+                </Card.Text>
+              </Card.Body>
+            </Card>  
+            </div>
+            <div className="container col-3">
+            <Card
+              bg={'success'}
+              text={'light'}
+              style={{ width: '14rem' }}
+              className="mb-2"
+            >
+              
+              <Card.Body>
+                <Card.Title><h1>17</h1></Card.Title>
+                <Card.Text>
+                 Remain Tasks
+                </Card.Text>
+              </Card.Body>
+            </Card>  
+            </div>
+            <div className="container col-3">
+            <Card
+              bg={'success'}
+              text={'white'}
+              style={{ width: '14rem' }}
+              className="mb-2"
+            >
+              
+              <Card.Body>
+                <Card.Title><h1>4</h1></Card.Title>
+                <Card.Text>
+                 Today Deadlines
+                </Card.Text>
+              </Card.Body>
+            </Card>  
+            </div>
+            
+          </div>
+
       <hr />
         <div className="col-md-10">
         <h4>My Projects List</h4><br />

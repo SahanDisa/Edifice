@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -269,6 +270,10 @@ const DirectCost = props => {
           >
             Update <UpdateIcon/>
           </button>
+          <Link to={"/directcost/" + currentDirectCost.projectId}>
+            <button className="btn btn-success">
+            Cancel
+            </button></Link>
           <button
             type="button"
             onClick={() => reset()}

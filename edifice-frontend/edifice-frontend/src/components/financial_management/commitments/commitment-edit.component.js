@@ -115,7 +115,7 @@ exclusions:"",
     <div className="container">
       {currentCommitment ? (
         <div class="container">
-          <h4>{currentCommitment.id} - {currentCommitment.title}</h4>
+          <h4>#{currentCommitment.id} - {currentCommitment.title}</h4>
           
           <div className="col-12 text-right">
               
@@ -308,6 +308,10 @@ exclusions:"",
           >
             Update <UpdateIcon/>
           </button>
+          <Link to={"/commitment/" + currentCommitment.projectId}>
+            <button className="btn btn-success">
+            Cancel
+            </button></Link>
           <button
             type="button"
             onClick={() => reset()}
@@ -327,7 +331,7 @@ exclusions:"",
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 1</strong><br/>Create a Commitment</h6> </TimelineContent>
+                <TimelineContent><h6><strong>Step 1</strong><br/>Create a Subcontract</h6> </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
@@ -348,7 +352,7 @@ exclusions:"",
                   <TimelineDot />
                  
                 </TimelineSeparator>
-                <TimelineContent><h5><strong>Step 4</strong><br/>Edit/Delete a Commitment.</h5></TimelineContent>
+                <TimelineContent><h5><strong>Step 4</strong><br/>Edit/Delete a Subcontract.</h5></TimelineContent>
               </TimelineItem>
             </Timeline>
             </div>

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import DirectCostDataService from "./../../../services/directcost.service";
-import ExcelDataService from "./../../../services/excel.service";
+import ExcelDataService from "./../../../services/excelupload.service";
 import { useTable } from "react-table";
 import { Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-
-
+import  Import from './excelupload.component';
+import Card from 'react-bootstrap/Card';
 
 const DirectCostList = (props) => {
   const {id}= useParams();
@@ -193,10 +193,16 @@ const DirectCostList = (props) => {
                 + Create
                 </Link>
                 
-              <input type="file" id="excelImport" name="excelImport"/>
-              <button className="btn btn-primary mr-2" >
-             Import
-            </button>
+              
+                {/*<Link className="btn btn-primary mr-2" to={"/excelupload"}>
+                Import
+                </Link>*/}
+                <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCrew">+ Import</a>&nbsp;&nbsp;
+                  {/* New Crew Starts */}
+            <div className="modal fade" id="newCrew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <Import projectId={id}/>          
+          </div>
+          {/* New Crew Ends */}
             
               {/*  <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
                 Import 
