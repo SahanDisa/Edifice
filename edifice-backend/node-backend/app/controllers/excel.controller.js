@@ -22,15 +22,16 @@ const upload = async (req, res) => {
 
       rows.forEach((row) => {
         let directcost = {
-          id: row[0],
-          costCode: row[1],
-          description: row[2],
-          category: row[3],
-          vendor: row[4],
-          employee: row[5],
-          receivedDate: row[6],
-          paidDate: row[7],
-          ammount: row[8],
+          //id: row[0],
+          costCode: row[0],
+          description: row[1],
+          category: row[2],
+          vendor: row[3],
+          employee: row[4],
+          receivedDate: row[5],
+          paidDate: row[6],
+          ammount: row[7],
+          projectId:row[8],
         };
 
         directcosts.push(directcost);

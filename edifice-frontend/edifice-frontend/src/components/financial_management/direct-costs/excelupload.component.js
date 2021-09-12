@@ -1,19 +1,37 @@
 import React, { useState, useEffect } from "react";
 import ExcelService from "./../../../services/excelupload.service";
+import DirectCostDataService from "./../../../services/directcost.service";
 import { Link } from "react-router-dom";
+import { Route, useParams } from "react-router-dom";
 
 // excel file upload
-const ExcelUploadFiles = () => {
+const ExcelUploadFiles = (props) => {
+  const {id}= useParams();
   
     const [selectedFiles, setSelectedFiles] = useState(undefined);
     const [currentFile, setCurrentFile] = useState(undefined);
     const [progress, setProgress] = useState(0);
     const [message, setMessage] = useState("");
+    const [directcosts, setDirectCosts] = useState([]);
+   
+   
   
     const [fileInfos, setFileInfos] = useState([]);
     const selectFile = (event) => {
         setSelectedFiles(event.target.files);
     };
+
+    const retrieveDirectCosts = () => {
+    
+      DirectCostDataService.getAll(id)//passing project id as id
+        .then((response) => {
+          setDirectCosts(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+
     const upload = () => {
         let currentFile = selectedFiles[0];
     
@@ -42,6 +60,8 @@ const ExcelUploadFiles = () => {
         ExcelService.getFiles().then((response) => {
           setFileInfos(response.data);
         });
+        retrieveDirectCosts();  
+
     }, []);
     return (
         <div>
@@ -50,7 +70,7 @@ const ExcelUploadFiles = () => {
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" id="exampleModalCenterTitle">Import Direct Costs</h5>
-                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => retrieveDirectCosts()} >
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -76,13 +96,13 @@ const ExcelUploadFiles = () => {
             <input type="file" onChange={selectFile} />
           </label>
     
-          {/*<button
+          <button
             className="btn btn-success"
             disabled={!selectedFiles}
             onClick={upload}
           >
             Upload
-          </button>*/}
+          </button>
          
     
           <div className="alert alert-light" role="alert">
@@ -91,13 +111,8 @@ const ExcelUploadFiles = () => {
 
          </div>
                 <div className="modal-footer">
-                <button
-            className="btn btn-success"
-            disabled={!selectedFiles}
-            onClick={upload}
-          >
-            Upload
-          </button>
+   
+          <Link  to={"/directcost/"+id} className="btn btn-success">View Direct Costs</Link>
          
                 </div>
               </div>
