@@ -20,10 +20,10 @@ exports.create = (req, res) => {
     description: req.body.description,
     date: req.body.date,
     estimatedBudget: req.body.estimatedBudget,
-    directCosts:req.body.directCosts,
-    commitedCosts:req.body.commitedCosts,
-    currentBudget: req.body.currentBudget,
-    revisedBudget: req.body.revisedBudget,
+    //directCosts:req.body.directCosts,
+    //commitedCosts:req.body.commitedCosts,
+    //currentBudget: req.body.currentBudget,
+    //revisedBudget: req.body.revisedBudget,
    
     projectId: req.body.projectId,
   };
