@@ -141,6 +141,7 @@ import AddEmployee from "./components/core_tools/edifice-directory/add-emp.compo
 import Report from "./components/report/report.component";
 
 import UploadExcel from "./components/financial_management/direct-costs/excelupload.component";
+import EstimateBudget from "./components/financial_management/budget/budgetestimates.component";
 
 
 class App extends Component {
@@ -402,6 +403,7 @@ class App extends Component {
             <Route path="/viewsinglesov/:id" component={ViewSingleSov} />
             <Route path="/viewbudget/:id" component={ViewSingleBudget} />
             <Route path="/excelupload/:id" component={UploadExcel} />
+            <Route path="/budgetestimates/:id" component={EstimateBudget} />
 
             {/*Report and PDF */}
             <Route path="/report/" component={Report} />
