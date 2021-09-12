@@ -378,7 +378,7 @@ class App extends Component {
             <Route path="/equipDetails/:code" component={EquipDetails} />
             {/*<Route path="/equipDetails/:id/:code" component={EquipDetails} />*/}
             <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
-            <Route path="/viewTimesheet/:code" component={ViewTimesheet} />
+            <Route path="/viewTimesheet/:id/:code" component={ViewTimesheet} />
                     
 
             {/*financial management */}
