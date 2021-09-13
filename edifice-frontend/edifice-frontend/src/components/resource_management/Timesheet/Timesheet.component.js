@@ -105,7 +105,7 @@ class Timesheet extends Component {
                                 <div className="col-6 text-right">
                                 <Link                         
                                         className="btn btn-secondary" 
-                                        to={"/viewTimesheet/"+timesheet.code}>
+                                        to={"/viewTimesheet/"+id+"/"+timesheet.code}>
                                     View
                                     </Link>
                                     <button                         

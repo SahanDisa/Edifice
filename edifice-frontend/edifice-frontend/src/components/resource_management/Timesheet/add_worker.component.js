@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Card from 'react-bootstrap/Card';
 
 import CrewDataService from "./../../../services/crew.service";
 import WorkersDataService from "./../../../services/worker.service";
@@ -64,6 +65,9 @@ class AddWorker extends Component {
           workerId: "12",
           timesheetId: this.state.timesheetId,
         };
+        console.log(data)
+        console.log("heloooooooooooooooooooo")
+
     
         WorkedHoursDataService.create(data)
           .then(response => {
@@ -84,7 +88,7 @@ class AddWorker extends Component {
         return (  
         <div>
             {/*------------------------------------ Add Emp Starts------------------------------------------------------------------ */}
-            <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div className="modal-dialog modal-md modal-dialog-centered" role="document">
                 <div className="modal-content">
 
                     <div className="modal-header">
@@ -96,62 +100,42 @@ class AddWorker extends Component {
 
                     <div className="modal-body" align ="left">
 
-                      <div class="accordion" id="accordionExample">
-                            {crews && crews.map((crew, index) => (
-                                <div class="card" key={index}>
-                                    <div class="card-header" id="headingOne">
-                                        <h2 class="mb-0">
-                                        <span class="badge bg-success rounded-pill">{crew.total}</span>
-                                        <button 
-                                        class="btn btn-link" 
-                                        type="button" 
-                                        data-toggle="collapse" 
-                                        data-target={`#collapse${index}`} 
-                                        aria-expanded="true" 
-                                        aria-controls="collapseOne">
-                                            {crew.name}
-                                        </button>
-                                        
-                                        </h2>
-                                    </div>
-                                    <div id={`collapse${index}`} className="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div className="">
-
-                                                {workers &&
-                                                    workers.map((worker) => (
-                                                        worker.crewId === index+1 ?
-
-                                                    <List component="nav" aria-label="mailbox folders" key={worker.crewId}>
-                                                        <div class="input-group-prepend">
-                                                            <ListItem button>
-                                                                <button 
-                                                                className="btn btn-success m-1"
-                                                                type="button"
-                                                                //onClick={this.addWorker(worker.wId)}
-                                                                onClick={this.addWorker}  >
-                                                                    Add 
-                                                                </button>
-
-                                                                {worker.firstName} {worker.lastName}
-                                                                
-                                                            </ListItem>
-                                                        </div>
-                                                    </List> :""                         
-                                                ))}
-                                                {/*Ends */}
-                                            
-                                            </div>
-                                        </div>
-                                    </div>
+                        {crews && crews.map((crew, index) => (
+                            <div className="card" key={index}>
+                                <div className="card-header">
+                                    <b>{crew.name}</b>
                                 </div>
-                            ))}  
-                                      </div>
-                    </div>
+                                <div className="card-body" >                                     
+                                    {workers &&
+                                        workers.map((worker) => (
+                                        worker.crewId === index+1 ?
+                                            <List key={worker.crewId}>                                
+                                                    <button 
+                                                        className="btn btn-success mr-1"
+                                                        type="button"
+                                                        //onClick={this.addWorker(worker.wId)}
+                                                        onClick={this.addWorker()} 
+                                                         >
+                                                            Add 
+                                                    </button>
+                                                    {worker.firstName} {worker.lastName}                                                                         
+                                            </List> : null                       
+                                                ))}   
+                                </div>
+                            </div> 
+                        ))}  
+                    </div>  
+                    <div className="modal-footer">
+                        <button 
+                        type="button" 
+                        className="btn btn-primary" 
+                        data-dismiss="modal">
+                            OK
+                        </button>
+                    </div>                                    
                 </div>
             </div>
-            {/*-------------------------------------------------------- Add Emp Ends----------------------------------------------------------------------*/}
-        </div>  
+        </div>            
         );
     }
   }

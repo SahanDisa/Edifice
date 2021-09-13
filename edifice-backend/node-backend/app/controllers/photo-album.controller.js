@@ -57,7 +57,7 @@ exports.findOne = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Directory with id=" + id
+        message: "Error retrieving Albums with id=" + id
       });
     });  
 };
@@ -111,4 +111,19 @@ exports.delete = (req, res) => {
         message: "Could not delete Photo with id=" + id
       });
     });
+};
+
+// Find recent drawing category
+exports.recent = (req, res) => {
+  const id = req.params.id;
+
+  Album.findAll({order: [['id', 'DESC']], limit: 5})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving recent albums"
+      });
+    });  
 };

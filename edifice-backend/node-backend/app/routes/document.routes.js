@@ -18,6 +18,9 @@ module.exports = app => {
     //Get Complete/Pending/Incomplete drawings
     router.get("/status/:status",documents.findAllbyStatus);
 
+    // Get recent lists
+    router.get("/data/recent", documents.recent);
+
     // Update a Drawing with id
     router.put("/:id", documents.update);
     

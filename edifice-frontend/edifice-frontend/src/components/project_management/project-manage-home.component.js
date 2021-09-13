@@ -15,16 +15,7 @@ import photosIcon from "././../../assets/photos.png";
 import punchlistIcon from "././../../assets/PM/punchlist.png";
 import documentIcon from "././../../assets/documents.png";
 
-import budgetIcon from "././../../assets/FM/budget.png";
-import addbudgetIcon from "././../../assets/FM/estimateBudget.png";
-import primecontractsIcon from "././../../assets/FM/primecontract.png";
-import costIcon from "././../../assets/FM/cost.png";
-import invoiceIcon from "././../../assets/FM/invoice.png";
-import commitmentsIcon from "././../../assets/FM/commitments.png";
-import bulldozerIcon from "././../../assets/PM/ibulldozer.png";
-
 import Card from 'react-bootstrap/Card';
-import ResourceCard from "../resource_management/resource-manage-cards";
 
 export default class BoardUser extends Component {
   constructor(props) {
@@ -189,86 +180,15 @@ export default class BoardUser extends Component {
           </div>
           <div className="col-lg-3 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" title="Track the details at Site">
-              <a className="d-block nav-heading text-center mb-2 mt-2"  data-toggle="modal" data-target="#dlModal" href="#" style={{ 'text-decoration': 'none' }}>
+              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/managedailylogs/"+ id} style={{ 'text-decoration': 'none' }}>
                 <img src={dailylogIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Daily Log</h3>
                 {/* <span className="fs-sm fw-normal text-muted">Keep track of every detail at job site each and everyday</span> */}
-              </a>
+              </Link>
             </div>
           </div>
         </div>
-          {/* Finance Management */}
-          {showModeratorBoard && (
-          <div className="mt-2">  
-           <h3>Financial Tools</h3>
-           <div className="row" style={{alignItems: "center"}} >
-          <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
-            <div className="card card-hover shadow-sm" title="See the Budget Overview">
-              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/budget/" + id} style={{ 'text-decoration': 'none' }}>
-                <img src={budgetIcon} alt="" width="50"/><br />
-                <h3 className="h5 nav-heading-title mb-0">Budget Overview</h3>
-                {/*<span className="fs-sm fw-normal text-muted">See the Budget Overview</span>*/}
-              </Link>
-              </div>
-            </div>
-            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
-            <div className="card card-hover shadow-sm" title="Estimate the Project Budget.">
-              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/budgetestimates/" + id} style={{ 'text-decoration': 'none' }}>
-                <img src={addbudgetIcon} alt="" width="50"/><br />
-                <h3 className="h5 nav-heading-title mb-0">Budget Estimates</h3>
-                {/*<span className="fs-sm fw-normal text-muted">Estimate the Project Budget.</span>*/}
-              </Link>
-              </div>
-            </div>
-         {/* <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-            <div className="card card-hover shadow-sm">
-            <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/primecontract/" + id} style={{ 'text-decoration': 'none' }}>
-                <img src={primecontractsIcon} alt="" width="50"/>
-                <h3 className="h5 nav-heading-title mb-0">Prime Contracts</h3>
-                <span className="fs-sm fw-normal text-muted">Easily create and manage contracts with the clients.</span>
-                </Link>
-              </div>
-    </div>*/}
-          <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
-            <div className="card card-hover shadow-sm" title="Track all direct costs that are not associated with commitments.">
-              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/directcost/" + id} style={{ 'text-decoration': 'none' }}>
-                <img src={costIcon} alt="" width="50"/>
-                <h3 className="h5 nav-heading-title mb-0">Direct Costs</h3>
-                {/*<span className="fs-sm fw-normal text-muted">Track all direct costs that are not associated with commitments.</span>*/}
-                </Link>
-              </div>
-            </div>
-            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm" title="See the Status and Schedule of Values of all the Contracts.">
-              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/commitment/" + id} style={{ 'text-decoration': 'none' }}>
-                <img src={commitmentsIcon} alt="" width="50"/>
-                <h3 className="h5 nav-heading-title mb-0">Commitments</h3>
-                {/*<span className="fs-sm fw-normal text-muted">See the Status and Schedule of Values of all the Contracts.</span>*/}
-              </Link>
-              </div>
-            </div>
-         {/* <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
-            <div className="card card-hover shadow-sm">
-              <Link className="d-block nav-heading text-center mt-2 mb-2" to={"/invoice/" + id} style={{ 'text-decoration': 'none' }}>
-                <img src={invoiceIcon} alt="" width="50"/>
-                <h3 className="h5 nav-heading-title mb-0">Invoicing</h3>
-                <span className="fs-sm fw-normal text-muted">View and review the invoice collection of the project.</span>
-              </Link>
-              </div>
-  </div>*/}
-          </div>
-          </div>  
-            )}
-          {/* Finance Management Ends */}
-
-          {/*resource management starts*/}
-          {showModeratorBoard && (
-          <div>
-              <ResourceCard id= {id}/>
-          </div>
-          )}
-          {/*resource management ends*/}
-
+         
           {/* Meeting Model Starts */}
           <div className="modal fade" id="meetingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered" role="document">
@@ -292,7 +212,7 @@ export default class BoardUser extends Component {
           {/* Meeting Model Ends */}
 
           {/* Daily Log Model Starts */}
-          <div className="modal fade" id="dlModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          {/* <div className="modal fade" id="dlModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered" role="document">
               <div className="modal-content">
                 <div className="modal-header">
@@ -310,7 +230,7 @@ export default class BoardUser extends Component {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* Daily log Model Ends */}
 
       </div>

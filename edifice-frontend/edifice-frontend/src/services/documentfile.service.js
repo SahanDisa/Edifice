@@ -21,6 +21,10 @@ class DocumentDataService {
     return http.get(`/projects/documents/status/${status}`);
   }
 
+  recent(){
+    return http.get(`/projects/documents/data/recent`);
+  }
+
   update(id, data) {
     return http.put(`/projects/documents/${id}`, data);
   }
