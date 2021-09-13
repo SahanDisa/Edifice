@@ -170,7 +170,10 @@ class PunchList extends Component {
                     <div className="container row">
                         {pltypes && pltypes.map((plt, index) => (
                             <div className={"container col-3"} key={index}>
-                                <Link to={"/punchlist/viewtype/" + projectId + "/" + plt.id}>
+                                <Link 
+                                to={"/viewtype/"+plt.id}
+                                // to={"/punchlist/viewtype/" + plt.id} 
+                                style={{'text-decoration': 'none'}}>
                                     <Card
                                         bg={'light'}
                                         text={'dark'}
@@ -196,7 +199,7 @@ class PunchList extends Component {
                             <li className={"list-group-item" + (index === currentIndex ? "active" : "")} key={index}>
                                 <div className="container row">
                                     <div className="col-9">
-                                        <Link to={"/punchlist/view/" + projectId + "/" + plti.no} style={{ 'text-decoration': 'none'}} >
+                                        <Link to={"/view/" + plti.no} style={{ 'text-decoration': 'none'}} >
                                             {plti.no + " - " + plti.title}
                                         </Link>
                                     </div>
