@@ -4,6 +4,19 @@ import BudgetDataService from "./../../../services/budget.service";
 import DirectCostDataService from "./../../../services/directcost.service";
 import SovDataService from "./../../../services/sov.service";
 import Table from 'react-bootstrap/Table';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import CheckIcon from '@material-ui/icons/Check';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend
+} from "recharts";
+
 
 export default class BudgetList extends Component {
     constructor(props) {
@@ -12,13 +25,17 @@ export default class BudgetList extends Component {
       this.calculateTotalDirectCosts = this.calculateTotalDirectCosts.bind(this);
       this.calculateTotalSovs = this.calculateTotalSovs.bind(this);
       this.calculateTotalEstimatedBudget = this.calculateTotalEstimatedBudget.bind(this);
+      this.onChangeSearchCostCode= this.onChangeSearchCostCode.bind(this);
+      this.findByCostCode=this.findByCostCode.bind(this);
       this.state = {
         id: this.props.match.params.id,
         budgets: [],
         projectId: "",
         directCostTotal:"",
         budgetTotal:"",
-        sovTotal:""
+        sovTotal:"",
+        tot:"",
+        searchCostCode: ""
       };
     }
   
@@ -28,6 +45,26 @@ export default class BudgetList extends Component {
       this.calculateTotalSovs(this.props.match.params.id);
       this.calculateTotalEstimatedBudget(this.props.match.params.id);
     }
+
+    onChangeSearchCostCode(e) {
+      const searchCostCode = e.target.value;
+  
+      this.setState({
+        searchCostCode: searchCostCode
+      });
+    }
+
+    findByCostCode(id,searchCostCode){
+      BudgetDataService.findByCostCode(id,searchCostCode)
+        .then((response) => {
+          this.setState({
+            budgets: response.data
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
 
     getBudgetOverview(id) {
       BudgetDataService.getBudgetOverview(id)
@@ -87,42 +124,120 @@ export default class BudgetList extends Component {
     
     }
 
-
     render() {
-        const { directCostTotal,budgetTotal,sovTotal,budgets,currentIndex } = this.state;
+        const { directCostTotal,budgetTotal,sovTotal,searchCostCode,budgets,currentIndex} = this.state;
+        const data = [
+          {
+            name: "Estimated Budget",
+            EB: (budgetTotal),
+          },
+          {
+            name: "Total Cost",
+            TC : (sovTotal + directCostTotal)
+          }
+        ];
         return (
             <div>
               <h2>Budget Overview</h2>
-              <p></p>
+              <p>See the Overview of the Project Budget</p>
               <hr></hr>
-
               <div className="row" style={{alignItems: "center"}} >
-          <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2" >
+              <div className="col" >
+              <BarChart
+      width={500}
+      height={200}
+      data={data}
+      margin={{
+        top: 5,
+        right: 30,
+        left: 20,
+        bottom: 5
+      }}
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+      <Legend />
+      <Bar dataKey="EB" fill="#82ca9d" />
+      <Bar dataKey="TC" fill="#EF253D" />
+    </BarChart>
+   </div>
+  
+   <div className="col" >     
+   <div className="row" style={{alignItems: "center"}} >
+          <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2" >
             <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Estimated Budget</h3>
                 <span className="fs-sm fw-normal text-muted">Rs. {budgetTotal}</span>
               </div>
             </div>
-<div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+<div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Direct Cost</h3>
                 <span className="fs-sm fw-normal text-muted">Rs. {directCostTotal}</span>
               </div>
     </div>
-          <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+    </div>
+    <div className="row" style={{alignItems: "center"}} >
+          <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Commited Cost</h3>
                 <span className="fs-sm fw-normal text-muted">Rs. {sovTotal} </span>
               </div>
             </div>
-            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+            <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Cost</h3>
                 <span className="fs-sm fw-normal text-muted">Rs. {sovTotal+directCostTotal}</span>
               </div>
             </div>
-            
+            </div>
+            {/*<div className="form-group col-md-4">
+        <div className="input-group mb-3">
+        
+ <select 
+                
+                id="costCode"
+           
+                
+                name="costCode"
+                className="form-control"
+            placeholder="Search by cost code"
+            value={searchCostCode}
+            onChange={this.onChangeSearchCostCode}
+              >
+                <option  selected value="">All</option>
+             {budgets &&
+                budgets.map((budget, index) => (
+                <option
+                    //value={budget.costCode}
+                    //onChange={onChangeSearchCostCode}
+                    key={index}
+                >
+                
+                {budget.costCode}
+                </option>
+                ))}
+
+           
+             
+              </select>
+
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={this.findByCostCode}
+            >
+              Search
+            </button>
           </div>
+        </div>
+      </div>*/}
+          </div>
+          </div>   
+          <hr /> 
           <br />
             
               {/* Drawing List */}
@@ -156,9 +271,9 @@ export default class BudgetList extends Component {
                     <td>{budget.btotal}</td>
                     <td>{budget.dtotal}</td>
                     <td>{budget.stotal}</td>
-                    <td>{budget.stotal}+{budget.dtotal}</td>
-                    <td></td> 
-                    <td></td>    
+                    <td>{Number(budget.stotal)+Number(budget.dtotal)}.00</td>
+                    <td>{Number(Number(budget.stotal)+Number(budget.dtotal))-Number(budget.btotal)}.00</td> 
+                    <td>{(Number(budget.stotal)+Number(budget.dtotal)) > budget.btotal ? <ArrowUpwardIcon style={{ color: "red" }}/>:(Number(budget.stotal)+Number(budget.dtotal)) < budget.btotal ? <ArrowDownwardIcon style={{ color: "green" }}/>:<CheckIcon/>}</td>    
                     </tr>
                     ))}
                 </tbody>
