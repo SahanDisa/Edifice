@@ -13,7 +13,7 @@ class PLTView extends Component {
         this.retrievePLT = this.retrievePLT.bind(this);
         this.state = {
             id: this.props.match.params.pltid,
-            projectId: this.props.match.params.id,
+            projectId: "",
             plitems: [],
             title: "",
             description: ""
@@ -34,14 +34,12 @@ class PLTView extends Component {
                 description: response.data.description,
                 projectId: response.data.projectId
             });
-            console.log("details tika gaththa...");
         });
     }
 
     retrievePLT(pltid) {
         PunchlistDataService.getType(pltid)
         .then(response => {
-            console.log("Category eke eewa gaththa");
             this.setState({
                 plitems: response.data
             });
@@ -55,11 +53,11 @@ class PLTView extends Component {
               <h2>Punch List Type - {title}</h2>
               <p>{description}</p>
               <hr />
-              <h6>Initiated - 🟡</h6>
-              <h6>Work in Progress - 🟠</h6>
-              <h6>Ready for Review - 🔵</h6>
-              <h6>Work not accepted - 🔴</h6>
-              <h6>Ready to close - 🟢</h6>
+              <h6>🟡 - Initiated</h6>
+              <h6>🟠 - Work in Progress</h6>
+              <h6>🔵 - Ready for Review</h6>
+              <h6>🔴 - Work not accepted</h6>
+              <h6>🟢 - Ready to close</h6>
               <hr/>
               <h3 className="mb-3">Punch List Items</h3>
               <Table striped bordered hover variant="" responsive>

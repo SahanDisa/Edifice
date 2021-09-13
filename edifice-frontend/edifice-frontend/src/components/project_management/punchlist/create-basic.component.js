@@ -256,11 +256,13 @@ class CreatePL extends Component {
                                 </div>
                             </div>
                             <hr />
-                            <button
+                            {lastpl && lastpl.map((puchlist, index) => (
+                            <Link
+                                to={"/addphotos/" + puchlist.id}
                                 type="button"
                                 onClick={this.savePunchListItem}
                                 className="btn btn-primary mr-2"
-                            >Next: Link Photos</button>
+                            >Next: Link Photos</Link>))}
                             <a href="/punchlist" className="">Cancel</a>
                         </form>
                     </div>

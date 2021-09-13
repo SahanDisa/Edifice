@@ -193,6 +193,7 @@ class PunchList extends Component {
                     </div>
                 </div>
                 <h4 className="mt-3">Punch Lists Items</h4><hr/>
+                <Link to={"/managepunchlist/create/" + projectId} className="btn btn-primary mt-2">+ Add Another Punch List Item</Link>
                 {/* <div className="container md-6"> */}
                     <ul className="list-group">
                         {plis && plis.map((plti, index) => (
@@ -216,7 +217,6 @@ class PunchList extends Component {
                         ))}
                     </ul>
                 {/* </div> */}
-                <Link to={"/managepunchlist/create/" + projectId} className="btn btn-primary mt-2">+ Add Another Punch List Item</Link>
                 </div>
             </div>
         );

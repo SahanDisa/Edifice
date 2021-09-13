@@ -155,7 +155,6 @@ exports.deleteAll = (req, res) => {
 // Get action plan for a given category
 exports.findAlltype = (req, res) => {
   const id = req.params.id;
-
   ActionPlan.findAll({ where: {
     category: id
   }})

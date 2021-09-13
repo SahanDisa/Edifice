@@ -25,24 +25,20 @@ export default class viewAPType extends Component {
       this.retrieveCategoryAP(this.props.match.params.id);
     }
 
-    retriveCategoryInfo(id){
-      ActionPlanTypeDataService.getOne(id)
+    retriveCategoryInfo(acid){
+      ActionPlanTypeDataService.getOne(acid)
       .then(response => {
         this.setState({
           id: response.data.id,
           title: response.data.title,
           description: response.data.description,
-          projectId: response.data.projectId,
+          projectId: response.data.projectId
         });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
       });
     }
 
-    retrieveCategoryAP(id) {
-      ActionPlanDataService.getType(id)
+    retrieveCategoryAP(acid) {
+      ActionPlanDataService.getType(acid)
         .then(response => {
           this.setState({
             actionplans: response.data
@@ -55,14 +51,14 @@ export default class viewAPType extends Component {
     }
 
     render() {
-        const { id, title, description, actionplans, currentIndex } = this.state;
+        const { id, title, description, actionplans } = this.state;
         return (
             <div>
                 <h2>Action Plan Category - {title}</h2>
                 <p>{description}</p>
                 <hr />
                 <h3>Action Plan List</h3>
-                <Table striped bordered hover responsive>
+                <Table striped bordered hover variant="" responsive>
                     <thead>
                       <tr>
                         <th>No</th>

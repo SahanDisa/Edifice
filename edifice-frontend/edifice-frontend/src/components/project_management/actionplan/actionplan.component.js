@@ -122,17 +122,28 @@ export default class ActionPlan extends Component {
                 </div>
             </div>
         </div>
-        <h4>Action Plan Items</h4><hr/>
+        <h4>Action Plans</h4><hr/>
+          <div className="container">
+            <Link className="btn btn-primary mb-3" to={"/addactionplan/"+projectId}>+ Add another Action Plan Item</Link>
+          </div>
           <div className="container">
             {actionplans && actionplans.map((api, index) => (
               <div className={"container mb-3" + (index === currentIndex ? "active" : "")} key={index}>
-                <Link to={"/viewactionplantype/"+ api.id} style={{'text-decoration': 'none'}}>
-                  <h5>{api.actiontype}</h5>
-                </Link>
                   <Card style={{ height: '10rem' }}>
-                    <Link to={"/viewactionplan/"+ api.id} style={{'text-decoration': 'none'}}>
-                      <Card.Header><h5>{api.title}</h5></Card.Header>
-                    </Link> 
+                      <Card.Header>
+                      <div className="row">
+                        <div className="col-11">
+                          <Link to={"/viewactionplan/"+ api.id} style={{'text-decoration': 'none'}}>
+                            <h5>{api.title}</h5>
+                          </Link>
+                        </div>
+                        <div className="col-1">
+                          <Link to={"/viewactionplantype/"+ api.id} style={{'text-decoration': 'none'}}>
+                            <p>{api.actiontype}</p>
+                          </Link>
+                        </div>
+                      </div>
+                      </Card.Header>
                     <Card.Body>
                       <Card.Text>
                         <div className="row">
@@ -150,9 +161,6 @@ export default class ActionPlan extends Component {
                   </Card>
               </div>
             ))}
-          </div>
-          <div className="container">
-            <Link className="btn btn-primary" to={"/addactionplan/"+projectId}>+ Add another Action Plan Item</Link>
           </div>
         </div>
         </div>
