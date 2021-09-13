@@ -2,7 +2,9 @@ const db = require("./../models/index");
 const Project = db.projects;
 const Budget = db.budgets;
 const DirectCost = db.directcosts;
+const Sov = db.sovs;
 const sequelize = require("sequelize");
+const { QueryTypes } = require('sequelize');
 
 // create a budget 
 exports.create = (req, res) => {
@@ -170,6 +172,14 @@ res.status(500).send({
 });  
 }
 
+exports.getBudgetOverview = (req,res)=>{
+
+  db.budgets.projectId  = req.params.id;
+  
+  db.sequelize.query('SELECT budget.costCode, SUM(budget.estimatedBudget) as btotal,SUM(directcost.amount) as dtotal,  SUM(sov.amount) as stotal FROM budget LEFT JOIN directcost ON directcost.costCode=budget.costCode  AND directcost.projectId=budget.projectId  LEFT JOIN sov   ON sov.costCode=budget.costCode   AND sov.projectId=budget.projectId  GROUP BY budget.costCode,budget.projectId', { type: db.sequelize.QueryTypes.SELECT})
+  .then(data => {
+      res.send(data);
+    })
 
 
-
+  }
