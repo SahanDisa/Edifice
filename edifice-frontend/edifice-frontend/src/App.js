@@ -34,6 +34,7 @@ import DrawingHome from "./components/project_management/drawings/drawings.compo
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
 import AddDrawingCategory from "./components/project_management/drawings/adddrawingcategory.component";
 import ViewSingleDrawingCategory from "./components/project_management/drawings/drawing-category-singlepage";
+import UpdateDrawingCategory from "./components/project_management/drawings/updatedrawing-category.component";
 import ViewSingleDrawing from "./components/project_management/drawings/drawing-singlepage.component";
 import UpdateDrawing from "./components/project_management/drawings/updatedrawing.component";
 
@@ -340,6 +341,7 @@ class App extends Component {
             <Route path="/drawing/:id" component={DrawingHome} />
             <Route path="/adddrawingcategory/:id" component={AddDrawingCategory} />
             <Route path="/viewdrawingcategory/:id" component={ViewSingleDrawingCategory}/>
+            <Route exact path={"/updatedrawingcategory/:pid/:id"} component={UpdateDrawingCategory}/>
             <Route path="/adddrawing/:id" component={AddDrawing} />
             <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
             <Route exact path="/updatedrawing/:id/:pid" component={UpdateDrawing}/>

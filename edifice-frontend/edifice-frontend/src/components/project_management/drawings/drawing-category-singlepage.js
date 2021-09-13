@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import DrawingCategoryDataService from "./../../../services/drawing-category.service";
+import AuthService from "./../../../services/auth.service";
 import Table from 'react-bootstrap/Table';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -16,13 +17,27 @@ export default class ViewSingleDrawingCategory extends Component {
         drawings: [],
         title: "",
         description: "", 
-        projectId: ""
+        projectId: "",
+        currentUser: AuthService.getCurrentUser(),
+        showEngineerBoard: false,
+        showManagerBoard: false,
+        showAdminBoard: false,
       };
     }
   
     componentDidMount() {
       this.retrieveCategoryDrawing(this.props.match.params.id);
       this.retriveCategoryInfo(this.props.match.params.id);
+      const user = AuthService.getCurrentUser();
+  
+      if (user) {
+        this.setState({
+          currentUser: user,
+          showEngineerBoard: user.roles.includes("ROLE_USER"),
+          showManagerBoard: user.roles.includes("ROLE_MODERATOR"),
+          showAdminBoard: user.roles.includes("ROLE_ADMIN"),
+        });
+      }  
     }
     retriveCategoryInfo(id){
       DrawingCategoryDataService.getOne(id)
@@ -52,15 +67,26 @@ export default class ViewSingleDrawingCategory extends Component {
         });
     }
     render() {
-        const { id,title,description,drawings,currentIndex } = this.state;
+        const { id,title,description,drawings,currentIndex,showManagerBoard,projectId } = this.state;
         return (
             <div>
               <h2>Drawing Category Single Page</h2>
               <p>Manage the drawing in each drawing category</p>
               <hr></hr>
-              <h3>Category details</h3>
-              <h6>Name : {title}</h6>
-              <h6>Description : {description}</h6>
+              <h3>Category Details</h3>
+              <div className="row">
+                  <div className="col-9">
+                  <h6>Name : {title}</h6>
+                  <h6>Description : {description}</h6>
+                  </div>
+                  { showManagerBoard &&
+                  <div className="col-3">
+                  <Link className="btn btn-primary" to={"/updatedrawingcategory/"+projectId+"/"+id} style={{'text-decoration': 'none'}}>
+                  ⚙️ Manage
+                  </Link>
+                  </div>
+                  }
+                </div>
               <hr></hr>
               
               <h3>Drawing List</h3>
