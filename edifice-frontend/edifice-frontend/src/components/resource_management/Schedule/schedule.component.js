@@ -110,6 +110,7 @@ export default class Schedule extends React.PureComponent {
     this.changeAddedAppointment = this.changeAddedAppointment.bind(this);
     this.changeAppointmentChanges = this.changeAppointmentChanges.bind(this);
     this.changeEditingAppointment = this.changeEditingAppointment.bind(this);
+    this.currentDateChange = (currentDate) => { this.setState({ currentDate }); };
   }
 
   changeAddedAppointment(addedAppointment) {
@@ -167,6 +168,7 @@ export default class Schedule extends React.PureComponent {
     >
       <ViewState
         currentDate={currentDate}
+        onCurrentDateChange={this.currentDateChange}
         defaultCurrentViewName="Week"
       />
 
