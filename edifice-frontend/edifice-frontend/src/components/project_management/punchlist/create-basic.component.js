@@ -21,6 +21,7 @@ class CreatePL extends Component {
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.savePunchListItem = this.savePunchListItem.bind(this);
         this.newPunchListItem = this.newPunchListItem.bind(this);
+        this.buttonChange = this.buttonChange.bind(this);
 
         this.state = {
             no: null,
@@ -33,6 +34,7 @@ class CreatePL extends Component {
             description: "",
             projectId: this.props.match.params.id,
             lastpl:[],
+            buttonChanger: undefined,
             submitted: false
         };
     }
@@ -83,6 +85,10 @@ class CreatePL extends Component {
             description: this.state.description,
             projectId: this.state.projectId
         };
+
+        this.setState({
+            buttonChanger: "True"
+        })
 
         PunchlistDataService.create(data)
         .then(response => {
@@ -149,7 +155,7 @@ class CreatePL extends Component {
     }
 
     render() {
-        const {lastpl, pltypes} = this.state;
+        const {lastpl, pltypes, buttonChanger} = this.state;
         return (
         <div className="">
             {this.state.submitted ? (
@@ -256,13 +262,18 @@ class CreatePL extends Component {
                                 </div>
                             </div>
                             <hr />
-                            {lastpl && lastpl.map((puchlist, index) => (
-                            <Link
-                                to={"/addphotos/" + puchlist.id}
+                            {!buttonChanger &&
+                                <button
                                 type="button"
                                 onClick={this.savePunchListItem}
                                 className="btn btn-primary mr-2"
-                            >Next: Link Photos</Link>))}
+                                >Save</button>
+                            }{buttonChanger &&
+                                <Link
+                                type="button"
+                                className="btn btn-primary mr-2"
+                                >Next: Link Photos</Link>
+                            }
                             <a href="/punchlist" className="">Cancel</a>
                         </form>
                     </div>
