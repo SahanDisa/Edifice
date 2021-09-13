@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -188,6 +189,10 @@ const Sov = props => {
           >
             Update <UpdateIcon/>
           </button>
+          <Link to={"/viewsov/" +currentSov.projectId+"/"+ currentSov.commitmentId}>
+            <button className="btn btn-success">
+            Cancel
+            </button></Link>
           <button
             type="button"
             onClick={() => reset()}
@@ -207,28 +212,28 @@ const Sov = props => {
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 1</strong><br/>Create a Direct Cost</h6> </TimelineContent>
+                <TimelineContent><h6><strong>Step 1</strong><br/>Create a SoV</h6> </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 2</strong><br/>Direct Cost will be automatically added to the Budget.</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 2</strong><br/>SoV will be automatically added to the Budget.</h6></TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 3</strong><br/>View the Direct Costs.</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 3</strong><br/>View the SoVs.</h6></TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot />
                  
                 </TimelineSeparator>
-                <TimelineContent><h5><strong>Step 4</strong><br/>Edit/Delete a DirectCost.</h5></TimelineContent>
+                <TimelineContent><h5><strong>Step 4</strong><br/>Edit/Delete a SoV.</h5></TimelineContent>
               </TimelineItem>
             </Timeline>
             </div>

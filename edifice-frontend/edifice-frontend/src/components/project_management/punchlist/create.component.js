@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Card from 'react-bootstrap/Card';
 import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
+import PunchListTypesDataService from "../../../services/project_management/punchlist.service.js";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -30,10 +31,16 @@ class CreatePL extends Component {
             // punchmanager: "",
             // assignee: "",
             description: "",
-            projectId: this.props.match.params.id,  
+            projectId: this.props.match.params.id, 
+            pltypes: [],
+            currentIndex: -1, 
             submitted: false
         };
     }
+
+    componentDidMount() {
+        this.retrievePLT(this.props.match.params.id);
+      }
 
     onChangeDuedate(e) {
         this.setState({
@@ -64,6 +71,19 @@ class CreatePL extends Component {
             description: e.target.value
         });
     }
+
+    retrievePLT(id){
+        PunchListTypesDataService.getAll(id)
+        .then(response => {
+            this.setState({
+              pltypes: response.data
+            });
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
 
     savePunchListItem() {
         var data = {
@@ -117,6 +137,7 @@ class CreatePL extends Component {
     }
 
     render() {
+        const {currentIndex, pltypes}
         return (
         <div className="">
             {this.state.submitted ? (
@@ -202,14 +223,24 @@ class CreatePL extends Component {
                                     <div className="form-row">
                                         <div className="form-group col-md-6">
                                             <label htmlFor="">Type</label>
-                                            <input
+                                            <select
                                                 className="form-control"
                                                 name="type"
                                                 value={this.state.type}
                                                 onChange={this.onChangeType}
                                                 type="text"
                                                 required
-                                            />
+                                            >
+                                                {pltypes && pltypes.map((pltypes, index) => (
+                                                    <option
+                                                        value={pltypes.id}
+                                                        onChange={this.onChangeType}
+                                                        key={index}
+                                                    >
+                                                        {pltypes.title}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </div>
                                         <div className="form-group col-md-6">
                                             <label htmlFor="">Location</label>

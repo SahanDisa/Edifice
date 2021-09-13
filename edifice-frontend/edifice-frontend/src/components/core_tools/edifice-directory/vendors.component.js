@@ -79,7 +79,7 @@ class Vendors extends Component {
   refreshList() {
     this.getVendors();
     this.setState({
-      currentProject: null,
+      currentVendor: null,
       currentIndex: -1,
       searchName: ""
     });

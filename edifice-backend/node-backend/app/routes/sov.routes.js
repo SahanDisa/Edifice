@@ -20,6 +20,13 @@ module.exports = app => {
   router.delete("/:id", sov.delete);
 
   router.get("/list/:id/:costCode", sov.findByCostCode);
+
+  // get all total sovs of a project
+  router.get("/:id/total", sov.getTotalSovs);
+
+  // get total according to cost code
+  //router.get("/list/:id/:costCode", directcost.getDTotalOfCostCodes);
+  router.get("/:id/:costCode/total", sov.getSTotalOfCostCodes);
   
     app.use('/api/commitments/sov', router);
   };

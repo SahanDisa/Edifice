@@ -36,7 +36,7 @@ const AddSov = (props) => {
   };
 /**End of validation */
 
-  const {cid}= useParams();
+  //const {cid}= useParams();
 
   const initialSovState = {
     id: null,
@@ -44,7 +44,9 @@ const AddSov = (props) => {
     description :"",
     date :"",
     amount: "",
-     commitmentId:props.match.params.id,  
+     commitmentId:props.match.params.id,
+     //new below
+     projectId:props.match.params.pid,  
     
   };
   const [sov, setSov] = useState(initialSovState);
@@ -62,6 +64,7 @@ const AddSov = (props) => {
       date: sov.date,
       amount: sov.amount,
        commitmentId: sov.commitmentId,
+       projectId: sov.projectId,
     };
 
     SovDataService.create(data)
@@ -73,6 +76,7 @@ const AddSov = (props) => {
           date: response.data.date,
           amount: response.data.amount,
           commitmentId: response.data.commitmentId,
+          projectId: response.data.projectId,
      
         });
         setSubmitted(true);
@@ -98,7 +102,7 @@ const AddSov = (props) => {
             <button className="btn btn-success" onClick={newSov}>
               + Add Another SoV
             </button>&nbsp;&nbsp;
-          <Link  to={"/viewsov/"+sov.commitmentId} className="btn btn-success">View SoVs</Link>
+          <Link  to={"/viewsov/"+sov.projectId+"/"+sov.commitmentId} className="btn btn-success">View SoVs</Link>
           </div>
         ) : (
           <div class="container">
@@ -202,7 +206,7 @@ const AddSov = (props) => {
           >
             Reset
           </button>&nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
-            <Link to={"/sov/" + sov.commitmentId}>
+            <Link to={"/viewsov/" +sov.projectId+"/"+ sov.commitmentId}>
             <button className="btn btn-success">
             Cancel
             </button></Link>
@@ -217,7 +221,7 @@ const AddSov = (props) => {
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h5><strong>Step 1</strong><br/>Create SoV for the commitment</h5> </TimelineContent>
+                <TimelineContent><h5><strong>Step 1</strong><br/>Create SoV for the Subcontract</h5> </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
@@ -231,7 +235,7 @@ const AddSov = (props) => {
                   <TimelineDot />
                  
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 3</strong><br/>View the SoVs for the Commitment</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 3</strong><br/>View the SoVs for the Subcontract</h6></TimelineContent>
               </TimelineItem>
             </Timeline>
             </div>

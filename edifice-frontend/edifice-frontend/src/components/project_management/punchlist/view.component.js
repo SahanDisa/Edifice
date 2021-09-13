@@ -1,127 +1,129 @@
 import React, { Component } from "react";
-import Card from 'react-bootstrap/Card';
-import Switch from "././../../../assets/PM/photos/drawings/broken_switch.jpg";
+import { Link } from "react-router-dom";
+import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
+import PunchListTypesDataService from "./../../../services/project_management/punchlisttypes.service.js";
+import Table from 'react-bootstrap/Table';
+import DeleteIcon from '@material-ui/icons/Delete';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import UpdateIcon from '@material-ui/icons/Update';
 
-class ViewPL extends Component {
-
-  render() {
-    return (
-      <div className="">
-        <h2>1 - Replace the Broken Switch Plate</h2><hr/>
-        <div className="mb-3">
-        <div className="col-sm-6 mb-3">
-                <h5>Date: 2021-07-15</h5>
-                <h5>Status : <b>Initiated 🟢</b></h5>
-              </div>
-          {/* <form>
-            <div className="form-row">
-                <div className="form-group col-md-3 form-check">
-                    <label htmlFor="" className="form-check-label">Status: Open</label>
-                </div>
-                <div className="form-group col-md-3 form-check">
-                    <label htmlFor="" className="form-check-label">Date: 2021-07-15</label>
-                </div>
-            </div>
-        </form> */}
-        <div>
-            
-            <ul class="nav nav-tabs">
-              <li class="nav-item">
-                <a class="nav-link active" id="detailsT" data-toggle="tab" href="#det" aria-controls="det" aria-selected="true">Details</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="assigneesT" data-toggle="tab" href="#assign" aria-controls="assign" aria-selected="true">Assignees</a>
-              </li>
-            </ul>
-            
-            <div class="tab-content" id="myTabContent">
-              
-                <div class="tab-pane fade show active" id="det" role="tabpanel" aria-labelledby="Details">
-                    <form>
-                        <div className="form-row">
-                            <div className="form-group col-md-4">
-                                <label htmlFor="">Location</label>
-                                <input className="form-control" type="text" value="1st Floor > North > Storage Room 134" readOnly/>
-                            </div>
-                            <div className="form-group col-md-4">
-                                <label htmlFor="">Trade</label>
-                                <input className="form-control" type="text" value="Switch and Hardware" readOnly/>
-                            </div>
-                            <div className="form-group col-md-4">
-                                <label htmlFor="">Reason</label>
-                                <input className="form-control" type="text" value="Damaged by one of the labourer" readOnly/>
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group col-md-12">
-                                <label htmlFor="">Description</label>
-                                <input className="form-control" type="text" value="Storage switch plate on 1st level is damaged left side and needs to be repaired." readOnly/>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="accordion mt-2" id="accordionExample">
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Linked Drawings</button>
-                                </h2>
-                            </div>
-                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                <div class="card-body">No linked drawings yet</div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingTwo">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Linked Photos</button>
-                                </h2>
-                            </div>
-                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                <div class="card-body">
-                                    <div className="row">
-                                        <div className="col-sm-6">
-                                            <Card style={{ width: '18rem' }}>
-                                                <Card.Img variant="top" src={Switch} />
-                                                <Card.Body>
-                                                    <Card.Title>Storage room 134</Card.Title>
-                                                    <Card.Text>Should replace the switch</Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>  
-                    </div>
-                </div>           
-                <div class="tab-pane fade" id="assign" role="tabpanel" aria-labelledby="Assignees">
-                    <div className="row">
-                        <div className="col-sm-3 mr-2">
-                            <Card style={{ width: '18rem' }} className="mt-2">
-                                <Card.Body>
-                                    <Card.Title>Engineer</Card.Title>
-                                    <Card.Text>Mr. Kusal Weerasinghe</Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </div>
-                        <div className="col-sm-3">
-                            <Card style={{ width: '18rem' }} className="mt-2">
-                                <Card.Body>
-                                    <Card.Title>Engineer</Card.Title>
-                                    <Card.Text>Ms. Aleesha Cooray</Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a href="/projectmanagementhome/1" className="btn btn-primary mt-2 mr-2">Done</a>
-          </div>
-        </div>
-      </div>
-    );
-  }
+class PLTView extends Component {
+    constructor(props) {
+        super(props);
+        this.retrievePLT = this.retrievePLT.bind(this);
+        this.state = {
+            id: this.props.match.params.pltid,
+            punchlist: [],
+            title: "",
+            description: "", 
+            projectId: ""
+        };
+    }
   
+    componentDidMount() {
+        this.retrievePLT(this.props.match.params.pltid);
+        this.retriveTypeInfo(this.props.match.params.pltid);
+    }
+
+    retriveTypeInfo(id){
+        PunchListTypesDataService.getOne(id)
+        .then(response => {
+            this.setState({
+                id: response.data.id,
+                title: response.data.title,
+                description: response.data.description,
+                projectId: response.data.projectId,
+            });
+            console.log(response.data);
+        })
+        .catch(e => {
+            console.log(e);
+        });
+    }
+
+    retrievePLT(id) {
+        PunchlistDataService.getType(id)
+        .then(response => {
+            console.log("Category eka gaththa");
+            this.setState({
+                punchlist: response.data
+            });
+            console.log(response.data);
+            })
+        .catch(e => {
+            console.log(e);
+        });
+    }
+
+    render() {
+        const { id, title, description, punchlist } = this.state;
+        return (
+            <div>
+              <h2>Punch List Type - {title}</h2>
+              <p>{description}</p>
+              <hr />
+              <h6>Initiated - 🟡</h6>
+              <h6>Work in Progress - 🟠</h6>
+              <h6>Ready for Review - 🔵</h6>
+              <h6>Work not accepted - 🔴</h6>
+              <h6>Ready to close - 🟢</h6>
+              <h3>Punch List Items</h3>
+              {/* punchlist List */}
+              <Table striped bordered hover variant="secondary" responsive>
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Due Date</th>
+                    <th>Assignee</th>
+                  </tr>
+                </thead>
+                {/* Functional for table data */}
+                <tbody>
+                {punchlist && punchlist.map((pli, index) => (
+                    <tr
+                        // className={
+                        // "list-group-item row" +
+                        // (index === currentIndex ? "active" : "")
+                        // }
+                        // onClick={() => this.setActiveProject(project, index)}
+                        key={index}
+                    >
+                    <td>{pli.id}</td>
+                    <td>{pli.title}</td>
+                    <td>{pli.description}</td>
+                    <td>{pli.location}</td>
+                    <td>{pli.duedate}</td>
+                    <td>{
+                        pli.status == "Initiated" ? "🟡":
+                        pli.status == "WIP" ? "🟠":
+                        pli.status == "RFR" ? "🔵":
+                        pli.status == "WNA" ? "🔴": "🟢"
+                    }</td>
+                    <td>{pli.assignee}</td>
+                    <td>
+                        <Link to={"/viewpl/"+pli.id}>
+                            <button className="btn btn-primary">View <VisibilityIcon/> </button>
+                        </Link>
+                        <Link to={"/updatepl/"+pli.id+"/"+id}>
+                            <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
+                        </Link>
+                        <Link to={"/deletepl/"+pli.id+"/"+id}>
+                            <button className="btn btn-danger m-2">Delete <DeleteIcon/> </button>
+                        </Link>
+                    </td>    
+                    </tr>
+                    ))}
+                </tbody>
+                {/*Ends */}
+              </Table>
+             
+            </div>
+        );
+    }
 }
 
-export default ViewPL;
+export default PLTView;

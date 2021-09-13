@@ -16,17 +16,16 @@ const AddCommitment = (props) => {
 
   /**validation */
   const validationSchema = Yup.object().shape({
-    hash: Yup.string().required('Hash is required'),
     title: Yup.string().required('Title is required'),
     contractCompany: Yup.string().required('Contract Company is required'),
     status: Yup.string().required('Status is required'),
     description: Yup.string().required('Description is required'),
     startDate: Yup.string().required('Start Date is required'),
     estimatedCompletionDate: Yup.string().required('Estimated Copletion Date is required'),
- actualCompletionDate: Yup.string().required('Actual Completion Date is required'),
- signedContractReceivedDate: Yup.string().required('Signed Contract Received Date is required'),
+    actualCompletionDate: Yup.string().required('Actual Completion Date is required'),
+    signedContractReceivedDate: Yup.string().required('Signed Contract Received Date is required'),
     inclusions: Yup.string().required('Inclusions are required'),
-exclusions: Yup.string().required('Exclusions are required'),
+    exclusions: Yup.string().required('Exclusions are required'),
   });
 
   const {
@@ -47,7 +46,6 @@ exclusions: Yup.string().required('Exclusions are required'),
 
   const initialCommitmentState = {
     id: null,
-    hash :"",
     title :"",
     contractCompany :"",
     status :"",
@@ -58,7 +56,11 @@ actualCompletionDate :"",
 signedContractReceivedDate :"",
     inclusions: "",
 exclusions:"",
-    projectId:props.match.params.id,  
+    projectId:props.match.params.id,
+    
+    commitmentStatuses: ["--","Ongoing 🔴", "Completed 🟢"]
+/* should uncomment this after the subcontractor table
+    subcontractors: [], */
     
   };
   const [commitment, setCommitment] = useState(initialCommitmentState);
@@ -71,7 +73,6 @@ exclusions:"",
 
   const saveCommitment = () => {
     var data = {
-      hash: commitment.hash,
 title: commitment.title,
 contractCompany:commitment.contractCompany,
 status: commitment.status,
@@ -87,11 +88,25 @@ exclusions:commitment.exclusions,
       projectId: commitment.projectId,
     };
 
+ /* should uncomment this after the subcontractors table
+ retrieveSubcontractors(id){
+    SubcontractorsService.getAll(id)
+    .then(response => {
+        this.setState({
+          suncontractors: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+  */   
+
     CommitmentDataService.create(data)
       .then(response => {
         setCommitment({
           id: response.data.id,
-        hash:response.data.hash,
 title:response.data.title,
 contractCompany:response.data.contractCompany,
 status:response.data.status,
@@ -127,33 +142,16 @@ exclusions:response.data.exclusions,
           <div>
             <h4>You submitted successfully!</h4>
             <button className="btn btn-success" onClick={newCommitment}>
-              + Add Another Commitment
+              + Add Another Subcontract
             </button>&nbsp;&nbsp;
-          <Link  to={"/commitment/"+commitment.projectId} className="btn btn-success">View Commitments</Link>
+          <Link  to={"/commitment/"+commitment.projectId} className="btn btn-success">View Subcontracts</Link>
           </div>
         ) : (
           <div class="container">
-            <h2>New Commitment</h2>
+            <h2>New Subcontract</h2>
             <div className="row">
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>
-   <div className="form-group">
-         
-                <label htmlFor="hash"># :</label> 
-             
-  
-              <input
-                type="text"
-            
-                id="hash"
-                {...register('hash')}
-                value={commitment.hash}
-                onChange={handleInputChange}
-                name="hash"
-className={`form-control ${errors.hash ? 'is-invalid' : ''}`}
-              />
-<div className="invalid-feedback">{errors.hash?.message}</div>
-              </div>
               <div className="form-group">
                 <label htmlFor="title">Title :</label>
     
@@ -184,13 +182,26 @@ className={`form-control ${errors.contractCompany ? 'is-invalid' : ''}`}
               />
 <div className="invalid-feedback">{errors.contractCompany?.message}</div>
               </div>
+             { /* this should uncomment after the subcontractors table 
+               {subcontractors &&
+                subcontractors.map((subcontractor, index) => (
+                <option
+                    value={subcontractor.id}
+                    onChange={this.onChangeType}
+                    key={index}
+                >
+             
+                {subcontractor.name}
+                </option>
+                ))}
+             
+             
+             */}
             
             <div className="form-group">
                 <label htmlFor="status">Status :</label>
             
-              <select
-            
-
+                <select
                 id="status"
                 {...register('status')}
                 value={commitment.status}
@@ -198,10 +209,19 @@ className={`form-control ${errors.contractCompany ? 'is-invalid' : ''}`}
                 name="status"
 className={`form-control ${errors.status ? 'is-invalid' : ''}`}
               >
-<option></option>
-<option>Ongoing 🔴</option>
-<option>Completed 🟢</option>
-                </select>
+                {commitment.commitmentStatuses &&
+                commitment.commitmentStatuses.map((commitmentStatus, index) => (
+                <option
+                    value={commitmentStatus}
+                    onChange={handleInputChange }
+                    key={index}
+                    selected
+                >
+                {/* unit data */}
+                {commitmentStatus}
+                </option>
+                ))}
+              </select>
 <div className="invalid-feedback">{errors.status?.message}</div>
               </div>
            
@@ -383,7 +403,7 @@ className={`form-control ${errors.exclusions ? 'is-invalid' : ''}`}
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h5><strong>Step 1</strong><br/>Create a Commitment</h5> </TimelineContent>
+                <TimelineContent><h5><strong>Step 1</strong><br/>Create a Subcontract</h5> </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
@@ -404,7 +424,7 @@ className={`form-control ${errors.exclusions ? 'is-invalid' : ''}`}
                   <TimelineDot />
                  
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 4</strong><br/>Edit/Delete a Commitment.</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 4</strong><br/>Edit/Delete a Subcontract.</h6></TimelineContent>
               </TimelineItem>
             </Timeline>
             </div>

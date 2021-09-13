@@ -1,6 +1,7 @@
 module.exports = app => {
     const directcost = require("./../controllers/directcost.controller");
     const excelController = require("./../controllers/excel.controller");
+   
   
     var router = require("express").Router();
 
@@ -14,7 +15,7 @@ module.exports = app => {
      //router.get("/list/:id?costCode=[keyword]", directcost.findByCode);
      router.get("/list/:id/:costCode", directcost.findByCostCode);
      //router.get("/list/:id?:costCode", directcost.findByCode);
-    
+     
     // Retrieve a single direct cost with id
     router.get("/:id", directcost.findOne);
 
@@ -27,13 +28,13 @@ module.exports = app => {
   // Delete a direct cost with id
   router.delete("/:id", directcost.delete);
 
- 
+// get total according to cost code
   //router.get("/list/:id/:costCode", directcost.getDTotalOfCostCodes);
-  router.get("/:id/:costCode", directcost.getDTotalOfCostCodes);
+  router.get("/:id/:costCode/total", directcost.getDTotalOfCostCodes);
 
+// get all total direct costs of a project
+  router.get("/:id/total", directcost.getTotalDirectCosts);
 
-  //export
-  router.get("/list/:id/download", excelController.download);
 
  
   

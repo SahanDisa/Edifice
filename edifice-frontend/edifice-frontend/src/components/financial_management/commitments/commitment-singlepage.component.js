@@ -14,7 +14,6 @@ export default class ViewSingleCommitment extends Component {
     this.state = {
       currentCommitment: {
          id: this.props.match.params.id,
-        hash: "",
       title: "",
       contractCompany: "",
       status: "", 
@@ -59,38 +58,23 @@ export default class ViewSingleCommitment extends Component {
       <div className="container">
         {currentCommitment ? (
           <div class="container">
-            <h4>{currentCommitment.hash} - {currentCommitment.title}</h4>
+            <h4>{currentCommitment.id} - {currentCommitment.title}</h4>
             <div className="col-12 text-right">
-              <div className="row col-12 text-right">
-            <Link to={"/viewsov/"+currentCommitment.id}>
-                    <button className="btn btn-success m-2">SoVs </button>
-                    </Link><br />
-                    <Link to={"/viewpayment/"+currentCommitment.id}>
+             
+            <Link to={"/viewsov/"+currentCommitment.projectId+"/"+currentCommitment.id}>
+                    <button className="btn btn-success m-2">View SoVs </button>
+                    </Link>
+                    {/*<Link to={"/viewpayment/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">Payments </button>
                     </Link><br />
                     <Link to={"/addinvoice/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">Invoices </button>
-                    </Link></div>
+                    </Link>*/}
                     </div>
                     <hr />
             <div className="row">
        <div className="col-sm-6">
-       <div className="form-group">
-         
-         <label htmlFor="hash"># :</label> 
-      
-
-       <input
-         type="text"
-         className="form-control"
-         id="hash"
-     
-         value={currentCommitment.hash}
-        
-         readonly
-         name="hash"
-       />
-       </div>
+ 
               <div className="form-group">
                 <label htmlFor="title">Title</label>
                 <input

@@ -1,4 +1,4 @@
-const db = require("./../models/index");
+const db = require("./../models/index.js");
 const Project = db.projects;
 const DirectCost = db.directcosts;
 
@@ -22,39 +22,40 @@ const upload = async (req, res) => {
 
       rows.forEach((row) => {
         let directcost = {
-          id: row[0],
-          costCode: row[1],
-          description: row[2],
-          category: row[3],
-          vendor: row[4],
-          employee: row[5],
-          receivedDate: row[6],
-          paidDate: row[7],
-          ammount: row[8],
+          //id: row[0],
+          costCode: row[0],
+          description: row[1],
+          category: row[2],
+          vendor: row[3],
+          employee: row[4],
+          receivedDate: row[5],
+          paidDate: row[6],
+          ammount: row[7],
+          projectId:row[8],
         };
 
         directcosts.push(directcost);
       });
 
       DirectCost.bulkCreate(directcosts)
-        .then(() => {
-          res.status(200).send({
-            message: "Uploaded the file successfully: " + req.file.originalname,
-          });
-        })
-        .catch((error) => {
-          res.status(500).send({
-            message: "Fail to import data into database!",
-            error: error.message,
-          });
+      .then(() => {
+        res.status(200).send({
+          message: "Uploaded the file successfully: " + req.file.originalname,
         });
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      message: "Could not upload the file: " + req.file.originalname,
-    });
-  }
+      })
+      .catch((error) => {
+        res.status(500).send({
+          message: "Fail to import data into database!",
+          error: error.message,
+        });
+      });
+  });
+} catch (error) {
+  console.log(error);
+  res.status(500).send({
+    message: "Could not upload the file: " + req.file.originalname,
+  });
+}
 };
 
 const getDirectCosts = (req, res) => {
@@ -69,7 +70,6 @@ const getDirectCosts = (req, res) => {
       });
     });
 };
-
 /*------------------------------------------------------------------------------------------------------------------------------ */
 const download = (req, res) => {
   const id = req.params.id;

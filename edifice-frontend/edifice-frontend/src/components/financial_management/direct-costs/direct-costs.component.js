@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import DirectCostDataService from "./../../../services/directcost.service";
-import ExcelDataService from "./../../../services/excel.service";
+import ExcelDataService from "./../../../services/excelupload.service";
 import { useTable } from "react-table";
 import { Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-
-
+import  Import from './excelupload.component';
+import Card from 'react-bootstrap/Card';
 
 const DirectCostList = (props) => {
   const {id}= useParams();
@@ -89,22 +89,30 @@ const DirectCostList = (props) => {
   };
 
 
-  /*added new
+  const  excelSave = (blob, fileName) => {
+    if (window.navigator.msSaveOrOpenBlob) { // For IE:
+        navigator.msSaveBlob(blob, fileName);
+    } else { // For other browsers:
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = fileName;
+        link.click();
+        window.URL.revokeObjectURL(link.href);
+    }
+};
+
   
+
  const exportDirectCosts = () => {
     
   ExcelDataService.download(id)
-    .then((response) => {
-      console.log(response.data)
-
-      //setDirectCosts(response.data);
-      //var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      //filesaver.saveAs(blob, 'fixi.xlsx');
-    })
+  .then(function () 
+  {})
     .catch((e) => {
       console.log(e);
     });
-};*/
+    console.log("clicked")
+};
 
   const columns = useMemo(
     () => [
@@ -185,15 +193,21 @@ const DirectCostList = (props) => {
                 + Create
                 </Link>
                 
-              <input type="file" id="excelImport" name="excelImport"/>
-              <button className="btn btn-primary mr-2" >
-             Import
-            </button>
+              
+                {/*<Link className="btn btn-primary mr-2" to={"/excelupload"}>
+                Import
+                </Link>*/}
+                <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCrew">+ Import</a>&nbsp;&nbsp;
+                  {/* New Crew Starts */}
+            <div className="modal fade" id="newCrew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <Import projectId={id}/>          
+          </div>
+          {/* New Crew Ends */}
             
               {/*  <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
                 Import 
   </Link>*/}
-                <button className="btn btn-primary mr-2">
+                <button className="btn btn-primary mr-2"  onClick={exportDirectCosts} >
                 Export 
                 </button>
                 </div>

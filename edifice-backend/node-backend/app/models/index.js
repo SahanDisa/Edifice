@@ -75,6 +75,7 @@ db.crews = require("./crew.model")(sequelize, Sequelize);
 db.workers = require("./worker.model")(sequelize, Sequelize);
 db.timesheets = require("./timesheet.model")(sequelize, Sequelize);
 db.workedHours = require("./worked-hours.model")(sequelize, Sequelize);
+db.schedule = require("./schedule.model")(sequelize, Sequelize);
 
 //for core class vendors and employees
 db.vendor=require("./vendor.model")(sequelize, Sequelize);
@@ -234,6 +235,13 @@ db.punchlisttypes.belongsTo(db.projects, {
   as: "project",
 });
 
+//One punch list type has many punch list items
+// db.punchlist.hasMany(db.punchlisttypes, { as: "pltypeitems" });
+// db.punchlisttypes.belongsTo(db.punchlist, {
+//   foreignKey: "punchlisttypesId",
+//   as: "type",
+// });
+
 // One project has many action plans
 db.projects.hasMany(db.actionplan, {as: "actionplans"});
 db.actionplan.belongsTo(db.projects, {
@@ -286,6 +294,13 @@ db.sovs.belongsTo(db.commitments, {
   as: "commitment",
 });
 
+// One projects has many sovs
+db.projects.hasMany(db.sovs, { as: "sovs" });
+db.sovs.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
 // One commitment has many 
 db.commitments.hasMany(db.payments, { as: "payments" });
 db.payments.belongsTo(db.commitments, {
@@ -304,18 +319,26 @@ db.invoices.belongsTo(db.commitments, {
 // ----------- Finance Management Ends -----------
 
 // ----------- Resource Management Starts --------
-//One category has many equipments
+//One project has many equipments
 db.projects.hasMany(db.equipments, { as: "equipments" });
 db.equipments.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
 
+
 //One crew has many workers
 db.crews.hasMany(db.workers, { as: "workers" });
 db.workers.belongsTo(db.crews, {
   foreignKey: "crewId",
   as: "crew",
+});
+
+//One user has many schedules
+db.users.hasMany(db.schedule, { as: "schedule" });
+db.schedule.belongsTo(db.users, {
+  foreignKey: "userId",
+  as: "user",
 });
 
 //One project has many crews
@@ -332,19 +355,21 @@ db.timesheets.belongsTo(db.projects, {
   as: "project",
 });
 
-//One workedhours has many workers
+//One worker has many workerhours
 db.workers.hasMany(db.workedHours, { as: "workersHours" });
 db.workedHours.belongsTo(db.workers, {
   foreignKey: "workerWId",
   as: "worker",
 });
 
-//One workedhours has many timesheets
+//One timesheet has many workerhours
 db.timesheets.hasMany(db.workedHours, { as: "workedhourstimesheet" });
 db.workedHours.belongsTo(db.timesheets, {
   foreignKey: "timesheetCode",
   as: "timesheet",
 });
+
+
 
 
 // ----------- Resource Management Ends --------

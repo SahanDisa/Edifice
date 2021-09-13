@@ -13,7 +13,7 @@ class WorkedHoursDataService {
   }
   */
   create(data) {
-    console.log(data)
+    //console.log(data)
     return http.post("/workedHours", data);
 
   }

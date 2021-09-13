@@ -4,17 +4,19 @@ import Defaults from './core_tools/admin/defaults.component'
 import Roles from './core_tools/admin/roles.component'
 import { Link } from "react-router-dom";
 
+//import PDF generating
+import Report from './report/report.component'
+
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import HomeWorkIcon from '@material-ui/icons/HomeWork';
-import WarningIcon from '@material-ui/icons/Warning';
-import Employees from './core_tools/edifice-directory/employees.component'
+//import LocationOnIcon from '@material-ui/icons/LocationOn';
+import {Assessment,HomeWork,LocationOn,Description,SupervisorAccount} from '@material-ui/icons';
 
 import UserService from "../services/user.service";
+import EmployeeDataService from "../services/employee.service";
 import VendorDataService from "../services/vendor.service";
 import ProjectDataService from "../services/project.service";
 
@@ -36,7 +38,9 @@ export default class BoardUser extends Component {
 
     this.getprojectCount=this.getprojectCount.bind(this);
     this.getVendorCount=this.getVendorCount.bind(this);
+    this.getEmployeeCount=this.getEmployeeCount.bind(this);
     this.getprojectDetails=this.getprojectCount.bind(this);
+    this.retrieveProjects = this.retrieveProjects.bind(this);
     this.state = {
       projects:[],
       content: "",
@@ -85,9 +89,24 @@ export default class BoardUser extends Component {
       }
     );
 
+    this.retrieveProjects();
     this.getprojectCount();
     this.getVendorCount();
-    
+    this.getEmployeeCount();
+  }
+
+  getEmployeeCount(){
+    //get Employee count
+    EmployeeDataService.getAll().then(response => {
+      this.setState({
+        employeeCount: response.data.length,
+        
+      });
+      //console.log(this.employeeCount);
+    })
+    .catch(e => {
+      console.log(e);
+    });
   }
 
   getprojectCount(){
@@ -118,28 +137,28 @@ export default class BoardUser extends Component {
     });
   }
   //private  var projectDetails=[];
-  getprojectDetails(id){
-    //get Project count
-    console.log(id);
-    ProjectDataService.get(id).then(response => {
-      //console.log( response.data[id]["id"]);
-      this.setState({
-        
+  retrieveProjects() {
+    ProjectDataService.getAll()
+      .then(response => {
+        this.setState({
+          projects: response.data
+        });
+        console.log(response.data);
       })
-      console.log(id);
-    })
-    //GOLDEN CODE
-    //projectDetails.then(function(result) {
-      //console.log(result) // "Some User token"
-   //})
-    
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
+  generatePDF(){
+    Report.generatePDF();
   }
 
   render() {
-    const { projectDetails,projectCount,vendorCount,employeeCount } = this.state;
+    const { projectDetails,projectCount,vendorCount,employeeCount,projects } = this.state;
     var elements = {};
     //this.getprojectDetails(elements);
-    //console.log(elements);
+    console.log(projects);
     const items = []
 
     //this.getprojectDetails(1);
@@ -164,8 +183,8 @@ export default class BoardUser extends Component {
               <div className="card card-hover shadow-sm" style={cardStyle}>
               <a className="d-block nav-heading text-center mt-3" href="/employees" style={linkText}>
 
-                <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>148</h1>
-                <h5 mb-0> <SupervisorAccountIcon style={{ fontSize:25 }}/>  Employees</h5>
+                <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{employeeCount}</h1>
+                <h5 mb-0> <SupervisorAccount style={{ fontSize:25 }}/>  Employees</h5>
               </a>
               </div>
             </div>
@@ -175,7 +194,7 @@ export default class BoardUser extends Component {
               <a className="d-block nav-heading text-center mt-3" style={linkText} href="/projects">
 
                 <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
-                <h5> <HomeWorkIcon style={{ fontSize:25 }}/>  Projects</h5>
+                <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>
               </a>
               </div>
             </div>
@@ -185,7 +204,7 @@ export default class BoardUser extends Component {
               <a className="d-block nav-heading text-center mt-3" style={linkText} href="/vendor">
 
                 <h1 className="nav-heading-title mb-1" style={{ fontSize:55 }}>{vendorCount}</h1>
-                <h6> <HomeWorkIcon style={{ fontSize:25 }}/>  Vendors & Subcontractors</h6>
+                <h6> <HomeWork style={{ fontSize:25 }}/>  Vendors & Subcontractors</h6>
               </a>
               </div>
             </div>
@@ -195,61 +214,42 @@ export default class BoardUser extends Component {
               <a className="d-block nav-heading text-center mt-3" style={linkText} href="#">
 
                 <h3 className="nav-heading-title mb-0" style={{ fontSize:55 }}>5</h3>
-                <h5> <SupervisorAccountIcon style={{ fontSize:25 }}/>  Pending Tasks</h5>
+                <h5> <SupervisorAccount style={{ fontSize:25 }}/>  Pending Tasks</h5>
               </a>
               </div>
             </div>
 
-          <div className="col-4 mb-4">
-            <div className="list-group" id="list-tab" role="tablist">
-              <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="/reports" role="tab" aria-controls="settings">Generate Report</a>
-            </div>
-          </div>
-          <div className="col-4">
-            <div className="list-group" id="list-tab" role="tablist">
-              <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="#list-report" role="tab" aria-controls="settings">Analytics</a>
-            </div>
+          <div className="col-4 mb-4 mr-5">
+            <a className="btn btn-primary p-2" onClick={()=>{this.generatePDF();}} id="list-settings-list"><Description style={{ fontSize:20 }}/> Generate Report</a>
+            <a className="btn btn-primary p-2 ml-5" id="list-settings-list" href="/list-report"> <Assessment style={{ fontSize:20 }}/> Analytics</a>
           </div>
           </div>
             <div classname-="mt-2 mb-2">
               <h3> Ongoing Projects:</h3>
             </div>
           <div classname="row">
-            
-            <div className="card card-hover shadow-sm col-lg-12 pt-1 mb-3 pb-3" id="project1">
+            {projects.map(project =>(
+              <div className="card card-hover shadow-sm col-lg-12 pt-1 mb-3 pb-3" id="project1">
               <a style={{ textDecoration: 'none' }} className="d-block nav-heading text-left ml-4 mt-3 mb-1 pb-3" href="projectmanagementhome/1">
                   <div classname="row">
-                    <h4 style={{color: "#273F7D"}} className="mb-6">Project Demo #1 Colombo</h4>
+                    <h4 style={{color: "#273F7D"}} className="mb-6">{project.title}</h4>
                         <div className="col-sm-6 mb-2" id="project1">
                           <ProgressBar now={20} label="20" />
                         </div>
                       <div className="col-sm-6" id="project1_d">
-                        <h5 mb-0> <SupervisorAccountIcon style={{ fontSize:24 }}/>  31</h5>
-
+                        <div className="row pb-2">
+                          <h5 className="pr-5 pl-2"> <SupervisorAccount style={{ fontSize:24 }}/>  31</h5>
+                          <h5> <LocationOn style={{ fontSize:24 }}/>  {project.location}</h5>
+                        </div>
                       </div>
                       <div className="col-2">
                         <div className="list-group" id="list-tab" role="tablist"></div>
-                          <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="/reports" role="tab" aria-controls="settings">Report</a>
+                          <a className="btn btn-primary p-2" onClick={()=>{this.generatePDF();}} id="list-settings-list">Report</a>
                       </div>
                   </div>
               </a>
-            </div>
-
-            <div className="card card-hover shadow-sm col-lg-12 pt-1 mb-3 pb-3" id="project2">
-              <a style={{ textDecoration: 'none' }} className="d-block nav-heading text-left ml-4 mt-3 mb-1 pb-3" href="#">
-                  <h4 style={{color: "#273F7D"}} className="mb-6">Anilana</h4>
-                    <div className="col-sm-6 ml-6 mr-6 mt-6 pt-6 mb-2" id="project2">
-                      <ProgressBar now={40} label="40" variant="warning" />
-                    </div>
-                    <div className="col-sm-2 mb-grid-gutter" id="project1_d">
-                      <h5 mb-0> <SupervisorAccountIcon style={{ fontSize:24 }}/>  12</h5>
-                    </div>
-                    <div className="col-2">
-                        <div className="list-group" id="list-tab" role="tablist"></div>
-                          <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="/reports" role="tab" aria-controls="settings">Report</a>
-                      </div>
-              </a>
-            </div>
+              </div>
+            ))}
 
           </div>
         <div className="row">

@@ -28,6 +28,10 @@ class AddEmployee extends Component {
         id: undefined
       };
     }
+  
+  componentDidMount() {
+    this.getLastEmployee();
+  }
 
     //onChange functions
   onChangeID(e) {
@@ -67,8 +71,7 @@ class AddEmployee extends Component {
   }
 
   saveEmployee() {
-    this.getLastEmployee();
-    //console.log(this.lastEmployeeID);
+    
     var data = {
       id: this.state.lastEmployeeID+1,
       name: this.state.name,
@@ -91,15 +94,15 @@ class AddEmployee extends Component {
         email: response.data.email,
         projCount: response.data.projCount,
         other: response.data.other,
-        submitted: true
       });
       console.log(response.data);
+      this.getLastEmployee();
     })
     .catch(e => {
       console.log(e);
       //console.log(data);
     });
-      //this.state.getLastvendorID();
+      this.getLastEmployee();
   }
 
   newEmployee() {
@@ -123,8 +126,8 @@ class AddEmployee extends Component {
             lastEmployeeID: response.data[0].id
           });
           //console.log(response.data[0].id);
-          //console.log(this.lastEmployeeID);
-          return response.data[0].id;
+          console.log(this.state.lastEmployeeID);
+          //return response.data[0].id;
         })
         .catch(e => {
           console.log(e);
@@ -134,12 +137,12 @@ class AddEmployee extends Component {
   render() {
 
     return (
-      <div className="">
+      <div className="container">
         <h2>New User</h2><hr/>
         <div className="">
           <h5>Enter user details</h5>
 
-          <label htmlFor="">Id</label>
+          <label htmlFor="" hidden>Id</label>
           <input className="form-control" type="number" hidden/>
           <br/>
 
@@ -158,13 +161,13 @@ class AddEmployee extends Component {
           value={this.state.role}
           onChange={this.onChangeRole}
           name="role" required>
-            <option value="Civil Engineer">civil engineer</option>
+            <option value="Civil Engineer">Civil engineer</option>
             <option value="Project Manager">Project manager</option>
             <option value="Site supervisor">Site supervisor</option>
           </select><br />
 
           <label htmlFor="">Email</label>
-          <input className="form-control" type="text"  id="email"
+          <input className="form-control" type="email"  id="email"
             required
             value={this.state.email}
             onChange={this.onChangeEmail}
@@ -189,7 +192,7 @@ class AddEmployee extends Component {
 
           <div>
           <a onClick={()=>{this.saveEmployee(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastEmployee()}} className="btn btn-success">Add</a>
-          <a href="/employees" className="btn btn-secondary" type="reset">Cancel</a>
+          <a className="btn btn-secondary" type="reset">Cancel</a>
           </div>
           <div>
           

@@ -15,6 +15,7 @@ class Timesheet extends Component {
 
         this.state = {
                 code:this.props.match.params.code,
+                id:this.props.match.params.id,
                 timesheet:[]
         };
       }
@@ -74,7 +75,7 @@ class Timesheet extends Component {
                 </button>
 
                     <table className="table table-bordered align-middle">
-                            <thead>
+                            <thead className="bg-light">
                                 <tr>
                                     <th className=" align-middle text-center"  rowspan="2">Crew</th>
                                     <th  className=" align-middle text-center" rowspan="2">Employee Name</th>
@@ -164,22 +165,25 @@ class Timesheet extends Component {
                     
                     {/*------------------------------------ Approve Starts------------------------------------------------------------------ */}
                     <div className="modal fade" id="approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <Approve/>
+                    <Approve
+                    timesheetId={timesheet.code}/>
                     </div>
                     {/*-------------------------------------Approve Ends----------------------------------------------------------------------*/}
 
                     {/*------------------------------------ Remove Approve Starts------------------------------------------------------------------ */}
                     <div className="modal fade" id="removeApprove" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <RemoveApprove/>
+                    <RemoveApprove
+                    timesheetId={timesheet.code}/>
                     </div>
                     {/*-------------------------------------Remove Approve Ends----------------------------------------------------------------------*/}
 
-
+                    {/*------------------------------------ Add worker Starts------------------------------------------------------------------ */}
                     <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                    <AddWorker 
                    timesheetId={timesheet.code}
                    id={id}/> 
-                </div>
+                    </div>
+                    {/*------------------------------------ Add worker Ends--------------------------------------------------------------------- */}
 
 
 

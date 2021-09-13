@@ -1,9 +1,9 @@
 import http from "../http-common.js";
 
-class TimesheetDataService {
+class ScheduleDataService {
   getAll(id) {
     //console.log(id)
-    return http.get(`/timesheets/list/${id}`);
+    return http.get(`/schedules/list/${id}`);
   }
 /*
   getAll() {
@@ -11,17 +11,17 @@ class TimesheetDataService {
   }*/
 
   get(id) {
-    return http.get(`/timesheets/${id}`);
+    return http.get(`/schedules/${id}`);
   }
 
   create(data) {
     console.log(data)
-    return http.post("/timesheets", data);
+    return http.post("/schedules", data);
 
   }
 
   update(id, data) {
-    return http.put(`/timesheets/status/${id}`, data);
+    return http.put(`/schedules/status/${id}`, data);
   }
 /*
   delete(id) {
@@ -43,4 +43,4 @@ class TimesheetDataService {
   // }
 }
 
-export default new TimesheetDataService();
+export default new ScheduleDataService();

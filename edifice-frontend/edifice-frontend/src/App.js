@@ -63,7 +63,7 @@ import Roles from "./components/core_tools/admin/roles.component";
 import AddUser from "./components/core_tools/edifice-directory/add-emp.component";
 import EditUser from "./components/core_tools/edifice-directory/edit-emp.component";
 import Vendors from "./components/core_tools/edifice-directory/vendors.component";
-import Emp from "./components/core_tools/edifice-directory/employees.component";
+import Employee from "./components/core_tools/edifice-directory/employees.component";
 import AddVendor from "./components/core_tools/edifice-directory/add-vendor.component";
 import EditVendor from "./components/core_tools/edifice-directory/edit-vendor.component";
 
@@ -110,6 +110,7 @@ import punchlistHome from "./components/project_management/punchlist/punchlist.c
 import ViewPL from "./components/project_management/punchlist/view.component";
 import CreatePL from "./components/project_management/punchlist/create-basic.component";
 import CreatePLT from "./components/project_management/punchlist/addtypes.component";
+import PLTView from "./components/project_management/punchlist/view.component";
 
 import ResourceManagementHome from "./components/resource_management/resource-manage-home.component";
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
@@ -140,7 +141,10 @@ import EditSingleCommitment from "./components/financial_management/commitments/
 import ViewSingleSov from "./components/financial_management/commitments/sov-singlepage.component";
 import ViewSingleBudget from "./components/financial_management/budget/budget-singlepage.component";
 import AddEmployee from "./components/core_tools/edifice-directory/add-emp.component";
-//import Report from "./components/report/report.component";
+import Report from "./components/report/report.component";
+
+import UploadExcel from "./components/financial_management/direct-costs/excelupload.component";
+
 
 class App extends Component {
   constructor(props) {
@@ -318,6 +322,7 @@ class App extends Component {
             <Route path="/managepunchlist/view/:id" component={ViewPL} />
             <Route path="/managepunchlist/create/:id" component={CreatePL} />
             <Route path="/managepunchlist/createtype/:id" component={CreatePLT} />
+            <Route path="/punchlist/viewtype/:pltid" component={PLTView} />
             {/* Daily Logs */}
             <Route path="/dailylogsconfiguration/:id" component={DlsConfig} />
             <Route path="/managedailylogs/:id" component={ManageDls} />
@@ -325,11 +330,11 @@ class App extends Component {
             <Route path="/managesdailylogs/view/:id" component={ViewDls} />
             
             <Route path="/addUser" component={AddEmployee} />
-            <Route path="/editUser" component={EditUser} />
+            <Route path="/editUser/:id" component={EditUser} />
             <Route path="/vendor" component={Vendors} />
-            <Route path="/employees" component={Emp} />
+            <Route path="/employees" component={Employee} />
             <Route path="/addVendor" component={AddVendor} />
-            <Route path="/editVendor" component={EditVendor} />
+            <Route path="/editVendor/:id" component={EditVendor} />
             {/* Document */}
             <Route path="/directory/:id" component={AddDirectory} />
             <Route path="/document/:id" component={DocumentHome} />
@@ -380,7 +385,7 @@ class App extends Component {
             <Route path="/equipDetails/:code" component={EquipDetails} />
             {/*<Route path="/equipDetails/:id/:code" component={EquipDetails} />*/}
             <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
-            <Route path="/viewTimesheet/:code" component={ViewTimesheet} />
+            <Route path="/viewTimesheet/:id/:code" component={ViewTimesheet} />
                     
 
             {/*financial management */}
@@ -392,10 +397,10 @@ class App extends Component {
             <Route path="/addcommitment/:id" component={AddCommitment} />
             {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
             <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
-            <Route path="/addsov/:id" component={AddSov} />
+            <Route exact path="/addsov/:pid/:id" component={AddSov} />
             <Route path="/viewdirectcost/:id" component={ViewSingleDirectCost} />
            {/* <Route path="/viewsov/:id" component={ViewSingleSov} />*/}
-            <Route path="/viewsov/:id" component={SovHome} />
+            <Route exact path="/viewsov/:pid/:id" component={SovHome} />
 
             <Route path="/addinvoice/:id" component={AddInvoice} />
             <Route path="/addpayment/:id" component={AddPayment} />
@@ -403,6 +408,10 @@ class App extends Component {
             <Route path="/editcommitment/:id" component={EditSingleCommitment} />
             <Route path="/viewsinglesov/:id" component={ViewSingleSov} />
             <Route path="/viewbudget/:id" component={ViewSingleBudget} />
+            <Route path="/excelupload/:id" component={UploadExcel} />
+
+            {/*Report and PDF */}
+            <Route path="/report/" component={Report} />
            
           </Switch>
         </div>
