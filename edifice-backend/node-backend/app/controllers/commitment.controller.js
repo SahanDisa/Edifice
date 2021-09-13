@@ -5,7 +5,7 @@ const Commitment = db.commitments;
 
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.hash) {
+  if (!req.body.title) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -14,7 +14,6 @@ exports.create = (req, res) => {
 
   // Create a commitment
   const commitment = {
-    hash: req.body.hash,
     title:req.body.title,
     contractCompany:req.body.contractCompany,
     status:req.body.status,
@@ -153,3 +152,40 @@ exports.findByContractCompany= (req, res) => {
       });
     });  
 };
+
+exports.findByStatusOngoing= (req, res) => {
+  const id = req.params.id;
+  const status = req.params.ongoing;
+
+  Commitment.findAll({ where: {
+    projectId: id,
+    status : status
+  }})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving status with id=" + id +" and status = "+status
+      });
+    });  
+};
+
+exports.findByStatusCompleted = (req, res) => {
+  const id = req.params.id;
+  const status = req.params.completed;
+
+  Commitment.findAll({ where: {
+    projectId: id,
+    status : status
+  }})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving status with id=" + id +" and status = "+status
+      });
+    });  
+};
+

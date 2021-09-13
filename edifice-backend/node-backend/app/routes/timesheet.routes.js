@@ -14,10 +14,10 @@ module.exports = app => {
   */
     // Retrieve a single timesheet with id
     router.get("/:id", timesheets.findOne);
- /* 
-    // Update a worker with id
-    router.put("/:id", worker.update);
-  
+ 
+    // Update a timesheet with id
+    router.put("/status/:id", timesheets.update);
+ /*  
     // Delete a worker with id
     router.delete("/:id/", worker.delete);
   

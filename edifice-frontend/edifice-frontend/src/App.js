@@ -140,7 +140,10 @@ import EditSingleCommitment from "./components/financial_management/commitments/
 import ViewSingleSov from "./components/financial_management/commitments/sov-singlepage.component";
 import ViewSingleBudget from "./components/financial_management/budget/budget-singlepage.component";
 import AddEmployee from "./components/core_tools/edifice-directory/add-emp.component";
-//import Report from "./components/report/report.component";
+import Report from "./components/report/report.component";
+
+import UploadExcel from "./components/financial_management/direct-costs/excelupload.component";
+
 
 class App extends Component {
   constructor(props) {
@@ -379,7 +382,7 @@ class App extends Component {
             <Route path="/equipDetails/:code" component={EquipDetails} />
             {/*<Route path="/equipDetails/:id/:code" component={EquipDetails} />*/}
             <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
-            <Route path="/viewTimesheet/:code" component={ViewTimesheet} />
+            <Route path="/viewTimesheet/:id/:code" component={ViewTimesheet} />
                     
 
             {/*financial management */}
@@ -402,6 +405,10 @@ class App extends Component {
             <Route path="/editcommitment/:id" component={EditSingleCommitment} />
             <Route path="/viewsinglesov/:id" component={ViewSingleSov} />
             <Route path="/viewbudget/:id" component={ViewSingleBudget} />
+            <Route path="/excelupload/:id" component={UploadExcel} />
+
+            {/*Report and PDF */}
+            <Route path="/report/" component={Report} />
            
           </Switch>
         </div>

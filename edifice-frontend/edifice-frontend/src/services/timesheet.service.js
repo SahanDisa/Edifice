@@ -19,11 +19,11 @@ class TimesheetDataService {
     return http.post("/timesheets", data);
 
   }
-/*
-  update(id, data) {
-    return http.put(`/projects/${id}`, data);
-  }
 
+  update(id, data) {
+    return http.put(`/timesheets/status/${id}`, data);
+  }
+/*
   delete(id) {
     return http.delete(`/projects/${id}`);
   }

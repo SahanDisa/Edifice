@@ -4,6 +4,9 @@ import Defaults from './core_tools/admin/defaults.component'
 import Roles from './core_tools/admin/roles.component'
 import { Link } from "react-router-dom";
 
+//import PDF generating
+import Report from './report/report.component'
+
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -147,6 +150,10 @@ export default class BoardUser extends Component {
       });
   }
 
+  generatePDF(){
+    Report.generatePDF();
+  }
+
   render() {
     const { projectDetails,projectCount,vendorCount,employeeCount,projects } = this.state;
     var elements = {};
@@ -213,7 +220,7 @@ export default class BoardUser extends Component {
             </div>
 
           <div className="col-4 mb-4 mr-5">
-            <a className="btn btn-primary p-2" id="list-settings-list" href="/report"><Description style={{ fontSize:20 }}/> Generate Report</a>
+            <a className="btn btn-primary p-2" onClick={()=>{this.generatePDF();}} id="list-settings-list"><Description style={{ fontSize:20 }}/> Generate Report</a>
             <a className="btn btn-primary p-2 ml-5" id="list-settings-list" href="/list-report"> <Assessment style={{ fontSize:20 }}/> Analytics</a>
           </div>
           </div>
@@ -237,7 +244,7 @@ export default class BoardUser extends Component {
                       </div>
                       <div className="col-2">
                         <div className="list-group" id="list-tab" role="tablist"></div>
-                          <a className="list-group-item list-group-item-action active" id="list-settings-list" data-toggle="list" href="/reports" role="tab" aria-controls="settings">Report</a>
+                          <a className="btn btn-primary p-2" onClick={()=>{this.generatePDF();}} id="list-settings-list">Report</a>
                       </div>
                   </div>
               </a>
