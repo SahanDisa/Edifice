@@ -16,6 +16,7 @@ import AuthService from "./services/auth.service";
 import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
+import Homereal from "./components/homereal.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-project.component";
 import BoardResource from "./components/board-resource.component";
@@ -108,10 +109,11 @@ import UpdateDls from "./components/project_management/dailylog/update.component
 import ViewDls from "./components/project_management/dailylog/view.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
-import ViewPL from "./components/project_management/punchlist/view.component";
 import CreatePL from "./components/project_management/punchlist/create-basic.component";
+import CreatePhotos from "./components/project_management/punchlist/create-addphoto.component";
 import CreatePLT from "./components/project_management/punchlist/addtypes.component";
-import PLTView from "./components/project_management/punchlist/view.component";
+import PLTView from "./components/project_management/punchlist/viewtype.component";
+import PLIView from "./components/project_management/punchlist/view.component";
 
 import ResourceManagementHome from "./components/resource_management/resource-manage-home.component";
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
@@ -276,6 +278,7 @@ class App extends Component {
         <div className="container mt-3">
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
+            <Route exact path={["/", "/homereal"]} component={Homereal} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
@@ -316,15 +319,17 @@ class App extends Component {
             <Route path="/managerfi/view" component={ViewRFI} />
             {/* Action Plan */}
             <Route path="/actionplan/:id" component={actionplanHome} />
-            <Route path="/addactionplantype/:id" component={AddActionPlanType} />
             <Route path="/addactionplan/:id" component={AddActionPlan} />
+            <Route path="/viewactionplantype/:id" component={viewAPType} />
             <Route path="/actionplansingle/:id" component={ActionPlanSinglePage} />
+
             {/* Punch List */}
             <Route path="/punchlist/:id" component={punchlistHome} />
-            <Route path="/managepunchlist/view/:id" component={ViewPL} />
+            <Route path="/managepunchlist/createaddphoto/:id" component={CreatePhotos} />
             <Route path="/managepunchlist/create/:id" component={CreatePL} />
             <Route path="/managepunchlist/createtype/:id" component={CreatePLT} />
-            <Route path="/punchlist/viewtype/:pltid" component={PLTView} />
+            <Route path="/viewtype/:pltid" component={PLTView} />
+            <Route path="/view/:pliid" component={PLIView} />
             {/* Daily Logs */}
             <Route path="/dailylogsconfiguration/:id" component={DlsConfig} />
             <Route path="/managedailylogs/:id" component={ManageDls} />

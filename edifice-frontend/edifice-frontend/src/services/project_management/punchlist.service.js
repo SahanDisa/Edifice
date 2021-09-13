@@ -6,7 +6,6 @@ class PunchlistDataService {
     }
 
     create(data) {
-        console.log("create wena service ekata aawa")
         return http.post(`/projects/punchlist/`, data);
     }
 
@@ -16,6 +15,10 @@ class PunchlistDataService {
 
     getType(id) {
         return http.get(`/projects/punchlist/type/${id}`);
+    }
+
+    findlastItem(){
+        return http.get(`/projects/punchlist/last`);
     }
 }
 

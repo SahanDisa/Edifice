@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
-import PunchListTypesDataService from "./../../../services/project_management/punchlisttypes.service.js";
+import PunchListTypesDataService  from "./../../../services/project_management/punchlisttypes.service.js";
+import PunchlistDataService  from "./../../../services/project_management/punchlist.service.js";
 
 class PunchList extends Component {
     constructor(props) {
@@ -11,6 +12,7 @@ class PunchList extends Component {
         this.savePunchListType = this.savePunchListType.bind(this);
         this.newPunchListType = this.newPunchListType.bind(this);
         this.retrievePLT = this.retrievePLT.bind(this);
+        this.retrievePL = this.retrievePL.bind(this);
 
         this.state = {
             id: null,
@@ -21,6 +23,31 @@ class PunchList extends Component {
             currentIndex: -1,
             submitted: false
         };
+    }
+
+    componentDidMount() {
+        this.retrievePLT(this.props.match.params.id);
+        this.retrievePL(this.props.match.params.id);
+    }
+
+    retrievePLT(projectId){
+        console.log("retrievePLT ekata aawa");
+        PunchListTypesDataService.getAll(projectId)
+        .then(response => {
+            this.setState({
+                pltypes: response.data
+            });
+        });
+    }
+
+    retrievePL(projectId){
+        console.log("retrievePL ekata aawa");
+        PunchlistDataService.getAll(projectId)
+        .then(response => {
+            this.setState({
+                plis: response.data
+            });
+        });
     }
 
     onChangeTitle(e) {
@@ -40,7 +67,7 @@ class PunchList extends Component {
         var data = {
             title : this.state.title,
             description: this.state.description,
-            projectId: this.state.projectId
+            projectId: this.props.match.params.id
         };
 
         PunchListTypesDataService.create(data)
@@ -53,10 +80,8 @@ class PunchList extends Component {
             submitted: true
             });
         console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
         });
+        window.location.reload();
     }
 
     newPunchListType() {
@@ -69,35 +94,10 @@ class PunchList extends Component {
         });
     }
 
-    componentDidMount() {
-        this.retrievePLT(this.props.match.params.id);
-    }
-
-    retrievePLT(projectId){
-        PunchListTypesDataService.getAll(projectId)
-        .then(response => {
-            this.setState({
-                pltypes: response.data
-            });
-        console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    }
-
     render() {
-        const {projectId, pltypes, currentIndex} = this.state;
+        const {projectId, pltypes, plis, currentIndex} = this.state;
         return (
             <div className="">
-                {/* {this.state.submitted ? (
-                    <div>
-                        <div>
-                            <h4>Punch List Type added successfully!</h4>
-                            <button className="btn btn-success" onClick={this.newPunchListType}>Add Another punch list type</button>
-                        </div>
-                    </div>
-                ) : ( */}
                 <div>
                 <h2>Punch Lists</h2><hr/>
                 <div className="container row">
@@ -134,7 +134,7 @@ class PunchList extends Component {
                         </Card>
                     </div> 
                 </div>
-                <h4>Punch List Types</h4><hr/>
+                <h4 className="mt-2">Punch List Types</h4><hr/>
                 <div className="container">
                     <div className="form-row">
                         <div className="form-group col-md-3">
@@ -163,14 +163,17 @@ class PunchList extends Component {
                             <label htmlFor="">.</label>
                             <button
                                 className="btn btn-primary"
-                                onClick={()=>this.savePunchListType, this.newPunchListType}
+                                onClick={this.savePunchListType}
                             >Add</button>
                         </div>
                     </div>
                     <div className="container row">
-                        {pltypes && pltypes.map((pltypes, index) => (
-                            <div className={"container col-3" + (index === currentIndex ? "active" : "")} key={index}>
-                                <Link to={"/punchlist/viewtype/" + pltypes.id}>
+                        {pltypes && pltypes.map((plt, index) => (
+                            <div className={"container col-3"} key={index}>
+                                <Link 
+                                to={"/viewtype/"+plt.id}
+                                // to={"/punchlist/viewtype/" + plt.id} 
+                                style={{'text-decoration': 'none'}}>
                                     <Card
                                         bg={'light'}
                                         text={'dark'}
@@ -179,8 +182,8 @@ class PunchList extends Component {
                                         variant="outline"
                                     >
                                         <Card.Body>
-                                            <Card.Title><h4>{pltypes.title}</h4></Card.Title>
-                                            <Card.Text>{pltypes.description == "" ? "No Description" : pltypes.description}</Card.Text>
+                                            <Card.Title><h4>{plt.title}</h4></Card.Title>
+                                            <Card.Text>{plt.description == "" ? "No Description" : plt.description}</Card.Text>
                                             <Card.Link variant="primary">Click to view</Card.Link>
                                         </Card.Body>
                                     </Card>
@@ -189,24 +192,32 @@ class PunchList extends Component {
                         ))}
                     </div>
                 </div>
-                <h4>Punch Lists Items</h4><hr/>
-                <ul className="list-group">
-                    <li className="list-group-item ">
-                        <Link to={"/managepunchlist/view/" + projectId} style={{ 'text-decoration': 'none'}}>1 - Replace the Broken Switch Plate</Link>
-                    </li>
-                    <li className="list-group-item ">
-                        <a href="#" style={{ 'text-decoration': 'none'}}>2 - Paint Touch up</a>
-                    </li>
-                    <li className="list-group-item ">
-                        <a href="#" style={{ 'text-decoration': 'none'}}>3 - Missing Bolts</a>
-                    </li>
-                    <li className="list-group-item ">
-                        <a href="#" style={{ 'text-decoration': 'none'}}>4 - Door Frame Damage</a>
-                    </li>
-                </ul>
+                <h4 className="mt-3">Punch Lists Items</h4><hr/>
                 <Link to={"/managepunchlist/create/" + projectId} className="btn btn-primary mt-2">+ Add Another Punch List Item</Link>
+                {/* <div className="container md-6"> */}
+                    <ul className="list-group">
+                        {plis && plis.map((plti, index) => (
+                            <li className={"list-group-item" + (index === currentIndex ? "active" : "")} key={index}>
+                                <div className="container row">
+                                    <div className="col-9">
+                                        <Link to={"/view/" + plti.no} style={{ 'text-decoration': 'none'}} >
+                                            {plti.no + " - " + plti.title}
+                                        </Link>
+                                    </div>
+                                    <div className="col-3">
+                                        <h6>{
+                                            plti.status == "Initiated" ? "Initiated 🟡":
+                                            plti.status == "WIP" ? "Work in Progress 🟠":
+                                            plti.status == "RFR" ? "Ready to Review 🔵":
+                                            plti.status == "WNA" ? "Work not Accepted 🔴": "All work Completed 🟢"    
+                                        }</h6>
+                                    </div>                               
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                {/* </div> */}
                 </div>
-                {/* )} */}
             </div>
         );
     }

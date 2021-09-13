@@ -5,7 +5,7 @@ import UserService from "./../services/user.service";
 import ProjectDataService from "./../services/project.service";
 import AuthService from "./../services/auth.service";
 import { Card } from "react-bootstrap";
-import mainIcon from "././../assets/Edifice.png";
+import mainIcon from "././../assets/logowithborder.png";
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ProjectIcon from '@material-ui/icons/Apartment';
 import FinanceIcon from '@material-ui/icons/MonetizationOn';
@@ -73,24 +73,24 @@ export default class Home extends Component {
     return (
       <div className="container">
         <center>
-        <h2>Hi Steve, Welcome to Edifice!</h2>
+        <h2>Welcome to Edifice!</h2>
         {showAdminBoard && showManagerBoard && showEngineerBoard &&
-        <h3>You are Login as <b>Admin</b></h3>
+        <h4>You are Login as <b>Admin</b></h4>
         }
         
         {!showAdminBoard && showManagerBoard && showEngineerBoard &&
-        <h3>You are Login as <b>Manager</b></h3>
+        <h4>You are Login as <b>Manager</b></h4>
         }
         {!showAdminBoard && !showManagerBoard && showEngineerBoard &&
-        <h3>You are Login as <b>Engineer</b></h3>
+        <h4>You are Login as <b>Engineer</b></h4>
         }
           <img
               src={mainIcon}
-              style={{'width' : "250px", height: "250px", 'border': '2px solid black'}}
+              style={{'width' : "250px", height: "250px"}}
               alt="profile-img"
               className = "mr-1"
             />
-          <h5>Construction Project Management Tool</h5>  
+          <h5 className="mt-3 mb-3">Construction Project Management Tool</h5>  
         </center>
         
           
@@ -98,7 +98,7 @@ export default class Home extends Component {
         <div className="row">
         <div className="col-3">
             <Card border="dark" style={{ width: '16rem' }}>
-                <Card.Header>Admin/Manager</Card.Header> 
+                <Card.Header>Admin/ Manager</Card.Header> 
                 <Card.Body>
                   <Card.Title>
                   <center>
@@ -115,7 +115,7 @@ export default class Home extends Component {
           </div>
           <div className="col-3">
             <Card border="dark" style={{ width: '16rem' }}>
-                <Card.Header>Manager/Enginner/Architect</Card.Header> 
+                <Card.Header>Manager/ Enginner/ Architect</Card.Header> 
                 <Card.Body>
                   <Card.Title>
                   <center>
@@ -133,7 +133,7 @@ export default class Home extends Component {
           </div>
           <div className="col-3">
             <Card border="dark" style={{ width: '16rem' }}>
-                <Card.Header>Manager/Enginner/QS</Card.Header> 
+                <Card.Header>Manager/ Enginner/ QS</Card.Header> 
                 <Card.Body>
                   <Card.Title>
                   <center>
@@ -151,7 +151,7 @@ export default class Home extends Component {
           </div>
           <div className="col-3">
             <Card border="dark" style={{ width: '16rem' }}>
-                <Card.Header>Manager/Enginner</Card.Header> 
+                <Card.Header>Manager/ Enginner</Card.Header> 
                 <Card.Body>
                   <Card.Title>
                   <center>

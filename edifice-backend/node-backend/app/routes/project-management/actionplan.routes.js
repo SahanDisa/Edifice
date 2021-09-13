@@ -3,13 +3,16 @@ module.exports = app => {
   
     var router = require("express").Router();
   
-    // Create a new Drawing
+    // Create a new Action Plan
     router.post("/", actionplan.create);
+
+    // Get all type Action plans
+    router.get("/type/:id", actionplan.findAlltype);
   
-    // Retrieve all Drawings for a project
+    // Retrieve all Action Plans for a project
     router.get("/list/:id", actionplan.findAllSearch);
   
-    // Retrieve a single Drawing with id
+    // Retrieve a single Action Plan with id
     router.get("/:id", actionplan.findOne);
 
     // project action plans
@@ -18,10 +21,10 @@ module.exports = app => {
     // get approved actions
     router.get("/approved/:id",actionplan.findAllApproved);
 
-    // Update a Drawing with id
+    // Update a Action Plan with id
     router.put("/:id", actionplan.update);
     
-    // Delete a Drawing with id
+    // Delete a Action Plan with id
     router.delete("/:id/", actionplan.delete);
   
     app.use('/api/projects/actionplan', router);

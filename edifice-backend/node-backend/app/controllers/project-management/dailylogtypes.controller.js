@@ -1,5 +1,5 @@
 const db = require("../../models/index.js");
-const PunchListTypes = db.punchlisttypes;
+const DailyLogTypes = db.punchlisttypes;
 
 // create a new punch list types
 exports.create = (req, res) => {
@@ -17,7 +17,7 @@ exports.create = (req, res) => {
     projectId: req.body.projectId
   };
   // Save Punch List Type in the database
-  PunchListTypes.create(plt)
+  DailyLogTypes.create(plt)
   .then(data => {
     res.send(data);
   })
@@ -32,7 +32,7 @@ exports.create = (req, res) => {
 // Get punch list types for a given project
 exports.findAll = (req, res) => {
     const id = req.params.id;
-    PunchListTypes.findAll({ where: {
+    DailyLogTypes.findAll({ where: {
       projectId: id
     }})
       .then(data => {
@@ -49,7 +49,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  PunchListTypes.findByPk(id)
+  DailyLogTypes.findByPk(id)
     .then(data => {
       res.send(data);
     })
