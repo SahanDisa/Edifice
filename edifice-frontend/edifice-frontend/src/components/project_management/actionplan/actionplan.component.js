@@ -65,7 +65,7 @@ export default class Drawings extends Component {
                 key={index}
                 >
                 {/* unit data */}
-                <Link to={"/viewdrawingcategory/"+actionplans.id} style={{'text-decoration': 'none'}}>
+                <Link to={"/actionplansingle/"+actionplan.id} style={{'text-decoration': 'none'}}>
                 <Card border="dark" style={{ width: '55rem' }}>
                 <Card.Header>{actionplan.actiontype}</Card.Header> 
                 <Card.Body>
