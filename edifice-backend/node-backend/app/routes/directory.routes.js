@@ -3,14 +3,20 @@ module.exports = app => {
   
     var router = require("express").Router();
   
-    // Create a new Album
+    // Create a new Directory
     router.post("/", directory.create);
   
-    // Retrieve all Albums for a project
+    // Retrieve all Directory for a project
     router.get("/:id", directory.findAll);
 
     // Retrive single Directory for a project
     router.get("/single/:id", directory.findOne);
+    
+    // Update a Directory with id
+    router.put("/:id", directory.update);
+  
+    // Delete a Directory with id
+    router.delete("/:id/", directory.delete);
   
     app.use('/api/projects/directory', router);
 };
