@@ -62,3 +62,70 @@ exports.findOne = (req, res) => {
       });
     });  
 };
+
+
+// Update a DrawingCategory by the id in the request
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  DrawingCategory.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "DrawingCategory was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update DrawingCategory with id=${id}. Maybe DrawingCategory was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating DrawingCategory with id=" + id
+      });
+    });
+};
+
+// Delete a DrawingCategory with the specified id in the request
+exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  DrawingCategory.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "DrawingCategory was deleted successfully!"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete DrawingCategory with id=${id}. Maybe DrawingCategory was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete DrawingCategory with id=" + id
+      });
+    });
+};
+
+// Find recent drawing category
+exports.recent = (req, res) => {
+  const id = req.params.id;
+
+  DrawingCategory.findAll({order: [['id', 'DESC']], limit: 5})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving recent drawingcategory"
+      });
+    });  
+};
+
