@@ -11,6 +11,9 @@ module.exports = app => {
 
     // Retrive single Directory for a project
     router.get("/single/:id", directory.findOne);
+
+    // Get recent lists
+    router.get("/list/recent", directory.recent);
     
     // Update a Directory with id
     router.put("/:id", directory.update);

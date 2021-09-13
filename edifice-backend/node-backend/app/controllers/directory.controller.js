@@ -112,3 +112,18 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+// Find recent documents
+exports.recent = (req, res) => {
+  const id = req.params.id;
+
+  Directory.findAll({order: [['id', 'DESC']], limit: 5})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving directiry with id=" + id
+      });
+    });  
+};

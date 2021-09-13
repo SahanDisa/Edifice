@@ -112,7 +112,8 @@ const UploadFiles = () => {
     return (
         <div>
         <br></br>
-        <div className="card">
+        {/*Recent List */}
+        {/* <div className="card col-5">
             <div className="card-header"><h5>Recent List</h5></div>
             <ul className="list-group list-group-flush">
               {fileInfos &&
@@ -122,11 +123,10 @@ const UploadFiles = () => {
                     <a href={file.url} target="_blank">{file.name}</a>
                   </li>
                   :
-                  <li className="list-group-item">
-                  </li>
+                  <p></p>
                 ))}
             </ul>
-          </div>
+          </div> */}
           {/* Browser-native */}
           <hr></hr>
           <h3>View Custom Documents</h3>
