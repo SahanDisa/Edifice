@@ -100,6 +100,7 @@ import ViewRFI from "./components/project_management/rfi/view.component";
 import actionplanHome from "./components/project_management/actionplan/actionplan.component";
 import AddActionPlan from "./components/project_management/actionplan/addactionplan.component";
 import AddActionPlanType from "./components/project_management/actionplan/addactionplantype.component";
+import ActionPlanSinglePage from "./components/project_management/actionplan/actionplansinglepage.component";
 
 import DlsConfig from "./components/project_management/dailylog/configuration.component";
 import ManageDls from "./components/project_management/dailylog/manage.component";
@@ -317,6 +318,7 @@ class App extends Component {
             <Route path="/actionplan/:id" component={actionplanHome} />
             <Route path="/addactionplantype/:id" component={AddActionPlanType} />
             <Route path="/addactionplan/:id" component={AddActionPlan} />
+            <Route path="/actionplansingle/:id" component={ActionPlanSinglePage} />
             {/* Punch List */}
             <Route path="/punchlist/:id" component={punchlistHome} />
             <Route path="/managepunchlist/view/:id" component={ViewPL} />
