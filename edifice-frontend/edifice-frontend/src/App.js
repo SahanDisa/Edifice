@@ -44,6 +44,7 @@ import PhotosHome from "./components/project_management/photos/photos.component"
 import AddAlbum from "./components/project_management/photos/addalbum.component";
 import ViewSingleAlbum from "./components/project_management/photos/album-singlepage.component";
 import MoveCapturetoAlbum from "./components/project_management/photos/movecapturestoalbum.component";
+import UpdateAlbum from "./components/project_management/photos/updatealbum.component";
 
 import BiddingHome from "./components/project_management/biddings/bidding.component";
 import AddBidding from "./components/project_management/biddings/addbidding.component";
@@ -351,6 +352,7 @@ class App extends Component {
             <Route path="/uploadphoto/:name" component={UploadPhotos}/>
             <Route path="/viewalbum/:id" component={ViewSingleAlbum}/>
             <Route path="/addalbum/:id" component={AddAlbum}/>
+            <Route exact path={"/updatealbum/:pid/:id"} component={UpdateAlbum}/>
             <Route path="/movecapture/:id" component={MoveCapturetoAlbum}/>
             {/* Bidding Component Routes  */}
             <Route path="/bidding/:id" component={BiddingHome} /> 
