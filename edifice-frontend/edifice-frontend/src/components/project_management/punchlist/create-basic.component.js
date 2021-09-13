@@ -20,6 +20,7 @@ class CreatePL extends Component {
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.savePunchListItem = this.savePunchListItem.bind(this);
         this.newPunchListItem = this.newPunchListItem.bind(this);
+        this.LinkingButton = this.LinkingButton.bind(this);
 
         this.state = {
             no: null,
@@ -32,7 +33,8 @@ class CreatePL extends Component {
             description: "",
             projectId: this.props.match.params.id,
             lastpl:[],
-            submitted: false
+            submitted: false,
+            linkButton: undefined,
         };
     }
 
@@ -78,6 +80,10 @@ class CreatePL extends Component {
             description: this.state.description,
             projectId: this.state.projectId
         };
+
+        this.setState({
+            linkButton: "wedehari"
+        })
 
         PunchlistDataService.create(data)
         .then(response => {
@@ -129,9 +135,12 @@ class CreatePL extends Component {
             console.log(e);
         });
       }
+    LinkingButton(){
+        console.log("Yes, Linking Button is succesful");
+    }
 
     render() {
-        const {lastpl} = this.state;
+        const {lastpl,linkButton} = this.state;
         return (
         <div className="">
             {this.state.submitted ? (
@@ -244,14 +253,18 @@ class CreatePL extends Component {
                                 </div>
                             </div>
                             <hr />
+                            {!linkButton &&
                             <button
                                 type="button"
                                 // data-toggle="modal"
                                 // data-target="#successfullyaddedModal"
                                 onClick={this.savePunchListItem}
-                                className="btn btn-primary mr-2"
-                            >Next: Link Photos</button>
-                            <a href="/punchlist" className="">Cancel</a>
+                                className="btn btn-primary mr-2">Save Punch Item</button>
+                            }
+                            {linkButton &&
+                                <button className="btn btn-primary" onClick={this.LinkingButton}>Link Photos</button>
+                            }
+                            <a className="btn btn-success m-2" href="/punchlist" >Cancel</a>
                         </form>
                     </div>
                     <div className="col-sm-4">
