@@ -98,7 +98,7 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
             <button className="btn btn-success" onClick={newBudget}>
               + Add Another Budget Line Item
             </button>&nbsp;&nbsp;
-          <Link  to={"/budget/"+budget.projectId} className="btn btn-success">View Budget</Link>
+          <Link  to={"/budgetestimates/"+budget.projectId} className="btn btn-success">View Estimated Budget</Link>
           </div>
         ) : (
           <div class="container">
@@ -117,8 +117,8 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
                 onChange={this.onChangeCostCode}
                 name="costCode"
              />*/}
-                <select 
-                
+                <input
+                type="text"
                 id="costCode"
            
                 
@@ -127,15 +127,7 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
                 value={budget.costCode}
                 onChange={handleInputChange}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
-              >
-                
-                <option>001-Maintenance Equipment</option>
-                <option>002-Sodding</option>
-                <option>003-Visual Display Boards</option>
-                <option>004-Site Clearing</option>
-                <option>005-Dewatering</option>
-             
-              </select>
+              />
               <div className="invalid-feedback">{errors.costCode?.message}</div>
             </div>
 
@@ -202,7 +194,7 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
           >
             Reset
           </button>&nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
-            <Link to={"/budget/" + budget.projectId}>
+            <Link to={"/budgetestimates/" + budget.projectId}>
             <button className="btn btn-success">
             Cancel
             </button></Link>
