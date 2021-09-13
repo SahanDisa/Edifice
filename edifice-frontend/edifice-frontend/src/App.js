@@ -30,7 +30,6 @@ import AssignUserProject from "./components/core_tools/admin/add-projectuser.com
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
 
-
 import DrawingHome from "./components/project_management/drawings/drawings.component";
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
 import AddDrawingCategory from "./components/project_management/drawings/adddrawingcategory.component";
@@ -73,6 +72,7 @@ import ViewTasks from "./components/core_tools/tasks/view.component";
 import DocumentHome from "./components/project_management/document/document.component";
 import AddDirectory from "./components/project_management/document/adddirectory.component";
 import ViewDirectory from "./components/project_management/document/viewsingledirectory.component";
+import UpdateDirectory from "./components/project_management/document/updatedirectory.component";
 import UploadDocFiles from "./components/project_management/document/adddocument.component";
 import UploadDocment from "./components/project_management/document/uploaddocument.component";
 import ViewSingleDocument from "./components/project_management/document/viewsingledocument.component";
@@ -339,6 +339,7 @@ class App extends Component {
             <Route path="/uploaddocument/:name" component={UploadDocment}/>
             <Route exact path="/updatedocument/:pid/:id" component={UpdateDocument}/>
             <Route exact path={"/viewdirectory/:pid/:id"} component={ViewDirectory}/>
+            <Route exact path={"/updatedirectory/:pid/:id"} component={UpdateDirectory}/>
             <Route path={"/viewsingledocument/:id"} component={ViewSingleDocument}/>
             {/* Drawing Component Routes  */}
             <Route path="/drawing/:id" component={DrawingHome} />
