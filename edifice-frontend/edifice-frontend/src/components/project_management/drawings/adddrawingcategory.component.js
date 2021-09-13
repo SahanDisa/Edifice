@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import DrawingCategoryDataService from "./../../../services/drawing-category.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -70,7 +71,7 @@ export default class AddDrawingCategory extends Component {
       description: "",
       projectId: this.props.match.params.id,
 
-      submitted: false
+      submitted: true
     });
   }
 
@@ -79,12 +80,17 @@ export default class AddDrawingCategory extends Component {
     return (
       <div className="container">
         {this.state.submitted ? (
+         <center> 
           <div>
             <h4>Category details successfully submitted!</h4>
-            <button className="btn btn-success" onClick={this.newDrawing}>
+            <button className="btn btn-success m-2" onClick={this.newDrawing}>
             Add Another Drawing Category
             </button>
+            <Link className="btn btn-primary m-2" to={"/drawing/"+projectId }>
+            Back Home
+            </Link>
           </div>
+        </center>
         ) : (
           <div class="container">
             <h2>Add New Drawing Category</h2>
