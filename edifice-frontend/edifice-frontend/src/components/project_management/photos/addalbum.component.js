@@ -78,15 +78,18 @@ export default class AddAlbum extends Component {
     return (
       <div className="container">
         {this.state.submitted ? (
+          <center>
           <div>
+          
             <h4>Album details successfully submitted!</h4>
-            <button className="btn btn-success" onClick={this.newDrawing}>
+            <button className="btn btn-success m-2" onClick={this.newDrawing}>
             Add Another Album
             </button>
-            <Link className="btn btn-primary mr-2" to={"/photos/"+projectId}>
+            <Link className="btn btn-primary m-2" to={"/photos/"+projectId}>
                 Home
             </Link>
           </div>
+          </center>
         ) : (
           <div className="container">
             <h2>Add New Album</h2>

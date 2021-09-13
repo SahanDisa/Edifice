@@ -1,38 +1,47 @@
 import React, { Component } from "react";
-import DrawingDataService from "./../../../services/drawing.service";
-import DrawingCategoryService from "../../../services/drawing-category.service";
+import { Link } from "react-router-dom";
+import PhotoDataService from "./../../../services/photo.service";
+import AlbumDataService from "../../../services/album.service";
+import UploadService from "./../../../services/photoupload.service";
 
-export default class UpdateDrawing extends Component {
+export default class UpdatePhoto extends Component {
   constructor(props) {
     super(props);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeCategory = this.onChangeCategory.bind(this);
-    this.getDrawing = this.getDrawing.bind(this);
-    this.updatePublished = this.updatePublished.bind(this);
-    this.updateDrawing = this.updateDrawing.bind(this);
-    this.deleteDrawing = this.deleteDrawing.bind(this);
+    this.onChangePath = this.onChangePath.bind(this);
+    this.getPhoto = this.getPhoto.bind(this);
+    this.updatePhoto = this.updatePhoto.bind(this);
+    this.deletePhoto = this.deletePhoto.bind(this);
+    this.selectFile = this.selectFile.bind(this);
+    this.upload = this.upload.bind(this);
 
     this.state = {
-      currentDrawing: {
+      currentPhoto: {
         id: null,
         title: "",
         description: "",
         category: "",
-        status: "",
-        published: false
+        path: "",
         
       },
       message: "",
       temp: this.props.match.params.id,
       pid: this.props.match.params.pid,
-      drawingcategories: [],
+      albums: [],
+
+      //file
+      selectedFiles: undefined,
+      currentFile: undefined,
+      image: undefined,
+      progress: 0,
     };
   }
 
   componentDidMount() {
-    this.getDrawing(this.props.match.params.id);
-    this.retriveDrawingCategory(this.props.match.params.pid);
+    this.getPhoto(this.props.match.params.id);
+    this.retrivePhotoCategory(this.props.match.params.pid);
   }
 
   onChangeTitle(e) {
@@ -40,8 +49,8 @@ export default class UpdateDrawing extends Component {
 
     this.setState(function(prevState) {
       return {
-        currentDrawing: {
-          ...prevState.currentDrawing,
+        currentPhoto: {
+          ...prevState.currentPhoto,
           title: title
         }
       };
@@ -52,8 +61,8 @@ export default class UpdateDrawing extends Component {
     const description = e.target.value;
     
     this.setState(prevState => ({
-      currentDrawing: {
-        ...prevState.currentDrawing,
+      currentPhoto: {
+        ...prevState.currentPhoto,
         description: description
       }
     }));
@@ -63,28 +72,28 @@ export default class UpdateDrawing extends Component {
     const category = e.target.value;
     
     this.setState(prevState => ({
-      currentDrawing: {
-        ...prevState.currentDrawing,
+      currentPhoto: {
+        ...prevState.currentPhoto,
         category: category
       }
     }));
   }
 
-  onChangeStatus(e) {
-    const status = e.target.value;
+  onChangePath(e) {
+    const path = e.target.value;
     
     this.setState(prevState => ({
-      currentDrawing: {
-        ...prevState.currentDrawing,
-        status: status
+      currentPhoto: {
+        ...prevState.currentPhoto,
+        path: path
       }
     }));
   }
-  retriveDrawingCategory(id){
-    DrawingCategoryService.getAll(id)
+  retrivePhotoCategory(id){
+    AlbumDataService.getAll(id)
     .then(response => {
         this.setState({
-          drawingcategories: response.data
+          albums: response.data
         });
         console.log(response.data);
       })
@@ -92,11 +101,11 @@ export default class UpdateDrawing extends Component {
         console.log(e);
       });
   }
-  getDrawing(id) {
-    DrawingDataService.get(id)
+  getPhoto(id) {
+    PhotoDataService.get(id)
       .then(response => {
         this.setState({
-          currentDrawing: response.data
+          currentPhoto: response.data
         });
         console.log(response.data);
       })
@@ -105,39 +114,15 @@ export default class UpdateDrawing extends Component {
       });
   }
 
-  updatePublished(status) {
-    var data = {
-      id: this.state.currentDrawing.id,
-      title: this.state.currentDrawing.title,
-      description: this.state.currentDrawing.description,
-      category: this.state.currentDrawing.category,
-      status: status
-    };
-
-    DrawingDataService.update(this.state.currentDrawing.id, data)
-      .then(response => {
-        this.setState(prevState => ({
-          currentDrawing: {
-            ...prevState.currentDrawing,
-            status: status
-          }
-        }));
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
-
-  updateDrawing() {
-    DrawingDataService.update(
-      this.state.currentDrawing.id,
-      this.state.currentDrawing
+  updatePhoto() {
+    PhotoDataService.update(
+      this.state.currentPhoto.id,
+      this.state.currentPhoto
     )
       .then(response => {
         console.log(response.data);
         this.setState({
-          message: "The project was updated successfully!"
+          message: "The photo details was updated successfully!"
         });
       })
       .catch(e => {
@@ -145,26 +130,71 @@ export default class UpdateDrawing extends Component {
       });
   }
 
-  deleteDrawing() {    
-    DrawingDataService.delete(this.state.currentDrawing.id)
+  deletePhoto() {    
+    PhotoDataService.delete(this.state.currentPhoto.id)
       .then(response => {
         console.log(response.data);
-        this.props.history.push('/projects')
+        this.props.history.push('/photos/'+this.state.pid)
       })
       .catch(e => {
         console.log(e);
       });
   }
+  selectFile(event) {
+    this.setState({
+      selectedFiles: event.target.files,
+      image:URL.createObjectURL(event.target.files[0]),
+    });
+  }
+  upload() {
+    let currentFile = this.state.selectedFiles[0];
+    let fileName = this.state.currentPhoto.title+".png";
+    console.log(currentFile);
+    console.log(fileName);
+    
+    this.setState({
+      progress: 0,
+      currentFile: currentFile,
+    });
+
+    UploadService.upload(currentFile, fileName, (event) => {
+      this.setState({
+        progress: Math.round((100 * event.loaded) / event.total),
+      });
+    })
+      .then((response) => {
+        this.setState({
+          message: response.data.message,
+        });
+        return UploadService.getFiles();
+      })
+      .then((files) => {
+        this.setState({
+          fileInfos: files.data,
+        });
+      })
+      .catch(() => {
+        this.setState({
+          progress: 0,
+          message: "Could not upload the file!",
+          currentFile: undefined,
+        });
+      });
+
+    this.setState({
+      selectedFiles: undefined,
+    });
+  }
 
     render() {
-      const { currentDrawing, temp, drawingcategories} = this.state;
+      const { currentPhoto, temp, albums,selectedFiles,currentFile,progress,message,image,pid} = this.state;
   
       return (
         <div>
-          {currentDrawing ? (
+          {currentPhoto ? (
             <div className="container">
-              <h2>Update a Drawing</h2>
-              <h4>Drawing Id : {temp}</h4>
+              <h2>Update a Photo</h2>
+              <h4>Photo Id : {temp}</h4>
               <form>
                 <div className="form-group">
                   <label htmlFor="title">Title</label>
@@ -172,7 +202,7 @@ export default class UpdateDrawing extends Component {
                     type="text"
                     className="form-control"
                     id="title"
-                    value={currentDrawing.title}
+                    value={currentPhoto.title}
                     onChange={this.onChangeTitle}
                   />
                 </div>
@@ -182,22 +212,12 @@ export default class UpdateDrawing extends Component {
                     type="text"
                     className="form-control"
                     id="description"
-                    value={currentDrawing.description}
+                    value={currentPhoto.description}
                     onChange={this.onChangeDescription}
                   />
                 </div>
-                {/* <div className="form-group">
-                  <label htmlFor="description">Category</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="category"
-                    value={currentDrawing.category}
-                    onChange={this.onChangeCategory}
-                  />
-                </div> */}
                 <div className="form-group">
-                <label htmlFor="category">Drawing Category</label>
+                <label htmlFor="category">Photo Category</label>
                 <select 
                     className="form-control"
                     id="category"
@@ -206,8 +226,8 @@ export default class UpdateDrawing extends Component {
                     value={this.state.category}
                     onChange={this.onChangeCategory}
                 >
-                    {drawingcategories &&
-                    drawingcategories.map((drawingcategory, index) => (
+                    {albums &&
+                    albums.map((drawingcategory, index) => (
                     <option
                         value={drawingcategory.id}
                         onChange={this.onChangeCategory}
@@ -222,57 +242,88 @@ export default class UpdateDrawing extends Component {
   
                 <div className="form-group">
                   <label>
-                    <strong>Status:</strong>
+                    <strong>Current Image Resource:</strong>
                   </label>
-                  {currentDrawing.status}
+                  {/* {currentPhoto.path} */}
+                  {/* Button Group */}
+                  {currentPhoto.title.substring(0, 9) == "oncapture" ? 
+                      <img src={"http://localhost:8080/api/capture/"+currentPhoto.title} alt="Upload the image source again or remain the filename as it is" style={{'width': '200px', 'height': '200px'}}/>
+                      : 
+                      <img src={"http://localhost:8080/api/photos/"+currentPhoto.title+".png"} alt="Upload the image source again or remain the filename as it is" style={{'width': '200px', 'height': '200px'}}/>
+                  }
                 </div>
+                {image &&
+                <div className="form-group">
+                <label>
+                    <strong>Updated Image Resource:</strong>
+                  </label>
+                  <img src={image} style={{'width': '200px', 'height': '200px'}}/>
+                </div>
+                }
               </form>
+              {/* Photo Uploading Unit */}
+              <div>
+                <h5>Update the Image Source</h5>
+                <p>File source document : - {currentPhoto.title}{".png"}</p>
+                {/* Div starts */}
+                <div>
+                  {currentFile && (
+                    <div className="progress">
+                      <div
+                        className="progress-bar progress-bar-info progress-bar-striped"
+                        role="progressbar"
+                        aria-valuenow={progress}
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        style={{ width: progress + "%" }}
+                      >
+                        {progress}%
+                      </div>
+                    </div>
+                  )}
 
-              {currentDrawing.status == "Not Complete" ? (
-                <button
-                  className="btn btn-warning mr-2"
-                  onClick={() => this.updatePublished("Pending")}
-                >
-                  Set Pending
-                </button>
-              ) : 
-              (currentDrawing.status == "Pending" ?
-                <button
-                  className="btn btn-success mr-2"
-                  onClick={() => this.updatePublished("Complete")}
-                >
-                  Set Complete
-                </button>
-              :
-              (
-                <button
-                  className="btn btn-danger mr-2"
-                  onClick={() => this.updatePublished("Not Complete")}
-                >
-                  Set Incomplete
-                </button>
-              ))}
-  
-              <button
-                className="btn btn-danger  mr-2"
-                onClick={this.deleteDrawing}
-              >
-                Delete
-              </button>
-  
+                  <label className="btn btn-default">
+                    <input type="file" onChange={this.selectFile} />
+                  </label>
+
+                  <button className="btn btn-success"
+                    disabled={!selectedFiles}
+                    onClick={this.upload}
+                  >
+                    Upload
+                  </button>
+
+                  <div className="alert alert-light" role="alert">
+                    {message}
+                  </div>
+                  {/*Ends div here  */}
+                  </div>
+              {/* End the container uploading here */}
+              </div> 
+              <Link className="btn btn-primary m-2" to={"/photos/"+pid}>
+                Back Home
+              </Link>
               <button
                 type="submit"
                 className="btn btn-warning mr-2"
-                onClick={this.updateDrawing}
+                onClick={this.updatePhoto}
               >
                 Update
               </button>
+              
+              <button
+                className="btn btn-danger  mr-2"
+                onClick={this.deletePhoto}
+              >
+                Delete
+              </button>
               <p>{this.state.message}</p>
+              
             </div>
           ) : (
             <div>
               <br />
-              <p>Please click on a Drawing...</p>
+              <p>Please click on a Photo...</p>
             </div>
           )}
         </div>
