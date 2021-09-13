@@ -152,6 +152,23 @@ exports.deleteAll = (req, res) => {
         });
 };
 
+// Get action plan for a given category
+exports.findAlltype = (req, res) => {
+  const id = req.params.id;
+
+  ActionPlan.findAll({ where: {
+    category: id
+  }})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving acltion plan items with aid=" + id
+      });
+    });  
+};
+
 // Find all published ActionPlan
 exports.findAllApproved = (req, res) => {
   const id = req.params.id;
