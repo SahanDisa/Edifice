@@ -18,7 +18,7 @@ exports.create = (req, res) => {
     projectId: req.body.projectId,
   };
 
-  // Save Project in the database
+  // Save Directory in the database
   Directory.create(album)
     .then(data => {
       res.send(data);
@@ -59,6 +59,71 @@ exports.findOne = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message: "Error retrieving Directory with id=" + id
+      });
+    });  
+};
+
+// Update a Directory by the id in the request
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  Directory.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Directory was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Directory with id=${id}. Maybe Directory was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Directory with id=" + id
+      });
+    });
+};
+
+// Delete a Directory with the specified id in the request
+exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  Directory.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Directory was deleted successfully!"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Directory with id=${id}. Maybe Directory was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete Directory with id=" + id
+      });
+    });
+};
+
+// Find recent documents
+exports.recent = (req, res) => {
+  const id = req.params.id;
+
+  Directory.findAll({order: [['id', 'DESC']], limit: 5})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving directiry with id=" + id
       });
     });  
 };

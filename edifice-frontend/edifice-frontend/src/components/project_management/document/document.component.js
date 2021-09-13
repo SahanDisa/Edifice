@@ -1,16 +1,23 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DirectoryService from "../../../services/directory.service";
+import DocumentfileService from "../../../services/documentfile.service";
 import Card from 'react-bootstrap/Card';
 import UploadFiles from "./fileupload.component";
 import directorycover from "././../../../assets/PM/photos/directory1.jpg";
+import Table from 'react-bootstrap/Table';
+import DeleteIcon from '@material-ui/icons/Delete';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import UpdateIcon from '@material-ui/icons/Update';
 
 export default class Documents extends Component {
   constructor(props) {
     super(props);
     this.retrieveDirectory = this.retriveDirectory.bind(this);
+    this.recentDocuments = this.recentDocuments.bind(this);
     this.state = {
       directories: [],
+      recentdocuments: [],
       currentIndex: -1,
       content: "",
       id: this.props.match.params.id
@@ -18,7 +25,9 @@ export default class Documents extends Component {
   }
   componentDidMount() {
     this.retrieveDirectory(this.props.match.params.id);
+    this.recentDocuments();
   }
+
   retriveDirectory(id){
       DirectoryService.getAll(id)
       .then(response => {
@@ -32,8 +41,21 @@ export default class Documents extends Component {
         });
   }
 
+  recentDocuments(){
+    DocumentfileService.recent()
+    .then(response => {
+        this.setState({
+          recentdocuments: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
   render() {
-      const {id, directories, currentIndex} = this.state;
+      const {id, directories, currentIndex, recentdocuments} = this.state;
       
       return (
           <div>
@@ -69,10 +91,6 @@ export default class Documents extends Component {
                         >
                         <Card.Img src={directorycover} alt="Card image" />
                         <Card.ImgOverlay>
-                        {/* <Card.Title><h4>{directory.title}</h4></Card.Title> */}
-                        {/* <Card.Text>
-                           {directory.description == "" ? "No Description" : directory.description} 
-                        </Card.Text> */}
                         </Card.ImgOverlay>
                         <Card.Title><h4>{directory.title}</h4></Card.Title>
                         </Card>
@@ -84,15 +102,51 @@ export default class Documents extends Component {
         <hr></hr>
         <h3>Documents</h3>
         <p>Manage your document by adding it to the system</p>
-            {/* <embed
-                src="https://www.pearsonhighered.com/assets/samplechapter/0/1/3/4/0134454170.pdf"
-                type="application/pdf"
-                frameBorder="0"
-                scrolling="auto"
-                height="500px"
-                width="100%"
-            ></embed> */}
-            {/* <Pdfviewer/> */}
+        <h3>Recent Documents</h3>
+                {/* Drawing List */}
+                <Table striped bordered hover variant="secondary" responsive>
+                  <thead>
+                    <tr>
+                      <th>Index</th>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  {/* Functional for table data */}
+                  <tbody>
+                  {recentdocuments &&
+                      recentdocuments.map((doc, index) => (
+                      <tr
+                          key={index}
+                      >
+                      <td>{doc.id}</td>
+                      <td>{doc.title}</td>
+                      <td>{doc.description}</td>
+                      <td>{doc.status}</td>
+                      <td>   
+                          {/* Button Group */}
+                          {/* <Link to={"/viewdoc/"+doc.id}>
+                          <button className="btn btn-primary">View <VisibilityIcon/> </button>
+                          </Link> */}
+                          {/* <a className="btn btn-primary" href={"http://localhost:8080/api/files/"+doc.title+".pdf"} target="_blank">View<VisibilityIcon/></a> */}
+                          <Link to={"/viewsingledocument/"+doc.id}>
+                          <button className="btn btn-primary m-2">View <VisibilityIcon/> </button>
+                          </Link>
+                          {/* <Link to={"/updatedocument/"+id +"/"+doc.id}>
+                          <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
+                          </Link>
+                          <Link to={"/viewdrawing/"+doc.id}>
+                          <button className="btn btn-danger">Delete <DeleteIcon/> </button>
+                          </Link> */}
+                      </td>    
+                      </tr>
+                      ))}
+                  </tbody>
+                  {/*Ends */}
+                </Table>
+            {/* Custome File Documents */}
             <UploadFiles/>
           </div>
 

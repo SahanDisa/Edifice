@@ -206,7 +206,7 @@ export default class BoardUser extends Component {
               <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/budget/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={budgetIcon} alt="" width="50"/><br />
                 <h3 className="h5 nav-heading-title mb-0">Budget</h3>
-                <span className="fs-sm fw-normal text-muted">Set up and manage a comprehensive budget throughout the lifecycle of the project.</span>
+                {/* <span className="fs-sm fw-normal text-muted">Set up and manage a comprehensive budget throughout the lifecycle of the project.</span> */}
               </Link>
               </div>
             </div>
@@ -225,7 +225,7 @@ export default class BoardUser extends Component {
               <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/directcost/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={costIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Direct Costs</h3>
-                <span className="fs-sm fw-normal text-muted">Track all direct costs that are not associated with commitments.</span>
+                {/* <span className="fs-sm fw-normal text-muted">Track all direct costs that are not associated with commitments.</span> */}
                 </Link>
               </div>
             </div>
@@ -235,7 +235,7 @@ export default class BoardUser extends Component {
               <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/commitment/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={commitmentsIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Commitments</h3>
-                <span className="fs-sm fw-normal text-muted">See the Status and Schedule of Values of all the Contracts.</span>
+                {/* <span className="fs-sm fw-normal text-muted">See the Status and Schedule of Values of all the Contracts.</span> */}
               </Link>
               </div>
             </div>

@@ -31,11 +31,11 @@ import AssignUserProject from "./components/core_tools/admin/add-projectuser.com
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
 
-
 import DrawingHome from "./components/project_management/drawings/drawings.component";
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
 import AddDrawingCategory from "./components/project_management/drawings/adddrawingcategory.component";
 import ViewSingleDrawingCategory from "./components/project_management/drawings/drawing-category-singlepage";
+import UpdateDrawingCategory from "./components/project_management/drawings/updatedrawing-category.component";
 import ViewSingleDrawing from "./components/project_management/drawings/drawing-singlepage.component";
 import UpdateDrawing from "./components/project_management/drawings/updatedrawing.component";
 
@@ -45,6 +45,8 @@ import PhotosHome from "./components/project_management/photos/photos.component"
 import AddAlbum from "./components/project_management/photos/addalbum.component";
 import ViewSingleAlbum from "./components/project_management/photos/album-singlepage.component";
 import MoveCapturetoAlbum from "./components/project_management/photos/movecapturestoalbum.component";
+import UpdateAlbum from "./components/project_management/photos/updatealbum.component";
+import UpdatePhoto from "./components/project_management/photos/updatephoto.component";
 
 import BiddingHome from "./components/project_management/biddings/bidding.component";
 import AddBidding from "./components/project_management/biddings/addbidding.component";
@@ -74,6 +76,7 @@ import ViewTasks from "./components/core_tools/tasks/view.component";
 import DocumentHome from "./components/project_management/document/document.component";
 import AddDirectory from "./components/project_management/document/adddirectory.component";
 import ViewDirectory from "./components/project_management/document/viewsingledirectory.component";
+import UpdateDirectory from "./components/project_management/document/updatedirectory.component";
 import UploadDocFiles from "./components/project_management/document/adddocument.component";
 import UploadDocment from "./components/project_management/document/uploaddocument.component";
 import ViewSingleDocument from "./components/project_management/document/viewsingledocument.component";
@@ -343,11 +346,13 @@ class App extends Component {
             <Route path="/uploaddocument/:name" component={UploadDocment}/>
             <Route exact path="/updatedocument/:pid/:id" component={UpdateDocument}/>
             <Route exact path={"/viewdirectory/:pid/:id"} component={ViewDirectory}/>
+            <Route exact path={"/updatedirectory/:pid/:id"} component={UpdateDirectory}/>
             <Route path={"/viewsingledocument/:id"} component={ViewSingleDocument}/>
             {/* Drawing Component Routes  */}
             <Route path="/drawing/:id" component={DrawingHome} />
             <Route path="/adddrawingcategory/:id" component={AddDrawingCategory} />
             <Route path="/viewdrawingcategory/:id" component={ViewSingleDrawingCategory}/>
+            <Route exact path={"/updatedrawingcategory/:pid/:id"} component={UpdateDrawingCategory}/>
             <Route path="/adddrawing/:id" component={AddDrawing} />
             <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
             <Route exact path="/updatedrawing/:id/:pid" component={UpdateDrawing}/>
@@ -357,6 +362,8 @@ class App extends Component {
             <Route path="/uploadphoto/:name" component={UploadPhotos}/>
             <Route path="/viewalbum/:id" component={ViewSingleAlbum}/>
             <Route path="/addalbum/:id" component={AddAlbum}/>
+            <Route exact path={"/updatealbum/:pid/:id"} component={UpdateAlbum}/>
+            <Route exact path={"/updatephoto/:pid/:id"} component={UpdatePhoto}/>
             <Route path="/movecapture/:id" component={MoveCapturetoAlbum}/>
             {/* Bidding Component Routes  */}
             <Route path="/bidding/:id" component={BiddingHome} /> 
