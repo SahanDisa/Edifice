@@ -31,7 +31,6 @@ class PunchList extends Component {
     }
 
     retrievePLT(projectId){
-        console.log("retrievePLT ekata aawa");
         PunchListTypesDataService.getAll(projectId)
         .then(response => {
             this.setState({
@@ -41,7 +40,6 @@ class PunchList extends Component {
     }
 
     retrievePL(projectId){
-        console.log("retrievePL ekata aawa");
         PunchlistDataService.getAll(projectId)
         .then(response => {
             this.setState({
@@ -63,7 +61,6 @@ class PunchList extends Component {
     }
 
     savePunchListType() {
-        console.log("save wuna");
         var data = {
             title : this.state.title,
             description: this.state.description,
@@ -171,9 +168,9 @@ class PunchList extends Component {
                         {pltypes && pltypes.map((plt, index) => (
                             <div className={"container col-3"} key={index}>
                                 <Link 
-                                to={"/viewtype/"+plt.id}
-                                // to={"/punchlist/viewtype/" + plt.id} 
-                                style={{'text-decoration': 'none'}}>
+                                    to={"/viewtype/"+plt.id}
+                                    style={{'text-decoration': 'none'}}
+                                >
                                     <Card
                                         bg={'light'}
                                         text={'dark'}
@@ -193,7 +190,7 @@ class PunchList extends Component {
                     </div>
                 </div>
                 <h4 className="mt-3">Punch Lists Items</h4><hr/>
-                <Link to={"/managepunchlist/create/" + projectId} className="btn btn-primary mt-2">+ Add Another Punch List Item</Link>
+                <Link to={"/managepunchlist/create/" + projectId} className="btn btn-primary mb-2">+ Add Another Punch List Item</Link>
                 {/* <div className="container md-6"> */}
                     <ul className="list-group">
                         {plis && plis.map((plti, index) => (
