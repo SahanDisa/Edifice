@@ -105,7 +105,7 @@ exports.delete = (req, res) => {
     });
 };
 
-//update a direct cost
+//update a budget
 
 exports.update = (req, res) => {
   const id = req.params.id;
@@ -149,14 +149,14 @@ exports.findByCostCode= (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Budget Line Item with id=" + id
+        message: "Error retrieving Budget Line Items with id=" + id
       });
     });  
 };
 
 // total of all estimated budget according to project id
 exports.getTotalBudget = (req,res)=>{
-  const id = req.params.id;
+const id = req.params.id;
 Budget.findAll({
 where: {projectId:id },
 attributes: [[sequelize.fn('sum', sequelize.col('estimatedBudget')), 'total']],
@@ -174,9 +174,10 @@ res.status(500).send({
 
 exports.getBudgetOverview = (req,res)=>{
 
-  db.budgets.projectId  = req.params.id;
+  //db.budgets.projectId  = req.params.id;
   
-  db.sequelize.query('SELECT budget.costCode, SUM(budget.estimatedBudget) as btotal,SUM(directcost.amount) as dtotal,  SUM(sov.amount) as stotal FROM budget LEFT JOIN directcost ON directcost.costCode=budget.costCode  AND directcost.projectId=budget.projectId  LEFT JOIN sov   ON sov.costCode=budget.costCode   AND sov.projectId=budget.projectId  GROUP BY budget.costCode,budget.projectId', { type: db.sequelize.QueryTypes.SELECT})
+  db.sequelize.query('SELECT budget.costCode, SUM(budget.estimatedBudget) as btotal,SUM(directcost.amount) as dtotal,  SUM(sov.amount) as stotal FROM budget LEFT JOIN directcost ON directcost.costCode=budget.costCode LEFT JOIN sov   ON sov.costCode=budget.costCode  WHERE budget.projectId=:id GROUP BY budget.costCode',
+   {  replacements: { id: req.params.id },type: db.sequelize.QueryTypes.SELECT})
   .then(data => {
       res.send(data);
     })
