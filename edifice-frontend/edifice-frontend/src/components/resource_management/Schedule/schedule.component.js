@@ -1,5 +1,8 @@
 import * as React from 'react';
 import Card from 'react-bootstrap/Card';
+
+import ScheduleDataService from "./../../../services/schedule.service";
+
 import Paper from '@material-ui/core/Paper';
 import { ViewState ,EditingState, IntegratedEditing} from '@devexpress/dx-react-scheduler';
 import { fade } from '@material-ui/core/styles/colorManipulator';
@@ -100,7 +103,10 @@ export default class Schedule extends React.PureComponent {
     super(props);
     this.state = {
       data: appointments ,
+      data1:[],
       currentDate: '2018-11-01',
+      id:"3",
+
 
       addedAppointment: {},
       appointmentChanges: {},
@@ -110,7 +116,26 @@ export default class Schedule extends React.PureComponent {
     this.changeAddedAppointment = this.changeAddedAppointment.bind(this);
     this.changeAppointmentChanges = this.changeAppointmentChanges.bind(this);
     this.changeEditingAppointment = this.changeEditingAppointment.bind(this);
+    this.currentDateChange = (currentDate) => { this.setState({ currentDate }); };
+    this.retrieveAppointments = this.retrieveAppointments.bind(this);
   }
+
+  componentDidMount() {
+    this.retrieveAppointments(3);
+  }
+
+  retrieveAppointments(id){
+    ScheduleDataService.getAll(id)
+    .then(response => {
+        this.setState({
+          data1: response.data
+        });
+        console.log(response.data);
+        })
+      .catch(e => {
+        console.log(e);
+});
+}
 
   changeAddedAppointment(addedAppointment) {
     this.setState({ addedAppointment });
@@ -128,8 +153,38 @@ export default class Schedule extends React.PureComponent {
     this.setState((state) => {
       let { data } = state;
       if (added) {
-        const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
-        data = [...data, { id: startingAddedId, ...added }];
+      //  const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
+      //  data = [...data, { id: startingAddedId, ...added }];
+        
+        //console.log(added.title)
+
+        var dataSend = {
+          title: added.title,
+          startDate: added.startDate,
+          endDate: added.endDate,
+        };
+    
+        ScheduleDataService.create(dataSend)
+          .then(response => {
+            this.setState({
+              title: response.dataSend.title,
+              startDate: response.dataSend.startDate,
+              endDate: response.dataSend.endDate,
+            });
+            console.log(response.data);
+            window.location.reload();
+          })
+          .catch(e => {
+            console.log(e);
+          });
+
+
+
+
+
+
+
+
       }
       if (changed) {
         data = data.map(appointment => (
@@ -167,6 +222,7 @@ export default class Schedule extends React.PureComponent {
     >
       <ViewState
         currentDate={currentDate}
+        onCurrentDateChange={this.currentDateChange}
         defaultCurrentViewName="Week"
       />
 
@@ -208,6 +264,7 @@ export default class Schedule extends React.PureComponent {
       <AppointmentTooltip
         showCloseButton
         showOpenButton 
+        showDeleteButton
       />
       <AppointmentForm/>     
     </Scheduler>

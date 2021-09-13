@@ -16,6 +16,16 @@ class PhotoFileDataService {
   getCat(id){
     return http.get(`/photofile/cat/${id}`);
   }
+
+  update(id, data) {
+    return http.put(`/photofile/${id}`, data);
+  }
+
+  delete(id) {
+    return http.delete(`/photofile/${id}`);
+  }
+
+
 }
 
 export default new PhotoFileDataService();

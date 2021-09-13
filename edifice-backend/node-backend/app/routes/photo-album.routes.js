@@ -12,6 +12,9 @@ module.exports = app => {
     // Get a single album
     router.get("/single/:id", album.findOne);
 
+    // Get recent data
+    router.get("/data/recent", album.recent);
+
     // Update a Tutorial with id
     router.put("/:id", album.update);
   

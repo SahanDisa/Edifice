@@ -11,6 +11,15 @@ module.exports = app => {
 
     // Retrive single Drawing Category for a project
     router.get("/single/:id", drawingcategory.findOne);
+
+    // Get recent data
+    router.get("/data/recent", drawingcategory.recent);
+
+    // Update a Drawing Category with id
+    router.put("/:id", drawingcategory.update);
+  
+    // Delete a DrawingCategory with id
+    router.delete("/:id/", drawingcategory.delete);
   
     app.use('/api/projects/drawing-category', router);
 };
