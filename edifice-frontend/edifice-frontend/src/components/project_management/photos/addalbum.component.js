@@ -21,7 +21,7 @@ export default class AddAlbum extends Component {
       title: "",
       description: "",
       projectId: this.props.match.params.id,  
-      submitted: true
+      submitted: false
     };
   }
 

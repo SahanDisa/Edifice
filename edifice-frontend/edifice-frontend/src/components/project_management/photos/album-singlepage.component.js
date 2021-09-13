@@ -133,7 +133,7 @@ export default class ViewSingleAlbum extends Component {
                         }
                         
                         
-                        <Link to={"/viewdrawing/"+photo.id}>
+                        <Link to={"/updatephoto/"+projectId+"/"+photo.id}>
                         <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
                         </Link>
                         {/* <Link to={"/viewdrawing/"+photo.id}>
