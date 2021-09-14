@@ -84,7 +84,7 @@ import ViewSingleDocument from "./components/project_management/document/viewsin
 import UpdateDocument from "./components/project_management/document/updatedocument.component";
 
 import MeetingsConfig from "./components/project_management/meetings/configuration.component";
-import ManageMeetings from "./components/project_management/meetings/manage.component";
+import MeetingsHome from "./components/project_management/meetings/meeting.component";
 import UpdateMeetings from "./components/project_management/meetings/update.component";
 import ViewMeetings from "./components/project_management/meetings/view.component";
 
@@ -101,7 +101,10 @@ import ViewRFI from "./components/project_management/rfi/view.component";
 
 import actionplanHome from "./components/project_management/actionplan/actionplan.component";
 import AddActionPlan from "./components/project_management/actionplan/addactionplan.component";
+import ViewAPType from "./components/project_management/actionplan/view-actionplantype.component";
 import ActionPlanSinglePage from "./components/project_management/actionplan/actionplansinglepage.component";
+import AddAPItem from "./components/project_management/actionplan/addapitem.component";
+import AddAPSection from "./components/project_management/actionplan/addapsection.component";
 
 import DlsConfig from "./components/project_management/dailylog/configuration.component";
 import ManageDls from "./components/project_management/dailylog/manage.component";
@@ -111,7 +114,7 @@ import ViewDls from "./components/project_management/dailylog/view.component";
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
 import CreatePL from "./components/project_management/punchlist/create-basic.component";
 import CreatePhotos from "./components/project_management/punchlist/create-addphoto.component";
-import CreatePLT from "./components/project_management/punchlist/addtypes.component";
+import CreateAssignees from "./components/project_management/punchlist/create-addassignee.component";
 import PLTView from "./components/project_management/punchlist/viewtype.component";
 import PLIView from "./components/project_management/punchlist/view.component";
 
@@ -312,7 +315,7 @@ class App extends Component {
             <Route path="/managestasks/view" component={ViewTasks} />
             {/* Meeting */}
             <Route path="/meetingsconfiguration" component={MeetingsConfig} />
-            <Route path="/managemeetings" component={ManageMeetings} />
+            <Route path="/meetings" component={MeetingsHome} />
             <Route path="/managesmeetings/update" component={UpdateMeetings} />
             <Route path="/managesmeetings/view" component={ViewMeetings} />
             {/* RFI */}
@@ -324,12 +327,14 @@ class App extends Component {
             <Route path="/actionplan/:id" component={actionplanHome} />
             <Route path="/addactionplan/:id" component={AddActionPlan} />
             <Route path="/actionplansingle/:id" component={ActionPlanSinglePage} />
-
+            <Route path="/addactionplanitem" component={AddAPItem} />
+            <Route path="/addactionplansection" component={AddAPSection} />
+            <Route path="/viewactionplantype/:id" component={ViewAPType} />
             {/* Punch List */}
             <Route path="/punchlist/:id" component={punchlistHome} />
             <Route path="/managepunchlist/createaddphoto/:id" component={CreatePhotos} />
+            <Route path="/managepunchlist/createaddassignee/:id" component={CreateAssignees} />
             <Route path="/managepunchlist/create/:id" component={CreatePL} />
-            <Route path="/managepunchlist/createtype/:id" component={CreatePLT} />
             <Route path="/viewtype/:pltid" component={PLTView} />
             <Route path="/view/:pliid" component={PLIView} />
             {/* Daily Logs */}

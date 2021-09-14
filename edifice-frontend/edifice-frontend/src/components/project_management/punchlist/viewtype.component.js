@@ -96,7 +96,7 @@ class PLTView extends Component {
                             pli.status == "WNA" ? "🔴": "🟢"
                         }</td>
                         <td>
-                            <Link to={"/updatepl/" + projectId + "/" + pli.no}>
+                            <Link to={"/view/"+ pli.no}>
                                 <button className="btn btn-success m-2">Update<UpdateIcon/></button>
                             </Link>
                             <Link to={"/deletepl/" + projectId + "/" + pli.no}>

@@ -17,7 +17,10 @@ module.exports = app => {
     router.get("/type/:id", punchlist.findAllintype);
 
     // Find Last punch list item
-    router.get("/last/",punchlist.findLastOne);
+    router.get("/last",punchlist.findLastOne);
+
+    // Update a equipment with id
+    router.put("/update/:id", punchlist.update);
   
     app.use('/api/projects/punchlist', router);
   };

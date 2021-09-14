@@ -96,7 +96,8 @@ class PunchList extends Component {
         return (
             <div className="">
                 <div>
-                <h2>Punch Lists</h2><hr/>
+                <h2>Punch Lists</h2>
+                <h6>Manage Punch Items in the site</h6><hr/>
                 <div className="container row">
                     <div className="container col-3 mb-2">
                         <Card bg={'success'} text={'white'} style={{ width: '14rem'}} className="mb-2">

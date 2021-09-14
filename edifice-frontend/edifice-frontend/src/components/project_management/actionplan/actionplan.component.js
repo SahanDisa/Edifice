@@ -79,90 +79,89 @@ export default class ActionPlan extends Component {
     render() {
         const { actionplans, aptypes, currentIndex, projectId } = this.state;
         return (
-        <div>
+          <div>
             <div className="container row">
                 <div className="col-12">
                     <h2>Action Plan</h2>
                     <h6>Ensure that unique company and project specific requirements are clearly defined, centralized and organized</h6>
                 </div>
-            <hr/>
-            </div>
-        <div className="container">
-        <h4 className="mt-2">Action Plan Types</h4><hr/>
-        <div className="container">
-            <div className="form-row">
-                <div className="form-group col-md-3">
-                    <label htmlFor="">Title</label>
-                    <input
-                      className="form-control" 
-                      type="text"
-                      name="title"
-                      value={this.state.title}
-                      onChange={this.onChangeTitle}
-                      required
-                    />
-                </div>
-                <div className="form-group col-md-8">
-                    <label htmlFor="">Description</label>
-                    <input 
-                      className="form-control" 
-                      type="text"
-                      name="description"
-                      value={this.state.description}
-                      onChange={this.onChangeDescription}
-                      required
-                    />
-                </div>
-                <div className="form-group col-md-1">
-                    <label htmlFor="">.</label>
-                    <button
-                        className="btn btn-primary"
-                        onClick={this.saveActionPlanCategory}
-                    >Add</button>
-                </div>
-            </div>
-        </div>
-        <h4>Action Plans</h4><hr/>
+            </div><hr/>
           <div className="container">
-            <Link className="btn btn-primary mb-3" to={"/addactionplan/"+projectId}>+ Add another Action Plan Item</Link>
-          </div>
-          <div className="container">
-            {actionplans && actionplans.map((api, index) => (
-              <div className={"container mb-3" + (index === currentIndex ? "active" : "")} key={index}>
-                  <Card style={{ height: '10rem' }}>
-                      <Card.Header>
-                      <div className="row">
-                        <div className="col-11">
-                          <Link to={"/viewactionplan/"+ api.id} style={{'text-decoration': 'none'}}>
-                            <h5>{api.title}</h5>
-                          </Link>
-                        </div>
-                        <div className="col-1">
-                          <Link to={"/viewactionplantype/"+ api.id} style={{'text-decoration': 'none'}}>
-                            <p>{api.actiontype}</p>
-                          </Link>
-                        </div>
-                      </div>
-                      </Card.Header>
-                    <Card.Body>
-                      <Card.Text>
+            <h4 className="mt-2">Action Plan Types</h4>
+            <div className="container">
+                <div className="form-row">
+                    <div className="form-group col-md-3">
+                        <label htmlFor="">Title</label>
+                        <input
+                          className="form-control" 
+                          type="text"
+                          name="title"
+                          value={this.state.title}
+                          onChange={this.onChangeTitle}
+                          required
+                        />
+                    </div>
+                    <div className="form-group col-md-8">
+                        <label htmlFor="">Description</label>
+                        <input 
+                          className="form-control" 
+                          type="text"
+                          name="description"
+                          value={this.state.description}
+                          onChange={this.onChangeDescription}
+                          required
+                        />
+                    </div>
+                    <div className="form-group col-md-1">
+                        <label htmlFor="">.</label>
+                        <button
+                            className="btn btn-primary"
+                            onClick={this.saveActionPlanCategory}
+                        >Add</button>
+                    </div>
+                </div>
+            </div>
+            <h4>Action Plans</h4><hr/>
+            <div className="container">
+              <Link className="btn btn-primary mb-3" to={"/addactionplan/"+projectId}>+ Add another Action Plan Item</Link>
+            </div>
+            <div className="container">
+              {actionplans && actionplans.map((api, index) => (
+                <div className={"container mb-3" + (index === currentIndex ? "active" : "")} key={index}>
+                    <Card style={{ height: '10rem' }}>
+                        <Card.Header>
                         <div className="row">
-                          <div className="col-6">
-                            <p>Description : {api.description} </p>
-                            <p>Location : {api.location}</p>
+                          <div className="col-11">
+                            <Link to={"/actionplansingle/" + api.id} style={{'text-decoration': 'none'}}>
+                              <h5>{api.title}</h5>
+                            </Link>
                           </div>
-                          <div className="col-6">
-                            <p>Plan Manager : {api.planmanager}</p>
-                            {api.isapprove == false ? "Not Approved 🔴" : "Approved 🟢"}
+                          <div className="col-1">
+                            <Link to={"/viewactionplantype/"+ api.id} style={{'text-decoration': 'none'}}>
+                              <p>{api.actiontype}</p>
+                            </Link>
                           </div>
                         </div>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-              </div>
-            ))}
+                        </Card.Header>
+                      <Card.Body>
+                        <Card.Text>
+                          <div className="row">
+                            <div className="col-6">
+                              <p>Description : {api.description} </p>
+                              <p>Location : {api.location}</p>
+                            </div>
+                            <div className="col-6">
+                              <p>Plan Manager : {api.planmanager}</p>
+                              {api.isapprove == false ? "Not Approved 🔴" : "Approved 🟢"}
+                            </div>
+                          </div>
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
         </div>
         );
     }

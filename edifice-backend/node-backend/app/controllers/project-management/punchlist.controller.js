@@ -87,7 +87,7 @@ exports.findLastOne = (req,res) =>{
         order: [['id', 'DESC']]
     })
     .then(data => {
-     res.send(data);
+        res.send(data);
     })
     .catch(err => {
     res.status(500).send({
@@ -96,3 +96,27 @@ exports.findLastOne = (req,res) =>{
         });
     });
 }
+
+// Update a equipment by the id in the request
+exports.update = (req, res) => {
+    const id = req.params.id;
+    Punchlist.update(req.body, {
+      where: { no: id }
+    })
+    .then(num => {
+        if (num == 1) {
+            res.send({
+                message: "equipment was updated successfully."
+            });
+        } else {
+            res.send({
+                message: `Cannot update equipment with id=${id}. Maybe equipment was not found or req.body is empty!`
+            });
+        }
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: "Error updating equipment with id=" + id
+        });
+    });
+};
