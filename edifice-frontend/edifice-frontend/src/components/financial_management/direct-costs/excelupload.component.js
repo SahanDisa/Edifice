@@ -66,17 +66,18 @@ const ExcelUploadFiles = (props) => {
     return (
         <div>
      
-          <div className="modal-dialog modal-dialog-centered" role="document">
+          {/*<div className="modal-dialog modal-dialog-centered" role="document">
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" id="exampleModalCenterTitle">Import Direct Costs</h5>
-                  <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => retrieveDirectCosts()} >
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => {retrieveDirectCosts();setTimeout(this.setState.bind(this, {position:1}), 3000); }} >
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div className="modal-body">
+    <div className="modal-body">*/}
       <div>
-          
+        <h4>Import Direct Costs</h4>  
+        <hr />
           {currentFile && (
             <div className="progress">
               <div
@@ -102,15 +103,15 @@ const ExcelUploadFiles = (props) => {
             onClick={upload}
           >
             Upload
-          </button>
-         
+          </button><br />
+          <Link  to={"/directcost/"+id} className="btn btn-success">View Direct Costs</Link>
     
           <div className="alert alert-light" role="alert">
             {message}
           </div>
 
          </div>
-                <div className="modal-footer">
+              { /* <div className="modal-footer">
    
           <Link  to={"/directcost/"+id} className="btn btn-success">View Direct Costs</Link>
          
@@ -118,7 +119,7 @@ const ExcelUploadFiles = (props) => {
               </div>
             </div>
     
-        </div>
+          </div>*/}
         </div>
     );
   };
