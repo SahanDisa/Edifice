@@ -133,7 +133,7 @@ class Employee extends Component {
       )
       )}
 
-    console.log(employees);
+    //console.log(employees);
       return (
         <div>
         
@@ -143,6 +143,9 @@ class Employee extends Component {
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/vendor">Vendors</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/subcontractor">Sub-Contractors</a>
             </li>
           </ul>
 
