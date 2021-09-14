@@ -85,9 +85,9 @@ export default class ActionPlan extends Component {
                     <h2>Action Plan</h2>
                     <h6>Ensure that unique company and project specific requirements are clearly defined, centralized and organized</h6>
                 </div>
-            </div>
+            </div><hr/>
           <div className="container">
-            <h4 className="mt-2">Action Plan Types</h4><hr/>
+            <h4 className="mt-2">Action Plan Types</h4>
             <div className="container">
                 <div className="form-row">
                     <div className="form-group col-md-3">

@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
+
+import AddAPItem from './addapitem.component';
+import AddAPSection from './addapsection.component';
+
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -153,10 +157,23 @@ export default class ActionPlanSinglePage extends Component {
                         <h6>Description : </h6>
                         <h6>Approved : Yes/No</h6>
                         <hr></hr>
-                        <Link className="btn btn-primary m-2" to={"/addactionplansection"}>Add Section</Link>
-                        <Link className="btn btn-primary m-2" to={"/addactionplanitem"}>Add Action Items</Link>
+                        <a href="#" className="btn btn-primary mr-2"  data-toggle="modal" data-target="#addAPSection">+ Add Section</a>
+                        <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#addAPItem">+ Add Item</a>
+                        {/* <Link className="btn btn-primary m-2" to={"/addactionplansection"}>Add Section</Link> */}
+                        {/* <Link className="btn btn-primary m-2" to={"/addactionplanitem"}>Add Action Items</Link> */}
                     </div>
                 </div>
+                {/* Add Section Starts */}
+                  <div className="modal fade" id="addAPSection" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <AddAPSection actionplansectionId ={id} />
+                  </div>
+                {/* Add Section Ends */}
+
+                {/* Add item Starts */}
+                  <div className="modal fade" id="addAPItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <AddAPItem />
+                  </div>
+                {/* Add item Ends */}
             </div>
         );
     }

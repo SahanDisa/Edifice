@@ -29,7 +29,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER
         },
         assignee: {
-            type: Sequelize.STRING
+            type: Sequelize.INTEGER
         },
         finalapprover: {
             type: Sequelize.INTEGER

@@ -24,7 +24,7 @@ export default class AddAPItem extends Component {
         description: "",
         assigner: "",
         isCompleted: 0,
-        actionplansectionId: this.props.match.params.id, 
+        // actionplansectionId: this.props.match.params.id, 
         
         actionplantypes: [],
         currentIndex: -1,
@@ -119,73 +119,88 @@ export default class AddAPItem extends Component {
           </div>
         ) : (
           <div class="container">
-            <h2>Add New Action Plan Item</h2>
-            <hr/>
-            <div className="">
-                <div className="form-row">
-                    <div className="form-group col-md-6">
-                        <label htmlFor="title">Title</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="title"
-                            required
-                            value={this.state.title}
-                            onChange={this.onChangeTitle}
-                            name="title"
-                        />
-                    </div>
-                    <div className="form-group col-md-3">
-                        <label htmlFor="title">Plan Manager</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="title"
-                            required
-                            value={this.state.planmanager}
-                            onChange={this.onChangePlanManager}
-                            name="title"
-                        />
-                    </div>
-                    <div className="form-group col-md-3">
-                        <label htmlFor="description">Completed</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value="No 🔴"
-                            readOnly
-                        />
+          <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalCenterTitle">Add New Action Plan Item</h5>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                    <div className="container">
+                        <div className="form-row">
+                            <div className="form-group col-6">
+                                <label htmlFor="title">Title</label>
+                                <input
+                                    required
+                                    type="text"
+                                    className="form-control"
+                                    id="title"
+                                    required
+                                    value={this.state.title}
+                                    onChange={this.onChangeTitle}
+                                    name="title"
+                                />
+                            </div>
+                            <div className="form-group col-3">
+                                <label htmlFor="title">Plan Manager</label>
+                                <input
+                                    required
+                                    type="text"
+                                    className="form-control"
+                                    id="title"
+                                    required
+                                    value={this.state.planmanager}
+                                    onChange={this.onChangePlanManager}
+                                    name="title"
+                                />
+                            </div>
+                            <div className="form-group col-3">
+                                <label htmlFor="description">Completed</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value="No 🔴"
+                                    readOnly
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-4">
+                            <label htmlFor="title">Location</label>
+                            <input
+                                required
+                                type="text"
+                                className="form-control"
+                                id="title"
+                                required
+                                value={this.state.location}
+                                onChange={this.onChangeLocation}
+                                name="title"
+                            />
+                            </div>
+                            <div className="form-group col-8">
+                                <label htmlFor="description">Description</label>
+                                <input
+                                    required
+                                    type="text"
+                                    className="form-control"
+                                    id="description"
+                                    required
+                                    value={this.state.description}
+                                    onChange={this.onChangeDescription}
+                                    name="description"
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className="form-row">
-                    <div className="form-group col-md-4">
-                    <label htmlFor="title">Location</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="title"
-                        required
-                        value={this.state.location}
-                        onChange={this.onChangeLocation}
-                        name="title"
-                    />
-                    </div>
-                    <div className="form-group col-md-8">
-                        <label htmlFor="description">Description</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="description"
-                            required
-                            value={this.state.description}
-                            onChange={this.onChangeDescription}
-                            name="description"
-                        />
-                    </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-primary"data-dismiss="modal" onClick={this.saveAPitem}>Create</button>
                 </div>
+              </div>
             </div>
-            <button onClick={this.saveAPitem} className="btn btn-success mr-2">Create</button>
-            <a href="/actionplan">Cancel</a>
           </div>
         )}
       </div>
