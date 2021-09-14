@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
-import { Modal, Button } from "react-bootstrap";
+import { Modal} from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import AddWorker from './add-worker.component';
 import EditWorker from './edit-worker.component';
 import ViewWorker from './view-worker.component';
 import  NewCrew from './new-crew.component';
 import Card from 'react-bootstrap/Card';
-import { Link } from "react-router-dom";
-import { ListGroup } from "react-bootstrap";
 
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import EditIcon from '@material-ui/icons/Edit';
@@ -163,12 +162,12 @@ class Crew extends Component {
             New Crew
           </a>
 
-          <a
+          <Link
             className="m-3 btn btn btn-primary"
-            data-toggle="modal"
-            data-target="#addWorker">
+            to={"/addWorker/"+id}
+            >
             Add Workers
-          </a>
+          </Link>
           </div>
         </div>
       </div>
@@ -185,7 +184,7 @@ class Crew extends Component {
                                     <h2 class="mb-0">
 
                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${index}`} aria-expanded="true" aria-controls="collapseOne">{crew.name}</button>
-                                      <span class="badge bg-success rounded-pill">{crew.total}</span>
+
                                     </h2>
                                 </div>
                                 <div id={`collapse${index}`} class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">

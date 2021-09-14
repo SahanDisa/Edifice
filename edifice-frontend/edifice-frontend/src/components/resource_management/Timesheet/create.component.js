@@ -55,6 +55,7 @@ class CreateTimesheet extends Component {
     
             });
             console.log(response.data);
+            window.location.reload();
           })
           .catch(e => {
             console.log(e);
