@@ -38,6 +38,7 @@ class NewCrew extends Component {
           submitted: true
         });
         console.log(response.data);
+        window.location.reload();
       })
       .catch(e => {
         console.log(e);

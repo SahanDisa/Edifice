@@ -15,6 +15,8 @@ export default class AddProject extends Component {
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
+    this.onChangeStartDate = this.onChangeStartDate.bind(this);
+    this.onChangeEndDate = this.onChangeEndDate.bind(this);
     this.saveProject = this.saveProject.bind(this);
     this.newProject = this.newProject.bind(this);
 
@@ -24,6 +26,8 @@ export default class AddProject extends Component {
       description: "",
       location: "", 
       published: false,
+      startdate: "",
+      enddate: "",
 
       submitted: false,
       lastproject:[],
@@ -47,12 +51,24 @@ export default class AddProject extends Component {
       location: e.target.value
     });
   }
+  onChangeStartDate(e) {
+    this.setState({
+      startdate: e.target.value
+    });
+  }
+  onChangeEndDate(e) {
+    this.setState({
+      enddate: e.target.value
+    });
+  }
 
   saveProject() {
     var data = {
       title: this.state.title,
       description: this.state.description,
-      location: this.state.location
+      location: this.state.location,
+      startdate: this.state.startdate,
+      enddate: this.state.enddate
     };
 
     ProjectDataService.create(data)
@@ -62,6 +78,8 @@ export default class AddProject extends Component {
           title: response.data.title,
           description: response.data.description,
           location: response.data.location,
+          startdate: response.data.startdate,
+          enddate: response.data.enddate,
           published: response.data.published,
 
           submitted: true
@@ -80,6 +98,8 @@ export default class AddProject extends Component {
       title: "",
       description: "",
       location: "",
+      startdate: "",
+      enddate: "",
       published: false,
 
       submitted: false
@@ -105,9 +125,11 @@ export default class AddProject extends Component {
       <div className="container">
         {this.state.submitted ? (
           <div>
+          <center>
             <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={this.newProject}>Add Project</button>
-            <div className="container row">
+            <button className="btn btn-success m-2" onClick={this.newProject}>Add Project</button>
+            <Link className="btn btn-primary m-2" to={"/projects"}>Back Home</Link>
+            <div>
               {lastproject && lastproject.map((project, index) => (
                 <div
                     className={
@@ -120,6 +142,7 @@ export default class AddProject extends Component {
                 </div>
               ))}
             </div>
+            </center>
           </div>
         ) : (
           <div class="container">
@@ -171,10 +194,10 @@ export default class AddProject extends Component {
               <input
                 type="date"
                 className="form-control"
-                id="startDate"
-                // required
-                // value={this.state.location}
-                // onChange={this.onChangeLocation}
+                id="startdate"
+                required
+                value={this.state.startdate}
+                onChange={this.onChangeStartDate}
                 name="startDate"
               />
             </div>
@@ -184,10 +207,10 @@ export default class AddProject extends Component {
               <input
                 type="date"
                 className="form-control"
-                id="endDate"
-                //required
-                // value={this.state.location}
-                // onChange={this.onChangeLocation}
+                id="enddate"
+                required
+                value={this.state.enddate}
+                onChange={this.onChangeEndDate}
                 name="endDate"
               />
             </div>

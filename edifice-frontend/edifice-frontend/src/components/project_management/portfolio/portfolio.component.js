@@ -3,6 +3,7 @@ import { PieChart, Pie, Sector, Cell, LineChart, Line, Label , XAxis, YAxis, Car
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import PortfolioDataService from "../../../services/portfolio.service";
+import ProjectDataService from "./../../../services/project.service";
 import DocumentDataService from "./../../../services/documentfile.service";
 import MilestoneService from "../../../services/milestone.service";
 import PortfolioProgressService from "../../../services/portfolioprogress.service";
@@ -103,6 +104,7 @@ export default class PortfolioHome extends Component {
         projectId: this.props.match.params.id,
 
         points: [],
+        project:[],
       };
     }
   
@@ -113,6 +115,19 @@ export default class PortfolioHome extends Component {
       this.retriveMilestones(this.props.match.params.id);
       this.findCompleteCount(this.props.match.params.id);
       this.getPoints(this.props.match.params.id);
+      this.retrieveProjectDetails(this.state.id);
+    }
+    retrieveProjectDetails(id) {
+      ProjectDataService.get(id)
+        .then(response => {
+          this.setState({
+            project: response.data
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
     getPoints(id){
       PortfolioProgressService.getAll(id)
@@ -283,7 +298,7 @@ export default class PortfolioHome extends Component {
  
     render() {
         const { milestones, departments, currentIndex,id,drawingComplete,drawingPending,drawingIncomplete,
-          documentComplete,documentPending,documentIncomplete,points} = this.state;
+          documentComplete,documentPending,documentIncomplete,points,project} = this.state;
         
         const dataPie = [
             { name: 'Completed', value:  (drawingComplete+documentComplete)},
@@ -390,11 +405,11 @@ export default class PortfolioHome extends Component {
                 <h3>Project Profile & Team</h3>
                 <Card>
                   <Card.Body>
-                    <Card.Title><h4>Port City: Tower</h4></Card.Title>
+                    <Card.Title><h4>{project.title}</h4></Card.Title>
                     <Card.Text>
-                    <h6>Description : Two tower construction</h6>
-                    <h6>Location: Colombo 2</h6>
-                    <h6>From <b>2021-07-16</b> To <b>2022-07-16</b></h6> 
+                    <h6>Description : {project.description}</h6>
+                    <h6>Location : {project.location}</h6>
+                    <h6>From <b>{project.startdate}</b> To <b>{project.enddate}</b></h6> 
                     </Card.Text>
                   </Card.Body>
                 </Card> 

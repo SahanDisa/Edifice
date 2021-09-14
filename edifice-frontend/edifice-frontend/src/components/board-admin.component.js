@@ -150,8 +150,8 @@ export default class BoardUser extends Component {
       });
   }
 
-  generatePDF(){
-    Report.generatePDF();
+  generatePDF(project){
+    Report.generatePDF(project);
   }
 
   render() {
@@ -230,7 +230,7 @@ export default class BoardUser extends Component {
           <div classname="row">
             {projects.map(project =>(
               <div className="card card-hover shadow-sm col-lg-12 pt-1 mb-3 pb-3" id="project1">
-              <a style={{ textDecoration: 'none' }} className="d-block nav-heading text-left ml-4 mt-3 mb-1 pb-3" href="projectmanagementhome/1">
+              <a style={{ textDecoration: 'none' }} className="d-block nav-heading text-left ml-4 mt-3 mb-1 pb-3">
                   <div classname="row">
                     <h4 style={{color: "#273F7D"}} className="mb-6">{project.title}</h4>
                         <div className="col-sm-6 mb-2" id="project1">
@@ -244,7 +244,7 @@ export default class BoardUser extends Component {
                       </div>
                       <div className="col-2">
                         <div className="list-group" id="list-tab" role="tablist"></div>
-                          <a className="btn btn-primary p-2" onClick={()=>{this.generatePDF();}} id="list-settings-list">Report</a>
+                          <a className="btn btn-primary p-2" onClick={()=>{this.generatePDF(project);}} id="list-settings-list">Report</a>
                       </div>
                   </div>
               </a>

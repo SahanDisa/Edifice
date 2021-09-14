@@ -21,13 +21,13 @@ class ScheduleDataService {
   }
 
   update(id, data) {
-    return http.put(`/schedules/status/${id}`, data);
-  }
-/*
-  delete(id) {
-    return http.delete(`/projects/${id}`);
+    return http.put(`/schedules/${id}`, data);
   }
 
+  delete(id) {
+    return http.delete(`/schedules/${id}`);
+  }
+/*
   deleteAll() {
     return http.delete(`/projects`);
   }

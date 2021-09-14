@@ -14,7 +14,10 @@ class ProjectUserDataService {
   }
 
   getProjectUsers(id){
-    return http.get(`/projects/user/project/{$id}`)
+    return http.get(`/projects/user/project/${id}`);
+  }
+  getProjectUserProjectDetails(id){
+    return http.get(`/projects/user/projectdata/user/${id}`);
   }
 
   update(id, data) {
