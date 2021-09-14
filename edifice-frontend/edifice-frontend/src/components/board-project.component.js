@@ -77,7 +77,6 @@ export default class BoardUser extends Component {
           <p>Start work on your project by select manage option</p>
           <div className="container row">
             <div className="container col-3">
-            <a href="/projectmanagementhome/1">
             <Card
               bg={'success'}
               text={'white'}
@@ -92,7 +91,7 @@ export default class BoardUser extends Component {
                 </Card.Text>
               </Card.Body>
             </Card>
-            </a>
+            
             </div>
             <div className="container col-3">
             <Card
