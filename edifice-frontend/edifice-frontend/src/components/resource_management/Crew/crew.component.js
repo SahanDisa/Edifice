@@ -6,6 +6,7 @@ import EditWorker from './edit-worker.component';
 import ViewWorker from './view-worker.component';
 import  NewCrew from './new-crew.component';
 import Card from 'react-bootstrap/Card';
+import { Link } from "react-router-dom";
 
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import EditIcon from '@material-ui/icons/Edit';
@@ -62,7 +63,8 @@ class Crew extends Component {
   }
 
     render() {
-      const { crews ,currentIndex,id, workers } = this.state;
+      const { crews,id, workers } = this.state;
+    
       return (
         <div>
           <Card
@@ -87,16 +89,18 @@ class Crew extends Component {
                               <a href="#" className="btn btn-outline-dark mb-3">Add Filter</a>
                               <div class="col-md-7 text-right">
                                 <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCrew">+ New Crew</a>
+                                <a href="#" className="btn btn-primary ml-3"  data-toggle="modal" data-target="#addWorker">+ Add Worker</a>
                               </div>
-
                             </div>
                         </form>
 
                         <div class="accordion" id="accordionExample">
+
                           {crews && crews.map((crew, index) => (
                             <div class="card" key={crew.id}>
                                 <div class="card-header" id="headingOne">
                                     <h2 class="mb-0">
+
                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${index}`} aria-expanded="true" aria-controls="collapseOne">{crew.name}</button>
                                       <span class="badge bg-success rounded-pill">{crew.total}</span>
                                     </h2>
@@ -104,15 +108,7 @@ class Crew extends Component {
                                 <div id={`collapse${index}`} class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div className="">
-                                            <div class="col-md-12 text-right mb-2">
-                                                <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#addWorker">+ Add Worker</a>
-                                            </div>
-
-                                              {/* Add Worker Starts */}
-                                              <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                <AddWorker crewId={crew.id}/>        
-                                              </div>
-
+  
                                             <Table responsive>
                                               <thead>
                                                 <tr>
@@ -129,6 +125,7 @@ class Crew extends Component {
 
                                              )*/}
                                               <tbody>
+
 
                                               {workers &&
                                                   workers.map((worker) => (
@@ -205,6 +202,12 @@ class Crew extends Component {
             <NewCrew projectId={id}/>          
           </div>
           {/* New Crew Ends */}
+
+          {/* Add Worker Starts */}
+            <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <AddWorker projectId={id}/>        
+            </div>
+
 
         </div>
 
