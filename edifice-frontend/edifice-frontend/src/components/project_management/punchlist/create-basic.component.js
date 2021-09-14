@@ -33,7 +33,7 @@ class CreatePL extends Component {
             // assignee: "",
             description: "",
             projectId: this.props.match.params.id,
-            lastpl:[],
+            lastpl:"",
             buttonChanger: undefined,
             submitted: false
         };
@@ -145,26 +145,23 @@ class CreatePL extends Component {
         PunchlistDataService.findlastItem()
         .then(response => {
             this.setState({
-                lastpl: response.data
+                lastpl: response.data.no
             });
-            console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
         });
     }
 
+    buttonChange(){
+        console.log("Yes, Linking Button is succesful");
+    }
+
     render() {
-        const {lastpl, pltypes, buttonChanger} = this.state;
+        const {lastpl, pltypes, buttonChanger, projectId, no} = this.state;
+        console.log(projectId);
         return (
         <div className="">
-            {this.state.submitted ? (
+            {/* {this.state.submitted ? (
                 <div>
                     <div>
-                        {/* <h4>Category details successfully submitted!</h4>
-                        <button className="btn btn-success" onClick={this.newPunchListItem}>Add Another punch list</button> */}
-                    {/* </div>
-                    <div className="container row"> */}
                         {lastpl && lastpl.map((puchlist, index) => (
                             <div className="container col-3" key={index}>
                                 <Link to={"/addphotos/" + puchlist.id} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>Add Photos</Link>
@@ -172,7 +169,7 @@ class CreatePL extends Component {
                         ))}
                     </div>
                 </div>
-            ) : (
+            ) : ( */}
             <div className="">
                 <h2>Add New Punch List Item</h2><hr/>
                 <div className="row mb-3">
@@ -270,7 +267,9 @@ class CreatePL extends Component {
                                 >Save</button>
                             }{buttonChanger &&
                                 <Link
+                                to={"/managepunchlist/createaddphoto/" + lastpl}
                                 type="button"
+                                onClick={this.buttonChange}
                                 className="btn btn-primary mr-2"
                                 >Next: Link Photos</Link>
                             }
@@ -295,7 +294,7 @@ class CreatePL extends Component {
                     </div>
                 </div>
             </div>
-        )}
+        {/* )} */}
         </div>
         );
     }

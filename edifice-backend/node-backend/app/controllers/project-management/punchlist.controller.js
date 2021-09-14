@@ -87,7 +87,7 @@ exports.findLastOne = (req,res) =>{
         order: [['id', 'DESC']]
     })
     .then(data => {
-     res.send(data);
+        res.send(data);
     })
     .catch(err => {
     res.status(500).send({
