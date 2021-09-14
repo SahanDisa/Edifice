@@ -2,6 +2,7 @@ import * as React from 'react';
 import Card from 'react-bootstrap/Card';
 
 import ScheduleDataService from "./../../../services/schedule.service";
+import AuthService from "./../../../services/auth.service";
 
 import Paper from '@material-ui/core/Paper';
 import { ViewState ,EditingState, IntegratedEditing} from '@devexpress/dx-react-scheduler';
@@ -82,6 +83,8 @@ const DayScaleCell = (props) => {
   } return <WeekView.DayScaleCell {...props} />;
 };
 
+const day = new Date();
+
 //Customize the Appearance
 const Appointment = ({
   children, style, ...restProps
@@ -102,10 +105,10 @@ export default class Schedule extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      data: appointments ,
+      data: [] ,
       data1:[],
-      currentDate: '2018-11-01',
-      id:"3",
+      currentDate: day,
+      userId: AuthService.getCurrentUser().id,
 
 
       addedAppointment: {},
@@ -121,14 +124,15 @@ export default class Schedule extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.retrieveAppointments(3);
+    const user = AuthService.getCurrentUser().id;
+    this.retrieveAppointments(user);
   }
 
   retrieveAppointments(id){
     ScheduleDataService.getAll(id)
     .then(response => {
         this.setState({
-          data1: response.data
+          data: response.data
         });
         console.log(response.data);
         })
@@ -152,16 +156,18 @@ export default class Schedule extends React.PureComponent {
   commitChanges({ added, changed, deleted }) {
     this.setState((state) => {
       let { data } = state;
+      //add task to schedule 
       if (added) {
       //  const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
       //  data = [...data, { id: startingAddedId, ...added }];
         
-        //console.log(added.title)
+      //console.log(added.title)
 
         var dataSend = {
           title: added.title,
           startDate: added.startDate,
           endDate: added.endDate,
+          userId:AuthService.getCurrentUser().id,
         };
     
         ScheduleDataService.create(dataSend)
@@ -170,6 +176,7 @@ export default class Schedule extends React.PureComponent {
               title: response.dataSend.title,
               startDate: response.dataSend.startDate,
               endDate: response.dataSend.endDate,
+              userId: response.dataSend.userId,
             });
             console.log(response.data);
             window.location.reload();
@@ -177,21 +184,31 @@ export default class Schedule extends React.PureComponent {
           .catch(e => {
             console.log(e);
           });
-
-
-
-
-
-
-
-
+          window.location.reload();
       }
+
+      //update a schedule 
       if (changed) {
         data = data.map(appointment => (
           changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
+          console.log(changed)
+
       }
+      //delete a schedule 
       if (deleted !== undefined) {
         data = data.filter(appointment => appointment.id !== deleted);
+
+        ScheduleDataService.delete(deleted)
+        .then(response => {
+          console.log(response.data);
+          //window.location.reload();
+         // this.props.history.push('/drawings/'+this.state.pid);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+
+        console.log("schedule deleted")
       }
       return { data };
     });
@@ -223,7 +240,7 @@ export default class Schedule extends React.PureComponent {
       <ViewState
         currentDate={currentDate}
         onCurrentDateChange={this.currentDateChange}
-        defaultCurrentViewName="Week"
+        defaultCurrentViewName="Day"
       />
 
       <EditingState
@@ -238,8 +255,8 @@ export default class Schedule extends React.PureComponent {
       <IntegratedEditing />
 
       <DayView
-          startDayHour={9}
-          endDayHour={18}
+          startDayHour={0}
+          endDayHour={24}
       />
 
       <WeekView
