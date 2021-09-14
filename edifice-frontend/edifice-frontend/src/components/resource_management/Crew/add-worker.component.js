@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Card from 'react-bootstrap/Card'
 
 import WorkerDataService from "./../../../services/worker.service";
 import CrewDataService from "./../../../services/crew.service";
@@ -23,14 +24,10 @@ class AddWorker extends Component {
       mobile:"",
       crewId:"",
       crews:[],
-      id: this.props.projectId,
-     // projectId: this.props.match.params.id,  
+      //id: this.props.match.params.id,
+      //projectId:this.props.match.params.id,  
       
     };
-    console.log("ssdsdsdsdsdsddddddddddddd")
-    console.log(this.props.projectId)
-    console.log("ssdsdsdsdsdsddddddddddddd")
-
   }
 
   componentDidMount() {
@@ -103,7 +100,7 @@ class AddWorker extends Component {
 
         });
         console.log(response.data);
-        window.location.reload();
+        this.props.history.push('/crew/1');
       })
       .catch(e => {
         console.log(e);
@@ -112,91 +109,101 @@ class AddWorker extends Component {
 
     render() {
       const { crews } = this.state;
-      console.log("sdsdsds")
-      console.log(crews)
-      console.log("sdsdsds")
         return (  
         <div>
-            <div className="modal-dialog modal-dialog-centered" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalCenterTitle">Add New Worker</h5>
-                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  
-                    <div>
+          <Card
+            bg={'success'}
+            text={'white'}
+            className="mb-2">    
+          <Card.Body>
+            <Card.Title><h4>Add New Worker</h4></Card.Title>
+          </Card.Body>
+        </Card>
+        
+        <div class="container">
+          <div class="row">
+            <div class="col-6">
+              <label htmlFor="">First Name</label>
+                <input 
+                  className="form-control" 
+                  type="text" 
+                  required
+                  id="firstName"
+                  value={this.state.firstName}
+                  onChange={this.onChangefirstName}
+                  name="firstName"/>
+            </div> 
 
-                        <label htmlFor="">First Name</label>
-                        <input 
-                          className="form-control" 
-                          type="text" 
-                          required
-                          id="firstName"
-                          value={this.state.firstName}
-                          onChange={this.onChangefirstName}
-                          name="firstName"/>
-                        <br/>
-
-                        <label htmlFor="">Last Name</label>
-                        <input 
-                          className="form-control" 
-                          type="text" 
-                          required
-                          id="lastName"
-                          value={this.state.lastName}
-                          onChange={this.onChangelastName}
-                          name="lastName"/>
-                        <br/>
-
-                        <label htmlFor="">Id</label>
-                        <input 
-                          className="form-control" 
-                          type="text" 
-                          required
-                          id="wId"
-                          value={this.state.wId}
-                          onChange={this.onChangewId}
-                          name="wId"/>
-                        <br/>
-
-                        <label htmlFor="">Mobile Number</label>
-                        <input 
-                          className="form-control" 
-                          type="number" 
-                          required
-                          id="mobile"
-                          value={this.state.mobile}
-                          onChange={this.onChangemobile}
-                          name="mobile"/>
-                        <br/>
-
-                        <label htmlFor="">Select crew</label>
-                        <select
-                        className="form-control" 
-                        name="crew" 
-                        id="crew"
-                        value={this.state.crewId}
-                        onChange={this.onChangecrewId}>
-                          <option value="--">- - </option>
-
-                          {crews && crews.map((crew, index) => (
-                          <option value={crew.id}>{crew.name}</option>
-                          ))}  
-                        </select>
-                        <br/>
-                    </div>
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-success" data-dismiss="modal" onClick={this.saveWorker}>Add</button>
-                </div>
-              </div>
-            </div>
+            <div class="col-6">
+              <label htmlFor="">Last Name</label>
+                <input 
+                  className="form-control" 
+                  type="text" 
+                  required
+                  id="lastName"
+                  value={this.state.lastName}
+                  onChange={this.onChangelastName}
+                   name="lastName"/>
+              </div>                   
+          </div>
         </div>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-6">
+              <label htmlFor="">Id</label>
+                <input 
+                  className="form-control" 
+                  type="text" 
+                  required
+                  id="wId"
+                  value={this.state.wId}
+                  onChange={this.onChangewId}
+                  name="wId"/>
+            </div>
+
+            <div class="col-6">
+              <label htmlFor="">Mobile Number</label>
+                  <input 
+                    className="form-control" 
+                    type="number" 
+                    required
+                    id="mobile"
+                    value={this.state.mobile}
+                    onChange={this.onChangemobile}
+                    name="mobile"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-6">
+              <label htmlFor="">Select crew</label>
+              <select
+                className="form-control" 
+                name="crew" 
+                id="crew"
+                value={this.state.crewId}
+                onChange={this.onChangecrewId}>
+                <option value="--">- - </option>
+
+                {crews && crews.map((crew, index) => (
+                  <option value={crew.id}>{crew.name}</option>
+                ))}  
+              </select>
+            </div>
+          </div>
+        </div>           
+        <button 
+        type="button" 
+        className="btn btn-primary m-3 pl-3 pr-3" 
+        onClick={this.saveWorker}>
+          Add
+        </button>   
+      </div>
  
-        );
+      );
     }
   }
 
