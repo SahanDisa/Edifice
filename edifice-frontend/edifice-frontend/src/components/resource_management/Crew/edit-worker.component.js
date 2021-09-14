@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Modal} from "react-bootstrap";
 import WorkerDataService from "./../../../services/worker.service";
 
 class EditWorker extends Component {
@@ -77,6 +78,7 @@ class EditWorker extends Component {
           }
         }));
         console.log(response.data);
+        window.location.reload();
       })
       .catch(e => {
         console.log(e);
@@ -87,66 +89,56 @@ class EditWorker extends Component {
       const { currentWorker} = this.state;
         return (  
         <div>
-            <div className="modal-dialog modal-dialog-centered" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalCenterTitle">Edit Worker Details</h5>
-                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  
-                    <div>
+          <Modal.Header closeButton> 
+            <h5 className="modal-title" id="exampleModalCenterTitle">Edit Worker Details</h5>
+          </Modal.Header>
+            <Modal.Body>
+            <div>          
+              <label htmlFor="">Id</label>
+              <input 
+              className="form-control" 
+              type="text" 
+              required
+              value={currentWorker.wId}
+              disabled/>
 
-                        
-                        <label htmlFor="">Id</label>
-                        <input 
-                        className="form-control" 
-                        type="text" 
-                        required
-                        value={currentWorker.wId}
-                        disabled/>
+              <label htmlFor="">First Name</label>
+              <input 
+              className="form-control" 
+              type="text" 
+              required
+              value={currentWorker.firstName}
+              onChange={this.onChangeFirstName}/>
+              <br/>
 
-                        <label htmlFor="">First Name</label>
-                        <input 
-                        className="form-control" 
-                        type="text" 
-                        required
-                        value={currentWorker.firstName}
-                        onChange={this.onChangeFirstName}/>
-                        <br/>
+              <label htmlFor="">Last Name</label>
+              <input 
+              className="form-control" 
+              type="text" 
+              required
+              value={currentWorker.lastName}
+              onChange={this.onChangeLastName}/>
+              <br/>
 
-                        <label htmlFor="">Last Name</label>
-                        <input 
-                        className="form-control" 
-                        type="text" 
-                        required
-                        value={currentWorker.lastName}
-                        onChange={this.onChangeLastName}/>
-                        <br/>
-
-                        <label htmlFor="">Mobile</label>
-                        <input 
-                        className="form-control" 
-                        type="text" 
-                        required
-                        value={currentWorker.mobile}
-                        onChange={this.onChangeMobile}/>
-                        <br/>
-                    </div>
-                </div>
-                <div className="modal-footer">
-                  <button 
+              <label htmlFor="">Mobile</label>
+              <input 
+              className="form-control" 
+              type="text" 
+              required
+              value={currentWorker.mobile}
+              onChange={this.onChangeMobile}/>
+              <br/>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+          <button 
                   type="button" 
                   className="btn btn-success"
                   data-dismiss="modal"
                   onClick={this.updateWorker}>
                     Update
                   </button>
-                </div>
-              </div>
-            </div>
+          </Modal.Footer>
         </div>
  
         );
