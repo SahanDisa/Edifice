@@ -135,8 +135,8 @@ export default class Project extends Component {
       return (
         <div>
           {currentProject ? (
-            <div className="edit-form">
-              <h2>Update a Project</h2>
+            <div className="container">
+              <h2>Update the Project</h2>
               <h4>Project Id : {temp}</h4>
               <form>
                 <div className="form-group">
@@ -180,14 +180,14 @@ export default class Project extends Component {
   
               {currentProject.published ? (
                 <button
-                  className="badge badge-primary mr-2"
+                  className="btn btn-primary mr-2"
                   onClick={() => this.updatePublished(false)}
                 >
                   UnPublish
                 </button>
               ) : (
                 <button
-                  className="badge badge-primary mr-2"
+                  className="btn btn-primary mr-2"
                   onClick={() => this.updatePublished(true)}
                 >
                   Publish
@@ -195,7 +195,7 @@ export default class Project extends Component {
               )}
   
               <button
-                className="badge badge-danger mr-2"
+                className="btn btn-danger mr-2"
                 onClick={this.deleteProject}
               >
                 Delete
@@ -203,7 +203,7 @@ export default class Project extends Component {
   
               <button
                 type="submit"
-                className="badge badge-success"
+                className="btn btn-success"
                 onClick={this.updateProject}
               >
                 Update
