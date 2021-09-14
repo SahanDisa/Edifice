@@ -7,6 +7,7 @@ import Table from 'react-bootstrap/Table';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import CheckIcon from '@material-ui/icons/Check';
+import HomeIcon from '@material-ui/icons/Home';
 import {
   BarChart,
   Bar,
@@ -157,7 +158,7 @@ export default class BudgetList extends Component {
         ];
         return (
             <div>
-              <h2>Budget Overview</h2>
+               <div  className="row"> <Link to={"/financialmanagementhome/" + id}><HomeIcon style={{ color: "#2b2d42"}}/></Link>&nbsp;<h3>BUDGET OVERVIEW</h3></div>
               <p>See the Overview of the Project Budget</p>
               {/*<Button aria-controls="simple-menu" aria-haspopup="true" onClick={this.handleClick}>
 Financial Management Home
