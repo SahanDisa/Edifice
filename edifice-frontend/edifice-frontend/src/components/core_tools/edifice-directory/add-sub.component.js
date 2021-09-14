@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import VendorDataService from "./../../../services/vendor.service";
+//import SubDataService from "./../../../services/subcontractor.service";
 
-class AddVendor extends Component {
+class AddSub extends Component {
 
   constructor(props) {
     super(props);
@@ -10,9 +10,9 @@ class AddVendor extends Component {
     this.onChangeContactNo = this.onChangeContactNo.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangeContactPersonName = this.onChangeContactPersonName.bind(this);
-    this.saveVendor = this.saveVendor.bind(this);
-    this.newVendor = this.newVendor.bind(this);
-    //this.retriveVendors = this.retrieveVendors.bind(this);
+    this.saveSub = this.saveSub.bind(this);
+    this.newSub = this.newSub.bind(this);
+    //this.retrieveSubs = this.retrieveSubs.bind(this);
     this.state = {
       companyName: "",
       type: "",
@@ -21,14 +21,14 @@ class AddVendor extends Component {
       contactPersonName: "",
 
       submitted: false,
-      lastVendor:[],
-      lastVendorID:undefined,
+      lastSub:[],
+      lastSubID:undefined,
       currentIndex: -1,
       id: undefined
     };
   }
   componentDidMount() {
-    this.getLastVendorID();
+    //this.getLastSubID();
   }
 
   //onChange functions
@@ -62,41 +62,41 @@ class AddVendor extends Component {
     });
   }
 
-  saveVendor() {
-    //this.getLastVendorID();
-    console.log(this.lastVendorID);
-    var data = {
-      id: this.state.lastVendorID+1,
-      companyName: this.state.companyName,
-      type: this.state.type,
-      contactNo:this.state.contactNo,
-      email:this.state.email,
-      contactPersonName: this.state.contactPersonName
-    };
-    this.state.lastVendorID=data.id;
+  saveSub() {
+    //this.getLastSubID();
+    console.log(this.lastSubID);
+//     var data = {
+//       id: this.state.lastSubID+1,
+//       companyName: this.state.companyName,
+//       type: this.state.type,
+//       contactNo:this.state.contactNo,
+//       email:this.state.email,
+//       contactPersonName: this.state.contactPersonName
+//     };
+//     this.state.lastSubID=data.id;
 
-    console.log(data);
+//     console.log(data);
 
-    VendorDataService.create(data)
-      .then(response => {
-        this.setState({
-          id: response.data.id,
-          companyName: response.data.companyName,
-          type: response.data.type,
-          contactNo: response.data.contactNo,
-          email: response.data.email,
-          contactPersonName: response.data.contactPersonName
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-        //console.log(data);
-      });
-    //this.state.getLastvendorID();
-  }
+//     SubDataService.create(data)
+//       .then(response => {
+//         this.setState({
+//           id: response.data.id,
+//           companyName: response.data.companyName,
+//           type: response.data.type,
+//           contactNo: response.data.contactNo,
+//           email: response.data.email,
+//           contactPersonName: response.data.contactPersonName
+//         });
+//         console.log(response.data);
+//       })
+//       .catch(e => {
+//         console.log(e);
+//         //console.log(data);
+//       });
+//     //this.state.getLastvendorID();
+   }
 
-  newVendor() {
+  newSub() {
     this.setState({
       id: null,
       companyName: "",
@@ -109,31 +109,31 @@ class AddVendor extends Component {
     });
   }
 
-  getLastVendorID(){
-    VendorDataService.findlastVendor()
-      .then(response => {
-          this.setState({
-            lastVendorID: response.data[0].id
-          });
-          console.log(this.state);
-          //return response.data[0].id;
-        })
-        .catch(e => {
-          console.log(e);
-        });
+  getLastSubID(){
+    // SubDataService.findlastSub()
+    //   .then(response => {
+    //       this.setState({
+    //         lastSubID: response.data[0].id
+    //       });
+    //       console.log(this.state);
+    //       //return response.data[0].id;
+    //     })
+    //     .catch(e => {
+    //       console.log(e);
+    //     });
   }
 
   render() {
-    const {lastproject, currentIndex} = this.state;
+    const {lastsub, currentIndex} = this.state;
 
 
     return (
       <div className="container ">
-        <h2>New Vendor </h2><hr/>
-        <div className="vendorBox" >
-          <h5>Enter necessary vendor details</h5>
+        <h2>New Sub-contractor </h2><hr/>
+        <div className="subBox" >
+          <h5>Enter necessary Sub-contractor details</h5>
 
-          <label htmlFor="" hidden>Id</label>
+          <label htmlFor="" hidden>ID</label>
           <input className="form-control" type="number" hidden/>
           <br/>
 
@@ -198,4 +198,4 @@ class AddVendor extends Component {
   
 }
 
-export default AddVendor;
+export default AddSub;

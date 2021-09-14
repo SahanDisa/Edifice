@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import cellEditFactory from 'react-bootstrap-table2-editor';
-import VendorDataService from "./../../../services/vendor.service";
+//import VendorDataService from "./../../../services/vendor.service";
 
   const columns = [{
     dataField: 'id',
@@ -45,16 +45,16 @@ import VendorDataService from "./../../../services/vendor.service";
   }];
 
 
-class Vendors extends Component {
+class Subcontractors extends Component {
   
   constructor(props) {
     super(props);
-    this.getVendors = this.getVendors.bind(this);
-    console.log(this.getVendor);
+    this.getSubs = this.getSubs.bind(this);
+    //console.log(this.getsub);
     this.state = {
-      currentVendor: {
-        vendors: [],
-        currentVendor: null,
+      currentSub: {
+        subs: [],
+        currentSub: null,
         currentId: -1,
         searchName: ""
         
@@ -65,7 +65,7 @@ class Vendors extends Component {
   }
 
   componentDidMount() {
-    this.getVendors(this.props.match.params.id);
+    this.getSubs(this.props.match.params.id);
   }
 
   onChangeSearchName(e) {
@@ -77,60 +77,42 @@ class Vendors extends Component {
   }
 
   refreshList() {
-    this.getVendors();
+    this.getSubs();
     this.setState({
-      currentVendor: null,
+      currentSub: null,
       currentIndex: -1,
       searchName: ""
     });
   }
 
-  getVendors() {
-    VendorDataService.getAll()
-      .then(response => {
-        this.setState({
-          vendors: response.data
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+  getgetSubs() {
+    console.log("thaama hadana gaman");
   }
 
   searchName() {
-    VendorDataService.findByTitle(this.state.searchTitle)
-      .then(response => {
-        this.setState({
-          vendors: response.data
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    console.log("thaama hadana gaman");
   }
   render() {
 
-    const {vendors, currentVendor, currentIndex } = this.state;
+    const {subs, currentSub, currentIndex } = this.state;
 
     //assigning table values
-    var data1=[];
-    var temp={};
-    {vendors &&
-      vendors.map((vendor, index) => (
-        temp={},
-        temp.id=vendor.id,
-        temp.companyName= vendor.companyName,
-        temp.type=vendor.type,
-        temp.contactNo=vendor.contactNo,
-        temp.email=vendor.email,
-        temp.contactPersonName=vendor.contactPersonName,
-        temp.edit=<a href={'/editVendor/'+vendor.id} className="btn btn-primary"> edit</a>,
-        data1.push(temp)
-      )
-      )}
-    console.log(vendors);
+    // var data1=[];
+    // var temp={};
+    // {subs &&
+    //   vendors.map((vendor, index) => (
+    //     temp={},
+    //     temp.id=vendor.id,
+    //     temp.companyName= vendor.companyName,
+    //     temp.type=vendor.type,
+    //     temp.contactNo=vendor.contactNo,
+    //     temp.email=vendor.email,
+    //     temp.contactPersonName=vendor.contactPersonName,
+    //     temp.edit=<a href={'/editVendor/'+vendor.id} className="btn btn-primary"> edit</a>,
+    //     data1.push(temp)
+    //   )
+    //   )}
+    //console.log(vendors);
     
     const data = [
       {id: 1, companyName: 'pathirage',type:'', edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
@@ -150,22 +132,22 @@ class Vendors extends Component {
             <a class="nav-link" href="/employees">Employees</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Vendors</a>
+            <a class="nav-link" aria-current="page" href="/vendor">Vendors</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/subcontractor">Sub-Contractors</a>
+            <a class="nav-link active" href="/#">Sub-Contractors</a>
           </li>
         </ul>
 
-        <h2>Vendors</h2>
+        <h2>Sub-contractors</h2>
 
         <form className="row g-3">
           <div className="col-auto">
-            <input className="form-control" type="text" placeholder="Search vendor"/>  
+            <input className="form-control" type="text" placeholder="Search Sub-contractor"/>  
           </div>
 
           <div className="col-auto">
-            <a href="" className="btn btn-success">search</a>
+            <a href="" className="btn btn-success">Search</a>
           </div>
 
           <p>Group By:</p>
@@ -179,7 +161,7 @@ class Vendors extends Component {
           </div>
 
           <div>
-            <a href="/addVendor" className="btn btn-primary"> +add vendor</a>
+            <a href="/addVendor" className="btn btn-primary"> +add Sub-contractor</a>
           </div>
         </form>
 
@@ -192,7 +174,7 @@ class Vendors extends Component {
         <BootstrapTable 
               hover
               keyField='id'
-              data={ data1 }
+              data={ data }
               columns={ columns } 
               cellEdit={ false }
 
@@ -202,4 +184,4 @@ class Vendors extends Component {
   }
 }
 
-export default Vendors;
+export default Subcontractors;
