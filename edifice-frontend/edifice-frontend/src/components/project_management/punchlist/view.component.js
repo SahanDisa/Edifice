@@ -10,9 +10,9 @@ import UpdateIcon from '@material-ui/icons/Update';
 class PLIView extends Component {
     constructor(props) {
         super(props);
-        this.retriveItemInfo = this.retriveItemInfo.bind(this);
+        this.retrivePLItemInfo = this.retrivePLItemInfo.bind(this);
         this.state = {
-            no: this.props.match.params.pltid,
+            no: this.props.match.params.pliid,
             title: "",
             description: "",
             location: "",
@@ -24,11 +24,11 @@ class PLIView extends Component {
     }
   
     componentDidMount() {
-        this.retriveItemInfo(this.props.match.params.pltid);
+        this.retrivePLItemInfo(this.props.match.params.pltid);
     }
 
-    retriveItemInfo(no){
-        PunchlistDataService.getOne(no)
+    retrivePLItemInfo(plid){
+        PunchlistDataService.getOne(plid)
         .then(response => {
             this.setState({
                 no: response.data.no,
@@ -80,7 +80,7 @@ class PLIView extends Component {
                             <label htmlFor="">Type</label>
                             <input
                                 className="form-control"
-                                name="location"
+                                name="type"
                                 value={type}
                                 type="text"
                                 readOnly

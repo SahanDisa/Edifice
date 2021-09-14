@@ -124,7 +124,7 @@ export default class BoardUser extends Component {
           </div>
           <div className="col-lg-3 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" title="Organise & define project workflows">
-            <Link className="d-block nav-heading text-center mb-2 mt-2" data-toggle="modal" data-target="#meetingModal" to={"/actionplan/" + id}  style={{ 'text-decoration': 'none' }}>
+            <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/actionplan/" + id}  style={{ 'text-decoration': 'none' }}>
               <img src={actionplanIcon} alt="" width="50"/>
               <h3 className="h5 nav-heading-title mb-0">Action Plan</h3>
               {/* <span className="fs-sm fw-normal text-muted">Organise & define project workflows</span> */}

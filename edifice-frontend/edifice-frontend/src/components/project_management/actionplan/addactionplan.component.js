@@ -17,7 +17,7 @@ export default class AddActionPlan extends Component {
     this.onChangeActionType = this.onChangeActionType.bind(this);
     this.onChangePlanManager = this.onChangePlanManager.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
-    this.saveDrawing = this.saveDrawing.bind(this);
+    this.saveActionPlan = this.saveActionPlan.bind(this);
     this.newDrawing = this.newDrawing.bind(this);
 
     this.state = {
@@ -81,7 +81,7 @@ export default class AddActionPlan extends Component {
         console.log(e);
       });
   }
-  saveDrawing() {  
+  saveActionPlan() {  
     var data = {
       title: this.state.title,
       planmanager:this.state.planmanager,
@@ -146,8 +146,8 @@ export default class AddActionPlan extends Component {
         ) : (
           <div class="container">
             <h2>Add New Action Plan</h2>
-            <div className="row">
-            <div className="col-sm-8">
+            <hr/>
+            <div className="">
               <div className="form-row">
                 <div className="form-group col-md-9">
                   <label htmlFor="title">Title</label>
@@ -162,35 +162,35 @@ export default class AddActionPlan extends Component {
                   />
                 </div>
                 <div className="form-group col-md-3">
-                  <label htmlFor="description">Approved</label>
+                  <label htmlFor="approved">Approved</label>
                   <input
                     type="text"
                     className="form-control"
                     value="No🔴"
-                    disabled
+                    readOnly
                   />
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group col-md-4">
-                  <label htmlFor="title">Plan Manager</label>
+                  <label htmlFor="planmanager">Plan Manager</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="title"
+                    id="planmanager"
                     required
                     value={this.state.planmanager}
                     onChange={this.onChangePlanManager}
-                    name="title"
+                    name="planmanager"
                   />
                 </div>
                 <div className="form-group col-md-4">
-                  <label htmlFor="category">Action Plan Type</label>
+                  <label htmlFor="type">Action Plan Type</label>
                   <select 
                     className="form-control"
-                    id="datatype"
+                    id="type"
                     required
-                    name="category"
+                    name="type"
                     value={this.state.actiontype}
                     onChange={this.onChangeActionType}
                   >
@@ -208,15 +208,15 @@ export default class AddActionPlan extends Component {
                   </select>
                 </div>
                 <div className="form-group col-md-4">
-                  <label htmlFor="title">Location</label>
+                  <label htmlFor="location">Location</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="title"
+                    id="location"
                     required
                     value={this.state.location}
                     onChange={this.onChangeLocation}
-                    name="title"
+                    name="location"
                   />
                 </div>
               </div>
@@ -235,27 +235,8 @@ export default class AddActionPlan extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-sm-4">
-            <Timeline>
-              <TimelineItem>
-                <TimelineSeparator>
-                  <TimelineDot />
-                  <TimelineConnector />
-                </TimelineSeparator>
-                <TimelineContent><h5><strong>Step 1</strong><br/>Action Plan Settings</h5> </TimelineContent>
-              </TimelineItem>
-              <TimelineItem>
-                <TimelineSeparator>
-                  <TimelineDot />
-                </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 2</strong><br/>Submit</h6></TimelineContent>
-              </TimelineItem>
-            </Timeline>
-            </div>
-            </div>
-            <button onClick={this.saveDrawing} className="btn btn-success">
-              Create Action Plan
-            </button>
+            <button onClick={this.saveActionPlan} className="btn btn-success">Create Action Plan</button>
+            <a href="/actionplan">Cancel</a>
           </div>
         )}
       </div>

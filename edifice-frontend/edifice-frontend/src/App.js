@@ -101,6 +101,8 @@ import ViewRFI from "./components/project_management/rfi/view.component";
 import actionplanHome from "./components/project_management/actionplan/actionplan.component";
 import AddActionPlan from "./components/project_management/actionplan/addactionplan.component";
 import ActionPlanSinglePage from "./components/project_management/actionplan/actionplansinglepage.component";
+import AddAPItem from "./components/project_management/actionplan/addapitem.component";
+import AddAPSection from "./components/project_management/actionplan/addapsection.component";
 
 import DlsConfig from "./components/project_management/dailylog/configuration.component";
 import ManageDls from "./components/project_management/dailylog/manage.component";
@@ -111,7 +113,6 @@ import punchlistHome from "./components/project_management/punchlist/punchlist.c
 import CreatePL from "./components/project_management/punchlist/create-basic.component";
 import CreatePhotos from "./components/project_management/punchlist/create-addphoto.component";
 import CreateAssignees from "./components/project_management/punchlist/create-addassignee.component";
-import CreatePLT from "./components/project_management/punchlist/addtypes.component";
 import PLTView from "./components/project_management/punchlist/viewtype.component";
 import PLIView from "./components/project_management/punchlist/view.component";
 
@@ -322,13 +323,13 @@ class App extends Component {
             <Route path="/actionplan/:id" component={actionplanHome} />
             <Route path="/addactionplan/:id" component={AddActionPlan} />
             <Route path="/actionplansingle/:id" component={ActionPlanSinglePage} />
-
+            <Route path="/addactionplanitem" component={AddAPItem} />
+            <Route path="/addactionplansection" component={AddAPSection} />
             {/* Punch List */}
             <Route path="/punchlist/:id" component={punchlistHome} />
             <Route path="/managepunchlist/createaddphoto/:id" component={CreatePhotos} />
             <Route path="/managepunchlist/createaddassignee/:id" component={CreateAssignees} />
             <Route path="/managepunchlist/create/:id" component={CreatePL} />
-            <Route path="/managepunchlist/createtype/:id" component={CreatePLT} />
             <Route path="/viewtype/:pltid" component={PLTView} />
             <Route path="/view/:pliid" component={PLIView} />
             {/* Daily Logs */}
