@@ -148,92 +148,92 @@ export default class AddActionPlan extends Component {
             <h2>Add New Action Plan</h2>
             <div className="row">
             <div className="col-sm-8">
-            <div className="form-group">
-              <label htmlFor="title">Title</label>
-              <input
-                type="text"
-                className="form-control"
-                id="title"
-                required
-                value={this.state.title}
-                onChange={this.onChangeName}
-                name="title"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="title">Plan Manager</label>
-              <input
-                type="text"
-                className="form-control"
-                id="title"
-                required
-                value={this.state.planmanager}
-                onChange={this.onChangePlanManager}
-                name="title"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="category">Action Plan Type</label>
-              <select 
-                className="form-control"
-                id="datatype"
-                required
-                name="category"
-                value={this.state.actiontype}
-                onChange={this.onChangeActionType}
-              >
-              <option></option>
-                {actionplantypes &&
-                actionplantypes.map((actionplantype, index) => (
-                <option
-                    value={actionplantype.title}
+              <div className="form-row">
+                <div className="form-group col-md-9">
+                  <label htmlFor="title">Title</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="title"
+                    required
+                    value={this.state.title}
+                    onChange={this.onChangeName}
+                    name="title"
+                  />
+                </div>
+                <div className="form-group col-md-3">
+                  <label htmlFor="description">Approved</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value="No🔴"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-4">
+                  <label htmlFor="title">Plan Manager</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="title"
+                    required
+                    value={this.state.planmanager}
+                    onChange={this.onChangePlanManager}
+                    name="title"
+                  />
+                </div>
+                <div className="form-group col-md-4">
+                  <label htmlFor="category">Action Plan Type</label>
+                  <select 
+                    className="form-control"
+                    id="datatype"
+                    required
+                    name="category"
+                    value={this.state.actiontype}
                     onChange={this.onChangeActionType}
-                    key={index}
-                >
-                {/* unit data */}
-                {actionplantype.title}
-                </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="title">Location</label>
-              <input
-                type="text"
-                className="form-control"
-                id="title"
-                required
-                value={this.state.location}
-                onChange={this.onChangeLocation}
-                name="title"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="description">Description</label>
-              <input
-                type="text"
-                className="form-control"
-                id="description"
-                required
-                value={this.state.description}
-                onChange={this.onChangeDescription}
-                name="description"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="description">Approved</label>
-              <input
-                type="text"
-                className="form-control"
-                value="No🔴"
-                disabled
-              />
-            </div>   
+                  >
+                    {actionplantypes &&
+                    actionplantypes.map((actionplantype, index) => (
+                    <option
+                        value={actionplantype.title}
+                        onChange={this.onChangeActionType}
+                        key={index}
+                    >
+                    {/* unit data */}
+                    {actionplantype.title}
+                    </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group col-md-4">
+                  <label htmlFor="title">Location</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="title"
+                    required
+                    value={this.state.location}
+                    onChange={this.onChangeLocation}
+                    name="title"
+                  />
+                </div>
+              </div>
+              <div className="form row">
+                <div className="form-group col-md-12">
+                  <label htmlFor="description">Description</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="description"
+                    required
+                    value={this.state.description}
+                    onChange={this.onChangeDescription}
+                    name="description"
+                  />
+                </div>
+              </div>
             </div>
             <div className="col-sm-4">
             <Timeline>

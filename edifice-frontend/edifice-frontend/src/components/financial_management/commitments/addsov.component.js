@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,6 +11,8 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
+import BudgetDataService from "./../../../services/budget.service";
+
 
 const AddSov = (props) => {
 
@@ -49,8 +51,27 @@ const AddSov = (props) => {
      projectId:props.match.params.pid,  
     
   };
+
+ 
+  const [budgets, setBudgets] = useState([]);
   const [sov, setSov] = useState(initialSovState);
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    retrieveBudgets();    
+
+  }, []);
+
+  const retrieveBudgets = () => {
+    
+    BudgetDataService.getAll(initialSovState.projectId)//passing project id as id
+      .then((response) => {
+        setBudgets(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const handleInputChange = event => {
     const { name, value } = event.target;
@@ -132,12 +153,25 @@ const AddSov = (props) => {
                 onChange={handleInputChange}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
               >
-                
+                <option value="" disabled selected>Select a Cost Code</option>
+{budgets &&
+                budgets.map((budget, index) => (
+                <option
+                    value={budget.costCode}
+                    onChange={handleInputChange}
+                    key={index}
+                >
+                {/* unit data */}
+                {budget.costCode}
+                </option>
+                ))}
+
+                {/*<option></option>
                 <option>001-Maintenance Equipment</option>
                 <option>002-Sodding</option>
                 <option>003-Visual Display Boards</option>
                 <option>004-Site Clearing</option>
-                <option>005-Dewatering</option>
+                <option>005-Dewatering</option>*/}
              
               </select>
               <div className="invalid-feedback">{errors.costCode?.message}</div>

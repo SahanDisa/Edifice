@@ -64,31 +64,31 @@ exports.findOne = (req, res) => {
         });
       });  
 };
-/*
-// Update a crew by the id in the request
+
+// Update a timesheet by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    crew.update(req.body, {
-      where: { id: id }
+    Timesheet.update(req.body, {
+      where: { code: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "crew was updated successfully."
+            message: "timesheet was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update crew with id=${id}. Maybe crew was not found or req.body is empty!`
+            message: `Cannot update timesheet with id=${id}. Maybe timesheet was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating crew with id=" + id
+          message: "Error updating timesheet with id=" + id
         });
       });
-};*/
+};
 /*
 // Delete a crew with the specified id in the request
 exports.delete = (req, res) => {

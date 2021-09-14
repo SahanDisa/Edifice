@@ -8,20 +8,32 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import  Import from './excelupload.component';
 import Card from 'react-bootstrap/Card';
+import BudgetDataService from "./../../../services/budget.service";
 
 const DirectCostList = (props) => {
   const {id}= useParams();
   const [directcosts, setDirectCosts] = useState([]);
   const [searchCostCode, setSearchCostCode] = useState("");
   const directcostsRef = useRef();
-
+  const [budgets, setBudgets] = useState([]);
 
   directcostsRef.current = directcosts;
 
   useEffect(() => {
     retrieveDirectCosts();
+    retrieveBudgets();
   }, []);
 
+  const retrieveBudgets = () => {
+    
+    BudgetDataService.getAll(id)//passing project id as id
+      .then((response) => {
+        setBudgets(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const onChangeSearchCostCode = (e) => {
     const searchCostCode = e.target.value;
@@ -231,12 +243,25 @@ const DirectCostList = (props) => {
             value={searchCostCode}
             onChange={onChangeSearchCostCode}
               >
-              <option  selected value="">All</option>
+                <option  selected value="">All</option>
+             {budgets &&
+                budgets.map((budget, index) => (
+                <option
+                    //value={budget.costCode}
+                    //onChange={onChangeSearchCostCode}
+                    key={index}
+                >
+                {/* unit data */}
+                {budget.costCode}
+                </option>
+                ))}
+
+                {/*<option></option>
                 <option>001-Maintenance Equipment</option>
                 <option>002-Sodding</option>
                 <option>003-Visual Display Boards</option>
                 <option>004-Site Clearing</option>
-                <option>005-Dewatering</option>
+                <option>005-Dewatering</option>*/}
              
               </select>
 

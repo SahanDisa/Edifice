@@ -12,6 +12,20 @@ class DrawingCategoryDataService {
   getOne(id){
     return http.get(`/projects/drawing-category/single/${id}`);
   }
+
+  recent(){
+    return http.get(`/projects/drawing-category/data/recent`);
+  }
+
+  update(id, data) {
+    return http.put(`/projects/drawing-category/${id}`, data);
+  }
+
+  delete(id) {
+    return http.delete(`/projects/drawing-category/${id}`);
+  }
+
+  
 }
 
 export default new DrawingCategoryDataService();

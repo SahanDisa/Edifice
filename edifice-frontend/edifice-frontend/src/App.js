@@ -16,6 +16,7 @@ import AuthService from "./services/auth.service";
 import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
+import Homereal from "./components/homereal.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-project.component";
 import BoardResource from "./components/board-resource.component";
@@ -30,11 +31,11 @@ import AssignUserProject from "./components/core_tools/admin/add-projectuser.com
 import ProjectsList from './components/core_tools/admin/project-list.component';
 import Project from './components/core_tools/admin/project.component';
 
-
 import DrawingHome from "./components/project_management/drawings/drawings.component";
 import AddDrawing from "./components/project_management/drawings/adddrawing.component";
 import AddDrawingCategory from "./components/project_management/drawings/adddrawingcategory.component";
 import ViewSingleDrawingCategory from "./components/project_management/drawings/drawing-category-singlepage";
+import UpdateDrawingCategory from "./components/project_management/drawings/updatedrawing-category.component";
 import ViewSingleDrawing from "./components/project_management/drawings/drawing-singlepage.component";
 import UpdateDrawing from "./components/project_management/drawings/updatedrawing.component";
 
@@ -44,6 +45,8 @@ import PhotosHome from "./components/project_management/photos/photos.component"
 import AddAlbum from "./components/project_management/photos/addalbum.component";
 import ViewSingleAlbum from "./components/project_management/photos/album-singlepage.component";
 import MoveCapturetoAlbum from "./components/project_management/photos/movecapturestoalbum.component";
+import UpdateAlbum from "./components/project_management/photos/updatealbum.component";
+import UpdatePhoto from "./components/project_management/photos/updatephoto.component";
 
 import BiddingHome from "./components/project_management/biddings/bidding.component";
 import AddBidding from "./components/project_management/biddings/addbidding.component";
@@ -73,6 +76,7 @@ import ViewTasks from "./components/core_tools/tasks/view.component";
 import DocumentHome from "./components/project_management/document/document.component";
 import AddDirectory from "./components/project_management/document/adddirectory.component";
 import ViewDirectory from "./components/project_management/document/viewsingledirectory.component";
+import UpdateDirectory from "./components/project_management/document/updatedirectory.component";
 import UploadDocFiles from "./components/project_management/document/adddocument.component";
 import UploadDocment from "./components/project_management/document/uploaddocument.component";
 import ViewSingleDocument from "./components/project_management/document/viewsingledocument.component";
@@ -96,7 +100,7 @@ import ViewRFI from "./components/project_management/rfi/view.component";
 
 import actionplanHome from "./components/project_management/actionplan/actionplan.component";
 import AddActionPlan from "./components/project_management/actionplan/addactionplan.component";
-import AddActionPlanType from "./components/project_management/actionplan/addactionplantype.component";
+import ActionPlanSinglePage from "./components/project_management/actionplan/actionplansinglepage.component";
 
 import DlsConfig from "./components/project_management/dailylog/configuration.component";
 import ManageDls from "./components/project_management/dailylog/manage.component";
@@ -104,10 +108,11 @@ import UpdateDls from "./components/project_management/dailylog/update.component
 import ViewDls from "./components/project_management/dailylog/view.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
-import ViewPL from "./components/project_management/punchlist/view.component";
 import CreatePL from "./components/project_management/punchlist/create-basic.component";
+import CreatePhotos from "./components/project_management/punchlist/create-addphoto.component";
 import CreatePLT from "./components/project_management/punchlist/addtypes.component";
-import PLTView from "./components/project_management/punchlist/view.component";
+import PLTView from "./components/project_management/punchlist/viewtype.component";
+import PLIView from "./components/project_management/punchlist/view.component";
 
 import ResourceManagementHome from "./components/resource_management/resource-manage-home.component";
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
@@ -141,6 +146,7 @@ import AddEmployee from "./components/core_tools/edifice-directory/add-emp.compo
 import Report from "./components/report/report.component";
 
 import UploadExcel from "./components/financial_management/direct-costs/excelupload.component";
+import EstimateBudget from "./components/financial_management/budget/budgetestimates.component";
 
 
 class App extends Component {
@@ -272,6 +278,7 @@ class App extends Component {
         <div className="container mt-3">
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
+            <Route exact path={["/", "/homereal"]} component={Homereal} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
@@ -312,14 +319,16 @@ class App extends Component {
             <Route path="/managerfi/view" component={ViewRFI} />
             {/* Action Plan */}
             <Route path="/actionplan/:id" component={actionplanHome} />
-            <Route path="/addactionplantype/:id" component={AddActionPlanType} />
             <Route path="/addactionplan/:id" component={AddActionPlan} />
+            <Route path="/actionplansingle/:id" component={ActionPlanSinglePage} />
+
             {/* Punch List */}
             <Route path="/punchlist/:id" component={punchlistHome} />
-            <Route path="/managepunchlist/view/:id" component={ViewPL} />
+            <Route path="/managepunchlist/createaddphoto/:id" component={CreatePhotos} />
             <Route path="/managepunchlist/create/:id" component={CreatePL} />
             <Route path="/managepunchlist/createtype/:id" component={CreatePLT} />
-            <Route path="/punchlist/viewtype/:pltid" component={PLTView} />
+            <Route path="/viewtype/:pltid" component={PLTView} />
+            <Route path="/view/:pliid" component={PLIView} />
             {/* Daily Logs */}
             <Route path="/dailylogsconfiguration/:id" component={DlsConfig} />
             <Route path="/managedailylogs/:id" component={ManageDls} />
@@ -339,11 +348,13 @@ class App extends Component {
             <Route path="/uploaddocument/:name" component={UploadDocment}/>
             <Route exact path="/updatedocument/:pid/:id" component={UpdateDocument}/>
             <Route exact path={"/viewdirectory/:pid/:id"} component={ViewDirectory}/>
+            <Route exact path={"/updatedirectory/:pid/:id"} component={UpdateDirectory}/>
             <Route path={"/viewsingledocument/:id"} component={ViewSingleDocument}/>
             {/* Drawing Component Routes  */}
             <Route path="/drawing/:id" component={DrawingHome} />
             <Route path="/adddrawingcategory/:id" component={AddDrawingCategory} />
             <Route path="/viewdrawingcategory/:id" component={ViewSingleDrawingCategory}/>
+            <Route exact path={"/updatedrawingcategory/:pid/:id"} component={UpdateDrawingCategory}/>
             <Route path="/adddrawing/:id" component={AddDrawing} />
             <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
             <Route exact path="/updatedrawing/:id/:pid" component={UpdateDrawing}/>
@@ -353,6 +364,8 @@ class App extends Component {
             <Route path="/uploadphoto/:name" component={UploadPhotos}/>
             <Route path="/viewalbum/:id" component={ViewSingleAlbum}/>
             <Route path="/addalbum/:id" component={AddAlbum}/>
+            <Route exact path={"/updatealbum/:pid/:id"} component={UpdateAlbum}/>
+            <Route exact path={"/updatephoto/:pid/:id"} component={UpdatePhoto}/>
             <Route path="/movecapture/:id" component={MoveCapturetoAlbum}/>
             {/* Bidding Component Routes  */}
             <Route path="/bidding/:id" component={BiddingHome} /> 
@@ -378,7 +391,7 @@ class App extends Component {
             <Route path="/equipDetails/:code" component={EquipDetails} />
             {/*<Route path="/equipDetails/:id/:code" component={EquipDetails} />*/}
             <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
-            <Route path="/viewTimesheet/:code" component={ViewTimesheet} />
+            <Route path="/viewTimesheet/:id/:code" component={ViewTimesheet} />
                     
 
             {/*financial management */}
@@ -402,6 +415,7 @@ class App extends Component {
             <Route path="/viewsinglesov/:id" component={ViewSingleSov} />
             <Route path="/viewbudget/:id" component={ViewSingleBudget} />
             <Route path="/excelupload/:id" component={UploadExcel} />
+            <Route path="/budgetestimates/:id" component={EstimateBudget} />
 
             {/*Report and PDF */}
             <Route path="/report/" component={Report} />

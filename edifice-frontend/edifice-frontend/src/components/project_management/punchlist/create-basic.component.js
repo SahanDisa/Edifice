@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
+import PunchListTypesDataService from "../../../services/project_management/punchlisttypes.service.js";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -20,6 +21,7 @@ class CreatePL extends Component {
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.savePunchListItem = this.savePunchListItem.bind(this);
         this.newPunchListItem = this.newPunchListItem.bind(this);
+        this.buttonChange = this.buttonChange.bind(this);
 
         this.state = {
             no: null,
@@ -32,8 +34,13 @@ class CreatePL extends Component {
             description: "",
             projectId: this.props.match.params.id,
             lastpl:[],
+            buttonChanger: undefined,
             submitted: false
         };
+    }
+
+    componentDidMount() {
+        this.retrievePLT(this.props.match.params.id);
     }
 
     onChangeDuedate(e) {
@@ -79,6 +86,10 @@ class CreatePL extends Component {
             projectId: this.state.projectId
         };
 
+        this.setState({
+            buttonChanger: "True"
+        })
+
         PunchlistDataService.create(data)
         .then(response => {
             this.setState({
@@ -117,6 +128,19 @@ class CreatePL extends Component {
         });
     }
 
+    retrievePLT(id){
+        PunchListTypesDataService.getAll(id)
+        .then(response => {
+            this.setState({
+                pltypes: response.data
+            });
+        console.log(response.data);
+        })
+        .catch(e => {
+            console.log(e);
+        });
+    }
+
     getLastPunchListID(){
         PunchlistDataService.findlastItem()
         .then(response => {
@@ -128,38 +152,22 @@ class CreatePL extends Component {
         .catch(e => {
             console.log(e);
         });
-      }
+    }
 
     render() {
-        const {lastpl} = this.state;
+        const {lastpl, pltypes, buttonChanger} = this.state;
         return (
         <div className="">
             {this.state.submitted ? (
                 <div>
                     <div>
-                        <h4>Category details successfully submitted!</h4>
-                        <button className="btn btn-success" onClick={this.newPunchListItem}>Add Another punch list</button>
-                    </div>
-                    {/* <div className="modal fade" id="successfullyaddedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div className="modal-dialog modal-dialog-centered" role="document">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalCenterTitle">Choose what you want to do?</h5>
-                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-success" onClick={this.newPunchListItem}>Add Another punch list</button>
-                                    <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}  
-                    <div className="container row">
+                        {/* <h4>Category details successfully submitted!</h4>
+                        <button className="btn btn-success" onClick={this.newPunchListItem}>Add Another punch list</button> */}
+                    {/* </div>
+                    <div className="container row"> */}
                         {lastpl && lastpl.map((puchlist, index) => (
                             <div className="container col-3" key={index}>
-                                <Link to={"/addphotos/" + puchlist.id} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>Add Departments</Link>
+                                <Link to={"/addphotos/" + puchlist.id} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>Add Photos</Link>
                             </div>
                         ))}
                     </div>
@@ -197,14 +205,24 @@ class CreatePL extends Component {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label htmlFor="">Type</label>
-                                    <input
+                                    <select
                                         className="form-control"
                                         name="type"
                                         value={this.state.type}
                                         onChange={this.onChangeType}
                                         type="text"
                                         required
-                                    />
+                                    >
+                                        {pltypes && pltypes.map((pli, index) => (
+                                            <option
+                                                value={pli.id}
+                                                onChange={this.onChangeType}
+                                                key={index}
+                                            >
+                                                {pli.title}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                                 <div className="form-group col-md-6">
                                     <label htmlFor="">Location</label>
@@ -244,13 +262,18 @@ class CreatePL extends Component {
                                 </div>
                             </div>
                             <hr />
-                            <button
+                            {!buttonChanger &&
+                                <button
                                 type="button"
-                                // data-toggle="modal"
-                                // data-target="#successfullyaddedModal"
                                 onClick={this.savePunchListItem}
                                 className="btn btn-primary mr-2"
-                            >Next: Link Photos</button>
+                                >Save</button>
+                            }{buttonChanger &&
+                                <Link
+                                type="button"
+                                className="btn btn-primary mr-2"
+                                >Next: Link Photos</Link>
+                            }
                             <a href="/punchlist" className="">Cancel</a>
                         </form>
                     </div>

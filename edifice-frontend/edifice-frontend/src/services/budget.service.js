@@ -43,6 +43,11 @@ getTotalBudget(id){
 
 }
 
+getBudgetOverview(id){
+
+  return http.get(`/projects/budget/${id}/total/overview`);
+
+}
 
 }
 export default new BudgetDataService();

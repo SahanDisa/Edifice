@@ -124,22 +124,16 @@ const DirectCost = props => {
                 onChange={this.onChangeCostCode}
                 name="costCode"
              />*/}
-                <select 
-               
+                <input
+               type="text"
                 id="costCode"
                 {...register('costCode')}
                 value={currentDirectCost.costCode}
                 onChange={handleInputChange}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
                 name="costCode"
-              >
-                <option></option>
-                <option>001-Maintenance Equipment</option>
-                <option>002-Sodding</option>
-                <option>003-Visual Display Boards</option>
-                <option>004-Site Clearing</option>
-                <option>005-Dewatering</option>
-              </select>
+              />
+          
               <div className="invalid-feedback">{errors.costCode?.message}</div>
             </div>
             <div className="form-group">

@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 
 import WorkerDataService from "./../../../services/worker.service";
+import CrewDataService from "./../../../services/crew.service";
 
 
 class AddWorker extends Component {
   constructor(props) {
     super(props);
+    this.retrieveCrew = this.retrieveCrew.bind(this);
     this.onChangewId = this.onChangewId.bind(this);
     this.onChangefirstName =this.onChangefirstName.bind(this);
     this.onChangelastName =this.onChangelastName.bind(this);
     this.onChangemobile =this.onChangemobile.bind(this);
+    this.onChangecrewId=this.onChangecrewId.bind(this);
     this.saveWorker = this.saveWorker.bind(this);
     
 
@@ -18,10 +21,33 @@ class AddWorker extends Component {
       firstName: "",
       lastName:"",
       mobile:"",
-      crewId: this.props.crewId,
+      crewId:"",
+      crews:[],
+      id: this.props.projectId,
      // projectId: this.props.match.params.id,  
-      submitted: false
+      
     };
+    console.log("ssdsdsdsdsdsddddddddddddd")
+    console.log(this.props.projectId)
+    console.log("ssdsdsdsdsdsddddddddddddd")
+
+  }
+
+  componentDidMount() {
+    this.retrieveCrew(1);
+  }
+
+  retrieveCrew(id) {
+    CrewDataService.getAll(id)
+      .then(response => {
+        this.setState({
+          crews: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   onChangewId(e) {
@@ -48,7 +74,11 @@ class AddWorker extends Component {
     });
   }
 
-
+  onChangecrewId(e) {
+    this.setState({
+      crewId: e.target.value
+    });
+  }
 
   saveWorker() {
     var data = {
@@ -57,7 +87,7 @@ class AddWorker extends Component {
       lastName: this.state.lastName,
       mobile: this.state.mobile,
       crewId: this.state.crewId,
-      projectId: this.state.projectId
+      projectId: this.props.projectId
     };
 
 
@@ -71,9 +101,9 @@ class AddWorker extends Component {
           crewId: response.data.crewId,
           projectId: this.state.projectId,
 
-          submitted: true
         });
         console.log(response.data);
+        window.location.reload();
       })
       .catch(e => {
         console.log(e);
@@ -81,6 +111,10 @@ class AddWorker extends Component {
   }
 
     render() {
+      const { crews } = this.state;
+      console.log("sdsdsds")
+      console.log(crews)
+      console.log("sdsdsds")
         return (  
         <div>
             <div className="modal-dialog modal-dialog-centered" role="document">
@@ -137,6 +171,21 @@ class AddWorker extends Component {
                           value={this.state.mobile}
                           onChange={this.onChangemobile}
                           name="mobile"/>
+                        <br/>
+
+                        <label htmlFor="">Select crew</label>
+                        <select
+                        className="form-control" 
+                        name="crew" 
+                        id="crew"
+                        value={this.state.crewId}
+                        onChange={this.onChangecrewId}>
+                          <option value="--">- - </option>
+
+                          {crews && crews.map((crew, index) => (
+                          <option value={crew.id}>{crew.name}</option>
+                          ))}  
+                        </select>
                         <br/>
                     </div>
                 </div>

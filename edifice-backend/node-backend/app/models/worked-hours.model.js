@@ -1,5 +1,8 @@
 module.exports = (sequelize, Sequelize) => {
     const workedHours = sequelize.define("worked_hours", {
+      location: {
+        type: Sequelize.STRING,
+      },
       start: {
         type: Sequelize.STRING,
       },

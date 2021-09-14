@@ -28,6 +28,10 @@ class ActionPlanDataService {
   Approved(id){
     return http.get(`/projects/actionplan/approved/${id}`);
   }
+
+  getType(id){
+    return http.get(`/projects/actionplan/type/${id}`);
+  }
 }
 
 export default new ActionPlanDataService();

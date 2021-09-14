@@ -10,7 +10,7 @@ module.exports = app => {
     router.get("/list/:id", actionplantype.findAll);
   
     // Retrieve a single Drawing with id
-    router.get("/:id", actionplantype.findOne);
+    router.get("/single/:id", actionplantype.findOne);
 
     // Update a Drawing with id
     router.put("/:id", actionplantype.update);

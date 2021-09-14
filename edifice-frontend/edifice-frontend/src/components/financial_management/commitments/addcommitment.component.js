@@ -58,7 +58,7 @@ signedContractReceivedDate :"",
 exclusions:"",
     projectId:props.match.params.id,
     
-    commitmentStatuses: ["--","Ongoing 🔴", "Completed 🟢"]
+    commitmentStatuses: ["Ongoing 🔴", "Completed 🟢"]
 /* should uncomment this after the subcontractor table
     subcontractors: [], */
     
@@ -209,6 +209,7 @@ className={`form-control ${errors.contractCompany ? 'is-invalid' : ''}`}
                 name="status"
 className={`form-control ${errors.status ? 'is-invalid' : ''}`}
               >
+                <option value="" disabled selected>Select the Status</option>
                 {commitment.commitmentStatuses &&
                 commitment.commitmentStatuses.map((commitmentStatus, index) => (
                 <option

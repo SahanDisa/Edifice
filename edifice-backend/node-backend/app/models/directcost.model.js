@@ -22,7 +22,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DATEONLY
       },
       amount: {
-        type: Sequelize.DECIMAL(10, 2) 
+        type: Sequelize.DECIMAL(20, 2) 
       },
     }, {
         freezeTableName: true,

@@ -1,6 +1,38 @@
 import React, { Component } from 'react';
+import TimesheetDataService from "../../../services/timesheet.service";
 
 class Approve extends Component {
+    constructor(props) {
+        super(props);
+        this.updateTimesheet = this.updateTimesheet.bind(this);
+
+        this.state = {
+            currentStatus:{
+                code: this.props.timesheetId,
+                status: "Pending"
+            }
+        };
+      }
+
+      updateTimesheet(){
+        var data = {
+            status: this.state.currentStatus.status
+          };
+      
+          TimesheetDataService.update(this.props.timesheetId, data)
+            .then(response => {
+              this.setState(prevState => ({
+                currentStatus: {
+                  ...prevState.currentStatus,
+                }
+              }));
+              console.log(response.data);
+            })
+            .catch(e => {
+              console.log(e);
+            });
+      }
+
     render() {
         return (  
         <div>
@@ -20,7 +52,12 @@ class Approve extends Component {
                     </div>
 
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-primary" data-dismiss="modal">Approve</button>
+                        <button 
+                        className="btn btn-primary" 
+                        data-dismiss="modal"
+                        onClick={this.updateTimesheet}>
+                            Remove
+                        </button>
                     </div>
                 </div>
             </div>
