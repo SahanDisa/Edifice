@@ -5,23 +5,41 @@ import AddWorker from "./add_worker.component";
 import Approve from "./approve.component";
 import RemoveApprove from "./remove-approve.component";
 import Card from 'react-bootstrap/Card';
+import { Link } from "react-router-dom";
 
 import TimesheetDataService from "../../../services/timesheet.service";
+import CrewDataService from "./../../../services/crew.service";
 
-class Timesheet extends Component {
+class ViewTimesheet extends Component {
     constructor(props) {
         super(props);
         this.retrieveTimesheet = this.retrieveTimesheet.bind(this);
+        this.retrieveCrew = this.retrieveCrew.bind(this);
 
         this.state = {
                 code:this.props.match.params.code,
                 id:this.props.match.params.id,
-                timesheet:[]
+                timesheet:[],
+                crews: []
         };
       }
 
       componentDidMount() {
         this.retrieveTimesheet(this.props.match.params.code);
+        this.retrieveCrew(this.props.match.params.id);
+      }
+
+      retrieveCrew(id) {
+        CrewDataService.getAll(id)
+          .then(response => {
+            this.setState({
+              crews: response.data
+            });
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
       }
 
       retrieveTimesheet(id){
@@ -38,9 +56,8 @@ class Timesheet extends Component {
       }
 
     render() {
-        const {id , timesheet} = this.state;
-        
-        //console.log(timesheets)
+        const {id , timesheet,crews} = this.state;
+
         return (
           <div>
             <Card
@@ -56,23 +73,46 @@ class Timesheet extends Component {
             <Card 
             className="mb-2"
             bg={'light'}>
-                <Card.Body>
-                    <h6>Code:{timesheet.code}</h6>
-                    <h6>Date: {timesheet.date}</h6>
-                    <h6>Status: {timesheet.status}</h6>
-                    <h6>ProjectId:{timesheet.projectId}</h6>
-                </Card.Body>
-            </Card>
+               <div class="container">                                
+                    <div class="row">                     
+                      <div class="col-6">
+                        <Card.Body>
+                            <h6>Code:{timesheet.code}</h6>
+                            <h6>Date: {timesheet.date}</h6>
+                            <h6>Status: {timesheet.status}</h6>
+                            <h6>ProjectId:{timesheet.projectId}</h6>
+                        </Card.Body>
+                      </div>
+
+                      <div class="col-6">
+                        <Card.Body>
+                        <h6>Select crew to add worker to timesheet</h6>
+                        {crews && crews.map((crew, index) => (
+                            <div className="list-group" key={index}>
+                                        <Link 
+                                        className="list-group-item list-group-item-action"
+                                        //data-toggle="modal" 
+                                        //data-target="#selectWorkers"
+                                        to={"/viewWorkers/"+crew.id}>
+                                           {crew.name}
+                                        </Link>
+                            </div> 
+                        ))} 
+                        </Card.Body>
+                      </div>
+                </div>
+                </div>
+                        </Card>
       
             <div className="card text-right">
 
             <div className="card-body">    
-                <button                         
+         {/*       <button                         
                     className="btn btn-primary m-3" 
                     data-toggle="modal" 
                     data-target="#addWorker">
                         Add Workers
-                </button>
+         </button>*/}
 
                     <table className="table table-bordered align-middle">
                             <thead className="bg-light">
@@ -96,10 +136,16 @@ class Timesheet extends Component {
 
                             <tr>
                                 <td>
-                                    crename
+                                    flooring
                                 </td>
                                 <td>Randie pathirae</td>
-                                <td>First Floor</td>
+                                <td>                        
+                                  <input 
+                                    type="text" 
+                                    id="default-picker" 
+                                    className="form-control" 
+                                    placeholder="Select time"/>
+                                </td>
                                 <td>                                 
                                     <input 
                                     type="time" 
@@ -149,7 +195,7 @@ class Timesheet extends Component {
                     {timesheet.status == "Pending"?
                     <button 
                     href="#" 
-                    className="btn btn-primary" 
+                    className="btn btn-primary mr-3" 
                     data-toggle="modal" 
                     data-target="#approve"> 
                         Approve
@@ -157,11 +203,17 @@ class Timesheet extends Component {
                     
                     <button 
                     href="#" 
-                    className="btn btn-primary" 
+                    className="btn btn-primary mr-3" 
                     data-toggle="modal" 
                     data-target="#removeApprove"> 
                         Remove the Approval
                     </button>}
+
+                    <button 
+                    href="#" 
+                    className="btn btn-secondary mr-3"> 
+                        Save Changes
+                    </button>
                     
                     {/*------------------------------------ Approve Starts------------------------------------------------------------------ */}
                     <div className="modal fade" id="approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -178,7 +230,7 @@ class Timesheet extends Component {
                     {/*-------------------------------------Remove Approve Ends----------------------------------------------------------------------*/}
 
                     {/*------------------------------------ Add worker Starts------------------------------------------------------------------ */}
-                    <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                    <AddWorker 
                    timesheetId={timesheet.code}
                    id={id}/> 
@@ -191,10 +243,11 @@ class Timesheet extends Component {
 
                 </div>
             </div>
+            
           </div>
           
         );
       }
     }
 
-export default Timesheet;
+export default ViewTimesheet;

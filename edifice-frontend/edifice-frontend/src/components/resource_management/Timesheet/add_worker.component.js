@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import Card from 'react-bootstrap/Card';
 
 import CrewDataService from "./../../../services/crew.service";
 import WorkersDataService from "./../../../services/worker.service";
 import WorkedHoursDataService from "./../../../services/worked-hours.service";
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import Workers from "./workers-list.component";
 
 class AddWorker extends Component {
     constructor(props) {
@@ -92,7 +90,7 @@ class AddWorker extends Component {
                 <div className="modal-content">
 
                     <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalCenterTitle">Select Workers</h5>
+                        <h5 className="modal-title" id="exampleModalCenterTitle">Select Crew</h5>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -101,27 +99,24 @@ class AddWorker extends Component {
                     <div className="modal-body" align ="left">
 
                         {crews && crews.map((crew, index) => (
-                            <div className="card" key={index}>
-                                <div className="card-header">
-                                    <b>{crew.name}</b>
-                                </div>
-                                <div className="card-body" >                                     
-                                    {workers &&
-                                        workers.map((worker) => (
-                                        worker.crewId === index+1 ?
-                                            <List key={worker.crewId}>                                
-                                                    <button 
-                                                        className="btn btn-success mr-1"
-                                                        type="button"
-                                                        //onClick={this.addWorker(worker.wId)}
-                                                        onClick={this.addWorker()} 
-                                                         >
-                                                            Add 
-                                                    </button>
-                                                    {worker.firstName} {worker.lastName}                                                                         
-                                            </List> : null                       
-                                                ))}   
-                                </div>
+                            <div className="list-group" key={index}>
+                                        <button 
+                                        className="list-group-item list-group-item-action"
+                                        data-toggle="modal" 
+                                        data-target="#selectWorkers">
+                                           {crew.name}
+                                        </button>
+
+                                        {/*------------------------------------ approve timesheet Starts------------------------------------------------------------------ */}
+                                        <div className="modal fade" id="selectWorkers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
+                                            <Workers id={crew.id}/>
+                                        </div>
+                    {/*-------------------------------------approve timesheet  Ends----------------------------------------------------------------------*/}
+      
+                                                          
+                         { /*      <div className="card-body" >                                     
+                                     
+                                        </div>*/}
                             </div> 
                         ))}  
                     </div>  
