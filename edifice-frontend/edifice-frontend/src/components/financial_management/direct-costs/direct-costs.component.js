@@ -206,19 +206,15 @@ const DirectCostList = (props) => {
                 </Link>
                 
               
-                {/*<Link className="btn btn-primary mr-2" to={"/excelupload"}>
+                <Link className="btn btn-primary mr-2" to={"/excelupload/"+id}>
                 Import
-                </Link>*/}
-                <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCrew">+ Import</a>&nbsp;&nbsp;
-                  {/* New Crew Starts */}
+                </Link>
+               {/* <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCrew">+ Import</a>&nbsp;&nbsp;
+         
             <div className="modal fade" id="newCrew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <Import projectId={id}/>          
-          </div>
-          {/* New Crew Ends */}
-            
-              {/*  <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
-                Import 
-  </Link>*/}
+          </div>*/}
+     
                 <button className="btn btn-primary mr-2"  onClick={exportDirectCosts} >
                 Export 
                 </button>
