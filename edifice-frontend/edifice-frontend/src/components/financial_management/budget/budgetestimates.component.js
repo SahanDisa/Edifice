@@ -5,6 +5,7 @@ import { Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import HomeIcon from '@material-ui/icons/Home';
 
 
 const BudgetEstimates = (props) => {
@@ -138,7 +139,7 @@ const BudgetEstimates = (props) => {
 
   return (
     <div>
-        <h3> BUDGET ESTIMATES</h3>
+      <div  className="row"> <Link to={"/financialmanagementhome/" + id}><HomeIcon style={{ color: "#2b2d42"}}/></Link>&nbsp;<h3>BUDGET ESTIMATES</h3></div>
                <h6>Estimated the Project Budget.</h6> 
                 <hr /><br />
 
@@ -147,8 +148,8 @@ const BudgetEstimates = (props) => {
             <Link className="btn btn-primary mr-2" to={"/addbudget/"+id}>{/*check this again*/}
                 + Create
                 </Link>
-                <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
-                Import 
+                <Link className="btn btn-primary mr-2" to={"/bexcelupload/"+id}>
+                Import
                 </Link>
                 <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
                 Export 

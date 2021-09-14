@@ -13,6 +13,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
+import { Link } from "react-router-dom";
 
 
 const Budget = props => {
@@ -182,6 +183,10 @@ const Budget = props => {
           >
             Update <UpdateIcon/>
           </button>
+          <Link to={"/budgetestimates/" + currentBudget.projectId}>
+            <button className="btn btn-success">
+            Cancel
+            </button></Link>
           <button
             type="button"
             onClick={() => reset()}

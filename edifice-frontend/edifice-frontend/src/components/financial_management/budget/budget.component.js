@@ -7,6 +7,7 @@ import Table from 'react-bootstrap/Table';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import CheckIcon from '@material-ui/icons/Check';
+import HomeIcon from '@material-ui/icons/Home';
 import {
   BarChart,
   Bar,
@@ -16,7 +17,9 @@ import {
   Tooltip,
   Legend
 } from "recharts";
-
+import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
 
 export default class BudgetList extends Component {
     constructor(props) {
@@ -27,6 +30,8 @@ export default class BudgetList extends Component {
       this.calculateTotalEstimatedBudget = this.calculateTotalEstimatedBudget.bind(this);
       this.onChangeSearchCostCode= this.onChangeSearchCostCode.bind(this);
       this.findByCostCode=this.findByCostCode.bind(this);
+      this.handleClose=this.handleClose.bind(this);
+      this.handleClick=this.handleClick.bind(this);
       this.state = {
         id: this.props.match.params.id,
         budgets: [],
@@ -35,7 +40,8 @@ export default class BudgetList extends Component {
         budgetTotal:"",
         sovTotal:"",
         tot:"",
-        searchCostCode: ""
+        searchCostCode: "",
+        anchorEl:null
       };
     }
   
@@ -45,6 +51,20 @@ export default class BudgetList extends Component {
       this.calculateTotalSovs(this.props.match.params.id);
       this.calculateTotalEstimatedBudget(this.props.match.params.id);
     }
+
+    handleClick(e){
+      const anchorEl = e.target.value;
+  
+      this.setState({
+        anchorEl: anchorEl
+      });
+    }
+  
+    handleClose(){
+      this.setState({
+        anchorEl: null
+      });
+    };
 
     onChangeSearchCostCode(e) {
       const searchCostCode = e.target.value;
@@ -125,7 +145,7 @@ export default class BudgetList extends Component {
     }
 
     render() {
-        const { directCostTotal,budgetTotal,sovTotal,searchCostCode,budgets,currentIndex} = this.state;
+        const { id,directCostTotal,budgetTotal,sovTotal,searchCostCode,budgets,currentIndex,anchorEl} = this.state;
         const data = [
           {
             name: "Estimated Budget",
@@ -138,8 +158,23 @@ export default class BudgetList extends Component {
         ];
         return (
             <div>
-              <h2>Budget Overview</h2>
+               <div  className="row"> <Link to={"/financialmanagementhome/" + id}><HomeIcon style={{ color: "#2b2d42"}}/></Link>&nbsp;<h3>BUDGET OVERVIEW</h3></div>
               <p>See the Overview of the Project Budget</p>
+              {/*<Button aria-controls="simple-menu" aria-haspopup="true" onClick={this.handleClick}>
+Financial Management Home
+</Button>
+<Menu
+  id="simple-menu"
+  anchorEl={anchorEl}
+  keepMounted
+  open={Boolean(anchorEl)}
+  onClose={this.handleClose}
+>
+<Link  to={"/budgetestimates/"+id}><MenuItem onClick={this.handleClose}>Budget Overview</MenuItem></Link>
+     <Link  to={"/budgetestimates/"+id}><MenuItem onClick={this.handleClose}>Budget Estimates</MenuItem></Link>
+   <Link  to={"/directcost/"+id}><MenuItem onClick={this.handleClose}>Direct Costs</MenuItem></Link>
+ <Link  to={"/commitment/"+id}><MenuItem onClick={this.handleClose}>Commitments</MenuItem></Link>
+        </Menu>*/}
               <hr></hr>
               <div className="row" style={{alignItems: "center"}} >
               <div className="col" >
@@ -244,6 +279,7 @@ export default class BudgetList extends Component {
               <Table  className="table table-striped table-bordered" responsive>
                 <thead className="Table-header">
                   <tr>
+                  <th>#</th>
                     <th>Cost Code</th>
                     <th>Estimated Budget</th>
                     <th>Direct Cost</th>
@@ -266,7 +302,7 @@ export default class BudgetList extends Component {
                         key={index}
                     >
 
-                   
+<td>{budget.id}</td>
                     <td>{budget.costCode}</td>
                     <td>{budget.btotal}</td>
                     <td>{budget.dtotal}</td>

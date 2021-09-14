@@ -189,3 +189,23 @@ exports.findByStatusCompleted = (req, res) => {
     });  
 };
 
+//get the last project 
+exports.findLastOne = (req,res) =>{
+  const pid = req.params.id;
+  Commitment.findAll({
+    where: {
+      projectId: pid,
+    },
+    limit: 1,
+    order: [['id', 'DESC']]
+  })
+  .then(data => {
+   res.send(data);
+ })
+ .catch(err => {
+   res.status(500).send({
+     message:
+       err.message || "Some error occurred while retrieving projects."
+   });
+ });
+}

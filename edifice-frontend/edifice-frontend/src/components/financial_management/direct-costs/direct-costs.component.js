@@ -9,6 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import  Import from './excelupload.component';
 import Card from 'react-bootstrap/Card';
 import BudgetDataService from "./../../../services/budget.service";
+import HomeIcon from '@material-ui/icons/Home';
 
 const DirectCostList = (props) => {
   const {id}= useParams();
@@ -197,7 +198,7 @@ const DirectCostList = (props) => {
 
   return (
     <div>
-        <h3> DIRECT COSTS</h3>
+        <div  className="row"> <Link to={"/financialmanagementhome/" + id}><HomeIcon style={{ color: "#2b2d42"}}/></Link>&nbsp;<h3>DIRECT COSTS</h3></div>
                <h6>Track all direct costs that are not associated with commitments.</h6><hr />
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
@@ -206,19 +207,15 @@ const DirectCostList = (props) => {
                 </Link>
                 
               
-                {/*<Link className="btn btn-primary mr-2" to={"/excelupload"}>
+                <Link className="btn btn-primary mr-2" to={"/excelupload/"+id}>
                 Import
-                </Link>*/}
-                <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCrew">+ Import</a>&nbsp;&nbsp;
-                  {/* New Crew Starts */}
+                </Link>
+               {/* <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCrew">+ Import</a>&nbsp;&nbsp;
+         
             <div className="modal fade" id="newCrew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <Import projectId={id}/>          
-          </div>
-          {/* New Crew Ends */}
-            
-              {/*  <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
-                Import 
-  </Link>*/}
+          </div>*/}
+     
                 <button className="btn btn-primary mr-2"  onClick={exportDirectCosts} >
                 Export 
                 </button>
