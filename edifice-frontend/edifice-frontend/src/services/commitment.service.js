@@ -32,6 +32,10 @@ class CommitmentDataService {
     return http.get(`/projects/commitment/list/${id}/${status}/status/completed`);
   }
 
+  findlastCommitment(id){
+    return http.get(`/projects/commitment/last/${id}/view`);
+  }
+
 
 }
 

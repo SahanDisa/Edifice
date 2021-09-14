@@ -45,7 +45,7 @@ export default class BoardUser extends Component {
     this.retriveUserProjects(this.state.currentUser.id);
   }
   retrieveUserProjectCount(id) {
-    ProjectUserService.userProjects(id)
+    ProjectUserService.getProjectUserProjectDetails(id)
       .then(response => {
         this.setState({
           usercount: response.data.length
@@ -57,7 +57,7 @@ export default class BoardUser extends Component {
       });
   }
   retriveUserProjects(id){
-    ProjectUserService.getAll(id)
+    ProjectUserService.getProjectUserProjectDetails(id)
     .then(response => {
       this.setState({
         uprojects: response.data
@@ -77,7 +77,6 @@ export default class BoardUser extends Component {
           <p>Start work on your project by select manage option</p>
           <div className="container row">
             <div className="container col-3">
-            <a href="/projectmanagementhome/1">
             <Card
               bg={'success'}
               text={'white'}
@@ -92,7 +91,7 @@ export default class BoardUser extends Component {
                 </Card.Text>
               </Card.Body>
             </Card>
-            </a>
+            
             </div>
             <div className="container col-3">
             <Card
@@ -162,11 +161,10 @@ export default class BoardUser extends Component {
               >
               <div className="container row">
                 <div className="col-7">
-                  {/* {this.retriveSingleProject(project.projectuserId)} */}
-                  {/* <h5>{uprojects.title}</h5>
-                  <h6>Breif : {uprojects.description}</h6>
-                  <p>Location : {uprojects.location}</p> */}
-                  <h4>Project : {index + 1}</h4>
+                  <h4>{project.title}</h4>
+                  <h6>Breif : {project.description}</h6>
+                  <p>Location : {project.location}</p>
+                  
                   <h6>Working Department : {project.department}</h6>
                   <h6>Position : {project.position}</h6>
                   <Link

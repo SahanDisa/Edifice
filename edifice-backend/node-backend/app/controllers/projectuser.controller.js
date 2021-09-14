@@ -131,3 +131,19 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+
+exports.getProjectUserDetails = (req,res)=>{
+  id = req.params.id;
+
+  db.sequelize.query('select projectuser.id, projectuser.userId, projectuser.department, projectuser.position, projectuser.projectId, projects.title, projects.description, projects.location, projects.startdate, projects.enddate, projects.published FROM projectuser INNER JOIN projects ON projectuser.projectId = projects.id AND projectuser.userId = '+id+';',
+   { type: db.sequelize.QueryTypes.SELECT})
+  .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not get the project user project details=" + id
+      });
+    });
+}

@@ -55,6 +55,7 @@ require('./app/routes/primecontract.routes')(app);
 require('./app/routes/invoice.routes')(app);
 require('./app/routes/payment.routes')(app);
 require('./app/routes/excel.routes')(app);
+require('./app/routes/bexcel.routes')(app);
 
 require('./app/routes/equipment.routes')(app);
 require('./app/routes/equipment-category.routes')(app);

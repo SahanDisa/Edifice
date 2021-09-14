@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
-import ExcelService from "./../../../services/excelupload.service";
-import DirectCostDataService from "./../../../services/directcost.service";
+import BExcelService from "../../../services/bexcelupload.service";
+import BudgetDataService from "../../../services/budget.service";
 import { Link } from "react-router-dom";
 import { Route, useParams } from "react-router-dom";
 
 // excel file upload
-const ExcelUploadFiles = (props) => {
+const BExcelUploadFiles = (props) => {
   const {id}= useParams();
   
     const [selectedFiles, setSelectedFiles] = useState(undefined);
     const [currentFile, setCurrentFile] = useState(undefined);
     const [progress, setProgress] = useState(0);
     const [message, setMessage] = useState("");
-    const [directcosts, setDirectCosts] = useState([]);
+    const [budgets, setBudgets] = useState([]);
    
    
   
@@ -21,11 +21,11 @@ const ExcelUploadFiles = (props) => {
         setSelectedFiles(event.target.files);
     };
 
-    const retrieveDirectCosts = () => {
+    const retrieveBudgets = () => {
     
-      DirectCostDataService.getAll(id)//passing project id as id
+      BudgetDataService.getAll(id)//passing project id as id
         .then((response) => {
-          setDirectCosts(response.data);
+          setBudgets(response.data);
         })
         .catch((e) => {
           console.log(e);
@@ -38,12 +38,12 @@ const ExcelUploadFiles = (props) => {
         setProgress(0);
         setCurrentFile(currentFile);
     
-        ExcelService.upload(currentFile, (event) => {
+        BExcelService.upload(currentFile, (event) => {
           setProgress(Math.round((100 * event.loaded) / event.total));
         })
           .then((response) => {
             setMessage(response.data.message);
-            return ExcelService.getFiles();
+            return BExcelService.getFiles();
           })
           .then((files) => {
             setFileInfos(files.data);
@@ -57,10 +57,10 @@ const ExcelUploadFiles = (props) => {
         setSelectedFiles(undefined);
     };
     useEffect(() => {
-        ExcelService.getFiles().then((response) => {
+        BExcelService.getFiles().then((response) => {
           setFileInfos(response.data);
         });
-        retrieveDirectCosts();  
+        retrieveBudgets();  
 
     }, []);
     return (
@@ -76,7 +76,7 @@ const ExcelUploadFiles = (props) => {
                 </div>
     <div className="modal-body">*/}
       <div>
-        <h4>Import Direct Costs</h4>  
+        <h4>Import Estimated Budget</h4>  
         <hr />
           {currentFile && (
             <div className="progress">
@@ -104,7 +104,7 @@ const ExcelUploadFiles = (props) => {
           >
             Upload
           </button><br />
-          <Link  to={"/directcost/"+id} className="btn btn-success">View Direct Costs</Link>
+          <Link  to={"/budgetestimates/"+id} className="btn btn-success">View Estimated Budget</Link>
     
           <div className="alert alert-light" role="alert">
             {message}
@@ -124,4 +124,4 @@ const ExcelUploadFiles = (props) => {
     );
   };
 
-export default ExcelUploadFiles;
+export default BExcelUploadFiles;

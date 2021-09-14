@@ -22,6 +22,7 @@ import BoardUser from "./components/board-project.component";
 import BoardResource from "./components/board-resource.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
+import ErrorPage from "./components/error.component";
 
 import AddProject from './components/core_tools/admin/add-project.component';
 import AddDepartment from "./components/core_tools/admin/add-department.component";
@@ -150,7 +151,7 @@ import Report from "./components/report/report.component";
 
 import UploadExcel from "./components/financial_management/direct-costs/excelupload.component";
 import EstimateBudget from "./components/financial_management/budget/budgetestimates.component";
-
+import BUploadExcel from "./components/financial_management/budget/bexcelupload.component";
 
 class App extends Component {
   constructor(props) {
@@ -275,6 +276,7 @@ class App extends Component {
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
+            <Route component={ErrorPage}/>
           </Switch>  
         )}
         {currentUser && (
@@ -291,6 +293,7 @@ class App extends Component {
             <Route path="/addmilestoneproject/:id" component={AddMilestoneGeneral}/>
             <Route path="/assignuser/:id" component={AssignUserProject} />
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
+            {/* <Route component={ErrorPage}/> */}
 
             <Route path="/resource" component={BoardResource} />
             <Route path="/financialmanagement" component={BoardModerator} />
@@ -421,6 +424,7 @@ class App extends Component {
             <Route path="/viewbudget/:id" component={ViewSingleBudget} />
             <Route path="/excelupload/:id" component={UploadExcel} />
             <Route path="/budgetestimates/:id" component={EstimateBudget} />
+            <Route path="/bexcelupload/:id" component={BUploadExcel} />
 
             {/*Report and PDF */}
             <Route path="/report/" component={Report} />
