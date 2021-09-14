@@ -1,28 +1,31 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
-import DirectCostDataService from "./../../../services/directcost.service";
-import ExcelDataService from "./../../../services/excelupload.service";
+import BudgetDataService from "./../../../services/budget.service";
 import { useTable } from "react-table";
 import { Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import  Import from './excelupload.component';
-import Card from 'react-bootstrap/Card';
-import BudgetDataService from "./../../../services/budget.service";
 
-const DirectCostList = (props) => {
+
+const BudgetEstimates = (props) => {
   const {id}= useParams();
-  const [directcosts, setDirectCosts] = useState([]);
-  const [searchCostCode, setSearchCostCode] = useState("");
-  const directcostsRef = useRef();
   const [budgets, setBudgets] = useState([]);
+  const [searchCostCode, setSearchCostCode] = useState("");
+  const budgetsRef = useRef();
+  budgetsRef.current = budgets;
 
-  directcostsRef.current = directcosts;
 
   useEffect(() => {
-    retrieveDirectCosts();
-    retrieveBudgets();
+    retrieveBudgets();    
+
   }, []);
+
+
+
+  const onChangeSearchCostCode = (e) => {
+    const searchCostCode = e.target.value;
+    setSearchCostCode(searchCostCode);
+  };
 
   const retrieveBudgets = () => {
     
@@ -35,99 +38,55 @@ const DirectCostList = (props) => {
       });
   };
 
-  const onChangeSearchCostCode = (e) => {
-    const searchCostCode = e.target.value;
-    setSearchCostCode(searchCostCode);
-  };
-
-  const retrieveDirectCosts = () => {
-    
-    DirectCostDataService.getAll(id)//passing project id as id
-      .then((response) => {
-        setDirectCosts(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
   const refreshList = () => {
-    retrieveDirectCosts();
+    retrieveBudgets();
+    
   };
 
   const findByCostCode = () => {
-  
-
-    DirectCostDataService.findByCostCode(id,searchCostCode)//searchCostCode
+    BudgetDataService.findByCostCode(id,searchCostCode)
       .then((response) => {
-        setDirectCosts(response.data);
-        console.log("clicked")
-        console.log(response.data)
-        console.log(searchCostCode)
-        console.log(id)
-        console.log(response)
+        setBudgets(response.data);
       })
       .catch((e) => {
         console.log(e);
       });
   };
 
-  const openDirectCost = (rowIndex) => {
-    const id = directcostsRef.current[rowIndex].id;
+  const openBudget = (rowIndex) => {
+    const id = budgetsRef.current[rowIndex].id;
     //const projectId = directcostsRef.current[rowIndex].projectId;
 
-    props.history.push("/viewdirectcost/"+ id);//here id is direct cost id
+    props.history.push("/viewbudget/"+ id);//here id is direct cost id
   };
 
 
 
-  const deleteDirectCost = (rowIndex) => {
-    const id = directcostsRef.current[rowIndex].id;
+  const deleteBudget = (rowIndex) => {
+    const id = budgetsRef.current[rowIndex].id;
     //const projectId = directcostsRef.current[rowIndex].projectId;
 
-    DirectCostDataService.remove(id)
+    BudgetDataService.remove(id)
       .then((response) => {
         
         //props.history.push("/directcost/"+id);
 
-        let newDirectCosts = [...directcostsRef.current];
-        newDirectCosts.splice(rowIndex, 1);
+        let newBudgets = [...budgetsRef.current];
+        newBudgets.splice(rowIndex, 1);
 
-        setDirectCosts(newDirectCosts);
+        setBudgets(newBudgets);
       })
       .catch((e) => {
         console.log(e);
       });
   };
 
-
-  const  excelSave = (blob, fileName) => {
-    if (window.navigator.msSaveOrOpenBlob) { // For IE:
-        navigator.msSaveBlob(blob, fileName);
-    } else { // For other browsers:
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = fileName;
-        link.click();
-        window.URL.revokeObjectURL(link.href);
-    }
-};
-
-  
-
- const exportDirectCosts = () => {
-    
-  ExcelDataService.download(id)
-  .then(function () 
-  {})
-    .catch((e) => {
-      console.log(e);
-    });
-    console.log("clicked")
-};
-
   const columns = useMemo(
     () => [
+      {
+        Header: "Id",
+        accessor: "id",
+      },
       {
         Header: "Cost Code",
         accessor: "costCode",
@@ -137,30 +96,12 @@ const DirectCostList = (props) => {
         accessor: "description",
       },
       {
-        Header: "Category",
-        accessor: "category",
+        Header: "Date",
+        accessor: "date",
       },
       {
-        Header: "Vendor",
-        accessor: "vendor",
-      },
-      {
-        Header: "Employee",
-        accessor: "employee",
-      },
-
-  {
-        Header: "Received Date",
-        accessor: "receivedDate",
-      },
-      
-  {
-    Header: "Paid Date",
-    accessor: "paidDate",
-  },
-  {
-        Header: "Amount (Rs.)",
-        accessor: "amount",
+        Header: "Estimated Budget Amount(Rs.)",
+        accessor: "estimatedBudget",
       },
       {
         Header: "",
@@ -169,11 +110,11 @@ const DirectCostList = (props) => {
           const rowIdx = props.row.id;
           return (
             <div>
-              <span onClick={() => openDirectCost(rowIdx)}>
+              <span onClick={() => openBudget(rowIdx)}>
               <EditIcon></EditIcon>&nbsp;&nbsp;
               </span>
 
-              <span onClick={() => deleteDirectCost(rowIdx)}>
+              <span onClick={() => deleteBudget(rowIdx)}>
                 <DeleteIcon></DeleteIcon>
               </span>
             </div>
@@ -192,36 +133,26 @@ const DirectCostList = (props) => {
     prepareRow,
   } = useTable({
     columns,
-    data: directcosts,
+    data: budgets
   });
 
   return (
     <div>
-        <h3> DIRECT COSTS</h3>
-               <h6>Track all direct costs that are not associated with commitments.</h6><hr />
+        <h3> BUDGET ESTIMATES</h3>
+               <h6>Estimated the Project Budget.</h6> 
+                <hr /><br />
+
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
-            <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+id}>{/*check this again*/}
+            <Link className="btn btn-primary mr-2" to={"/addbudget/"+id}>{/*check this again*/}
                 + Create
                 </Link>
-                
-              
-                {/*<Link className="btn btn-primary mr-2" to={"/excelupload"}>
-                Import
-                </Link>*/}
-                <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCrew">+ Import</a>&nbsp;&nbsp;
-                  {/* New Crew Starts */}
-            <div className="modal fade" id="newCrew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <Import projectId={id}/>          
-          </div>
-          {/* New Crew Ends */}
-            
-              {/*  <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
+                <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
                 Import 
-  </Link>*/}
-                <button className="btn btn-primary mr-2"  onClick={exportDirectCosts} >
+                </Link>
+                <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
                 Export 
-                </button>
+                </Link>
                 </div>
       <div className="form-group col-md-4">
         <div className="input-group mb-3">
@@ -232,7 +163,7 @@ const DirectCostList = (props) => {
             value={searchCostCode}
             onChange={onChangeSearchCostCode}
           />*/}
- <select 
+           <select 
                 
                 id="costCode"
            
@@ -247,8 +178,8 @@ const DirectCostList = (props) => {
              {budgets &&
                 budgets.map((budget, index) => (
                 <option
-                    //value={budget.costCode}
-                    //onChange={onChangeSearchCostCode}
+                    value={budget.costCode}
+                    onChange={onChangeSearchCostCode}
                     key={index}
                 >
                 {/* unit data */}
@@ -264,7 +195,6 @@ const DirectCostList = (props) => {
                 <option>005-Dewatering</option>*/}
              
               </select>
-
           <div className="input-group-append">
             <button
               className="btn btn-outline-secondary"
@@ -313,4 +243,4 @@ const DirectCostList = (props) => {
   );
 };
 
-export default DirectCostList;
+export default BudgetEstimates; 
