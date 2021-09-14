@@ -87,6 +87,7 @@ export default class BoardUser extends Component {
                 <Card.Text>
                   <h6>Description : {projects.description}</h6>
                   <h6>Location: {projects.location}</h6> 
+                  <h6>From : {projects.startdate} to {projects.enddate}</h6>
                 </Card.Text>
               </Card.Body>
             </Card> 
