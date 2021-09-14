@@ -217,11 +217,11 @@ db.meetingcategory.belongsTo(db.projects, {
 });
 
 // One meeting category has many meetings
-db.meetingcategory.hasMany(db.meetings, { as: "meetings" });
-db.meetings.belongsTo(db.meetingcategory, {
-  foreignKey: "mcId",
-  as: "mcategory",
-});
+// db.meetingcategory.hasMany(db.meetings, { as: "meetings" });
+// db.meetings.belongsTo(db.meetingcategory, {
+//   foreignKey: "mcId",
+//   as: "mcategory",
+// });
 
 // One project has many punch lists
 db.projects.hasMany(db.punchlist, { as: "punchlist" });
