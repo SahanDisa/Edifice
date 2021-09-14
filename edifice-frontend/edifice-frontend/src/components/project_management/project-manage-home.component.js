@@ -115,7 +115,7 @@ export default class BoardUser extends Component {
           </div> */}
           <div className="col-lg-3 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" title="Manage meetings">
-            <Link className="d-block nav-heading text-center mb-2 mt-2" data-toggle="modal" data-target="#meetingModal" to="#" style={{ 'text-decoration': 'none' }}>
+            <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/meetings/"+id} style={{ 'text-decoration': 'none' }}>
               <img src={meetingIcon} alt="" width="50"/>
               <h3 className="h5 nav-heading-title mb-0">Meetings</h3>                
               {/* <span className="fs-sm fw-normal text-muted">Manage all aspects of your project meetings from agenda distribution</span> */}
@@ -191,7 +191,7 @@ export default class BoardUser extends Component {
         </div>
          
           {/* Meeting Model Starts */}
-          <div className="modal fade" id="meetingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          {/* <div className="modal fade" id="meetingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered" role="document">
               <div className="modal-content">
                 <div className="modal-header">
@@ -209,7 +209,7 @@ export default class BoardUser extends Component {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* Meeting Model Ends */}
 
           {/* Daily Log Model Starts */}

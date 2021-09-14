@@ -165,7 +165,7 @@ export default class ActionPlanSinglePage extends Component {
                 </div>
                 {/* Add Section Starts */}
                   <div className="modal fade" id="addAPSection" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <AddAPSection actionplansectionId ={id} />
+                    <AddAPSection actionplanId ={id} />
                   </div>
                 {/* Add Section Ends */}
 

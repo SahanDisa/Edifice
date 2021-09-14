@@ -143,26 +143,16 @@ export default class AddAPItem extends Component {
                                     name="title"
                                 />
                             </div>
-                            <div className="form-group col-3">
-                                <label htmlFor="title">Plan Manager</label>
+                            <div className="form-group col-6">
+                                <label htmlFor="title">Section</label>
                                 <input
                                     required
                                     type="text"
                                     className="form-control"
-                                    id="title"
+                                    id="section"
                                     required
-                                    value={this.state.planmanager}
-                                    onChange={this.onChangePlanManager}
-                                    name="title"
-                                />
-                            </div>
-                            <div className="form-group col-3">
-                                <label htmlFor="description">Completed</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value="No 🔴"
-                                    readOnly
+                                    value={this.state.section}
+                                    name="section"
                                 />
                             </div>
                         </div>
@@ -180,7 +170,31 @@ export default class AddAPItem extends Component {
                                 name="title"
                             />
                             </div>
-                            <div className="form-group col-8">
+                            <div className="form-group col-4">
+                                <label htmlFor="title">Plan Manager</label>
+                                <input
+                                    required
+                                    type="text"
+                                    className="form-control"
+                                    id="title"
+                                    required
+                                    value={this.state.planmanager}
+                                    onChange={this.onChangePlanManager}
+                                    name="title"
+                                />
+                            </div>
+                            <div className="form-group col-4">
+                                <label htmlFor="description">Completed</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value="No 🔴"
+                                    readOnly
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-12">
                                 <label htmlFor="description">Description</label>
                                 <input
                                     required

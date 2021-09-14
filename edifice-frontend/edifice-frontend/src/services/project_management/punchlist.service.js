@@ -5,6 +5,10 @@ class PunchlistDataService {
         return http.get(`/projects/punchlist/${id}`);
     }
 
+    update(id, data) {
+        return http.put(`/projects/punchlist/update/${id}`, data);
+    }
+
     create(data) {
         return http.post(`/projects/punchlist/`, data);
     }

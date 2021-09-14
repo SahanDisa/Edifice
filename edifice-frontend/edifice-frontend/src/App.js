@@ -83,7 +83,7 @@ import ViewSingleDocument from "./components/project_management/document/viewsin
 import UpdateDocument from "./components/project_management/document/updatedocument.component";
 
 import MeetingsConfig from "./components/project_management/meetings/configuration.component";
-import ManageMeetings from "./components/project_management/meetings/manage.component";
+import MeetingsHome from "./components/project_management/meetings/meeting.component";
 import UpdateMeetings from "./components/project_management/meetings/update.component";
 import ViewMeetings from "./components/project_management/meetings/view.component";
 
@@ -100,6 +100,7 @@ import ViewRFI from "./components/project_management/rfi/view.component";
 
 import actionplanHome from "./components/project_management/actionplan/actionplan.component";
 import AddActionPlan from "./components/project_management/actionplan/addactionplan.component";
+import ViewAPType from "./components/project_management/actionplan/view-actionplantype.component";
 import ActionPlanSinglePage from "./components/project_management/actionplan/actionplansinglepage.component";
 import AddAPItem from "./components/project_management/actionplan/addapitem.component";
 import AddAPSection from "./components/project_management/actionplan/addapsection.component";
@@ -311,7 +312,7 @@ class App extends Component {
             <Route path="/managestasks/view" component={ViewTasks} />
             {/* Meeting */}
             <Route path="/meetingsconfiguration" component={MeetingsConfig} />
-            <Route path="/managemeetings" component={ManageMeetings} />
+            <Route path="/meetings" component={MeetingsHome} />
             <Route path="/managesmeetings/update" component={UpdateMeetings} />
             <Route path="/managesmeetings/view" component={ViewMeetings} />
             {/* RFI */}
@@ -325,6 +326,7 @@ class App extends Component {
             <Route path="/actionplansingle/:id" component={ActionPlanSinglePage} />
             <Route path="/addactionplanitem" component={AddAPItem} />
             <Route path="/addactionplansection" component={AddAPSection} />
+            <Route path="/viewactionplantype/:id" component={ViewAPType} />
             {/* Punch List */}
             <Route path="/punchlist/:id" component={punchlistHome} />
             <Route path="/managepunchlist/createaddphoto/:id" component={CreatePhotos} />
