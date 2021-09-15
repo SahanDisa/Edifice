@@ -73,7 +73,7 @@ export default class Home extends Component {
     return (
       <div className="container">
         <center>
-        <h2>Hi Steve, Welcome to Edifice!</h2>
+        <h2>Hi {currentUser.username}, Welcome to Edifice!</h2>
         {showAdminBoard && showManagerBoard && showEngineerBoard &&
         <h3>You are Login as <b>Admin</b></h3>
         }
