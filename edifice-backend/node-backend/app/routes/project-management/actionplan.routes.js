@@ -15,9 +15,6 @@ module.exports = app => {
     // Retrieve a single Action Plan with id
     router.get("/:id", actionplan.findOne);
 
-    // project action plans
-    router.get("/action/:id",actionplan.findAll);
-
     // get approved actions
     router.get("/approved/:id",actionplan.findAllApproved);
 

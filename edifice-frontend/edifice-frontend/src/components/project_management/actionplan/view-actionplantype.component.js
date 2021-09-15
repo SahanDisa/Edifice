@@ -21,8 +21,8 @@ export default class viewAPType extends Component {
     }
   
     componentDidMount() {
-      this.retriveCategoryInfo(this.props.match.params.id);
       this.retrieveCategoryAP(this.props.match.params.id);
+      this.retriveCategoryInfo(this.props.match.params.id);
     }
 
     retriveCategoryInfo(acid){
@@ -39,25 +39,21 @@ export default class viewAPType extends Component {
 
     retrieveCategoryAP(acid) {
       ActionPlanDataService.getType(acid)
-        .then(response => {
-          this.setState({
-            actionplans: response.data
-          });
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
+      .then(response => {
+        this.setState({
+          actionplans: response.data
         });
+      })
     }
 
     render() {
-        const { id, title, description, actionplans } = this.state;
+        const { id, title, description, projectId, actionplans } = this.state;
         return (
             <div>
-                <h2>Action Plan Category - {title}</h2>
+                <h2>Action Plan Type - {title}</h2>
                 <p>{description}</p>
                 <hr />
-                <h3>Action Plan List</h3>
+                <h3 className="mb-3">Action Plan List</h3>
                 <Table striped bordered hover variant="" responsive>
                     <thead>
                       <tr>
@@ -80,10 +76,10 @@ export default class viewAPType extends Component {
                           <td>{api.location}</td>
                           <td>{api.isapprove == 0 ? "🔴 Not Approved": "🟢 Approved"}</td>
                           <td>
-                            <Link to={"/updatedrawing/"+api.id+"/"+id}>
+                            <Link to={"/updatedrawing/" + api.id}>
                               <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
                             </Link>
-                            <Link to={"/viewdrawing/"+api.id}>
+                            <Link to={"/viewdrawing/" + api.id}>
                               <button className="btn btn-danger">Delete <DeleteIcon/> </button>
                             </Link>
                           </td>    

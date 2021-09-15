@@ -18,7 +18,7 @@ export default class AddAPItem extends Component {
         description: "",
         assigner: "",
         isCompleted: 0,
-        actionplanId: this.props.actionplanId, 
+        actionplanId: this.props.actionplanId,
         
         actionplantypes: [],
         currentIndex: -1,
