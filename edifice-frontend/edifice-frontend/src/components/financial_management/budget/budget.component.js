@@ -165,6 +165,7 @@ export default class BudgetList extends Component {
               <p>See the Overview of the Project Budget</p>
 </div>
 <div className="col" >
+<div className="row">
 <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2" >
 <div className="card card-hover shadow-sm" style={{alignItems: "center"}} ><br />
  {(Number(sovTotal)+Number(directCostTotal)) > budgetTotal ? 
@@ -175,6 +176,13 @@ export default class BudgetList extends Component {
 </div>
 </div>
 
+<div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2" >
+<div className="card card-hover shadow-sm" style={{alignItems: "center"}} ><br />
+  <h3 className="h6 nav-heading-title mb-0">Revised Amount(Rs.) : <span style={{ color: 'red' }}>{Number(sovTotal)+Number(directCostTotal)-Number(budgetTotal)}</span></h3>
+<br />
+</div>
+</div>
+</div>
 </div>
               </div>
               {/*<Button aria-controls="simple-menu" aria-haspopup="true" onClick={this.handleClick}>
