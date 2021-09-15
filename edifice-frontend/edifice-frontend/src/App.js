@@ -105,6 +105,7 @@ import ViewAPType from "./components/project_management/actionplan/view-actionpl
 import ActionPlanSinglePage from "./components/project_management/actionplan/actionplansinglepage.component";
 import AddAPItem from "./components/project_management/actionplan/addapitem.component";
 import AddAPSection from "./components/project_management/actionplan/addapsection.component";
+import ViewActionPlanItems from "./components/project_management/actionplan/viewactionplanitems.component";
 
 import DlsConfig from "./components/project_management/dailylog/configuration.component";
 import ManageDls from "./components/project_management/dailylog/manage.component";
@@ -127,6 +128,8 @@ import Schedule from "./components/resource_management/Schedule/schedule.compone
 import Equipments from "./components/resource_management/Equipment/equipment.component";
 import EquipDetails from "./components/resource_management/Equipment/equipmentDetails.component";
 import ViewTimesheet from "./components/resource_management/Timesheet/view-timesheet.component";
+import ViewWorkers from "./components/resource_management/Timesheet/view-workers.component";
+import AddWorker from "./components/resource_management/Crew/add-worker.component";
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
@@ -330,6 +333,7 @@ class App extends Component {
             <Route path="/addactionplanitem" component={AddAPItem} />
             <Route path="/addactionplansection" component={AddAPSection} />
             <Route path="/viewactionplantype/:id" component={ViewAPType} />
+            <Route exact path="/viewactionplanitems/:aid/:asid" component={ViewActionPlanItems}/>
             {/* Punch List */}
             <Route path="/punchlist/:id" component={punchlistHome} />
             <Route path="/managepunchlist/createaddphoto/:id" component={CreatePhotos} />
@@ -390,18 +394,23 @@ class App extends Component {
             <Route path="/primecontract/:id" component={PrimeContracts} />
 
             {/*resource management */}
+            <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
+            {/*timesheet*/}
             <Route path="/timesheet/:id" component={Timesheet} />
             <Route path="/customize" component={Customize} />
+            <Route path="/viewTimesheet/:id/:code" component={ViewTimesheet} />
+            <Route path="/viewWorkers/:id" component={ViewWorkers} />
+            {/*crew*/}
             <Route path="/crew/:id" component={Crew} />
             <Route path="/newCrew/:id" component={NewCrew}/>
+            <Route path="/addWorker/:id" component={AddWorker} />
+            {/*schedule*/}
             <Route path="/schedule/:id" component={Schedule} />
+            {/*equipment*/}
             <Route path="/equipments/:id" component={Equipments} />
             <Route path="/equipDetails/:code" component={EquipDetails} />
             {/*<Route path="/equipDetails/:id/:code" component={EquipDetails} />*/}
-            <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
-            <Route path="/viewTimesheet/:id/:code" component={ViewTimesheet} />
-                    
-
+            
             {/*financial management */}
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
             <Route path="/editprimecontracts/:id" component={EditPrimeContracts} />

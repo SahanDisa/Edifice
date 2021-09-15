@@ -122,22 +122,23 @@ export default class ActionPlan extends Component {
             </div>
             <h4>Action Plans</h4><hr/>
             <div className="container">
-              <Link className="btn btn-primary mb-3" to={"/addactionplan/"+projectId}>+ Add another Action Plan Item</Link>
+              <Link className="btn btn-primary mb-3" to={"/addactionplan/"+projectId}>+ Add another Action Plan</Link>
             </div>
+            <hr></hr>
             <div className="container">
               {actionplans && actionplans.map((api, index) => (
                 <div className={"container mb-3" + (index === currentIndex ? "active" : "")} key={index}>
                     <Card style={{ height: '10rem' }}>
                         <Card.Header>
                         <div className="row">
-                          <div className="col-11">
+                          <div className="col-9">
                             <Link to={"/actionplansingle/" + api.id} style={{'text-decoration': 'none'}}>
                               <h5>{api.title}</h5>
                             </Link>
                           </div>
-                          <div className="col-1">
+                          <div className="col-3">
                             <Link to={"/viewactionplantype/"+ api.id} style={{'text-decoration': 'none'}}>
-                              <p>{api.actiontype}</p>
+                              <h6>Action Type: {api.actiontype}</h6>
                             </Link>
                           </div>
                         </div>

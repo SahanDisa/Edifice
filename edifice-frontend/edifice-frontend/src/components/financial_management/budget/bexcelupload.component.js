@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import BExcelService from "../../../services/bexcelupload.service";
+import ExcelService from "../../../services/excelupload.service";
 import BudgetDataService from "../../../services/budget.service";
 import { Link } from "react-router-dom";
 import { Route, useParams } from "react-router-dom";
+import HomeIcon from '@material-ui/icons/Home';
 
 // excel file upload
 const BExcelUploadFiles = (props) => {
@@ -38,12 +39,12 @@ const BExcelUploadFiles = (props) => {
         setProgress(0);
         setCurrentFile(currentFile);
     
-        BExcelService.upload(currentFile, (event) => {
+        ExcelService.bupload(currentFile, (event) => {
           setProgress(Math.round((100 * event.loaded) / event.total));
         })
           .then((response) => {
             setMessage(response.data.message);
-            return BExcelService.getFiles();
+            return ExcelService.getBFiles();
           })
           .then((files) => {
             setFileInfos(files.data);
@@ -57,7 +58,7 @@ const BExcelUploadFiles = (props) => {
         setSelectedFiles(undefined);
     };
     useEffect(() => {
-        BExcelService.getFiles().then((response) => {
+        ExcelService.getBFiles().then((response) => {
           setFileInfos(response.data);
         });
         retrieveBudgets();  
@@ -76,7 +77,7 @@ const BExcelUploadFiles = (props) => {
                 </div>
     <div className="modal-body">*/}
       <div>
-        <h4>Import Estimated Budget</h4>  
+      <div  className="row"> <Link to={"/financialmanagementhome/" + id}><HomeIcon style={{ color: "#2b2d42"}}/></Link>&nbsp;<h4>Import Estimated Budget</h4>  </div>
         <hr />
           {currentFile && (
             <div className="progress">
@@ -103,8 +104,8 @@ const BExcelUploadFiles = (props) => {
             onClick={upload}
           >
             Upload
-          </button><br />
-          <Link  to={"/budgetestimates/"+id} className="btn btn-success">View Estimated Budget</Link>
+          </button><hr /><br />
+          <Link  to={"/budgetestimates/"+id} className="btn btn-primary">View Estimated Budget</Link>
     
           <div className="alert alert-light" role="alert">
             {message}

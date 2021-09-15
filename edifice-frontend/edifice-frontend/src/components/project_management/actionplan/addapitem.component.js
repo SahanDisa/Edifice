@@ -18,7 +18,7 @@ export default class AddAPItem extends Component {
         description: "",
         assigner: "",
         isCompleted: 0,
-        actionplanId: this.props.acrionplanId, 
+        actionplanId: this.props.actionplanId,
         
         actionplantypes: [],
         currentIndex: -1,
@@ -96,7 +96,7 @@ export default class AddAPItem extends Component {
     }
 
   render() {
-    const {actionplansectionId, currentIndex, actionplantypes} = this.state;
+    const {actionplansectionId, currentIndex, actionplantypes,actionplanId} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
@@ -116,7 +116,7 @@ export default class AddAPItem extends Component {
           <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalCenterTitle">Add New Action Plan Item</h5>
+                  <h5 className="modal-title" id="exampleModalCenterTitle">Add New Action Plan Item {actionplanId}</h5>
                   <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
