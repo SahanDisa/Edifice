@@ -5,7 +5,7 @@ const upload = (file, onUploadProgress) => {
 
   formData.append("file", file);
 
-  return http.post("/excel/upload", formData, {
+  return http.post("/excel/upload/budget", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -14,7 +14,7 @@ const upload = (file, onUploadProgress) => {
 };
 
 const getFiles = () => {
-  return http.get("/excel/budgets");
+  return http.get("/excel/budgets/list");
 };
 
 export default {

@@ -12,7 +12,7 @@
  
   
     app.use('/api/excel', router);
-  };*/
+  };
 
   const express = require("express");
 const router = express.Router();
@@ -21,11 +21,11 @@ const bexcelController = require("./../controllers/bexcel.controller");
 const upload = require("./../middleware/uploadExcel");
 
 let routes = (app) => {
-  router.post("/upload", upload.single("file"), bexcelController.upload);
-  router.get("/budgets", bexcelController.getBudgets);
+  router.post("/upload/budget", upload.single("file"), bexcelController.upload);
+  router.get("/budgets/list", bexcelController.getBudgets);
   //router.get("/download", bexcelController.download);
 
   app.use("/api/excel", router);
 };
 
-module.exports = routes;
+module.exports = routes;*/
