@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import BExcelService from "../../../services/bexcelupload.service";
+import ExcelService from "../../../services/excelupload.service";
 import BudgetDataService from "../../../services/budget.service";
 import { Link } from "react-router-dom";
 import { Route, useParams } from "react-router-dom";
@@ -38,12 +38,12 @@ const BExcelUploadFiles = (props) => {
         setProgress(0);
         setCurrentFile(currentFile);
     
-        BExcelService.upload(currentFile, (event) => {
+        ExcelService.bupload(currentFile, (event) => {
           setProgress(Math.round((100 * event.loaded) / event.total));
         })
           .then((response) => {
             setMessage(response.data.message);
-            return BExcelService.getFiles();
+            return ExcelService.getBFiles();
           })
           .then((files) => {
             setFileInfos(files.data);
@@ -57,7 +57,7 @@ const BExcelUploadFiles = (props) => {
         setSelectedFiles(undefined);
     };
     useEffect(() => {
-        BExcelService.getFiles().then((response) => {
+        ExcelService.getBFiles().then((response) => {
           setFileInfos(response.data);
         });
         retrieveBudgets();  
