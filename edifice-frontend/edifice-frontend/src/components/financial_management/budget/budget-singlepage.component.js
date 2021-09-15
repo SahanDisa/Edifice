@@ -13,6 +13,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
+import { Link } from "react-router-dom";
 
 
 const Budget = props => {
@@ -115,7 +116,7 @@ const Budget = props => {
                 onChange={this.onChangeCostCode}
                 name="costCode"
              />*/}
-                <select 
+                <input
                
                 id="costCode"
                 {...register('costCode')}
@@ -123,14 +124,8 @@ const Budget = props => {
                 onChange={handleInputChange}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
                 name="costCode"
-              >
-                <option></option>
-                <option>001-Maintenance Equipment</option>
-                <option>002-Sodding</option>
-                <option>003-Visual Display Boards</option>
-                <option>004-Site Clearing</option>
-                <option>005-Dewatering</option>
-              </select>
+              />
+
               <div className="invalid-feedback">{errors.costCode?.message}</div>
             </div>
             <div className="form-group">
@@ -188,6 +183,10 @@ const Budget = props => {
           >
             Update <UpdateIcon/>
           </button>
+          <Link to={"/budgetestimates/" + currentBudget.projectId}>
+            <button className="btn btn-success">
+            Cancel
+            </button></Link>
           <button
             type="button"
             onClick={() => reset()}

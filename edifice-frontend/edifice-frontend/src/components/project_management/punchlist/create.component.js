@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
 import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
 import PunchListTypesDataService from "../../../services/project_management/punchlist.service.js";
@@ -27,12 +28,14 @@ class CreatePL extends Component {
             status: "Initiated",
             duedate: "",
             title: "",
+            type: "",
             location: "",
             // punchmanager: "",
             // assignee: "",
             description: "",
             projectId: this.props.match.params.id, 
             pltypes: [],
+            lastplitem:[],
             currentIndex: -1, 
             submitted: false
         };
@@ -76,14 +79,14 @@ class CreatePL extends Component {
         PunchListTypesDataService.getAll(id)
         .then(response => {
             this.setState({
-              pltypes: response.data
+                pltypes: response.data
             });
-            console.log(response.data);
-          })
-          .catch(e => {
+        console.log(response.data);
+        })
+        .catch(e => {
             console.log(e);
-          });
-      }
+        });
+    }
 
     savePunchListItem() {
         var data = {
@@ -126,6 +129,7 @@ class CreatePL extends Component {
             no: null,
             duedate: "",
             title: "",
+            type: "",
             location: "",
             // punchmanager: "",
             // assignee: "",
@@ -136,8 +140,21 @@ class CreatePL extends Component {
         });
     }
 
+    getLastProjectID(){
+        PunchlistDataService.findlastPLI()
+        .then(response => {
+            this.setState({
+                lastplitem: response.data
+            });
+        console.log(response.data);
+        })
+        .catch(e => {
+            console.log(e);
+        });
+    }
+
     render() {
-        const {currentIndex, pltypes}
+        const {currentIndex, pltypes, lastplitem} = this.state;
         return (
         <div className="">
             {this.state.submitted ? (
@@ -161,17 +178,15 @@ class CreatePL extends Component {
                                 </div>
                             </div>
                         </div>
-                    </div> */}  
+                    </div> */}
                     <div className="container row">
-                        {lastproject && lastproject.map((project, index) => (
+                        {lastplitem && lastplitem.map((punchlistitem, index) => (
                             <div
                                 className={
-                                "container col-3" +  (index === currentIndex ? "active" : "")
-                                }
+                                "container col-3" +  (index === currentIndex ? "active" : "")}
                                 key={index}
                             >
-                            {/* unit data */}
-                            <Link to={"/adddepartment/"+project.id} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>Add Departments</Link>
+                            <Link to={"/addphotos/"+punchlistitem.id} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>Add Photos</Link>
                             </div>
                         ))}
                     </div>
@@ -196,7 +211,7 @@ class CreatePL extends Component {
                         
                         {/* <div class="tab-content" id="myTabContent"> */}
                             {/* <div class="tab-pane fade show active" id="det" role="tabpanel" aria-labelledby="Details"> */}
-                                <form>
+                                <div className="container">
                                     <div className="form-row">
                                         <div className="form-group col-md-6">
                                             <label htmlFor="">Title</label>
@@ -231,13 +246,13 @@ class CreatePL extends Component {
                                                 type="text"
                                                 required
                                             >
-                                                {pltypes && pltypes.map((pltypes, index) => (
+                                                {pltypes && pltypes.map((pli, index) => (
                                                     <option
-                                                        value={pltypes.id}
+                                                        value={pli.id}
                                                         onChange={this.onChangeType}
                                                         key={index}
                                                     >
-                                                        {pltypes.title}
+                                                        {pli.title}
                                                     </option>
                                                 ))}
                                             </select>
@@ -288,7 +303,7 @@ class CreatePL extends Component {
                                         className="btn btn-primary mr-2"
                                     >Next: Link Photos</button>
                                     <a href="/punchlist" className="">Cancel</a>
-                                </form>
+                                </div>
                             {/* </div> */}
                             {/* <div class="tab-pane fade" id="photos" role="tabpanel" aria-labelledby="Photos"> */}
                                 <div className="row">

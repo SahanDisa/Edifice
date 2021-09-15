@@ -8,20 +8,33 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import  Import from './excelupload.component';
 import Card from 'react-bootstrap/Card';
+import BudgetDataService from "./../../../services/budget.service";
+import HomeIcon from '@material-ui/icons/Home';
 
 const DirectCostList = (props) => {
   const {id}= useParams();
   const [directcosts, setDirectCosts] = useState([]);
   const [searchCostCode, setSearchCostCode] = useState("");
   const directcostsRef = useRef();
-
+  const [budgets, setBudgets] = useState([]);
 
   directcostsRef.current = directcosts;
 
   useEffect(() => {
     retrieveDirectCosts();
+    retrieveBudgets();
   }, []);
 
+  const retrieveBudgets = () => {
+    
+    BudgetDataService.getAll(id)//passing project id as id
+      .then((response) => {
+        setBudgets(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const onChangeSearchCostCode = (e) => {
     const searchCostCode = e.target.value;
@@ -185,7 +198,7 @@ const DirectCostList = (props) => {
 
   return (
     <div>
-        <h3> DIRECT COSTS</h3>
+        <div  className="row"> <Link to={"/financialmanagementhome/" + id}><HomeIcon style={{ color: "#2b2d42"}}/></Link>&nbsp;<h3>DIRECT COSTS</h3></div>
                <h6>Track all direct costs that are not associated with commitments.</h6><hr />
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
@@ -194,19 +207,15 @@ const DirectCostList = (props) => {
                 </Link>
                 
               
-                {/*<Link className="btn btn-primary mr-2" to={"/excelupload"}>
+                <Link className="btn btn-primary mr-2" to={"/excelupload/"+id}>
                 Import
-                </Link>*/}
-                <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCrew">+ Import</a>&nbsp;&nbsp;
-                  {/* New Crew Starts */}
+                </Link>
+               {/* <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCrew">+ Import</a>&nbsp;&nbsp;
+         
             <div className="modal fade" id="newCrew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <Import projectId={id}/>          
-          </div>
-          {/* New Crew Ends */}
-            
-              {/*  <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
-                Import 
-  </Link>*/}
+          </div>*/}
+     
                 <button className="btn btn-primary mr-2"  onClick={exportDirectCosts} >
                 Export 
                 </button>
@@ -231,12 +240,25 @@ const DirectCostList = (props) => {
             value={searchCostCode}
             onChange={onChangeSearchCostCode}
               >
-              <option  selected value="">All</option>
+                <option  selected value="">All</option>
+             {budgets &&
+                budgets.map((budget, index) => (
+                <option
+                    //value={budget.costCode}
+                    //onChange={onChangeSearchCostCode}
+                    key={index}
+                >
+                {/* unit data */}
+                {budget.costCode}
+                </option>
+                ))}
+
+                {/*<option></option>
                 <option>001-Maintenance Equipment</option>
                 <option>002-Sodding</option>
                 <option>003-Visual Display Boards</option>
                 <option>004-Site Clearing</option>
-                <option>005-Dewatering</option>
+                <option>005-Dewatering</option>*/}
              
               </select>
 

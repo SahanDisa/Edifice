@@ -52,7 +52,11 @@ db.meetingcategory = require("./project-management/meetingcategory.model")(seque
 // Punch list component Model Classes
 db.punchlist = require("./project-management/punchlist.model")(sequelize, Sequelize);
 db.punchlisttypes = require("./project-management/punchlisttypes.model")(sequelize, Sequelize);
-db.punchlist = require("./project-management/punchlist.model")(sequelize, Sequelize);
+db.plphotos = require("./project-management/punchlistphotos.model.js")(sequelize, Sequelize);
+db.plassignees = require("./project-management/punchlistassignees.model.js")(sequelize, Sequelize);
+
+// Daily log component Model Classes
+db.dailylogtypes = require("./project-management/dailylogtypes.model")(sequelize, Sequelize);
 // Action Plan Model Classes
 db.actionplantype = require("./project-management/actionplantype.model")(sequelize, Sequelize);
 db.actionplan = require("./project-management/actionplan.model")(sequelize, Sequelize);
@@ -189,14 +193,12 @@ db.roles.belongsToMany(db.users, {
   otherKey: "userId"
 });
 
-//
+// 
 db.users.belongsToMany(db.roles, {
   through: "user_roles",
   foreignKey: "userId",
   otherKey: "roleId"
 });
-
-
 
 // ---------------------------------------------------
 
@@ -215,11 +217,11 @@ db.meetingcategory.belongsTo(db.projects, {
 });
 
 // One meeting category has many meetings
-db.meetingcategory.hasMany(db.meetings, { as: "meetings" });
-db.meetings.belongsTo(db.meetingcategory, {
-  foreignKey: "mcId",
-  as: "mcategory",
-});
+// db.meetingcategory.hasMany(db.meetings, { as: "meetings" });
+// db.meetings.belongsTo(db.meetingcategory, {
+//   foreignKey: "mcId",
+//   as: "mcategory",
+// });
 
 // One project has many punch lists
 db.projects.hasMany(db.punchlist, { as: "punchlist" });
@@ -235,12 +237,26 @@ db.punchlisttypes.belongsTo(db.projects, {
   as: "project",
 });
 
-//One punch list type has many punch list items
-// db.punchlist.hasMany(db.punchlisttypes, { as: "pltypeitems" });
-// db.punchlisttypes.belongsTo(db.punchlist, {
-//   foreignKey: "punchlisttypesId",
-//   as: "type",
-// });
+// One punch list has many photos
+db.punchlist.hasMany(db.plphotos, { as: "plphotos" });
+db.plphotos.belongsTo(db.punchlist, {
+  foreignKey: "punchlistNo",
+  as: "plId",
+});
+
+// One punch list has many punch lists assignees
+db.punchlist.hasMany(db.plassignees, { as: "plassignees" });
+db.plassignees.belongsTo(db.punchlist, {
+  foreignKey: "punchlistNo",
+  as: "plId",
+});
+
+// One project has many daily log types
+db.projects.hasMany(db.dailylogtypes, { as: "dailylogtypes" });
+db.dailylogtypes.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "type",
+});
 
 // One project has many action plans
 db.projects.hasMany(db.actionplan, {as: "actionplans"});

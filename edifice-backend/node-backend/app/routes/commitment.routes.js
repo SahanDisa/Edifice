@@ -24,5 +24,8 @@ module.exports = app => {
 
   router.get("/list/:id/:contractCompany", commitment.findByContractCompany);
 
+      // Find Last Project
+      router.get("/last/:id/view",commitment.findLastOne);
+
     app.use('/api/projects/commitment', router);
   };

@@ -26,7 +26,7 @@ class Report extends Component {
 
     }
 
-    generatePDF(){
+    generatePDF(project){
 
         doc.setFont("times");
         doc.setFontSize(12);
@@ -40,10 +40,12 @@ class Report extends Component {
         
         doc.setFont("times");
         doc.setFontSize(22);
-        doc.text("Edifice Construction Management System",105, 40, null, null, "center");
+        //doc.text("Edifice Construction Management System",105, 40, null, null, "center");
         doc.setFont("times", "bold");
         doc.setFontSize(18);
-        doc.text("Project Status: <Project Name>",100, 50, "center");
+
+        const title = "Project Title: ".concat(project.title);
+        doc.text( title,100, 50, "center");
 
         //PROJECT ID AND STUFF
         doc.setFont("times","normal");
@@ -51,7 +53,7 @@ class Report extends Component {
         doc.text("Project ID :",10, 65, null, null, "left");
 
         doc.setFont("times", "bold");
-        doc.text("<ID >",35, 65, null, null, "left");
+        doc.text(project.id.toString(),35, 65, null, null, "left");
 
         //LOCATION
         doc.setFontSize(12);
@@ -59,7 +61,7 @@ class Report extends Component {
         doc.text("Location   :",10, 72, null, null, "left");
 
         doc.setFont("times", "bold");
-        doc.text("<LOCATION PLACE >",35, 72, null, null, "left");
+        doc.text(project.location,35, 72, null, null, "left");
 
         //COST CODES
         doc.setFontSize(12);
@@ -79,7 +81,7 @@ class Report extends Component {
         doc.text("Description :",10, 85, null, null, "left");
 
         doc.setFont("times", "normal");
-        doc.text("<SOME LONG ASS DESCCRIPTION MAYBE.....>",10, 91, null, null, "left");
+        doc.text(project.description,10, 91, null, null, "left");
 
         //WORKING EMPLOYEES
         //LOCATION
@@ -95,7 +97,7 @@ class Report extends Component {
         const tempdata=[
             {
             empID:"1",
-            name: "Amarabandu Rupasinghe",
+            name: "Ivar Boneless",
             role: "Engineer",
             enrollDate: "2021-9-12",
             mobileNo: "0723235665"

@@ -152,6 +152,9 @@ class Vendors extends Component {
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Vendors</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/subcontractor">Sub-Contractors</a>
+          </li>
         </ul>
 
         <h2>Vendors</h2>

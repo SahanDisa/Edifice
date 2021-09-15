@@ -184,10 +184,10 @@ class AddVendor extends Component {
           <br/>
 
           <div className="row">
-          <a onClick={()=>{this.saveVendor(); setTimeout(this.setState.bind(this, {position:1}), 3000);}}className="btn btn-success">Add </a>
-          </div>
-          <div>
-          <a className="btn btn-secondary" type="reset">Cancel</a>
+            <a onClick={()=>{this.saveVendor(); setTimeout(this.setState.bind(this, {position:1}), 3000);}}className="btn btn-success">Add </a>
+            <div className="pl-4">  
+              <a className="btn btn-secondary" type="reset">Cancel</a>
+            </div>
           </div>
         </div>
         

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -58,17 +58,40 @@ signedContractReceivedDate :"",
 exclusions:"",
     projectId:props.match.params.id,
     
-    commitmentStatuses: ["--","Ongoing 🔴", "Completed 🟢"]
+    commitmentStatuses: ["Ongoing 🔴", "Completed 🟢"],
 /* should uncomment this after the subcontractor table
     subcontractors: [], */
-    
+    lastcommitment:[],
   };
   const [commitment, setCommitment] = useState(initialCommitmentState);
   const [submitted, setSubmitted] = useState(false);
+  const [lastcommitment,setlastcommitment]= useState(initialCommitmentState);
+
+  const [count, setCount] = useState(0);
+
+  const handleClickAsync=()=> {
+    setTimeout(function delay() {
+      setCount(count + 1);
+    }, 5000);
+  };
+
 
   const handleInputChange = event => {
     const { name, value } = event.target;
     setCommitment({ ...commitment, [name]: value });
+  };
+
+  const getLastCommitmentID=()=>{
+    
+    CommitmentDataService.findlastCommitment(initialCommitmentState.projectId)
+      .then(response => {
+ 
+            setlastcommitment(response.data)
+
+        })
+        .catch(e => {
+          console.log(e);
+        });
   };
 
   const saveCommitment = () => {
@@ -141,10 +164,25 @@ exclusions:response.data.exclusions,
         {submitted ? (
           <div>
             <h4>You submitted successfully!</h4>
+            <div className="row">
             <button className="btn btn-success" onClick={newCommitment}>
               + Add Another Subcontract
             </button>&nbsp;&nbsp;
-          <Link  to={"/commitment/"+commitment.projectId} className="btn btn-success">View Subcontracts</Link>
+          <Link  to={"/commitment/"+commitment.projectId} className="btn btn-success">View Subcontracts</Link> &nbsp;&nbsp;
+        
+          {lastcommitment && lastcommitment.map((c, index) => (
+            <div
+           /* className={
+              "container col-3" +  (index === commitment.currentIndex ? "active" : "")
+            }*/
+            key={index}
+        >
+                  {/* unit data */}
+                  <Link to={"/viewsov/"+commitment.projectId+"/"+c.id} className="btn btn-success">Add SoVs</Link>
+                  </div>
+              ))}
+
+</div>
           </div>
         ) : (
           <div class="container">
@@ -209,6 +247,7 @@ className={`form-control ${errors.contractCompany ? 'is-invalid' : ''}`}
                 name="status"
 className={`form-control ${errors.status ? 'is-invalid' : ''}`}
               >
+                <option value="" disabled selected>Select the Status</option>
                 {commitment.commitmentStatuses &&
                 commitment.commitmentStatuses.map((commitmentStatus, index) => (
                 <option
@@ -377,7 +416,7 @@ className={`form-control ${errors.exclusions ? 'is-invalid' : ''}`}
 
 
             <div className="form-group">
-            <button type="submit" onClick={saveCommitment} className="btn btn-success">
+            <button type="submit" onClick={()=>{saveCommitment();setTimeout(getLastCommitmentID({position:1}), 3000);}} className="btn btn-success">
               Save
             </button>
             &nbsp;&nbsp;

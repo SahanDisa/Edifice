@@ -16,6 +16,7 @@ import AuthService from "./services/auth.service";
 import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
+import Homereal from "./components/homereal.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-project.component";
 import BoardResource from "./components/board-resource.component";
@@ -83,7 +84,7 @@ import ViewSingleDocument from "./components/project_management/document/viewsin
 import UpdateDocument from "./components/project_management/document/updatedocument.component";
 
 import MeetingsConfig from "./components/project_management/meetings/configuration.component";
-import ManageMeetings from "./components/project_management/meetings/manage.component";
+import MeetingsHome from "./components/project_management/meetings/meeting.component";
 import UpdateMeetings from "./components/project_management/meetings/update.component";
 import ViewMeetings from "./components/project_management/meetings/view.component";
 
@@ -100,8 +101,10 @@ import ViewRFI from "./components/project_management/rfi/view.component";
 
 import actionplanHome from "./components/project_management/actionplan/actionplan.component";
 import AddActionPlan from "./components/project_management/actionplan/addactionplan.component";
-import AddActionPlanType from "./components/project_management/actionplan/addactionplantype.component";
+import ViewAPType from "./components/project_management/actionplan/view-actionplantype.component";
 import ActionPlanSinglePage from "./components/project_management/actionplan/actionplansinglepage.component";
+import AddAPItem from "./components/project_management/actionplan/addapitem.component";
+import AddAPSection from "./components/project_management/actionplan/addapsection.component";
 
 import DlsConfig from "./components/project_management/dailylog/configuration.component";
 import ManageDls from "./components/project_management/dailylog/manage.component";
@@ -109,10 +112,11 @@ import UpdateDls from "./components/project_management/dailylog/update.component
 import ViewDls from "./components/project_management/dailylog/view.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
-import ViewPL from "./components/project_management/punchlist/view.component";
 import CreatePL from "./components/project_management/punchlist/create-basic.component";
-import CreatePLT from "./components/project_management/punchlist/addtypes.component";
-import PLTView from "./components/project_management/punchlist/view.component";
+import CreatePhotos from "./components/project_management/punchlist/create-addphoto.component";
+import CreateAssignees from "./components/project_management/punchlist/create-addassignee.component";
+import PLTView from "./components/project_management/punchlist/viewtype.component";
+import PLIView from "./components/project_management/punchlist/view.component";
 
 import ResourceManagementHome from "./components/resource_management/resource-manage-home.component";
 import Timesheet from "./components/resource_management/Timesheet/Timesheet.component";
@@ -123,6 +127,8 @@ import Schedule from "./components/resource_management/Schedule/schedule.compone
 import Equipments from "./components/resource_management/Equipment/equipment.component";
 import EquipDetails from "./components/resource_management/Equipment/equipmentDetails.component";
 import ViewTimesheet from "./components/resource_management/Timesheet/view-timesheet.component";
+import ViewWorkers from "./components/resource_management/Timesheet/view-workers.component";
+import AddWorker from "./components/resource_management/Crew/add-worker.component";
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
@@ -146,7 +152,8 @@ import AddEmployee from "./components/core_tools/edifice-directory/add-emp.compo
 import Report from "./components/report/report.component";
 
 import UploadExcel from "./components/financial_management/direct-costs/excelupload.component";
-
+import EstimateBudget from "./components/financial_management/budget/budgetestimates.component";
+import BUploadExcel from "./components/financial_management/budget/bexcelupload.component";
 
 class App extends Component {
   constructor(props) {
@@ -278,6 +285,7 @@ class App extends Component {
         <div className="container mt-3">
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
+            <Route exact path={["/", "/homereal"]} component={Homereal} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
@@ -309,7 +317,7 @@ class App extends Component {
             <Route path="/managestasks/view" component={ViewTasks} />
             {/* Meeting */}
             <Route path="/meetingsconfiguration" component={MeetingsConfig} />
-            <Route path="/managemeetings" component={ManageMeetings} />
+            <Route path="/meetings" component={MeetingsHome} />
             <Route path="/managesmeetings/update" component={UpdateMeetings} />
             <Route path="/managesmeetings/view" component={ViewMeetings} />
             {/* RFI */}
@@ -319,15 +327,18 @@ class App extends Component {
             <Route path="/managerfi/view" component={ViewRFI} />
             {/* Action Plan */}
             <Route path="/actionplan/:id" component={actionplanHome} />
-            <Route path="/addactionplantype/:id" component={AddActionPlanType} />
             <Route path="/addactionplan/:id" component={AddActionPlan} />
             <Route path="/actionplansingle/:id" component={ActionPlanSinglePage} />
+            <Route path="/addactionplanitem" component={AddAPItem} />
+            <Route path="/addactionplansection" component={AddAPSection} />
+            <Route path="/viewactionplantype/:id" component={ViewAPType} />
             {/* Punch List */}
             <Route path="/punchlist/:id" component={punchlistHome} />
-            <Route path="/managepunchlist/view/:id" component={ViewPL} />
+            <Route path="/managepunchlist/createaddphoto/:id" component={CreatePhotos} />
+            <Route path="/managepunchlist/createaddassignee/:id" component={CreateAssignees} />
             <Route path="/managepunchlist/create/:id" component={CreatePL} />
-            <Route path="/managepunchlist/createtype/:id" component={CreatePLT} />
-            <Route path="/punchlist/viewtype/:pltid" component={PLTView} />
+            <Route path="/viewtype/:pltid" component={PLTView} />
+            <Route path="/view/:pliid" component={PLIView} />
             {/* Daily Logs */}
             <Route path="/dailylogsconfiguration/:id" component={DlsConfig} />
             <Route path="/managedailylogs/:id" component={ManageDls} />
@@ -381,18 +392,23 @@ class App extends Component {
             <Route path="/primecontract/:id" component={PrimeContracts} />
 
             {/*resource management */}
+            <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
+            {/*timesheet*/}
             <Route path="/timesheet/:id" component={Timesheet} />
             <Route path="/customize" component={Customize} />
+            <Route path="/viewTimesheet/:id/:code" component={ViewTimesheet} />
+            <Route path="/viewWorkers/:id" component={ViewWorkers} />
+            {/*crew*/}
             <Route path="/crew/:id" component={Crew} />
             <Route path="/newCrew/:id" component={NewCrew}/>
+            <Route path="/addWorker/:id" component={AddWorker} />
+            {/*schedule*/}
             <Route path="/schedule/:id" component={Schedule} />
+            {/*equipment*/}
             <Route path="/equipments/:id" component={Equipments} />
             <Route path="/equipDetails/:code" component={EquipDetails} />
             {/*<Route path="/equipDetails/:id/:code" component={EquipDetails} />*/}
-            <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
-            <Route path="/viewTimesheet/:id/:code" component={ViewTimesheet} />
-                    
-
+            
             {/*financial management */}
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
             <Route path="/editprimecontracts/:id" component={EditPrimeContracts} />
@@ -414,6 +430,8 @@ class App extends Component {
             <Route path="/viewsinglesov/:id" component={ViewSingleSov} />
             <Route path="/viewbudget/:id" component={ViewSingleBudget} />
             <Route path="/excelupload/:id" component={UploadExcel} />
+            <Route path="/budgetestimates/:id" component={EstimateBudget} />
+            <Route path="/bexcelupload/:id" component={BUploadExcel} />
 
             {/*Report and PDF */}
             <Route path="/report/" component={Report} />

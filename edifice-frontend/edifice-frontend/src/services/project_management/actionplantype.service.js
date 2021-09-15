@@ -20,6 +20,10 @@ class ActionPlanTypeDataService {
   delete(id) {
     return http.delete(`/projects/actionplantype/${id}`);
   }
+
+  getOne(id){
+    return http.get(`/projects/actionplantype/single/${id}`);
+  }
 }
 
 export default new ActionPlanTypeDataService();

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
+import { Modal} from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import AddWorker from './add-worker.component';
 import EditWorker from './edit-worker.component';
@@ -18,14 +20,23 @@ class Crew extends Component {
 
   constructor(props) {
     super(props);
+    this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
+    this.searchTitle = this.searchTitle.bind(this);
     this.retrieveCrew = this.retrieveCrew.bind(this);
     this.retrieveWorkers = this.retrieveWorkers.bind(this);
+    this.setActiveEditWorker = this.setActiveEditWorker.bind(this);
+    this.setActiveViewWorker = this.setActiveViewWorker.bind(this);
 
     this.state = {
       crews: [],
       workers: [],
-      currentIndex: -1,
+      currentEditWorker: "",
+      currentEditIndex: -1,
+      currentViewWorker:"",
+      currentViewIndex:-1,
       content: "",
+      searchTitle: "",
+      isOpen: false,
       id: this.props.match.params.id
     };
   }
@@ -61,8 +72,52 @@ class Crew extends Component {
       });
   }
 
+  onChangeSearchTitle(e) {
+    const searchTitle = e.target.value;
+
+    this.setState({
+      searchTitle: searchTitle
+    });
+  }
+
+  searchTitle() {
+    CrewDataService.findByTitle(this.state.searchTitle)
+      .then(response => {
+        this.setState({
+          crews: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
+  setActiveEditWorker(worker, index) {
+    this.setState({
+      currentEditWorker: worker,
+      currentEditIndex: index
+    });
+    this.openEditModal();
+  }
+
+  setActiveViewWorker(worker,index){
+    this.setState({
+      currentViewWorker: worker,
+      currentViewIndex: index
+    });
+    this.openViewModal();
+  }
+
+  openEditModal = () => this.setState({ isEditOpen: true });
+  openViewModal = () => this.setState({ isViewOpen: true });
+  closeEditModal = () => this.setState({ isEditOpen: false });
+  closeViewModal = () => this.setState({ isViewOpen: false });
+
+
     render() {
-      const { crews ,currentIndex,id, workers } = this.state;
+      const { crews,id, workers,searchTitle, currentEditWorker,currentViewWorker,currentEditIndex} = this.state;
+    
       return (
         <div>
           <Card
@@ -75,44 +130,67 @@ class Crew extends Component {
             </Card.Body>
           </Card> 
           <br/>
-          
+
+          <div className="row">
+            <div className="col-md-12">
+            <div className="input-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search crew"
+              value={searchTitle}
+              onChange={this.onChangeSearchTitle}
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={this.searchTitle}
+              >
+                Search
+              </button>
+            </div>
+          </div>
+          </div>
+
+        <div className="col-md-12">
+          <div className="text-right">
+          <a
+            className="m-3 btn btn btn-success"
+            data-toggle="modal"
+            data-target="#newCrew">
+            New Crew
+          </a>
+
+          <Link
+            className="m-3 btn btn btn-primary"
+            to={"/addWorker/"+id}
+            >
+            Add Workers
+          </Link>
+          </div>
+        </div>
+      </div>
+
             <div>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="status" role="tabpanel" aria-labelledby="allmeetings">  
-                        <form>
-                            <div className="form-row">
-                              <div className="form-group col-md-3">
-                                    <input className="form-control" type="text" placeholder="Search" />
-                              </div>
-                              <a href="#" className="btn btn-outline-dark mb-3">Add Filter</a>
-                              <div class="col-md-7 text-right">
-                                <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCrew">+ New Crew</a>
-                              </div>
-
-                            </div>
-                        </form>
 
                         <div class="accordion" id="accordionExample">
+
                           {crews && crews.map((crew, index) => (
                             <div class="card" key={crew.id}>
                                 <div class="card-header" id="headingOne">
                                     <h2 class="mb-0">
+
                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${index}`} aria-expanded="true" aria-controls="collapseOne">{crew.name}</button>
-                                      <span class="badge bg-success rounded-pill">{crew.total}</span>
+
                                     </h2>
                                 </div>
                                 <div id={`collapse${index}`} class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div className="">
-                                            <div class="col-md-12 text-right mb-2">
-                                                <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#addWorker">+ Add Worker</a>
-                                            </div>
-
-                                              {/* Add Worker Starts */}
-                                              <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                <AddWorker crewId={crew.id}/>        
-                                              </div>
-
+  
                                             <Table responsive>
                                               <thead>
                                                 <tr>
@@ -124,21 +202,13 @@ class Crew extends Component {
                                                   <th></th>
                                                 </tr>
                                               </thead>
-                                              {/* Functional for table data */}
-                                             { /*const newWorkers = workers.filter(worker => worker.crewId == index)
-
-                                             )*/}
                                               <tbody>
+
 
                                               {workers &&
                                                   workers.map((worker) => (
-                                                    worker.crewId === index+1 ?
+                                                    worker.crewId === crew.id ?
                                                   <tr
-                                                      // className={
-                                                      // "list-group-item row" +
-                                                      // (index === currentIndex ? "active" : "")
-                                                      // }
-                                                      // onClick={() => this.setActiveProject(project, index)}
                                                       key={worker.crewId}
                                                   >
                                                   <td>{worker.wId}</td>
@@ -147,33 +217,20 @@ class Crew extends Component {
                                                   <td>{worker.mobile}</td>
                                                   <td>
                                             
-                                                    <button className="btn btn-primary" data-toggle="modal" data-target="#editWorker">Edit <EditIcon/> </button>
+                                                    <button 
+                                                    className="btn btn-primary" 
+                                                    onClick={() =>this.setActiveEditWorker(worker, index)}
+                                                    >
+                                                      Edit <EditIcon/> 
+                                                    </button>
 
-                                                    {/* Edit Worker Starts */}
-                                                    <div className="modal fade" id="editWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                      <EditWorker
-                                                      id={worker.wId}
-                                                      fName={worker.firstName}
-                                                      lName={worker.lastName}
-                                                      mobile={worker.mobile}/>        
-                                                    </div>
-                                                    {/* Edit Worker Ends */}
+                                                    <button 
+                                                    className="btn btn-success m-2" 
+                                                    onClick={() =>this.setActiveViewWorker(worker, index)}
+                                                    >
+                                                      View <VisibilityIcon/> 
+                                                    </button>
 
-
-                                                    <button className="btn btn-success m-2" data-toggle="modal" data-target="#viewWorker">View <VisibilityIcon/> </button>
-                                                    
-                                                    {/* View Worker Starts */}
-                                                    <div className="modal fade" id="viewWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                      <ViewWorker 
-                                                      id={worker.wId}
-                                                      fName={worker.firstName}
-                                                      lName={worker.lastName}
-                                                      mobile={worker.mobile}/>        
-                                                    </div>
-                                                    {/* View Worker Ends */}
-
-                                                   
-                                                  
                                                   </td>    
                                                   </tr>:""
                                                   ))}
@@ -190,7 +247,6 @@ class Crew extends Component {
                 </div>
             </div>
 
-
           {/* Add Worker Starts */}
           <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <AddWorker/>   
@@ -206,6 +262,33 @@ class Crew extends Component {
           </div>
           {/* New Crew Ends */}
 
+          {/* Add Worker Starts */}
+            <div className="modal fade" id="addWorker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <AddWorker projectId={id}/>        
+            </div>
+
+          {/* Edit Worker Starts */}
+            <Modal show={this.state.isEditOpen} onHide={this.closeEditModal}>
+              <EditWorker
+                id={currentEditWorker.wId}
+                fName={currentEditWorker.firstName}
+                lName={currentEditWorker.lastName}
+                mobile={currentEditWorker.mobile}
+              />  
+          </Modal>
+          {/* Edit Worker Ends */}
+
+
+
+          {/* View Worker Starts */}
+          <Modal show={this.state.isViewOpen} onHide={this.closeViewModal}>
+              <ViewWorker
+                id={currentViewWorker.wId}
+                fName={currentViewWorker.firstName}
+                lName={currentViewWorker.lastName}
+                mobile={currentViewWorker.mobile}
+              />  
+          </Modal>
         </div>
 
       );

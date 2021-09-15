@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
+import MeetingCategoryDataService from "../../../services/project_management/meetingcategory.service";
 import CreateMeeting from './createmeeting.component';
 
 const data = [
@@ -55,14 +56,103 @@ const columns = [
         return { width: '7%', textAlign: 'center' };}
   }];
 
-class ManageMeetings extends Component {
+class MeetingsHome extends Component {
+  constructor(props) {
+      super(props);
+      this.onChangeOverview = this.onChangeOverview.bind(this);
+      this.onChangeDescription = this.onChangeDescription.bind(this);
+      this.saveMeetingCategory = this.saveMeetingCategory.bind(this);
+      this.state = {
+        id: null,
+        overview: "",
+        description: "",
+        projectId: this.props.match.params.id,
+        meetingcat: [],
+        currentIndex: -1,
+        content: "",
+
+        submitted: false
+      };
+    }
+
+    onChangeOverview(e) {
+      this.setState({
+        overview: e.target.value
+      });
+    }
+
+    onChangeDescription(e) {
+      this.setState({
+        description: e.target.value
+      });
+    }
+
+    saveMeetingCategory() {
+      console.log("click kala");  
+      var data = {
+        overview : this.state.overview,
+        description: this.state.description,
+        projectId: this.props.match.params.id
+      };
+
+      MeetingCategoryDataService.create(data)
+      .then(response => {
+        this.setState({
+          id: response.data.id,
+          overview: response.data.overview,
+          description: response.data.description,
+
+          submitted: true
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+      window.location.reload();
+    }
 
     render() {
       return (
         <div className="">
-          <h2>Manage Meetings</h2><hr/>
-          <div>
-            
+          <h2>Meetings</h2>
+          <h6>Manage all aspects of your project meetings from agenda distribution</h6><hr/>
+          <div className="container">            
+            <h4 className="mt-2">Meeting Types</h4>
+            <div className="container">
+              <div className="form-row">
+                <div className="form-group col-md-3">
+                  <label htmlFor="">Overview</label>
+                  <input
+                    className="form-control" 
+                    type="text"
+                    name="overview"
+                    value={this.state.overview}
+                    onChange={this.onChangeOverview}
+                    required
+                  />
+                </div>
+                <div className="form-group col-md-8">
+                  <label htmlFor="">Description</label>
+                  <input 
+                    className="form-control" 
+                    type="text"
+                    name="description"
+                    value={this.state.description}
+                    onChange={this.onChangeDescription}
+                    required
+                  />
+                </div>
+                <div className="form-group col-md-1">
+                  <label htmlFor="">.</label>
+                  <button
+                      className="btn btn-primary"
+                      onClick={this.saveMeetingCategory}
+                  >Add</button>
+                </div>
+              </div>
+            </div><hr/>
+            <h4 className="mb-3">Meetings</h4>
             <ul class="nav nav-tabs">
               <li class="nav-item">
                 <a class="nav-link active" id="allmeetings" data-toggle="tab" href="#status" aria-controls="status" aria-selected="true">All Meetings</a>
@@ -115,7 +205,7 @@ class ManageMeetings extends Component {
                 </div>
                 <div>
                   <div class="col-md-12 text-left mt-3 mb-3">
-                    <a href="/meetingsconfiguration" className="btn btn-primary">+ Add Category</a>
+                    <a href="/meetingsconfiguration" className="btn btn-primary">+ Add overview</a>
                   </div>
                 </div>
               </div>
@@ -139,4 +229,4 @@ class ManageMeetings extends Component {
     
   }
 
-export default ManageMeetings;
+export default MeetingsHome;

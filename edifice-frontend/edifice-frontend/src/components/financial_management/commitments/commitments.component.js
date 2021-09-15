@@ -5,6 +5,7 @@ import SovDataService from "./../../../services/sov.service";
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
+import HomeIcon from '@material-ui/icons/Home';
 
 export default class Commitments extends Component {
     
@@ -179,7 +180,7 @@ export default class Commitments extends Component {
             <div>
                <div className="container row">
                 <div className="col-12">
-                <h2>COMMITMENTS</h2>
+                <div  className="row"> <Link to={"/financialmanagementhome/" + id}><HomeIcon style={{ color: "#2b2d42"}}/></Link>&nbsp;<h3>COMMITMENTS</h3></div>
                 <h6>See the Status and Value of all the Sub-Contracts.</h6>
                 <hr />
                 </div>

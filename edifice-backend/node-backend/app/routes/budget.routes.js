@@ -30,5 +30,7 @@ module.exports = app => {
   router.get("/:id/total", budget.getTotalBudget);
 
 
+  router.get("/:id/total/overview", budget.getBudgetOverview);
+
     app.use('/api/projects/budget', router);
   };
