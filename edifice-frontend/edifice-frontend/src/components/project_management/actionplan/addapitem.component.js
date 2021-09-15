@@ -2,12 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ActionPlanDataService from "./../../../services/project_management/actionplan.service";
 import ActionPlanTypeDataService from "../../../services/project_management/actionplantype.service";
-import Timeline from '@material-ui/lab/Timeline';
-import TimelineItem from '@material-ui/lab/TimelineItem';
-import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
-import TimelineConnector from '@material-ui/lab/TimelineConnector';
-import TimelineContent from '@material-ui/lab/TimelineContent';
-import TimelineDot from '@material-ui/lab/TimelineDot';
 
 export default class AddAPItem extends Component {
   constructor(props) {
@@ -24,7 +18,7 @@ export default class AddAPItem extends Component {
         description: "",
         assigner: "",
         isCompleted: 0,
-        // actionplansectionId: this.props.match.params.id, 
+        actionplanId: this.props.acrionplanId, 
         
         actionplantypes: [],
         currentIndex: -1,
