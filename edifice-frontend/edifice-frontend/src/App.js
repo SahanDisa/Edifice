@@ -105,6 +105,7 @@ import ViewAPType from "./components/project_management/actionplan/view-actionpl
 import ActionPlanSinglePage from "./components/project_management/actionplan/actionplansinglepage.component";
 import AddAPItem from "./components/project_management/actionplan/addapitem.component";
 import AddAPSection from "./components/project_management/actionplan/addapsection.component";
+import ViewActionPlanItems from "./components/project_management/actionplan/viewactionplanitems.component";
 
 import DlsConfig from "./components/project_management/dailylog/configuration.component";
 import ManageDls from "./components/project_management/dailylog/manage.component";
@@ -332,6 +333,7 @@ class App extends Component {
             <Route path="/addactionplanitem" component={AddAPItem} />
             <Route path="/addactionplansection" component={AddAPSection} />
             <Route path="/viewactionplantype/:id" component={ViewAPType} />
+            <Route exact path="/viewactionplanitems/:aid/:asid" component={ViewActionPlanItems}/>
             {/* Punch List */}
             <Route path="/punchlist/:id" component={punchlistHome} />
             <Route path="/managepunchlist/createaddphoto/:id" component={CreatePhotos} />
