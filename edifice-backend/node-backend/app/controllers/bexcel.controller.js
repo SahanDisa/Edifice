@@ -5,7 +5,7 @@ const Budget = db.budgets;
 const readXlsxFile = require("read-excel-file/node");
 const excel = require("exceljs");
 
-const upload = async (req, res) => {
+const bupload = async (req, res) => {
   try {
     if (req.file == undefined) {
       return res.status(400).send("Please upload an excel file!");
@@ -73,7 +73,7 @@ const getBudgets = (req, res) => {
 /*------------------------------------------------------------------------------------------------------------------------------ */
 
 module.exports = {
-  upload,
+  bupload,
   //download,
   getBudgets,
 };
