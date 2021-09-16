@@ -8,9 +8,7 @@ import 'bootstrap/dist/js/bootstrap.js';
 // import Popper from 'popper.js';
 import "./App.css";
 import mainIcon from "././assets/Edifice.png";
-
-// import NavDropdown from "react-bootstrap/NavDropdown"
-
+import profileAvatar from "././assets/profile-navbar.jpg";
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
@@ -20,7 +18,7 @@ import Homereal from "./components/homereal.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-project.component";
 import BoardResource from "./components/board-resource.component";
-import BoardModerator from "./components/board-moderator.component";
+import BoardModerator from "./components/board-finance.component";
 import BoardAdmin from "./components/board-admin.component";
 import ErrorPage from "./components/error.component";
 
@@ -105,6 +103,7 @@ import ViewAPType from "./components/project_management/actionplan/view-actionpl
 import ActionPlanSinglePage from "./components/project_management/actionplan/actionplansinglepage.component";
 import AddAPItem from "./components/project_management/actionplan/addapitem.component";
 import AddAPSection from "./components/project_management/actionplan/addapsection.component";
+import ViewActionPlanItems from "./components/project_management/actionplan/viewactionplanitems.component";
 
 import DlsConfig from "./components/project_management/dailylog/configuration.component";
 import ManageDls from "./components/project_management/dailylog/manage.component";
@@ -127,6 +126,8 @@ import Schedule from "./components/resource_management/Schedule/schedule.compone
 import Equipments from "./components/resource_management/Equipment/equipment.component";
 import EquipDetails from "./components/resource_management/Equipment/equipmentDetails.component";
 import ViewTimesheet from "./components/resource_management/Timesheet/view-timesheet.component";
+import ViewWorkers from "./components/resource_management/Timesheet/view-workers.component";
+import AddWorker from "./components/resource_management/Crew/add-worker.component";
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
@@ -203,7 +204,7 @@ class App extends Component {
                 <Link to={"/home"} className="nav-link"></Link>
               </li>
             )}
-            {currentUser && (
+            {/* {currentUser && (
               <li className="nav-item">
                 <Link to={"/projectmanagement"} className="nav-link">
                 <h6>Manage Projects</h6>
@@ -222,17 +223,12 @@ class App extends Component {
                 <Link to={"/resource"} className="nav-link">
                   <h6>Manage Resources</h6>
                 </Link>
-        { /*    <NavDropdown title="Manage Resources" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/timesheet">Timesheets</NavDropdown.Item>
-                <NavDropdown.Item href="/equipments">Equipments</NavDropdown.Item>
-                <NavDropdown.Item href="/crew">Crews</NavDropdown.Item>
-              </NavDropdown>*/}
             </li>
-            )}
+            )} */}
             {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
-                <h6>Core Tools</h6>
+                <h6>Dashboard</h6>
                 </Link>
               </li>
             )}
@@ -242,17 +238,23 @@ class App extends Component {
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to={"/schedule"} className="nav-link">
-                  Schedule
+                  <h6>Schedule</h6>
                 </Link>
               </li>
+              {/* <img
+                  src={profileAvatar}
+                  style={{'width' : "40px", height: "40px"}}
+                  alt="profile-img"
+                  className = "mr-1"
+                /> */}
               <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
-                  Profile
+                  <h6>Profile</h6>
                 </Link>
               </li>
               <li className="nav-item">
                 <a href="/login" className="nav-link" onClick={this.logOut}>
-                  LogOut
+                  <h6>LogOut</h6>
                 </a>
               </li>
             </div>
@@ -260,15 +262,9 @@ class App extends Component {
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to={"/login"} className="nav-link">
-                  Login
+                  <h6>Login</h6>
                 </Link>
               </li>
-
-              {/* <li className="nav-item">
-                <Link to={"/register"} className="nav-link">
-                  Sign Up
-                </Link>
-              </li> */}
             </div>
           )}
         </nav>
@@ -293,7 +289,6 @@ class App extends Component {
             <Route path="/addmilestoneproject/:id" component={AddMilestoneGeneral}/>
             <Route path="/assignuser/:id" component={AssignUserProject} />
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
-            {/* <Route component={ErrorPage}/> */}
 
             <Route path="/resource" component={BoardResource} />
             <Route path="/financialmanagement" component={BoardModerator} />
@@ -330,6 +325,7 @@ class App extends Component {
             <Route path="/addactionplanitem" component={AddAPItem} />
             <Route path="/addactionplansection" component={AddAPSection} />
             <Route path="/viewactionplantype/:id" component={ViewAPType} />
+            <Route exact path="/viewactionplanitems/:aid/:asid" component={ViewActionPlanItems}/>
             {/* Punch List */}
             <Route path="/punchlist/:id" component={punchlistHome} />
             <Route path="/managepunchlist/createaddphoto/:id" component={CreatePhotos} />
@@ -390,18 +386,23 @@ class App extends Component {
             <Route path="/primecontract/:id" component={PrimeContracts} />
 
             {/*resource management */}
+            <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
+            {/*timesheet*/}
             <Route path="/timesheet/:id" component={Timesheet} />
             <Route path="/customize" component={Customize} />
+            <Route path="/viewTimesheet/:id/:code" component={ViewTimesheet} />
+            <Route path="/viewWorkers/:id" component={ViewWorkers} />
+            {/*crew*/}
             <Route path="/crew/:id" component={Crew} />
             <Route path="/newCrew/:id" component={NewCrew}/>
+            <Route path="/addWorker/:id" component={AddWorker} />
+            {/*schedule*/}
             <Route path="/schedule/:id" component={Schedule} />
+            {/*equipment*/}
             <Route path="/equipments/:id" component={Equipments} />
             <Route path="/equipDetails/:code" component={EquipDetails} />
             {/*<Route path="/equipDetails/:id/:code" component={EquipDetails} />*/}
-            <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
-            <Route path="/viewTimesheet/:id/:code" component={ViewTimesheet} />
-                    
-
+            
             {/*financial management */}
             <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
             <Route path="/editprimecontracts/:id" component={EditPrimeContracts} />
@@ -428,7 +429,7 @@ class App extends Component {
 
             {/*Report and PDF */}
             <Route path="/report/" component={Report} />
-           
+            <Route component={ErrorPage}/>
           </Switch>
         </div>
         )}

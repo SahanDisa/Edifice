@@ -99,7 +99,7 @@ class PLTView extends Component {
                             <Link to={"/view/"+ pli.no}>
                                 <button className="btn btn-success m-2">Update<UpdateIcon/></button>
                             </Link>
-                            <Link to={"/deletepl/" + projectId + "/" + pli.no}>
+                            <Link to={"/deletepl/" + pli.no}>
                                 <button className="btn btn-danger m-2">Delete<DeleteIcon/></button>
                             </Link>
                         </td>    

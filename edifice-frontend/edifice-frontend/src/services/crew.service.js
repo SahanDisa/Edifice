@@ -28,17 +28,11 @@ class CrewDataService {
 
   deleteAll() {
     return http.delete(`/projects`);
-  }
+  }*/
 
   findByTitle(title) {
-    return http.get(`/projects?title=${title}`);
+    return http.get(`/Crews?title=${title}`);
   }
-  userProjects(id){
-    return http.get(`/projects/user/list/${id}`);
-  }*/
-  // findPublished(){
-  //   return http.get(`/projects?published=`)
-  // }
 }
 
 export default new CrewDataService();

@@ -98,7 +98,7 @@ class Equipment extends Component {
                                         <div className="">
                                             <div class="col-md-12 text-right mb-2">
                                             {equipments && equipments.map((equipmentList, currentIndex) => (
-                                              equipment.category === equipmentList.category ?
+                                              equipment.category == equipmentList.category ?
                                             
                                               <List component="nav" aria-label="mailbox folders">
                                                 <ListItem button>

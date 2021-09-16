@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Modal} from "react-bootstrap";
 import DeleteIcon from '@material-ui/icons/Delete';
 import WorkersDataService from "./../../../services/worker.service";
 
-class EditWorker extends Component {
+class ViewWorker extends Component {
   constructor(props) {
     super(props);
     this.deleteWorker = this.deleteWorker.bind(this);
@@ -22,6 +23,7 @@ class EditWorker extends Component {
     WorkersDataService.delete(this.state.wId)
       .then(response => {
         console.log(response.data);
+        window.location.reload();
        // this.props.history.push('/drawings/'+this.state.pid);
       })
       .catch(e => {
@@ -37,29 +39,20 @@ class EditWorker extends Component {
       //console.log(wId)
         return (  
         <div>
-            <div className="modal-dialog modal-dialog-centered" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalCenterTitle">Worker Details</h5>
-                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  
-                    <div>
+          <Modal.Header closeButton> 
+            <h5 className="modal-title" id="exampleModalCenterTitle">Edit Worker Details</h5>
+          </Modal.Header>
+          <Modal.Body>
+            <div>
+              <label htmlFor=""><b>Id:</b> {wId}</label>
+              <label htmlFor=""><b>First Name:</b> {fristName}</label>
+              <label htmlFor=""><b>Last Name:</b> {lastName}</label>
+              <label htmlFor=""><b>Mobile:</b> {mobile}</label>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
 
-                        <label htmlFor=""><b>Id:</b> {wId}</label>
-
-                        <label htmlFor=""><b>First Name:</b> {fristName}</label>
-
-                        <label htmlFor=""><b>Last Name:</b> {lastName}</label>
-
-                        <label htmlFor=""><b>Mobile:</b> {mobile}</label>
-                    </div>
-                </div>
-                <div className="modal-footer">
-                <button 
+            <button 
                 type="button" 
                 className="btn btn-danger" 
                 data-toggle="modal" 
@@ -67,21 +60,18 @@ class EditWorker extends Component {
                 onClick={this.deleteWorker}>
                   Delete 
                   <DeleteIcon/>
-                </button>
+              </button>
 
-                <button 
+              <button 
                 type="button" 
                 className="btn btn-success">
                   Check Worked Hours
-                </button>
+              </button>
 
-                </div>
-              </div>
-            </div>
+          </Modal.Footer>
         </div>
- 
         );
     }
   }
 
-export default EditWorker;
+export default ViewWorker;

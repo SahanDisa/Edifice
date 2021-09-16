@@ -64,15 +64,9 @@ class Timesheet extends Component {
                         <div className="col-auto">
                             <a href="" className="btn btn-success">search</a>
                         </div>
-
-                        <div className="col-auto">
-                            <input className="form-control" type="date" id="birthday" name="birthday"/>
-                            <br />
-                        </div>
                     </form>
 
                     <div className ="col-6 align-items-end text-right">
-                        <a href="/customize" className="btn btn-secondary mr-3"> Customize</a>
                         <a href="#" className="btn btn-secondary mr-3"> Export PDF</a>
                         <button className="btn btn-primary" data-toggle="modal" data-target="#createNew"> Create New</button>
                         
