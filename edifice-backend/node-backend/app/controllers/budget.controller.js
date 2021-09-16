@@ -22,6 +22,7 @@ exports.create = (req, res) => {
     description: req.body.description,
     date: req.body.date,
     estimatedBudget: req.body.estimatedBudget,
+    published: req.body.published,
     //directCosts:req.body.directCosts,
     //commitedCosts:req.body.commitedCosts,
     //currentBudget: req.body.currentBudget,
@@ -46,9 +47,11 @@ exports.create = (req, res) => {
 // Get budget line items for a given project
 exports.findAll = (req, res) => {
   const id = req.params.id;
+  const published = true;
 
   Budget.findAll({ where: {
-    projectId: id
+    projectId: id,
+    published: published
   }})
     .then(data => {
       res.send(data);
@@ -78,7 +81,7 @@ exports.findOne = (req, res) => {
 
 /*-------------------------------------------------------------- */
 
-//delete a direct cost
+//delete a budget - this should be removed
 
 exports.delete = (req, res) => {
   const id = req.params.id;
@@ -104,12 +107,12 @@ exports.delete = (req, res) => {
       });
     });
 };
+/*-------------------------------------------------------------- */
 
 //update a budget
 
 exports.update = (req, res) => {
   const id = req.params.id;
-
 
   Budget.update(req.body, {
     where: { id: id }
@@ -132,15 +135,19 @@ exports.update = (req, res) => {
     });
 };
 
-/*********************************************** */
+
+//search by cost code
+
 exports.findByCostCode= (req, res) => {
   const id = req.params.id;
+  const published = true;
   //const costCode = req.query.costCode;
   const costCode = req.params.costCode;
     //var condition = costCode ? { costCode: { [Op.like]: `%${costCode}%` } } : null;
 
   Budget.findAll({ where: {
     projectId: id,
+    published : published,
     //condition:condition
     costCode:costCode
   }})
@@ -158,7 +165,7 @@ exports.findByCostCode= (req, res) => {
 exports.getTotalBudget = (req,res)=>{
 const id = req.params.id;
 Budget.findAll({
-where: {projectId:id },
+where: {projectId:id ,published:true},
 attributes: [[sequelize.fn('sum', sequelize.col('estimatedBudget')), 'total']],
 raw: true,
 }).then(data => {
@@ -172,15 +179,22 @@ res.status(500).send({
 });  
 }
 
+
+// budget overview table with join
+
 exports.getBudgetOverview = (req,res)=>{
 
   //db.budgets.projectId  = req.params.id;
   
-  db.sequelize.query('SELECT budget.id,budget.costCode, SUM(budget.estimatedBudget) as btotal,SUM(directcost.amount) as dtotal,  SUM(sov.amount) as stotal FROM budget LEFT JOIN directcost ON directcost.costCode=budget.costCode LEFT JOIN sov   ON sov.costCode=budget.costCode  WHERE budget.projectId=:id GROUP BY budget.costCode',
-   {  replacements: { id: req.params.id },type: db.sequelize.QueryTypes.SELECT})
+  db.sequelize.query('SELECT budget.id,budget.costCode, SUM(budget.estimatedBudget) as btotal,SUM(directcost.amount) as dtotal,  SUM(sov.amount) as stotal FROM budget LEFT JOIN directcost ON directcost.costCode=budget.costCode LEFT JOIN sov   ON sov.costCode=budget.costCode  WHERE budget.projectId=:id AND budget.published=:published GROUP BY budget.costCode',
+   {  replacements: { id: req.params.id,published:true },type: db.sequelize.QueryTypes.SELECT})
   .then(data => {
       res.send(data);
     })
-
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving total  "
+      });
+      });  
 
   }

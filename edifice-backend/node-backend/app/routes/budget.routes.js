@@ -9,7 +9,7 @@ module.exports = app => {
     // Retrieve all Budgets for a project
     router.get("/list/:id", budget.findAll);
   
-   // Retrieve all direct costs for a project
+   // Retrieve all budgets for a project according to cost code
      //router.get("/list/:id?costCode=[keyword]", directcost.findByCode);
      router.get("/list/:id/:costCode", budget.findByCostCode);
   
