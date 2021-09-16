@@ -6,9 +6,10 @@ import Card from 'react-bootstrap/Card';
 import UploadFiles from "./fileupload.component";
 import directorycover from "././../../../assets/PM/photos/directory1.jpg";
 import Table from 'react-bootstrap/Table';
-import DeleteIcon from '@material-ui/icons/Delete';
+// import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import UpdateIcon from '@material-ui/icons/Update';
+import { Breadcrumbs } from "@material-ui/core";
+// import UpdateIcon from '@material-ui/icons/Update';
 
 export default class Documents extends Component {
   constructor(props) {
@@ -59,41 +60,47 @@ export default class Documents extends Component {
       
       return (
           <div>
-          <h2>Document</h2>
-          <h6>Manage project specific documents and organise with directories in here</h6>
-          <Link className="btn btn-primary mr-2" to={"/directory/"+id}>
-                Add Directory
-          </Link>
-          <Link className="btn btn-primary mr-2" to={"/adddocument/"+id}>
-                Add Document
-          </Link>
+          <h2>Document Home</h2>
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link color="inherit" to="/home">
+              Home
+            </Link>
+            <Link color="inherit" to={"/projectmanagementhome/"+id}>
+              App Dashboard
+            </Link>
+            <Link color="textPrimary" to={"/document/"+id} aria-current="page">
+              Document Home
+            </Link>
+          </Breadcrumbs>
           <hr></hr>
           <h3>Directory</h3>
-          <p>Manage your document by clicking on a directory</p>
+          <h6>Manage project specific documents and organise with directories in here</h6>
+          <Link className="btn btn-primary mr-2 mb-2" to={"/directory/"+id}>
+                Add Directory
+          </Link>
+          
           <div className="container">
           <div className="container row">
             {directories &&
               directories.map((directory, index) => (
-                    <div
-                    className={
-                    "container col-3" +
-                    (index === currentIndex ? "active" : "")
-                    }
-                    key={index}
-                >
+              <div
+              className={
+              "container col-3" +
+              (index === currentIndex ? "active" : "")
+              }
+              key={index}>
                 {/* unit data */}
                 <Link to={"/viewdirectory/"+id+"/"+directory.id} style={{'text-decoration': 'none'}}>
-                        <Card
-                        bg={'secondary'}
-                        text={'dark'}
-                        style={{ width: '14rem' }}
-                        className="mb-2"
-                        >
-                        <Card.Img src={directorycover} alt="Card image" />
-                        <Card.ImgOverlay>
-                        </Card.ImgOverlay>
-                        <Card.Title><h4>{directory.title}</h4></Card.Title>
-                        </Card>
+                  <Card
+                  bg={'secondary'}
+                  text={'dark'}
+                  style={{ width: '14rem' }}
+                  className="mb-2">
+                  <Card.Img src={directorycover} alt="Card image" />
+                  <Card.ImgOverlay>
+                  </Card.ImgOverlay>
+                  <Card.Title><h4>{directory.title}</h4></Card.Title>
+                  </Card>
                 </Link>
                 </div>
             ))}
@@ -101,55 +108,55 @@ export default class Documents extends Component {
         </div>
         <hr></hr>
         <h3>Documents</h3>
-        <p>Manage your document by adding it to the system</p>
+        <h6>Manage your document by adding it to the system</h6>
+        <Link className="btn btn-primary mr-2 mb-2" to={"/adddocument/"+id}>
+                Add Document
+        </Link>
         <h3>Recent Documents</h3>
-                {/* Drawing List */}
-                <Table striped bordered hover variant="secondary" responsive>
-                  <thead>
-                    <tr>
-                      <th>Index</th>
-                      <th>Name</th>
-                      <th>Description</th>
-                      <th>Status</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  {/* Functional for table data */}
-                  <tbody>
-                  {recentdocuments &&
-                      recentdocuments.map((doc, index) => (
-                      <tr
-                          key={index}
-                      >
-                      <td>{doc.id}</td>
-                      <td>{doc.title}</td>
-                      <td>{doc.description}</td>
-                      <td>{doc.status}</td>
-                      <td>   
-                          {/* Button Group */}
-                          {/* <Link to={"/viewdoc/"+doc.id}>
-                          <button className="btn btn-primary">View <VisibilityIcon/> </button>
-                          </Link> */}
-                          {/* <a className="btn btn-primary" href={"http://localhost:8080/api/files/"+doc.title+".pdf"} target="_blank">View<VisibilityIcon/></a> */}
-                          <Link to={"/viewsingledocument/"+doc.id}>
-                          <button className="btn btn-primary m-2">View <VisibilityIcon/> </button>
-                          </Link>
-                          {/* <Link to={"/updatedocument/"+id +"/"+doc.id}>
-                          <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
-                          </Link>
-                          <Link to={"/viewdrawing/"+doc.id}>
-                          <button className="btn btn-danger">Delete <DeleteIcon/> </button>
-                          </Link> */}
-                      </td>    
-                      </tr>
-                      ))}
-                  </tbody>
-                  {/*Ends */}
-                </Table>
-            {/* Custome File Documents */}
-            <UploadFiles/>
-          </div>
-
+          {/* Drawing List */}
+          <Table striped bordered hover variant="secondary" responsive>
+          <thead>
+            <tr>
+              <th>Index</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          {/* Functional for table data */}
+          <tbody>
+          {recentdocuments &&
+            recentdocuments.map((doc, index) => (
+          <tr key={index} >
+            <td>{doc.id}</td>
+            <td>{doc.title}</td>
+            <td>{doc.description}</td>
+            <td>{doc.status  == "Not Complete" ? "🔴 Not Complete": doc.status == "Pending"? "🟡 Pending" : "🟢 Complete"}</td>
+            <td>   
+                {/* Button Group */}
+                {/* <Link to={"/viewdoc/"+doc.id}>
+                <button className="btn btn-primary">View <VisibilityIcon/> </button>
+                </Link> */}
+                {/* <a className="btn btn-primary" href={"http://localhost:8080/api/files/"+doc.title+".pdf"} target="_blank">View<VisibilityIcon/></a> */}
+                <Link to={"/viewsingledocument/"+doc.id}>
+                <button className="btn btn-primary m-2">View <VisibilityIcon/> </button>
+                </Link>
+                {/* <Link to={"/updatedocument/"+id +"/"+doc.id}>
+                <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
+                </Link>
+                <Link to={"/viewdrawing/"+doc.id}>
+                <button className="btn btn-danger">Delete <DeleteIcon/> </button>
+                </Link> */}
+            </td>    
+          </tr>
+          ))}
+          </tbody>
+          {/*Ends */}
+        </Table>
+        {/* Custome File Documents */}
+        <UploadFiles/>
+      </div>
       );
   }
 }
