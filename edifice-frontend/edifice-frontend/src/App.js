@@ -8,9 +8,6 @@ import 'bootstrap/dist/js/bootstrap.js';
 // import Popper from 'popper.js';
 import "./App.css";
 import mainIcon from "././assets/Edifice.png";
-
-// import NavDropdown from "react-bootstrap/NavDropdown"
-
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
@@ -206,7 +203,7 @@ class App extends Component {
                 <Link to={"/home"} className="nav-link"></Link>
               </li>
             )}
-            {currentUser && (
+            {/* {currentUser && (
               <li className="nav-item">
                 <Link to={"/projectmanagement"} className="nav-link">
                 <h6>Manage Projects</h6>
@@ -225,17 +222,12 @@ class App extends Component {
                 <Link to={"/resource"} className="nav-link">
                   <h6>Manage Resources</h6>
                 </Link>
-        { /*    <NavDropdown title="Manage Resources" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/timesheet">Timesheets</NavDropdown.Item>
-                <NavDropdown.Item href="/equipments">Equipments</NavDropdown.Item>
-                <NavDropdown.Item href="/crew">Crews</NavDropdown.Item>
-              </NavDropdown>*/}
             </li>
-            )}
+            )} */}
             {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
-                <h6>Core Tools</h6>
+                <h6>Dashboard</h6>
                 </Link>
               </li>
             )}
@@ -245,17 +237,17 @@ class App extends Component {
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to={"/schedule"} className="nav-link">
-                  Schedule
+                  <h6>Schedule</h6>
                 </Link>
               </li>
               <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
-                  Profile
+                  <h6>Profile</h6>
                 </Link>
               </li>
               <li className="nav-item">
                 <a href="/login" className="nav-link" onClick={this.logOut}>
-                  LogOut
+                  <h6>LogOut</h6>
                 </a>
               </li>
             </div>
@@ -263,15 +255,9 @@ class App extends Component {
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to={"/login"} className="nav-link">
-                  Login
+                  <h6>Login</h6>
                 </Link>
               </li>
-
-              {/* <li className="nav-item">
-                <Link to={"/register"} className="nav-link">
-                  Sign Up
-                </Link>
-              </li> */}
             </div>
           )}
         </nav>
