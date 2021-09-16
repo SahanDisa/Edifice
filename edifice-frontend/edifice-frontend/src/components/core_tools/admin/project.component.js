@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ProjectDataService from "./../../../services/project.service";
+import { Breadcrumbs } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 export default class Project extends Component {
   constructor(props) {
@@ -137,7 +139,20 @@ export default class Project extends Component {
           {currentProject ? (
             <div className="container">
               <h2>Update the Project</h2>
-              <h4>Project Id : {temp}</h4>
+              <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" to="/home">
+                  Home
+                </Link>
+                <Link color="inherit" to={"/admin"}>
+                  Core Dashboard
+                </Link>
+                <Link color="inherit" to={"/projects"}>
+                  Project Home
+                </Link>
+                <Link color="textPrimary" to={"/projects/"+temp} aria-current="page">
+                  Update Projects / {temp}
+                </Link>
+              </Breadcrumbs>
               <form>
                 <div className="form-group">
                   <label htmlFor="title">Title</label>
