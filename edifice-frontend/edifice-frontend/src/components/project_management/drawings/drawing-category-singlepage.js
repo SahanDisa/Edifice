@@ -78,6 +78,9 @@ export default class ViewSingleDrawingCategory extends Component {
                   <div className="col-9">
                   <h6>Name : {title}</h6>
                   <h6>Description : {description}</h6>
+                  <h6>🔴 : Not Complete</h6>
+                  <h6>🟡 : Pending</h6>
+                  <h6>🟢 : Complete</h6>
                   </div>
                   { showManagerBoard &&
                   <div className="col-3">

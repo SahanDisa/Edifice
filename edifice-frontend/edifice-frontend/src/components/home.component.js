@@ -323,7 +323,7 @@ export default class Home extends Component {
                       radius={50}
                       progress={66}
                       initialAnimation
-                      initialAnimationDelay={50}
+                      initialAnimationDelay={2000}
                       strokeWidth={10}
                       strokeColor="#273f7d"
                       transition="2s ease"

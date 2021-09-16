@@ -87,6 +87,16 @@ export default class BoardUser extends Component {
 
   render() {
     const {id,showEngineerBoard,showManagerBoard,showAdminBoard,projects} = this.state;
+    const today = new Date();
+    const date1 = new Date(projects.startdate);
+    const date2 = new Date(projects.enddate);
+    const diffTime = Math.abs(date2 - date1);
+    const diffTime2 = Math.abs(date2 - today);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    const remainDays = Math.ceil(diffTime2/(1000 * 60 * 60 * 24));
+    console.log(diffTime + " milliseconds");
+    console.log(diffDays + " days");
+    console.log(remainDays + " remain days");
     return (
       <div className="container">
         <h2>App Dashboard</h2>
@@ -106,11 +116,17 @@ export default class BoardUser extends Component {
         {/* Breadcrumb ends */}
         <div className="card card-hover shadow-sm card-text-edifice">
         <div className="row">
-          <div className="col-9 m-2">
+          <div className="col-5 m-2">
           <h4>{projects.title}</h4>
           <h6>Description : {projects.description}</h6>
           <h6>Location: {projects.location}</h6> 
           <h6>From : {projects.startdate} to {projects.enddate}</h6>
+          </div>
+          <div className="col-4 mt-4">
+          <center>
+          <h2><b>{remainDays}{" "}</b>Days</h2>
+          <h3>Remaining</h3>
+          </center>
           </div>
           <div className="col-2">
           <center>
