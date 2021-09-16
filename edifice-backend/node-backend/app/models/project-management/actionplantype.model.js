@@ -6,8 +6,13 @@ module.exports = (sequelize, Sequelize) => {
       },
       description: {
         type: Sequelize.STRING
-      }}, {
-        freezeTableName: true,
+      },
+      isDeleted: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: 0
+      }
+    }, {
+      freezeTableName: true,
     });
 
     return ActionPlanType;
