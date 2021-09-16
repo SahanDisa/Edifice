@@ -233,3 +233,7 @@ button.bg-dark:focus {
   background-color: #2b2d42;
   color: white;
 }
+
+.card-text-edifice{
+  color: #273f7d !important;
+}

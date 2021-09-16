@@ -11,9 +11,10 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ProjectIcon from '@material-ui/icons/Apartment';
 import FinanceIcon from '@material-ui/icons/MonetizationOn';
 import ResourceIcon from '@material-ui/icons/EmojiTransportation';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import ProgressBar from 'react-bootstrap/ProgressBar';
-import Badge from 'react-bootstrap/Badge'
+// import CircularProgress from '@material-ui/core/CircularProgress';
+// import ProgressBar from 'react-bootstrap/ProgressBar';
+// import Badge from 'react-bootstrap/Badge';
+import ProgressBarCust from 'react-customizable-progressbar';
 
 export default class Home extends Component {
   constructor(props) {
@@ -133,9 +134,9 @@ export default class Home extends Component {
                   <Card.Title>
                   <center>
                   <DashboardIcon style={{ fontSize: 50 }}/>
-                  <Link to={"/admin/"} style={{'text-decoration': 'none'}}>
-                  <h3>Dashboard & Core Tools</h3>
-                  </Link>
+                  
+                  <h3 style={{'color': '#273f7d' }}>Dashboard & Core Tools</h3>
+                  
                   </center>
                   </Card.Title>
                   <Card.Text>
@@ -150,9 +151,9 @@ export default class Home extends Component {
                   <Card.Title>
                   <center>
                   <ProjectIcon style={{ fontSize: 50 }}/>
-                  <Link to={"/projectmanagement/"} style={{'text-decoration': 'none'}}>
-                  <h3>Project Management</h3>
-                  </Link>
+                  
+                  <h3 style={{'color': '#273f7d' }}>Project Management</h3>
+                  
                   </center>
                   </Card.Title>
                   <Card.Text>
@@ -168,9 +169,9 @@ export default class Home extends Component {
                   <Card.Title>
                   <center>
                   <FinanceIcon style={{ fontSize: 50 }}/>
-                  <Link to={"/financialmanagement/"} style={{'text-decoration': 'none'}}>
-                  <h3>Finance Management</h3>
-                  </Link>
+                  
+                  <h3 style={{'color': '#273f7d' }}>Finance Management</h3>
+                 
                   </center>
                   </Card.Title>
                   <Card.Text>
@@ -186,9 +187,9 @@ export default class Home extends Component {
                   <Card.Title>
                   <center>
                   <ResourceIcon style={{ fontSize: 50 }}/>
-                  <Link to={"/resource/"} style={{'text-decoration': 'none'}}>
-                  <h3>Resource Management</h3>
-                  </Link>
+                  
+                  <h3 style={{'color': '#273f7d' }}>Resource Management</h3>
+                  
                   </center>
                   </Card.Title>
                   <Card.Text>
@@ -209,9 +210,9 @@ export default class Home extends Component {
                   <Card.Title>
                   <center>
                   <ProjectIcon style={{ fontSize: 50 }}/>
-                  <Link to={"/projectmanagement/"} style={{'text-decoration': 'none'}}>
-                  <h3>Project Management</h3>
-                  </Link>
+                  
+                  <h3 style={{'color': '#273f7d' }}>Project Management</h3>
+                  
                   </center>
                   </Card.Title>
                   <Card.Text>
@@ -227,9 +228,9 @@ export default class Home extends Component {
                   <Card.Title>
                   <center>
                   <FinanceIcon style={{ fontSize: 50 }}/>
-                  <Link to={"/financialmanagement/"} style={{'text-decoration': 'none'}}>
-                  <h3>Finance Management</h3>
-                  </Link>
+                  
+                  <h3 style={{'color': '#273f7d' }}>Finance Management</h3>
+                  
                   </center>
                   </Card.Title>
                   <Card.Text>
@@ -245,9 +246,9 @@ export default class Home extends Component {
                   <Card.Title>
                   <center>
                   <ResourceIcon style={{ fontSize: 50 }}/>
-                  <Link to={"/resource/"} style={{'text-decoration': 'none'}}>
-                  <h3>Resource Management</h3>
-                  </Link>
+                  
+                  <h3 style={{'color': '#273f7d' }}>Resource Management</h3>
+                  
                   </center>
                   </Card.Title>
                   <Card.Text>
@@ -269,9 +270,9 @@ export default class Home extends Component {
                   <Card.Title>
                   <center>
                   <ProjectIcon style={{ fontSize: 50 }}/>
-                  <Link to={"/projectmanagement/"} style={{'text-decoration': 'none'}}>
-                  <h3>Project Management</h3>
-                  </Link>
+                  
+                  <h3 style={{'color': '#273f7d' }}>Project Management</h3>
+                  
                   </center>
                   </Card.Title>
                   <Card.Text>
@@ -293,30 +294,47 @@ export default class Home extends Component {
         <div className="list-group">
           {uprojects &&
             uprojects.map((project, index) => (
-              <Card border="dark" style={{ width: '54rem' }} className="m-2">
+              <Card style={{ width: '54rem'}} className="m-2 shadow-sm">
               <div className="container row">
                 <div className="col-9">
                   <Link
                     to={"/projectmanagementhome/" + project.projectId}
-                    className="" style={{'text-decoration': 'none'}}
+                    className="" style={{'text-decoration': 'none', 'color': '#273f7d'}}
                   >
-                    <h4>{project.title}</h4>
-                    <br/>
-                    <h6>Breif : {project.description}</h6>
+                    <h4 className="mt-2">{project.title}</h4>
+                  </Link>
+                  <br/>
+                    <h6>Brief : {project.description}</h6>
                     <h6>Location : {project.location}</h6>
                     <h6>Working Department : {project.department}</h6>
                     {/* {index} */}
                     {/* <h6>Position : {project.position}</h6> */}
-                  </Link>
                 </div>
                 <div className="col-3">
                 <center>
-                <img
+                {/* <img
                   src={projectLogo}
                   style={{'width' : "100px", height: "100px"}}
                   alt="profile-img"
-                  className = "mt-3"
-                />
+                  className = "mt-4"
+                  
+                /> */}
+                  <ProgressBarCust
+                      radius={50}
+                      progress={66}
+                      initialAnimation
+                      initialAnimationDelay={50}
+                      strokeWidth={10}
+                      strokeColor="#273f7d"
+                      transition="2s ease"
+                      trackStrokeWidth={10}
+                      trackStrokeColor="#f3eded"
+                      trackTransition="1s ease"
+                      pointerRadius={1}
+                      pointerStrokeWidth={15}
+                      pointerStrokeColor="#5c81cd"
+                      className="mt-2"
+                  />
                   {/* <h5>Progress</h5>
                   <ProgressBar>
                     <ProgressBar  variant="primary" now={35} key={1} />
