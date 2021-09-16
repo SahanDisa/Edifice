@@ -120,3 +120,28 @@ exports.update = (req, res) => {
         });
     });
 };
+
+// Delete a Punchlist with the specified id in the request
+exports.delete = (req, res) => {
+    const id = req.params.id;
+    Punchlist.update({isDeleted = 1}, {
+      where: { no: id }
+    })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Punchlist was deleted successfully!"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Punchlist with id=${id}. Maybe Punchlist was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete Punchlist with id=" + id
+      });
+    });
+  };
+  
