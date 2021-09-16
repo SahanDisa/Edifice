@@ -7,6 +7,7 @@ import Table from 'react-bootstrap/Table';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
+import { Breadcrumbs } from "@material-ui/core";
 
 export default class ViewSingleDrawingCategory extends Component {
     constructor(props) {
@@ -71,7 +72,21 @@ export default class ViewSingleDrawingCategory extends Component {
         return (
             <div>
               <h2>Drawing Category Single Page</h2>
-              <p>Manage the drawing in each drawing category</p>
+              <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+projectId}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/drawing/"+projectId} aria-current="page">
+                Drawing Home
+              </Link>
+              <Link color="textPrimary" to={"/viewdrawingcategory/"+id} aria-current="page">
+                {title}
+              </Link>
+            </Breadcrumbs>
+              
               <hr></hr>
               <h3>Category Details</h3>
               <div className="row">
@@ -94,6 +109,7 @@ export default class ViewSingleDrawingCategory extends Component {
               
               <h3>Drawing List</h3>
               {/* Drawing List */}
+              <h6>Manage the drawing in each drawing category</h6>
               <Table striped bordered hover variant="secondary" responsive>
                 <thead>
                   <tr>

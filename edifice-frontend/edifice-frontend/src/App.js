@@ -8,6 +8,7 @@ import 'bootstrap/dist/js/bootstrap.js';
 // import Popper from 'popper.js';
 import "./App.css";
 import mainIcon from "././assets/Edifice.png";
+import profileAvatar from "././assets/profile-navbar.jpg";
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
@@ -240,6 +241,12 @@ class App extends Component {
                   <h6>Schedule</h6>
                 </Link>
               </li>
+              {/* <img
+                  src={profileAvatar}
+                  style={{'width' : "40px", height: "40px"}}
+                  alt="profile-img"
+                  className = "mr-1"
+                /> */}
               <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
                   <h6>Profile</h6>
