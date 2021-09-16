@@ -7,6 +7,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
+import { Breadcrumbs } from "@material-ui/core";
 
 //JSX(Javascript XML)
 //https://addrwaing/projectId?=1
@@ -94,6 +95,20 @@ export default class AddDrawingCategory extends Component {
         ) : (
           <div class="container">
             <h2>Add New Drawing Category</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+projectId}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/drawing/"+projectId} aria-current="page">
+                Drawing Home
+              </Link>
+              <Link color="textPrimary" to={"/adddrawingcategory/"+projectId} aria-current="page">
+                Add Category
+              </Link>
+            </Breadcrumbs>
             <div className="row">
             <div className="col-sm-8">
                 <div className="form-group">
@@ -129,7 +144,13 @@ export default class AddDrawingCategory extends Component {
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h5><strong>Step 1</strong><br/>Category Settings</h5> </TimelineContent>
+                <TimelineContent><h5><strong>Step 1 </strong>Category Details</h5> </TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                </TimelineSeparator>
+                <TimelineContent><h6><strong>Step 2 :</strong>Submit</h6></TimelineContent>
               </TimelineItem>
             </Timeline>
             </div>

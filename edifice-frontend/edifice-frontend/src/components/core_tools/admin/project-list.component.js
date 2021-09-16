@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ProjectDataService from "./../../../services/project.service";
 import { Link } from "react-router-dom";
 import { ListGroup } from "react-bootstrap";
+import { Breadcrumbs } from "@material-ui/core";
 
 export default class ProjectsList extends Component {
   constructor(props) {
@@ -89,10 +90,23 @@ export default class ProjectsList extends Component {
     const { searchTitle, projects, currentProject, currentIndex } = this.state;
 
     return (
-      <div className="row">
-      <h2>Project Dashboard</h2>
-        
-        <div className="col-md-10">
+      <div>
+      {/* Top */}
+      <div>
+          <h2>Project Dashboard</h2>
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link color="inherit" to="/home">
+              Home
+            </Link>
+            <Link color="inherit" to={"/admin"}>
+              Core Dashboard
+            </Link>
+            <Link color="inherit" to={"/projects/"}>
+              Projects
+            </Link>
+          </Breadcrumbs>
+        </div> 
+        <div className="mt-1">
           <div className="input-group mb-3">
             <input
               type="text"
@@ -112,78 +126,65 @@ export default class ProjectsList extends Component {
             </div>
           </div>
         </div>
+      {/* Top ends */}
+      <div className="">
+        <h3>Projects List</h3>
+        <h6>Create new projects to the system</h6>
+        
+      </div>
+      <div className="row"> 
         <div className="col-md-6">
-          <h4>Projects List</h4>
-
-          <a
-            className="m-3 btn btn-sm btn-primary"
-            href="/addProject">
-            Add Project
-          </a>
-
+        <a className="btn btn-primary mb-2" href="/addProject">Add New Project</a>
           <ListGroup as="ul">
             {projects &&
               projects.map((project, index) => (
                 <ListGroup.Item as="li"
-                  // className={
-                  //   "list-group-item" +
-                  //   (index === currentIndex ? "active" : "")}
                   action
                   onClick={() => this.setActiveProject(project, index)}
                   key={index}
                   
                 >
-                  {project.title}
+                  <h6>{project.title}</h6>
                 </ListGroup.Item>
               ))}
             </ListGroup>
 
-          <button
-            className="m-3 btn btn-sm btn-danger"
-            onClick={this.removeAllProjects}
-          >
+          <button className="btn btn-danger mt-2" onClick={this.removeAllProjects}>
             Remove All
           </button>
-
         </div>
         <div className="col-md-6">
           {currentProject ? (
             <div>
-              <h4>Project</h4>
               <div>
                 <label>
-                  <strong>Title:</strong>
+                  <h5><strong>Title:</strong></h5>
                 </label>{" "}
-                {currentProject.title}
+                <h6>{currentProject.title}</h6>
               </div>
               <div>
                 <label>
-                  <strong>Description:</strong>
+                  <h5><strong>Description:</strong></h5>
                 </label>{" "}
-                {currentProject.description}
+                <h6>{currentProject.description}</h6>
               </div>
               <div>
                 <label>
-                  <strong>Location:</strong>
+                  <h5><strong>Location:</strong></h5>
                 </label>{" "}
-                {currentProject.location}
+                <h6>{currentProject.location}</h6>
               </div>
               <div>
                 <label>
-                  <strong>Status:</strong>
+                  <h5><strong>Status:</strong></h5>
                 </label>{" "}
-                {currentProject.published ? "Published" : "Pending"}
+                <h6>{currentProject.published ? "🔵 Published" : "🟡 Pending"}</h6>
               </div>
+              <hr></hr>
               <Link
                 to={"/projectmanagementhome/"+ currentProject.id}
                 className="m-1 btn btn-sm btn-primary">
-                View
-              </Link>
-              <Link
-                to={"/projects/" + currentProject.id}
-                className="m-1 btn btn-sm btn-warning"
-              >
-                Edit
+                Manage
               </Link>
               <Link
                 to={"#"}
@@ -198,10 +199,15 @@ export default class ProjectsList extends Component {
               </Link>
               <Link
                 to={"/assignuser/"+ currentProject.id}
-                className="m-1 btn btn-sm btn-primary">
+                className="m-1 btn btn-sm btn-success">
                 Assign Users
               </Link>
-              
+              <Link
+                to={"/projects/" + currentProject.id}
+                className="m-1 btn btn-sm btn-warning"
+              >
+                Edit
+              </Link>
             </div>
           ) : (
             <div>
@@ -210,6 +216,7 @@ export default class ProjectsList extends Component {
             </div>
           )}
         </div>
+      </div>
       </div>
     );
   }
