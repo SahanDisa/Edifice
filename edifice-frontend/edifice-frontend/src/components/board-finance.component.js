@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
-import UserService from "./../services/user.service";
-import AuthService from "./../services/auth.service";
-import ProjectDataService from "./../services/project.service";
+import UserService from "../services/user.service";
+import AuthService from "../services/auth.service";
+import ProjectDataService from "../services/project.service";
 import ProjectUserService from "../services/projectuser.service";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ProgressBar from 'react-bootstrap/ProgressBar';
@@ -75,7 +75,7 @@ export default class BoardUser extends Component {
           <p>Select the Project and Start Working on Your Project Financials Smoothly.</p>
           <div className="container row">
             <div className="container col-3">
-            <a href="/projectmanagementhome/1">
+            
             <Card
               bg={'success'}
               text={'white'}
@@ -90,7 +90,7 @@ export default class BoardUser extends Component {
                 </Card.Text>
               </Card.Body>
             </Card>
-            </a>
+            
             </div>
             <div className="container col-3">
             <Card

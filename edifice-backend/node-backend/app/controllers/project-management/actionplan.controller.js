@@ -152,11 +152,11 @@ exports.deleteAll = (req, res) => {
         });
 };
 
-// Get action plan for a given category
+// Get action plan for a given projectId
 exports.findAlltype = (req, res) => {
   const id = req.params.id;
   ActionPlan.findAll({ where: {
-    category: id
+    projectId: id
   }})
     .then(data => {
       res.send(data);

@@ -65,8 +65,8 @@ export const Pdfviewer = () => {
         />
         {pdfFileError&&<div className='error-msg'>{pdfFileError}</div>}
         <br></br>
-        <button type="submit" className='btn btn-success btn-lg'>
-          UPLOAD
+        <button type="submit" className='btn btn-primary'>
+          Upload
         </button>
       </form>
       </div>

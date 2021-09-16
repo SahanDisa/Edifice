@@ -326,7 +326,7 @@ export default class PortfolioHome extends Component {
             <h2>Portfolio</h2>
             <p>Project abstraction</p>
             <hr></hr>
-            <div className="container">
+            <div>
               <h3>Project Analytics</h3>
               <p>Graphical representation of the progress measurements based on items</p>
                 <div className="row">
@@ -373,7 +373,7 @@ export default class PortfolioHome extends Component {
             <hr></hr>
             
             {/* Progress Tab */}
-            <div className="container">
+            <div>
               <h3>Progress by Activities</h3>
               {/* {drawingComplete+" "+drawingPending+" "+drawingIncomplete} */}
               <p>Visulize the progress of all the activities</p>
@@ -401,7 +401,7 @@ export default class PortfolioHome extends Component {
               </div>
             </div>
             <hr></hr>
-            <div className="container">
+            <div>
                 <h3>Project Profile & Team</h3>
                 <Card>
                   <Card.Body>
@@ -425,7 +425,7 @@ export default class PortfolioHome extends Component {
                 </div>
             </div>
             <hr></hr>
-            <div className="container">
+            <div>
                 <h3>Project Departments</h3>
                 <p>Project Department details</p>
                 {/* Info */}

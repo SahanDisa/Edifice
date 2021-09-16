@@ -20,7 +20,7 @@ import Homereal from "./components/homereal.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-project.component";
 import BoardResource from "./components/board-resource.component";
-import BoardModerator from "./components/board-moderator.component";
+import BoardModerator from "./components/board-finance.component";
 import BoardAdmin from "./components/board-admin.component";
 import ErrorPage from "./components/error.component";
 
@@ -105,6 +105,7 @@ import ViewAPType from "./components/project_management/actionplan/view-actionpl
 import ActionPlanSinglePage from "./components/project_management/actionplan/actionplansinglepage.component";
 import AddAPItem from "./components/project_management/actionplan/addapitem.component";
 import AddAPSection from "./components/project_management/actionplan/addapsection.component";
+import ViewActionPlanItems from "./components/project_management/actionplan/viewactionplanitems.component";
 
 import DlsConfig from "./components/project_management/dailylog/configuration.component";
 import ManageDls from "./components/project_management/dailylog/manage.component";
@@ -295,7 +296,6 @@ class App extends Component {
             <Route path="/addmilestoneproject/:id" component={AddMilestoneGeneral}/>
             <Route path="/assignuser/:id" component={AssignUserProject} />
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
-            {/* <Route component={ErrorPage}/> */}
 
             <Route path="/resource" component={BoardResource} />
             <Route path="/financialmanagement" component={BoardModerator} />
@@ -332,6 +332,7 @@ class App extends Component {
             <Route path="/addactionplanitem" component={AddAPItem} />
             <Route path="/addactionplansection" component={AddAPSection} />
             <Route path="/viewactionplantype/:id" component={ViewAPType} />
+            <Route exact path="/viewactionplanitems/:aid/:asid" component={ViewActionPlanItems}/>
             {/* Punch List */}
             <Route path="/punchlist/:id" component={punchlistHome} />
             <Route path="/managepunchlist/createaddphoto/:id" component={CreatePhotos} />
@@ -435,7 +436,7 @@ class App extends Component {
 
             {/*Report and PDF */}
             <Route path="/report/" component={Report} />
-           
+            <Route component={ErrorPage}/>
           </Switch>
         </div>
         )}

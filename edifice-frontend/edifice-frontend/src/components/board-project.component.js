@@ -12,6 +12,8 @@ export default class BoardUser extends Component {
   constructor(props) {
     super(props);
     this.retriveUserProjects = this.retriveUserProjects.bind(this);
+    this.showCompleted = this.showCompleted.bind(this);
+    this.showProgressed = this.showProgressed.bind(this);
     this.state = {
       projects: [],
       uprojects: [],
@@ -20,11 +22,11 @@ export default class BoardUser extends Component {
       currentUser:  AuthService.getCurrentUser() ,
       usercount: 0,
       showModeratorBoard: false,
+      buttonToggle: 0,
     };
   }
 
   componentDidMount() {
-    
     UserService.getUserBoard().then(
       response => {
         this.setState({
@@ -68,9 +70,19 @@ export default class BoardUser extends Component {
       console.log(e);
     });
   }
+  showCompleted(){
+    this.setState({
+      buttonToggle: 1
+    });
+  }
+  showProgressed(){
+    this.setState({
+      buttonToggle: 0
+    });
+  }
 
   render() {
-    const { uprojects,currentIndex } = this.state;
+    const { uprojects,currentIndex,buttonToggle } = this.state;
     return (
       <div className="container">
           <h3>Project Management Home</h3>
@@ -83,7 +95,6 @@ export default class BoardUser extends Component {
               style={{ width: '14rem' }}
               className="mb-2"
             >
-              
               <Card.Body>
                 <Card.Title><h1>1</h1></Card.Title>
                 <Card.Text>
@@ -101,7 +112,6 @@ export default class BoardUser extends Component {
               className="mb-2"
               background-color={'#3F51B5'}
             >
-              
               <Card.Body>
                 <Card.Title><h1>3</h1></Card.Title>
                 <Card.Text>
@@ -117,7 +127,6 @@ export default class BoardUser extends Component {
               style={{ width: '14rem' }}
               className="mb-2"
             >
-              
               <Card.Body>
                 <Card.Title><h1>17</h1></Card.Title>
                 <Card.Text>
@@ -133,7 +142,6 @@ export default class BoardUser extends Component {
               style={{ width: '14rem' }}
               className="mb-2"
             >
-              
               <Card.Body>
                 <Card.Title><h1>4</h1></Card.Title>
                 <Card.Text>
@@ -142,10 +150,11 @@ export default class BoardUser extends Component {
               </Card.Body>
             </Card>  
             </div>
-            
           </div>
-        <hr></hr>  
+        <hr></hr>
+        {buttonToggle == 0 ?  
         <div className="col-md-10">
+        <button className="btn btn-primary" onClick={this.showCompleted}>Show Completed Projects</button>
         <h4>My Projects List</h4>
 
         <ul className="list-group">
@@ -190,6 +199,12 @@ export default class BoardUser extends Component {
             ))}
         </ul>
         </div> 
+        : 
+        <div className="col-md-10">
+        <button className="btn btn-primary" onClick={this.showProgressed}>Show Progressing Projects</button>
+        <h4>My Completed Projects List</h4>
+        </div>
+        } 
       </div> 
     );
   }

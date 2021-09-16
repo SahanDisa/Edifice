@@ -8,6 +8,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import CheckIcon from '@material-ui/icons/Check';
 import HomeIcon from '@material-ui/icons/Home';
+import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
 import {
   BarChart,
   Bar,
@@ -158,8 +159,32 @@ export default class BudgetList extends Component {
         ];
         return (
             <div>
+              <div className="row">
+              <div className="col" >
                <div  className="row"> <Link to={"/financialmanagementhome/" + id}><HomeIcon style={{ color: "#2b2d42"}}/></Link>&nbsp;<h3>BUDGET OVERVIEW</h3></div>
               <p>See the Overview of the Project Budget</p>
+</div>
+<div className="col" >
+<div className="row">
+<div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2" >
+<div className="card card-hover shadow-sm" style={{alignItems: "center"}} ><br />
+ {(Number(sovTotal)+Number(directCostTotal)) > budgetTotal ? 
+              <div className="row"><ReportProblemOutlinedIcon style={{ color: "red" }}/><h3 className="h5 nav-heading-title mb-0">&nbsp;Over Budgeted</h3></div>
+: <CheckIcon/>
+}
+<br />
+</div>
+</div>
+
+<div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2" >
+<div className="card card-hover shadow-sm" style={{alignItems: "center"}} ><br />
+  <h3 className="h6 nav-heading-title mb-0">Revised Amount(Rs.) : <span style={{ color: 'red' }}>{Number(sovTotal)+Number(directCostTotal)-Number(budgetTotal)}</span></h3>
+<br />
+</div>
+</div>
+</div>
+</div>
+              </div>
               {/*<Button aria-controls="simple-menu" aria-haspopup="true" onClick={this.handleClick}>
 Financial Management Home
 </Button>

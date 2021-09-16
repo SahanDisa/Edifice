@@ -2,12 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ActionPlanDataService from "./../../../services/project_management/actionplan.service";
 import ActionPlanTypeDataService from "../../../services/project_management/actionplantype.service";
-import Timeline from '@material-ui/lab/Timeline';
-import TimelineItem from '@material-ui/lab/TimelineItem';
-import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
-import TimelineConnector from '@material-ui/lab/TimelineConnector';
-import TimelineContent from '@material-ui/lab/TimelineContent';
-import TimelineDot from '@material-ui/lab/TimelineDot';
 
 export default class AddAPItem extends Component {
   constructor(props) {
@@ -24,7 +18,7 @@ export default class AddAPItem extends Component {
         description: "",
         assigner: "",
         isCompleted: 0,
-        // actionplansectionId: this.props.match.params.id, 
+        actionplanId: this.props.actionplanId,
         
         actionplantypes: [],
         currentIndex: -1,
@@ -102,7 +96,7 @@ export default class AddAPItem extends Component {
     }
 
   render() {
-    const {actionplansectionId, currentIndex, actionplantypes} = this.state;
+    const {actionplansectionId, currentIndex, actionplantypes,actionplanId} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
@@ -122,7 +116,7 @@ export default class AddAPItem extends Component {
           <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalCenterTitle">Add New Action Plan Item</h5>
+                  <h5 className="modal-title" id="exampleModalCenterTitle">Add New Action Plan Item {actionplanId}</h5>
                   <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
