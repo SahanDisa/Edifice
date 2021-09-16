@@ -125,9 +125,9 @@ export default class Profile extends Component {
           <div className="col-6">
           <h3>My Account</h3>
           <p>
-            <strong>Token:</strong>{" "}
-            {currentUser.accessToken.substring(0, 20)} ...{" "}
-            {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
+            {/* <strong>Token:</strong>{" "} */}
+            {/* {currentUser.accessToken.substring(0, 20)} ...{" "}
+            {currentUser.accessToken.substr(currentUser.accessToken.length - 20)} */}
           </p>
           <div className="form-group">
               <label htmlFor="startDate"><h6>Username : </h6></label>
@@ -154,8 +154,45 @@ export default class Profile extends Component {
               />
           </div>
           <a href="#" className="btn btn-primary">Update Profile</a>
-            <hr></hr>
-            
+          <hr></hr>
+          <h3>Chanage Password</h3>
+          <div className="form-group">
+              <label htmlFor="startDate"><h6>Previous Password : </h6></label>
+              <input
+                type="password"
+                className="form-control"
+                id="startDate"
+                //required
+                value=""
+                // onChange={this.onChangeLocation}
+                name="startDate"
+              />
+          </div>
+          <div className="form-group">
+              <label htmlFor="startDate"><h6>New Password : </h6></label>
+              <input
+                type="password"
+                className="form-control"
+                id="startDate"
+                //required
+                value=""
+                // onChange={this.onChangeLocation}
+                name="startDate"
+              />
+          </div>
+          <div className="form-group">
+              <label htmlFor="startDate"><h6>Confirm Password : </h6></label>
+              <input
+                type="password"
+                className="form-control"
+                id="startDate"
+                //required
+                value=""
+                // onChange={this.onChangeLocation}
+                name="startDate"
+              />
+          </div>
+          <a href="#" className="btn btn-primary">Change Password</a>
           </div>
           <div className="col-6">
           <h3>My Roles & Permission</h3>
