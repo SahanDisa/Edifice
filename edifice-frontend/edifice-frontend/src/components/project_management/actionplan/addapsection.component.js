@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import ActionPlanDataService from "./../../../services/project_management/actionplan.service";
+import ActionPlanSectionDataService from "./../../../services/project_management/actionplansection.service";
 import ActionPlanTypeDataService from "../../../services/project_management/actionplantype.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -26,7 +26,7 @@ export default class AddAPSection extends Component {
         refid: "",
         acceptance: "",
         duedate: "",
-        // actionplanId: this.props.match.params.id, 
+        actionplanId: this.props.actionplanId,
         
         actionplantypes: [],
         currentIndex: -1,
@@ -70,10 +70,10 @@ export default class AddAPSection extends Component {
             refid: this.state.refid,
             acceptance: this.state.acceptance,
             duedate: this.state.duedate,
-            actionplanId: this.state.actionplanId
+            actionplanId: this.state.actionplanId,
         };
 
-        ActionPlanDataService.create(data)
+        ActionPlanSectionDataService.create(data)
         .then(response => {
             this.setState({
             id: response.data.id,

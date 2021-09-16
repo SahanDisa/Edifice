@@ -13,7 +13,7 @@ module.exports = app => {
     router.get("/published", crew.findAllPublished);
   */
     // Retrieve a single crew with id
-    router.get("/:id", crew.findOne);
+    // router.get("/:id", crew.findOne);
  /* 
     // Update a crew with id
     router.put("/:id", crew.update);
