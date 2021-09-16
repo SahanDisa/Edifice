@@ -62,7 +62,7 @@ exports.update = (req, res) => {
 // Delete a ActionPlan with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-  ActionPlan.update({isDeleted = 1}, {
+  ActionPlan.update({
     where: { id: id }
   })
   .then(num => {
