@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import ActionPlanTypeDataService from "../../../services/project_management/actionplantype.service";
 import ActionPlanService from "../../../services/project_management/actionplan.service";
 import Card from 'react-bootstrap/Card';
-import drawingcover from "././../../../assets/PM/photos/drawing.jpg";
 
 export default class ActionPlan extends Component {
     constructor(props) {

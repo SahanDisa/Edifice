@@ -234,7 +234,16 @@ button.bg-dark:focus {
   color: white;
 }
 
+.btn-import.btn,
+.btn-import.btn:hover,
+.btn-import.btn:active,
+.btn-import.btn:visited .btn-import.btn:focus {
+  background-color: #51547b !important;
+  border-color: #51547b;
+  box-shadow: none;
+  color: white;
+}
+
 .card-text-edifice{
   color: #273f7d !important;
 }
-

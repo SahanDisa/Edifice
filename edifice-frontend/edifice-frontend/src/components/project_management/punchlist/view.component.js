@@ -128,7 +128,7 @@ class PLIView extends Component {
                                 value={plItem.title}
                                 onChange={this.onChangeTitle}
                                 type="text"
-                                readOnly
+                                required
                             />
                         </div>
                         <div className="form-group col-md-6">
@@ -138,7 +138,7 @@ class PLIView extends Component {
                                 name="status"
                                 type="text"
                                 value={plItem.status}
-                                readOnly
+                                required
                             />
                         </div>
                     </div>
@@ -150,7 +150,7 @@ class PLIView extends Component {
                                 name="type"
                                 value={plItem.type}
                                 type="text"
-                                readOnly
+                                required
                             />
                         </div>
                         <div className="form-group col-md-6">

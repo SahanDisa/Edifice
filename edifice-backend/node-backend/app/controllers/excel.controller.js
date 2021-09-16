@@ -49,6 +49,7 @@ const upload = async (req, res) => {
           error: error.message,
         });
       });
+
   });
 } catch (error) {
   console.log(error);
@@ -70,6 +71,7 @@ const getDirectCosts = (req, res) => {
       });
     });
 };
+
 /*------------------------------------------------------------------------------------------------------------------------------ */
 const download = (req, res) => {
   const id = req.params.id;
@@ -132,5 +134,5 @@ const download = (req, res) => {
 module.exports = {
   upload,
   download,
-  getDirectCosts,
+  getDirectCosts
 };
