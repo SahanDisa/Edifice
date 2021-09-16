@@ -163,7 +163,7 @@ exclusions:response.data.exclusions,
        
         {submitted ? (
           <div>
-            <h4>You submitted successfully!</h4>
+            <h4>You submitted successfully!</h4><hr />
             <div className="row">
             <button className="btn btn-success" onClick={newCommitment}>
               + Add Another Subcontract

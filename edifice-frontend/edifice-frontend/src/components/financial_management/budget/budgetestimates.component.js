@@ -141,10 +141,12 @@ const BudgetEstimates = (props) => {
 
   return (
     <div>
+        
+       
       <div  className="row"> <Link to={"/financialmanagementhome/" + id}><HomeIcon style={{ color: "#2b2d42"}}/></Link>&nbsp;<h3>BUDGET ESTIMATES</h3></div>
                <h6>Estimate the Project Budget.</h6> 
                 <hr /><br />
-
+                
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
             <Link className="btn btn-primary mr-2" to={"/addbudget/"+id}>{/*check this again*/}

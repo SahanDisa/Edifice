@@ -227,10 +227,9 @@ const AddDirectCost = (props) => {
                 onChange={handleInputChange}
                 className={`form-control ${errors.category ? 'is-invalid' : ''}`}
               >
-                <option></option>
-                <option>Expense</option>
                 <option>Invoice</option>
                 <option>Payroll</option>
+                <option>Expense</option>
               </select>
               <div className="invalid-feedback">{errors.category?.message}</div>
             </div>
