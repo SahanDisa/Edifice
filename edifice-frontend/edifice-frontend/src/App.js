@@ -20,7 +20,7 @@ import Homereal from "./components/homereal.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-project.component";
 import BoardResource from "./components/board-resource.component";
-import BoardModerator from "./components/board-moderator.component";
+import BoardModerator from "./components/board-finance.component";
 import BoardAdmin from "./components/board-admin.component";
 import ErrorPage from "./components/error.component";
 
@@ -296,7 +296,6 @@ class App extends Component {
             <Route path="/addmilestoneproject/:id" component={AddMilestoneGeneral}/>
             <Route path="/assignuser/:id" component={AssignUserProject} />
             <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
-            {/* <Route component={ErrorPage}/> */}
 
             <Route path="/resource" component={BoardResource} />
             <Route path="/financialmanagement" component={BoardModerator} />
@@ -437,7 +436,7 @@ class App extends Component {
 
             {/*Report and PDF */}
             <Route path="/report/" component={Report} />
-           
+            <Route component={ErrorPage}/>
           </Switch>
         </div>
         )}
