@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AlbumDataService from "./../../../services/album.service";
 import { WebcamCapture } from './webcam.component';
-import { CameraViewer } from "./viewphoto.component";
-import Accordion from 'react-bootstrap/Accordion';
+// import { CameraViewer } from "./viewphoto.component";
+// import Accordion from 'react-bootstrap/Accordion';
 import Typography from '@material-ui/core/Typography';
-import Icon1 from "././../../../assets/PM/photos/image1.jpg";
+import { Breadcrumbs } from "@material-ui/core";
+// import Icon1 from "././../../../assets/PM/photos/image1.jpg";
 import Icon2 from "././../../../assets/PM/photos/albumicon.jpg";
 import UploadPhotoService from "../../../services/photoupload.service";
 import Card from 'react-bootstrap/Card';
@@ -65,19 +66,28 @@ export default class PhotosHome extends Component {
       return (
         <div>
           <h2>Photos</h2>
-          <p>Here you can manage your photos and captures photos onsite</p>
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link color="inherit" to="/home">
+              Home
+            </Link>
+            <Link color="inherit" to={"/projectmanagementhome/"+id}>
+              App Dashboard
+            </Link>
+            <Link color="textPrimary" to={"/photos/"+id} aria-current="page">
+              Photos Home
+            </Link>
+          </Breadcrumbs>
+          
           <hr></hr>
           {/* Album division starts */}
-          <div className="container">
+          <div>
             <h3>Albums</h3>
-            <p>Manage your photo by adding it into albums</p>
-            <Link className="btn btn-primary mr-2" to={"/addalbum/"+id}>
+            <h6>Manage your photo by adding it into Albums,Click on Albums to Manage</h6>
+            <Link className="btn btn-primary mb-2 mt-2" to={"/addalbum/"+id}>
               Add Album
             </Link>
-            <hr></hr>
             <h4>Recent Albums</h4>
-            <p>Click on Albums to manage your photos</p>
-            <div className="container row">
+            <div className="row">
             {albums &&
                 albums.map((album, index) => (
                 <div
@@ -106,9 +116,9 @@ export default class PhotosHome extends Component {
           </div>
         {/* Album div ends */}
         {/* Photo div starts */}
-        <div className="container">
+        <div>
           <h3>Photos</h3>
-          <p>Manage your photos by uploading it to the system</p>
+          <h6>Here you can manage your photos and captured photos onsite</h6>
             <Link className="btn btn-primary mr-2" to={"/addphoto/"+id}>
               Add Photo
             </Link>
@@ -117,7 +127,7 @@ export default class PhotosHome extends Component {
             </Link>
             <hr></hr>
           </div> 
-          <div className="container">
+          <div>
             <h4>Recent Photos</h4>
             <div className="container row">
             
@@ -141,7 +151,7 @@ export default class PhotosHome extends Component {
             <hr></hr>
         </div>
         {/* onsite capturing component import dynamically*/}
-        <div className="container">
+        <div>
           <Typography>
           <WebcamCapture/>      
           </Typography>

@@ -145,7 +145,7 @@ export default class BoardUser extends Component {
               pointerRadius={3}
               pointerStrokeWidth={12}
           />
-          {/* <h6><b>66%</b></h6>  */}
+          {/* <h6 className="mb-10"><b>66%</b></h6>  */}
           </center> 
           </div>
           </div>
