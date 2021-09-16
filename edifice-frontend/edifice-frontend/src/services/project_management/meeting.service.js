@@ -1,32 +1,24 @@
-import http from "./../http-common.js";
+import http from "./../../http-common.js";
 
 class MeetingDataService {
-    getAll() {
-        return http.get("/projects");
-    }
-
-    get(id) {
-        return http.get(`/projects/${id}`);
-    }
-
     create(data) {
-        return http.post("/projects", data);
+        return http.post("/meetings", data);
     }
 
     update(id, data) {
-        return http.put(`/projects/${id}`, data);
+        return http.put(`/meetings/update/${id}`, data);
     }
 
     delete(id) {
-        return http.delete(`/projects/${id}`);
+        return http.put(`/meetings/delete/${id}`);
     }
 
-    findByTitle(title) {
-        return http.get(`/projects?title=${title}`);
+    getAll() {
+        return http.get("/meetings/");
     }
 
-    userProjects(id){
-        return http.get(`/projects/user/list/${id}`);
+    get(id) {
+        return http.get(`/meetings/${id}`);
     }
 }
 
