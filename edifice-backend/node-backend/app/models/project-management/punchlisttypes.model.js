@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const PunchListTypes = sequelize.define("punchlisttypes", {
+    const pltypes = sequelize.define("pltypes", {
         title: {
             type: Sequelize.STRING,
             allowNull: false
@@ -7,10 +7,14 @@ module.exports = (sequelize, Sequelize) => {
         description: {
             type: Sequelize.STRING,
             allowNull: false
+        },
+        isDeleted: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: 0
         }
     }, {
         freezeTableName: true,
     });
   
-    return PunchListTypes;
+    return pltypes;
 };

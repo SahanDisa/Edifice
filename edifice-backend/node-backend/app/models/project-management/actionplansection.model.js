@@ -15,8 +15,13 @@ module.exports = (sequelize, Sequelize) => {
       },
       refid:{
         type: Sequelize.STRING
-      }}, {
-        freezeTableName: true,
+      },
+      isDeleted: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: 0
+      }
+    }, {
+      freezeTableName: true,
     });
   
     return ActionPlanSection;

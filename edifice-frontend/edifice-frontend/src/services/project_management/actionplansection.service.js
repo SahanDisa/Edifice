@@ -1,18 +1,6 @@
 import http from "./../../http-common.js";
 
-class ActionPlanDataService {
-  getAll(id) {
-    return http.get(`/projects/actionplansection/actionsection/${id}`);
-  }
-  
-  getAllSearch(id) {
-    return http.get(`/projects/actionplansection/list/${id}`);
-  }
-
-  get(id) {
-    return http.get(`/projects/actionplansection/${id}`);
-  }
-
+class ActionPlanSectionDataService {
   create(data) {
     return http.post(`/projects/actionplansection/`, data);
   }
@@ -25,9 +13,13 @@ class ActionPlanDataService {
     return http.delete(`/projects/actionplansection/${id}`);
   }
 
-  Approved(id){
-    return http.get(`/projects/actionplansection/approved/${id}`);
+  get(id) {
+    return http.get(`/projects/actionplansection/${id}`);
+  }
+
+  getAll(id) {
+    return http.get(`/projects/actionplansection/all/${id}`);
   }
 }
 
-export default new ActionPlanDataService();
+export default new ActionPlanSectionDataService();

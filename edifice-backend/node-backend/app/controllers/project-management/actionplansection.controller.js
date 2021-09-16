@@ -11,7 +11,6 @@ exports.create = (req, res) => {
     });
     return;
   }
-
   // Create a ActionPlanSection
   const actionplansection = {
     title: req.body.title,
@@ -21,132 +20,98 @@ exports.create = (req, res) => {
     refid: req.body.refid,
     actionplanId: req.body.actionplanId
   };
-
   // Save ActionPlanSection in the database
   ActionPlanSection.create(actionplansection)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the ActionPlanSection."
-      });
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while creating the ActionPlanSection."
     });
+  });
 };
-
-// Retrieve all ActionPlanSection from the database.
-exports.findAllSearch = (req, res) => {
-    const title = req.query.title;
-    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-  
-    ActionPlanSection.findAll({ where: condition })
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving projects."
-        });
-      });
-};
-
-// Find a single ActionPlanSection with an id
-exports.findOne = (req, res) => {
-    const id = req.params.id;
-
-    ActionPlanSection.findByPk(id)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error retrieving ActionPlanSection with id=" + id
-        });
-      });  
-};
-
-//get the ActionPlanSection action
-exports.findAll= (req, res) => {
-    const id = req.params.id;
-  
-    ActionPlanSection.findAll({ where: {
-      actionplanId: id
-    }})
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error retrieving ActionPlanSection Drawings with id=" + id
-        });
-      });  
-  };
 
 // Update a ActionPlanSection by the id in the request
 exports.update = (req, res) => {
-    const id = req.params.id;
-
-    ActionPlanSection.update(req.body, {
-      where: { id: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "ActionPlanSection was updated successfully."
-          });
-        } else {
-          res.send({
-            message: `Cannot update ActionPlanSection with id=${id}. Maybe ActionPlanSection was not found or req.body is empty!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error updating ActionPlanSection with id=" + id
-        });
+  const id = req.params.id;
+  ActionPlanSection.update(req.body, {
+    where: { id: id }
+  })
+  .then(num => {
+    if (num == 1) {
+      res.send({
+        message: "ActionPlanSection was updated successfully."
       });
+    } else {
+      res.send({
+        message: `Cannot update ActionPlanSection with id=${id}. Maybe ActionPlanSection was not found or req.body is empty!`
+      });
+    }
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Error updating ActionPlanSection with id=" + id
+    });
+  });
 };
 
 // Delete a ActionPlanSection with the specified id in the request
 exports.delete = (req, res) => {
-    const id = req.params.id;
-
-    ActionPlanSection.destroy({
-      where: { id: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "ActionPlanSection was deleted successfully!"
-          });
-        } else {
-          res.send({
-            message: `Cannot delete ActionPlanSection with id=${id}. Maybe ActionPlanSection was not found!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Could not delete ActionPlanSection with id=" + id
-        });
+  const id = req.params.id;
+  ActionPlanSection.update({isDeleted: 1}, {
+    where: { id: id }
+  })
+  .then(num => {
+    if (num == 1) {
+      res.send({
+        message: "ActionPlanSection was deleted successfully!"
       });
+    } else {
+      res.send({
+        message: `Cannot delete ActionPlanSection with id=${id}. Maybe ActionPlanSection was not found!`
+      });
+    }
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Could not delete ActionPlanSection with id=" + id
+    });
+  });
 };
 
-// Delete all ActionPlanSection from the database.
-exports.deleteAll = (req, res) => {
-    ActionPlanSection.destroy({
-        where: {},
-        truncate: false
-      })
-        .then(nums => {
-          res.send({ message: `${nums} ActionPlanSection were deleted successfully!` });
-        })
-        .catch(err => {
-          res.status(500).send({
-            message:
-              err.message || "Some error occurred while removing all tutorials."
-          });
-        });
+// Find a single ActionPlanSection with an id
+exports.findOne = (req, res) => {
+  const id = req.params.id;
+  ActionPlanSection.findByPk({id}, { where:
+    {
+      isDeleted: 0
+    }
+  })
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Error retrieving ActionPlanSection with id=" + id
+    });
+  });  
+};
+
+//get the ActionPlanSection action
+exports.findAll= (req, res) => {
+  const id = req.params.id;
+  ActionPlanSection.findAll({ where: {
+    actionplanId: id,
+    isDeleted: 0
+  }})
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Error retrieving ActionPlanSection Drawings with id=" + id
+    });
+  });  
 };
