@@ -20,7 +20,7 @@ import Homereal from "./components/homereal.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-project.component";
 import BoardResource from "./components/board-resource.component";
-import BoardModerator from "./components/board-moderator.component";
+import BoardModerator from "./components/board-finance.component";
 import BoardAdmin from "./components/board-admin.component";
 import ErrorPage from "./components/error.component";
 
