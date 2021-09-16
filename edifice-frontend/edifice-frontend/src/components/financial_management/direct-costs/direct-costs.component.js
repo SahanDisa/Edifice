@@ -10,6 +10,9 @@ import  Import from './excelupload.component';
 import Card from 'react-bootstrap/Card';
 import BudgetDataService from "./../../../services/budget.service";
 import HomeIcon from '@material-ui/icons/Home';
+import PublishIcon from '@material-ui/icons/Publish';
+import AddIcon from '@material-ui/icons/Add';
+
 
 const DirectCostList = (props) => {
   const {id}= useParams();
@@ -203,12 +206,12 @@ const DirectCostList = (props) => {
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
             <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+id}>{/*check this again*/}
-                + Create
+               <AddIcon/>&nbsp;Create
                 </Link>
                 
               
-                <Link className="btn btn-primary mr-2" to={"/excelupload/"+id}>
-                Import
+                <Link className="btn btn-import mr-2" to={"/excelupload/"+id}>
+                <PublishIcon/>&nbsp;Import
                 </Link>
                {/* <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCrew">+ Import</a>&nbsp;&nbsp;
          
@@ -216,10 +219,10 @@ const DirectCostList = (props) => {
             <Import projectId={id}/>          
           </div>*/}
      
-                <button className="btn btn-primary mr-2"  onClick={exportDirectCosts} >
+               {/* <button className="btn btn-primary mr-2"  onClick={exportDirectCosts} >
                 Export 
-                </button>
-                </div>
+                </button>*/}
+        </div>
       <div className="form-group col-md-4">
         <div className="input-group mb-3">
          {/* <input

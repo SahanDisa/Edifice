@@ -84,6 +84,7 @@ db.schedule = require("./schedule.model")(sequelize, Sequelize);
 //for core class vendors and employees
 db.vendor=require("./vendor.model")(sequelize, Sequelize);
 db.employee=require("./employee.model")(sequelize, Sequelize);
+db.subcontractor=require("./subcontractor.model")(sequelize, Sequelize);
 
 //This section is for testing purposes
 db.demo = require("./demo.model")(sequelize, Sequelize);

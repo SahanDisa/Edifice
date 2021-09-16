@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import BudgetDataService from "./../../../services/budget.service";
+import PublishIcon from '@material-ui/icons/Publish';
+import AddIcon from '@material-ui/icons/Add';
 
 const SovList = (props) => {
   const {id}= useParams();
@@ -156,14 +158,14 @@ const SovList = (props) => {
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
             <Link className="btn btn-primary mr-2" to={"/addsov/"+pid+"/"+id}>
-                + Create
+                <AddIcon/>Create
                 </Link>
-                <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
-                Import
+                <Link className="btn btn-import mr-2" to={"/adddirectcost/"+1}>
+                <PublishIcon/>&nbsp;Import
                 </Link>
-                <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
+                {/*<Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
                 Export
-                </Link>
+  </Link>*/}
                 </div>
       <div className="form-group col-md-4">
         <div className="input-group mb-3">

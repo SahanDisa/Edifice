@@ -235,7 +235,7 @@ export default class AddActionPlan extends Component {
                 </div>
               </div>
             </div>
-            <button onClick={this.saveActionPlan} className="btn btn-success">Create Action Plan</button>
+            <button onClick={this.saveActionPlan} className="btn btn-success mr-2">Create Action Plan</button>
             <a href="/actionplan">Cancel</a>
           </div>
         )}
