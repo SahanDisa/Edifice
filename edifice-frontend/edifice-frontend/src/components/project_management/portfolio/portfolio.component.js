@@ -7,6 +7,8 @@ import ProjectDataService from "./../../../services/project.service";
 import DocumentDataService from "./../../../services/documentfile.service";
 import MilestoneService from "../../../services/milestone.service";
 import PortfolioProgressService from "../../../services/portfolioprogress.service";
+
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Typography from '@material-ui/core/Typography';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -313,6 +315,17 @@ export default class PortfolioHome extends Component {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
         const x = cx + radius * Math.cos(-midAngle * RADIAN);
         const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+        const today = new Date();
+        const date1 = new Date(project.startdate);
+        const date2 = new Date(project.enddate);
+        const diffTime = Math.abs(date2 - date1);
+        const diffTime2 = Math.abs(date2 - today);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+        const remainDays = Math.ceil(diffTime2/(1000 * 60 * 60 * 24));
+        console.log(diffTime + " milliseconds");
+        console.log(diffDays + " days");
+        console.log(remainDays + " remain days");
           
         return (
           <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
@@ -324,11 +337,22 @@ export default class PortfolioHome extends Component {
         return (
             <div>
             <h2>Portfolio</h2>
-            <p>Project abstraction</p>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+id}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/portfolio/"+id} aria-current="page">
+                Portfolio
+              </Link>
+            </Breadcrumbs>
             <hr></hr>
             <div>
               <h3>Project Analytics</h3>
-              <p>Graphical representation of the progress measurements based on items</p>
+              <h6>Graphical representation of the progress measurements based on project services</h6>
+              <hr></hr>
                 <div className="row">
                   <div className="col-6">
                   <h4>Overall Progress</h4>
@@ -352,7 +376,7 @@ export default class PortfolioHome extends Component {
                   </PieChart>
                   </div>
                   <div className="col-6">
-                  <h4>Monthly Progress</h4>
+                  <h4>Milestone Progress</h4>
                   <LineChart
                     width={500}
                     height={300}
@@ -376,9 +400,8 @@ export default class PortfolioHome extends Component {
             <div>
               <h3>Progress by Activities</h3>
               {/* {drawingComplete+" "+drawingPending+" "+drawingIncomplete} */}
-              <p>Visulize the progress of all the activities</p>
-              {(new Date().getFullYear())}{" "}{(new Date().toLocaleString('en-us', { month: 'long' }))}
-              
+              <h6>Visulize the progress of all the activities</h6>
+              {/* {(new Date().getFullYear())}{" "}{(new Date().toLocaleString('en-us', { month: 'long' }))} */}
               <div className="container">
                 <h6>Drawing</h6>
                 <ProgressBar>
@@ -402,8 +425,9 @@ export default class PortfolioHome extends Component {
             </div>
             <hr></hr>
             <div>
-                <h3>Project Profile & Team</h3>
-                <Card>
+                <h3>Project Team</h3>
+                <h6>Deatails of the staff members and vendor details</h6>
+                {/* <Card>
                   <Card.Body>
                     <Card.Title><h4>{project.title}</h4></Card.Title>
                     <Card.Text>
@@ -412,8 +436,8 @@ export default class PortfolioHome extends Component {
                     <h6>From <b>{project.startdate}</b> To <b>{project.enddate}</b></h6> 
                     </Card.Text>
                   </Card.Body>
-                </Card> 
-                <div>
+                </Card>  */}
+                <div className="container">
                   <h6>Manager - 2</h6>      
                   <ProgressBar variant="primary" now={10} />
                   <h6>Enginners - 10</h6>  
@@ -427,7 +451,7 @@ export default class PortfolioHome extends Component {
             <hr></hr>
             <div>
                 <h3>Project Departments</h3>
-                <p>Project Department details</p>
+                <h6>Project Department details</h6>
                 {/* Info */}
                 <div className="row">
                 {departments &&
@@ -454,9 +478,13 @@ export default class PortfolioHome extends Component {
                   </div>
             </div>
             <hr></hr>
-            <div className="container">
+            <div>
               <h3>Project Milestones</h3>
-              <p>conatines the project milestones and stages of the project</p>
+              <h6>Represent the state diagram project milestones of the project</h6>
+              <center>
+                {/* <h5>Total Days</h5>
+                <h4>Remaining Days</h4> */}
+              </center>
               <div className="container">
                 {/* stepper */}
                 <div>
@@ -468,7 +496,7 @@ export default class PortfolioHome extends Component {
                       </TimelineDot>
                       <TimelineConnector />
                     </TimelineSeparator>
-                    <TimelineContent>Start</TimelineContent>
+                    <TimelineContent><h5>Start</h5></TimelineContent>
                 </TimelineItem>
                 {milestones && milestones.map((milestone, index) => (
                   <TimelineItem key={index}>
@@ -490,10 +518,16 @@ export default class PortfolioHome extends Component {
                       </Typography>
                       <Typography>
                       {milestone.description}
+                      <br/>
                       { milestone.completed ? 
+                      <h6>Completed {" "}
                       <input type="checkbox" name="check" value={milestone.id} onChange={this.uncheckMilestone} checked></input>
+                      </h6>
                       : 
-                      <input type="checkbox" name="uncheck" value={milestone.id} onChange={this.checkMilestone}></input>}
+                      <h6>Incomplete
+                      <input type="checkbox" name="uncheck" value={milestone.id} onChange={this.checkMilestone}></input>
+                      </h6>
+                      }
                       </Typography>
                     </Paper>
                     </TimelineContent>
@@ -507,7 +541,7 @@ export default class PortfolioHome extends Component {
                     <TimelineDot variant="outlined" color="secondary">
                       <AdjustSharpIcon />
                     </TimelineDot>
-                    <TimelineContent>Finish</TimelineContent>
+                    <TimelineContent><h5>End</h5></TimelineContent>
                   </TimelineItem>
                 </Timeline>
                 </div>

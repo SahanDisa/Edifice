@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import DrawingCategoryService from "../../../services/drawing-category.service";
+import { Breadcrumbs } from "@material-ui/core";
 
 export default class UpdateDrawing extends Component {
   constructor(props) {
@@ -176,14 +178,27 @@ export default class UpdateDrawing extends Component {
   }
 
     render() {
-      const { currentDrawing, temp, drawingcategories} = this.state;
+      const { currentDrawing, temp, drawingcategories,pid} = this.state;
   
       return (
         <div>
           {currentDrawing ? (
             <div className="container">
               <h2>Update a Drawing</h2>
-              <h4>Drawing Id : {temp}</h4>
+              <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" to="/home">
+                  Home
+                </Link>
+                <Link color="inherit" to={"/projectmanagementhome/"+pid}>
+                  App Dashboard
+                </Link>
+                <Link color="inherit" to={"/drawing/"+pid}>
+                  Drawing Home
+                </Link>
+                <Link color="textPrimary" to={"/updatedrawing/"+pid+"/"+temp} aria-current="page">
+                  Update Drawing / {temp}
+                </Link>
+              </Breadcrumbs>
               <form>
                 <div className="form-group">
                   <label htmlFor="title">Title</label>
