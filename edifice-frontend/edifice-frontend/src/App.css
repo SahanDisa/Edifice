@@ -243,3 +243,7 @@ button.bg-dark:focus {
   box-shadow: none;
   color: white;
 }
+
+.card-text-edifice{
+  color: #273f7d !important;
+}

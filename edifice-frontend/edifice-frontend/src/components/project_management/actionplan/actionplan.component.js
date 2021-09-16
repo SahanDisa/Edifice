@@ -122,9 +122,8 @@ export default class ActionPlan extends Component {
             </div>
             <h4>Action Plans</h4><hr/>
             <div className="container">
-              <Link className="btn btn-primary mb-3" to={"/addactionplan/"+projectId}>+ Add another Action Plan</Link>
+              <Link className="btn btn-primary mb-3" to={"/addactionplan/"+projectId}>+ Add Action Plan</Link>
             </div>
-            <hr></hr>
             <div className="container">
               {actionplans && actionplans.map((api, index) => (
                 <div className={"container mb-3" + (index === currentIndex ? "active" : "")} key={index}>

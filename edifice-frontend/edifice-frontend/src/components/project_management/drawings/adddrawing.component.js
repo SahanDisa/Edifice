@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import DrawingCategoryService from "../../../services/drawing-category.service";
 import UploadService from "./../../../services/document.service";
+import { Breadcrumbs } from "@material-ui/core";
+
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -182,6 +184,20 @@ export default class AddDrawing extends Component {
         ) : (
           <div class="container">
             <h2>Add New Drawing</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+projectId}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/drawing/"+projectId} aria-current="page">
+                Drawing Home
+              </Link>
+              <Link color="textPrimary" to={"/adddrawing/"+projectId} aria-current="page">
+                Add Drawing
+              </Link>
+            </Breadcrumbs>
             <div className="row">
             <div className="col-sm-8">
             <div className="form-group">
@@ -212,6 +228,8 @@ export default class AddDrawing extends Component {
 
             <div className="form-group">
               <label htmlFor="category">Drawing Category</label>
+              <div className="row">
+              <div className="col-9">
               <select 
                 className="form-control"
                 id="datatype"
@@ -232,6 +250,11 @@ export default class AddDrawing extends Component {
                 </option>
                 ))}
               </select>
+              </div>
+              <div className="col-3">
+                <a href={"/adddrawingcategory/"+projectId} className="btn btn-primary">Add Category</a>
+              </div>
+              </div>
             </div>
             <div className="form-group">
               <label htmlFor="description">Version</label>

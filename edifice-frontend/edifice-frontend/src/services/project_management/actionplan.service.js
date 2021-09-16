@@ -1,36 +1,32 @@
 import http from "./../../http-common.js";
 
 class ActionPlanDataService {
-  getAll(id) {
-    return http.get(`/projects/actionplan/action/${id}`);
-  }
-  
-  getAllSearch(id) {
-    return http.get(`/projects/actionplan/list/${id}`);
-  }
-
-  get(id) {
-    return http.get(`/projects/actionplan/${id}`);
-  }
-
   create(data) {
     return http.post(`/projects/actionplan/`, data);
   }
 
   update(id, data) {
-    return http.put(`/projects/actionplan/${id}`, data);
+    return http.put(`/projects/actionplan/update/${id}`, data);
   }
 
   delete(id) {
-    return http.delete(`/projects/actionplan/${id}`);
+    return http.put(`/projects/actionplan/delete/${id}`);
   }
 
-  Approved(id){
-    return http.get(`/projects/actionplan/approved/${id}`);
+  getOne(id) {
+    return http.get(`/projects/actionplan/single/${id}`);
+  }
+
+  getAll(id) {
+    return http.get(`/projects/actionplan/action/${id}`);
   }
 
   getType(id){
     return http.get(`/projects/actionplan/type/${id}`);
+  }
+
+  getApproved(id){
+    return http.get(`/projects/actionplan/approved/${id}`);
   }
 }
 

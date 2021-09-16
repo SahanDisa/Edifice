@@ -4,6 +4,7 @@ import DrawingDataService from "./../../../services/drawing.service";
 import DrawRevisionService from "../../../services/drawrevision.service";
 import UserService from "./../../../services/user.service";
 import AuthService from "./../../../services/auth.service";
+import { Breadcrumbs } from "@material-ui/core";
 import { Avatar } from "@material-ui/core";
 
 import PdfIcon from '@material-ui/icons/PictureAsPdf';
@@ -45,6 +46,7 @@ export default class ViewSingleDrawing extends Component {
       });
     }
     componentDidMount() {
+      window.scrollTo(0, 0);
       this.retrieveDrawing(this.props.match.params.id);
       this.getRevisions(this.props.match.params.id);
     }
@@ -108,31 +110,39 @@ export default class ViewSingleDrawing extends Component {
            // Main Div
             <div>
               <h2>Drawing Single Page</h2>
-              <p>Manage as single drawing and add measurements and versioning</p>
+              <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" to="/home">
+                  Home
+                </Link>
+                <Link color="inherit" to={"/projectmanagementhome/"+id}>
+                  App Dashboard
+                </Link>
+                <Link color="inherit" to={"/drawing/"+id}>
+                  Drawing Home
+                </Link>
+                <Link color="textPrimary" to={"/viewdrawing/"+id} aria-current="page">
+                  View Drawing
+                </Link>
+              </Breadcrumbs>
+              {/* <p>Manage as single drawing and add measurements and versioning</p> */}
               <hr></hr>
-              <h3>File details</h3>
-              <h6>Drawing Id : {id}</h6>
-              <h6>Name : {title}</h6>
-              <h6>Description : {description}</h6>
-              <h6>Drawing Type : {category}</h6>
-              <h6>Status : {status}</h6>
-              <hr></hr>
-            
+
               <h3>View & Manage Drawing</h3>
-              <p>View the particular drawing in pdf format</p>
-            <div className="row">
-            <div className="col-sm-9">
-            <embed
-                  //src="https://vancouver.ca/files/cov/sample-drawing-package-1and2family.pdf"
-                  src={"http://localhost:8080/api/files/"+title+".pdf"}
-                  type="application/pdf"
-                  frameBorder="0"
-                  scrolling="auto"
-                  height="700px"
-                  width="100%"
-              ></embed>
+              <h6>View the particular drawing in pdf format</h6>
+              <div className="row">
+              <div className="col-sm-8">
+              <embed
+                    //src="https://vancouver.ca/files/cov/sample-drawing-package-1and2family.pdf"
+                    src={"http://localhost:8080/api/files/"+title+".pdf"}
+                    type="application/pdf"
+                    frameBorder="0"
+                    scrolling="auto"
+                    height="700px"
+                    width="100%"
+                ></embed>
+              <hr></hr>  
               <h3>Revisions</h3>
-              <p>Add specific notes for the drawing for the future reference</p>
+              <h6>Add specific notes for the drawing for the future reference</h6>
               <div className="row">
                 <div className="col-sm-6">
                   <ul className="list-group list-group-flush">
@@ -142,7 +152,7 @@ export default class ViewSingleDrawing extends Component {
                           
                           <Avatar>U</Avatar>
                           
-                          {revision.username}{" : "}{revision.description}
+                          <b>{revision.username}</b>{" : "}{revision.description}
                         </li>
                         ))}
                   </ul>
@@ -180,16 +190,24 @@ export default class ViewSingleDrawing extends Component {
               </div>
               </div>
               <div className="col-sm-3">
-                <h4>Full Screen</h4>
+                <h3>File details</h3>
+                <h6>Drawing Id : {id}</h6>
+                <h6>Name : {title}</h6>
+                <h6>Description : {description}</h6>
+                <h6>Drawing Type : {category}</h6>
+                <h6>Status : {status}</h6>
+
+                <hr></hr>
+                <h4>View Full Screen</h4>
                 <a href={url+title+".pdf"} target="_blank" style={{'text-decoration': 'none'}}>
                 
                 <PdfIcon style={{ fontSize: 100 }} />
                 </a>
-                <div>
+                {/* <div>
                     <h4>Measurements</h4>
                     <p>Main measurements : Area, Distance</p>
                     <button className="btn btn-primary">Add</button>
-                </div>
+                </div> */}
                 <div>
                     <h4>Version</h4>
                     <h5>{version}{".0"}</h5>

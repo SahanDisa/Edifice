@@ -4,7 +4,6 @@ import ActionPlanTypeDataService from "../../../services/project_management/acti
 import ActionPlanDataService from "../../../services/project_management/actionplan.service";
 import Table from 'react-bootstrap/Table';
 import DeleteIcon from '@material-ui/icons/Delete';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
 
 export default class viewAPType extends Component {
@@ -76,7 +75,7 @@ export default class viewAPType extends Component {
                           <td>{api.location}</td>
                           <td>{api.isapprove == 0 ? "🔴 Not Approved": "🟢 Approved"}</td>
                           <td>
-                            <Link to={"/updatedrawing/" + api.id}>
+                            <Link to={"/viewactionplan/" + api.id}>
                               <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
                             </Link>
                             <Link to={"/viewdrawing/" + api.id}>

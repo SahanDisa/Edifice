@@ -1,18 +1,24 @@
-import http from "../../http-common.js";
+import http from "./../../http-common.js";
 
 class MeetingCategoryDataService {
-    getAll(id) {
-        console.log("getAll wena service ekata aawa");
-        return http.get(`/projects/meetingcategory/${id}`);
-    }
-
     create(data) {
-        console.log("create wena service ekata aawa");
-        return http.post(`/projects/meetingcategory/`, data);
+        return http.post("/meetingcategory", data);
     }
 
-    getOne(id){
-        return http.get(`/projects/meetingcategory/single/${id}`);
+    update(id, data) {
+        return http.put(`/meetingcategory/update/${id}`, data);
+    }
+
+    delete(id) {
+        return http.put(`/meetingcategory/delete/${id}`);
+    }
+
+    getAll() {
+        return http.get("/meetingcategory/");
+    }
+
+    get(id) {
+        return http.get(`/meetingcategory/${id}`);
     }
 }
 
