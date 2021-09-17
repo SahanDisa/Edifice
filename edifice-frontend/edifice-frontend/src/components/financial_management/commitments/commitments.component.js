@@ -6,6 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
 import HomeIcon from '@material-ui/icons/Home';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 export default class Commitments extends Component {
     
@@ -180,8 +181,18 @@ export default class Commitments extends Component {
             <div>
                <div className="container row">
                 <div className="col-12">
-                <div  className="row"> <Link to={"/financialmanagementhome/" + id}><HomeIcon style={{ color: "#2b2d42"}}/></Link>&nbsp;<h3>COMMITMENTS</h3></div>
-                <h6>See the Status and Value of all the Sub-Contracts.</h6>
+              <h3>COMMITMENTS</h3>
+                <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+id}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/commitment/"+id} aria-current="page">
+               Commitments
+              </Link>
+            </Breadcrumbs>
                 <hr />
                 </div>
             </div>

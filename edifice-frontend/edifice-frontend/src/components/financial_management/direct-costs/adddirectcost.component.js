@@ -13,6 +13,7 @@ import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import BudgetDataService from "./../../../services/budget.service";
 import { Route, useParams } from "react-router-dom";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 const AddDirectCost = (props) => {
 
@@ -140,6 +141,21 @@ const AddDirectCost = (props) => {
         ) : (
           <div class="container">
             <h2>New Direct Cost</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+directcost.projectId}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/directcost/"+directcost.projectId} aria-current="page">
+               Direct Costs
+              </Link>
+              <Link color="textPrimary" to={"/adddirectcost/"+directcost.projectId} aria-current="page">
+               New Direct Cost
+              </Link>
+            </Breadcrumbs>
+                <hr />
             <div className="row">
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>

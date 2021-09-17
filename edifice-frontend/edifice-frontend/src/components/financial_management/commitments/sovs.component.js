@@ -9,6 +9,7 @@ import BudgetDataService from "./../../../services/budget.service";
 import PublishIcon from '@material-ui/icons/Publish';
 import AddIcon from '@material-ui/icons/Add';
 import HomeIcon from '@material-ui/icons/Home';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 const SovList = (props) => {
   const {id}= useParams();
@@ -154,8 +155,18 @@ const SovList = (props) => {
 
   return (
     <div>
-         <div  className="row"> <Link to={"/financialmanagementhome/" + pid}><HomeIcon style={{ color: "#2b2d42"}}/></Link>&nbsp;<h3> Schedule of Values</h3></div>
-               <h6>Track all SoVs associated with a Subcontract.</h6><hr />
+        <h3> Schedule of Values</h3>
+         <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+pid}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/viewsov/"+pid+"/"+id} aria-current="page">
+               Schedule of Values
+              </Link>
+            </Breadcrumbs><hr />
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
             <Link className="btn btn-primary mr-2" to={"/addsov/"+pid+"/"+id}>

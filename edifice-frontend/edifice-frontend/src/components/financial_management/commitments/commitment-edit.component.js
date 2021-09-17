@@ -14,6 +14,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
+import { Breadcrumbs } from "@material-ui/core";
 
 
 const EditCommitment = props => {
@@ -115,8 +116,21 @@ exclusions:"",
     <div className="container">
       {currentCommitment ? (
         <div class="container">
-          <h4>#{currentCommitment.id} - {currentCommitment.title}</h4>
-          
+          <h4>Edit Sub Contract</h4>
+          <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+currentCommitment.projectId}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/commitment/"+currentCommitment.projectId}>
+               Commitments
+              </Link>
+              <Link color="textPrimary" to={"/editcommitment/"+currentCommitment.id} aria-current="page">
+               Edit Sub Contract - #{currentCommitment.id} - {currentCommitment.title}
+              </Link>
+            </Breadcrumbs>
           <div className="col-12 text-right">
               
             <Link to={"/viewsov/"+currentCommitment.projectId+"/"+currentCommitment.id}>

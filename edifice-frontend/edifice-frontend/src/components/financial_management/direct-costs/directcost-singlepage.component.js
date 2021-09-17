@@ -14,6 +14,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 
 const DirectCost = props => {
@@ -109,7 +110,22 @@ const DirectCost = props => {
     <div className="container">
       {currentDirectCost ? (
         <div class="container">
-          <h4>Direct Costs</h4>
+          <h2>Direct Costs</h2>
+          <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+currentDirectCost.projectId}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/directcost/"+currentDirectCost.projectId} aria-current="page">
+              Direct Costs
+              </Link>
+              <Link color="textPrimary" to={"/viewdirectcost/"+currentDirectCost.id} aria-current="page">
+               Edit Direct Cost
+              </Link>
+            </Breadcrumbs>
+                <hr />
           <div className="row">
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>
