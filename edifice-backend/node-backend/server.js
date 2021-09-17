@@ -20,7 +20,9 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 const db = require("./app/models/index.js");
 const Role = db.roles;
@@ -68,6 +70,7 @@ require('./app/routes/worker.routes')(app);
 require('./app/routes/worked-hours.routes')(app);
 require('./app/routes/timesheet.routes')(app);
 require('./app/routes/employee.routes')(app);
+require('./app/routes/schedule.routes')(app);
 
 require('./app/routes/primecontract.routes')(app);
 require('./app/routes/invoice.routes')(app);
@@ -85,34 +88,37 @@ require('./app/routes/project-management/actionplantype.routes')(app);
 require('./app/routes/project-management/actionplan.routes')(app);
 require('./app/routes/project-management/actionplansection.routes')(app);
 require('./app/routes/project-management/actionplanitem.routes')(app);
+
 require('./app/routes/vendor.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to edifice backend" });
+  res.json({
+    message: "Welcome to edifice backend"
+  });
 });
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-  console.log(`-------------------Welcome to Edifice Backend--------------------`)  
+  console.log(`-------------------Welcome to Edifice Backend--------------------`)
   console.log(`---------------Server is running on port ${PORT}-----------------`);
 });
 
 // initial data
 function initial() {
-    Role.create({
-      id: 1,
-      name: "user"
-    });
-   
-    Role.create({
-      id: 2,
-      name: "moderator"
-    });
-   
-    Role.create({
-      id: 3,
-      name: "admin"
-    });
+  Role.create({
+    id: 1,
+    name: "user"
+  });
+
+  Role.create({
+    id: 2,
+    name: "moderator"
+  });
+
+  Role.create({
+    id: 3,
+    name: "admin"
+  });
 }

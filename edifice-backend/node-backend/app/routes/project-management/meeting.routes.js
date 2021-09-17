@@ -6,17 +6,17 @@ module.exports = app => {
   // Create a new meeting
   router.post("/", meetings.create);
 
-  // Retrieve all meetings
-  router.get("/", meetings.findAll);
+  // Update a meeting with id
+  router.put("/update/:id", meetings.update);
+
+  // Delete a meeting with id
+  router.put("/delete/:id/", meetings.delete);
 
   // Retrieve a single meeting with id
   router.get("/:id", meetings.findOne);
 
-  // Update a meeting with id
-  router.put("/:id", meetings.update);
-
-  // Delete a meeting with id
-  router.delete("/:id/", meetings.delete);
+  // Retrieve all meetings
+  router.get("/", meetings.findAll);
 
   app.use('/api/meetings', router);
 };

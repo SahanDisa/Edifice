@@ -83,7 +83,7 @@ class CreatePL extends Component {
             // punchmanager: this.state.punchmanager,
             // assignee: this.state.assignee,
             description: this.state.description,
-            projectId: this.state.projectId
+            projectId: this.props.match.params.id
         };
 
         this.setState({
@@ -156,20 +156,9 @@ class CreatePL extends Component {
 
     render() {
         const {lastpl, pltypes, buttonChanger, projectId, no} = this.state;
-        console.log(projectId);
+        console.log(lastpl);
         return (
         <div className="">
-            {/* {this.state.submitted ? (
-                <div>
-                    <div>
-                        {lastpl && lastpl.map((puchlist, index) => (
-                            <div className="container col-3" key={index}>
-                                <Link to={"/addphotos/" + puchlist.id} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>Add Photos</Link>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            ) : ( */}
             <div className="">
                 <h2>Add New Punch List Item</h2><hr/>
                 <div className="row mb-3">
@@ -273,7 +262,7 @@ class CreatePL extends Component {
                                 className="btn btn-primary mr-2"
                                 >Next: Link Photos</Link>
                             }
-                            <a href="/punchlist" className="">Cancel</a>
+                            <a href="/punchlist/1" className="">Cancel</a>
                         </form>
                     </div>
                     <div className="col-sm-4">

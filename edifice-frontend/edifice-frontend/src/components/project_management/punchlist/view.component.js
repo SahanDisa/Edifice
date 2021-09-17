@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
-import Table from 'react-bootstrap/Table';
-import DeleteIcon from '@material-ui/icons/Delete';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import UpdateIcon from '@material-ui/icons/Update';
 
 class PLIView extends Component {
     constructor(props) {
@@ -100,13 +95,14 @@ class PLIView extends Component {
         .catch(e => {
             console.log(e);
         });
+        window.location.reload();
     }
 
     deletePunchList(){
         PunchlistDataService.delete(this.props.match.params.code)
         .then(response => {
             console.log(response.data);
-            //this.props.history.push('/equipments/1');
+            this.props.history.push('/punchlist/1');
         })
         .catch(e => {
             console.log(e);
@@ -128,7 +124,7 @@ class PLIView extends Component {
                                 value={plItem.title}
                                 onChange={this.onChangeTitle}
                                 type="text"
-                                required
+                                readOnly
                             />
                         </div>
                         <div className="form-group col-md-6">
@@ -138,7 +134,7 @@ class PLIView extends Component {
                                 name="status"
                                 type="text"
                                 value={plItem.status}
-                                required
+                                readOnly
                             />
                         </div>
                     </div>
@@ -150,7 +146,7 @@ class PLIView extends Component {
                                 name="type"
                                 value={plItem.type}
                                 type="text"
-                                required
+                                readOnly
                             />
                         </div>
                         <div className="form-group col-md-6">
@@ -197,7 +193,7 @@ class PLIView extends Component {
                     <button
                         className="btn btn-danger mr-2"
                         onClick={this.deletePunchList}>Delete</button>
-                    <a href="/punchlist" className="btn btn-success">Cancel</a>
+                    <a href="/punchlist/1" className="">Cancel</a>
                 </div>            
             </div>
         );
