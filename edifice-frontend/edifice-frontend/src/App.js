@@ -295,6 +295,7 @@ class App extends Component {
               <Route exact path={["/", "/homereal"]} component={Homereal} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
+              <Route exact path="/register/:id" component={Register} />
               <Route exact path="/profile" component={Profile} />
               <Route path="/projectmanagement" component={BoardUser} />
               <Route path="/adddepartment/:id" component={AddDepartment} />
