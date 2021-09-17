@@ -131,19 +131,22 @@ exclusions:"",
                Edit Sub Contract - #{currentCommitment.id} - {currentCommitment.title}
               </Link>
             </Breadcrumbs>
-          <div className="col-12 text-right">
-              
-            <Link to={"/viewsov/"+currentCommitment.projectId+"/"+currentCommitment.id}>
-                    <button className="btn btn-success m-2">View SoVs </button>
-                    </Link><br />
+<br />
+                    <ul class="nav nav-tabs">
+            <li class="nav-item">
+                       <Link class="nav-link active" aria-current="page"to={"#"}>Sub Contract Details</Link>
+            </li>
+            <li class="nav-item">
+             <Link to={"/viewsov/" +currentCommitment.projectId+"/"+currentCommitment.id}  class="nav-link">SoVs</Link>
+            </li>
+          </ul>
                     {/*<Link to={"/viewpayment/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">Payments </button>
                     </Link><br />
                     <Link to={"/addinvoice/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">Invoices </button>
                     </Link>*/}
-                    </div>
-                    <hr />
+
           <div className="row">
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>
@@ -276,39 +279,7 @@ exclusions:"",
               />
 <div className="invalid-feedback">{errors.signedContractReceivedDate?.message}</div>
               </div>
-             
-            
-            <div className="form-group">
-                <label htmlFor="">Inclusions :</label>
 
-              <input
-                type="textarea"
-
-                id="inclusions"
-               {...register('inclusions')}
-                value={currentCommitment.inclusions}
-                onChange={handleInputChange}
-                name="inclusions"
- className={`form-control ${errors.inclusions? 'is-invalid' : ''}`}
-              />
-<div className="invalid-feedback">{errors.inclusions?.message}</div>
-              </div>
-            
-            <div className="form-group">
-                <label htmlFor="">Exclusions :</label>
-              
-              <input
-                type="textarea"
-
-                id="exclusions"
-              {...register('exclusions')}
-                value={currentCommitment.exclusions}
-                onChange={handleInputChange}
-                name="exclusions"
- className={`form-control ${errors.exclusions? 'is-invalid' : ''}`}
-              />
-<div className="invalid-feedback">{errors.exclusions?.message}</div>
-   </div>
             <div className="form-group">
 
             <button className="btn btn-danger" onClick={deleteCommitment}>
