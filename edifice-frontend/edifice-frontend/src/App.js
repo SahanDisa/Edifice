@@ -105,8 +105,7 @@ import AddAPItem from "./components/project_management/actionplan/addapitem.comp
 import AddAPSection from "./components/project_management/actionplan/addapsection.component";
 import ViewActionPlan from "./components/project_management/actionplan/viewactionplan.component";
 
-import DlsConfig from "./components/project_management/dailylog/configuration.component";
-import ManageDls from "./components/project_management/dailylog/manage.component";
+import DailyLogHome from "./components/project_management/dailylog/dailylog.component";
 import UpdateDls from "./components/project_management/dailylog/update.component";
 import ViewDls from "./components/project_management/dailylog/view.component";
 
@@ -334,10 +333,9 @@ class App extends Component {
             <Route path="/viewtype/:pltid" component={PLTView} />
             <Route path="/view/:pliid" component={PLIView} />
             {/* Daily Logs */}
-            <Route path="/dailylogsconfiguration/:id" component={DlsConfig} />
-            <Route path="/managedailylogs/:id" component={ManageDls} />
-            <Route path="/managesdailylogs/update/:id" component={UpdateDls} />
-            <Route path="/managesdailylogs/view/:id" component={ViewDls} />
+            <Route path="/dailylogs/:id" component={DailyLogHome} />
+            <Route path="/dailylogs/update/:id" component={UpdateDls} />
+            <Route path="/dailylogs/view/:id" component={ViewDls} />
             
             <Route path="/addUser" component={AddEmployee} />
             <Route path="/editUser/:id" component={EditUser} />
