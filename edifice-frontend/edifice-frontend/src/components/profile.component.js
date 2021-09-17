@@ -8,6 +8,7 @@ import mainIcon from "././../assets/profile-gen.png";
 import buildIcon from "././../assets/PM/ibulldozer.png";
 import PersonIcon from '@material-ui/icons/Person';
 import Card from 'react-bootstrap/Card';
+import { Breadcrumbs } from "@material-ui/core";
 
 //css styles
 const linkText={
@@ -87,38 +88,48 @@ export default class Profile extends Component {
     const { projects,currentIndex,currentUser } = this.state;
     return (
       <div className="container">
+        <h2>Profile</h2>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link color="inherit" to="/home">
+            Home
+          </Link>
+          <Link color="inherit" to={"/profile"}>
+            Profile
+          </Link>
+        </Breadcrumbs>
+        <hr></hr>
         <div className="row">
         <div className="col-12">
-          <Card
-              bg={'success'}
-              text={'white'}
-              //style={{ width: '14rem' }}
-              className="mb-2"
-            >
-              <Card.Body>
-                <Card.Title></Card.Title>
-                <Card.Text>
-                <div className="row">
-                <div className="col-10">
-                <h3>Profile</h3>
-                <h6>Username : {currentUser.username}</h6>
-                <h6>Email : {currentUser.email}</h6>
-                {/*  currentUser.roles.length-1 is to get last element  */} 
-                <h6>Role  : {currentUser.roles[currentUser.roles.length-1]}</h6> 
-                </div>
-                <div className="col-2">
-                <img
-                    // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                    src={mainIcon}
-                    alt="profile-img"
-                    className="profile-img-card"
-                    
-                />
-                </div>
-                </div>
-                </Card.Text>
-              </Card.Body>
-            </Card> 
+          {/* <Card
+            bg={'success'}
+            text={'white'}
+            //style={{ width: '14rem' }}
+            className="mb-2">
+          <Card.Body>
+            <Card.Title></Card.Title>
+            <Card.Text>
+            <div className="row">
+            <div className="col-10">
+            
+            <h6>Username : {currentUser.username}</h6>
+            <h6>Email : {currentUser.email}</h6>
+             
+            <h6>Role  : {currentUser.roles[currentUser.roles.length-1]}</h6> 
+            </div>
+            <div className="col-2">
+            <img
+                // src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                src={mainIcon}
+                alt="profile-img"
+                className="profile-img-card"
+                
+            />
+            </div>
+            </div>
+            </Card.Text>
+          </Card.Body>
+        </Card>  */}
+        {/* currentUser.roles.length-1 is to get last element  */} 
         </div>
         </div>
         <div className="row">

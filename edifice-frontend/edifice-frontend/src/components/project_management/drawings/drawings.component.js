@@ -6,6 +6,7 @@ import { Breadcrumbs } from "@material-ui/core";
 import Pdfviewer from "./pdfviewer.component";
 import Card from 'react-bootstrap/Card';
 import drawingcover from "././../../../assets/PM/photos/drawing.jpg";
+import ProgressBar from 'react-customizable-progressbar';
 
 export default class Drawings extends Component {
     constructor(props) {
@@ -73,47 +74,59 @@ export default class Drawings extends Component {
           <div className="container">
           <h3>Insights</h3>
           <div className="row">
-          <div className="col-3">
-            <Card bg={'primary'} text={'white'} style={{ width: '12rem' }}>
-              <Card.Body>
-                <Card.Title><h1>5</h1></Card.Title>
-                  <Card.Text>
-                  Categories
-                  </Card.Text>
-                </Card.Body>
-            </Card>
+            <div className="col-lg-3 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
+                <h1>5</h1>
+                <h3 className="h5 nav-heading-title mb-0">Category</h3>
+                {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
+              </Link>
+              </div>
+            </div>
+            <div className="col-lg-3 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
+                <h1>7</h1>
+                <h3 className="h5 nav-heading-title mb-0">Drawing</h3>
+                {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
+              </Link>
+              </div>
+            </div>
+            <div className="col-lg-3 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
+                <h1>14</h1>
+                <h3 className="h5 nav-heading-title mb-0">Revision</h3>
+                {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
+              </Link>
+              </div>
+            </div>
+            <div className="col-lg-3 mb-grid-gutter pb-2">
+              <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
+                <center>
+                <ProgressBar
+                    radius={25}
+                    progress={45}
+                    cut={120}
+                    rotate={-210}
+                    initialAnimation
+                    initialAnimationDelay={1}
+                    strokeWidth={13}
+                    strokeColor="#273f7d"
+                    transition="2s ease"
+                    trackStrokeWidth={12}
+                    trackTransition="1s ease"
+                    pointerRadius={3}
+                    pointerStrokeWidth={12}
+                />
+                {/* <h3 className="h5 nav-heading-title mb-0">Progress</h3> */}
+                </center>
+                {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
+              </Link>
+              </div>
+            </div>
           </div>
-          <div className="col-3">
-           <Card bg={'success'} text={'white'} style={{ width: '12rem' }}>
-              <Card.Body>
-                <Card.Title><h1>6</h1></Card.Title>
-                  <Card.Text>
-                    Drawings
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </div>
-          <div className="col-3">
-            <Card bg={'danger'} text={'white'} style={{ width: '12rem' }}>
-              <Card.Body>
-                <Card.Title><h1>2</h1></Card.Title>
-                <Card.Text>
-                  Not Completed
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </div>
-          <div className="col-3">
-            <Card bg={'primary'} text={'white'} style={{ width: '12rem' }}>
-              <Card.Body>
-                <Card.Title><h1>14</h1></Card.Title>
-                <Card.Text>
-                  Revisions
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </div>  
-        </div>
         </div>
         <hr></hr>
         <div className="container">
