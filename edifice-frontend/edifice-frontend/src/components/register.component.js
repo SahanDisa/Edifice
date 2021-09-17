@@ -8,6 +8,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Chip from "@material-ui/core/Chip";
 //import Stack from '@material-ui/core/Stack';
 
+import EmployeeDataService from "../services/employee.service";
 import AuthService from "../services/auth.service";
 
 const required = value => {
@@ -68,10 +69,11 @@ export default class Register extends Component {
       message: "",
       rolesSelected: [],
       designations:["Quantity Surveyor","Project Engineer","Site Engineer"],
-      rolesColors: []
+      rolesColors: [],
+      signupDisabled:true
     };
 
-    this.makeRolearray(this.state.designations)
+    this.makeRolearray(this.state.id,this.state.designations)
   }
 
   onChangeUsername(e) {
@@ -134,7 +136,22 @@ export default class Register extends Component {
 
   //handle frontend input
 
-  makeRolearray(roles){
+  makeRolearray(id,roles){
+    if(id!="undefined"){
+
+      EmployeeDataService.getOne(id)
+      .then(response => {
+        this.setState({
+          email: response.data.email
+        });
+        
+        console.log(this.state.email);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    }
+    //console.log(employeeDetails);
     {roles.map((value,index) => { 
       this.state.rolesSelected.push(
         "default"
@@ -181,7 +198,7 @@ export default class Register extends Component {
         <h2 className="py-4"><PersonAddIcon/> Create Account</h2>
 
         <div className="row">
-          <div className="col-6 pr-5">
+          <div className="col-6 pr-4">
 
             <Form
               onSubmit={this.handleRegister}
@@ -258,17 +275,24 @@ export default class Register extends Component {
           {/* row end down*/}
           </div>
           <div className="col-6">
-            <h3 >Select Roles </h3>
+            <h3 className="pd-3">Select Roles </h3>
+            <div className="row">
             {roles.map((value,index) => { 
               return(
-                <div>
-                  <Chip label={value} onClick={() =>this.addToRoles(index)} clickable={true} color={this.state.rolesSelected[index]} />
+
+                <div className="pr-2">
+                  <Chip 
+                    className="py-1"
+                    label={value}
+                    onClick={() =>this.addToRoles(index)}
+                    clickable={true} color={this.state.rolesSelected[index]} />
                 </div>
                 )
               })}
+            </div>
           </div>
           <div className="form-group">
-            <button className="btn btn-primary btn-block">Sign Up</button>
+            <button className="btn btn-primary btn-block" disabled={this.state.signupDisabled}>Sign Up</button>
           </div>
         
         </div>

@@ -34,6 +34,7 @@ db.departments = require("./department.model.js")(sequelize, Sequelize);
 db.milestones = require("./milestone.model.js")(sequelize, Sequelize);
 db.portfolioprogress = require("./portfolioprogress.model.js")(sequelize, Sequelize);
 db.projectuser = require("./projectuser.model")(sequelize, Sequelize);
+db.designations = require("./designation.model")(sequelize, Sequelize);
 // Drawing Component Model Classes
 db.drawingcategory = require("./drawing-category.model")(sequelize, Sequelize);
 db.drawings = require("./drawing.model.js")(sequelize, Sequelize);
