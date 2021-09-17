@@ -160,7 +160,7 @@ class AddEmployee extends Component {
           required
           value={this.state.role}
           onChange={this.onChangeRole}
-          name="role" required>
+          name="role" required default="Civil Engineer">
             <option value="Civil Engineer">Civil engineer</option>
             <option value="Project Manager">Project manager</option>
             <option value="Site supervisor">Site supervisor</option>
