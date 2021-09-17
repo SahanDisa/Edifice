@@ -15,3 +15,4 @@ edifice-backend/node-backend/node_modules
 edifice-frontend/edifice-frontend/node_modules
 
 
+edifice-backend/node-backend/app/config/db.config.js

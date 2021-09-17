@@ -4,6 +4,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import DirectCostDataService from "./../../../services/directcost.service";
+import BudgetDataService from "./../../../services/budget.service";
+import VendorDataService from "./../../../services/vendor.service";
+import EmployeeDataService from "./../../../services/employee.service";
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
@@ -15,6 +18,7 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import cogoToast from 'cogo-toast';
 
 
 const DirectCost = props => {
@@ -23,7 +27,6 @@ const DirectCost = props => {
   const validationSchema = Yup.object().shape({
     costCode: Yup.string().required('Cost Code is required'),
     description: Yup.string().required('Description is required'),
-    category: Yup.string().required('Category is required'),
     vendor: Yup.string().required('Vendor is required'),
     employee: Yup.string().required('Employee is required'),
     receivedDate: Yup.string().required('Received Date is required'),
@@ -51,7 +54,6 @@ const DirectCost = props => {
     id: null,
     costCode: "",
     description: "",
-    category: "",
     vendor: "",
     employee: "",
     receivedDate: "",
@@ -59,8 +61,15 @@ const DirectCost = props => {
     amount: "",
     projectId:""
   };
-  const [currentDirectCost, setCurrentDirectCost] = useState(initialDirectCostState);
-  const [message, setMessage] = useState("");
+
+  const {id}= useParams();
+  const [budgets, setBudgets] = useState([]);
+  const [vendors, setVendors] = useState([]);
+  const [employees, setEmployees] = useState([]);
+const [currentDirectCost, setCurrentDirectCost] = useState(initialDirectCostState);
+const [message, setMessage] = useState("");
+
+
 
   const getDirectCost = id => {
     DirectCostDataService.get(id)
@@ -73,8 +82,45 @@ const DirectCost = props => {
       });
   };
 
+  const retrieveBudgets = () => {
+    
+    BudgetDataService.getAll(id)//passing project id as id
+      .then((response) => {
+        setBudgets(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const retrieveVendors = () => {
+    
+    VendorDataService.getAll()//passing project id as id
+      .then((response) => {
+        setVendors(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+
+  const retrieveEmployees = () => {
+    
+    EmployeeDataService.getAll()//passing project id as id
+      .then((response) => {
+        setEmployees(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   useEffect(() => {
     getDirectCost(props.match.params.id);
+    retrieveBudgets();  
+    retrieveVendors();
+    retrieveEmployees();  
   },[props.match.params.id]);
 
   const handleInputChange = event => {
@@ -130,7 +176,7 @@ const DirectCost = props => {
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
-              <label htmlFor="costCode">Cost Code</label>
+              <label htmlFor="costCode">Cost Code :</label>
              {/* <input
                 type="text"
                 className="form-control"
@@ -140,20 +186,33 @@ const DirectCost = props => {
                 onChange={this.onChangeCostCode}
                 name="costCode"
              />*/}
-                <input
-               type="text"
+                <select
                 id="costCode"
                 {...register('costCode')}
                 value={currentDirectCost.costCode}
                 onChange={handleInputChange}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
                 name="costCode"
-              />
+              >
+                  <option value="" disabled selected>Select a Cost Code</option>
+        {budgets &&
+                budgets.map((budget, index) => (
+                <option
+                    value={budget.costCode}
+                    onChange={handleInputChange}
+                    key={index}
+                >
+                {/* unit data */}
+                {budget.costCode}
+                </option>
+                ))}
+
+                </select>
           
               <div className="invalid-feedback">{errors.costCode?.message}</div>
             </div>
             <div className="form-group">
-              <label htmlFor="title">Description</label>
+              <label htmlFor="title">Description :</label>
               <input
                 type="text"
                 
@@ -167,66 +226,57 @@ const DirectCost = props => {
               <div className="invalid-feedback">{errors.description?.message}</div>
             </div>
             <div className="form-group">
-              <label htmlFor="category">Category</label>
-              {/*<input
-                type="text"
-                className="form-control"
-                id="category"
-                required
-                value={this.state.category}
-                onChange={this.onChangeCategory}
-                name="category"
-              />*/}
-  <select 
-                
-                id="category"
-                {...register('category')}
-                value={currentDirectCost.category}
-                onChange={handleInputChange}
-                className={`form-control ${errors.category ? 'is-invalid' : ''}`}
-                name="category"
-              >
-                 <option></option>
-                <option>Expense</option>
-                <option>Invoice</option>
-                <option>Payroll</option>
-              </select>
-              <div className="invalid-feedback">{errors.category?.message}</div>
-            </div>
-
-
-
-
-            <div className="form-group">
-              <label htmlFor="title">Vendor</label>
-              <input
-                type="text"
-               
+              <label htmlFor="title">Vendor :</label>
+              <select
                 id="vendor"
                 name="vendor"
                 {...register('vendor')}
                 value={currentDirectCost.vendor}
                 onChange={handleInputChange}
                 className={`form-control ${errors.vendor ? 'is-invalid' : ''}`}
-              />
+              >
+                <option value="" disabled selected>Select a Vendor</option>
+{vendors &&
+                vendors.map((vendor, index) => (
+                <option
+                    value={vendor.companyName}
+                    onChange={handleInputChange}
+                    key={index}
+                >
+                {/* unit data */}
+                {vendor.companyName}
+                </option>
+                ))}
+                </select>
               <div className="invalid-feedback">{errors.vendor?.message}</div>
             </div>
             <div className="form-group">
-              <label htmlFor="title">Employee</label>
-              <input
-                type="text"
-               
+              <label htmlFor="title">Employee :</label>
+              <select
                 id="employee"
                 name="employee"
                 {...register('employee')}
                 value={currentDirectCost.employee}
                 onChange={handleInputChange}
                 className={`form-control ${errors.employee ? 'is-invalid' : ''}`}
-              />
+              >
+<option value="" disabled selected>Select an Employee</option>
+{employees &&
+                employees.map((employee, index) => (
+                <option
+                    value={employee.name}
+                    onChange={handleInputChange}
+                    key={index}
+                >
+                {/* unit data */}
+                {employee.name}
+                </option>
+                ))}
+                </select>
               <div className="invalid-feedback">{errors.employee?.message}</div>
             </div>
             <div className="form-group">
-              <label htmlFor="description">Received Date</label>
+              <label htmlFor="description">Received Date :</label>
               <input
                 type="date"
               
@@ -240,7 +290,7 @@ const DirectCost = props => {
               <div className="invalid-feedback">{errors.receivedDate?.message}</div>
             </div>
             <div className="form-group">
-              <label htmlFor="description">Paid Date</label>
+              <label htmlFor="description">Paid Date :</label>
               <input
                 type="date"
                
@@ -254,7 +304,7 @@ const DirectCost = props => {
               <div className="invalid-feedback">{errors.paidDate?.message}</div>
             </div>
             <div className="form-group">
-              <label htmlFor="description">Amount</label>
+              <label htmlFor="description">Amount :</label>
               <input
                 type="text"
                

@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
+import { Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-//import { Route, useParams } from "react-router-dom";
 import DirectCostDataService from "./../../../services/directcost.service";
+import BudgetDataService from "./../../../services/budget.service";
+import VendorDataService from "./../../../services/vendor.service";
+import EmployeeDataService from "./../../../services/employee.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
-import BudgetDataService from "./../../../services/budget.service";
-import { Route, useParams } from "react-router-dom";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import cogoToast from 'cogo-toast';
 
 const AddDirectCost = (props) => {
 
@@ -21,7 +23,6 @@ const AddDirectCost = (props) => {
   const validationSchema = Yup.object().shape({
     costCode: Yup.string().required('Cost Code is required'),
     description: Yup.string().required('Description is required'),
-    category: Yup.string().required('Category is required'),
     vendor: Yup.string().required('Vendor is required'),
     employee: Yup.string().required('Employee is required'),
     receivedDate: Yup.string().required('Received Date is required'),
@@ -61,11 +62,15 @@ const AddDirectCost = (props) => {
 
   const {id}= useParams();
   const [budgets, setBudgets] = useState([]);
+  const [vendors, setVendors] = useState([]);
+  const [employees, setEmployees] = useState([]);
   const [directcost, setDirectCost] = useState(initialDirectCostState);
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    retrieveBudgets();    
+    retrieveBudgets();  
+    retrieveVendors();
+    retrieveEmployees();  
 
   }, []);
 
@@ -79,6 +84,29 @@ const AddDirectCost = (props) => {
     BudgetDataService.getAll(id)//passing project id as id
       .then((response) => {
         setBudgets(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const retrieveVendors = () => {
+    
+    VendorDataService.getAll()//passing project id as id
+      .then((response) => {
+        setVendors(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+
+  const retrieveEmployees = () => {
+    
+    EmployeeDataService.getAll()//passing project id as id
+      .then((response) => {
+        setEmployees(response.data);
       })
       .catch((e) => {
         console.log(e);
@@ -121,6 +149,12 @@ const AddDirectCost = (props) => {
       });
   };
 
+  
+ const viewDirectCost = () => {
+  props.history.push("/directcost/"+ directcost.projectId);
+  cogoToast.success("Direct Cost Saved Successfully!");
+ }
+
   const newDirectCost = () => {
     setDirectCost(initialDirectCostState);
     setSubmitted(false);
@@ -131,13 +165,9 @@ const AddDirectCost = (props) => {
         <div className="container">
        
         {submitted ? (
-          <div>
-            <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={newDirectCost}>
-              + Add Another Direct Cost
-            </button>&nbsp;&nbsp;
-          <Link  to={"/directcost/"+directcost.projectId} className="btn btn-success">View Direct Costs</Link>
-          </div>
+
+         viewDirectCost()
+
         ) : (
           <div class="container">
             <h2>New Direct Cost</h2>
@@ -161,28 +191,18 @@ const AddDirectCost = (props) => {
        <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
               <label htmlFor="costCode">Cost Code :</label>
-             {/* <input
-                type="text"
-                className="form-control"
-                id="costCode"
-                required
-                value={this.state.costCode}
-                onChange={this.onChangeCostCode}
-                name="costCode"
-             />*/}
+
                 <select 
-                
                 id="costCode"
-           
-                
                 name="costCode"
                 {...register('costCode')}
                 value={directcost.costCode}
                 onChange={handleInputChange}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
               >
-<option value="" disabled selected>Select a Cost Code</option>
-{budgets &&
+
+        <option value="" disabled selected>Select a Cost Code</option>
+        {budgets &&
                 budgets.map((budget, index) => (
                 <option
                     value={budget.costCode}
@@ -193,14 +213,6 @@ const AddDirectCost = (props) => {
                 {budget.costCode}
                 </option>
                 ))}
-
-                {/*<option></option>
-                <option>001-Maintenance Equipment</option>
-                <option>002-Sodding</option>
-                <option>003-Visual Display Boards</option>
-                <option>004-Site Clearing</option>
-                <option>005-Dewatering</option>*/}
-             
               </select>
               <div className="invalid-feedback">{errors.costCode?.message}</div>
             </div>
@@ -208,11 +220,8 @@ const AddDirectCost = (props) => {
             <div className="form-group">
               <label htmlFor="amount">Description :</label>
               <input
-                type="text"
-            
+                type="text"          
                 id="description"
-                
-           
                 name="description"
                 {...register('description')}
                 value={directcost.description}
@@ -221,67 +230,57 @@ const AddDirectCost = (props) => {
               />
                <div className="invalid-feedback">{errors.description?.message}</div>
             </div>
-
-            <div className="form-group">
-              <label htmlFor="category">Category :</label>
-              {/*<input
-                type="text"
-                className="form-control"
-                id="category"
-                required
-                value={this.state.category}
-                onChange={this.onChangeCategory}
-                name="category"
-              />*/}
-  <select 
-                
-                id="category"
-                
-                name="category"
-                {...register('category')}
-                value={directcost.category}
-                onChange={handleInputChange}
-                className={`form-control ${errors.category ? 'is-invalid' : ''}`}
-              >
-                <option>Invoice</option>
-                <option>Payroll</option>
-                <option>Expense</option>
-              </select>
-              <div className="invalid-feedback">{errors.category?.message}</div>
-            </div>
-
             <div className="form-group">
               <label htmlFor="amount">Vendor :</label>
-              <input
-                type="text"
-                
+              <select
                 id="vendor"
-              
-               
                 name="vendor"
                 {...register('vendor')}
                 className={`form-control ${errors.vendor ? 'is-invalid' : ''}`}
                 value={directcost.vendor}
                 onChange={handleInputChange}
                 
-              />
+              >
+<option value="" disabled selected>Select a Vendor</option>
+{vendors &&
+                vendors.map((vendor, index) => (
+                <option
+                    value={vendor.companyName}
+                    onChange={handleInputChange}
+                    key={index}
+                >
+                {/* unit data */}
+                {vendor.companyName}
+                </option>
+                ))}
+ </select>
                <div className="invalid-feedback">{errors.vendor?.message}</div>
             </div>
 
             <div className="form-group">
               <label htmlFor="amount">Employee :</label>
-              <input
-                type="text"
-               
+              <select
                 id="employee"
-                
-               
                 name="employee"
                 {...register('employee')}
                 value={directcost.employee}
                 onChange={handleInputChange}
                 className={`form-control ${errors.employee ? 'is-invalid' : ''}`}
-              />
+              >
+
+<option value="" disabled selected>Select an Employee</option>
+{employees &&
+                employees.map((employee, index) => (
+                <option
+                    value={employee.name}
+                    onChange={handleInputChange}
+                    key={index}
+                >
+                {/* unit data */}
+                {employee.name}
+                </option>
+                ))}
+ </select>
                <div className="invalid-feedback">{errors.employee?.message}</div>
             </div>
 
@@ -289,10 +288,7 @@ const AddDirectCost = (props) => {
               <label htmlFor="date">Received Date :</label>
               <input
                 type="date"
-                
                 id="receivedDate"
-                
-               
                 name="receivedDate"
                 {...register('receivedDate')}
                 value={directcost.receivedDate}
@@ -306,10 +302,7 @@ const AddDirectCost = (props) => {
               <label htmlFor="date">Paid Date :</label>
               <input
                 type="date"
-                
                 id="paidDate"
-                
-                
                 name="paidDate"
                 {...register('paidDate')}
                 value={directcost.paidDate}
@@ -323,10 +316,7 @@ const AddDirectCost = (props) => {
               <label htmlFor="amount">Amount :</label>
               <input
                 type="text"
-               
                 id="amount"
-             
-              
                 name="amount"
                 {...register('amount')}
                 value={directcost.amount}
@@ -362,7 +352,7 @@ const AddDirectCost = (props) => {
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h5><strong>Step 1</strong><br/>Create a Direct Cost</h5> </TimelineContent>
+                <TimelineContent><h5><strong>Step 1</strong><br/>Create a Direct Cost.</h5> </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>

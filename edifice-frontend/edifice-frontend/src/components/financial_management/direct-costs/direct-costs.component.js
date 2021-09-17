@@ -133,16 +133,16 @@ const DirectCostList = (props) => {
   const columns = useMemo(
     () => [
       {
+        Header: "#",
+        accessor: "id",
+      },
+      {
         Header: "Cost Code",
         accessor: "costCode",
       },
       {
         Header: "Description",
         accessor: "description",
-      },
-      {
-        Header: "Category",
-        accessor: "category",
       },
       {
         Header: "Vendor",
@@ -253,7 +253,7 @@ const DirectCostList = (props) => {
             value={searchCostCode}
             onChange={onChangeSearchCostCode}
               >
-                <option  selected value="">All</option>
+                <option  selected value="">All Direct Costs</option>
              {budgets &&
                 budgets.map((budget, index) => (
                 <option
