@@ -13,6 +13,7 @@ import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import BudgetDataService from "./../../../services/budget.service";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import CommitmentDataService from "./../../../services/commitment.service";
 
 
 const AddSov = (props) => {
@@ -39,7 +40,8 @@ const AddSov = (props) => {
   };
 /**End of validation */
 
-  //const {cid}= useParams();
+const {id}= useParams();
+const {pid}= useParams();
 
   const initialSovState = {
     id: null,
@@ -53,6 +55,23 @@ const AddSov = (props) => {
     
   };
 
+  const initialCommitmentState = {
+    id: null,
+    title :"",
+    contractCompany :"",
+    status :"",
+    description :"",
+    startDate :"",
+    estimatedCompletionDate :"",
+actualCompletionDate :"",
+signedContractReceivedDate :"",
+    inclusions: "",
+exclusions:"",
+    projectId:props.match.params.id,  
+    commitmentStatuses: ["Ongoing 🔴", "Completed 🟢"],
+    
+  };
+  const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentState);
  
   const [budgets, setBudgets] = useState([]);
   const [sov, setSov] = useState(initialSovState);
@@ -60,8 +79,20 @@ const AddSov = (props) => {
 
   useEffect(() => {
     retrieveBudgets();    
-
+    getCommitment(id);
   }, []);
+
+  const getCommitment = id => {
+    CommitmentDataService.get(id)
+      .then(response => {
+        setCurrentCommitment(response.data);
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
 
   const retrieveBudgets = () => {
     
@@ -133,11 +164,17 @@ const AddSov = (props) => {
               <Link color="inherit" to="/home">
                 Home
               </Link>
-              <Link color="inherit" to={"/projectmanagementhome/"+sov.projectId}>
+              <Link color="inherit" to={"/projectmanagementhome/"+pid}>
                 App Dashboard
               </Link>
-              <Link color="textPrimary" to={"/viewsov/"+sov.projectId+"/"+sov.commitmentId} aria-current="page">
-               Shedule of Values
+              <Link color="textPrimary" to={"/commitment/"+pid} aria-current="page">
+               Commitments
+              </Link>
+              <Link color="textPrimary" to={"/editcommitment/"+id} aria-current="page">
+              #{id} - {currentCommitment.title}
+              </Link>
+              <Link color="textPrimary" to={"/viewsov/"+pid+"/"+id} aria-current="page">
+               Schedule of Values
               </Link>
               <Link color="textPrimary" to={"/addsov/"+sov.projectId+"/"+sov.commitmentId} aria-current="page">
                New SoV

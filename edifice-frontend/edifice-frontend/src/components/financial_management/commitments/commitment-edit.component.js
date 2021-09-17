@@ -15,6 +15,7 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
+import SubDataService from "./../../../services/subcontractor.service";
 
 
 const EditCommitment = props => {
@@ -62,9 +63,11 @@ signedContractReceivedDate :"",
     inclusions: "",
 exclusions:"",
     projectId:props.match.params.id,  
+    commitmentStatuses: ["Ongoing 🔴", "Completed 🟢"],
     
   };
   const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentState);
+  const [subcontractors, setSubcontractors] = useState([]);
   const [message, setMessage] = useState("");
 
   const getCommitment = id => {
@@ -80,7 +83,21 @@ exclusions:"",
 
   useEffect(() => {
     getCommitment(props.match.params.id);
+    retrieveSubcontractors();  
   },[props.match.params.id]);
+
+  const retrieveSubcontractors=()=>{
+    
+    SubDataService.getAll()//passing project id as id
+      .then((response) => {
+
+          setSubcontractors(response.data);
+
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const handleInputChange = event => {
     const { name, value } = event.target;
@@ -116,7 +133,7 @@ exclusions:"",
     <div className="container">
       {currentCommitment ? (
         <div class="container">
-          <h4>Edit Sub Contract</h4>
+          <h4>Edit Subcontract</h4>
           <Breadcrumbs aria-label="breadcrumb">
               <Link color="inherit" to="/home">
                 Home
@@ -128,7 +145,7 @@ exclusions:"",
                Commitments
               </Link>
               <Link color="textPrimary" to={"/editcommitment/"+currentCommitment.id} aria-current="page">
-               Edit Sub Contract - #{currentCommitment.id} - {currentCommitment.title}
+              #{currentCommitment.id} - {currentCommitment.title}
               </Link>
             </Breadcrumbs>
 <br />
@@ -166,23 +183,34 @@ exclusions:"",
               <div className="form-group">
                 <label htmlFor="contractCompany">Contract Company :</label>
              
-                <input
-                type="text"
-                
+                <select
                 id="contractCompany"
                  {...register('contractCompany')}
                 value={currentCommitment.contractCompany}
                 onChange={handleInputChange}
                 name="contractCompany"
   className={`form-control ${errors.contractCompany ? 'is-invalid' : ''}`}
-              />
+              >
+              <option value="" disabled selected>Select the Subcontractor</option>
+              {subcontractors &&
+               subcontractors.map((subcontractor, index) => (
+                <option
+                    value={subcontractor.companyName}
+                    onChange={handleInputChange}
+                    key={index}
+                >
+                {/* unit data */}
+                {subcontractor.companyName}
+                </option>
+                ))}
+              </select>
 <div className="invalid-feedback">{errors.contractCompany?.message}</div>
               </div>
               <div className="form-group">
                 <label htmlFor="status">Status :</label>
             
-              <input
-                type="text"
+              <select
+           
             
                 id="status"
                 {...register('status')}
@@ -190,7 +218,21 @@ exclusions:"",
                 onChange={handleInputChange}
                 name="status"
   className={`form-control ${errors.status ? 'is-invalid' : ''}`}
-              />
+              >
+                <option value="" disabled selected>Select the Status</option>
+                {currentCommitment.commitmentStatuses &&
+                currentCommitment.commitmentStatuses.map((commitmentStatus, index) => (
+                <option
+                    value={commitmentStatus}
+                    onChange={handleInputChange }
+                    key={index}
+                    selected
+                >
+                {/* unit data */}
+                {commitmentStatus}
+                </option>
+                ))}
+              </select>
 <div className="invalid-feedback">{errors.status?.message}</div>
               </div>
               {/*<div className="form-group">

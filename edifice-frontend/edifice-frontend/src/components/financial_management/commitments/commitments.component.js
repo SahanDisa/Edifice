@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import CommitmentDataService from "./../../../services/commitment.service";
 import SovDataService from "./../../../services/sov.service";
-import SubcontractsDataService from "./../../../services/subcontractor.service";
+import SubDataService from "./../../../services/subcontractor.service";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 export default class Commitments extends Component {
@@ -39,6 +39,7 @@ export default class Commitments extends Component {
       this.calculateTotalSovs(this.props.match.params.id);
       this.getOngoingCount();
       this.getCompletedCount();
+      this.retrieveSubcontractors();
     }
 
     onChangeSearchContractCompany (e) {
@@ -64,16 +65,16 @@ export default class Commitments extends Component {
 
     retrieveSubcontractors(){
     
-      SubcontractsDataService.getAll()//passing project id as id
-        .then((response) => {
+      SubDataService.getAll()//passing project id as id
+        .then(response => {
           this.setState({
             subcontractors: response.data
           });
         })
-        .catch((e) => {
+        .catch(e => {
           console.log(e);
         });
-    };
+    }
 
     calculateTotalSovs(id){
  
@@ -92,6 +93,7 @@ export default class Commitments extends Component {
 
     refreshList() {
       this.retrieveCommitment();
+      //this.retrieveSubcontractors();
       //this.calculateTotalSovs();
       this.setState({
         currentCommitment: null,
@@ -246,12 +248,12 @@ export default class Commitments extends Component {
               {subcontractors &&
                 subcontractors.map((subcontractor, index) => (
                 <option
-                    value={subcontractor.companyName}
-                    onChange={searchContractCompany}
+                    value={subcontractor.contractCompany}
+                    onChange={this.onChangeSearchContractCompany}
                     key={index}
                 >
                 {/* unit data */}
-                {subcontractor.companyName}
+                {subcontractor.contractCompany}
                 </option>
                 ))}
               </select>
