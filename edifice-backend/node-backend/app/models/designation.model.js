@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Designation = sequelize.define("deisgnation", {
+    const Designation = sequelize.define("designation", {
       id: {
         type:Sequelize.INTEGER,
         primaryKey: true   
@@ -17,5 +17,5 @@ module.exports = (sequelize, Sequelize) => {
         freezeTableName: true,
     });
   
-    return SubContractor;
+    return Designation;
 };
