@@ -9,6 +9,9 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 
+import EmployeeDataService from "./../../../services/employee.service";
+import employeeService from "./../../../services/employee.service";
+
 
 export default class AssignUserProject extends Component {
   constructor(props) {
@@ -27,12 +30,14 @@ export default class AssignUserProject extends Component {
       currentIndex: -1,
       projectId: this.props.match.params.id,
       departments: [],
-
+      employees: [],
       submitted: false
     };
+    
   }
   componentDidMount() {
     this.retrieveDepartments(this.props.match.params.id);
+    this.getEmployees();
   }
   onChangeUserID(e) {
     this.setState({
@@ -96,14 +101,29 @@ export default class AssignUserProject extends Component {
     });
   }
 
+  getEmployees(){
+    EmployeeDataService.getAll()
+      .then(response => {
+        this.setState({
+          employees: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    
+      //console.log(this.state.employees)
+  }
+
   render() {
-    const {departments, currentIndex, projectId} = this.state;
+    const {departments, currentIndex, projectId,employees} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
           <div>
           <center>
-            <h4>You add a ProjectUser successfully</h4>
+            <h4>You add a ProjectUser successfully </h4>
             <button className="btn btn-success" onClick={this.newProjectUser}  style={{ 'text-decoration': 'none' }}>
               Add Another ProjectUser
             </button>
@@ -142,11 +162,12 @@ export default class AssignUserProject extends Component {
                 {drawingcategory.title}
                 </option>
                 ))} */}
-                <option value={1} onChange={this.onChangeUserID}>1 - John Doe</option>
-                <option value={2} onChange={this.onChangeUserID}>2 - Steve Smith</option>
-                <option value={3} onChange={this.onChangeUserID}>3 - Kamal Perera</option>
-                <option value={4} onChange={this.onChangeUserID}>4 - Saman Dissanayaka</option>
-                <option value={5} onChange={this.onChangeUserID}>5 - Ranjith Weerasuriya</option>
+                {employees &&
+                employees.map((employee,index) => {
+                  return(
+                    <option value={employee.name} onChange={this.onChangeUserID}>{employee.name}</option>
+                  )
+                })}
               </select>
             </div>
 
@@ -206,6 +227,12 @@ export default class AssignUserProject extends Component {
                 disabled
               />
             </div>
+            {employees &&
+                employees.map((employee,index) => {
+                  return(
+                  <p>{employee.name}</p>
+                  )
+                })}
             <button onClick={this.saveProjectUser} className="btn btn-success">
               Assign User
             </button>
