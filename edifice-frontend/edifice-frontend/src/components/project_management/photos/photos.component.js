@@ -12,6 +12,11 @@ import UploadPhotoService from "../../../services/photoupload.service";
 import Card from 'react-bootstrap/Card';
 import ProgressBar from 'react-customizable-progressbar';
 
+if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+  console.log("Let's get this party started")
+}
+navigator.mediaDevices.getUserMedia({video: true});
+
 export default class PhotosHome extends Component {
   
     constructor(props) {
@@ -61,7 +66,7 @@ export default class PhotosHome extends Component {
             console.log(e);
           });
     }
-
+    
     render() {
       const { albums, currentIndex,id,fileInfos, Captures } = this.state;
       return (
