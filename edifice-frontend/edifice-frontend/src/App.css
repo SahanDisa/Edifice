@@ -246,4 +246,5 @@ button.bg-dark:focus {
 
 .card-text-edifice{
   color: #273f7d !important;
+  text-decoration: none !important;
 }

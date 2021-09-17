@@ -56,6 +56,7 @@ db.pltypes = require("./project-management/punchlisttypes.model")(sequelize, Seq
 db.punchlist = require("./project-management/punchlist.model")(sequelize, Sequelize);
 db.plphotos = require("./project-management/punchlistphotos.model.js")(sequelize, Sequelize);
 db.plassignees = require("./project-management/punchlistassignees.model.js")(sequelize, Sequelize);
+db.plbasic = require("./project-management/punchlistbasic.model.js")(sequelize, Sequelize);
 // Action Plan Model Classes
 db.actionplantype = require("./project-management/actionplantype.model")(sequelize, Sequelize);
 db.actionplan = require("./project-management/actionplan.model")(sequelize, Sequelize);
@@ -270,6 +271,13 @@ db.plassignees.belongsToMany(db.punchlist, {
   otherKey: "punchlistNo"
 });
 
+// One daily log general has many daily questions
+db.punchlist.hasMany(db.plbasic, { as: "plbasic" });
+db.plbasic.belongsTo(db.punchlist, {
+  foreignKey: "punchlistNo",
+  as: "punchlist",
+});
+
 // One project has many action plans
 db.projects.hasMany(db.actionplan, {as: "actionplans"});
 db.actionplan.belongsTo(db.projects, {
@@ -312,10 +320,10 @@ db.dlgeneral.belongsTo(db.projects, {
   as: "type",
 });
 
-// One daly log general has many daily questions
+// One daily log general has many daily questions
 db.dlgeneral.hasMany(db.dlquestions, { as: "dlquestions" });
 db.dlquestions.belongsTo(db.dlgeneral, {
-  foreignKey: "projectId",
+  foreignKey: "dlgeneralId",
   as: "type",
 });
 

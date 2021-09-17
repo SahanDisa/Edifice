@@ -124,7 +124,7 @@ exports.update = (req, res) => {
 // Delete a Punchlist with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
-    Punchlist.update({isDeleted = 1}, {
+    Punchlist.update({
       where: { no: id }
     })
     .then(num => {

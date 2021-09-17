@@ -62,10 +62,7 @@ exports.update = (req, res) => {
 // Delete a Meeting with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-
-  Meeting.update({isDeleted = 1}, {
-    where: { id: id }
-  })
+  Meeting.update({ where: { id: id }})
   .then(num => {
     if (num == 1) {
       res.send({

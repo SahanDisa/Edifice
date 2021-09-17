@@ -57,7 +57,7 @@ exports.update = (req, res) => {
 // Delete a MeetingCategory with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-  MeetingCategory.update({isDeleted = 1}, {
+  MeetingCategory.update({
     where: { id: id }
   })
   .then(num => {

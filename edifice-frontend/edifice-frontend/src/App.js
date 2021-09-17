@@ -401,20 +401,20 @@ class App extends Component {
 
               {/*resource management */}
               <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
-              {/*timesheet*/}
+              {/timesheet/}
               <Route path="/timesheet/:id" component={Timesheet} />
               <Route path="/viewTimesheet/:id/:code" component={ViewTimesheet} />
               <Route path="/addWorkers/:id" component={AddWorkers} />
-              {/*crew*/}
+              {/crew/}
               <Route path="/crew/:id" component={Crew} />
               <Route path="/newCrew/:id" component={NewCrew} />
               <Route path="/addWorker/:id" component={AddWorker} />
-              {/*schedule*/}
+              {/schedule/}
               <Route path="/schedule/:id" component={Schedule} />
-              {/*equipment*/}
+              {/equipment/}
               <Route path="/equipments/:id" component={Equipments} />
               <Route path="/equipDetails/:code" component={EquipDetails} />
-              {/*<Route path="/equipDetails/:id/:code" component={EquipDetails} />*/}
+              {/<Route path="/equipDetails/:id/:code" component={EquipDetails} />/}
 
               {/*financial management */}
               <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
@@ -423,7 +423,7 @@ class App extends Component {
               {/* Commitment Component Routes  */}
               <Route path="/commitment/:id" component={CommitmentHome} />
               <Route path="/addcommitment/:id" component={AddCommitment} />
-              {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
+              {/<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />/}
               <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
               <Route exact path="/addsov/:pid/:id" component={AddSov} />
               <Route path="/viewdirectcost/:id" component={ViewSingleDirectCost} />

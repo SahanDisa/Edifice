@@ -249,7 +249,7 @@ export default class BoardUser extends Component {
           <div className="col-lg-3 mb-grid-gutter pb-2">
           
             <div className="card card-hover shadow-sm" title="Track the details at Site">
-              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/managedailylogs/"+ id} style={{ 'text-decoration': 'none' }}>
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/dailylogs/"+ id} style={{ 'text-decoration': 'none' }}>
                 <img src={dailylogIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Daily Log</h3>
                 {/* <span className="fs-sm fw-normal text-muted">Keep track of every detail at job site each and everyday</span> */}
