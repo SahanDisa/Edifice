@@ -227,13 +227,13 @@ class App extends Component {
                 <NavDropdown.Item href="/timesheet">Timesheets</NavDropdown.Item>
                 <NavDropdown.Item href="/equipments">Equipments</NavDropdown.Item>
                 <NavDropdown.Item href="/crew">Crews</NavDropdown.Item>
-              </NavDropdown>*/}
-              </li>
-            )}
+              </NavDropdown>
+              </li>*/}
+
             {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
-                  <h6>Core Tools</h6>
+                  <h6>Dashboard</h6>
                 </Link>
               </li>
             )}
@@ -264,7 +264,7 @@ class App extends Component {
               </li>
             </div>
           ) : (
-            
+
               <div className="navbar-nav ml-auto">
                 <li className="nav-item">
                   <Link to={"/login"} className="nav-link">
@@ -290,166 +290,164 @@ class App extends Component {
         )}
         {currentUser && (
 
-        <div className="container mt-3">
-          <Switch>
-            <Route exact path={["/", "/home"]} component={Home} />
-            <Route exact path={["/", "/homereal"]} component={Homereal} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/profile" component={Profile} />
-            <Route path="/projectmanagement" component={BoardUser} />
-            <Route path="/adddepartment/:id" component={AddDepartment} />
-            <Route path="/addmilestone/:id" component={AddMilestone}/>
-            <Route path="/addmilestoneproject/:id" component={AddMilestoneGeneral}/>
-            <Route path="/assignuser/:id" component={AssignUserProject} />
-            <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
+          <div className="container mt-3">
+            <Switch>
+              <Route exact path={["/", "/home"]} component={Home} />
+              <Route exact path={["/", "/homereal"]} component={Homereal} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/profile" component={Profile} />
+              <Route path="/projectmanagement" component={BoardUser} />
+              <Route path="/adddepartment/:id" component={AddDepartment} />
+              <Route path="/addmilestone/:id" component={AddMilestone} />
+              <Route path="/addmilestoneproject/:id" component={AddMilestoneGeneral} />
+              <Route path="/assignuser/:id" component={AssignUserProject} />
+              <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
 
-            <Route path="/resource" component={BoardResource} />
-            <Route path="/financialmanagement" component={BoardModerator} />
-            <Route path="/admin" component={BoardAdmin} />
-            <Route exact path={["/", "/projects"]} component={ProjectsList} />
-           
-            <Route path="/addproject" component={AddProject} />
-            <Route path="/projects/:id" component={Project} />
-            <Route path="/dates" component={Dates} />
-            <Route path="/defaults" component={Defaults} />
-            <Route path="/roles" component={Roles} />
-            {/* Porfolio */}
-            <Route path="/portfolio/:id" component={PortfolioHome} />
-            <Route path="/portstepper" component={PortfolioStepper} />
-            {/* Tasks */}
-            <Route path="/tasksconfiguration" component={TaskConfiguration} />
-            <Route path="/managetasks" component={ManageTasks} />
-            <Route path="/managestasks/update" component={UpdateTasks} />
-            <Route path="/managestasks/view" component={ViewTasks} />
-            {/* Meeting */}
-            <Route path="/meetingsconfiguration" component={MeetingsConfig} />
-            <Route path="/meetings" component={MeetingsHome} />
-            <Route path="/managesmeetings/update" component={UpdateMeetings} />
-            <Route path="/managesmeetings/view" component={ViewMeetings} />
-            {/* RFI */}
-            <Route path="/rfi" component={rfiHome} />
-            <Route path="/managerfi/create" component={CreateRFI} />
-            <Route path="/managerfi/edit" component={EditRFI} />
-            <Route path="/managerfi/view" component={ViewRFI} />
-            {/* Action Plan */}
-            <Route path="/actionplan/:id" component={actionplanHome} />
-            <Route path="/addactionplan/:id" component={AddActionPlan} />
-            <Route path="/actionplansingle/:id" component={ActionPlanSinglePage} />
-            <Route path="/addactionplanitem" component={AddAPItem} />
-            <Route path="/addactionplansection" component={AddAPSection} />
-            <Route path="/viewactionplantype/:id" component={ViewAPType} />
-            <Route exact path="/viewactionplan/:id" component={ViewActionPlan}/>
-            {/* Punch List */}
-            <Route path="/punchlist/:id" component={punchlistHome} />
-            <Route path="/managepunchlist/createaddphoto/:id" component={CreatePhotos} />
-            <Route path="/managepunchlist/createaddassignee/:id" component={CreateAssignees} />
-            <Route path="/managepunchlist/create/:id" component={CreatePL} />
-            <Route path="/viewtype/:pltid" component={PLTView} />
-            <Route path="/view/:pliid" component={PLIView} />
-            {/* Daily Logs */}
-            <Route path="/dailylogsconfiguration/:id" component={DlsConfig} />
-            <Route path="/managedailylogs/:id" component={ManageDls} />
-            <Route path="/managesdailylogs/update/:id" component={UpdateDls} />
-            <Route path="/managesdailylogs/view/:id" component={ViewDls} />
-            
-            <Route path="/addUser" component={AddEmployee} />
-            <Route path="/editUser/:id" component={EditUser} />
-            <Route path="/vendor" component={Vendors} />
-            <Route path="/employees" component={Employee} />
-            <Route path="/addVendor" component={AddVendor} />
-            <Route path="/editVendor/:id" component={EditVendor} />
-            {/* Document */}
-            <Route path="/directory/:id" component={AddDirectory} />
-            <Route path="/document/:id" component={DocumentHome} />
-            <Route path="/adddocument/:id" component={UploadDocFiles} />
-            <Route path="/uploaddocument/:name" component={UploadDocment}/>
-            <Route exact path="/updatedocument/:pid/:id" component={UpdateDocument}/>
-            <Route exact path={"/viewdirectory/:pid/:id"} component={ViewDirectory}/>
-            <Route exact path={"/updatedirectory/:pid/:id"} component={UpdateDirectory}/>
-            <Route path={"/viewsingledocument/:id"} component={ViewSingleDocument}/>
-            {/* Drawing Component Routes  */}
-            <Route path="/drawing/:id" component={DrawingHome} />
-            <Route path="/adddrawingcategory/:id" component={AddDrawingCategory} />
-            <Route path="/viewdrawingcategory/:id" component={ViewSingleDrawingCategory}/>
-            <Route exact path={"/updatedrawingcategory/:pid/:id"} component={UpdateDrawingCategory}/>
-            <Route path="/adddrawing/:id" component={AddDrawing} />
-            <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
-            <Route exact path="/updatedrawing/:id/:pid" component={UpdateDrawing}/>
-            {/* Photo Component Routes */}
-            <Route path="/photos/:id" component={PhotosHome} />
-            <Route path="/addphoto/:id" component={AddPhoto}/>
-            <Route path="/uploadphoto/:name" component={UploadPhotos}/>
-            <Route path="/viewalbum/:id" component={ViewSingleAlbum}/>
-            <Route path="/addalbum/:id" component={AddAlbum}/>
-            <Route exact path={"/updatealbum/:pid/:id"} component={UpdateAlbum}/>
-            <Route exact path={"/updatephoto/:pid/:id"} component={UpdatePhoto}/>
-            <Route path="/movecapture/:id" component={MoveCapturetoAlbum}/>
-            {/* Bidding Component Routes  */}
-            <Route path="/bidding/:id" component={BiddingHome} /> 
-            <Route path="/addbidding" component={AddBidding} /> 
-            <Route path="/viewbidding" component={ViewSingleBidding}/>
-            <Route path="/viewspec" component={ViewSpec} />  
-			      <Route path="/budget/:id" component={BudgetHome} />
-            <Route path="/addbudget/:id" component={AddBudget} />
-            <Route path="/prime-contracts" component={PrimeContracts} />
-            <Route path="/addprimecontract/:id" component={CreatePrimeContracts} />
-            <Route path="/directcost/:id" component={DirectCostHome} />
-            <Route path="/invoice/:id" component={InvoiceHome} />
-            
-            <Route path="/primecontract/:id" component={PrimeContracts} />
+              <Route path="/resource" component={BoardResource} />
+              <Route path="/financialmanagement" component={BoardModerator} />
+              <Route path="/admin" component={BoardAdmin} />
+              <Route exact path={["/", "/projects"]} component={ProjectsList} />
 
-            {/*resource management */}
-            <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
-            {/*timesheet*/}
-            <Route path="/timesheet/:id" component={Timesheet} />
-            <Route path="/customize" component={Customize} />
-            <Route path="/viewTimesheet/:id/:code" component={ViewTimesheet} />
-            <Route path="/viewWorkers/:id" component={ViewWorkers} />
-            {/*crew*/}
-            <Route path="/crew/:id" component={Crew} />
-            <Route path="/newCrew/:id" component={NewCrew}/>
-            <Route path="/addWorker/:id" component={AddWorker} />
-            {/*schedule*/}
-            <Route path="/schedule/:id" component={Schedule} />
-            {/*equipment*/}
-            <Route path="/equipments/:id" component={Equipments} />
-            <Route path="/equipDetails/:code" component={EquipDetails} />
-            {/*<Route path="/equipDetails/:id/:code" component={EquipDetails} />*/}
-            
-            {/*financial management */}
-            <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
-            <Route path="/editprimecontracts/:id" component={EditPrimeContracts} />
-            <Route path="/adddirectcost/:id" component={AddDirectCost} />
-            {/* Commitment Component Routes  */}
-            <Route path="/commitment/:id" component={CommitmentHome} />
-            <Route path="/addcommitment/:id" component={AddCommitment} />
-            {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
-            <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
-            <Route exact path="/addsov/:pid/:id" component={AddSov} />
-            <Route path="/viewdirectcost/:id" component={ViewSingleDirectCost} />
-           {/* <Route path="/viewsov/:id" component={ViewSingleSov} />*/}
-            <Route exact path="/viewsov/:pid/:id" component={SovHome} />
+              <Route path="/addproject" component={AddProject} />
+              <Route path="/projects/:id" component={Project} />
+              <Route path="/dates" component={Dates} />
+              <Route path="/defaults" component={Defaults} />
+              <Route path="/roles" component={Roles} />
+              {/* Porfolio */}
+              <Route path="/portfolio/:id" component={PortfolioHome} />
+              <Route path="/portstepper" component={PortfolioStepper} />
+              {/* Tasks */}
+              <Route path="/tasksconfiguration" component={TaskConfiguration} />
+              <Route path="/managetasks" component={ManageTasks} />
+              <Route path="/managestasks/update" component={UpdateTasks} />
+              <Route path="/managestasks/view" component={ViewTasks} />
+              {/* Meeting */}
+              <Route path="/meetingsconfiguration" component={MeetingsConfig} />
+              <Route path="/meetings" component={MeetingsHome} />
+              <Route path="/managesmeetings/update" component={UpdateMeetings} />
+              <Route path="/managesmeetings/view" component={ViewMeetings} />
+              {/* RFI */}
+              <Route path="/rfi" component={rfiHome} />
+              <Route path="/managerfi/create" component={CreateRFI} />
+              <Route path="/managerfi/edit" component={EditRFI} />
+              <Route path="/managerfi/view" component={ViewRFI} />
+              {/* Action Plan */}
+              <Route path="/actionplan/:id" component={actionplanHome} />
+              <Route path="/addactionplan/:id" component={AddActionPlan} />
+              <Route path="/actionplansingle/:id" component={ActionPlanSinglePage} />
+              <Route path="/addactionplanitem" component={AddAPItem} />
+              <Route path="/addactionplansection" component={AddAPSection} />
+              <Route path="/viewactionplantype/:id" component={ViewAPType} />
+              <Route exact path="/viewactionplan/:id" component={ViewActionPlan} />
+              {/* Punch List */}
+              <Route path="/punchlist/:id" component={punchlistHome} />
+              <Route path="/managepunchlist/createaddphoto/:id" component={CreatePhotos} />
+              <Route path="/managepunchlist/createaddassignee/:id" component={CreateAssignees} />
+              <Route path="/managepunchlist/create/:id" component={CreatePL} />
+              <Route path="/viewtype/:pltid" component={PLTView} />
+              <Route path="/view/:pliid" component={PLIView} />
+              {/* Daily Logs */}
+              <Route path="/dailylogsconfiguration/:id" component={DlsConfig} />
+              <Route path="/managedailylogs/:id" component={ManageDls} />
+              <Route path="/managesdailylogs/update/:id" component={UpdateDls} />
+              <Route path="/managesdailylogs/view/:id" component={ViewDls} />
 
-            <Route path="/addinvoice/:id" component={AddInvoice} />
-            <Route path="/addpayment/:id" component={AddPayment} />
-            <Route path="/viewpayment/:id" component={PaymentHome} />
-            <Route path="/editcommitment/:id" component={EditSingleCommitment} />
-            <Route path="/viewsinglesov/:id" component={ViewSingleSov} />
-            <Route path="/viewbudget/:id" component={ViewSingleBudget} />
-            <Route path="/excelupload/:id" component={UploadExcel} />
-            <Route path="/budgetestimates/:id" component={EstimateBudget} />
-            <Route path="/bexcelupload/:id" component={BUploadExcel} />
+              <Route path="/addUser" component={AddEmployee} />
+              <Route path="/editUser/:id" component={EditUser} />
+              <Route path="/vendor" component={Vendors} />
+              <Route path="/employees" component={Employee} />
+              <Route path="/addVendor" component={AddVendor} />
+              <Route path="/editVendor/:id" component={EditVendor} />
+              {/* Document */}
+              <Route path="/directory/:id" component={AddDirectory} />
+              <Route path="/document/:id" component={DocumentHome} />
+              <Route path="/adddocument/:id" component={UploadDocFiles} />
+              <Route path="/uploaddocument/:name" component={UploadDocment} />
+              <Route exact path="/updatedocument/:pid/:id" component={UpdateDocument} />
+              <Route exact path={"/viewdirectory/:pid/:id"} component={ViewDirectory} />
+              <Route exact path={"/updatedirectory/:pid/:id"} component={UpdateDirectory} />
+              <Route path={"/viewsingledocument/:id"} component={ViewSingleDocument} />
+              {/* Drawing Component Routes  */}
+              <Route path="/drawing/:id" component={DrawingHome} />
+              <Route path="/adddrawingcategory/:id" component={AddDrawingCategory} />
+              <Route path="/viewdrawingcategory/:id" component={ViewSingleDrawingCategory} />
+              <Route exact path={"/updatedrawingcategory/:pid/:id"} component={UpdateDrawingCategory} />
+              <Route path="/adddrawing/:id" component={AddDrawing} />
+              <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
+              <Route exact path="/updatedrawing/:id/:pid" component={UpdateDrawing} />
+              {/* Photo Component Routes */}
+              <Route path="/photos/:id" component={PhotosHome} />
+              <Route path="/addphoto/:id" component={AddPhoto} />
+              <Route path="/uploadphoto/:name" component={UploadPhotos} />
+              <Route path="/viewalbum/:id" component={ViewSingleAlbum} />
+              <Route path="/addalbum/:id" component={AddAlbum} />
+              <Route exact path={"/updatealbum/:pid/:id"} component={UpdateAlbum} />
+              <Route exact path={"/updatephoto/:pid/:id"} component={UpdatePhoto} />
+              <Route path="/movecapture/:id" component={MoveCapturetoAlbum} />
+              {/* Bidding Component Routes  */}
+              <Route path="/bidding/:id" component={BiddingHome} />
+              <Route path="/addbidding" component={AddBidding} />
+              <Route path="/viewbidding" component={ViewSingleBidding} />
+              <Route path="/viewspec" component={ViewSpec} />
+              <Route path="/budget/:id" component={BudgetHome} />
+              <Route path="/addbudget/:id" component={AddBudget} />
+              <Route path="/prime-contracts" component={PrimeContracts} />
+              <Route path="/addprimecontract/:id" component={CreatePrimeContracts} />
+              <Route path="/directcost/:id" component={DirectCostHome} />
+              <Route path="/invoice/:id" component={InvoiceHome} />
 
-            {/*Report and PDF */}
-            <Route path="/report/" component={Report} />
-            <Route component={ErrorPage}/>
-          </Switch>
-        </div>
+              <Route path="/primecontract/:id" component={PrimeContracts} />
+
+              {/*resource management */}
+              <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
+              {/*timesheet*/}
+              <Route path="/timesheet/:id" component={Timesheet} />
+              <Route path="/viewTimesheet/:id/:code" component={ViewTimesheet} />
+              <Route path="/addWorkers/:id" component={AddWorkers} />
+              {/*crew*/}
+              <Route path="/crew/:id" component={Crew} />
+              <Route path="/newCrew/:id" component={NewCrew} />
+              <Route path="/addWorker/:id" component={AddWorker} />
+              {/*schedule*/}
+              <Route path="/schedule/:id" component={Schedule} />
+              {/*equipment*/}
+              <Route path="/equipments/:id" component={Equipments} />
+              <Route path="/equipDetails/:code" component={EquipDetails} />
+              {/*<Route path="/equipDetails/:id/:code" component={EquipDetails} />*/}
+
+              {/*financial management */}
+              <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
+              <Route path="/editprimecontracts/:id" component={EditPrimeContracts} />
+              <Route path="/adddirectcost/:id" component={AddDirectCost} />
+              {/* Commitment Component Routes  */}
+              <Route path="/commitment/:id" component={CommitmentHome} />
+              <Route path="/addcommitment/:id" component={AddCommitment} />
+              {/*<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />*/}
+              <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
+              <Route exact path="/addsov/:pid/:id" component={AddSov} />
+              <Route path="/viewdirectcost/:id" component={ViewSingleDirectCost} />
+              {/* <Route path="/viewsov/:id" component={ViewSingleSov} />*/}
+              <Route exact path="/viewsov/:pid/:id" component={SovHome} />
+
+              <Route path="/addinvoice/:id" component={AddInvoice} />
+              <Route path="/addpayment/:id" component={AddPayment} />
+              <Route path="/viewpayment/:id" component={PaymentHome} />
+              <Route path="/editcommitment/:id" component={EditSingleCommitment} />
+              <Route path="/viewsinglesov/:id" component={ViewSingleSov} />
+              <Route path="/viewbudget/:id" component={ViewSingleBudget} />
+              <Route path="/excelupload/:id" component={UploadExcel} />
+              <Route path="/budgetestimates/:id" component={EstimateBudget} />
+              <Route path="/bexcelupload/:id" component={BUploadExcel} />
+
+              {/*Report and PDF */}
+              <Route path="/report/" component={Report} />
+              <Route component={ErrorPage} />
+            </Switch>
+          </div>
         )}
       </div>
     );
   }
 }
-
 export default App;
