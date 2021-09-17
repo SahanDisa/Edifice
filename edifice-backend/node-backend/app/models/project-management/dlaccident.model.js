@@ -14,7 +14,7 @@ module.exports = (sequelize, Sequelize) => {
         defaultValue: 0
       }
     }, {
-        freezeTableName: true,
+      freezeTableName: true
     });
   
     return DLaccident;

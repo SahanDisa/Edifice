@@ -10,6 +10,7 @@ class PunchlistDataService {
     }
 
     create(data) {
+        console.log("punch list service ekata enawa");
         return http.post(`/projects/punchlist/`, data);
     }
 
@@ -22,7 +23,7 @@ class PunchlistDataService {
     }
 
     findlastItem(){
-        return http.get(`/projects/punchlist/last`);
+        return http.get(`/projects/punchlist/last/`);
     }
 }
 
