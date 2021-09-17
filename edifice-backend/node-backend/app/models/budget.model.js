@@ -14,7 +14,8 @@ module.exports = (sequelize, Sequelize) => {
       }
       ,
       published: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
       },  
     /* directCosts: {
         type: Sequelize.DECIMAL(10, 2),

@@ -198,3 +198,22 @@ exports.getBudgetOverview = (req,res)=>{
       });  
 
   }
+
+  //update the status of a budget line
+
+  exports.budgetUnpublished = (req,res)=>{
+    id = req.params.id;
+    db.sequelize.query('UPDATE budget SET published= false WHERE id='+id+';',
+     {type: db.sequelize.QueryTypes.SELECT})
+    .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Error updating status "
+        });
+        });  
+
+
+  
+    }

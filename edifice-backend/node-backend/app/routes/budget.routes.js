@@ -17,6 +17,8 @@ module.exports = app => {
     // Retrieve a single direct cost with id
     router.get("/:id", budget.findOne);
 
+    router.get("/:id/unpublished",budget.budgetUnpublished); 
+
     /* Retrieve a single direct cost with id
     router.get("/:projectId/:id", directcost.findOne);*/
 
