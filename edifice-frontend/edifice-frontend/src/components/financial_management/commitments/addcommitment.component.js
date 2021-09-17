@@ -12,6 +12,8 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import cogoToast from 'cogo-toast';
+import SubDataService from "./../../../services/subcontractor.service";
 
 const AddCommitment = (props) => {
 
@@ -60,11 +62,10 @@ exclusions:"",
     projectId:props.match.params.id,
     
     commitmentStatuses: ["Ongoing 🔴", "Completed 🟢"],
-/* should uncomment this after the subcontractor table
-    subcontractors: [], */
     lastcommitment:[],
   };
   const [commitment, setCommitment] = useState(initialCommitmentState);
+  const [subcontractors, setSubcontractors] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [lastcommitment,setlastcommitment]= useState(initialCommitmentState);
 
@@ -94,6 +95,24 @@ exclusions:"",
           console.log(e);
         });
   };
+
+  useEffect(() => {
+    retrieveSubcontractors();  
+  }, []);
+
+  const retrieveSubcontractors=()=>{
+    
+    SubDataService.getAll()//passing project id as id
+      .then((response) => {
+
+          setSubcontractors(response.data);
+
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
 
   const saveCommitment = () => {
     var data = {
@@ -158,34 +177,19 @@ exclusions:response.data.exclusions,
     setSubmitted(false);
   };
 
+  const viewCommitment = () => {
+    props.history.push("/editcommitment/"+ commitment.id);
+    cogoToast.success("Commitment Saved Successfully!");
+   }
+
  
   return (
         <div className="container">
        
-        {submitted ? (
-          <div>
-            <h4>You submitted successfully!</h4><hr />
-            <div className="row">
-            <button className="btn btn-success" onClick={newCommitment}>
-              + Add Another Subcontract
-            </button>&nbsp;&nbsp;
-          <Link  to={"/commitment/"+commitment.projectId} className="btn btn-success">View Subcontracts</Link> &nbsp;&nbsp;
-        
-          {lastcommitment && lastcommitment.map((c, index) => (
-            <div
-           /* className={
-              "container col-3" +  (index === commitment.currentIndex ? "active" : "")
-            }*/
-            key={index}
-        >
-                  {/* unit data */}
-                  <Link to={"/viewsov/"+commitment.projectId+"/"+c.id} className="btn btn-success">Add SoVs</Link>
-                  </div>
-              ))}
-
-</div>
-          </div>
+       {submitted ? (       
+            viewCommitment()       
         ) : (
+
           <div class="container">
             <h2>New Subcontract</h2>
             <Breadcrumbs aria-label="breadcrumb">
@@ -203,6 +207,7 @@ exclusions:response.data.exclusions,
               </Link>
             </Breadcrumbs>
                 <hr />
+
             <div className="row">
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>
@@ -224,8 +229,7 @@ className={`form-control ${errors.title ? 'is-invalid' : ''}`}
               <div className="form-group">
                 <label htmlFor="contractCompany">Contract Company :</label>
              
-                <input
-                type="text"
+                <select
        
                 id="contractCompany"
                {...register('contractCompany')}
@@ -233,7 +237,20 @@ className={`form-control ${errors.title ? 'is-invalid' : ''}`}
                 onChange={handleInputChange}
                 name="contractCompany"
 className={`form-control ${errors.contractCompany ? 'is-invalid' : ''}`}
-              />
+              >
+                 <option value="" disabled selected>Select the Subcontractor</option>
+              {subcontractors &&
+               subcontractors.map((subcontractor, index) => (
+                <option
+                    value={subcontractor.companyName}
+                    onChange={handleInputChange}
+                    key={index}
+                >
+                {/* unit data */}
+                {subcontractor.companyName}
+                </option>
+                ))}
+              </select>
 <div className="invalid-feedback">{errors.contractCompany?.message}</div>
               </div>
              { /* this should uncomment after the subcontractors table 
@@ -335,6 +352,23 @@ className={`form-control ${errors.description ? 'is-invalid' : ''}`}
                 name="attachments"
               />
               </div>*/}
+
+<div className="form-group">
+                <label htmlFor="signedContractReceivedDate">Signed Contract Received Date :</label>
+ 
+              <input
+                type="date"
+              
+                id="signedContractReceivedDate"
+                 {...register('signedContractReceivedDate')}
+                value={commitment.signedContractReceivedDate}
+                onChange={handleInputChange}
+                name="signedContractReceivedDate"
+className={`form-control ${errors.signedContractReceivedDate ? 'is-invalid' : ''}`}
+              />
+<div className="invalid-feedback">{errors.signedContractReceivedDate?.message}</div>
+              </div>
+
               <div className="form-group">
                 <label htmlFor="startDate">Start Date :</label>
             
@@ -366,7 +400,7 @@ className={`form-control ${errors.estimatedCompletionDate ? 'is-invalid' : ''}`}
 <div className="invalid-feedback">{errors.estimatedCompletionDate?.message}</div>
               </div>
              
-            <div className="form-group">
+              <div className="form-group">
                 <label htmlFor="actualCompletionDate">Actual Completion Date :</label>
  
               <input
@@ -381,56 +415,6 @@ className={`form-control ${errors.actualCompletionDate ? 'is-invalid' : ''}`}
               />
 <div className="invalid-feedback">{errors.actualCompletionDate?.message}</div>
               </div>
-              <div className="form-group">
-                <label htmlFor="signedContractReceivedDate">Signed Contract Received Date :</label>
- 
-              <input
-                type="date"
-              
-                id="signedContractReceivedDate"
-                 {...register('signedContractReceivedDate')}
-                value={commitment.signedContractReceivedDate}
-                onChange={handleInputChange}
-                name="signedContractReceivedDate"
-className={`form-control ${errors.signedContractReceivedDate ? 'is-invalid' : ''}`}
-              />
-<div className="invalid-feedback">{errors.signedContractReceivedDate?.message}</div>
-              </div>
-             
-            
-            <div className="form-group">
-                <label htmlFor="">Inclusions :</label>
-
-              <input
-                type="textarea"
-           
-                id="inclusions"
-               {...register('inclusions')}
-                value={commitment.inclusions}
-                onChange={handleInputChange}
-                name="inclusions"
-className={`form-control ${errors.inclusions ? 'is-invalid' : ''}`}
-              />
-<div className="invalid-feedback">{errors.inclusions?.message}</div>
-              </div>
-            
-            <div className="form-group">
-                <label htmlFor="">Exclusions :</label>
-              
-              <input
-                type="textarea"
-    
-                id="exclusions"
-                 {...register('exclusions')}
-                value={commitment.exclusions}
-                onChange={handleInputChange}
-                name="exclusions"
-className={`form-control ${errors.exclusions ? 'is-invalid' : ''}`}
-              />
-<div className="invalid-feedback">{errors.exclusions?.message}</div>
-   </div>            
-
-
             <div className="form-group">
             <button type="submit" onClick={()=>{saveCommitment();setTimeout(getLastCommitmentID({position:1}), 3000);}} className="btn btn-success">
               Save
