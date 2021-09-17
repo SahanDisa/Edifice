@@ -38,18 +38,39 @@ exports.create = (req, res) => {
 };
 
 exports.getTimesheetDetails = (req, res) => {
-  console.log("hiiiiiiiiiiiiiiiiiiiiiiiii")
 
   db.sequelize.query(
-    'SELECT worked_hours.location,worked_hours.start, worked_hours.lunch_start,worked_hours.lunch_stop,worked_hours.tea_start, worked_hours.tea_stop,worked_hours.stop, worker.firstName, worker.lastName FROM worked_hours INNER JOIN worker ON worker.wId=worked_hours.workerWId WHERE worked_hours.timesheetId=:id',
+    'SELECT worked_hours.id,worked_hours.location,worked_hours.start, worked_hours.lunch_start,worked_hours.lunch_stop,worked_hours.tea_start, worked_hours.tea_stop,worked_hours.stop, worker.firstName, worker.lastName FROM worked_hours INNER JOIN worker ON worker.wId=worked_hours.workerWId WHERE worked_hours.timesheetId=:id',
     { replacements: { id: req.params.id }, type: db.sequelize.QueryTypes.SELECT })
     .then(data => {
       res.send(data);
     })
-
-
 }
 
+// Update a workedhours by the id in the request
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  WorkedHours.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "workedhours was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update workedhours with id=${id}. Maybe workedhours was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating workedhours with id=" + id
+      });
+    });
+};
 /*
 // Retrieve all workers from a given project
 exports.findAll = (req, res) => {
@@ -83,31 +104,7 @@ exports.findOne = (req, res) => {
         });
       });
 };*/
-/*
-// Update a crew by the id in the request
-exports.update = (req, res) => {
-    const id = req.params.id;
 
-    crew.update(req.body, {
-      where: { id: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "crew was updated successfully."
-          });
-        } else {
-          res.send({
-            message: `Cannot update crew with id=${id}. Maybe crew was not found or req.body is empty!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error updating crew with id=" + id
-        });
-      });
-};*/
 /*
 // Delete a crew with the specified id in the request
 exports.delete = (req, res) => {

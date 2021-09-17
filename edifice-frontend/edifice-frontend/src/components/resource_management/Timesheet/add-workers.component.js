@@ -205,7 +205,7 @@ class Workers extends Component {
           </div>
           <div className="text-right">
             <Link
-              className="btn btn-primary mt-3"
+              className="btn btn-primary mt-3 text-right"
               to={"/viewTimesheet/" + id + "/" + code}>
               Back
             </Link>

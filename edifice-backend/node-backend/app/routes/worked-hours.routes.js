@@ -8,6 +8,9 @@ module.exports = app => {
 
   //view timesheet detils 
   router.get("/list/:id", workedHours.getTimesheetDetails);
+
+  // Update a worker with id
+  router.put("/:id", workedHours.update);
   /*  
       // Retrieve all workedHours
       router.get("/list/", workedHours.findAll);
@@ -17,10 +20,7 @@ module.exports = app => {
     
       // Retrieve a single worker with id
       router.get("/:id", worker.findOne);
-    
-      // Update a worker with id
-      router.put("/:id", worker.update);
-    
+        
       // Delete a worker with id
       router.delete("/:id/", worker.delete);
     

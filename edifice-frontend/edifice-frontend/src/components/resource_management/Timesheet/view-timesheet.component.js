@@ -7,24 +7,38 @@ import { Link } from "react-router-dom";
 
 import TimesheetDataService from "../../../services/timesheet.service";
 import CrewDataService from "./../../../services/crew.service";
+import WorkedHoursDataService from "./../../../services/worked-hours.service";
 
 class ViewTimesheet extends Component {
   constructor(props) {
     super(props);
     this.retrieveTimesheet = this.retrieveTimesheet.bind(this);
     this.retrieveCrew = this.retrieveCrew.bind(this);
+    this.retrieveWorkedHours = this.retrieveWorkedHours.bind(this);
+    this.saveWorker = this.saveWorker.bind(this);
 
     this.state = {
       code: this.props.match.params.code,
       id: this.props.match.params.id,
       timesheet: [],
-      crews: []
+      workedHours: [],
+      crews: [],
+      currentWorker: {
+        location: "",
+        start: "",
+        lunch_start: "",
+        lunch_stop: "",
+        tea_start: "",
+        tea_stop: "",
+        stop: ""
+      }
     };
   }
 
   componentDidMount() {
     this.retrieveTimesheet(this.props.match.params.code);
     this.retrieveCrew(this.props.match.params.id);
+    this.retrieveWorkedHours(this.props.match.params.code);
   }
 
   retrieveCrew(id) {
@@ -53,8 +67,49 @@ class ViewTimesheet extends Component {
       });
   }
 
+  retrieveWorkedHours(id) {
+    WorkedHoursDataService.getTimesheetDetails(id)
+      .then(response => {
+        this.setState({
+          workedHours: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
+  saveWorker(worker) {
+    var data = {
+      location: worker.location,
+      start: worker.start,
+      lunch_start: worker.lunch_start,
+      lunch_stop: worker.lunch_stop,
+      tea_start: worker.tea_start,
+      tea_stop: worker.tea_stop,
+      stop: worker.stop,
+
+    };
+    console.log(data)
+
+
+    WorkedHoursDataService.update(worker.id, data)
+      .then(response => {
+        this.setState(prevState => ({
+          currentWorker: {
+            ...prevState.currentWorker,
+          }
+        }));
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
   render() {
-    const { id, timesheet, crews } = this.state;
+    const { id, timesheet, workedHours, crews } = this.state;
 
     return (
       <div>
@@ -71,7 +126,7 @@ class ViewTimesheet extends Component {
         <Card
           className="mb-2"
           bg={'light'}>
-          <div class="container">
+          <div>
             <div class="row">
               <div class="col-6">
                 <Card.Body>
@@ -91,7 +146,7 @@ class ViewTimesheet extends Component {
                     to={"/addWorkers/" + id + "/" + timesheet.id}
                   >
                     Add Workers
-                    </Link>
+                  </Link>
                   {/*      <h6>Select crew to add worker to timesheet</h6>*/}
                   {/*crews && crews.map((crew, index) => (
                             <div className="list-group" key={index}>
@@ -130,6 +185,7 @@ class ViewTimesheet extends Component {
                   <th className=" align-middle text-center" colspan="2">Lunch</th>
                   <th className=" align-middle text-center" colspan="2">Tea</th>
                   <th className=" align-middle text-center" rowspan="2">Leave</th>
+                  <th className=" align-middle text-center" rowspan="2"></th>
                 </tr>
                 <tr>
                   <th className=" align-middle text-center" >Start</th>
@@ -140,61 +196,77 @@ class ViewTimesheet extends Component {
               </thead>
               <tbody>
 
-                <tr>
-                  <td>
-                    flooring
-                                </td>
-                  <td>Randie pathirae</td>
-                  <td>
-                    <input
-                      type="text"
-                      id="default-picker"
-                      className="form-control"
-                      placeholder="Select time" />
-                  </td>
-                  <td>
-                    <input
-                      type="time"
-                      id="default-picker"
-                      className="form-control"
-                      placeholder="Select time" />
-                  </td>
-                  <td>
-                    <input
-                      type="time"
-                      id="default-picker"
-                      className="form-control"
-                      placeholder="Select time" />
-                  </td>
-                  <td>
-                    <input
-                      type="time"
-                      id="default-picker"
-                      className="form-control"
-                      placeholder="Select time" />
-                  </td>
-                  <td>
-                    <input
-                      type="time"
-                      id="default-picker"
-                      className="form-control"
-                      placeholder="Select time" />
-                  </td>
-                  <td>
-                    <input
-                      type="time"
-                      id="default-picker"
-                      className="form-control"
-                      placeholder="Select time" />
-                  </td>
-                  <td>
-                    <input
-                      type="time"
-                      id="default-picker"
-                      className="form-control"
-                      placeholder="Select time" />
-                  </td>
-                </tr>
+                {workedHours && workedHours.map((worker, index) => (
+                  <tr
+                    key={index}>
+                    <td>flooring</td>
+                    <td className=" align-left text-left">{worker.firstName} {worker.lastName}</td>
+                    <td>
+                      <input
+                        type="text"
+                        id="default-picker"
+                        className="form-control"
+                        placeholder="Select time"
+                        value={worker.location} />
+                    </td>
+                    <td>
+                      <input
+                        type="time"
+                        id="default-picker"
+                        className="form-control"
+                        placeholder="Select time"
+                        value={worker.start} />
+                    </td>
+                    <td>
+                      <input
+                        type="time"
+                        id="default-picker"
+                        className="form-control"
+                        placeholder="Select time"
+                        value={worker.lunch_start} />
+                    </td>
+                    <td>
+                      <input
+                        type="time"
+                        id="default-picker"
+                        className="form-control"
+                        placeholder="Select time"
+                        value={worker.lunch_stop} />
+                    </td>
+                    <td>
+                      <input
+                        type="time"
+                        id="default-picker"
+                        className="form-control"
+                        placeholder="Select time"
+                        value={worker.tea_start} />
+                    </td>
+                    <td>
+                      <input
+                        type="time"
+                        id="default-picker"
+                        className="form-control"
+                        placeholder="Select time"
+                        value={worker.tea_stop} />
+                    </td>
+                    <td>
+                      <input
+                        type="time"
+                        id="default-picker"
+                        className="form-control"
+                        placeholder="Select time"
+                        value={worker.stop} />
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-secondary mr-3"
+                        onClick={() => this.saveWorker(worker)}
+                      >
+                        Save
+                      </button> :
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
 
@@ -205,7 +277,7 @@ class ViewTimesheet extends Component {
                 data-toggle="modal"
                 data-target="#approve">
                 Approve
-                    </button> :
+              </button> :
 
               <button
                 href="#"
@@ -213,13 +285,7 @@ class ViewTimesheet extends Component {
                 data-toggle="modal"
                 data-target="#removeApprove">
                 Remove the Approval
-                    </button>}
-
-            <button
-              href="#"
-              className="btn btn-secondary mr-3">
-              Save Changes
-                    </button>
+              </button>}
 
             {/*------------------------------------ Approve Starts------------------------------------------------------------------ */}
             <div className="modal fade" id="approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -240,11 +306,6 @@ class ViewTimesheet extends Component {
 
             </div>
             {/*------------------------------------ Add worker Ends--------------------------------------------------------------------- */}
-
-
-
-
-
           </div>
         </div>
 
