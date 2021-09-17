@@ -49,19 +49,25 @@ db.document = require("./document.model")(sequelize, Sequelize);
 // Meeting component Model Classes
 db.meetings = require("./project-management/meeting.model")(sequelize, Sequelize);
 db.meetingcategory = require("./project-management/meetingcategory.model")(sequelize, Sequelize);
+db.meetingagenda = require("./project-management/meetingagenda.model")(sequelize, Sequelize);
+db.meetingattendees = require("./project-management/meetingattendees.model")(sequelize, Sequelize);
 // Punch list component Model Classes
+db.pltypes = require("./project-management/punchlisttypes.model")(sequelize, Sequelize);
 db.punchlist = require("./project-management/punchlist.model")(sequelize, Sequelize);
-db.punchlisttypes = require("./project-management/punchlisttypes.model")(sequelize, Sequelize);
 db.plphotos = require("./project-management/punchlistphotos.model.js")(sequelize, Sequelize);
 db.plassignees = require("./project-management/punchlistassignees.model.js")(sequelize, Sequelize);
-
-// Daily log component Model Classes
-db.dailylogtypes = require("./project-management/dailylogtypes.model")(sequelize, Sequelize);
+db.plbasic = require("./project-management/punchlistbasic.model.js")(sequelize, Sequelize);
 // Action Plan Model Classes
 db.actionplantype = require("./project-management/actionplantype.model")(sequelize, Sequelize);
 db.actionplan = require("./project-management/actionplan.model")(sequelize, Sequelize);
 db.actionplansection = require("./project-management/actionplansection.model")(sequelize, Sequelize);
 db.actionplanitem = require("./project-management/actionplanitem.model")(sequelize, Sequelize);
+// Daily log component Model Classes
+db.dlaccident = require("./project-management/dlaccident.model")(sequelize, Sequelize);
+db.dlcall = require("./project-management/dlcall.model")(sequelize, Sequelize);
+db.dlweather = require("./project-management/dlweather.model")(sequelize, Sequelize);
+db.dlgeneral = require("./project-management/dlgeneral.model")(sequelize, Sequelize);
+db.dlquestions = require("./project-management/dlquestions.model")(sequelize, Sequelize);
 
 // Finance Model Classes
 db.budgets = require("./budget.model.js")(sequelize, Sequelize);
@@ -217,12 +223,20 @@ db.meetingcategory.belongsTo(db.projects, {
   as: "project",
 });
 
-// One meeting category has many meetings
-// db.meetingcategory.hasMany(db.meetings, { as: "meetings" });
-// db.meetings.belongsTo(db.meetingcategory, {
-//   foreignKey: "mcId",
-//   as: "mcategory",
-// });
+//One project has many meeting attendees
+db.projects.hasMany(db.meetingattendees, { as: "meetingattendees" });
+db.meetingattendees.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
+// One meeting has one agenda
+db.meetings.hasMany(db.meetingagenda, { as: "meetingagenda" });
+db.meetingagenda.belongsTo(db.meetings, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
 
 // One project has many punch lists
 db.projects.hasMany(db.punchlist, { as: "punchlist" });
@@ -232,8 +246,8 @@ db.punchlist.belongsTo(db.projects, {
 });
 
 // One project has many punch lists types
-db.projects.hasMany(db.punchlisttypes, { as: "punchlisttypes" });
-db.punchlisttypes.belongsTo(db.projects, {
+db.projects.hasMany(db.pltypes, { as: "pltypes" });
+db.pltypes.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
@@ -245,18 +259,23 @@ db.plphotos.belongsTo(db.punchlist, {
   as: "plId",
 });
 
-// One punch list has many punch lists assignees
-db.punchlist.hasMany(db.plassignees, { as: "plassignees" });
-db.plassignees.belongsTo(db.punchlist, {
+// Many punch list has many punch lists assignees
+db.punchlist.belongsToMany(db.plassignees, {
+  through: "punchlist_plassignees",
   foreignKey: "punchlistNo",
-  as: "plId",
+  otherKey: "punchlistassigneesId"
+});
+db.plassignees.belongsToMany(db.punchlist, {
+  through: "punchlist_plassignees",
+  foreignKey: "punchlistassigneesId",
+  otherKey: "punchlistNo"
 });
 
-// One project has many daily log types
-db.projects.hasMany(db.dailylogtypes, { as: "dailylogtypes" });
-db.dailylogtypes.belongsTo(db.projects, {
-  foreignKey: "projectId",
-  as: "type",
+// One daily log general has many daily questions
+db.punchlist.hasMany(db.plbasic, { as: "plbasic" });
+db.plbasic.belongsTo(db.punchlist, {
+  foreignKey: "punchlistNo",
+  as: "punchlist",
 });
 
 // One project has many action plans
@@ -278,6 +297,41 @@ db.actionplansection.hasMany(db.actionplanitem, {as: "actionplanitems"});
 db.actionplanitem.belongsTo(db.actionplansection, {
   foreignKey: "actionplansectionId",
   as: "actionplansection",
+});
+
+// One project has many daily accident log
+db.projects.hasMany(db.dlaccident, { as: "dlaccident" });
+db.dlaccident.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "type",
+});
+
+// One project has many daily call log
+db.projects.hasMany(db.dlcall, { as: "dlcall" });
+db.dlcall.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "type",
+});
+
+// One project has many daily general log
+db.projects.hasMany(db.dlgeneral, { as: "dlgeneral" });
+db.dlgeneral.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "type",
+});
+
+// One daily log general has many daily questions
+db.dlgeneral.hasMany(db.dlquestions, { as: "dlquestions" });
+db.dlquestions.belongsTo(db.dlgeneral, {
+  foreignKey: "dlgeneralId",
+  as: "type",
+});
+
+// One project has many daily weather log
+db.projects.hasMany(db.dlweather, { as: "dlweather" });
+db.dlweather.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "type",
 });
 
 // ----------- Project Management Ends -------------

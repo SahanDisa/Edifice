@@ -12,11 +12,12 @@ module.exports = (sequelize, Sequelize) => {
     location: {
       type: Sequelize.STRING
     },
-    noofitems:{
-      type: Sequelize.INTEGER    
-    },
     status: {
       type: Sequelize.STRING
+    },
+    isDeleted: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: 0
     }
   }, {
       freezeTableName: true,

@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import DrawingCategoryService from "../../../services/drawing-category.service";
-// import DeleteIcon from '@material-ui/icons/Delete';
-// import VisibilityIcon from '@material-ui/icons/Visibility';
-// import UpdateIcon from '@material-ui/icons/Update';
+import { Breadcrumbs } from "@material-ui/core";
 import Pdfviewer from "./pdfviewer.component";
 import Card from 'react-bootstrap/Card';
 import drawingcover from "././../../../assets/PM/photos/drawing.jpg";
@@ -52,28 +50,81 @@ export default class Drawings extends Component {
 
     render() {
         const { drawings , drawingcategories, currentIndex,id } = this.state;
-        // const classes = useStyles();
+        
         return (
         <div>
-            <div className="container row">
-                <div className="col-12">
-                    <h2>Drawings</h2>
-                    <h6>Manage the drawings,other related planning materials in here</h6>
-                </div>
-            <hr></hr>
-            </div>
-            <div className="container">
-                
-                <Link className="btn btn-primary mr-2" to={"/adddrawing/"+id}>
-                Add New Drawing
+          <div className="container row">
+            <div className="col-12">
+              <h2>Drawing Home</h2>
+                <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" to="/home">
+                  Home
                 </Link>
-                <Link className="btn btn-primary" to={"/adddrawingcategory/"+id}>
-                Add Catgory
+                <Link color="inherit" to={"/projectmanagementhome/"+id}>
+                  App Dashboard
                 </Link>
-                <hr></hr>
+                <Link color="textPrimary" to={"/drawing/"+id} aria-current="page">
+                  Drawing Home
+                </Link>
+                </Breadcrumbs>
             </div>
+          </div>
+          <hr></hr>
+          <div className="container">
+          <h3>Insights</h3>
+          <div className="row">
+          <div className="col-3">
+            <Card bg={'primary'} text={'white'} style={{ width: '12rem' }}>
+              <Card.Body>
+                <Card.Title><h1>5</h1></Card.Title>
+                  <Card.Text>
+                  Categories
+                  </Card.Text>
+                </Card.Body>
+            </Card>
+          </div>
+          <div className="col-3">
+           <Card bg={'success'} text={'white'} style={{ width: '12rem' }}>
+              <Card.Body>
+                <Card.Title><h1>6</h1></Card.Title>
+                  <Card.Text>
+                    Drawings
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+          <div className="col-3">
+            <Card bg={'danger'} text={'white'} style={{ width: '12rem' }}>
+              <Card.Body>
+                <Card.Title><h1>2</h1></Card.Title>
+                <Card.Text>
+                  Not Completed
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+          <div className="col-3">
+            <Card bg={'primary'} text={'white'} style={{ width: '12rem' }}>
+              <Card.Body>
+                <Card.Title><h1>14</h1></Card.Title>
+                <Card.Text>
+                  Revisions
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>  
+        </div>
+        </div>
+        <hr></hr>
         <div className="container">
-        <h3>Drawing Category</h3>
+        <h3>Drawings</h3>
+        <h6>Manage the drawings,other related planning materials in here</h6>
+        <Link className="btn btn-primary mb-2 mr-2" to={"/adddrawing/"+id}>
+          Add New Drawing
+        </Link>
+        <Link className="btn btn-primary mb-2" to={"/adddrawingcategory/"+id}>
+          Add Catgory
+        </Link>
         <div className="container row">
             {drawingcategories &&
                 drawingcategories.map((drawingcategory, index) => (

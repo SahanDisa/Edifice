@@ -7,6 +7,10 @@ module.exports = (sequelize, Sequelize) => {
         role: {
             type: Sequelize.STRING,
             allowNull: false
+        },
+        isDeleted: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: 0
         }
     }, {
         freezeTableName: true,

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import {Link } from "react-router-dom";
 import UserService from "../services/user.service";
 import AuthService from "../services/auth.service";
 import ProjectDataService from "../services/project.service";

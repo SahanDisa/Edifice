@@ -7,7 +7,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
-
+import { Breadcrumbs } from "@material-ui/core";
 
 export default class AddProject extends Component {
   constructor(props) {
@@ -149,6 +149,20 @@ export default class AddProject extends Component {
           <div className="row">
             <div className="container col-8">
             <h2>Add New Project</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" to="/home">
+                  Home
+                </Link>
+                <Link color="inherit" to={"/admin"}>
+                  Core Dashboard
+                </Link>
+                <Link color="inherit" to={"/projects"}>
+                  Project Home
+                </Link>
+                <Link color="textPrimary" to={"/addProject"} aria-current="page">
+                  Add New Project
+                </Link>
+            </Breadcrumbs>
             <h5>Step 1: Project Settings</h5>
             <div className="form-group">
               <label htmlFor="title">Title</label>

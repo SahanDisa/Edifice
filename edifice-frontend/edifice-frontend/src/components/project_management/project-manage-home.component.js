@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
+// import { Switch, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import UserService from "./../../services/user.service";
 import ProjectDataService from "./../../services/project.service";
 import AuthService from "./../../services/auth.service";
+import ProgressBar from 'react-customizable-progressbar'
+
 import portfolioIcon from "././../../assets/portfolio.png";
 import rfiIcon from "././../../assets/rfi.png";
 import dailylogIcon from "././../../assets/dailylog.png";
@@ -15,6 +17,13 @@ import drawingsIcon from "././../../assets/drawings.png";
 import photosIcon from "././../../assets/photos.png";
 import punchlistIcon from "././../../assets/PM/punchlist.png";
 import documentIcon from "././../../assets/documents.png";
+
+import budgetIcon from "././../../assets/FM/budget.png";
+import addbudgetIcon from "././../../assets/FM/estimateBudget.png";
+import costIcon from "././../../assets/FM/cost.png";
+import commitmentsIcon from "././../../assets/FM/commitments.png";
+
+import bulldozerIcon from "././../../assets/066-bulldozer.png";
 
 import Card from 'react-bootstrap/Card';
 
@@ -27,16 +36,21 @@ export default class BoardUser extends Component {
       projects: [],
       id: this.props.match.params.id,
       currentUser:  AuthService.getCurrentUser() ,
-      showModeratorBoard: false,
+      showEngineerBoard: false,
+      showManagerBoard: false,
+      showAdminBoard: false,
     };
   }
   componentDidMount() {
+    window.scrollTo(0, 0);
     const user = AuthService.getCurrentUser();
 
     if (user) {
       this.setState({
         currentUser: user,
-        showModeratorBoard: user.roles.includes("ROLE_MODERATOR")
+        showEngineerBoard: user.roles.includes("ROLE_USER"),
+        showManagerBoard: user.roles.includes("ROLE_MODERATOR"),
+        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
       });
     }
     UserService.getUserBoard().then(
@@ -72,91 +86,126 @@ export default class BoardUser extends Component {
   }
 
   render() {
-    const {id,showModeratorBoard,projects} = this.state;
+    const {id,showEngineerBoard,showManagerBoard,showAdminBoard,projects} = this.state;
+    const today = new Date();
+    const date1 = new Date(projects.startdate);
+    const date2 = new Date(projects.enddate);
+    const diffTime = Math.abs(date2 - date1);
+    const diffTime2 = Math.abs(date2 - today);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    const remainDays = Math.ceil(diffTime2/(1000 * 60 * 60 * 24));
+    console.log(diffTime + " milliseconds");
+    console.log(diffDays + " days");
+    console.log(remainDays + " remain days");
     return (
       <div className="container">
         <h2>App Dashboard</h2>
         {/* Breadcrumb starts */}
         <Breadcrumbs aria-label="breadcrumb">
-          <Link color="inherit" href="/">
-            Material-UI
+          <Link color="inherit" to="/home">
+            Home
           </Link>
-          <Link color="inherit" href="/getting-started/installation/">
-            Core
+          <Link color="inherit" to={"/projectmanagementhome/"+id}>
+            App Dashboard
           </Link>
-          <Link
-            color="textPrimary"
-            href="/components/breadcrumbs/"
-            
-            aria-current="page"
-          >
+          {/* <Link color="textPrimary" href="/components/breadcrumbs/" aria-current="page">
             Breadcrumb
-          </Link>
+          </Link> */}
         </Breadcrumbs>
         <br></br>
         {/* Breadcrumb ends */}
+        <div className="card card-hover shadow-sm card-text-edifice">
         <div className="row">
-          <div className="col-12">
-            <Card
-              bg={'success'}
-              text={'white'}
-              //style={{ width: '14rem' }}
-              className="mb-2"
-            >
-              <Card.Body>
-                <Card.Title><h4>{projects.title}</h4></Card.Title>
-                <Card.Text>
-                  <h6>Description : {projects.description}</h6>
-                  <h6>Location: {projects.location}</h6> 
-                  <h6>From : {projects.startdate} to {projects.enddate}</h6>
-                </Card.Text>
-              </Card.Body>
-            </Card> 
+          <div className="col-5 m-2">
+          <h4>{projects.title}</h4>
+          <h6>Description : {projects.description}</h6>
+          <h6>Location: {projects.location}</h6> 
+          <h6>From : {projects.startdate} to {projects.enddate}</h6>
+          </div>
+          <div className="col-4 mt-4">
+          <center>
+          <h2><b>{remainDays}{" "}</b>Days</h2>
+          <h3>Remaining</h3>
+          </center>
+          </div>
+          <div className="col-2">
+          <center>
+          <ProgressBar
+              radius={60}
+              progress={66}
+              cut={120}
+              rotate={-210}
+              initialAnimation
+              initialAnimationDelay={1}
+              strokeWidth={13}
+              strokeColor="#273f7d"
+              transition="2s ease"
+              trackStrokeWidth={12}
+              trackTransition="1s ease"
+              pointerRadius={3}
+              pointerStrokeWidth={12}
+          />
+          {/* <h6><b>66%</b></h6>  */}
+          </center> 
+          </div>
           </div>
         </div>
-        <h3>Project Tools</h3>
+        {/* Only Manager and Admin has Access to Project/Finance/Resource */}
+        
+        { showManagerBoard && showEngineerBoard &&
+        <div>
+        {/* Project Tools Starts */}
+        <h3 className="mt-2">Project Tools</h3>
         <div className="row">
           <div className="col-lg-3 mb-grid-gutter pb-2">
+          
             <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
-            <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
+            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
               <img src={portfolioIcon} alt="" width="50"/>
               <h3 className="h5 nav-heading-title mb-0">Portfolio</h3>
               {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
             </Link>
             </div>
+          
           </div>
           <div className="col-lg-3 mb-grid-gutter pb-2">
+          
             <div className="card card-hover shadow-sm" title="Manage meetings">
-            <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/meetings/"+id} style={{ 'text-decoration': 'none' }}>
+            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/meetings/"+id} style={{ 'text-decoration': 'none' }}>
               <img src={meetingIcon} alt="" width="50"/>
               <h3 className="h5 nav-heading-title mb-0">Meetings</h3>                
               {/* <span className="fs-sm fw-normal text-muted">Manage all aspects of your project meetings from agenda distribution</span> */}
             </Link>
             </div>
+            
           </div>
           <div className="col-lg-3 mb-grid-gutter pb-2">
+          
             <div className="card card-hover shadow-sm" title="Organise & define project workflows">
-            <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/actionplan/" + id}  style={{ 'text-decoration': 'none' }}>
+            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/actionplan/" + id}  style={{ 'text-decoration': 'none' }}>
               <img src={actionplanIcon} alt="" width="50"/>
               <h3 className="h5 nav-heading-title mb-0">Action Plan</h3>
               {/* <span className="fs-sm fw-normal text-muted">Organise & define project workflows</span> */}
             </Link>
             </div>
+            
           </div>
           <div className="col-lg-3 mb-grid-gutter pb-2">
+          
             <div className="card card-hover shadow-sm" title="Manage the project Drawings">
-              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/drawing/" + id} style={{ 'text-decoration': 'none' }}>
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/drawing/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={drawingsIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Drawings</h3>
                 {/* <span className="fs-sm fw-normal text-muted">Manage your project drawings in one place</span> */}
               </Link>
             </div>
+            
           </div>
         </div>
         <div className="row">
           {/* <div className="col-lg-4 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" title="">
-            <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/bidding/" + id} style={{ 'text-decoration': 'none' }}>
+            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/bidding/" + id} style={{ 'text-decoration': 'none' }}>
               <img src={biddingIcon} alt="" width="50"/>
               <h3 className="h5 nav-heading-title mb-0">Biddings</h3>
               <span className="fs-sm fw-normal text-muted">Manage all the bid packages and bidding proceses</span>
@@ -165,87 +214,256 @@ export default class BoardUser extends Component {
           </div> */}
           
           <div className="col-lg-3 mb-grid-gutter pb-2">
+          
             <div className="card card-hover shadow-sm" title="Manage & Capture Images">
-              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/photos/" + id} style={{ 'text-decoration': 'none' }}>
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/photos/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={photosIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Photos</h3>
                 {/* <span className="fs-sm fw-normal text-muted">Manage and capture all the images</span> */}
               </Link>
             </div>
+            
           </div>
           <div className="col-lg-3 mb-grid-gutter pb-2">
+          
             <div className="card card-hover shadow-sm" title="Manage Documents">
-              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/document/" + id} style={{ 'text-decoration': 'none' }}>
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/document/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={documentIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Documents</h3>
                 {/* <span className="fs-sm fw-normal text-muted">Manage documents</span> */}
               </Link>
             </div>
+            
           </div>
           <div className="col-lg-3 mb-grid-gutter pb-2">
+          
             <div className="card card-hover shadow-sm" title="Manage Punch Items">
-              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/punchlist/" + id} style={{ 'text-decoration': 'none' }}>
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/punchlist/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={punchlistIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Punch List</h3>
                 {/* <span className="fs-sm fw-normal text-muted">Manage punch items</span> */}
               </Link>
             </div>
+            
           </div>
           <div className="col-lg-3 mb-grid-gutter pb-2">
+          
             <div className="card card-hover shadow-sm" title="Track the details at Site">
-              <Link className="d-block nav-heading text-center mb-2 mt-2" to={"/managedailylogs/"+ id} style={{ 'text-decoration': 'none' }}>
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/dailylogs/"+ id} style={{ 'text-decoration': 'none' }}>
                 <img src={dailylogIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Daily Log</h3>
                 {/* <span className="fs-sm fw-normal text-muted">Keep track of every detail at job site each and everyday</span> */}
               </Link>
             </div>
+            
           </div>
         </div>
-         
-          {/* Meeting Model Starts */}
-          {/* <div className="modal fade" id="meetingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalCenterTitle">Choose what you want to do?</h5>
-                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <Link to={"/meetingsconfiguration/"+id} className="btn btn-primary ml-5 mr-3"> Meeting Configuration</Link>
-                  <Link to={"/managemeetings/"+id} className="btn btn-primary mr-6"> Manage Meetings</Link>
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                </div>
+        {/* Project Tools Ends */}
+        {/* Finance Tools Starts */}
+        <h3 className="mt-2">Finance Tools</h3>
+        <div className="row" style={{alignItems: "center"}} >
+          <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+          
+            <div className="card card-hover shadow-sm" title="See the Budget Overview">
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/budget/" + id} style={{ 'text-decoration': 'none' }}>
+                <img src={budgetIcon} alt="" width="50"/><br />
+                <h3 className="h5 nav-heading-title mb-0">Budget Overview</h3>
+                {/*<span className="fs-sm fw-normal text-muted">See the Budget Overview</span>*/}
+              </Link>
+            </div>
+            
+          </div>
+          <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+          
+            <div className="card card-hover shadow-sm" title="Estimate the Project Budget.">
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/budgetestimates/" + id} style={{ 'text-decoration': 'none' }}>
+                <img src={addbudgetIcon} alt="" width="50"/><br />
+                <h3 className="h5 nav-heading-title mb-0">Budget Estimates</h3>
+                {/*<span className="fs-sm fw-normal text-muted">Estimate the Project Budget.</span>*/}
+              </Link>
+            </div>
+            
+          </div>
+          <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+          
+            <div className="card card-hover shadow-sm" title="Track all direct costs that are not associated with commitments.">
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/directcost/" + id} style={{ 'text-decoration': 'none' }}>
+                <img src={costIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Direct Costs</h3>
+                {/*<span className="fs-sm fw-normal text-muted">Track all direct costs that are not associated with commitments.</span>*/}
+                </Link>
               </div>
+              
+          </div>
+          <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+          
+              <div className="card card-hover shadow-sm" title="See the Status and Schedule of Values of all the Contracts.">
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/commitment/" + id} style={{ 'text-decoration': 'none' }}>
+                <img src={commitmentsIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Commitments</h3>
+                {/*<span className="fs-sm fw-normal text-muted">See the Status and Schedule of Values of all the Contracts.</span>*/}
+              </Link>
+              </div>
+              
+          </div>
+        </div>
+        {/* Finance Tools Ends */}
+        {/* Resource Tools Starts */}
+        <h3 className="mt-2">Resource Tools</h3>
+        <div className="row" style={{alignItems: "center"}}> 
+          <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+          
+            <div className="card card-hover shadow-sm">
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/crew/" + id}>
+                <img src={meetingIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Crews</h3>
+              </Link>
+              </div>
+              
+            </div>
+          <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+          
+            <div className="card card-hover shadow-sm">
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/equipments/" + id}>
+                <img src={bulldozerIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Equipments</h3>
+                </Link>
+              </div>
+              
+            </div>
+          <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+          
+            <div className="card card-hover shadow-sm">
+                <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/schedule/"+id}>
+                    <img src={dailylogIcon} alt="" width="50"/>
+                    <h3 className="h5 nav-heading-title mb-0">Schedule</h3>                
+                </Link>
+              </div>
+              
+            </div>
+            <div className="col-lg-3 col-sm-6 mb-grid-gutter pb-2">
+            
+                <div className="card card-hover shadow-sm">
+                  <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/timesheet/"+id}>
+                    <img src={documentIcon} alt="" width="50"/><br />
+                    <h3 className="h5 nav-heading-title mb-0">Timesheet</h3>
+                  </Link>
+                </div>
+                
+            </div>
+        </div>
+        {/* Resource Tools Ends */}
+        </div>
+        }
+        {/* Only Enginner has access to project tools */}
+        {!showAdminBoard && !showManagerBoard && showEngineerBoard &&
+        <div>
+        <h3>Project Tools</h3>
+        <div className="row">
+          <div className="col-lg-3 mb-grid-gutter pb-2">
+          
+            <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
+            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
+              <img src={portfolioIcon} alt="" width="50"/>
+              <h3 className="h5 nav-heading-title mb-0">Portfolio</h3>
+              {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
+            </Link>
+            </div>
+            
+          </div>
+          <div className="col-lg-3 mb-grid-gutter pb-2">
+          
+            <div className="card card-hover shadow-sm" title="Manage meetings">
+            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/meetings/"+id} style={{ 'text-decoration': 'none' }}>
+              <img src={meetingIcon} alt="" width="50"/>
+              <h3 className="h5 nav-heading-title mb-0">Meetings</h3>                
+              {/* <span className="fs-sm fw-normal text-muted">Manage all aspects of your project meetings from agenda distribution</span> */}
+            </Link>
+            </div>
+            
+          </div>
+          <div className="col-lg-3 mb-grid-gutter pb-2">
+          
+            <div className="card card-hover shadow-sm" title="Organise & define project workflows">
+            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/actionplan/" + id}  style={{ 'text-decoration': 'none' }}>
+              <img src={actionplanIcon} alt="" width="50"/>
+              <h3 className="h5 nav-heading-title mb-0">Action Plan</h3>
+              {/* <span className="fs-sm fw-normal text-muted">Organise & define project workflows</span> */}
+            </Link>
+            </div>
+            
+          </div>
+          <div className="col-lg-3 mb-grid-gutter pb-2">
+          
+            <div className="card card-hover shadow-sm" title="Manage the project Drawings">
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/drawing/" + id} style={{ 'text-decoration': 'none' }}>
+                <img src={drawingsIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Drawings</h3>
+                {/* <span className="fs-sm fw-normal text-muted">Manage your project drawings in one place</span> */}
+              </Link>
+            </div>
+            
+          </div>
+        </div>
+        <div className="row">
+          {/* <div className="col-lg-4 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm" title="">
+            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/bidding/" + id} style={{ 'text-decoration': 'none' }}>
+              <img src={biddingIcon} alt="" width="50"/>
+              <h3 className="h5 nav-heading-title mb-0">Biddings</h3>
+              <span className="fs-sm fw-normal text-muted">Manage all the bid packages and bidding proceses</span>
+            </Link>
             </div>
           </div> */}
-          {/* Meeting Model Ends */}
-
-          {/* Daily Log Model Starts */}
-          {/* <div className="modal fade" id="dlModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalCenterTitle">Choose what you want to do?</h5>
-                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <a href="/dailylogsconfiguration" className="btn btn-primary ml-5 mr-3"> Daily Log Configuration</a>
-                  <a href="/managedailylogs" className="btn btn-primary mr-6"> Manage Daily Logs</a>
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                </div>
-              </div>
+          
+          <div className="col-lg-3 mb-grid-gutter pb-2">
+          
+            <div className="card card-hover shadow-sm" title="Manage & Capture Images">
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/photos/" + id} style={{ 'text-decoration': 'none' }}>
+                <img src={photosIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Photos</h3>
+                {/* <span className="fs-sm fw-normal text-muted">Manage and capture all the images</span> */}
+              </Link>
             </div>
-          </div> */}
-          {/* Daily log Model Ends */}
-
+            
+          </div>
+          <div className="col-lg-3 mb-grid-gutter pb-2">
+          
+            <div className="card card-hover shadow-sm" title="Manage Documents">
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/document/" + id} style={{ 'text-decoration': 'none' }}>
+                <img src={documentIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Documents</h3>
+                {/* <span className="fs-sm fw-normal text-muted">Manage documents</span> */}
+              </Link>
+            </div>
+            
+          </div>
+          <div className="col-lg-3 mb-grid-gutter pb-2">
+          
+            <div className="card card-hover shadow-sm" title="Manage Punch Items">
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/punchlist/" + id} style={{ 'text-decoration': 'none' }}>
+                <img src={punchlistIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Punch List</h3>
+                {/* <span className="fs-sm fw-normal text-muted">Manage punch items</span> */}
+              </Link>
+            </div>
+            
+          </div>
+          <div className="col-lg-3 mb-grid-gutter pb-2">
+          
+            <div className="card card-hover shadow-sm" title="Track the details at Site">
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/managedailylogs/"+ id} style={{ 'text-decoration': 'none' }}>
+                <img src={dailylogIcon} alt="" width="50"/>
+                <h3 className="h5 nav-heading-title mb-0">Daily Log</h3>
+                {/* <span className="fs-sm fw-normal text-muted">Keep track of every detail at job site each and everyday</span> */}
+              </Link>
+            </div>
+            
+          </div>
+        </div>
+        {/* Project Tools Ends */}
+        </div>
+        }
       </div>
     );
   }

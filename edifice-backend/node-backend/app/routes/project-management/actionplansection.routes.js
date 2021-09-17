@@ -6,20 +6,17 @@ module.exports = app => {
     // Create a new Drawing
     router.post("/", actionplansection.create);
   
-    // Retrieve all Drawings for a project
-    router.get("/list/:id", actionplansection.findAllSearch);
+    // Update a Drawing with id
+    router.put("/update/:id", actionplansection.update);
+    
+    // Delete a Drawing with id
+    router.put("/delete/:id/", actionplansection.delete);
   
     // Retrieve a single Drawing with id
     router.get("/:id", actionplansection.findOne);
 
     // project action plans
-    router.get("/actionsection/:id",actionplansection.findAll);
-
-    // Update a Drawing with id
-    router.put("/:id", actionplansection.update);
-    
-    // Delete a Drawing with id
-    router.delete("/:id/", actionplansection.delete);
+    router.get("/all/:id",actionplansection.findAll);
   
     app.use('/api/projects/actionplansection', router);
   };
