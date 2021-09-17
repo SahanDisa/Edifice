@@ -20,7 +20,7 @@ exports.create = (req, res) => {
     tea_start: req.body.tea_start,
     tea_end: req.body.tea_end,
     stop: req.body.stop,
-    timesheetCode: req.body.timesheetId,
+    timesheetId: req.body.timesheetId,
     workerWId: req.body.workerId
 
   };
@@ -36,23 +36,37 @@ exports.create = (req, res) => {
       });
     });
 };
+
+exports.getTimesheetDetails = (req, res) => {
+  console.log("hiiiiiiiiiiiiiiiiiiiiiiiii")
+
+  db.sequelize.query(
+    'SELECT worked_hours.location,worked_hours.start, worked_hours.lunch_start,worked_hours.lunch_stop,worked_hours.tea_start, worked_hours.tea_stop,worked_hours.stop, worker.firstName, worker.lastName FROM worked_hours INNER JOIN worker ON worker.wId=worked_hours.workerWId WHERE worked_hours.timesheetId=:id',
+    { replacements: { id: req.params.id }, type: db.sequelize.QueryTypes.SELECT })
+    .then(data => {
+      res.send(data);
+    })
+
+
+}
+
 /*
 // Retrieve all workers from a given project
 exports.findAll = (req, res) => {
     //const id = req.query.id;
-      
+
     Worker.findAll(/*{ where: {
       projectId: id
    // }}*/ /*)
-     .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving data"
-        });
-      });
+.then(data => {
+res.send(data);
+})
+.catch(err => {
+res.status(500).send({
+message:
+err.message || "Some error occurred while retrieving data"
+});
+});
 };*/
 /*
 // Find a single crew with an id
@@ -67,7 +81,7 @@ exports.findOne = (req, res) => {
         res.status(500).send({
           message: "Error retrieving crew with id=" + id
         });
-      });  
+      });
 };*/
 /*
 // Update a crew by the id in the request

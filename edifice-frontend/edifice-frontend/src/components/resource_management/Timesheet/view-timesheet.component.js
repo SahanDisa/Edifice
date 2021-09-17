@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import Create from "./create.component";
 import Approve from "./approve.component";
 import RemoveApprove from "./remove-approve.component";
 import Card from 'react-bootstrap/Card';
@@ -76,7 +75,7 @@ class ViewTimesheet extends Component {
             <div class="row">
               <div class="col-6">
                 <Card.Body>
-                  <h6>Code:{timesheet.code}</h6>
+                  <h6>Id:{timesheet.id}</h6>
                   <h6>Date: {timesheet.date}</h6>
                   <h6>Status: {timesheet.status}</h6>
                   <h6>ProjectId:{timesheet.projectId}</h6>
@@ -85,13 +84,13 @@ class ViewTimesheet extends Component {
 
               <div class="col-6 text-right">
                 <Card.Body>
-                <Link
-                      className="btn btn-primary m-3"
-                      //data-toggle="modal"
-                      //data-target="#selectCrew"
-                      to={"/addWorkers/" + id + "/" + timesheet.code}
-                    >
-                      Add Workers
+                  <Link
+                    className="btn btn-primary m-3"
+                    //data-toggle="modal"
+                    //data-target="#selectCrew"
+                    to={"/addWorkers/" + id + "/" + timesheet.id}
+                  >
+                    Add Workers
                     </Link>
                   {/*      <h6>Select crew to add worker to timesheet</h6>*/}
                   {/*crews && crews.map((crew, index) => (
@@ -225,14 +224,14 @@ class ViewTimesheet extends Component {
             {/*------------------------------------ Approve Starts------------------------------------------------------------------ */}
             <div className="modal fade" id="approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <Approve
-                timesheetId={timesheet.code} />
+                timesheetId={timesheet.id} />
             </div>
             {/*-------------------------------------Approve Ends----------------------------------------------------------------------*/}
 
             {/*------------------------------------ Remove Approve Starts------------------------------------------------------------------ */}
             <div className="modal fade" id="removeApprove" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <RemoveApprove
-                timesheetId={timesheet.code} />
+                timesheetId={timesheet.id} />
             </div>
             {/*-------------------------------------Remove Approve Ends----------------------------------------------------------------------*/}
 
