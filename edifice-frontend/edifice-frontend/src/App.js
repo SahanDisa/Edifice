@@ -105,8 +105,7 @@ import AddAPItem from "./components/project_management/actionplan/addapitem.comp
 import AddAPSection from "./components/project_management/actionplan/addapsection.component";
 import ViewActionPlan from "./components/project_management/actionplan/viewactionplan.component";
 
-import DlsConfig from "./components/project_management/dailylog/configuration.component";
-import ManageDls from "./components/project_management/dailylog/manage.component";
+import DailyLogHome from "./components/project_management/dailylog/dailylog.component";
 import UpdateDls from "./components/project_management/dailylog/update.component";
 import ViewDls from "./components/project_management/dailylog/view.component";
 
@@ -348,10 +347,9 @@ class App extends Component {
               <Route path="/viewtype/:pltid" component={PLTView} />
               <Route path="/view/:pliid" component={PLIView} />
               {/* Daily Logs */}
-              <Route path="/dailylogsconfiguration/:id" component={DlsConfig} />
-              <Route path="/managedailylogs/:id" component={ManageDls} />
-              <Route path="/managesdailylogs/update/:id" component={UpdateDls} />
-              <Route path="/managesdailylogs/view/:id" component={ViewDls} />
+              <Route path="/dailylogs/:id" component={DailyLogHome} />
+              <Route path="/dailylogs/update/:id" component={UpdateDls} />
+              <Route path="/dailylogs/view/:id" component={ViewDls} />
 
               <Route path="/addUser" component={AddEmployee} />
               <Route path="/editUser/:id" component={EditUser} />
@@ -401,20 +399,20 @@ class App extends Component {
 
               {/*resource management */}
               <Route path="/resourcemanagementhome/:id" component={ResourceManagementHome} />
-              {/timesheet/}
+              {/* {/timesheet/} */}
               <Route path="/timesheet/:id" component={Timesheet} />
               <Route path="/viewTimesheet/:id/:code" component={ViewTimesheet} />
               <Route path="/addWorkers/:id" component={AddWorkers} />
-              {/crew/}
+              {/* {/crew/} */}
               <Route path="/crew/:id" component={Crew} />
               <Route path="/newCrew/:id" component={NewCrew} />
               <Route path="/addWorker/:id" component={AddWorker} />
-              {/schedule/}
+              {/* {/schedule/} */}
               <Route path="/schedule/:id" component={Schedule} />
-              {/equipment/}
+              {/* {/equipment/} */}
               <Route path="/equipments/:id" component={Equipments} />
               <Route path="/equipDetails/:code" component={EquipDetails} />
-              {/<Route path="/equipDetails/:id/:code" component={EquipDetails} />/}
+              {/* {/<Route path="/equipDetails/:id/:code" component={EquipDetails} />/} */}
 
               {/*financial management */}
               <Route path="/financialmanagementhome/:id" component={FinancialManagementHome} />
@@ -423,7 +421,7 @@ class App extends Component {
               {/* Commitment Component Routes  */}
               <Route path="/commitment/:id" component={CommitmentHome} />
               <Route path="/addcommitment/:id" component={AddCommitment} />
-              {/<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />/}
+              {/* {/<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />/} */}
               <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
               <Route exact path="/addsov/:pid/:id" component={AddSov} />
               <Route path="/viewdirectcost/:id" component={ViewSingleDirectCost} />
