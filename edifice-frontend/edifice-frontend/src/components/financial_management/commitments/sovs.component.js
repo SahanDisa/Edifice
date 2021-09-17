@@ -166,7 +166,17 @@ const SovList = (props) => {
               <Link color="textPrimary" to={"/viewsov/"+pid+"/"+id} aria-current="page">
                Schedule of Values
               </Link>
-            </Breadcrumbs><hr />
+            </Breadcrumbs>
+            <ul class="nav nav-tabs">
+            <li class="nav-item">
+            <Link to={"/editcommitment/"+id}  class="nav-link">Sub Contract Details</Link>
+                      
+            </li>
+            <li class="nav-item">
+            <Link class="nav-link active" aria-current="page"to={"#"}>SoVs</Link>
+            </li>
+          </ul>
+
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
             <Link className="btn btn-primary mr-2" to={"/addsov/"+pid+"/"+id}>
