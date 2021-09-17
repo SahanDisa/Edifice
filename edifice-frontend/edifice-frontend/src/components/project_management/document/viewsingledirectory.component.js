@@ -7,6 +7,7 @@ import Table from 'react-bootstrap/Table';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
+import { Breadcrumbs } from "@material-ui/core";
 
 export default class ViewDirectory extends Component {
     constructor(props) {
@@ -72,7 +73,21 @@ export default class ViewDirectory extends Component {
           return (
               <div>
                 <h2>Directory Single Page</h2>
-                <p>Manage the document in each document category</p>
+                <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" to="/home">
+                  Home
+                </Link>
+                <Link color="inherit" to={"/projectmanagementhome/"+pid}>
+                  App Dashboard
+                </Link>
+                <Link color="textPrimary" to={"/document/"+pid} aria-current="page">
+                  Document Home
+                </Link>
+                <Link color="textPrimary" to={"/viewdirectory/"+pid+"/"+id} aria-current="page">
+                  {title}
+                </Link>
+              </Breadcrumbs>
+                
                 <hr></hr>
                 <h3>Category details</h3>
                 <div className="row">
@@ -91,6 +106,7 @@ export default class ViewDirectory extends Component {
                 <hr></hr>
                 
                 <h3>Document List</h3>
+                <h6>Manage the document in each document category</h6>
                 {/* Drawing List */}
                 <Table striped bordered hover variant="secondary" responsive>
                   <thead>
@@ -107,11 +123,6 @@ export default class ViewDirectory extends Component {
                   {documents &&
                       documents.map((doc, index) => (
                       <tr
-                          // className={
-                          // "list-group-item row" +
-                          // (index === currentIndex ? "active" : "")
-                          // }
-                          // onClick={() => this.setActiveProject(project, index)}
                           key={index}
                       >
                       <td>{doc.id}</td>
@@ -130,9 +141,9 @@ export default class ViewDirectory extends Component {
                           <Link to={"/updatedocument/"+pid +"/"+doc.id}>
                           <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
                           </Link>
-                          <Link to={"/viewdrawing/"+doc.id}>
+                          {/* <Link to={"/viewdrawing/"+doc.id}>
                           <button className="btn btn-danger">Delete <DeleteIcon/> </button>
-                          </Link>
+                          </Link> */}
                       </td>    
                       </tr>
                       ))}

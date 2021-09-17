@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import DirectoryDataService from "../../../services/directory.service";
+import { Breadcrumbs } from "@material-ui/core";
 
 export default class UpdateDirectory extends Component {
   constructor(props) {
@@ -98,14 +100,27 @@ export default class UpdateDirectory extends Component {
   }
 
     render() {
-      const { currentDirectory, temp} = this.state;
+      const { currentDirectory, temp,pid} = this.state;
   
       return (
         <div>
           {currentDirectory ? (
             <div className="container">
               <h2>Update a Directory</h2>
-              <h4>Directory Id : {temp}</h4>
+              <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" to="/home">
+                  Home
+                </Link>
+                <Link color="inherit" to={"/projectmanagementhome/"+pid}>
+                  App Dashboard
+                </Link>
+                <Link color="textPrimary" to={"/document/"+pid}>
+                  Document Home
+                </Link>
+                <Link color="textPrimary" to={"/updatedirectory/"+pid+"/"+temp} aria-current="page">
+                  Update Directory / {temp}
+                </Link>
+              </Breadcrumbs>
               <form>
                 <div className="form-group">
                   <label htmlFor="title">Title</label>

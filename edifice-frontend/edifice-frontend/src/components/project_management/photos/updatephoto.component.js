@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PhotoDataService from "./../../../services/photo.service";
 import AlbumDataService from "../../../services/album.service";
 import UploadService from "./../../../services/photoupload.service";
+import { Breadcrumbs } from "@material-ui/core";
 
 export default class UpdatePhoto extends Component {
   constructor(props) {
@@ -194,7 +195,20 @@ export default class UpdatePhoto extends Component {
           {currentPhoto ? (
             <div className="container">
               <h2>Update a Photo</h2>
-              <h4>Photo Id : {temp}</h4>
+              <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+pid}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/photos/"+pid}>
+                Photos Home
+              </Link>
+              <Link color="textPrimary" to={"/updatephoto/"+pid+"/"+temp} aria-current="page">
+                Update Photo / {temp}
+              </Link>
+            </Breadcrumbs>
               <form>
                 <div className="form-group">
                   <label htmlFor="title">Title</label>

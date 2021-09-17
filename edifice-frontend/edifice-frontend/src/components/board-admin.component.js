@@ -205,6 +205,11 @@ export default class BoardUser extends Component {
                 <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
                 <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>
               </a>
+              {/* <Link to={"/projects"}>
+              <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
+                <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>
+
+              </Link> */}
               </div>
             </div>
 

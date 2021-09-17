@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import DocumentDataService from "./../../../services/documentfile.service";
 import DirectoryCategoryService from "../../../services/directory.service";
+import { Breadcrumbs } from "@material-ui/core";
 
 export default class UpdateDocument extends Component {
   constructor(props) {
@@ -176,14 +178,27 @@ export default class UpdateDocument extends Component {
   }
 
     render() {
-      const { currentDocument, temp, drawingcategories} = this.state;
+      const { pid, currentDocument, temp, drawingcategories} = this.state;
   
       return (
         <div>
           {currentDocument ? (
             <div className="container">
               <h2>Update a Document</h2>
-              <h4>Document Id : {temp}</h4>
+              <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" to="/home">
+                  Home
+                </Link>
+                <Link color="inherit" to={"/projectmanagementhome/"+pid}>
+                  App Dashboard
+                </Link>
+                <Link color="textPrimary" to={"/document/"+pid}>
+                  Document Home
+                </Link>
+                <Link color="textPrimary" to={"/updatedocument/"+pid+"/"+temp} aria-current="page">
+                  Update Document / {temp}
+                </Link>
+              </Breadcrumbs>
               <form>
                 <div className="form-group">
                   <label htmlFor="title">Title</label>

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import AlbumDataService from "../../../services/album.service";
+import { Breadcrumbs } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 export default class UpdateAlbum extends Component {
   constructor(props) {
@@ -98,14 +100,27 @@ export default class UpdateAlbum extends Component {
   }
 
     render() {
-      const { currentAlbum, temp} = this.state;
+      const { pid,currentAlbum, temp} = this.state;
   
       return (
         <div>
           {currentAlbum ? (
             <div className="container">
               <h2>Update a Album</h2>
-              <h4>Album Id : {temp}</h4>
+              <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" to="/home">
+                  Home
+                </Link>
+                <Link color="inherit" to={"/projectmanagementhome/"+pid}>
+                  App Dashboard
+                </Link>
+                <Link color="textPrimary" to={"/photos/"+pid}>
+                  Photos Home
+                </Link>
+                <Link color="textPrimary" to={"/updatephoto/"+pid+"/"+temp} aria-current="page">
+                  Update Photo / {temp}
+                </Link>
+              </Breadcrumbs>
               <form>
                 <div className="form-group">
                   <label htmlFor="title">Title</label>
