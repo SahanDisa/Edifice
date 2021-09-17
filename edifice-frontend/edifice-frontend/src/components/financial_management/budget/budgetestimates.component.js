@@ -109,7 +109,7 @@ const BudgetEstimates = (props) => {
   const columns = useMemo(
     () => [
       {
-        Header: "Id",
+        Header: "#",
         accessor: "id",
       },
       {
@@ -211,7 +211,7 @@ const BudgetEstimates = (props) => {
             value={searchCostCode}
             onChange={onChangeSearchCostCode}
               >
-                <option  selected value="">All</option>
+                <option  selected value="">All Budget Estimates</option>
              {budgets &&
                 budgets.map((budget, index) => (
                 <option
