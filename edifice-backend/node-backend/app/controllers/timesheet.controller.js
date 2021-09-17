@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new timesheet
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.code) {
+  if (!req.body.date) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -17,7 +17,6 @@ exports.create = (req, res) => {
     date: req.body.date,
     status: req.body.status,
     projectId: req.body.projectId,
-    code: req.body.code,
   };
   // Save timesheet in the database
   Timesheet.create(timesheet)
@@ -34,60 +33,62 @@ exports.create = (req, res) => {
 
 // Retrieve all timesheets from a given project
 exports.findAll = (req, res) => {
-    const id = req.query.id;
-      
-    Timesheet.findAll(/*{ where: {
+  const id = req.params.id;
+
+  Timesheet.findAll({
+    where: {
       projectId: id
-     }}*/)
-     .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving data"
-        });
+    }
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving data"
       });
+    });
 };
 
 // Find a single timesheet with an id
 exports.findOne = (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
 
-    Timesheet.findByPk(id)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error retrieving timesheet with id=" + id
-        });
-      });  
+  Timesheet.findByPk(id)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving timesheet with id=" + id
+      });
+    });
 };
 
 // Update a timesheet by the id in the request
 exports.update = (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
 
-    Timesheet.update(req.body, {
-      where: { code: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "timesheet was updated successfully."
-          });
-        } else {
-          res.send({
-            message: `Cannot update timesheet with id=${id}. Maybe timesheet was not found or req.body is empty!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error updating timesheet with id=" + id
+  Timesheet.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "timesheet was updated successfully."
         });
+      } else {
+        res.send({
+          message: `Cannot update timesheet with id=${id}. Maybe timesheet was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating timesheet with id=" + id
       });
+    });
 };
 /*
 // Delete a crew with the specified id in the request

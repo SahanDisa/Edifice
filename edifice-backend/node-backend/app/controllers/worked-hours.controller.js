@@ -20,7 +20,7 @@ exports.create = (req, res) => {
     tea_start: req.body.tea_start,
     tea_end: req.body.tea_end,
     stop: req.body.stop,
-    timesheetCode: req.body.timesheetId,
+    timesheetId: req.body.timesheetId,
     workerWId: req.body.workerId
 
   };
@@ -36,23 +36,58 @@ exports.create = (req, res) => {
       });
     });
 };
+
+exports.getTimesheetDetails = (req, res) => {
+
+  db.sequelize.query(
+    'SELECT worked_hours.id,worked_hours.location,worked_hours.start, worked_hours.lunch_start,worked_hours.lunch_stop,worked_hours.tea_start, worked_hours.tea_stop,worked_hours.stop, worker.firstName, worker.lastName FROM worked_hours INNER JOIN worker ON worker.wId=worked_hours.workerWId WHERE worked_hours.timesheetId=:id',
+    { replacements: { id: req.params.id }, type: db.sequelize.QueryTypes.SELECT })
+    .then(data => {
+      res.send(data);
+    })
+}
+
+// Update a workedhours by the id in the request
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  WorkedHours.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "workedhours was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update workedhours with id=${id}. Maybe workedhours was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating workedhours with id=" + id
+      });
+    });
+};
 /*
 // Retrieve all workers from a given project
 exports.findAll = (req, res) => {
     //const id = req.query.id;
-      
+
     Worker.findAll(/*{ where: {
       projectId: id
    // }}*/ /*)
-     .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving data"
-        });
-      });
+.then(data => {
+res.send(data);
+})
+.catch(err => {
+res.status(500).send({
+message:
+err.message || "Some error occurred while retrieving data"
+});
+});
 };*/
 /*
 // Find a single crew with an id
@@ -67,33 +102,9 @@ exports.findOne = (req, res) => {
         res.status(500).send({
           message: "Error retrieving crew with id=" + id
         });
-      });  
-};*/
-/*
-// Update a crew by the id in the request
-exports.update = (req, res) => {
-    const id = req.params.id;
-
-    crew.update(req.body, {
-      where: { id: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "crew was updated successfully."
-          });
-        } else {
-          res.send({
-            message: `Cannot update crew with id=${id}. Maybe crew was not found or req.body is empty!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error updating crew with id=" + id
-        });
       });
 };*/
+
 /*
 // Delete a crew with the specified id in the request
 exports.delete = (req, res) => {
