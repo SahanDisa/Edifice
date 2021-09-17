@@ -5,6 +5,7 @@ import DrawRevisionService from "../../../services/drawrevision.service";
 import UserService from "./../../../services/user.service";
 import AuthService from "./../../../services/auth.service";
 import { Avatar } from "@material-ui/core";
+import { Breadcrumbs } from "@material-ui/core";
 
 import PdfIcon from '@material-ui/icons/PictureAsPdf';
 
@@ -33,17 +34,6 @@ export default  class SingleDocument extends Component {
           comment: "",
         };
       }
-    //   onChangeUserName(e) {
-    //     this.setState({
-    //       username: e.target.value
-    //     });
-    //   }
-    
-    //   onChangeComment(e) {
-    //     this.setState({
-    //       comment: e.target.value
-    //     });
-    //   }
       componentDidMount() {
         this.retrieveDocument(this.props.match.params.id);
         this.getRevisions(this.props.match.params.id);
@@ -103,24 +93,30 @@ export default  class SingleDocument extends Component {
           });
       }
       render() {
-          const { id,title,description,category,version,status,url,revisions,currentUser } = this.state;
+          const { id,title,description,category,version,status,url,revisions,currentUser,projectId } = this.state;
           return (
              // Main Div
               <div>
                 <h2>Document Single Page</h2>
-                <p>Manage as single document and add measurements and versioning</p>
-                <hr></hr>
-                <h3>File details</h3>
-                {/* <h6>Document Id : {id}</h6> */}
-                <h6>Name : {title}</h6>
-                <h6>Description : {description}</h6>
-                <h6>Document Type : {category}</h6>
-                <hr></hr>
-              
-                <h3>View & Manage Document</h3>
-                <p>View the particular document in pdf format</p>
+                <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" to="/home">
+                  Home
+                </Link>
+                <Link color="inherit" to={"/projectmanagementhome/"+projectId}>
+                  App Dashboard
+                </Link>
+                <Link color="textPrimary" to={"/document/"+projectId}>
+                  Document Home
+                </Link>
+                <Link color="textPrimary" to={"/viewsingledocument/"+id} aria-current="page">
+                  View Document
+                </Link>
+              </Breadcrumbs>
+              <hr></hr>
+              <h3>View & Manage Document</h3>
+              <h6>Manage as single document and add measurements and versioning</h6>
               <div className="row">
-              <div className="col-sm-10">
+              <div className="col-sm-9">
               <embed
                     //src="https://vancouver.ca/files/cov/sample-drawing-package-1and2family.pdf"
                     src={"http://localhost:8080/api/files/"+title+".pdf"}
@@ -178,7 +174,13 @@ export default  class SingleDocument extends Component {
                   </div>
                 </div> */}
                 </div>
-                {/* <div className="col-sm-3">
+                <div className="col-sm-3">
+                  <h3>File details</h3>
+                  {/* <h6>Document Id : {id}</h6> */}
+                  <h6>Name : {title}</h6>
+                  <h6>Description : {description}</h6>
+                  <h6>Document Type : {category}</h6>
+                  <hr></hr>
                   <h4>Full Screen</h4>
                   <a href={url+title+".pdf"} target="_blank" style={{'text-decoration': 'none'}}>
                   
@@ -193,7 +195,7 @@ export default  class SingleDocument extends Component {
                       <h4>Version</h4>
                       <h5>{version}{".0"}</h5>   
                   </div> 
-                </div> */}
+                </div>
               </div>
               </div>
           );

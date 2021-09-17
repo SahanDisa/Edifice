@@ -136,7 +136,7 @@ export const WebcamCapture = () => {
                             fileInfos.map((file, index) => (
                             <div className="container col-2 mt-1" key={index}>
                                 <Card className="bg-dark text-white">
-                                <Card.Img src={file.url} alt="Card image" style={{'width': '150px', 'height': '150px'}}/>
+                                <Card.Img src={file.url} alt="Card image" style={{'width': '153px', 'height': '150px'}}/>
                                 <Card.ImgOverlay>
                                 {/* <Card.Title>{file.name}</Card.Title>
                                 <Card.Text>

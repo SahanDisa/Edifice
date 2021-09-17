@@ -9,6 +9,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
+import { Breadcrumbs } from "@material-ui/core";
 // import CameraCapture from './cameracpature.component';
 
 export default class AddPhoto extends Component {
@@ -185,6 +186,20 @@ export default class AddPhoto extends Component {
         ) : (
           <div class="container">
             <h2>Add New Photo</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+projectId}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/photos/"+projectId}>
+                Photos Home
+              </Link>
+              <Link color="textPrimary" to={"/addphoto/"+projectId} aria-current="page">
+                Add Photo
+              </Link>
+            </Breadcrumbs>
             <div className="row">
             <div className="col-sm-8">
             <div className="form-group">

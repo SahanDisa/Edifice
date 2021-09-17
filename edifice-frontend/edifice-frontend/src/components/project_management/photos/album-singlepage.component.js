@@ -4,9 +4,10 @@ import AlbumDataService from "./../../../services/album.service";
 import PhotoDataService from "./../../../services/photo.service";
 import AuthService from "./../../../services/auth.service";
 import Table from 'react-bootstrap/Table';
-import DeleteIcon from '@material-ui/icons/Delete';
+// import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
+import { Breadcrumbs } from "@material-ui/core";
 
 export default class ViewSingleAlbum extends Component {
     constructor(props) {
@@ -71,7 +72,21 @@ export default class ViewSingleAlbum extends Component {
         return (
             <div>
               <h2>Drawing Category Single Page</h2>
-              <p>Manage the drawing in each drawing category</p>
+              <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" to="/home">
+                  Home
+                </Link>
+                <Link color="inherit" to={"/projectmanagementhome/"+projectId}>
+                  App Dashboard
+                </Link>
+                <Link color="textPrimary" to={"/photos/"+projectId}>
+                  Photos Home
+                </Link>
+                <Link color="textPrimary" to={"/viewalbum/"+projectId} aria-current="page">
+                  View Album
+                </Link>
+              </Breadcrumbs>
+              
               <hr></hr>
               <h3>Category details</h3>
               <div className="row">
@@ -90,6 +105,7 @@ export default class ViewSingleAlbum extends Component {
               <hr></hr>
               
               <h3>Drawing List</h3>
+              <h6>Manage the drawing in each drawing category</h6>
               {/* Drawing List */}
               <Table striped bordered hover variant="secondary" responsive>
                 <thead>

@@ -284,8 +284,9 @@ class App extends Component {
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
-            <Route component={ErrorPage} />
-          </Switch>
+            <Route path="/photos/:id" component={PhotosHome} />
+            <Route component={ErrorPage}/>
+          </Switch>  
         )}
         {currentUser && (
 

@@ -5,7 +5,7 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import UserService from "./../../services/user.service";
 import ProjectDataService from "./../../services/project.service";
 import AuthService from "./../../services/auth.service";
-import ProgressBar from 'react-customizable-progressbar'
+import ProgressBar from 'react-customizable-progressbar';
 
 import portfolioIcon from "././../../assets/portfolio.png";
 import rfiIcon from "././../../assets/rfi.png";
@@ -145,7 +145,7 @@ export default class BoardUser extends Component {
               pointerRadius={3}
               pointerStrokeWidth={12}
           />
-          {/* <h6><b>66%</b></h6>  */}
+          {/* <h6 className="mb-10"><b>66%</b></h6>  */}
           </center> 
           </div>
           </div>

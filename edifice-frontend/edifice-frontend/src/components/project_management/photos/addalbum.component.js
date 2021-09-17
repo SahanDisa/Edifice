@@ -7,6 +7,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
+import { Breadcrumbs } from "@material-ui/core";
 
 export default class AddAlbum extends Component {
   constructor(props) {
@@ -80,7 +81,6 @@ export default class AddAlbum extends Component {
         {this.state.submitted ? (
           <center>
           <div>
-          
             <h4>Album details successfully submitted!</h4>
             <button className="btn btn-success m-2" onClick={this.newDrawing}>
             Add Another Album
@@ -93,6 +93,20 @@ export default class AddAlbum extends Component {
         ) : (
           <div className="container">
             <h2>Add New Album</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+projectId}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/photos/"+projectId}>
+                Photos Home
+              </Link>
+              <Link color="textPrimary" to={"/addablum/"+projectId} aria-current="page">
+                Add Album
+              </Link>
+            </Breadcrumbs>
             <div className="row">
             <div className="col-sm-8">
                 <div className="form-group">
