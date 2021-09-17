@@ -21,6 +21,7 @@ export default class Drawings extends Component {
       };
     }
     componentDidMount() {
+      window.scrollTo(0, 0);
       this.retrieveDrawing(this.props.match.params.id);
       this.retriveDrawingCategory(this.props.match.params.id);
     }
@@ -73,40 +74,35 @@ export default class Drawings extends Component {
           <hr></hr>
           <div className="container">
           <h3>Insights</h3>
+          <h6>Overview of Drawing progress</h6>
           <div className="row">
-            <div className="col-lg-3 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
-              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
-                <h1>5</h1>
-                <h3 className="h5 nav-heading-title mb-0">Category</h3>
+            <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
+              <div className="card card-hover shadow-sm" title="Category Insights">
+                <h1 className="m-2">5</h1>
+                <h3 className="h5 nav-heading-title m-2">Category</h3>
                 {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
-              </Link>
               </div>
             </div>
-            <div className="col-lg-3 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
-              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
-                <h1>7</h1>
-                <h3 className="h5 nav-heading-title mb-0">Drawing</h3>
+            <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
+              <div className="card card-hover shadow-sm" title="Project Insights">
+                <h1 className="m-2" >7</h1>
+                <h3 className="h5 nav-heading-title mb-0 m-2">Drawing</h3>
                 {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
-              </Link>
               </div>
             </div>
-            <div className="col-lg-3 mb-grid-gutter pb-2">
-              <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
-              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
-                <h1>14</h1>
-                <h3 className="h5 nav-heading-title mb-0">Revision</h3>
+            <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
+              <div className="card card-hover shadow-sm" title="Revision Insights">
+                <h1 className="m-2">14</h1>
+                <h3 className="h5 nav-heading-title mb-0 m-2">Revision</h3>
                 {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
-              </Link>
               </div>
             </div>
-            <div className="col-lg-3 mb-grid-gutter pb-2">
+            <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
               <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
               <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
                 <center>
                 <ProgressBar
-                    radius={25}
+                    radius={29}
                     progress={45}
                     cut={120}
                     rotate={-210}

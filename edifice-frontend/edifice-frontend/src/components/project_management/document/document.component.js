@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card';
 import UploadFiles from "./fileupload.component";
 import directorycover from "././../../../assets/PM/photos/directory1.jpg";
 import Table from 'react-bootstrap/Table';
+import ProgressBar from 'react-customizable-progressbar';
 // import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { Breadcrumbs } from "@material-ui/core";
@@ -72,6 +73,59 @@ export default class Documents extends Component {
               Document Home
             </Link>
           </Breadcrumbs>
+          <hr></hr>
+          <div>
+            <h3>Insights</h3>
+            <h6>Overview of Document progress</h6>
+            <div className="row">
+              <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
+                <div className="card card-hover shadow-sm" title="Directory Insights">
+                  <h1 className="m-2">5</h1>
+                  <h3 className="h5 nav-heading-title m-2">Directory</h3>
+                  {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
+                </div>
+              </div>
+              <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
+                <div className="card card-hover shadow-sm" title="Document Insights">
+                  <h1 className="m-2" >7</h1>
+                  <h3 className="h5 nav-heading-title mb-0 m-2">Document</h3>
+                  {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
+                </div>
+              </div>
+              <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
+                <div className="card card-hover shadow-sm" title="Revision Insights">
+                  <h1 className="m-2">10</h1>
+                  <h3 className="h5 nav-heading-title mb-0 m-2">Revision</h3>
+                  {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
+                </div>
+              </div>
+              <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
+                <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
+                <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
+                  <center>
+                  <ProgressBar
+                      radius={29}
+                      progress={25}
+                      cut={120}
+                      rotate={-210}
+                      initialAnimation
+                      initialAnimationDelay={1}
+                      strokeWidth={13}
+                      strokeColor="#273f7d"
+                      transition="2s ease"
+                      trackStrokeWidth={12}
+                      trackTransition="1s ease"
+                      pointerRadius={3}
+                      pointerStrokeWidth={12}
+                  />
+                  {/* <h3 className="h5 nav-heading-title mb-0">Progress</h3> */}
+                  </center>
+                  {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
+                </Link>
+                </div>
+              </div>
+            </div>
+          </div>
           <hr></hr>
           <h3>Directory</h3>
           <h6>Manage project specific documents and organise with directories in here</h6>

@@ -10,6 +10,7 @@ import { Breadcrumbs } from "@material-ui/core";
 import Icon2 from "././../../../assets/PM/photos/albumicon.jpg";
 import UploadPhotoService from "../../../services/photoupload.service";
 import Card from 'react-bootstrap/Card';
+import ProgressBar from 'react-customizable-progressbar';
 
 export default class PhotosHome extends Component {
   
@@ -77,7 +78,59 @@ export default class PhotosHome extends Component {
               Photos Home
             </Link>
           </Breadcrumbs>
-          
+          <hr></hr>
+          <div>
+            <h3>Insights</h3>
+            <h6>Overview of Document progress</h6>
+            <div className="row">
+              <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
+                <div className="card card-hover shadow-sm" title="Albums Insights">
+                  <h1 className="m-2">4</h1>
+                  <h3 className="h5 nav-heading-title m-2">Albums</h3>
+                  {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
+                </div>
+              </div>
+              <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
+                <div className="card card-hover shadow-sm" title="Photos Insights">
+                  <h1 className="m-2" >9</h1>
+                  <h3 className="h5 nav-heading-title mb-0 m-2">Photos</h3>
+                  {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
+                </div>
+              </div>
+              <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
+                <div className="card card-hover shadow-sm" title="Capture Insights">
+                  <h1 className="m-2">15</h1>
+                  <h3 className="h5 nav-heading-title mb-0 m-2">Captures</h3>
+                  {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
+                </div>
+              </div>
+              <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
+                <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
+                <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
+                  <center>
+                  <ProgressBar
+                      radius={29}
+                      progress={65}
+                      cut={120}
+                      rotate={-210}
+                      initialAnimation
+                      initialAnimationDelay={1}
+                      strokeWidth={13}
+                      strokeColor="#273f7d"
+                      transition="2s ease"
+                      trackStrokeWidth={12}
+                      trackTransition="1s ease"
+                      pointerRadius={3}
+                      pointerStrokeWidth={12}
+                  />
+                  {/* <h3 className="h5 nav-heading-title mb-0">Progress</h3> */}
+                  </center>
+                  {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
+                </Link>
+                </div>
+              </div>
+            </div>
+          </div>
           <hr></hr>
           {/* Album division starts */}
           <div>
@@ -137,7 +190,7 @@ export default class PhotosHome extends Component {
                     {/* <a href={file.url}>{file.name}{" "}{file.url}</a>
                     <img src={file.url} style={{'height':'300px'}}/> */}
                     <Card className="bg-dark text-white">
-                    <Card.Img src={file.url} alt="Card image" style={{'width': '320px', 'height': '300px'}}/>
+                    <Card.Img src={file.url} alt="Card image" style={{'width': '328px', 'height': '300px'}}/>
                     <Card.ImgOverlay>
                       <Card.Title>{file.name}</Card.Title>
                       <Card.Text>
