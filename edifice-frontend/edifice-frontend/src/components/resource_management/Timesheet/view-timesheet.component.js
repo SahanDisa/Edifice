@@ -87,7 +87,7 @@ class ViewTimesheet extends Component {
   closeModal = () => this.setState({ isOpen: false });
 
   render() {
-    const { id, timesheet, workedHours, crews } = this.state;
+    const { id, timesheet, workedHours, crews, currentWorker } = this.state;
 
     return (
       <div>
@@ -233,6 +233,14 @@ class ViewTimesheet extends Component {
         {/* mark Worker Starts */}
         <Modal show={this.state.isOpen} onHide={this.closeModal}>
           <MarkWorker
+            id={currentWorker.id}
+            location={currentWorker.location}
+            start={currentWorker.start}
+            lunch_start={currentWorker.lunch_start}
+            lunch_stop={currentWorker.lunch_stop}
+            tea_start={currentWorker.tea_start}
+            tea_stop={currentWorker.tea_stop}
+            stop={currentWorker.stop}
           />
         </Modal>
 
