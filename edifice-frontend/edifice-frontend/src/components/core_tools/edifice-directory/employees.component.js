@@ -45,6 +45,8 @@ import EmployeeDataService from "./../../../services/employee.service";
   }  
 ];
 
+const { SearchBar, ClearSearchButton } = Search;
+
 
 class Employee extends Component {
 
