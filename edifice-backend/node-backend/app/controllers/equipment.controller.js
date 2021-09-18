@@ -16,8 +16,8 @@ exports.create = (req, res) => {
   const equipment = {
     code: req.body.code,
     date: req.body.date,
-    condition:req.body.condition,
-    category: req.body.category, 
+    condition: req.body.condition,
+    equipmentCategoryId: req.body.category,
     description: req.body.description,
     projectId: req.body.projectId
   };
@@ -35,86 +35,84 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all equipments from a given equipment.
+// Retrieve all equipments
 exports.findAll = (req, res) => {
-    //const id = req.query.id;
-    //var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-  
-    Equipment.findAll(/*{ where: condition }*/)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving data."
-        });
+
+  Equipment.findAll()
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving data."
       });
+    });
 };
 
 // Find a single equipment with an id
 exports.findOne = (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
 
-    Equipment.findByPk(id)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error retrieving equipment with id=" + id
-        });
-      });  
+  Equipment.findByPk(id)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving equipment with id=" + id
+      });
+    });
 };
 
 // Update a equipment by the id in the request
 exports.update = (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
 
-    Equipment.update(req.body, {
-      where: { code: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "equipment was updated successfully."
-          });
-        } else {
-          res.send({
-            message: `Cannot update equipment with id=${id}. Maybe equipment was not found or req.body is empty!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error updating equipment with id=" + id
+  Equipment.update(req.body, {
+    where: { code: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "equipment was updated successfully."
         });
+      } else {
+        res.send({
+          message: `Cannot update equipment with id=${id}. Maybe equipment was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating equipment with id=" + id
       });
+    });
 };
 
 // Delete a equipment with the specified id in the request
 exports.delete = (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
 
-    Equipment.destroy({
-      where: { code: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "equipment was deleted successfully!"
-          });
-        } else {
-          res.send({
-            message: `Cannot delete equipment with id=${id}. Maybe equipment was not found!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Could not delete equipment with id=" + id
+  Equipment.destroy({
+    where: { code: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "equipment was deleted successfully!"
         });
+      } else {
+        res.send({
+          message: `Cannot delete equipment with id=${id}. Maybe equipment was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete equipment with id=" + id
       });
+    });
 };
 
 /*

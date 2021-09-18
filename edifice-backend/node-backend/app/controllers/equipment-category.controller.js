@@ -33,13 +33,8 @@ exports.create = (req, res) => {
 
 // Retrieve all categorys from a given project
 exports.findAll = (req, res) => {
-  const id = req.params.id;
 
-  category.findAll({
-    where: {
-      projectId: id
-    }
-  })
+  Category.findAll()
     .then(data => {
       res.send(data);
     })

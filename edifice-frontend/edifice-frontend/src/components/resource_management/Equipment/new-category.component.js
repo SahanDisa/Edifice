@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
 
 import EquipmentCategoryDataService from "./../../../services/equipment-category.service";
 
@@ -13,7 +12,6 @@ class NewCategory extends Component {
     this.state = {
       id: null,
       name: "",
-      projectId: this.props.projectId,
       submitted: false
     };
   }

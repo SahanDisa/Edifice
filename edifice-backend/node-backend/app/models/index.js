@@ -463,6 +463,15 @@ db.invoices.belongsTo(db.commitments, {
 // ----------- Finance Management Ends -----------
 
 // ----------- Resource Management Starts --------
+//One equipmentcategory has many equipments
+db.equipmentCategorys.hasMany(db.equipments, {
+  as: "equipments"
+});
+db.equipments.belongsTo(db.equipmentCategorys, {
+  foreignKey: "equipmentCategoryId",
+  as: "categorys",
+});
+
 //One project has many equipments
 db.projects.hasMany(db.equipments, {
   as: "equipments"
@@ -471,16 +480,6 @@ db.equipments.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
-
-//One project has many equipmentCategorys
-db.projects.hasMany(db.equipmentCategorys, {
-  as: "equipmentCategorys"
-});
-db.equipmentCategorys.belongsTo(db.projects, {
-  foreignKey: "projectId",
-  as: "project",
-});
-
 
 //One crew has many workers
 db.crews.hasMany(db.workers, {

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+
 import EquipmentDataService from "./../../../services/equipment.service";
+import EquipmentCategoryDataService from "./../../../services/equipment-category.service";
 
 
 import List from '@material-ui/core/List';
@@ -18,6 +20,7 @@ class Equipment extends Component {
   constructor(props) {
     super(props);
     this.retrieveEquipment = this.retrieveEquipment.bind(this);
+    this.retrieveEquipmentCategory = this.retrieveEquipmentCategory.bind(this);
     this.searchTitle = this.searchTitle.bind(this);
 
     this.state = {
@@ -26,18 +29,33 @@ class Equipment extends Component {
       currentIndex: -1,
       searchTitle: "",
       content: "",
-      id: this.props.match.params.id
     };
   }
 
   componentDidMount() {
-    this.retrieveEquipment(this.props.match.params.id);
+    this.retrieveEquipment();
+    this.retrieveEquipmentCategory();
   }
-  retrieveEquipment(id) {
-    EquipmentDataService.getAll(id)
+
+  retrieveEquipment() {
+    EquipmentDataService.getAll()
       .then(response => {
         this.setState({
           equipments: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+
+  }
+
+  retrieveEquipmentCategory() {
+    EquipmentCategoryDataService.getAll()
+      .then(response => {
+        this.setState({
+          categorys: response.data
         });
         console.log(response.data);
       })
@@ -69,7 +87,7 @@ class Equipment extends Component {
   }
 
   render() {
-    const { equipments, currentIndex, id, categorys, searchTitle } = this.state;
+    const { equipments, id, categorys, searchTitle } = this.state;
     //console.log(equipments[0])
 
     return (
@@ -132,56 +150,56 @@ class Equipment extends Component {
               <h5>Categories</h5>
               <br />
               <div class="accordion" id="accordionExample">
-                {equipments && equipments.map((equipment, currentIndex) => (
-                  categorys.includes(equipment.category) ? null : categorys.push(equipment.category) &&
-                    <div class="card">
-                      <div class="card-header" id="headingOne">
+                {categorys && categorys.map((category, currentIndex) => (
+                  <div class="card" key={category.id}>
+                    <div class="card-header" id="headingOne">
 
-                        <h2 class="mb-0">
-                          <button class="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${currentIndex}`} aria-expanded="true" aria-controls="collapseOne">{equipment.category}</button>
-                        </h2>
-                      </div>
-                      <div id={`collapse${currentIndex}`} class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                        <div class="card-body">
-                          <div className="">
-                            <div class="col-md-12 text-right mb-2">
-                              {equipments && equipments.map((equipmentList, currentIndex) => (
-                                equipment.category == equipmentList.category ?
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${currentIndex}`} aria-expanded="true" aria-controls="collapseOne">{category.name}</button>
+                      </h2>
+                    </div>
+                    <div id={`collapse${currentIndex}`} class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                      <div class="card-body">
+                        <div className="">
+                          <div class="col-md-12 text-right mb-2">
+                            {/* {equipments && equipments.map((equipmentList, currentIndex) => (
+                              equipment.category == equipmentList.category ?
 
-                                  <List component="nav" aria-label="mailbox folders">
-                                    <ListItem button>
+                                <List component="nav" aria-label="mailbox folders">
+                                  <ListItem button>
 
-                                      <Link to=/*{"/equipDetails/"+id+"/"+equipment.code}*/{"/equipDetails/" + equipment.code}>{equipmentList.code} {equipmentList.description}</Link>
-                                    </ListItem>
-                                    <Divider />
-                                    <Divider light />
-                                  </List> : ""
-                              ))}
-                            </div>
-
+                                    <Link to={"/equipDetails/" + equipment.code} > {equipmentList.code} {equipmentList.description}</Link>
+                                  </ListItem>
+                                  <Divider />
+                                  <Divider light />
+                                </List> : ""
+                            ))} */}
                           </div>
+
                         </div>
                       </div>
                     </div>
+                  </div>
                 ))}
               </div>
             </div>
-          </div>
-        </div>
+          </div >
+        </div >
+
         {/* New Caregory Starts */}
-        <div className="modal fade" id="newCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <NewCategory projectId={id} />
-        </div>
+        <div div className="modal fade" id="newCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+          <NewCategory />
+        </div >
         {/* New Caregory Ends */}
 
         {/* New Equipment Starts */}
         <div className="modal fade" id="addEquip" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <AddEquip projectId={id} />
+          <AddEquip />
         </div>
         {/* New Equipment Ends */}
 
 
-      </div>
+      </div >
 
 
 
