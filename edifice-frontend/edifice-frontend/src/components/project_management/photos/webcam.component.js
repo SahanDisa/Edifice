@@ -116,7 +116,7 @@ export const WebcamCapture = () => {
             </>
             <div className="row">
             <div className="form-group col-12">
-              <label htmlFor="category">Select Device</label>
+              <h5>Select Device</h5>
               {devices &&
                 devices.map((device, index) => (
                 <button

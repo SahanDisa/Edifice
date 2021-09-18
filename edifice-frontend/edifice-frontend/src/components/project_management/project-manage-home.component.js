@@ -34,6 +34,7 @@ export default class BoardUser extends Component {
     this.state = {
       content: "",
       projects: [],
+      progress: 0,
       id: this.props.match.params.id,
       currentUser:  AuthService.getCurrentUser() ,
       showEngineerBoard: false,
@@ -71,6 +72,7 @@ export default class BoardUser extends Component {
       }
     );
     this.retrieveProjects(this.state.id);
+    this.getRecentProgress(this.state.id);
   }
   retrieveProjects(id) {
     ProjectDataService.get(id)
@@ -84,9 +86,28 @@ export default class BoardUser extends Component {
         console.log(e);
       });
   }
+  getRecentProgress(id){
+    var data = 0;
+    ProjectDataService.findRecentProgress(id)
+    .then(response =>{
+      if(response.data.length>0){
+        console.log("Progress is "+response.data[0].progress);
+        data = Math.ceil(response.data[0].progress*100);
+        // this.setState({
+        //   progress: response.data[0].progress
+        // }).catch(e =>{
+        //   console.log(e);
+        // });
+      }
+      console.log("Data assigned"+data);
+      this.setState({
+        progress: data 
+      });
+    });
+  }
 
   render() {
-    const {id,showEngineerBoard,showManagerBoard,showAdminBoard,projects} = this.state;
+    const {id,showEngineerBoard,showManagerBoard,showAdminBoard,projects,progress} = this.state;
     const today = new Date();
     const date1 = new Date(projects.startdate);
     const date2 = new Date(projects.enddate);
@@ -132,7 +153,7 @@ export default class BoardUser extends Component {
           <center>
           <ProgressBar
               radius={60}
-              progress={66}
+              progress={projects.progressValue}
               cut={120}
               rotate={-210}
               initialAnimation

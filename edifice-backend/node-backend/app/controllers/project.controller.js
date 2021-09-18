@@ -164,5 +164,20 @@ exports.findAllPublished = (req, res) => {
       });
     });
 };
+
+exports.getRecentProgress = (req,res)=>{
+  id = req.params.id;
+
+  db.sequelize.query('select progresspoints.progress FROM progresspoints where projectId = '+id+' order by progresspoints.id DESC limit 1;',
+   { type: db.sequelize.QueryTypes.SELECT})
+  .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not get the recent progress of project =" + id
+      });
+    });
+}
 ///////////////////////////////////
 // Improve for pagination as well
