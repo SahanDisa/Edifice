@@ -60,7 +60,7 @@ exports.update = (req, res) => {
 // Delete a DLWeather with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
-    DLWeather.update({isDeleted = 1}, {
+    DLWeather.update({
         where: { id: id }
     })
     .then(num => {

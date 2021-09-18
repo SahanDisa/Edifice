@@ -8,6 +8,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import HomeIcon from '@material-ui/icons/Home';
 import PublishIcon from '@material-ui/icons/Publish';
 import AddIcon from '@material-ui/icons/Add';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 
 const BudgetEstimates = (props) => {
@@ -16,7 +17,7 @@ const BudgetEstimates = (props) => {
   const [searchCostCode, setSearchCostCode] = useState("");
   const budgetsRef = useRef();
   budgetsRef.current = budgets;
-
+  const [published, setPublished] = useState(false);
 
   useEffect(() => {
     retrieveBudgets();    
@@ -69,6 +70,27 @@ const BudgetEstimates = (props) => {
     const id = budgetsRef.current[rowIndex].id;
     //const projectId = directcostsRef.current[rowIndex].projectId;
 
+    BudgetDataService.budgetUnpublished(id)
+    .then((response) => {
+        
+      //props.history.push("/directcost/"+id);
+
+      let newBudgets = [...budgetsRef.current];
+      newBudgets.splice(rowIndex, 1);
+
+      setBudgets(newBudgets);
+      retrieveBudgets();
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+
+  };
+
+ /* const deleteBudget = (rowIndex) => {
+    const id = budgetsRef.current[rowIndex].id;
+    //const projectId = directcostsRef.current[rowIndex].projectId;
+
     BudgetDataService.remove(id)
       .then((response) => {
         
@@ -82,12 +104,12 @@ const BudgetEstimates = (props) => {
       .catch((e) => {
         console.log(e);
       });
-  };
+  };*/
 
   const columns = useMemo(
     () => [
       {
-        Header: "Id",
+        Header: "#",
         accessor: "id",
       },
       {
@@ -141,10 +163,22 @@ const BudgetEstimates = (props) => {
 
   return (
     <div>
-      <div  className="row"> <Link to={"/financialmanagementhome/" + id}><HomeIcon style={{ color: "#2b2d42"}}/></Link>&nbsp;<h3>BUDGET ESTIMATES</h3></div>
-               <h6>Estimate the Project Budget.</h6> 
+        
+       
+     <h3>BUDGET ESTIMATES</h3>
+      <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+id}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/budgetestimates/"+id} aria-current="page">
+               Budget Estimates
+              </Link>
+            </Breadcrumbs>
                 <hr /><br />
-
+                
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
             <Link className="btn btn-primary mr-2" to={"/addbudget/"+id}>{/*check this again*/}
@@ -177,7 +211,7 @@ const BudgetEstimates = (props) => {
             value={searchCostCode}
             onChange={onChangeSearchCostCode}
               >
-                <option  selected value="">All</option>
+                <option  selected value="">All Budget Estimates</option>
              {budgets &&
                 budgets.map((budget, index) => (
                 <option

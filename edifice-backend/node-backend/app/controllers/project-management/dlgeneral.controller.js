@@ -59,7 +59,7 @@ exports.update = (req, res) => {
 // Delete a DLGeneral with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
-    DLGeneral.update({isDeleted = 1}, {
+    DLGeneral.update({
         where: { id: id }
     })
     .then(num => {

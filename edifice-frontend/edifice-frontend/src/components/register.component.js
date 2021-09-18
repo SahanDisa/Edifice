@@ -8,6 +8,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Chip from "@material-ui/core/Chip";
 //import Stack from '@material-ui/core/Stack';
 
+import EmployeeDataService from "../services/employee.service";
 import AuthService from "../services/auth.service";
 
 const required = value => {
@@ -57,6 +58,7 @@ export default class Register extends Component {
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    //this.addToRoles=this.addToRoles.bind(this);
 
     this.state = {
       id: this.props.match.params.id,
@@ -65,10 +67,13 @@ export default class Register extends Component {
       password: "",
       successful: false,
       message: "",
-      rolesSelected: []
+      rolesSelected: [],
+      designations:["Quantity Surveyor","Project Engineer","Site Engineer"],
+      rolesColors: [],
+      signupDisabled:true
     };
 
-    console.log(this.props.match.params)
+    this.makeRolearray(this.state.id,this.state.designations)
   }
 
   onChangeUsername(e) {
@@ -130,24 +135,70 @@ export default class Register extends Component {
   }
 
   //handle frontend input
-  addToRoles(role,index){
-    //this.state.rolesSelected.push(role)
-    console.log(index)
-    console.log(this.state.rolesSelected)
+
+  makeRolearray(id,roles){
+    if(id!="undefined"){
+
+      EmployeeDataService.getOne(id)
+      .then(response => {
+        this.setState({
+          email: response.data.email
+        });
+        
+        console.log(this.state.email);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    }
+    //console.log(employeeDetails);
+    {roles.map((value,index) => { 
+      this.state.rolesSelected.push(
+        "default"
+      )
+    })}
+    console.log(this.state.rolesSelected);
+  }
+
+  addToRoles(index){
+    //console.log(index)
+    if(this.state.rolesSelected[index]=="default"){
+      // 1. Make a shallow copy of the items
+      let rolesSelected = [...this.state.rolesSelected];
+      // 2. Make a shallow copy of the item you want to mutate
+      let roleSelected = {...rolesSelected[1]};
+      // 3. Replace the property you're intested in
+      roleSelected = 'secondary';
+      // 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
+      rolesSelected[index] = roleSelected;
+      // 5. Set the state to our new copy
+      this.setState({rolesSelected});
+    }else{
+      // 1. Make a shallow copy of the items
+      let rolesSelected = [...this.state.rolesSelected];
+      // 2. Make a shallow copy of the item you want to mutate
+      let roleSelected = {...rolesSelected[1]};
+      // 3. Replace the property you're intested in
+      roleSelected = 'default';
+      // 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
+      rolesSelected[index] = roleSelected;
+      // 5. Set the state to our new copy
+      this.setState({rolesSelected});
+    }
+    //console.log(this.state.color)
+    console.log(this.state.rolesSelected[index])
   }
 
   render() {
 
-    const roles= ["Quantity Surveyor","Project Engineer","Site Engineer"]
-
-
+    const roles= this.state.designations;
 
     return (
       <div>
         <h2 className="py-4"><PersonAddIcon/> Create Account</h2>
 
         <div className="row">
-          <div className="col-6 pr-5">
+          <div className="col-6 pr-4">
 
             <Form
               onSubmit={this.handleRegister}
@@ -224,17 +275,24 @@ export default class Register extends Component {
           {/* row end down*/}
           </div>
           <div className="col-6">
-            <h3 >Select Roles </h3>
+            <h3 className="pd-3">Select Roles </h3>
+            <div className="row">
             {roles.map((value,index) => { 
               return(
-                <div>
-                  <Chip label={value} onClick={this.addToRoles.bind(this,value,index)} clickable={true}/>
+
+                <div className="pr-2">
+                  <Chip 
+                    className="py-1"
+                    label={value}
+                    onClick={() =>this.addToRoles(index)}
+                    clickable={true} color={this.state.rolesSelected[index]} />
                 </div>
                 )
               })}
+            </div>
           </div>
           <div className="form-group">
-            <button className="btn btn-primary btn-block">Sign Up</button>
+            <button className="btn btn-primary btn-block" disabled={this.state.signupDisabled}>Sign Up</button>
           </div>
         
         </div>

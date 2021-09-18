@@ -14,6 +14,8 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
+import { Breadcrumbs } from "@material-ui/core";
+import SubDataService from "./../../../services/subcontractor.service";
 
 
 const EditCommitment = props => {
@@ -61,9 +63,11 @@ signedContractReceivedDate :"",
     inclusions: "",
 exclusions:"",
     projectId:props.match.params.id,  
+    commitmentStatuses: ["Ongoing 🔴", "Completed 🟢"],
     
   };
   const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentState);
+  const [subcontractors, setSubcontractors] = useState([]);
   const [message, setMessage] = useState("");
 
   const getCommitment = id => {
@@ -79,7 +83,21 @@ exclusions:"",
 
   useEffect(() => {
     getCommitment(props.match.params.id);
+    retrieveSubcontractors();  
   },[props.match.params.id]);
+
+  const retrieveSubcontractors=()=>{
+    
+    SubDataService.getAll()//passing project id as id
+      .then((response) => {
+
+          setSubcontractors(response.data);
+
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const handleInputChange = event => {
     const { name, value } = event.target;
@@ -115,21 +133,37 @@ exclusions:"",
     <div className="container">
       {currentCommitment ? (
         <div class="container">
-          <h4>#{currentCommitment.id} - {currentCommitment.title}</h4>
-          
-          <div className="col-12 text-right">
-              
-            <Link to={"/viewsov/"+currentCommitment.projectId+"/"+currentCommitment.id}>
-                    <button className="btn btn-success m-2">View SoVs </button>
-                    </Link><br />
+          <h4>Edit Subcontract</h4>
+          <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+currentCommitment.projectId}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/commitment/"+currentCommitment.projectId}>
+               Commitments
+              </Link>
+              <Link color="textPrimary" to={"/editcommitment/"+currentCommitment.id} aria-current="page">
+              #{currentCommitment.id} - {currentCommitment.title}
+              </Link>
+            </Breadcrumbs>
+<br />
+                    <ul class="nav nav-tabs">
+            <li class="nav-item">
+                       <Link class="nav-link active" aria-current="page"to={"#"}>Sub Contract Details</Link>
+            </li>
+            <li class="nav-item">
+             <Link to={"/viewsov/" +currentCommitment.projectId+"/"+currentCommitment.id}  class="nav-link">SoVs</Link>
+            </li>
+          </ul>
                     {/*<Link to={"/viewpayment/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">Payments </button>
                     </Link><br />
                     <Link to={"/addinvoice/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">Invoices </button>
                     </Link>*/}
-                    </div>
-                    <hr />
+
           <div className="row">
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>
@@ -149,23 +183,34 @@ exclusions:"",
               <div className="form-group">
                 <label htmlFor="contractCompany">Contract Company :</label>
              
-                <input
-                type="text"
-                
+                <select
                 id="contractCompany"
                  {...register('contractCompany')}
                 value={currentCommitment.contractCompany}
                 onChange={handleInputChange}
                 name="contractCompany"
   className={`form-control ${errors.contractCompany ? 'is-invalid' : ''}`}
-              />
+              >
+              <option value="" disabled selected>Select the Subcontractor</option>
+              {subcontractors &&
+               subcontractors.map((subcontractor, index) => (
+                <option
+                    value={subcontractor.companyName}
+                    onChange={handleInputChange}
+                    key={index}
+                >
+                {/* unit data */}
+                {subcontractor.companyName}
+                </option>
+                ))}
+              </select>
 <div className="invalid-feedback">{errors.contractCompany?.message}</div>
               </div>
               <div className="form-group">
                 <label htmlFor="status">Status :</label>
             
-              <input
-                type="text"
+              <select
+           
             
                 id="status"
                 {...register('status')}
@@ -173,7 +218,21 @@ exclusions:"",
                 onChange={handleInputChange}
                 name="status"
   className={`form-control ${errors.status ? 'is-invalid' : ''}`}
-              />
+              >
+                <option value="" disabled selected>Select the Status</option>
+                {currentCommitment.commitmentStatuses &&
+                currentCommitment.commitmentStatuses.map((commitmentStatus, index) => (
+                <option
+                    value={commitmentStatus}
+                    onChange={handleInputChange }
+                    key={index}
+                    selected
+                >
+                {/* unit data */}
+                {commitmentStatus}
+                </option>
+                ))}
+              </select>
 <div className="invalid-feedback">{errors.status?.message}</div>
               </div>
               {/*<div className="form-group">
@@ -262,39 +321,7 @@ exclusions:"",
               />
 <div className="invalid-feedback">{errors.signedContractReceivedDate?.message}</div>
               </div>
-             
-            
-            <div className="form-group">
-                <label htmlFor="">Inclusions :</label>
 
-              <input
-                type="textarea"
-
-                id="inclusions"
-               {...register('inclusions')}
-                value={currentCommitment.inclusions}
-                onChange={handleInputChange}
-                name="inclusions"
- className={`form-control ${errors.inclusions? 'is-invalid' : ''}`}
-              />
-<div className="invalid-feedback">{errors.inclusions?.message}</div>
-              </div>
-            
-            <div className="form-group">
-                <label htmlFor="">Exclusions :</label>
-              
-              <input
-                type="textarea"
-
-                id="exclusions"
-              {...register('exclusions')}
-                value={currentCommitment.exclusions}
-                onChange={handleInputChange}
-                name="exclusions"
- className={`form-control ${errors.exclusions? 'is-invalid' : ''}`}
-              />
-<div className="invalid-feedback">{errors.exclusions?.message}</div>
-   </div>
             <div className="form-group">
 
             <button className="btn btn-danger" onClick={deleteCommitment}>

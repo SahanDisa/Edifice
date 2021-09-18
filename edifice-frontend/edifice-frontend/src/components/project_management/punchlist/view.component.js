@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
 
 class PLIView extends Component {
@@ -99,16 +100,16 @@ class PLIView extends Component {
     }
 
     deletePunchList(){
-        PunchlistDataService.delete(this.props.match.params.code)
+        PunchlistDataService.delete(this.props.match.params.pliid)
         .then(response => {
             console.log(response.data);
-            this.props.history.push('/punchlist/1');
+            this.props.history.push('/punchlist/');
         })
         .catch(e => {
             console.log(e);
         });
     }
-
+    
     render() {
         const { plItem, projectId } = this.state;
         return (
@@ -193,7 +194,7 @@ class PLIView extends Component {
                     <button
                         className="btn btn-danger mr-2"
                         onClick={this.deletePunchList}>Delete</button>
-                    <a href="/punchlist/1" className="">Cancel</a>
+                    <Link to={"/punchlist/"+projectId} className="">Cancel</Link>
                 </div>            
             </div>
         );

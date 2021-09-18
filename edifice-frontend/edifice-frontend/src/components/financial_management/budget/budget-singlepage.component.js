@@ -14,6 +14,10 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Link } from "react-router-dom";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import cogoToast from 'cogo-toast';
+import { Event } from "jquery";
+
 
 
 const Budget = props => {
@@ -36,6 +40,8 @@ const Budget = props => {
   });
 
   const onSubmit = data => {
+
+
     console.log(JSON.stringify(data, null, 2));
   };
 /**End of validation */
@@ -74,17 +80,29 @@ const Budget = props => {
   };
 
 
-
   const updateBudget = () => {
-    BudgetDataService.update(currentBudget.id, currentBudget)
+
+    var data = {
+      id: currentBudget.id,
+      costCode: currentBudget.costCode,
+      description: currentBudget.description,
+      date: currentBudget.date,
+      estimatedBudget: currentBudget.estimatedBudget,
+    };
+    BudgetDataService.update(currentBudget.id, data)
       .then(response => {
         console.log(response.data);
-        setMessage("The budget line item was updated successfully!");
       })
       .catch(e => {
         console.log(e);
       });
+    
   };
+
+  const viewBudget = () => {
+    props.history.push("/budgetestimates/"+ currentBudget.projectId);
+    cogoToast.success("Budget Estimate Updated Successfully!");
+   }
 
   const deleteBudget = () => {
     BudgetDataService.remove(currentBudget.id)
@@ -101,7 +119,22 @@ const Budget = props => {
     <div className="container">
       {currentBudget ? (
         <div class="container">
-          <h4>Budget Line Item</h4>
+          <h2>Edit Budget Estimate</h2>
+          <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+currentBudget.projectId}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/budgetestimates/"+currentBudget.projectId} aria-current="page">
+               Budget Estimates
+              </Link>
+              <Link color="textPrimary" to={"/viewbudget/"+currentBudget.id} aria-current="page">
+               Edit Budget Estimate
+              </Link>
+            </Breadcrumbs>
+                <hr />
           <div className="row">
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>
@@ -121,7 +154,7 @@ const Budget = props => {
                 id="costCode"
                 {...register('costCode')}
                 value={currentBudget.costCode}
-                onChange={handleInputChange}
+                onChange={handleSubmit}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
                 name="costCode"
               />
@@ -132,13 +165,12 @@ const Budget = props => {
               <label htmlFor="title">Description</label>
               <input
                 type="text"
-                
+                className={`form-control ${errors.description ? 'is-invalid' : ''}`}
                 id="description"
                 name="description"
-                {...register('description')}
                 value={currentBudget.description}
-                onChange={handleInputChange}
-                className={`form-control ${errors.description ? 'is-invalid' : ''}`}
+                onChange={handleSubmit}
+                {...register('description')}
               />
               <div className="invalid-feedback">{errors.description?.message}</div>
             </div>
@@ -151,7 +183,7 @@ const Budget = props => {
                 name="date"
                 {...register('date')}
                 value={currentBudget.date}
-                onChange={handleInputChange}
+                onChange={handleSubmit}
                 className={`form-control ${errors.date ? 'is-invalid' : ''}`}
               />
               <div className="invalid-feedback">{errors.date?.message}</div>
@@ -165,7 +197,7 @@ const Budget = props => {
                 name="estimatedBudget"
                 {...register('estimatedBudget')}
                 value={currentBudget.estimatedBudget}
-                onChange={handleInputChange}
+                onChange={handleSubmit}
                 className={`form-control ${errors.estimatedBudget ? 'is-invalid' : ''}`}
               />
               <div className="invalid-feedback">{errors.estimatedBudget?.message}</div>
@@ -238,7 +270,7 @@ const Budget = props => {
           
 
 
-     
+          {viewBudget}
           <p>{message}</p>
         </div>
       ) : (

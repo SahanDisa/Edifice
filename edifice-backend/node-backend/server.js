@@ -84,12 +84,19 @@ require('./app/routes/project-management/punchlisttypes.routes')(app);
 require('./app/routes/project-management/punchlistphotos.routes')(app);
 require('./app/routes/project-management/punchlistassignees.routes')(app);
 
+require('./app/routes/project-management/dlaccident.routes')(app);
+require('./app/routes/project-management/dlcall.routes')(app);
+require('./app/routes/project-management/dlgeneral.routes')(app);
+require('./app/routes/project-management/dlweather.routes')(app);
+require('./app/routes/project-management/dlquestions.routes')(app);
+
 require('./app/routes/project-management/actionplantype.routes')(app);
 require('./app/routes/project-management/actionplan.routes')(app);
 require('./app/routes/project-management/actionplansection.routes')(app);
 require('./app/routes/project-management/actionplanitem.routes')(app);
 
 require('./app/routes/vendor.routes')(app);
+require('./app/routes/subcontractor.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {
