@@ -327,10 +327,9 @@ export default class Home extends Component {
                   className = "mt-4"
                   
                 /> */}
-                  <button value ={project.id} onClick={this.showRecentProgress}>demo</button>
                   <ProgressBarCust
                       radius={50}
-                      progress={66}
+                      progress={project.progressValue}
                       initialAnimation
                       initialAnimationDelay={1000}
                       strokeWidth={10}
@@ -344,15 +343,6 @@ export default class Home extends Component {
                       pointerStrokeColor="#cd5c5c"
                       className="mt-2"
                   />
-                  {/* <h5>Progress</h5>
-                  <ProgressBar>
-                    <ProgressBar  variant="primary" now={35} key={1} />
-                    <ProgressBar variant="success" now={20} key={2} />
-                    <ProgressBar variant="danger" now={10} key={3} />
-                  </ProgressBar>
-                  <h6>Progress</h6>
-                  <CircularProgress variant="determinate" color="success" value={61} />
-                    <p>61%</p> */}
                 </center>
                 </div> 
               </div>

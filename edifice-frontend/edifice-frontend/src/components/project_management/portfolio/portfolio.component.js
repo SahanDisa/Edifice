@@ -274,6 +274,7 @@ export default class PortfolioHome extends Component {
         .catch(e => {
           console.log(e);
       });
+
       var datapoint = {
         name : (new Date().getFullYear()) + " "+(new Date().toLocaleString('en-us', { month: 'long' })),
         progress: ( (this.state.completeMilestoneCount + 1)/this.state.milestoneCount).toFixed(3),
@@ -294,7 +295,30 @@ export default class PortfolioHome extends Component {
       .catch(e => {
         console.log(e);
       });
-      window.location.reload();
+
+      // refresh the list
+      this.getPoints(this.state.id);
+      this.retriveMilestones(this.state.id);
+
+      // update the project progress value
+      var dataprogress = {
+        progressValue: Math.ceil(((this.state.completeMilestoneCount + 1)/this.state.milestoneCount).toFixed(3)*100),
+        projectId: this.state.projectId,
+      }
+      console.log("Progress Value is "+dataprogress.progressValue+" "+dataprogress.projectId);
+
+      ProjectDataService.update(this.state.id,dataprogress)
+        .then(response => {
+          console.log(response.data);
+          this.setState({
+            message: "The project was updated successfully!"
+          });
+          this.props.history.push('/projectmanagementhome/'+this.state.projectId);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+
     }
     getTimeline(){
       // const today = new Date();
@@ -524,13 +548,16 @@ export default class PortfolioHome extends Component {
                       {milestone.description}
                       <br/>
                       { milestone.completed ? 
-                      <h6>Completed {" "}
+                      <div>
+                      <h6>Completed {" "}</h6>
                       <input type="checkbox" name="check" value={milestone.id} onChange={this.uncheckMilestone} checked></input>
-                      </h6>
-                      : 
-                      <h6>Incomplete
+                      
+                      </div>
+                      :
+                      <div> 
+                      <h6>Incomplete {" "}</h6>
                       <input type="checkbox" name="uncheck" value={milestone.id} onChange={this.checkMilestone}></input>
-                      </h6>
+                      </div>
                       }
                       </Typography>
                     </Paper>

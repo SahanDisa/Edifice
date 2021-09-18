@@ -153,7 +153,7 @@ export default class BoardUser extends Component {
           <center>
           <ProgressBar
               radius={60}
-              progress={progress}
+              progress={projects.progressValue}
               cut={120}
               rotate={-210}
               initialAnimation
