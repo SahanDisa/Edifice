@@ -14,6 +14,9 @@ module.exports = app => {
   
     // Retrieve a single Tutorial with id
     router.get("/:id", projects.findOne);
+
+    // Retrive recent progress
+    router.get("/progress/:id",projects.getRecentProgress);
   
     // Update a Tutorial with id
     router.put("/:id", projects.update);
