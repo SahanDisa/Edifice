@@ -235,9 +235,7 @@ export default class BoardUser extends Component {
 
           <div className="col-8 mb-4 mr-5">
             <a className="btn btn-primary p-2" onClick={()=>{this.generatePDF();}} id="list-settings-list"><Description style={{ fontSize:20 }}/> Generate Report</a>
-            <a className="btn btn-primary p-2 ml-5 mr-5" id="list-settings-list" href="/list-report"> <Assessment style={{ fontSize:20 }}/> Analytics</a>
-            <a className="btn btn-secondary p-2 ml-5" onClick={()=>{this.createUser(5);}}><AddCircleOutline style={{ fontSize:20 }}/> Add User</a>
-            
+            <a className="btn btn-primary p-2 ml-5 mr-5" id="list-settings-list" href="/list-report"> <Assessment style={{ fontSize:20 }}/> Analytics</a> 
           </div>
           <div className="col-4 mb-4 mr-5">
 

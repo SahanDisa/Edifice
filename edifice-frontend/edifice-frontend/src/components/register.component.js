@@ -96,7 +96,7 @@ export default class Register extends Component {
 
   handleRegister(e) {
     e.preventDefault();
-
+    //console.log("agagagagag")
     this.setState({
       message: "",
       successful: false
@@ -163,26 +163,17 @@ export default class Register extends Component {
   addToRoles(index){
     //console.log(index)
     if(this.state.rolesSelected[index]=="default"){
-      // 1. Make a shallow copy of the items
       let rolesSelected = [...this.state.rolesSelected];
-      // 2. Make a shallow copy of the item you want to mutate
       let roleSelected = {...rolesSelected[1]};
-      // 3. Replace the property you're intested in
       roleSelected = 'secondary';
-      // 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
       rolesSelected[index] = roleSelected;
-      // 5. Set the state to our new copy
       this.setState({rolesSelected});
     }else{
-      // 1. Make a shallow copy of the items
+      //you cant use x[]= in state!
       let rolesSelected = [...this.state.rolesSelected];
-      // 2. Make a shallow copy of the item you want to mutate
       let roleSelected = {...rolesSelected[1]};
-      // 3. Replace the property you're intested in
       roleSelected = 'default';
-      // 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
       rolesSelected[index] = roleSelected;
-      // 5. Set the state to our new copy
       this.setState({rolesSelected});
     }
     //console.log(this.state.color)
@@ -292,7 +283,7 @@ export default class Register extends Component {
             </div>
           </div>
           <div className="form-group">
-            <button className="btn btn-primary btn-block" disabled={this.state.signupDisabled}>Sign Up</button>
+            <button className="btn btn-primary btn-block" onClick={this.handleRegister}>Sign Up</button>
           </div>
         
         </div>
