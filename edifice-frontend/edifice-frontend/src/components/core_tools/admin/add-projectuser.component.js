@@ -138,6 +138,20 @@ export default class AssignUserProject extends Component {
             <h5>Step 4 : Assign Users to the project by giving the position</h5>
             <div className="form-group">
               <label htmlFor="category">User ID</label>
+              {/* <input type="text" 
+              className="form-control"
+              id="datatype"
+              required
+              name="category"
+              value={this.state.userId}
+              onChange={this.onChangeUserID}
+              list="cars" />
+              <datalist id="cars">
+                <option>Volvo</option>
+                <option>Saab</option>
+                <option>Mercedes</option>
+                <option>Audi</option>
+              </datalist> */}
               <select 
                 className="form-control"
                 id="datatype"
@@ -146,7 +160,14 @@ export default class AssignUserProject extends Component {
                 value={this.state.userId}
                 onChange={this.onChangeUserID}
               >
-                {/* {drawingcategories &&
+                <option value={1} onChange={this.onChangeUserID}>John Doe</option>
+                <option value={2} onChange={this.onChangeUserID}>Steve Smith</option>
+                <option value={3} onChange={this.onChangeUserID}>Kamal Perera</option>
+                <option value={4} onChange={this.onChangeUserID}>Saman Dissanayaka</option>
+                <option value={5} onChange={this.onChangeUserID}>Ranjith Weerasuriya</option>
+              </select>
+            </div>
+             {/* {drawingcategories &&
                 drawingcategories.map((drawingcategory, index) => (
                 <option
                     value={drawingcategory.id}
@@ -157,14 +178,6 @@ export default class AssignUserProject extends Component {
                 {drawingcategory.title}
                 </option>
                 ))} */}
-                <option value={1} onChange={this.onChangeUserID}>John Doe</option>
-                <option value={2} onChange={this.onChangeUserID}>Steve Smith</option>
-                <option value={3} onChange={this.onChangeUserID}>Kamal Perera</option>
-                <option value={4} onChange={this.onChangeUserID}>Saman Dissanayaka</option>
-                <option value={5} onChange={this.onChangeUserID}>Ranjith Weerasuriya</option>
-              </select>
-            </div>
-
             <div className="form-group">
               <label htmlFor="description">Position</label>
               <select 
