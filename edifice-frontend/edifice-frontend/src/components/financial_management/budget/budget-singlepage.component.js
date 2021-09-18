@@ -4,7 +4,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import BudgetDataService from "./../../../services/budget.service";
 import DeleteIcon from '@material-ui/icons/Delete';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
 import { Route, useParams } from "react-router-dom";
 import Timeline from '@material-ui/lab/Timeline';
@@ -22,31 +21,6 @@ import { Event } from "jquery";
 
 const Budget = props => {
 
-  /**validation */
-  const validationSchema = Yup.object().shape({
-    costCode: Yup.string().required('Cost Code is required'),
-    description: Yup.string().required('Description is required'),
-    date: Yup.string().required('Date is required'),
-    estimatedBudget: Yup.string().required('Amount is required'),
-  });
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors }
-  } = useForm({
-    resolver: yupResolver(validationSchema)
-  });
-
-  const onSubmit = data => {
-
-
-    console.log(JSON.stringify(data, null, 2));
-  };
-/**End of validation */
-
-
   //const {projectId}= useParams();
   const initialBudgetState = {
     id: null,
@@ -57,7 +31,7 @@ const Budget = props => {
     projectId:""
   };
   const [currentBudget, setCurrentBudget] = useState(initialBudgetState);
-  const [message, setMessage] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   const getBudget = id => {
     BudgetDataService.get(id)
@@ -73,6 +47,31 @@ const Budget = props => {
   useEffect(() => {
     getBudget(props.match.params.id);
   },[props.match.params.id]);
+
+    /**validation*/
+  const validationSchema = Yup.object().shape({
+    costCode: Yup.string().required('Cost Code is required'),
+    description: Yup.string().required('Description is required'),
+    date: Yup.string().required('Date is required'),
+    estimatedBudget: Yup.string().required('Amount is required'),
+  });
+  
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validationSchema)
+  });
+
+  const onSubmit = data => {
+    console.log("jfj"+JSON.stringify(data, null, 2));
+  };
+/*End of validation */
+
+
 
   const handleInputChange = event => {
     const { name, value } = event.target;
@@ -91,11 +90,38 @@ const Budget = props => {
     };
     BudgetDataService.update(currentBudget.id, data)
       .then(response => {
+        setSubmitted(true);
         console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
+   
+
+    
+  };
+
+  const updatePublished = (status) => {
+
+    var data = {
+      id: currentBudget.id,
+      costCode: currentBudget.costCode,
+      description: currentBudget.description,
+      date: currentBudget.date,
+      estimatedBudget: currentBudget.estimatedBudget,
+      published:status
+    };
+    BudgetDataService.update(currentBudget.id, data)
+      .then(response => {
+        props.history.push("/budgetestimates/"+currentBudget.projectId);
+        cogoToast.success("Budget Estimate Deleted Successfully!");
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+   
+
     
   };
 
@@ -117,7 +143,11 @@ const Budget = props => {
 
   return (
     <div className="container">
-      {currentBudget ? (
+      {submitted ? (
+         viewBudget()
+ 
+ ) : (
+ 
         <div class="container">
           <h2>Edit Budget Estimate</h2>
           <Breadcrumbs aria-label="breadcrumb">
@@ -150,13 +180,15 @@ const Budget = props => {
                 name="costCode"
              />*/}
                 <input
-               
+               type="text"
                 id="costCode"
-                {...register('costCode')}
-                value={currentBudget.costCode}
-                onChange={handleSubmit}
-                className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
                 name="costCode"
+                value={currentBudget.costCode}
+                {...register('costCode')}
+                
+                onChange={handleInputChange}
+                className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
+               
               />
 
               <div className="invalid-feedback">{errors.costCode?.message}</div>
@@ -165,12 +197,13 @@ const Budget = props => {
               <label htmlFor="title">Description</label>
               <input
                 type="text"
-                className={`form-control ${errors.description ? 'is-invalid' : ''}`}
+               className={`form-control ${errors.description ? 'is-invalid' : ''}`}
                 id="description"
                 name="description"
-                value={currentBudget.description}
-                onChange={handleSubmit}
                 {...register('description')}
+                value={currentBudget.description}
+                onChange={handleInputChange}
+               
               />
               <div className="invalid-feedback">{errors.description?.message}</div>
             </div>
@@ -183,7 +216,7 @@ const Budget = props => {
                 name="date"
                 {...register('date')}
                 value={currentBudget.date}
-                onChange={handleSubmit}
+                onChange={handleInputChange}
                 className={`form-control ${errors.date ? 'is-invalid' : ''}`}
               />
               <div className="invalid-feedback">{errors.date?.message}</div>
@@ -197,28 +230,28 @@ const Budget = props => {
                 name="estimatedBudget"
                 {...register('estimatedBudget')}
                 value={currentBudget.estimatedBudget}
-                onChange={handleSubmit}
+                onChange={handleInputChange}
                 className={`form-control ${errors.estimatedBudget ? 'is-invalid' : ''}`}
               />
               <div className="invalid-feedback">{errors.estimatedBudget?.message}</div>
             </div>
             <div className="form-group">
 
-            <button className="btn btn-danger" onClick={deleteBudget}>
+            <button className="btn btn-danger" onClick={() =>{updatePublished(false);reset()}}>
             Delete <DeleteIcon/> 
           </button>
 
           <button
             type="submit"
             className="btn btn-success m-2"
-            onClick={updateBudget}
+            onClick={() =>{updateBudget();reset()}}
           >
             Update <UpdateIcon/>
           </button>
-          <Link to={"/budgetestimates/" + currentBudget.projectId}>
+         {/* <Link to={"/budgetestimates/" + currentBudget.projectId}>
             <button className="btn btn-success">
             Cancel
-            </button></Link>
+            </button></Link> */}
           <button
             type="button"
             onClick={() => reset()}
@@ -267,17 +300,10 @@ const Budget = props => {
           
           
           </div>
-          
 
-
-          {viewBudget}
-          <p>{message}</p>
         </div>
-      ) : (
-        <div>
-          <br />
-          <p>Please click on a budget line item...</p>
-        </div>
+        
+       
       )}
     </div>
   );

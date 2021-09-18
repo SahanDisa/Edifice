@@ -4,6 +4,8 @@ import CommitmentDataService from "./../../../services/commitment.service";
 import SovDataService from "./../../../services/sov.service";
 import SubDataService from "./../../../services/subcontractor.service";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
+import CheckIcon from '@material-ui/icons/Check';
 
 export default class Commitments extends Component {
     
@@ -30,7 +32,7 @@ export default class Commitments extends Component {
         sovTotal:"",
         ongoingCount: 0,
         completedCount: 0,
-        id: this.props.match.params.id
+        id: this.props.match.params.id,
       };
     }
   
@@ -181,6 +183,17 @@ export default class Commitments extends Component {
     
     render() {
         const { searchContractCompany , commitments ,currentIndex,id,sovTotal, ongoingCount,completedCount,subcontractors} = this.state;
+        const today = new Date();
+        const date1 = new Date(commitments.startdate);
+        const date2 = new Date(commitments.estimatedCompletionDate);
+        const diffTime = Math.abs(date2 - date1);
+        const diffTime2 = Math.abs(date2 - today);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+        const remainDays = Math.ceil(diffTime2/(1000 * 60 * 60 * 24));
+        console.log(diffTime + " milliseconds");
+        console.log(diffDays + " days");
+        console.log(remainDays + " remain days");
+
 
         return (
             <div>
@@ -273,19 +286,29 @@ export default class Commitments extends Component {
             <ul className="list-group">
             {commitments &&
                 commitments.map((commitment, index) => (
+
                 <div
+               
                     className={
                     "list-group-item row" +
                     (index === currentIndex ? "active" : "")
                     }
+                    class="card-header" id="headingOne"
                     //onClick={() => this.setActiveCommmitment(commitment, index)}
                     key={index}
                 >
-                <div className="row">
+                <div className="row"  >
                 <div className="col-10">
                 <Link to={"/editcommitment/"+commitment.id} style={{ 'text-decoration': 'none','color':'#273f7d'}}><h5> #{commitment.id} - {commitment.title}</h5> </Link>
                     <h6>Contract Company : {commitment.contractCompany}</h6> 
                     <h6>Status :  {commitment.status}</h6>
+                   {/* <div className="card card-hover shadow-sm" style={{alignItems: "center"}} ><br />
+ {(( Math.ceil(Math.abs(new Date(commitment.estimatedCompletionDate)-new Date(commitment.startdate))/(1000 * 60 * 60 * 24) ))> 0 ) ? 
+              <div className="row"><ReportProblemOutlinedIcon style={{ color: "red" }}/><h3 className="h5 nav-heading-title mb-0">&nbsp;Ongoing</h3></div>:(Math.abs(new Date(commitment.estimatedCompletionDate)-new Date(commitment.startdate)) < 0)?<p>Completed</p>
+: <CheckIcon/>  
+ }
+<br />
+</div>*/}
                     {/* Button Group 
                     <Link to={"/viewcommitment/"+commitment.id}>*/}
                     

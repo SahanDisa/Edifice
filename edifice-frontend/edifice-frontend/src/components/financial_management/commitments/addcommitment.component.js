@@ -51,7 +51,7 @@ const AddCommitment = (props) => {
     id: null,
     title :"",
     contractCompany :"",
-    status :"",
+    status :"Ongoing 🔴",
     description :"",
     startDate :"",
     estimatedCompletionDate :"",
@@ -61,7 +61,7 @@ signedContractReceivedDate :"",
 exclusions:"",
     projectId:props.match.params.id,
     
-    commitmentStatuses: ["Ongoing 🔴", "Completed 🟢"],
+    commitmentStatuses: ["Ongoing 🔴","Completed 🟢"],
     lastcommitment:[],
   };
   const [commitment, setCommitment] = useState(initialCommitmentState);
@@ -272,16 +272,22 @@ className={`form-control ${errors.contractCompany ? 'is-invalid' : ''}`}
             <div className="form-group">
                 <label htmlFor="status">Status :</label>
             
-                <select
+                <input
+                type="text"
                 id="status"
                 {...register('status')}
-                value={commitment.status}
+                value="Ongoing 🔴"
+                disabled
                 onChange={handleInputChange}
                 name="status"
 className={`form-control ${errors.status ? 'is-invalid' : ''}`}
-              >
-                <option value="" disabled selected>Select the Status</option>
-                {commitment.commitmentStatuses &&
+              />
+                
+
+               {/* <option selected>Ongoing 🔴</option>
+                <option>Completed 🟢</option> 
+<option value="" selected disabled>Select the Status</option>
+         { commitment.commitmentStatuses &&
                 commitment.commitmentStatuses.map((commitmentStatus, index) => (
                 <option
                     value={commitmentStatus}
@@ -289,11 +295,10 @@ className={`form-control ${errors.status ? 'is-invalid' : ''}`}
                     key={index}
                     selected
                 >
-                {/* unit data */}
                 {commitmentStatus}
-                </option>
-                ))}
-              </select>
+                </option> 
+                ))} 
+              </select>*/}
 <div className="invalid-feedback">{errors.status?.message}</div>
               </div>
            
