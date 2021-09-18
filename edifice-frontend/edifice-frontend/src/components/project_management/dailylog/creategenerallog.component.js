@@ -14,7 +14,10 @@ class CreateDGL extends Component {
         this.saveGeneralLog = this.saveGeneralLog.bind(this);
         this.retrieveQuestions = this.retrieveQuestions.bind(this);
         this.state = {
-            questions: [],
+            qu: {
+                id: null,
+                questions: ""
+            },
             id: null,
             date: "",
             questions: "",
@@ -23,6 +26,23 @@ class CreateDGL extends Component {
             projectId: this.props.match.params.id,
             submitted: false
         };
+    }
+
+    componentDidMount() {
+        this.retrieveQuestions(this.props.match.params.id);
+    }
+
+    retrieveQuestions(id){
+        DLQuestionsService.getAll(id)
+        .then(response => {
+            this.setState({
+                qu: response.data
+            });
+            console.log(response.data);
+        })
+        .catch(e => {
+            console.log(e);
+        });
     }
 
     onChangeDate(e) {
@@ -51,10 +71,10 @@ class CreateDGL extends Component {
 
     saveGeneralLog() {
         var data = {
-            date: this.status.date,
-            questions: this.status.questions,
-            isHappened: this.status.isHappened,
-            description: this.status.description,
+            date: this.state.date,
+            questions: this.state.questions,
+            isHappened: this.state.isHappened,
+            description: this.state.description,
             projectId: this.props.match.params.id
         };
 
@@ -71,24 +91,6 @@ class CreateDGL extends Component {
                 submitted: true
             });
             console.log("save function service ekata enawa");
-            console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
-        });
-    }
-
-    componentDidMount() {
-        this.retrieveQuestions(this.props.match.params.id);
-    }
-
-    retrieveQuestions(id){
-        DLQuestionsService.getAll(id)
-        .then(response => {
-            this.setState({
-                questions: response.data
-            });
-            console.log("questions tika ganna aawa");
             console.log(response.data);
         })
         .catch(e => {
@@ -141,10 +143,10 @@ class CreateDGL extends Component {
                                     <td>
                                         <input
                                             className="form-control"
-                                            name="questions"
+                                            name="description"
                                             type="text"
-                                            value={this.state.questions}
-                                            onChange={this.onChangeQuestions}
+                                            value={this.state.description}
+                                            onChange={this.onChangeDescription}
                                             required
                                         />                                     
                                     </td> 

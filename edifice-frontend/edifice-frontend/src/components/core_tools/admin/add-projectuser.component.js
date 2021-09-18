@@ -9,6 +9,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
+import { Breadcrumbs } from "@material-ui/core";
 
 import EmployeeDataService from "./../../../services/employee.service";
 import employeeService from "./../../../services/employee.service";
@@ -141,37 +142,41 @@ export default class AssignUserProject extends Component {
           <div className="row">
             <div className="container col-8">
             <h2>Assign User To the Project</h2>
-            <h5>Step 4 : Assign Users to project </h5>
+            <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" to="/home">
+                  Home
+                </Link>
+                <Link color="inherit" to={"/admin"}>
+                  Core Dashboard
+                </Link>
+                <Link color="inherit" to={"/projects"}>
+                  Project Home
+                </Link>
+                <Link color="textPrimary" to={"/assignuser/"+projectId} aria-current="page">
+                  Assign users / {projectId}
+                </Link>
+            </Breadcrumbs>
+            <h5>Step 4 : Assign Users to the project by giving the position</h5>
             <div className="form-group">
               <label htmlFor="category">User ID</label>
-              <select 
+              <select
                 className="form-control"
                 id="datatype"
                 required
                 name="category"
-                value={this.state.userId}
+                value={this.state.UserID}
                 onChange={this.onChangeUserID}
               >
-                {/* {drawingcategories &&
-                drawingcategories.map((drawingcategory, index) => (
-                <option
-                    value={drawingcategory.id}
-                    onChange={this.onChangeType}
-                    key={index}
-                >
-                
-                {drawingcategory.title}
-                </option>
-                ))} */}
+
                 {employees &&
                 employees.map((employee,index) => {
                   return(
                     <option value={employee.name} onChange={this.onChangeUserID}>{employee.name}</option>
                   )
                 })}
+
               </select>
             </div>
-
             <div className="form-group">
               <label htmlFor="description">Position</label>
               <select 
@@ -182,12 +187,12 @@ export default class AssignUserProject extends Component {
                 value={this.state.position}
                 onChange={this.onChangePosition}
               >
-                <option value={"Project Manager"} onChange={this.onChangePosition}>1 - Project Manager</option>
-                <option value={"Senior Architect"} onChange={this.onChangePosition}>2 - Senior Enginner</option>
-                <option value={"Senior Enginner"} onChange={this.onChangePosition}>3 - Senior Architect</option>
-                <option value={"Enginner"} onChange={this.onChangePosition}>3 - Enginner</option>
-                <option value={"Architect"} onChange={this.onChangePosition}>2 - Architect</option>
-                <option value={"QA Enginner"} onChange={this.onChangePosition}>4 - QA Enginner</option>
+                <option value={"Project Manager"} onChange={this.onChangePosition}>Project Manager</option>
+                <option value={"Senior Architect"} onChange={this.onChangePosition}>Senior Enginner</option>
+                <option value={"Senior Enginner"} onChange={this.onChangePosition}>Senior Architect</option>
+                <option value={"Enginner"} onChange={this.onChangePosition}>Enginner</option>
+                <option value={"Architect"} onChange={this.onChangePosition}>Architect</option>
+                <option value={"QA Enginner"} onChange={this.onChangePosition}>QA Enginner</option>
               </select>
             </div>
             <div className="form-group">

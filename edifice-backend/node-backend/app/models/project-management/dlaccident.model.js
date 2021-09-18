@@ -6,7 +6,10 @@ module.exports = (sequelize, Sequelize) => {
       time: {
         type: Sequelize.TIME  
       },
-      partyinvolved: {
+      crew: {
+        type: Sequelize.STRING
+      },
+      description: {
         type: Sequelize.STRING
       },
       isDeleted: {

@@ -248,3 +248,7 @@ button.bg-dark:focus {
   color: #273f7d !important;
   text-decoration: none !important;
 }
+
+.disabledLink{
+  pointer-events: none;
+}

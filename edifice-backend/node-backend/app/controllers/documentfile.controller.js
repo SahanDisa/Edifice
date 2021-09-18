@@ -134,8 +134,10 @@ exports.delete = (req, res) => {
 // Get drawings for a given category
 exports.findAllbyStatus = (req, res) => {
   const status = req.params.status;
+  const projectId = req.params.pid;
   Document.findAll({ where: {
-    status: status
+    status: status,
+    projectId: projectId
   }})
     .then(data => {
       res.send(data);

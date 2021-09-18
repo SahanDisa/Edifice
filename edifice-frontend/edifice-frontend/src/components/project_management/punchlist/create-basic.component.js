@@ -164,14 +164,32 @@ class CreatePL extends Component {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label htmlFor="">Title</label>
+                                    {/* <datalist
+                                        className="form-control"
+                                        name="title"
+                                        value={this.state.title}
+                                        onChange={this.onChangeTitle}
+                                        type="text"
+                                        required>
+                                            <option value="A/C doesn't work">A/C doesn't work</option>
+                                            <option value="Water line blocked">Water line blocked</option>
+                                            <option value=""></option> */}
+                                    {/* </datalist> */}
                                     <input
                                         className="form-control"
                                         name="title"
                                         value={this.state.title}
                                         onChange={this.onChangeTitle}
                                         type="text"
+                                        list="suggest"
                                         required
                                     />
+                                    <datalist id="suggest">
+                                            <option value="A/C doesn't work">A/C doesn't work</option>
+                                            <option value="Water line blocked">Water line blocked</option>
+                                            <option value="Dim Light">Dim Light</option>
+                                            <option value="Chipped door frame">Chipped door frame</option>
+                                    </datalist>
                                 </div>
                                 <div className="form-group col-md-6">
                                     <label htmlFor="">Status</label>
