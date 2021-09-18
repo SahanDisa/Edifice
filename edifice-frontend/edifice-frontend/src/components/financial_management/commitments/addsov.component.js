@@ -14,7 +14,7 @@ import TimelineDot from '@material-ui/lab/TimelineDot';
 import BudgetDataService from "./../../../services/budget.service";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import CommitmentDataService from "./../../../services/commitment.service";
-
+import cogoToast from 'cogo-toast';
 
 const AddSov = (props) => {
 
@@ -42,6 +42,9 @@ const AddSov = (props) => {
 
 const {id}= useParams();
 const {pid}= useParams();
+
+
+
 
   const initialSovState = {
     id: null,
@@ -80,7 +83,11 @@ exclusions:"",
   useEffect(() => {
     retrieveBudgets();    
     getCommitment(id);
+
   }, []);
+
+
+ 
 
   const getCommitment = id => {
     CommitmentDataService.get(id)
@@ -145,18 +152,18 @@ exclusions:"",
     setSubmitted(false);
   };
 
+    
+const viewS = () => {
+  props.history.push("/viewsov/"+pid+"/"+id);
+  cogoToast.success("SoV Saved Successfully!");
+ }
+
  
   return (
         <div className="container">
        
         {submitted ? (
-          <div>
-            <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={newSov}>
-              + Add Another SoV
-            </button>&nbsp;&nbsp;
-          <Link  to={"/viewsov/"+sov.projectId+"/"+sov.commitmentId} className="btn btn-success">View SoVs</Link>
-          </div>
+          viewS()
         ) : (
           <div class="container">
             <h2>New SoV</h2>
