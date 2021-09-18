@@ -11,6 +11,8 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import cogoToast from 'cogo-toast';
 
 const AddBudget = (props) => {
 
@@ -81,7 +83,14 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
       .catch(e => {
         console.log(e);
       });
+
+    
   };
+
+ const viewBudget = () => {
+  props.history.push("/budgetestimates/"+ budget.projectId);
+  cogoToast.success("Budget Estimate Saved Successfully!");
+ }
 
   const newBudget = () => {
     setBudget(initialBudgetState);
@@ -92,17 +101,26 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
   return (
         <div className="container">
        
-        {submitted ? (
-          <div>
-            <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={newBudget}>
-              + Add Another Budget Line Item
-            </button>&nbsp;&nbsp;
-          <Link  to={"/budgetestimates/"+budget.projectId} className="btn btn-success">View Estimated Budget</Link>
-          </div>
+        {submitted ? (       
+            viewBudget()       
         ) : (
           <div class="container">
-            <h2>New Budget Line Item</h2>
+            <h2>New Budget Estimate</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+budget.projectId}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/budgetestimates/"+budget.projectId} aria-current="page">
+               Budget Estimates
+              </Link>
+              <Link color="textPrimary" to={"/addbudget/"+budget.projectId} aria-current="page">
+               New Budget Estimate
+              </Link>
+            </Breadcrumbs>
+                <hr />
             <div className="row">
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>

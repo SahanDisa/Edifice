@@ -19,6 +19,7 @@
     "axios": "^0.21.1",
     "blob-util": "^2.0.2",
     "bootstrap": "^4.6.0",
+    "cogo-toast": "^4.2.3",
     "filesaver": "0.0.13",
     "jquery": "^3.6.0",
     "jspdf": "^2.3.1",

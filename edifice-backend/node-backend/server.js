@@ -96,6 +96,7 @@ require('./app/routes/project-management/actionplansection.routes')(app);
 require('./app/routes/project-management/actionplanitem.routes')(app);
 
 require('./app/routes/vendor.routes')(app);
+require('./app/routes/subcontractor.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {

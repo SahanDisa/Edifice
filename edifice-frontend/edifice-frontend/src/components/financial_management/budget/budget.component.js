@@ -8,6 +8,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import CheckIcon from '@material-ui/icons/Check';
 import HomeIcon from '@material-ui/icons/Home';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
 import {
   BarChart,
@@ -161,8 +162,18 @@ export default class BudgetList extends Component {
             <div>
               <div className="row">
               <div className="col" >
-               <div  className="row"> <Link to={"/financialmanagementhome/" + id}><HomeIcon style={{ color: "#2b2d42"}}/></Link>&nbsp;<h3>BUDGET OVERVIEW</h3></div>
-              <p>See the Overview of the Project Budget</p>
+               <h2>BUDGET OVERVIEW</h2>
+               <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+id}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/budget/"+id} aria-current="page">
+               Budget Overview
+              </Link>
+            </Breadcrumbs>
 </div>
 <div className="col" >
 <div className="row">

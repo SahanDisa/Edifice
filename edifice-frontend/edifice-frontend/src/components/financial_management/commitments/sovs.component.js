@@ -8,6 +8,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import BudgetDataService from "./../../../services/budget.service";
 import PublishIcon from '@material-ui/icons/Publish';
 import AddIcon from '@material-ui/icons/Add';
+import HomeIcon from '@material-ui/icons/Home';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import CommitmentDataService from "./../../../services/commitment.service";
 
 const SovList = (props) => {
   const {id}= useParams();
@@ -17,6 +20,24 @@ const SovList = (props) => {
   const sovsRef = useRef();
   const [budgets, setBudgets] = useState([]);
 
+  const initialCommitmentState = {
+    id: null,
+    title :"",
+    contractCompany :"",
+    status :"",
+    description :"",
+    startDate :"",
+    estimatedCompletionDate :"",
+actualCompletionDate :"",
+signedContractReceivedDate :"",
+    inclusions: "",
+exclusions:"",
+    projectId:props.match.params.id,  
+    commitmentStatuses: ["Ongoing 🔴", "Completed 🟢"],
+    
+  };
+  const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentState);
+
   //const {cId}= useParams();
  
   sovsRef.current = sovs;
@@ -24,6 +45,7 @@ const SovList = (props) => {
   useEffect(() => {
     retrieveSovs();
     retrieveBudgets();   
+    getCommitment(id);
   }, []);
 
   const retrieveBudgets = () => {
@@ -37,6 +59,16 @@ const SovList = (props) => {
       });
   };
 
+  const getCommitment = id => {
+    CommitmentDataService.get(id)
+      .then(response => {
+        setCurrentCommitment(response.data);
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
 
   const onChangeSearchCostCode = (e) => {
     const searchCostCode = e.target.value;
@@ -94,6 +126,10 @@ const SovList = (props) => {
 
   const columns = useMemo(
     () => [
+      {
+        Header: "#",
+        accessor: "id",
+      },
       {
         Header: "Cost Code",
         accessor: "costCode",
@@ -154,7 +190,33 @@ const SovList = (props) => {
   return (
     <div>
         <h3> Schedule of Values</h3>
-               <h6>Track all SoVs associated with a Subcontract.</h6><hr />
+         <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+pid}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/commitment/"+pid} aria-current="page">
+               Commitments
+              </Link>
+              <Link color="textPrimary" to={"/editcommitment/"+id} aria-current="page">
+              #{id} - {currentCommitment.title}
+              </Link>
+              <Link color="textPrimary" to={"/viewsov/"+pid+"/"+id} aria-current="page">
+               Schedule of Values
+              </Link>
+            </Breadcrumbs><br />
+            <ul class="nav nav-tabs">
+            <li class="nav-item">
+            <Link to={"/editcommitment/"+id}  class="nav-link">Sub Contract Details</Link>
+                      
+            </li>
+            <li class="nav-item">
+            <Link class="nav-link active" aria-current="page"to={"#"}>SoVs</Link>
+            </li>
+          </ul>
+
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
             <Link className="btn btn-primary mr-2" to={"/addsov/"+pid+"/"+id}>
@@ -176,7 +238,7 @@ const SovList = (props) => {
             value={searchCostCode}
             onChange={onChangeSearchCostCode}
           >
-            <option  selected value="">All</option>
+            <option  selected value="">All SoVs</option>
              {budgets &&
                 budgets.map((budget, index) => (
                 <option

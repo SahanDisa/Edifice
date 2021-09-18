@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import CommitmentDataService from "./../../../services/commitment.service";
 import SovDataService from "./../../../services/sov.service";
-import DeleteIcon from '@material-ui/icons/Delete';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import UpdateIcon from '@material-ui/icons/Update';
-import HomeIcon from '@material-ui/icons/Home';
+import SubDataService from "./../../../services/subcontractor.service";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 export default class Commitments extends Component {
     
@@ -21,8 +19,10 @@ export default class Commitments extends Component {
       this.getCompletedCount=this.getCompletedCount.bind(this);
       this.deleteCommitment = this.deleteCommitment.bind(this);
       this.calculateTotalSovs=this.calculateTotalSovs.bind(this);   
+      this.retrieveSubcontractors = this.retrieveSubcontractors.bind(this);
       this.state = {
         commitments: [],
+        subcontractors: [],
         currentCommitment: null,
         currentIndex: -1,
         content: "",
@@ -30,24 +30,16 @@ export default class Commitments extends Component {
         sovTotal:"",
         ongoingCount: 0,
         completedCount: 0,
-        //ongoingStatus:"Ongoing 🔴",
-
         id: this.props.match.params.id
       };
     }
-
-
-    // makeStyles((theme) => ({
-    //     button: {
-    //       margin: theme.spacing(1),
-    //     },
-    //   }));
   
     componentDidMount() {
       this.retrieveCommitment(this.props.match.params.id);
       this.calculateTotalSovs(this.props.match.params.id);
       this.getOngoingCount();
       this.getCompletedCount();
+      this.retrieveSubcontractors();
     }
 
     onChangeSearchContractCompany (e) {
@@ -71,6 +63,19 @@ export default class Commitments extends Component {
         });
     }
 
+    retrieveSubcontractors(){
+    
+      SubDataService.getAll()//passing project id as id
+        .then(response => {
+          this.setState({
+            subcontractors: response.data
+          });
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+
     calculateTotalSovs(id){
  
       SovDataService.getTotalSovs(id)
@@ -88,6 +93,7 @@ export default class Commitments extends Component {
 
     refreshList() {
       this.retrieveCommitment();
+      //this.retrieveSubcontractors();
       //this.calculateTotalSovs();
       this.setState({
         currentCommitment: null,
@@ -174,24 +180,27 @@ export default class Commitments extends Component {
     }
     
     render() {
-        const { searchContractCompany , commitments ,currentCommitment, currentIndex,id,sovTotal, ongoingCount,completedCount} = this.state;
-        // const classes = useStyles();
+        const { searchContractCompany , commitments ,currentIndex,id,sovTotal, ongoingCount,completedCount,subcontractors} = this.state;
+
         return (
             <div>
                <div className="container row">
                 <div className="col-12">
-                <div  className="row"> <Link to={"/financialmanagementhome/" + id}><HomeIcon style={{ color: "#2b2d42"}}/></Link>&nbsp;<h3>COMMITMENTS</h3></div>
-                <h6>See the Status and Value of all the Sub-Contracts.</h6>
+              <h3>COMMITMENTS</h3>
+                <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+id}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/commitment/"+id} aria-current="page">
+               Commitments
+              </Link>
+            </Breadcrumbs>
                 <hr />
                 </div>
             </div>
-
-            <div className="col-12 text-right">
-                <Link className="btn btn-primary mr-2" to={"/addcommitment/"+id}>
-                + New Subcontract
-                </Link>
-            </div>
-            <br />
 
             <div className="container row">
             <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2">
@@ -212,12 +221,20 @@ export default class Commitments extends Component {
                 <span className="fs-sm fw-normal text-muted">{completedCount}</span>
               </div>
             </div>
-            </div>
+            </div><br />
 
             <div className="container">
-            <div className="form-row mt-3">
-            <div className="form-group col-md-8 text-left">
+           
+            <div className="row">
+            <div className="col  text-left">
                 <h4>Subcontracts List</h4></div>
+                <div className="col text-right">
+                <Link className="btn btn-primary mr-2" to={"/addcommitment/"+id}>
+                + New Subcontract
+                </Link>
+            </div>
+            </div>
+            <div className="form-row mt-3">
                 <div className="col-md-4">
                 <div className="input-group mb-3">
                 <select
@@ -227,9 +244,18 @@ export default class Commitments extends Component {
               value={searchContractCompany}
               onChange={this.onChangeSearchContractCompany}
             >
-              <option  selected value="">All</option>
-                <option>Chance Electric Company (Pvt) Ltd</option>
-                <option>XYZ Company (Pvt) Ltd</option>
+              <option  selected value="">All Subcontracts</option>
+              {subcontractors &&
+                subcontractors.map((subcontractor, index) => (
+                <option
+                    value={subcontractor.contractCompany}
+                    onChange={this.onChangeSearchContractCompany}
+                    key={index}
+                >
+                {/* unit data */}
+                {subcontractor.contractCompany}
+                </option>
+                ))}
               </select>
             <div className="input-group-append">
               <button
@@ -257,14 +283,14 @@ export default class Commitments extends Component {
                 >
                 <div className="row">
                 <div className="col-10">
-                <h6> #{commitment.id} - {commitment.title}</h6>
+                <Link to={"/editcommitment/"+commitment.id} style={{ 'text-decoration': 'none','color':'#273f7d'}}><h5> #{commitment.id} - {commitment.title}</h5> </Link>
                     <h6>Contract Company : {commitment.contractCompany}</h6> 
                     <h6>Status :  {commitment.status}</h6>
                     {/* Button Group 
                     <Link to={"/viewcommitment/"+commitment.id}>*/}
-                     <Link to={"/editcommitment/"+commitment.id}>
-                   View <VisibilityIcon/> 
-                    </Link>
+                    
+                 
+                   
                     {/* <Button
                         variant="contained"
                         color="primary"
