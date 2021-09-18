@@ -16,7 +16,6 @@ module.exports = app => {
     router.get("/single/:id", dlaccident.findOne);
   
     // Retrieve all daily log - accident for a project
-    console.log("dlaccident route ekata enawa");
     router.get("/list/:id", dlaccident.findAll);
   
     app.use('/api/projects/dlaccident', router);

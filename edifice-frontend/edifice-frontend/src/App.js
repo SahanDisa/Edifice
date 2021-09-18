@@ -81,9 +81,8 @@ import UploadDocment from "./components/project_management/document/uploaddocume
 import ViewSingleDocument from "./components/project_management/document/viewsingledocument.component";
 import UpdateDocument from "./components/project_management/document/updatedocument.component";
 
-import MeetingsConfig from "./components/project_management/meetings/configuration.component";
 import MeetingsHome from "./components/project_management/meetings/meeting.component";
-import UpdateMeetings from "./components/project_management/meetings/update.component";
+import CreateMeetings from "./components/project_management/meetings/createmeeting.component";
 import ViewMeetings from "./components/project_management/meetings/view.component";
 
 import BudgetHome from "./components/financial_management/budget/budget.component";
@@ -332,10 +331,9 @@ class App extends Component {
               <Route path="/managestasks/update" component={UpdateTasks} />
               <Route path="/managestasks/view" component={ViewTasks} />
               {/* Meeting */}
-              <Route path="/meetingsconfiguration" component={MeetingsConfig} />
-              <Route path="/meetings" component={MeetingsHome} />
-              <Route path="/managesmeetings/update" component={UpdateMeetings} />
-              <Route path="/managesmeetings/view" component={ViewMeetings} />
+              <Route path="/meetings/:id" component={MeetingsHome} />
+              <Route path="/meetings/view/:id" component={ViewMeetings} />
+              <Route path="/createmeetings/:id" component={CreateMeetings} />
               {/* RFI */}
               <Route path="/rfi" component={rfiHome} />
               <Route path="/managerfi/create" component={CreateRFI} />

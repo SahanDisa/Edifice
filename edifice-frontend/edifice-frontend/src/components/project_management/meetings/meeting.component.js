@@ -1,60 +1,13 @@
 import React, { Component } from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
+import { Link } from "react-router-dom";
 import MeetingCategoryDataService from "../../../services/project_management/meetingcategory.service";
-import CreateMeeting from './createmeeting.component';
+import MeetingDataService from "../../../services/project_management/meeting.service";
 
-const data = [
-  {edit: <a href="/managesmeetings/update" className="btn btn-primary">Edit</a>, view:<a href="/managesmeetings/view" className="btn btn-success">View</a>,
-  overview: "Updates on this week", date: "17/07/2021", time: "10:30 AM", location: "Zoom Platform", status: "Scheduled", items: "2", extra: ""
-  }
-];
-const columns = [
-  {
-    dataField: 'edit',
-    text: '',
-    headerStyle: (column, colIndex) => {
-        return { width: '7%', textAlign: 'center' };}
-  }, {
-    dataField: 'view',
-    text: '',
-    headerStyle: (column, colIndex) => {
-    return { width: '7%', textAlign: 'center' };}
-  }, {
-    dataField: 'overview',
-    text: 'Meeting Overview',
-    headerStyle: (column, colIndex) => {
-    return { width: '50%', textAlign: 'center' };}
-  }, {
-    dataField: 'date',
-    text: 'Meeting Date',
-    headerStyle: (column, colIndex) => {
-        return { width: '10%', textAlign: 'center' };}
-  }, {
-    dataField: 'time',
-    text: 'Time',
-    headerStyle: (column, colIndex) => {
-    return { width: '7%', textAlign: 'center' };}
-  }, {
-    dataField: 'location',
-    text: 'location',
-    headerStyle: (column, colIndex) => {
-    return { width: '7%', textAlign: 'center' };}
-  }, {
-    dataField: 'status',
-    text: 'Status',
-    headerStyle: (column, colIndex) => {
-        return { width: '7%', textAlign: 'center' };}
-  }, {
-    dataField: 'items',
-    text: 'Number of Items',
-    headerStyle: (column, colIndex) => {
-    return { width: '7%', textAlign: 'center' };}
-  }, {
-    dataField: 'extra',
-    text: 'Extra',
-    headerStyle: (column, colIndex) => {
-        return { width: '7%', textAlign: 'center' };}
-  }];
+import Table from 'react-bootstrap/Table';
+
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import DeleteIcon from '@material-ui/icons/Delete';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 class MeetingsHome extends Component {
   constructor(props) {
@@ -62,17 +15,43 @@ class MeetingsHome extends Component {
       this.onChangeOverview = this.onChangeOverview.bind(this);
       this.onChangeDescription = this.onChangeDescription.bind(this);
       this.saveMeetingCategory = this.saveMeetingCategory.bind(this);
+      this.retrieveMeetingCategory = this.retrieveMeetingCategory.bind(this);
+      this.retrieveMeeting = this.retrieveMeeting.bind(this);
       this.state = {
         id: null,
-        overview: "",
+        category: "",
         description: "",
         projectId: this.props.match.params.id,
-        meetingcat: [],
+        categories: [],
+        meeting: [],
         currentIndex: -1,
         content: "",
 
         submitted: false
       };
+    }
+
+    componentDidMount() {
+      this.retrieveMeetingCategory(this.props.match.params.id);
+      this.retrieveMeeting(this.props.match.params.id);
+    }
+
+    retrieveMeetingCategory(projectId){
+      MeetingCategoryDataService.getAll(projectId)
+      .then(response => {
+          this.setState({
+            categories: response.data
+          });
+      });
+    }
+
+    retrieveMeeting(projectId){
+      MeetingDataService.getAll(projectId)
+      .then(response => {
+          this.setState({
+            meeting: response.data
+          });
+      });
     }
 
     onChangeOverview(e) {
@@ -87,8 +66,7 @@ class MeetingsHome extends Component {
       });
     }
 
-    saveMeetingCategory() {
-      console.log("click kala");  
+    saveMeetingCategory() { 
       var data = {
         overview : this.state.overview,
         description: this.state.description,
@@ -113,10 +91,16 @@ class MeetingsHome extends Component {
     }
 
     render() {
+      const {categories, meeting, projectId} = this.state;
+      console.log(projectId);
       return (
         <div className="">
           <h2>Meetings</h2>
-          <h6>Manage all aspects of your project meetings from agenda distribution</h6><hr/>
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link color="inherit" to="/home">Home</Link>
+            <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
+            <Link color="inherit" aria-current="page" className="disabledLink">Meetings</Link>
+          </Breadcrumbs><hr/>
           <div className="container">            
             <h4 className="mt-2">Meeting Types</h4>
             <div className="container">
@@ -153,76 +137,69 @@ class MeetingsHome extends Component {
               </div>
             </div><hr/>
             <h4 className="mb-3">Meetings</h4>
-            <ul class="nav nav-tabs">
-              <li class="nav-item">
-                <a class="nav-link active" id="allmeetings" data-toggle="tab" href="#status" aria-controls="status" aria-selected="true">All Meetings</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="recyclebin" data-toggle="tab" href="#comment" aria-controls="comment" aria-selected="true">Recycle Bin</a>
-              </li>
-            </ul>
-            
-            <div class="tab-content" id="myTabContent">
-              
-              <div class="tab-pane fade show active" id="status" role="tabpanel" aria-labelledby="allmeetings">
-                
-                <form>
-                  <div className="form-row mt-3">
-                    <div class="col-md-12 text-right">
-                      <a data-toggle="modal" data-target="#CreateMeeting" href="#" className="btn btn-primary">+ Create Meeting</a>
-                    </div>
-                    <div className="form-group col-md-4">
-                      <input className="form-control" type="text" placeholder="Search" />
-                    </div>
-                    <a href="#" className="btn btn-outline-dark mb-3">Add Filter</a>
+            <form>
+              <div className="form-row mt-3">
+                <div class="col-md-12 text-right">
+                  <Link to={"/createmeetings/"+projectId} className="btn btn-primary">+ Create Meeting</Link>
+                </div>
+                <div className="form-group col-md-4">
+                  <input className="form-control" type="text" placeholder="Search" />
+                </div>
+                <a href="#" className="btn btn-outline-dark mb-3">Add Filter</a>
+              </div>
+            </form>
+            <div class="accordion" id="accordionExample">
+              {categories && categories.map((cat, index) => (
+                <div class="card" key={cat.id}>
+                  <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${index}`} aria-expanded="true" aria-controls="collapseOne">{cat.name}</button>
+                    </h2>
                   </div>
-                </form>
-
-                <div class="accordion" id="accordionExample">
-                  <div class="card">
-                    <div class="card-header" id="headingOne">
-                      <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Weekly OAC Meeting</button>
-                      </h2>
-                    </div>
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                      <div class="card-body">
-                        <div className="">
-                          <div class="col-md-12 text-right mb-2">
-                            <a href="#" className="btn btn-primary">+ Follow-up Meeting</a>
-                          </div>
-                          <BootstrapTable 
-                            hover
-                            keyField='location'
-                            data={ data }
-                            columns={ columns } 
-                            cellEdit={ false }
-                          />
+                  <div id={`#collapse${index}`} class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                      <div className="">
+                        <div class="col-md-12 text-right mb-2">
+                          <Link to="#" className="btn btn-primary">+ Follow-up Meeting</Link>
                         </div>
+                        <Table striped bordered hover variant="" responsive>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Overview</th>
+                                    <th>Time</th>
+                                    <th>Location</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {meeting && meeting.map((mt) => ( meeting.overview === categories.id ?
+                                    <tr key={mt.id}>
+                                        <td>{mt.date}</td>
+                                        <td>{mt.overview}</td>
+                                        <td>{mt.time}</td>
+                                        <td>{mt.location}</td>
+                                        <td>{mt.status}</td>
+                                        <td>
+                                            <Link to={"/viewmeeting/" + projectId + "/" + mt.id}>
+                                                <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
+                                            </Link>
+                                            <Link to="">
+                                                <button className="btn btn-danger">Delete <DeleteIcon/></button>
+                                            </Link>
+                                        </td>    
+                                    </tr> : ""
+                                ))}
+                            </tbody>
+                        </Table>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div>
-                  <div class="col-md-12 text-left mt-3 mb-3">
-                    <a href="/meetingsconfiguration" className="btn btn-primary">+ Add overview</a>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="tab-pane fade" id="comment" role="tabpanel" aria-labelledby="recyclebin">
-                <h5 className="mt-3 ml-9">There is no meetings in the Recycle Bin</h5>
-                <a href="/projectmanagementhome/1" type="submit" className="btn btn-primary mt-2">Ok</a>
-              </div>
-
+              ))}
             </div>
-
           </div>
-          {/* Create Meeting Starts */}
-          <div className="modal fade" id="CreateMeeting" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <CreateMeeting/>        
-          </div>
-          {/* Create Meeting Ends */}
         </div>
       );
     }
