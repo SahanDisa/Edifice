@@ -19,5 +19,5 @@ module.exports = app => {
     console.log("dlaccident route ekata enawa");
     router.get("/list/:id", dlaccident.findAll);
   
-    app.use('/api/projects/accidentlog', router);
+    app.use('/api/projects/dlaccident', router);
 };
