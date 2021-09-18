@@ -5,7 +5,6 @@ import PunchListTypesDataService from "../../../services/project_management/punc
 import Table from 'react-bootstrap/Table';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import UpdateIcon from '@material-ui/icons/Update';
 
 class PLTView extends Component {
     constructor(props) {
@@ -75,14 +74,7 @@ class PLTView extends Component {
                 </thead>
                 <tbody>
                 {plitems && plitems.map((pli, index) => (
-                    <tr
-                        // className={
-                        // "list-group-item row" +
-                        // (index === currentIndex ? "active" : "")
-                        // }
-                        // onClick={() => this.setActiveProject(project, index)}
-                        key={index}
-                    >
+                    <tr key={index}>
                         <td>{pli.no}</td>
                         <td>{pli.title}</td>
                         <td>{pli.description}</td>
@@ -97,14 +89,14 @@ class PLTView extends Component {
                         }</td>
                         <td>
                             <Link to={"/view/"+ pli.no}>
-                                <button className="btn btn-success m-2">Update<UpdateIcon/></button>
+                                <button className="btn btn-success mr-2">View<VisibilityIcon/></button>
                             </Link>
                             <Link to={"/deletepl/" + pli.no}>
-                                <button className="btn btn-danger m-2">Delete<DeleteIcon/></button>
+                                <button className="btn btn-danger">Delete<DeleteIcon/></button>
                             </Link>
                         </td>    
                     </tr>
-                    ))}
+                ))}
                 </tbody>
               </Table>
             </div>
