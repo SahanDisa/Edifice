@@ -114,7 +114,7 @@ export default class PortfolioHome extends Component {
   
     componentDidMount() {
       this.retrieveDrawingStatus(this.props.match.params.id);
-      this.retrieveDocumentStatus();
+      this.retrieveDocumentStatus(this.props.match.params.id);
       this.retrieveDepartments(this.props.match.params.id);
       this.retriveMilestones(this.props.match.params.id);
       this.findCompleteCount(this.props.match.params.id);
@@ -207,8 +207,8 @@ export default class PortfolioHome extends Component {
           console.log(e);
         });
     }
-    retrieveDocumentStatus() {
-      DocumentDataService.getStatus("Complete")
+    retrieveDocumentStatus(id) {
+      DocumentDataService.getStatus(id,"Complete")
         .then(response => {
           this.setState({
             documentComplete: response.data.length,
@@ -219,7 +219,7 @@ export default class PortfolioHome extends Component {
         .catch(e => {
           console.log(e);
         });
-        DocumentDataService.getStatus("Pending")
+        DocumentDataService.getStatus(id,"Pending")
         .then(response => {
           this.setState({
             documentPending: response.data.length,
@@ -230,7 +230,7 @@ export default class PortfolioHome extends Component {
         .catch(e => {
           console.log(e);
         });
-        DocumentDataService.getStatus("Not Complete")
+        DocumentDataService.getStatus(id,"Not Complete")
         .then(response => {
           this.setState({
             documentIncomplete: response.data.length,

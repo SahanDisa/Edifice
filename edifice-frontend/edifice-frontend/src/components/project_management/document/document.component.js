@@ -6,7 +6,8 @@ import Card from 'react-bootstrap/Card';
 import UploadFiles from "./fileupload.component";
 import directorycover from "././../../../assets/PM/photos/directory1.jpg";
 import Table from 'react-bootstrap/Table';
-import ProgressBar from 'react-customizable-progressbar';
+import ProgressBarCust from 'react-customizable-progressbar';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 // import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { Breadcrumbs } from "@material-ui/core";
@@ -22,19 +23,38 @@ export default class Documents extends Component {
       recentdocuments: [],
       currentIndex: -1,
       content: "",
+      documentcount: 0,
+      directorycount: 0,
+      documentComplete: 0,
+      documentPending: 0,
+      documentIncomplete: 0,
       id: this.props.match.params.id
     };
   }
   componentDidMount() {
+    this.retrieveDocuments(this.props.match.params.id);
     this.retrieveDirectory(this.props.match.params.id);
+    this.retrieveDocumentStatus(this.props.match.params.id);
     this.recentDocuments();
   }
-
+  retrieveDocuments(id) {
+    DocumentfileService.getAll(id)
+      .then(response => {
+        this.setState({
+          documentcount: response.data.length
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
   retriveDirectory(id){
       DirectoryService.getAll(id)
       .then(response => {
           this.setState({
-            directories: response.data
+            directories: response.data,
+            directorycount: response.data.length
           });
           console.log(response.data);
         })
@@ -42,7 +62,41 @@ export default class Documents extends Component {
           console.log(e);
         });
   }
-
+  retrieveDocumentStatus(id) {
+    DocumentfileService.getStatus(id,"Complete")
+      .then(response => {
+        this.setState({
+          documentComplete: response.data.length,
+          // dataPie: response.data.length,
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+      DocumentfileService.getStatus(id,"Pending")
+      .then(response => {
+        this.setState({
+          documentPending: response.data.length,
+          //dataPie: response.data.length,
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+      DocumentfileService.getStatus(id,"Not Complete")
+      .then(response => {
+        this.setState({
+          documentIncomplete: response.data.length,
+          //dataPie: response.data.length,
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
   recentDocuments(){
     DocumentfileService.recent()
     .then(response => {
@@ -57,8 +111,12 @@ export default class Documents extends Component {
   }
 
   render() {
-      const {id, directories, currentIndex, recentdocuments} = this.state;
-      
+      const {id, directories, currentIndex, recentdocuments,documentComplete,documentPending,documentIncomplete
+      ,documentcount,directorycount} = this.state;
+      const completePercentage = Math.ceil((documentComplete/documentcount)*100);
+      const pendingPercentage = Math.ceil((documentPending/documentcount)*100);
+      const incompletePerentage = Math.ceil((documentIncomplete/documentcount)*100);
+
       return (
           <div>
           <h2>Document Home</h2>
@@ -80,14 +138,14 @@ export default class Documents extends Component {
             <div className="row">
               <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
                 <div className="card card-hover shadow-sm" title="Directory Insights">
-                  <h1 className="m-2">5</h1>
+                  <h1 className="m-2">{directorycount}</h1>
                   <h3 className="h5 nav-heading-title m-2">Directory</h3>
                   {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
                 </div>
               </div>
               <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
                 <div className="card card-hover shadow-sm" title="Document Insights">
-                  <h1 className="m-2" >7</h1>
+                  <h1 className="m-2" >{documentcount}</h1>
                   <h3 className="h5 nav-heading-title mb-0 m-2">Document</h3>
                   {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
                 </div>
@@ -101,9 +159,18 @@ export default class Documents extends Component {
               </div>
               <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
                 <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
-                <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
+                <Link className="d-block nav-heading text-center card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
                   <center>
-                  <ProgressBar
+                  <ProgressBar className="m-1">
+                    <ProgressBar  variant="primary" now={completePercentage} key={1} />
+                    <ProgressBar variant="success" now={pendingPercentage} key={2} />
+                    <ProgressBar variant="danger" now={incompletePerentage} key={3} />
+                  </ProgressBar>
+                
+                  <h6>Complete: {completePercentage} %</h6>
+                  <h6>Pending : {pendingPercentage} %</h6>
+                  <h6>Incomplete : {incompletePerentage} %</h6>
+                  {/* <ProgressBarCust
                       radius={29}
                       progress={25}
                       cut={120}
@@ -117,7 +184,7 @@ export default class Documents extends Component {
                       trackTransition="1s ease"
                       pointerRadius={3}
                       pointerStrokeWidth={12}
-                  />
+                  /> */}
                   {/* <h3 className="h5 nav-heading-title mb-0">Progress</h3> */}
                   </center>
                   {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
