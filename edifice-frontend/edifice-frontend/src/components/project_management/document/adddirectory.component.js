@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import DirectoryService from "../../../services/directory.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -6,7 +7,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
-
+import { Breadcrumbs } from "@material-ui/core";
 
 export default class AddDirectory extends Component {
   constructor(props) {
@@ -73,6 +74,7 @@ export default class AddDirectory extends Component {
     });
   }
   render() {
+    const {projectId} = this.state
     return (
       <div className="container">
         {this.state.submitted ? (
@@ -87,6 +89,20 @@ export default class AddDirectory extends Component {
           <div className="row">
             <div className="container col-8">
             <h2>Add New Directory</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+            <Link color="inherit" to="/home">
+              Home
+            </Link>
+            <Link color="inherit" to={"/projectmanagementhome/"+projectId}>
+              App Dashboard
+            </Link>
+            <Link color="textPrimary" to={"/document/"+projectId} aria-current="page">
+              Document Home
+            </Link>
+            <Link color="textPrimary" to={"/directory/"+projectId} aria-current="page">
+              Add Directory
+            </Link>
+          </Breadcrumbs>
             <h5>Step 1: Project Settings</h5>
             <div className="form-group">
               <label htmlFor="title">Title :</label>

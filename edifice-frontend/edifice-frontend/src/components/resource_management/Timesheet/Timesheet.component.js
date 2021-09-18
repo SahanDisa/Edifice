@@ -62,7 +62,7 @@ class Timesheet extends Component {
               </div>
             </form>
 
-            <div className="col-6 align-items-end text-right">
+            <div className="col-8 align-items-end text-right">
               <a href="#" className="btn btn-secondary mr-3"> Export PDF</a>
               <button
                 className="btn btn-primary"
@@ -84,13 +84,13 @@ class Timesheet extends Component {
 
         {timesheets && timesheets.map((timesheet, index) => (
 
-          <div className="card" key={timesheet.code}>
+          <div className="card" key={timesheet.id}>
             <div className="card-header">
 
               <div className=" container">
                 <div className="row">
                   <div class="col-6">
-                    <p>Code: {timesheet.code}</p>
+                    <p>Id: {timesheet.id}</p>
                     <h5 >Date: {timesheet.date}</h5>
                     {timesheet.status == "Pending" ?
                       <p>🔴 Not Approved</p> : <p>🟢 Approved</p>}
@@ -100,7 +100,7 @@ class Timesheet extends Component {
                   <div className="col-6 text-right">
                     <Link
                       className="btn btn-primary mt-5"
-                      to={"/viewTimesheet/" + id + "/" + timesheet.code}>
+                      to={"/viewTimesheet/" + id + "/" + timesheet.id}>
                       Manage
                     </Link>
                   </div>

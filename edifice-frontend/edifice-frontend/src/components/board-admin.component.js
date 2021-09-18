@@ -13,7 +13,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 //import LocationOnIcon from '@material-ui/icons/LocationOn';
-import {Assessment,HomeWork,LocationOn,Description,SupervisorAccount} from '@material-ui/icons';
+import {Assessment,HomeWork,LocationOn,Description,SupervisorAccount,AddCircleOutline} from '@material-ui/icons';
 
 import UserService from "../services/user.service";
 import EmployeeDataService from "../services/employee.service";
@@ -153,9 +153,18 @@ export default class BoardUser extends Component {
   generatePDF(project){
     Report.generatePDF(project);
   }
+  
+  createUser(userId){
+    if (typeof userId == 'undefined') {
+      window.location="/register"
+    }else{
+      window.location="/register/"+userId
+    }
+  }
 
   render() {
     const { projectDetails,projectCount,vendorCount,employeeCount,projects } = this.state;
+    
     var elements = {};
     //this.getprojectDetails(elements);
     console.log(projects);
@@ -196,6 +205,11 @@ export default class BoardUser extends Component {
                 <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
                 <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>
               </a>
+              {/* <Link to={"/projects"}>
+              <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
+                <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>
+
+              </Link> */}
               </div>
             </div>
 
@@ -209,7 +223,7 @@ export default class BoardUser extends Component {
               </div>
             </div>
 
-            <div className="col-lg-3 col-sm-6 pb-2" id="capitalcard">
+            <div className="col-lg-3 col-sm-6 pb-2" id="capitalcard" hidden>
               <div className="card card-hover shadow-sm" style={cardStyle}>
               <a className="d-block nav-heading text-center mt-3" style={linkText} href="#">
 
@@ -219,9 +233,15 @@ export default class BoardUser extends Component {
               </div>
             </div>
 
-          <div className="col-4 mb-4 mr-5">
+          <div className="col-8 mb-4 mr-5">
             <a className="btn btn-primary p-2" onClick={()=>{this.generatePDF();}} id="list-settings-list"><Description style={{ fontSize:20 }}/> Generate Report</a>
-            <a className="btn btn-primary p-2 ml-5" id="list-settings-list" href="/list-report"> <Assessment style={{ fontSize:20 }}/> Analytics</a>
+            <a className="btn btn-primary p-2 ml-5 mr-5" id="list-settings-list" href="/list-report"> <Assessment style={{ fontSize:20 }}/> Analytics</a>
+            <a className="btn btn-secondary p-2 ml-5" onClick={()=>{this.createUser(5);}}><AddCircleOutline style={{ fontSize:20 }}/> Add User</a>
+            
+          </div>
+          <div className="col-4 mb-4 mr-5">
+
+            
           </div>
           </div>
             <div classname-="mt-2 mb-2">
@@ -238,7 +258,7 @@ export default class BoardUser extends Component {
                         </div>
                       <div className="col-sm-6" id="project1_d">
                         <div className="row pb-2">
-                          <h5 className="pr-5 pl-2"> <SupervisorAccount style={{ fontSize:24 }}/>  31</h5>
+                          <h5 className="pr-5 pl-2"> <SupervisorAccount style={{ fontSize:24 }}/>  0</h5>
                           <h5> <LocationOn style={{ fontSize:24 }}/>  {project.location}</h5>
                         </div>
                       </div>

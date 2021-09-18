@@ -22,7 +22,8 @@ exports.create = (req, res) => {
     mobile: req.body.mobile,
     projCount:req.body.projCount,
     other:req.body.other,
-    userid:req.body.id
+    userid:req.body.id,
+    hasAccount:0
   };
 
   // Save Employee in database

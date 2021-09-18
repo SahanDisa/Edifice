@@ -288,8 +288,9 @@ class App extends Component {
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
-            <Route component={ErrorPage} />
-          </Switch>
+            <Route path="/photos/:id" component={PhotosHome} />
+            <Route component={ErrorPage}/>
+          </Switch>  
         )}
         {currentUser && (
 
@@ -299,6 +300,7 @@ class App extends Component {
               <Route exact path={["/", "/homereal"]} component={Homereal} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
+              <Route exact path="/register/:id" component={Register} />
               <Route exact path="/profile" component={Profile} />
               <Route path="/projectmanagement" component={BoardUser} />
               <Route path="/adddepartment/:id" component={AddDepartment} />
@@ -410,7 +412,7 @@ class App extends Component {
               {/* {/timesheet/} */}
               <Route path="/timesheet/:id" component={Timesheet} />
               <Route path="/viewTimesheet/:id/:code" component={ViewTimesheet} />
-              <Route path="/addWorkers/:id" component={AddWorkers} />
+              <Route path="/addWorkers/:id/:code" component={AddWorkers} />
               {/* {/crew/} */}
               <Route path="/crew/:id" component={Crew} />
               <Route path="/newCrew/:id" component={NewCrew} />
