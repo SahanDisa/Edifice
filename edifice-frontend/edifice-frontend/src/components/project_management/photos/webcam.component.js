@@ -8,9 +8,17 @@ import { Card } from 'react-bootstrap';
 const WebcamComponent = () => <Webcam />;
 
 const videoConstraints = {
-    width: 220,
-    height: 200,
-    facingMode: "user"
+    width: {
+        min: 1280,
+        ideal: 1920,
+        max: 2560,
+    },
+    height: {
+        min: 720,
+        ideal: 1080,
+        max: 1440
+    },
+    facingMode: 'user'
 };
 
 export const WebcamCapture = () => {
@@ -18,9 +26,12 @@ export const WebcamCapture = () => {
     const [image,setImage]=useState('');
     const webcamRef = React.useRef(null);
     const [progress, setProgress] = useState(0);
+    const [camera, setCamera] = useState("");
     const [message, setMessage] = useState("");
     const [currentFile, setCurrentFile] = useState(undefined);
     const [fileInfos, setFileInfos] = useState([]);
+    const [deviceId, setDeviceId] = React.useState({});
+    const [devices, setDevices] = React.useState([]);
     
     const capture = React.useCallback(
         () => {
@@ -66,26 +77,72 @@ export const WebcamCapture = () => {
           //window.location.reload();
         // setSelectedFiles(undefined);
     };
+    const handleDevices = React.useCallback(
+        mediaDevices =>
+          setDevices(mediaDevices.filter(({ kind }) => kind === "videoinput")),
+        [setDevices]
+    );
+    
+    function setCamDevice(devId){
+            console.log(devId);
+            setCamera(devId);
+    }
     
     useEffect(() => {
         UploadService.getCaptures().then((response) => {
           setFileInfos(response.data);
         });
     }, []);
+    React.useEffect(
+        () => {
+          navigator.mediaDevices.enumerateDevices().then(handleDevices);
+        },
+        [handleDevices]
+    );
 
     return (
         <div className="webcam-container">
             <div className="webcam-img">
             <h3>Onsite Capturing</h3>
             <p>Press Capture button to take an image and press Retake to undo the operation.</p>
+            <>
+            {/* {devices.map((device, key) => (
+                <div>
+                    <Webcam audio={false} videoConstraints={{ deviceId: device.deviceId }} />
+                    {device.label || `Device ${key + 1}`}
+                </div>
+
+                ))} */}
+            </>
+            <div className="row">
+            <div className="form-group col-12">
+              <label htmlFor="category">Select Device</label>
+              {devices &&
+                devices.map((device, index) => (
+                <button
+                    className = "btn btn-success mr-2"
+                    value={device.deviceId}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        //console.log("Cam value : "+e)
+                        setCamDevice(device.deviceId);
+                    }}
+                    key={index}
+                >
+                {/* unit data */}
+                {device.label || `Device ${index + 1}`}
+                </button>
+                ))}
+            </div>
+            </div>
             <center>
                 {image == '' ? <Webcam
                     audio={false}
                     height={500}
                     ref={webcamRef}
                     screenshotFormat="image/png"
-                    width={500}
-                    videoConstraints={videoConstraints}
+                    width={800}
+                    videoConstraints={{deviceId: camera}}
                 /> : <img src={image} />}
             </center>
                 
@@ -107,7 +164,6 @@ export const WebcamCapture = () => {
                         <h4>Upload Status</h4>
                         {image != '' && (
                         <div className="progress">
-                        
                         <div
                             className="progress-bar progress-bar-info progress-bar-striped"
                             role="progressbar"
@@ -136,7 +192,7 @@ export const WebcamCapture = () => {
                             fileInfos.map((file, index) => (
                             <div className="container col-2 mt-1" key={index}>
                                 <Card className="bg-dark text-white">
-                                <Card.Img src={file.url} alt="Card image" style={{'width': '150px', 'height': '150px'}}/>
+                                <Card.Img src={file.url} alt="Card image" style={{'width': '153px', 'height': '150px'}}/>
                                 <Card.ImgOverlay>
                                 {/* <Card.Title>{file.name}</Card.Title>
                                 <Card.Text>

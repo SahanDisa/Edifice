@@ -36,6 +36,10 @@ module.exports = (sequelize, Sequelize) => {
         },
         description: {
             type: Sequelize.STRING
+        },
+        isDeleted: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: 0
         }
     }, {
         freezeTableName: true,

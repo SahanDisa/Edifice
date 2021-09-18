@@ -1,16 +1,16 @@
 module.exports = app => {
-    const punchlisttypes = require("../../controllers/project-management/punchlisttypes.controller");
+    const pltypes = require("../../controllers/project-management/punchlisttypes.controller");
   
     var router = require("express").Router();
   
     // Create a new Punch List Type
-    router.post("/", punchlisttypes.create);
+    router.post("/", pltypes.create);
   
     // Retrieve all Punch List Type for a project
-    router.get("/:id", punchlisttypes.findAll);
+    router.get("/:id", pltypes.findAll);
 
     // Retrive single Punch List Type for a project
-    router.get("/single/:id", punchlisttypes.findOne);
+    router.get("/single/:id", pltypes.findOne);
   
-    app.use('/api/projects/punchlisttypes', router);
+    app.use('/api/projects/pltypes', router);
 };

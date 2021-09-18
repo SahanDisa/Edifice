@@ -9,6 +9,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
+import { Breadcrumbs } from "@material-ui/core";
 
 export default class AddDocument extends Component {
   constructor(props) {
@@ -184,6 +185,20 @@ export default class AddDocument extends Component {
         ) : (
           <div class="container">
             <h2>Add New Document</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+            <Link color="inherit" to="/home">
+              Home
+            </Link>
+            <Link color="inherit" to={"/projectmanagementhome/"+projectId}>
+              App Dashboard
+            </Link>
+            <Link color="textPrimary" to={"/document/"+projectId} aria-current="page">
+              Document Home
+            </Link>
+            <Link color="textPrimary" to={"/adddocument/"+projectId} aria-current="page">
+              Add Document
+            </Link>
+          </Breadcrumbs>
             <div className="row">
             <div className="col-sm-8">
             <div className="form-group">

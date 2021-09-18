@@ -10,11 +10,15 @@ module.exports = (sequelize, Sequelize) => {
       assigner: {
         type: Sequelize.STRING, 
       },
-      iscompleted: {
+      isCompleted: {
          type: Sequelize.BOOLEAN 
+      },
+      isDeleted: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: 0
       }
-      }, {
-        freezeTableName: true,
+    }, {
+      freezeTableName: true,
     });
   
     return ActionPlanItem;

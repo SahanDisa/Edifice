@@ -5,7 +5,7 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import UserService from "./../../services/user.service";
 import ProjectDataService from "./../../services/project.service";
 import AuthService from "./../../services/auth.service";
-import ProgressBar from 'react-customizable-progressbar'
+import ProgressBar from 'react-customizable-progressbar';
 
 import portfolioIcon from "././../../assets/portfolio.png";
 import rfiIcon from "././../../assets/rfi.png";
@@ -145,7 +145,7 @@ export default class BoardUser extends Component {
               pointerRadius={3}
               pointerStrokeWidth={12}
           />
-          {/* <h6><b>66%</b></h6>  */}
+          {/* <h6 className="mb-10"><b>66%</b></h6>  */}
           </center> 
           </div>
           </div>
@@ -249,7 +249,7 @@ export default class BoardUser extends Component {
           <div className="col-lg-3 mb-grid-gutter pb-2">
           
             <div className="card card-hover shadow-sm" title="Track the details at Site">
-              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/managedailylogs/"+ id} style={{ 'text-decoration': 'none' }}>
+              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/dailylogs/"+ id} style={{ 'text-decoration': 'none' }}>
                 <img src={dailylogIcon} alt="" width="50"/>
                 <h3 className="h5 nav-heading-title mb-0">Daily Log</h3>
                 {/* <span className="fs-sm fw-normal text-muted">Keep track of every detail at job site each and everyday</span> */}

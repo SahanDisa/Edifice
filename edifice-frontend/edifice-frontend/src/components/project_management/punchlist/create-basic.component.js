@@ -17,7 +17,6 @@ class CreatePL extends Component {
         this.onChangeType = this.onChangeType.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
         // this.onChangePunchmanager = this.onChangePunchmanager.bind(this);
-        // this.onChangeAssignee = this.onChangeAssignee.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.savePunchListItem = this.savePunchListItem.bind(this);
         this.newPunchListItem = this.newPunchListItem.bind(this);
@@ -30,7 +29,6 @@ class CreatePL extends Component {
             title: "",
             location: "",
             // punchmanager: "",
-            // assignee: "",
             description: "",
             projectId: this.props.match.params.id,
             lastpl:"",
@@ -81,9 +79,8 @@ class CreatePL extends Component {
             type: this.state.type,
             location: this.state.location,
             // punchmanager: this.state.punchmanager,
-            // assignee: this.state.assignee,
             description: this.state.description,
-            projectId: this.state.projectId
+            projectId: this.props.match.params.id
         };
 
         this.setState({
@@ -100,12 +97,12 @@ class CreatePL extends Component {
                 type: response.data.type,
                 location: response.data.location,
                 // punchmanager: response.data.punchmanager,
-                // assignee: response.data.assignee,
                 description: response.data.description,
                 projectId: response.data.projectId,
 
                 submitted: true
             });
+            console.log("save function service ekata enawa");
             console.log(response.data);
         })
         .catch(e => {
@@ -120,7 +117,6 @@ class CreatePL extends Component {
             title: "",
             location: "",
             // punchmanager: "",
-            // assignee: "",
             description: "",
             projectId: this.props.match.params.id,
 
@@ -155,21 +151,10 @@ class CreatePL extends Component {
     }
 
     render() {
-        const {lastpl, pltypes, buttonChanger, projectId, no} = this.state;
-        console.log(projectId);
+        const {lastpl, pltypes, buttonChanger, projectId} = this.state;
+        console.log(lastpl);
         return (
         <div className="">
-            {/* {this.state.submitted ? (
-                <div>
-                    <div>
-                        {lastpl && lastpl.map((puchlist, index) => (
-                            <div className="container col-3" key={index}>
-                                <Link to={"/addphotos/" + puchlist.id} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>Add Photos</Link>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            ) : ( */}
             <div className="">
                 <h2>Add New Punch List Item</h2><hr/>
                 <div className="row mb-3">
@@ -273,7 +258,7 @@ class CreatePL extends Component {
                                 className="btn btn-primary mr-2"
                                 >Next: Link Photos</Link>
                             }
-                            <a href="/punchlist" className="">Cancel</a>
+                            <Link to={"/punchlist/"+projectId} className="">Cancel</Link>
                         </form>
                     </div>
                     <div className="col-sm-4">
