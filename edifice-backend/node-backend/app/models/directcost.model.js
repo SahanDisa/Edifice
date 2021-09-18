@@ -21,6 +21,10 @@ module.exports = (sequelize, Sequelize) => {
       amount: {
         type: Sequelize.DECIMAL(20, 2) 
       },
+      published: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
+      },  
     }, {
         freezeTableName: true,
     });
