@@ -17,7 +17,6 @@ exports.create = (req, res) => {
   const directcost = {
     costCode: req.body.costCode,
     description:req.body.description,
-    category: req.body.category,
     vendor: req.body.vendor,
     employee: req.body.employee,
     receivedDate: req.body.receivedDate,

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { Modal } from "react-bootstrap";
 
 import Approve from "./approve.component";
 import RemoveApprove from "./remove-approve.component";
 import Card from 'react-bootstrap/Card';
 import { Link } from "react-router-dom";
+
+import MarkWorker from './mark-worker.component';
 
 import TimesheetDataService from "../../../services/timesheet.service";
 import CrewDataService from "./../../../services/crew.service";
@@ -15,7 +18,6 @@ class ViewTimesheet extends Component {
     this.retrieveTimesheet = this.retrieveTimesheet.bind(this);
     this.retrieveCrew = this.retrieveCrew.bind(this);
     this.retrieveWorkedHours = this.retrieveWorkedHours.bind(this);
-    this.saveWorker = this.saveWorker.bind(this);
 
     this.state = {
       code: this.props.match.params.code,
@@ -23,15 +25,8 @@ class ViewTimesheet extends Component {
       timesheet: [],
       workedHours: [],
       crews: [],
-      currentWorker: {
-        location: "",
-        start: "",
-        lunch_start: "",
-        lunch_stop: "",
-        tea_start: "",
-        tea_stop: "",
-        stop: ""
-      }
+      currentWorker: "",
+      currentIndex: -1
     };
   }
 
@@ -80,36 +75,19 @@ class ViewTimesheet extends Component {
       });
   }
 
-  saveWorker(worker) {
-    var data = {
-      location: worker.location,
-      start: worker.start,
-      lunch_start: worker.lunch_start,
-      lunch_stop: worker.lunch_stop,
-      tea_start: worker.tea_start,
-      tea_stop: worker.tea_stop,
-      stop: worker.stop,
-
-    };
-    console.log(data)
-
-
-    WorkedHoursDataService.update(worker.id, data)
-      .then(response => {
-        this.setState(prevState => ({
-          currentWorker: {
-            ...prevState.currentWorker,
-          }
-        }));
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+  setActiveWorker(worker, index) {
+    this.setState({
+      currentWorker: worker,
+      currentIndex: index
+    });
+    this.openModal();
   }
 
+  openModal = () => this.setState({ isOpen: true });
+  closeModal = () => this.setState({ isOpen: false });
+
   render() {
-    const { id, timesheet, workedHours, crews } = this.state;
+    const { id, timesheet, workedHours, crews, currentWorker } = this.state;
 
     return (
       <div>
@@ -200,70 +178,21 @@ class ViewTimesheet extends Component {
                   <tr
                     key={index}>
                     <td>flooring</td>
-                    <td className=" align-left text-left">{worker.firstName} {worker.lastName}</td>
-                    <td>
-                      <input
-                        type="text"
-                        id="default-picker"
-                        className="form-control"
-                        placeholder="Select time"
-                        value={worker.location} />
-                    </td>
-                    <td>
-                      <input
-                        type="time"
-                        id="default-picker"
-                        className="form-control"
-                        placeholder="Select time"
-                        value={worker.start} />
-                    </td>
-                    <td>
-                      <input
-                        type="time"
-                        id="default-picker"
-                        className="form-control"
-                        placeholder="Select time"
-                        value={worker.lunch_start} />
-                    </td>
-                    <td>
-                      <input
-                        type="time"
-                        id="default-picker"
-                        className="form-control"
-                        placeholder="Select time"
-                        value={worker.lunch_stop} />
-                    </td>
-                    <td>
-                      <input
-                        type="time"
-                        id="default-picker"
-                        className="form-control"
-                        placeholder="Select time"
-                        value={worker.tea_start} />
-                    </td>
-                    <td>
-                      <input
-                        type="time"
-                        id="default-picker"
-                        className="form-control"
-                        placeholder="Select time"
-                        value={worker.tea_stop} />
-                    </td>
-                    <td>
-                      <input
-                        type="time"
-                        id="default-picker"
-                        className="form-control"
-                        placeholder="Select time"
-                        value={worker.stop} />
-                    </td>
+                    <td className=" align-left text-center">{worker.firstName} {worker.lastName}</td>
+                    <td>{worker.location}</td>
+                    <td> {worker.start} </td>
+                    <td>{worker.lunch_start} </td>
+                    <td>{worker.lunch_stop}</td>
+                    <td>{worker.tea_start}</td>
+                    <td>{worker.tea_stop} </td>
+                    <td>{worker.stop}</td>
                     <td>
                       <button
                         className="btn btn-secondary mr-3"
-                        onClick={() => this.saveWorker(worker)}
+                        onClick={() => this.setActiveWorker(worker)}
                       >
-                        Save
-                      </button> :
+                        Mark
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -299,15 +228,24 @@ class ViewTimesheet extends Component {
               <RemoveApprove
                 timesheetId={timesheet.id} />
             </div>
-            {/*-------------------------------------Remove Approve Ends----------------------------------------------------------------------*/}
-
-            {/*------------------------------------ Add worker Starts------------------------------------------------------------------ */}
-            <div className="modal fade" id="selectCrew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-
-            </div>
-            {/*------------------------------------ Add worker Ends--------------------------------------------------------------------- */}
           </div>
         </div>
+        {/* mark Worker Starts */}
+        <Modal show={this.state.isOpen} onHide={this.closeModal}>
+          <MarkWorker
+            id={currentWorker.id}
+            location={currentWorker.location}
+            start={currentWorker.start}
+            lunch_start={currentWorker.lunch_start}
+            lunch_stop={currentWorker.lunch_stop}
+            tea_start={currentWorker.tea_start}
+            tea_stop={currentWorker.tea_stop}
+            stop={currentWorker.stop}
+          />
+        </Modal>
+
+
+
 
       </div>
 

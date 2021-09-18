@@ -10,6 +10,9 @@ import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
 
+import EmployeeDataService from "./../../../services/employee.service";
+import employeeService from "./../../../services/employee.service";
+
 
 export default class AssignUserProject extends Component {
   constructor(props) {
@@ -28,12 +31,14 @@ export default class AssignUserProject extends Component {
       currentIndex: -1,
       projectId: this.props.match.params.id,
       departments: [],
-
+      employees: [],
       submitted: false
     };
+    
   }
   componentDidMount() {
     this.retrieveDepartments(this.props.match.params.id);
+    this.getEmployees();
   }
   onChangeUserID(e) {
     this.setState({
@@ -97,14 +102,29 @@ export default class AssignUserProject extends Component {
     });
   }
 
+  getEmployees(){
+    EmployeeDataService.getAll()
+      .then(response => {
+        this.setState({
+          employees: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    
+      //console.log(this.state.employees)
+  }
+
   render() {
-    const {departments, currentIndex, projectId} = this.state;
+    const {departments, currentIndex, projectId,employees} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
           <div>
           <center>
-            <h4>You add a ProjectUser successfully</h4>
+            <h4>You add a ProjectUser successfully </h4>
             <button className="btn btn-success" onClick={this.newProjectUser}  style={{ 'text-decoration': 'none' }}>
               Add Another ProjectUser
             </button>
@@ -138,46 +158,24 @@ export default class AssignUserProject extends Component {
             <h5>Step 4 : Assign Users to the project by giving the position</h5>
             <div className="form-group">
               <label htmlFor="category">User ID</label>
-              {/* <input type="text" 
-              className="form-control"
-              id="datatype"
-              required
-              name="category"
-              value={this.state.userId}
-              onChange={this.onChangeUserID}
-              list="cars" />
-              <datalist id="cars">
-                <option>Volvo</option>
-                <option>Saab</option>
-                <option>Mercedes</option>
-                <option>Audi</option>
-              </datalist> */}
-              <select 
+              <select
                 className="form-control"
                 id="datatype"
                 required
                 name="category"
-                value={this.state.userId}
+                value={this.state.UserID}
                 onChange={this.onChangeUserID}
               >
-                <option value={1} onChange={this.onChangeUserID}>John Doe</option>
-                <option value={2} onChange={this.onChangeUserID}>Steve Smith</option>
-                <option value={3} onChange={this.onChangeUserID}>Kamal Perera</option>
-                <option value={4} onChange={this.onChangeUserID}>Saman Dissanayaka</option>
-                <option value={5} onChange={this.onChangeUserID}>Ranjith Weerasuriya</option>
+
+                {employees &&
+                employees.map((employee,index) => {
+                  return(
+                    <option value={employee.name} onChange={this.onChangeUserID}>{employee.name}</option>
+                  )
+                })}
+
               </select>
             </div>
-             {/* {drawingcategories &&
-                drawingcategories.map((drawingcategory, index) => (
-                <option
-                    value={drawingcategory.id}
-                    onChange={this.onChangeType}
-                    key={index}
-                >
-                
-                {drawingcategory.title}
-                </option>
-                ))} */}
             <div className="form-group">
               <label htmlFor="description">Position</label>
               <select 
@@ -234,6 +232,12 @@ export default class AssignUserProject extends Component {
                 disabled
               />
             </div>
+            {employees &&
+                employees.map((employee,index) => {
+                  return(
+                  <p>{employee.name}</p>
+                  )
+                })}
             <button onClick={this.saveProjectUser} className="btn btn-success">
               Assign User
             </button>

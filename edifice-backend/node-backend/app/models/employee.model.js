@@ -26,6 +26,9 @@ module.exports = (sequelize, Sequelize) => {
       username:{
         type: Sequelize.STRING
         
+      },
+      hasAccount:{
+        type:Sequelize.BOOLEAN
       }
     }, {
         freezeTableName: true,

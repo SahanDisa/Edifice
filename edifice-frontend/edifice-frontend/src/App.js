@@ -109,6 +109,10 @@ import ViewActionPlan from "./components/project_management/actionplan/viewactio
 import DailyLogHome from "./components/project_management/dailylog/dailylog.component";
 import UpdateDls from "./components/project_management/dailylog/update.component";
 import ViewDls from "./components/project_management/dailylog/view.component";
+import CreateDCL from "./components/project_management/dailylog/createcalllog.component";
+import CreateDAL from "./components/project_management/dailylog/createaccidentlog.component";
+import CreateDGL from "./components/project_management/dailylog/creategenerallog.component";
+import CreateDWL from "./components/project_management/dailylog/createweatherlog.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
 import CreatePL from "./components/project_management/punchlist/create-basic.component";
@@ -356,6 +360,10 @@ class App extends Component {
               <Route path="/dailylogs/:id" component={DailyLogHome} />
               <Route path="/dailylogs/update/:id" component={UpdateDls} />
               <Route path="/dailylogs/view/:id" component={ViewDls} />
+              <Route path="/createaccidentlog/:id" component={CreateDAL} />
+              <Route path="/createcalllog/:id" component={CreateDCL} />
+              <Route path="/creategenerallog/:id" component={CreateDGL} />
+              <Route path="/createweatherlog/:id" component={CreateDWL} />
 
               <Route path="/addUser" component={AddEmployee} />
               <Route path="/editUser/:id" component={EditUser} />
