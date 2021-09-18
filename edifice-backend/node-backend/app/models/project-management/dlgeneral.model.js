@@ -4,7 +4,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.DATEONLY
         },
         questions: {
-            type: Sequelize.INTEGER
+            type: Sequelize.STRING
         },
         isHappened: {
             type: Sequelize.BOOLEAN,
