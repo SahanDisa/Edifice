@@ -158,25 +158,14 @@ export default class AssignUserProject extends Component {
             <h5>Step 4 : Assign Users to the project by giving the position</h5>
             <div className="form-group">
               <label htmlFor="category">User ID</label>
-              <select 
+              <select
                 className="form-control"
                 id="datatype"
                 required
                 name="category"
-                value={this.state.userId}
+                value={this.state.UserID}
                 onChange={this.onChangeUserID}
               >
-                {/* {drawingcategories &&
-                drawingcategories.map((drawingcategory, index) => (
-                <option
-                    value={drawingcategory.id}
-                    onChange={this.onChangeType}
-                    key={index}
-                >
-                
-                {drawingcategory.title}
-                </option>
-                ))} */}
 
                 {employees &&
                 employees.map((employee,index) => {
@@ -187,7 +176,6 @@ export default class AssignUserProject extends Component {
 
               </select>
             </div>
-
             <div className="form-group">
               <label htmlFor="description">Position</label>
               <select 

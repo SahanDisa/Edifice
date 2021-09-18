@@ -154,7 +154,15 @@ export default class AddMilestoneGeneral extends Component {
                 value={this.state.duration}
                 onChange={this.onChangeDuration}
                 name="duration"
+                list={"dur"}
               />
+              <datalist id="dur">
+                <option>1 Months</option>
+                <option>2 Months</option>
+                <option>3 Months</option>
+                <option>6 Months</option>
+                <option>12 Months</option>
+              </datalist>
             </div>
             <button onClick={this.saveMilestone} className="btn btn-success">
               Create Milestone
