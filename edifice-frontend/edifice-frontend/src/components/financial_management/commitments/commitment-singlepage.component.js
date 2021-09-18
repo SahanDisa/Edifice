@@ -4,6 +4,7 @@ import CommitmentDataService from "./../../../services/commitment.service";
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
+import { Breadcrumbs } from "@material-ui/core";
 
 export default class ViewSingleCommitment extends Component {
   constructor(props) {
@@ -29,7 +30,9 @@ export default class ViewSingleCommitment extends Component {
       exclusions:"",
         projectId: ""
       },
-      message: ""
+      message: "",
+      temp: this.props.match.params.id,
+      pid: this.props.match.params.pid,
     };
   }
 
@@ -52,13 +55,30 @@ export default class ViewSingleCommitment extends Component {
   }
 
  render() {
-    const { currentCommitment, projectId , id} = this.state;
+    const { currentCommitment,temp,pid} = this.state;
 
     return (
       <div className="container">
+        <h4>Edit Sub Contract</h4>
+        <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+currentCommitment.projectId}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/commitment/"+currentCommitment.projectId}>
+               Commitments
+              </Link>
+              <Link color="textPrimary" to={"/editcommitment/"+temp} aria-current="page">
+               Edit Sub Contract
+              </Link>
+            </Breadcrumbs>
+                <hr />
         {currentCommitment ? (
           <div class="container">
             <h4>{currentCommitment.id} - {currentCommitment.title}</h4>
+
             <div className="col-12 text-right">
              
             <Link to={"/viewsov/"+currentCommitment.projectId+"/"+currentCommitment.id}>

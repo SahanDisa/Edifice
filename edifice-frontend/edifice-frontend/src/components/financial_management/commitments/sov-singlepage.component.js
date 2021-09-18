@@ -14,7 +14,8 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
-
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import CommitmentDataService from "./../../../services/commitment.service";
 
 const Sov = props => {
 
@@ -53,6 +54,26 @@ const Sov = props => {
   const [currentSov, setCurrentSov] = useState(initialSovState);
   const [message, setMessage] = useState("");
 
+  const {id}= useParams();
+const {pid}= useParams();
+const initialCommitmentState = {
+  id: null,
+  title :"",
+  contractCompany :"",
+  status :"",
+  description :"",
+  startDate :"",
+  estimatedCompletionDate :"",
+actualCompletionDate :"",
+signedContractReceivedDate :"",
+  inclusions: "",
+exclusions:"",
+  projectId:props.match.params.id,  
+  commitmentStatuses: ["Ongoing 🔴", "Completed 🟢"],
+  
+};
+const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentState);
+
   const getSov = id => {
     SovDataService.get(id)
       .then(response => {
@@ -66,7 +87,19 @@ const Sov = props => {
 
   useEffect(() => {
     getSov(props.match.params.id);
+    getCommitment(id);
   },[props.match.params.id]);
+
+  const getCommitment = id => {
+    CommitmentDataService.get(id)
+      .then(response => {
+        setCurrentCommitment(response.data);
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
 
   const handleInputChange = event => {
     const { name, value } = event.target;
@@ -102,6 +135,27 @@ const Sov = props => {
       {currentSov ? (
         <div class="container">
           <h4>SoVs</h4>
+          <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+pid}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/commitment/"+pid} aria-current="page">
+               Commitments
+              </Link>
+              <Link color="textPrimary" to={"/editcommitment/"+id} aria-current="page">
+              #{id} - {currentCommitment.title}
+              </Link>
+              <Link color="textPrimary" to={"/viewsov/"+pid+"/"+id} aria-current="page">
+               Schedule of Values
+              </Link>
+              <Link color="textPrimary" to={"/viewsinglesov/"+currentSov.id} aria-current="page">
+               #{currentSov.id} - {currentSov.costCode}
+              </Link>
+            </Breadcrumbs>
+            <hr />
           <div className="row">
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>

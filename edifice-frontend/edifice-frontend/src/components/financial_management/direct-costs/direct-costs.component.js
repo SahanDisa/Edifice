@@ -12,7 +12,7 @@ import BudgetDataService from "./../../../services/budget.service";
 import HomeIcon from '@material-ui/icons/Home';
 import PublishIcon from '@material-ui/icons/Publish';
 import AddIcon from '@material-ui/icons/Add';
-
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 const DirectCostList = (props) => {
   const {id}= useParams();
@@ -133,16 +133,16 @@ const DirectCostList = (props) => {
   const columns = useMemo(
     () => [
       {
+        Header: "#",
+        accessor: "id",
+      },
+      {
         Header: "Cost Code",
         accessor: "costCode",
       },
       {
         Header: "Description",
         accessor: "description",
-      },
-      {
-        Header: "Category",
-        accessor: "category",
       },
       {
         Header: "Vendor",
@@ -201,8 +201,18 @@ const DirectCostList = (props) => {
 
   return (
     <div>
-        <div  className="row"> <Link to={"/financialmanagementhome/" + id}><HomeIcon style={{ color: "#2b2d42"}}/></Link>&nbsp;<h3>DIRECT COSTS</h3></div>
-               <h6>Track all direct costs that are not associated with commitments.</h6><hr />
+        <h2>DIRECT COSTS</h2>
+        <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+id}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/directcost/"+id} aria-current="page">
+               Direct Costs
+              </Link>
+            </Breadcrumbs><hr />
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
             <Link className="btn btn-primary mr-2" to={"/adddirectcost/"+id}>{/*check this again*/}
@@ -243,7 +253,7 @@ const DirectCostList = (props) => {
             value={searchCostCode}
             onChange={onChangeSearchCostCode}
               >
-                <option  selected value="">All</option>
+                <option  selected value="">All Direct Costs</option>
              {budgets &&
                 budgets.map((budget, index) => (
                 <option

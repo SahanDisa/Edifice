@@ -6,9 +6,6 @@ module.exports = (sequelize, Sequelize) => {
       description: {
         type: Sequelize.STRING
       },
-      category: {
-        type: Sequelize.STRING
-      },
       vendor: {
         type: Sequelize.STRING
       },
