@@ -199,7 +199,9 @@ class App extends Component {
           <div className="navbar-nav mr-auto">
             {currentUser && (
               <li className="nav-item">
-                <Link to={"/home"} className="nav-link"></Link>
+                <Link to={"/home"} className="nav-link">
+                  <h6>Home</h6>
+                </Link>
               </li>
             )}
             {/* {currentUser && (

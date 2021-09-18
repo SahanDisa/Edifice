@@ -85,6 +85,7 @@ export default class PortfolioHome extends Component {
       this.findCompleteCount = this.findCompleteCount.bind(this);
       this.checkMilestone = this.checkMilestone.bind(this);
       this.getPoints = this.getPoints.bind(this);
+      this.getTimeline = this.getTimeline.bind(this);
       
       this.state = {
         drawings: [],
@@ -94,7 +95,6 @@ export default class PortfolioHome extends Component {
         content: "",
         milestoneCount: 0,
         completeMilestoneCount: 0,
-
 
         drawingComplete: 0,
         drawingPending: 0,
@@ -107,17 +107,20 @@ export default class PortfolioHome extends Component {
 
         points: [],
         project:[],
+        totaldays: 0,
+        remaindays: 0,
       };
     }
   
     componentDidMount() {
-      this.retrieveDrawingStatus();
+      this.retrieveDrawingStatus(this.props.match.params.id);
       this.retrieveDocumentStatus();
       this.retrieveDepartments(this.props.match.params.id);
       this.retriveMilestones(this.props.match.params.id);
       this.findCompleteCount(this.props.match.params.id);
       this.getPoints(this.props.match.params.id);
       this.retrieveProjectDetails(this.state.id);
+      this.getTimeline();
     }
     retrieveProjectDetails(id) {
       ProjectDataService.get(id)
@@ -169,8 +172,8 @@ export default class PortfolioHome extends Component {
           console.log(e);
         });
     }
-    retrieveDrawingStatus() {
-      DrawingDataService.getStatus("Complete")
+    retrieveDrawingStatus(id) {
+      DrawingDataService.getStatus(id,"Complete")
         .then(response => {
           this.setState({
             drawingComplete: response.data.length,
@@ -181,7 +184,7 @@ export default class PortfolioHome extends Component {
         .catch(e => {
           console.log(e);
         });
-        DrawingDataService.getStatus("Pending")
+        DrawingDataService.getStatus(id,"Pending")
         .then(response => {
           this.setState({
             drawingPending: response.data.length,
@@ -192,7 +195,7 @@ export default class PortfolioHome extends Component {
         .catch(e => {
           console.log(e);
         });
-        DrawingDataService.getStatus("Not Complete")
+        DrawingDataService.getStatus(id,"Not Complete")
         .then(response => {
           this.setState({
             drawingIncomplete: response.data.length,
@@ -293,6 +296,18 @@ export default class PortfolioHome extends Component {
       });
       window.location.reload();
     }
+    getTimeline(){
+      // const today = new Date();
+      // const date1 = new Date(this.project.startdate);
+      // const date2 = new Date(this.project.enddate);
+      // const diffTime = Math.abs(date2 - date1);
+      // const diffTime2 = Math.abs(date2 - today);
+      // const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+      // const remainDays = Math.ceil(diffTime2/(1000 * 60 * 60 * 24));
+      // console.log(diffTime + " milliseconds");
+      // console.log(diffDays + " days");
+      // console.log(remainDays + " remain days");
+    }
     
     uncheckMilestone(){
       console.log("unchecked");
@@ -316,17 +331,6 @@ export default class PortfolioHome extends Component {
         const x = cx + radius * Math.cos(-midAngle * RADIAN);
         const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
-        const today = new Date();
-        const date1 = new Date(project.startdate);
-        const date2 = new Date(project.enddate);
-        const diffTime = Math.abs(date2 - date1);
-        const diffTime2 = Math.abs(date2 - today);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-        const remainDays = Math.ceil(diffTime2/(1000 * 60 * 60 * 24));
-        console.log(diffTime + " milliseconds");
-        console.log(diffDays + " days");
-        console.log(remainDays + " remain days");
-          
         return (
           <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
             {`${(percent * 100).toFixed(0)}%`}
