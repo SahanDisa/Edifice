@@ -13,6 +13,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import PublishIcon from '@material-ui/icons/Publish';
 import AddIcon from '@material-ui/icons/Add';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import cogoToast from 'cogo-toast';
 
 const DirectCostList = (props) => {
   const {id}= useParams();
@@ -83,7 +84,34 @@ const DirectCostList = (props) => {
     props.history.push("/viewdirectcost/"+ id);//here id is direct cost id
   };
 
+//remove item from table
+const updatePublished = (rowIndex) => {
 
+  var data = {
+    id:  directcostsRef.current[rowIndex].id,
+    costCode:directcostsRef.current[rowIndex].costCode,
+    description:directcostsRef.current[rowIndex].description,
+    vendor:directcostsRef.current[rowIndex].vendor,
+    employee:directcostsRef.current[rowIndex].employee,
+    receivedDate: directcostsRef.current[rowIndex].receivedDate,
+    paidDate: directcostsRef.current[rowIndex].paidDate,
+   amount: directcostsRef.current[rowIndex].amount,
+    published:false
+    //project id ?
+  };
+  DirectCostDataService.update(directcostsRef.current[rowIndex].id, data)
+    .then(response => {
+      let newDirectCosts = [...directcostsRef.current];
+      newDirectCosts.splice(rowIndex, 1);
+
+      setDirectCosts(newDirectCosts);
+      cogoToast.success("Direct Cost Deleted Successfully!");
+    })
+    .catch(e => {
+      console.log(e);
+    });
+ 
+  };
 
   const deleteDirectCost = (rowIndex) => {
     const id = directcostsRef.current[rowIndex].id;
@@ -177,7 +205,15 @@ const DirectCostList = (props) => {
               <EditIcon></EditIcon>&nbsp;&nbsp;
               </span>
 
-              <span onClick={() => deleteDirectCost(rowIdx)}>
+              <span onClick={() => {
+
+const confirmBox = window.confirm(
+  "Do you really want to delete this item ?"
+)
+if (confirmBox === true) {
+updatePublished(rowIdx)
+}
+}}>
                 <DeleteIcon></DeleteIcon>
               </span>
             </div>
