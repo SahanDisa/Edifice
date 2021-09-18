@@ -24,6 +24,7 @@ import ErrorPage from "./components/error.component";
 
 import AddProject from './components/core_tools/admin/add-project.component';
 import AddDepartment from "./components/core_tools/admin/add-department.component";
+import AddCustomDepartment from "./components/core_tools/admin/add-department-custom.component";
 import AddMilestone from "./components/core_tools/admin/add-milestone.component";
 import AddMilestoneGeneral from "./components/core_tools/admin/add-milestone-custom.component";
 import AssignUserProject from "./components/core_tools/admin/add-projectuser.component";
@@ -302,6 +303,7 @@ class App extends Component {
               <Route exact path="/profile" component={Profile} />
               <Route path="/projectmanagement" component={BoardUser} />
               <Route path="/adddepartment/:id" component={AddDepartment} />
+              <Route path={"/addcustomdepartment/:id"} component={AddCustomDepartment}/>
               <Route path="/addmilestone/:id" component={AddMilestone} />
               <Route path="/addmilestoneproject/:id" component={AddMilestoneGeneral} />
               <Route path="/assignuser/:id" component={AssignUserProject} />

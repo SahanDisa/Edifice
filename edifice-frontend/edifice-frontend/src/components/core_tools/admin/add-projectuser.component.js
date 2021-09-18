@@ -8,6 +8,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
+import { Breadcrumbs } from "@material-ui/core";
 
 
 export default class AssignUserProject extends Component {
@@ -120,6 +121,20 @@ export default class AssignUserProject extends Component {
           <div className="row">
             <div className="container col-8">
             <h2>Assign User To the Project</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" to="/home">
+                  Home
+                </Link>
+                <Link color="inherit" to={"/admin"}>
+                  Core Dashboard
+                </Link>
+                <Link color="inherit" to={"/projects"}>
+                  Project Home
+                </Link>
+                <Link color="textPrimary" to={"/assignuser/"+projectId} aria-current="page">
+                  Assign users / {projectId}
+                </Link>
+            </Breadcrumbs>
             <h5>Step 4 : Assign Users to the project by giving the position</h5>
             <div className="form-group">
               <label htmlFor="category">User ID</label>
@@ -142,11 +157,11 @@ export default class AssignUserProject extends Component {
                 {drawingcategory.title}
                 </option>
                 ))} */}
-                <option value={1} onChange={this.onChangeUserID}>1 - John Doe</option>
-                <option value={2} onChange={this.onChangeUserID}>2 - Steve Smith</option>
-                <option value={3} onChange={this.onChangeUserID}>3 - Kamal Perera</option>
-                <option value={4} onChange={this.onChangeUserID}>4 - Saman Dissanayaka</option>
-                <option value={5} onChange={this.onChangeUserID}>5 - Ranjith Weerasuriya</option>
+                <option value={1} onChange={this.onChangeUserID}>John Doe</option>
+                <option value={2} onChange={this.onChangeUserID}>Steve Smith</option>
+                <option value={3} onChange={this.onChangeUserID}>Kamal Perera</option>
+                <option value={4} onChange={this.onChangeUserID}>Saman Dissanayaka</option>
+                <option value={5} onChange={this.onChangeUserID}>Ranjith Weerasuriya</option>
               </select>
             </div>
 
@@ -160,12 +175,12 @@ export default class AssignUserProject extends Component {
                 value={this.state.position}
                 onChange={this.onChangePosition}
               >
-                <option value={"Project Manager"} onChange={this.onChangePosition}>1 - Project Manager</option>
-                <option value={"Senior Architect"} onChange={this.onChangePosition}>2 - Senior Enginner</option>
-                <option value={"Senior Enginner"} onChange={this.onChangePosition}>3 - Senior Architect</option>
-                <option value={"Enginner"} onChange={this.onChangePosition}>3 - Enginner</option>
-                <option value={"Architect"} onChange={this.onChangePosition}>2 - Architect</option>
-                <option value={"QA Enginner"} onChange={this.onChangePosition}>4 - QA Enginner</option>
+                <option value={"Project Manager"} onChange={this.onChangePosition}>Project Manager</option>
+                <option value={"Senior Architect"} onChange={this.onChangePosition}>Senior Enginner</option>
+                <option value={"Senior Enginner"} onChange={this.onChangePosition}>Senior Architect</option>
+                <option value={"Enginner"} onChange={this.onChangePosition}>Enginner</option>
+                <option value={"Architect"} onChange={this.onChangePosition}>Architect</option>
+                <option value={"QA Enginner"} onChange={this.onChangePosition}>QA Enginner</option>
               </select>
             </div>
             <div className="form-group">
