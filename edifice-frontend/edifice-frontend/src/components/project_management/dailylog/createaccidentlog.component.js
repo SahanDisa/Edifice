@@ -1,20 +1,23 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import DLCallService from "../../../services/project_management/dlcall.service.js";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import DLAccidentService from "../../../services/project_management/dlaccident.service.js";
 
 class CreateDAL extends Component {
     constructor(props) {
         super(props);
         this.onChangeDate = this.onChangeDate.bind(this);
         this.onChangeTime = this.onChangeTime.bind(this);
-        this.onChangePartyinvolved = this.onChangePartyinvolved.bind(this);
+        this.onChangeCrew = this.onChangeCrew.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
         this.saveAccidentLog = this.saveAccidentLog.bind(this);
 
         this.state = {
             id: null,
             date: "",
             time: "",
-            partyinvolved: "",
+            crew: "",
+            description: "",
             projectId: this.props.match.params.id,
             submitted: false
         };
@@ -32,37 +35,40 @@ class CreateDAL extends Component {
         });
     }
 
-    onChangePartyinvolved(e) {
+    onChangeCrew(e) {
         this.setState({
-            partyinvolved: e.target.value
+            crew: e.target.value
+        });
+    }
+
+    onChangeDescription(e) {
+        this.setState({
+            description: e.target.value
         });
     }
 
     saveAccidentLog() {
         var data = {
-            date: this.status.date,
-            time: this.status.time,
-            partyinvolved: this.status.partyinvolved,
+            date: this.state.date,
+            time: this.state.time,
+            crew: this.state.crew,
+            description: this.state.description,
             projectId: this.props.match.params.id
         };
 
-        DLCallService.create(data)
+        DLAccidentService.create(data)
         .then(response => {
             this.setState({
                 no: response.data.no,
                 date: response.data.date,
                 time: response.data.time,
-                partyinvolved: response.data.partyinvolved,
+                crew: response.data.crew,
+                description: response.data.description,
                 projectId: response.data.projectId,
 
                 submitted: true
             });
-            console.log("save function service ekata enawa");
-            console.log(response.data);
         })
-        .catch(e => {
-            console.log(e);
-        });
     }
     
     render() {
@@ -70,53 +76,68 @@ class CreateDAL extends Component {
         return (
         <div className="">
             <div className="">
-                <h2>Add New Accident Log</h2><hr/>
-                {/* <div className="row mb-3"> */}
-                    <div>
-                        <div className="form-row">
-                            <div className="form-group col-md-3">
-                                <label htmlFor="">Date</label>
-                                <input
-                                    className="form-control"
-                                    name="title"
-                                    value={this.state.date}
-                                    onChange={this.onChangeDate}
-                                    type="date"
-                                    required
-                                />
-                            </div>
-                            <div className="form-group col-md-3">
-                                <label htmlFor="">Time</label>
-                                <input
-                                    className="form-control"
-                                    name="time"
-                                    type="time"
-                                    value={this.state.time}
-                                    onChange={this.onChangeTime}
-                                    required
-                                />
-                            </div>
-                            <div className="form-group col-md-6">
-                                <label htmlFor="">Party Involved</label>
-                                <input
-                                    className="form-control"
-                                    name="partyinvolved"
-                                    value={this.state.partyinvolved}
-                                    onChange={this.onChangePartyinvolved}
-                                    type="text"
-                                    required
-                                />
-                            </div>
+                <h2>Add New Accident Log</h2>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="inherit" to="/home">Home</Link>
+                    <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
+                    <Link color="inherit" to={"/dailylogs/"+projectId}>Daily Log</Link>
+                    <Link color="inherit" aria-current="page" className="disabledLink">Add New Accident Log</Link>
+                </Breadcrumbs><hr/>
+                <div>
+                    <div className="form-row">
+                        <div className="form-group col-md-3">
+                            <label htmlFor="">Date</label>
+                            <input
+                                className="form-control"
+                                name="date"
+                                value={this.state.date}
+                                onChange={this.onChangeDate}
+                                type="date"
+                                required
+                            />
                         </div>
-                        <hr />
-                        <button
-                            type="button"
-                            onClick={this.saveAccidentLog}
-                            className="btn btn-primary mr-2"
-                        >Save</button>
-                        <Link to={"/dailylog/"+projectId} className="">Cancel</Link>
+                        <div className="form-group col-md-3">
+                            <label htmlFor="">Time</label>
+                            <input
+                                className="form-control"
+                                name="time"
+                                type="time"
+                                value={this.state.time}
+                                onChange={this.onChangeTime}
+                                required
+                            />
+                        </div>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="">Crew</label>
+                            <input
+                                className="form-control"
+                                name="crew"
+                                value={this.state.crew}
+                                onChange={this.onChangeCrew}
+                                type="text"
+                                required
+                            />
+                        </div>
+                        <div className="form-group col-md-12">
+                            <label htmlFor="">Description</label>
+                            <input
+                                className="form-control"
+                                name="description"
+                                value={this.state.description}
+                                onChange={this.onChangeDescription}
+                                type="text"
+                                required
+                            />
+                        </div>
                     </div>
-                {/* </div> */}
+                    <hr />
+                    <button
+                        type="button"
+                        onClick={this.saveAccidentLog}
+                        className="btn btn-primary mr-2"
+                    >Save</button>
+                    <Link to={"/dailylog/"+projectId} className="card-text-edifice">Cancel</Link>
+                </div>
             </div>
         </div>
         );

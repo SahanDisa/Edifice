@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import DLCallService from "../../../services/project_management/dlcall.service.js";
 
 class CreateDCL extends Component {
@@ -10,6 +11,7 @@ class CreateDCL extends Component {
         this.onChangeCallto = this.onChangeCallto.bind(this);
         this.onChangeStarttime = this.onChangeStarttime.bind(this);
         this.onChangeEndtime = this.onChangeEndtime.bind(this);
+        this.onChangeReason = this.onChangeReason.bind(this);
         this.saveCallLog = this.saveCallLog.bind(this);
 
         this.state = {
@@ -19,6 +21,7 @@ class CreateDCL extends Component {
             callto: "",
             starttime: "",
             endtime: "",
+            reason: "",
             projectId: this.props.match.params.id,
             submitted: false
         };
@@ -54,13 +57,20 @@ class CreateDCL extends Component {
         });
     }
 
+    onChangeReason(e) {
+        this.setState({
+            reason: e.target.value
+        });
+    }
+
     saveCallLog() {
         var data = {
-            date: this.status.date,
-            callfrom: this.status.callfrom,
-            callto: this.status.callto,
-            starttime: this.status.starttime,
-            endtime: this.status.endtime,
+            date: this.state.date,
+            callfrom: this.state.callfrom,
+            callto: this.state.callto,
+            starttime: this.state.starttime,
+            endtime: this.state.endtime,
+            reason: this.state.reason,
             projectId: this.props.match.params.id
         };
 
@@ -73,15 +83,11 @@ class CreateDCL extends Component {
                 callto: response.data.callto,
                 starttime: response.data.starttime,
                 endtime: response.data.endtime,
+                reason: response.data.reason,
                 projectId: response.data.projectId,
 
                 submitted: true
             });
-            console.log("save function service ekata enawa");
-            console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
         });
     }
     
@@ -90,7 +96,13 @@ class CreateDCL extends Component {
         return (
         <div className="">
             <div className="">
-                <h2>Add New Call Log</h2><hr/>
+                <h2>Add New Call Log</h2>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="inherit" to="/home">Home</Link>
+                    <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
+                    <Link color="inherit" to={"/dailylogs/"+projectId}>Daily Log</Link>
+                    <Link color="inherit" aria-current="page" className="disabledLink">Add New Call Log</Link>
+                </Breadcrumbs><hr/>
                 <div className="">
                     <div className="form-row">
                         <div className="form-group col-md-4">
@@ -149,7 +161,18 @@ class CreateDCL extends Component {
                                 type="text"
                                 required
                             />
-                        </div>                        
+                        </div>
+                        <div className="form-group col-md-12">
+                            <label htmlFor="">Reason</label>
+                            <input
+                                className="form-control"
+                                name="reason"
+                                value={this.state.reason}
+                                onChange={this.onChangeReason}
+                                type="text"
+                                required
+                            />
+                        </div>                      
                     </div>
                     <hr />
                     <button

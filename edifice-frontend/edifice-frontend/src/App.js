@@ -82,9 +82,8 @@ import UploadDocment from "./components/project_management/document/uploaddocume
 import ViewSingleDocument from "./components/project_management/document/viewsingledocument.component";
 import UpdateDocument from "./components/project_management/document/updatedocument.component";
 
-import MeetingsConfig from "./components/project_management/meetings/configuration.component";
 import MeetingsHome from "./components/project_management/meetings/meeting.component";
-import UpdateMeetings from "./components/project_management/meetings/update.component";
+import CreateMeetings from "./components/project_management/meetings/createmeeting.component";
 import ViewMeetings from "./components/project_management/meetings/view.component";
 
 import BudgetHome from "./components/financial_management/budget/budget.component";
@@ -113,6 +112,10 @@ import CreateDCL from "./components/project_management/dailylog/createcalllog.co
 import CreateDAL from "./components/project_management/dailylog/createaccidentlog.component";
 import CreateDGL from "./components/project_management/dailylog/creategenerallog.component";
 import CreateDWL from "./components/project_management/dailylog/createweatherlog.component";
+import ViewDCL from "./components/project_management/dailylog/viewcalllog.component";
+import ViewDAL from "./components/project_management/dailylog/viewaccidentlog.component";
+import ViewDGL from "./components/project_management/dailylog/viewgenerallog.component";
+import ViewDWL from "./components/project_management/dailylog/viewweatherlog.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
 import CreatePL from "./components/project_management/punchlist/create-basic.component";
@@ -332,10 +335,9 @@ class App extends Component {
               <Route path="/managestasks/update" component={UpdateTasks} />
               <Route path="/managestasks/view" component={ViewTasks} />
               {/* Meeting */}
-              <Route path="/meetingsconfiguration" component={MeetingsConfig} />
-              <Route path="/meetings" component={MeetingsHome} />
-              <Route path="/managesmeetings/update" component={UpdateMeetings} />
-              <Route path="/managesmeetings/view" component={ViewMeetings} />
+              <Route path="/meetings/:id" component={MeetingsHome} />
+              <Route path="/meetings/view/:id" component={ViewMeetings} />
+              <Route path="/createmeetings/:id" component={CreateMeetings} />
               {/* RFI */}
               <Route path="/rfi" component={rfiHome} />
               <Route path="/managerfi/create" component={CreateRFI} />
@@ -364,6 +366,10 @@ class App extends Component {
               <Route path="/createcalllog/:id" component={CreateDCL} />
               <Route path="/creategenerallog/:id" component={CreateDGL} />
               <Route path="/createweatherlog/:id" component={CreateDWL} />
+              <Route path="/viewaccidentlog/:id/:dlid" component={ViewDAL} />
+              <Route path="/viewcalllog/:id/:dlid" component={ViewDCL} />
+              <Route path="/viewgenerallog/:id/:dlid" component={ViewDGL} />
+              <Route path="/viewweatherlog/:id/:dlid" component={ViewDWL} />
 
               <Route path="/addUser" component={AddEmployee} />
               <Route path="/editUser/:id" component={EditUser} />
