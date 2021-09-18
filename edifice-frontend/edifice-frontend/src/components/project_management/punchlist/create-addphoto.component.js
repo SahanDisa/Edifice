@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
 import PLPhotosDataService from "../../../services/project_management/punchlistphotos.service.js";
+import { WebcamCapture } from './../photos/webcam.component';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -16,6 +17,8 @@ class CreatePhotos extends Component {
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.savePhotos = this.savePhotos.bind(this);
         this.buttonChange = this.buttonChange.bind(this);
+        this.openCamera = this.openCamera.bind(this);
+        this.closeCamera = this.closeCamera.bind(this);
 
         this.state = {
             id: null,
@@ -23,6 +26,7 @@ class CreatePhotos extends Component {
             description: "",
             punchlistNo: "",
             lastpl: [],
+            isCam: 0,
 
             submitted: false
         };
@@ -30,6 +34,18 @@ class CreatePhotos extends Component {
 
     componentDidMount() {
         this.getLastPunchListID();
+    }
+
+    openCamera() {
+        this.setState({
+            isCam: 1
+        })
+    }
+
+    closeCamera() {
+        this.setState({
+            isCam: 0
+        })
     }
 
     onChangeName(e) {
@@ -112,14 +128,14 @@ class CreatePhotos extends Component {
     }
 
     render() {
-        const {punchlistNo, id, buttonChanger} = this.state;
+        const {punchlistNo, isCam, buttonChanger} = this.state;
         return (
         <div className="">
             <div className="">
                 <h2>Add New Punch List Item</h2><hr/>
                 <div className="row mb-3">
                     <div className="col-sm-8">
-                    <h5>Step 2: Add Photos</h5>
+                    <h5>Step 2: Link Photos</h5>
                         <form>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
@@ -145,6 +161,20 @@ class CreatePhotos extends Component {
                                     />
                                 </div>
                             </div>
+                            <div className="form-row">
+                            {isCam == 0 && (
+                                <button className="btn btn-primary" onClick={this.openCamera}>Start Camera</button>
+                            )}
+                            {isCam == 1 && (
+                                <div>
+                                    <button className="btn btn-primary" onClick={this.closeCamera}>Stop Camera</button>
+                                    <WebcamCapture/>
+                                </div>
+                            )}
+                            </div>
+                            {/* {isCam == 1 && (
+                                <WebcamCapture/>
+                            )} */}
                             <hr />
                             {!buttonChanger &&
                                 <button

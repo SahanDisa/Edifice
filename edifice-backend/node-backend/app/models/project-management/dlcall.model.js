@@ -15,6 +15,9 @@ module.exports = (sequelize, Sequelize) => {
         endtime: {
             type: Sequelize.TIME
         },
+        reason: {
+            type: Sequelize.STRING
+        },
         isDeleted: {
             type: Sequelize.BOOLEAN,
             defaultValue: 0

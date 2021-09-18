@@ -136,7 +136,7 @@ exports.delete = (req, res) => {
 exports.getProjectUserDetails = (req,res)=>{
   id = req.params.id;
 
-  db.sequelize.query('select projectuser.id, projectuser.userId, projectuser.department, projectuser.position, projectuser.projectId, projects.title, projects.description, projects.location, projects.startdate, projects.enddate, projects.published FROM projectuser INNER JOIN projects ON projectuser.projectId = projects.id AND projectuser.userId = '+id+';',
+  db.sequelize.query('select projectuser.id, projectuser.userId, projectuser.department, projectuser.position, projectuser.projectId, projects.title, projects.description, projects.location, projects.startdate, projects.enddate, projects.progressValue, projects.published FROM projectuser INNER JOIN projects ON projectuser.projectId = projects.id AND projectuser.userId = '+id+';',
    { type: db.sequelize.QueryTypes.SELECT})
   .then(data => {
       res.send(data);

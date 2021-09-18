@@ -134,7 +134,7 @@ export default class ProjectsList extends Component {
       </div>
       <div className="row"> 
         <div className="col-md-6">
-        <a className="btn btn-primary mb-2" href="/addProject">Add New Project</a>
+        <Link className="btn btn-primary mb-2" to="/addProject">Add New Project</Link>
           <ListGroup as="ul">
             {projects &&
               projects.map((project, index) => (
@@ -142,7 +142,6 @@ export default class ProjectsList extends Component {
                   action
                   onClick={() => this.setActiveProject(project, index)}
                   key={index}
-                  
                 >
                   <h6>{project.title}</h6>
                 </ListGroup.Item>
@@ -187,7 +186,7 @@ export default class ProjectsList extends Component {
                 Manage
               </Link>
               <Link
-                to={"#"}
+                to={"/addcustomdepartment/"+ currentProject.id}
                 className="m-1 btn btn-sm btn-success"
                 >
                 Department

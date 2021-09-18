@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { Modal } from "react-bootstrap";
-import WorkerDataService from "./../../../services/worker.service";
+import WorkedHoursDataService from "./../../../services/worked-hours.service";
 
 class EditWorker extends Component {
     constructor(props) {
         super(props);
-        this.onChangeFirstName = this.onChangeFirstName.bind(this);
-        this.onChangeLastName = this.onChangeLastName.bind(this);
-        this.onChangeMobile = this.onChangeMobile.bind(this);
+        this.onChangeLocation = this.onChangeLocation.bind(this);
+        this.onChangeStart = this.onChangeStart.bind(this);
+        this.onChangeLunchStart = this.onChangeLunchStart.bind(this);
+        this.onChangeLunchStop = this.onChangeLunchStop.bind(this);
+        this.onChangeTeaStart = this.onChangeTeaStart.bind(this);
+        this.onChangeTeaStop = this.onChangeTeaStop.bind(this);
+        this.onChangeStop = this.onChangeStop.bind(this);
         this.updateWorker = this.updateWorker.bind(this);
 
         this.state = {
@@ -16,61 +20,124 @@ class EditWorker extends Component {
             //currentIndex: -1,
             //content: "",
             currentWorker: {
-                wId: this.props.id,
-                firstName: this.props.fName,
-                lastName: this.props.lName,
-                mobile: this.props.mobile
+                id: this.props.id,
+                location: this.props.location,
+                start: this.props.start,
+                lunch_start: this.props.lunch_start,
+                lunch_stop: this.props.lunch_stop,
+                tea_start: this.props.tea_start,
+                tea_stop: this.props.tea_stop,
+                stop: this.props.stop
+
             }
 
         };
     }
 
-    onChangeFirstName(e) {
-        const firstName = e.target.value;
+    onChangeLocation(e) {
+        const location = e.target.value;
 
         this.setState(function (prevState) {
             return {
                 currentWorker: {
                     ...prevState.currentWorker,
-                    firstName: firstName
+                    location: location
                 }
             };
         });
     }
 
-    onChangeMobile(e) {
-        const mobile = e.target.value;
+    onChangeStart(e) {
+        const start = e.target.value;
 
         this.setState(function (prevState) {
             return {
                 currentWorker: {
                     ...prevState.currentWorker,
-                    mobile: mobile
+                    start: start
                 }
             };
         });
     }
 
-    onChangeLastName(e) {
-        const lastName = e.target.value;
+    onChangeLunchStart(e) {
+        const lunchStart = e.target.value;
 
         this.setState(function (prevState) {
             return {
                 currentWorker: {
                     ...prevState.currentWorker,
-                    lastName: lastName
+                    lunch_start: lunchStart
                 }
             };
         });
     }
+
+    onChangeLunchStop(e) {
+        const lunchStop = e.target.value;
+
+        this.setState(function (prevState) {
+            return {
+                currentWorker: {
+                    ...prevState.currentWorker,
+                    lunch_stop: lunchStop
+                }
+            };
+        });
+    }
+
+    onChangeTeaStart(e) {
+        const teaStart = e.target.value;
+
+        this.setState(function (prevState) {
+            return {
+                currentWorker: {
+                    ...prevState.currentWorker,
+                    tea_start: teaStart
+                }
+            };
+        });
+    }
+
+    onChangeTeaStop(e) {
+        const teaStop = e.target.value;
+
+        this.setState(function (prevState) {
+            return {
+                currentWorker: {
+                    ...prevState.currentWorker,
+                    tea_stop: teaStop
+                }
+            };
+        });
+    }
+
+    onChangeStop(e) {
+        const stop = e.target.value;
+
+        this.setState(function (prevState) {
+            return {
+                currentWorker: {
+                    ...prevState.currentWorker,
+                    stop: stop
+                }
+            };
+        });
+    }
+
+
 
     updateWorker() {
         var data = {
-            firstName: this.state.currentWorker.firstName,
-            lastName: this.state.currentWorker.lastName,
-            mobile: this.state.currentWorker.mobile,
+            location: this.state.currentWorker.location,
+            start: this.state.currentWorker.start,
+            lunch_start: this.state.currentWorker.lunch_start,
+            lunch_stop: this.state.currentWorker.lunch_stop,
+            tea_start: this.state.currentWorker.tea_start,
+            tea_stop: this.state.currentWorker.tea_stop,
+            stop: this.state.currentWorker.stop
         };
-        WorkerDataService.update(this.state.currentWorker.wId, data)
+        WorkedHoursDataService.update(this.props.id, data)
             .then(response => {
                 this.setState(prevState => ({
                     currentWorker: {
@@ -99,15 +166,16 @@ class EditWorker extends Component {
                             className="form-control"
                             type="text"
                             required
-                            value={currentWorker.wId} />
+                            value={currentWorker.location}
+                            onChange={this.onChangeLocation} />
 
                         <label htmlFor="">Start Time:</label>
                         <input
                             className="form-control"
                             type="time"
                             required
-                            value={currentWorker.firstName}
-                            onChange={this.onChangeFirstName} />
+                            value={currentWorker.start}
+                            onChange={this.onChangeStart} />
 
                         <label htmlFor="">Lunch Time:</label>
                         <div class="container">
@@ -117,16 +185,16 @@ class EditWorker extends Component {
                                         className="form-control"
                                         type="time"
                                         required
-                                        value={currentWorker.lastName}
-                                        onChange={this.onChangeLastName} />
+                                        value={currentWorker.lunch_start}
+                                        onChange={this.onChangeLunchStart} />
                                 </div>
                                 <div class="col-6">
                                     <input
                                         className="form-control"
                                         type="time"
                                         required
-                                        value={currentWorker.lastName}
-                                        onChange={this.onChangeLastName} />
+                                        value={currentWorker.lunch_stop}
+                                        onChange={this.onChangeLunchStop} />
                                 </div>
 
                             </div>
@@ -139,8 +207,8 @@ class EditWorker extends Component {
                                         className="form-control"
                                         type="time"
                                         required
-                                        value={currentWorker.lastName}
-                                        onChange={this.onChangeLastName} />
+                                        value={currentWorker.tea_start}
+                                        onChange={this.onChangeTeaStart} />
                                 </div>
                                 <div class="col-6">
                                     <input
@@ -148,8 +216,8 @@ class EditWorker extends Component {
                                         type="time"
                                         required
                                         placeholder="start time"
-                                        value={currentWorker.lastName}
-                                        onChange={this.onChangeLastName} />
+                                        value={currentWorker.tea_stop}
+                                        onChange={this.onChangeTeaStop} />
                                 </div>
 
                             </div>
@@ -158,10 +226,10 @@ class EditWorker extends Component {
                         <label htmlFor="">Leave Time:</label>
                         <input
                             className="form-control"
-                            type="text"
+                            type="time"
                             required
-                            value={currentWorker.mobile}
-                            onChange={this.onChangeMobile} />
+                            value={currentWorker.stop}
+                            onChange={this.onChangeStop} />
                         <br />
                     </div>
                 </Modal.Body>

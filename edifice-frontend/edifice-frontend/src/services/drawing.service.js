@@ -17,8 +17,8 @@ class DrawingDataService {
     return http.get(`/projects/drawing/cat/${id}`);
   }
 
-  getStatus(status){
-    return http.get(`/projects/drawing/status/${status}`);
+  getStatus(pid,status){
+    return http.get(`/projects/drawing/status/${pid}/${status}`);
   }
 
   update(id, data) {

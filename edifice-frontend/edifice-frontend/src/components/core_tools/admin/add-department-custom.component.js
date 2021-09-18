@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import MilestoneDataService from "../../../services/milestone.service";
+import DepartmentDataService from "./../../../services/department.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -9,21 +9,21 @@ import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
 
-export default class AddMilestoneGeneral extends Component {
+export default class AddCustomDepartment extends Component {
   constructor(props) {
     super(props);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeDuration = this.onChangeDuration.bind(this);
-    this.saveMilestone = this.saveMilestone.bind(this);
-    this.newMilestone = this.newMilestone.bind(this);
+    this.onChangePurpose = this.onChangePurpose.bind(this);
+    this.saveDepartment = this.saveDepartment.bind(this);
+    this.newDepartment = this.newDepartment.bind(this);
 
     this.state = {
       id: null,
       lastproject: [],
       title: "",
       description: "",
-      duration: "", 
+      purpose: "", 
       currentIndex: -1,
       projectId: this.props.match.params.id,
 
@@ -44,25 +44,25 @@ export default class AddMilestoneGeneral extends Component {
       description: e.target.value
     });
   }
-  onChangeDuration(e) {
+  onChangePurpose(e) {
     this.setState({
-      duration: e.target.value
+      purpose: e.target.value
     });
   }
-  saveMilestone() {
+  saveDepartment() {
     var data = {
       title: this.state.title,
       description: this.state.description,
-      duration: this.state.duration,
+      purpose: this.state.purpose,
       projectId: this.state.projectId
     };
-    MilestoneDataService.create(data)
+    DepartmentDataService.create(data)
       .then(response => {
         this.setState({
           id: response.data.id,
           title: response.data.title,
           description: response.data.description,
-          duration: response.data.duration,
+          purpose: response.data.purpose,
           projectId: response.data.projectId,
 
           submitted: true
@@ -73,12 +73,12 @@ export default class AddMilestoneGeneral extends Component {
         console.log(e);
       });
   }
-  newMilestone() {
+  newDepartment() {
     this.setState({
       id: null,
       title: "",
       description: "",
-      duration: "",
+      purpose: "",
       published: false,
 
       submitted: false
@@ -90,19 +90,23 @@ export default class AddMilestoneGeneral extends Component {
     return (
       <div className="container">
         {this.state.submitted ? (
-        <center>
           <div>
-            <h4>You add a Milestone successfully</h4>
-            <button className="btn btn-success" onClick={this.newMilestone}  style={{ 'text-decoration': 'none' }}>
-              Add Another Milestone
-            </button>
+            <center>
+                <h4>You add a Department successfully</h4>
+            
+                <button className="btn btn-success" onClick={this.newDepartment}  style={{ 'text-decoration': 'none' }}>
+                Add Another Department
+                </button>
+                {/* <Link to={"/addmilestone/"+projectId} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
+                        Add Milestone
+                    </Link> */}
+            </center>
           </div>
-          </center>
         ) : (
           <div class="container">
           <div className="row">
             <div className="container col-8">
-            <h2>Add Custom Milestone</h2>
+            <h2>Add Custom Department</h2>
             <Breadcrumbs aria-label="breadcrumb">
                 <Link color="inherit" to="/home">
                   Home
@@ -113,11 +117,11 @@ export default class AddMilestoneGeneral extends Component {
                 <Link color="inherit" to={"/projects"}>
                   Project Home
                 </Link>
-                <Link color="textPrimary" to={"/addmilestoneproject/"+projectId} aria-current="page">
-                  Custom Milestone / Add
+                <Link color="textPrimary" to={"/addcustomdepartment/"+projectId} aria-current="page">
+                  Custom Department / Add
                 </Link>
             </Breadcrumbs>
-            <h5>Step 3 : Define Milestones</h5>
+            <h5>Step 2 : Define Departments</h5>
             <div className="form-group">
               <label htmlFor="title">Title</label>
               <input
@@ -145,27 +149,19 @@ export default class AddMilestoneGeneral extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="description">Duration</label>
+              <label htmlFor="description">Purpose</label>
               <input
                 type="text"
                 className="form-control"
-                id="duration"
+                id="purpose"
                 required
-                value={this.state.duration}
-                onChange={this.onChangeDuration}
-                name="duration"
-                list={"dur"}
+                value={this.state.purpose}
+                onChange={this.onChangePurpose}
+                name="purpose"
               />
-              <datalist id="dur">
-                <option>1 Months</option>
-                <option>2 Months</option>
-                <option>3 Months</option>
-                <option>6 Months</option>
-                <option>12 Months</option>
-              </datalist>
             </div>
-            <button onClick={this.saveMilestone} className="btn btn-success">
-              Create Milestone
+            <button onClick={this.saveDepartment} className="btn btn-success">
+              Create Department
             </button>
             </div>
             <div className="container col-4">
@@ -182,14 +178,14 @@ export default class AddMilestoneGeneral extends Component {
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 2 :</strong>Define departments</h6></TimelineContent>
+                <TimelineContent><h5><strong>Step 2 </strong>Define departments</h5></TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h5><strong>Step 3 </strong>Define milestones</h5></TimelineContent>
+                <TimelineContent><h6><strong>Step 3 :</strong>Define milestones</h6></TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
