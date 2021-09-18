@@ -374,16 +374,6 @@ db.dlgeneral.belongsTo(db.projects, {
   as: "type",
 });
 
-// One daily log general has many daily questions
-db.dlgeneral.hasMany(db.dlquestions, {
-  as: "dlquestions"
-});
-
-db.dlquestions.belongsTo(db.dlgeneral, {
-  foreignKey: "dlgeneralId",
-  as: "type",
-});
-
 // One project has many daily weather log
 db.projects.hasMany(db.dlweather, {
   as: "dlweather"

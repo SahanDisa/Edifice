@@ -10,7 +10,7 @@ import Table from 'react-bootstrap/Table';
 
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import DeleteIcon from '@material-ui/icons/Delete';
-import UpdateIcon from '@material-ui/icons/Update';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 class DailyLogHome extends Component {
     constructor(props) {
@@ -90,11 +90,11 @@ class DailyLogHome extends Component {
         const { projectId, accidentlog, dlcall, dlgeneral, dlweather} = this.state;
         return (
             <div className="">
-                <h2>Manage Daily Logs</h2>
+                <h2>Daily Logs</h2>
                 <Breadcrumbs aria-label="breadcrumb">
                     <Link color="inherit" to="/home">Home</Link>
                     <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
-                    <Link color="inherit" aria-current="page">Manage Daily Logs</Link>
+                    <Link color="inherit" aria-current="page" className="disabledLink">Daily Logs</Link>
                 </Breadcrumbs><hr/>
                 <div className="mb-3">
                     <form>
@@ -137,7 +137,8 @@ class DailyLogHome extends Component {
                                             <tr>
                                                 <th>Date</th>
                                                 <th>Time</th>
-                                                <th>Party Involved</th>
+                                                <th>Crew</th>
+                                                <th>Description</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -146,13 +147,14 @@ class DailyLogHome extends Component {
                                                 <tr key={dla.id}>
                                                     <td>{dla.date}</td>
                                                     <td>{dla.time}</td>
-                                                    <td>{dla.partyinvolved}</td>
+                                                    <td>{dla.crew}</td>
+                                                    <td>{dla.description}</td>
                                                     <td>
-                                                        <Link to={"/view/"+ dla.id}>
-                                                            <button className="btn btn-success m-2">Update<UpdateIcon/></button>
+                                                        <Link to={"/viewaccidentlog/" + projectId + "/" + dla.id}>
+                                                            <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
                                                         </Link>
                                                         <Link to={"/deletepl/" + dla.id}>
-                                                            <button className="btn btn-danger m-2">Delete<DeleteIcon/></button>
+                                                            <button className="btn btn-danger">Delete <DeleteIcon/></button>
                                                         </Link>
                                                     </td>    
                                                 </tr>
@@ -188,14 +190,14 @@ class DailyLogHome extends Component {
                                             <tr key={index}>
                                                 <td>{dlw.date}</td>
                                                 <td>{dlw.time}</td>
-                                                <td>{dlw.tempterature}</td>
+                                                <td>{dlw.temperature}</td>
                                                 <td>{dlw.weather}</td>
                                                 <td>
-                                                    <Link to={"/view/"+ dlw.id}>
-                                                        <button className="btn btn-success m-2">Update<UpdateIcon/></button>
+                                                    <Link to={"/viewweatherlog/" + projectId + "/" + dlw.id}>
+                                                        <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
                                                     </Link>
                                                     <Link to={"/deletepl/" + dlw.id}>
-                                                        <button className="btn btn-danger m-2">Delete<DeleteIcon/></button>
+                                                        <button className="btn btn-danger">Delete <DeleteIcon/></button>
                                                     </Link>
                                                 </td>    
                                             </tr>
@@ -224,6 +226,7 @@ class DailyLogHome extends Component {
                                             <th>Call To</th>
                                             <th>Start Time</th>
                                             <th>End Time</th>
+                                            <th>Reason</th>
                                             <th></th>
                                         </tr>
                                         </thead>
@@ -235,12 +238,13 @@ class DailyLogHome extends Component {
                                                 <td>{dlc.callto}</td>
                                                 <td>{dlc.starttime}</td>
                                                 <td>{dlc.endtime}</td>
+                                                <td>{dlc.reason}</td>
                                                 <td>
-                                                    <Link to={"/view/"+ dlc.id}>
-                                                        <button className="btn btn-success m-2">Update<UpdateIcon/></button>
+                                                    <Link to={"/viewcalllog/" + projectId + "/" + dlc.id}>
+                                                        <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
                                                     </Link>
                                                     <Link to={"/deletepl/" + dlc.id}>
-                                                        <button className="btn btn-danger m-2">Delete<DeleteIcon/></button>
+                                                        <button className="btn btn-danger">Delete <DeleteIcon/></button>
                                                     </Link>
                                                 </td>    
                                             </tr>
@@ -277,11 +281,11 @@ class DailyLogHome extends Component {
                                                 <td>{dlg.questions}</td>
                                                 <td>{dlg.isHappened ? "Yes" : "No"}</td>
                                                 <td>
-                                                    <Link to={"/view/"+ dlg.id}>
-                                                        <button className="btn btn-success m-2">Update<UpdateIcon/></button>
+                                                    <Link to={"/viewgenerallog/" + projectId + "/" + dlg.id}>
+                                                        <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
                                                     </Link>
                                                     <Link to={"/deletepl/" + dlg.id}>
-                                                        <button className="btn btn-danger m-2">Delete<DeleteIcon/></button>
+                                                        <button className="btn btn-danger">Delete <DeleteIcon/></button>
                                                     </Link>
                                                 </td>    
                                             </tr>
@@ -293,7 +297,6 @@ class DailyLogHome extends Component {
                         </div>
                     </div>        
                 </div>
-                <a className="btn btn-success" href="/projectmanagementhome/1">Done</a>           
             </div>
         );
     }

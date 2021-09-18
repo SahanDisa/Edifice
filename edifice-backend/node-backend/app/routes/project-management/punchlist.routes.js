@@ -7,7 +7,6 @@ module.exports = app => {
     router.post("/", punchlist.create);
 
     // Retrieve all punchlist for a project
-    console.log("routes ekatath aawoo");
     router.get("/:id", punchlist.findAll);
 
     // Retrieve a single punch list with id

@@ -84,9 +84,7 @@ exports.delete = (req, res) => {
 // Find a single DLWeather with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
-    DLWeather.findByPk({id}, { where: {
-        isDeleted: 0
-    }})
+    DLWeather.findByPk(id)
     .then(data => {
         res.send(data);
     })

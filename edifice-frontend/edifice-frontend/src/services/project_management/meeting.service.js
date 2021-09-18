@@ -13,8 +13,8 @@ class MeetingDataService {
         return http.put(`/meetings/delete/${id}`);
     }
 
-    getAll() {
-        return http.get("/meetings/");
+    getAll(id) {
+        return http.get(`/meetings/all/${id}`);
     }
 
     get(id) {
