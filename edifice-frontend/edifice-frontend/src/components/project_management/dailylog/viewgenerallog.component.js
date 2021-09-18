@@ -1,23 +1,17 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import DLWeatherService from "../../../services/project_management/dlweather.service.js";
+import DLAccidentService from "../../../services/project_management/dlaccident.service";
 
-class CreateDWL extends Component {
+class CreateDAL extends Component {
     constructor(props) {
         super(props);
-        this.onChangeDate = this.onChangeDate.bind(this);
-        this.onChangeTime = this.onChangeTime.bind(this);
-        this.onChangeTemperature = this.onChangeTemperature.bind(this);
-        this.onChangeWeather = this.onChangeWeather.bind(this);
-        this.saveWeatherLog = this.saveWeatherLog.bind(this);
+        this.retrieveAccidentLog = this.retrieveAccidentLog.bind(this);
+        this.saveAccidentLog = this.saveAccidentLog.bind(this);
 
         this.state = {
-            id: null,
-            date: "",
-            time: "",
-            temperature: "",
-            weather: "",
+            accidentlog: [],
+            id: this.props.match.params.dlid,
             projectId: this.props.match.params.id,
             submitted: false
         };
@@ -35,43 +29,35 @@ class CreateDWL extends Component {
         });
     }
 
-    onChangeTemperature(e) {
+    onChangeCrew(e) {
         this.setState({
-            temperature: e.target.value
+            crew: e.target.value
         });
     }
 
-    onChangeWeather(e) {
+    onChangeDescription(e) {
         this.setState({
-            weather: e.target.value
+            description: e.target.value
         });
     }
 
-    onChangeEndtime(e) {
-        this.setState({
-            endtime: e.target.value
-        });
-    }
-
-    saveWeatherLog() {
+    saveAccidentLog() {
         var data = {
             date: this.state.date,
             time: this.state.time,
-            temperature: this.state.temperature,
-            weather: this.state.weather,
-            endtime: this.state.endtime,
+            crew: this.state.crew,
+            description: this.state.description,
             projectId: this.props.match.params.id
         };
 
-        DLWeatherService.create(data)
+        DLAccidentService.create(data)
         .then(response => {
             this.setState({
                 no: response.data.no,
                 date: response.data.date,
                 time: response.data.time,
-                temperature: response.data.temperature,
-                weather: response.data.weather,
-                endtime: response.data.endtime,
+                crew: response.data.crew,
+                description: response.data.description,
                 projectId: response.data.projectId,
 
                 submitted: true
@@ -89,20 +75,20 @@ class CreateDWL extends Component {
         return (
         <div className="">
             <div className="">
-                <h2>Add New Weather Log</h2>
+                <h2>Add New Accident Log</h2>
                 <Breadcrumbs aria-label="breadcrumb">
                     <Link color="inherit" to="/home">Home</Link>
                     <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
                     <Link color="inherit" to={"/dailylogs/"+projectId}>Daily Log</Link>
-                    <Link color="inherit" aria-current="page" className="disabledLink">Add New Weather Log</Link>
+                    <Link color="inherit" aria-current="page" className="disabledLink">Add New Accident Log</Link>
                 </Breadcrumbs><hr/>
-                <div className="">
+                <div>
                     <div className="form-row">
                         <div className="form-group col-md-3">
                             <label htmlFor="">Date</label>
                             <input
                                 className="form-control"
-                                name="title"
+                                name="date"
                                 value={this.state.date}
                                 onChange={this.onChangeDate}
                                 type="date"
@@ -120,25 +106,24 @@ class CreateDWL extends Component {
                                 required
                             />
                         </div>
-                        <div className="form-group col-md-3">
-                            <label htmlFor="">Temprature</label>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="">Crew</label>
                             <input
                                 className="form-control"
-                                type="temperature"
-                                e={this.state.temperature}
-                                onChange={this.onChangeTemperature}
-                                type="number"
-                                min="0"
+                                name="crew"
+                                value={this.state.crew}
+                                onChange={this.onChangeCrew}
+                                type="text"
                                 required
                             />
                         </div>
-                        <div className="form-group col-md-3">
-                            <label htmlFor="">Weather</label>
+                        <div className="form-group col-md-12">
+                            <label htmlFor="">Description</label>
                             <input
                                 className="form-control"
-                                name="weather"
-                                value={this.state.weather}
-                                onChange={this.onChangeWeather}
+                                name="description"
+                                value={this.state.description}
+                                onChange={this.onChangeDescription}
                                 type="text"
                                 required
                             />
@@ -147,10 +132,10 @@ class CreateDWL extends Component {
                     <hr />
                     <button
                         type="button"
-                        onClick={this.saveWeatherLog}
+                        onClick={this.saveAccidentLog}
                         className="btn btn-primary mr-2"
                     >Save</button>
-                    <Link to={"/dailylog/"+projectId} className="">Cancel</Link>
+                    <Link to={"/dailylog/"+projectId} className="card-text-edifice">Cancel</Link>
                 </div>
             </div>
         </div>
@@ -158,4 +143,4 @@ class CreateDWL extends Component {
     }
 }
 
-export default CreateDWL;
+export default CreateDAL;
