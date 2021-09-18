@@ -5,87 +5,84 @@ import EquipmentCategoryDataService from "./../../../services/equipment-category
 
 class NewCategory extends Component {
 
-    constructor(props) {
-      super(props);
-      this.onChangeName = this.onChangeName.bind(this);
-      this.saveCategory = this.saveCategory.bind(this);
+  constructor(props) {
+    super(props);
+    this.onChangeName = this.onChangeName.bind(this);
+    this.saveCategory = this.saveCategory.bind(this);
 
-      this.state = {
-        id: null,
-        name: "",
-       // projectId: this.props.match.params.id,  
-        submitted: false
-      };
-    }
+    this.state = {
+      id: null,
+      name: "",
+      projectId: this.props.projectId,
+      submitted: false
+    };
+  }
 
-    onChangeName(e) {
-      this.setState({
-        name: e.target.value
-      });
-    }
+  onChangeName(e) {
+    this.setState({
+      name: e.target.value
+    });
+  }
 
-    saveCategory() {
-      var data = {
-        name: this.state.name,
-        projectId: this.state.projectId
-      };
+  saveCategory() {
+    var data = {
+      name: this.state.name,
+      projectId: this.state.projectId
+    };
 
-      EquipmentCategoryDataService.create(data)
-        .then(response => {
-          this.setState({
-            id: response.data.id,
-            name: response.data.name,
-            projectId: response.data.projectId,
-
-            submitted: true
-          });
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
+    EquipmentCategoryDataService.create(data)
+      .then(response => {
+        this.setState({
+          id: response.data.id,
+          name: response.data.name,
+          projectId: response.data.projectId,
         });
-    }
+        console.log(response.data);
+        window.location.reload();
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
 
-    render() {
-        const {projectId} = this.state;
-        return (  
-        <div>
-            <div className="modal-dialog modal-dialog-centered" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalCenterTitle">Add new equipment Category</h5>
-                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  
-                    <div>
+  render() {
+    const { projectId } = this.state;
+    return (
+      <div>
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalCenterTitle">Add new equipment Category</h5>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
 
-                        <label htmlFor="">Enter Category Name</label>
-                        <input 
-                          className="form-control" 
-                          type="text" 
-                          required
-                          id="name"
-                          value={this.state.name}
-                          onChange={this.onChangeName}
-                          name="name"
-                          />
-                        <br/>
+              <div>
 
-                    </div>
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.saveCategory}>Add</button>
-                </div>
+                <label htmlFor="">Enter Category Name</label>
+                <input
+                  className="form-control"
+                  type="text"
+                  required
+                  id="name"
+                  value={this.state.name}
+                  onChange={this.onChangeName}
+                  name="name"
+                />
+                <br />
+
               </div>
             </div>
-        
+            <div className="modal-footer">
+              <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.saveCategory}>Add</button>
+            </div>
+          </div>
         </div>
- 
-        );
-    }
+      </div>
+    );
   }
+}
 
 export default NewCategory;

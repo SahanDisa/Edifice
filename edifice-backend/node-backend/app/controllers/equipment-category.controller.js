@@ -1,5 +1,5 @@
 const db = require("./../models/index.js");
-const Category = db.categorys;
+const Category = db.equipmentCategorys;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new category
@@ -34,18 +34,20 @@ exports.create = (req, res) => {
 // Retrieve all categorys from a given project
 exports.findAll = (req, res) => {
   const id = req.params.id;
-  
-    category.findAll({ where: {
+
+  category.findAll({
+    where: {
       projectId: id
-    }})
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error retrieving Project Drawings with id=" + id
-        });
+    }
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Project Drawings with id=" + id
       });
+    });
 };
 /*
 // Find a single category with an id
@@ -60,7 +62,7 @@ exports.findOne = (req, res) => {
         res.status(500).send({
           message: "Error retrieving category with id=" + id
         });
-      });  
+      });
 };*/
 /*
 // Update a category by the id in the request
