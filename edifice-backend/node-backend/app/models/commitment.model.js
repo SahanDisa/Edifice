@@ -31,6 +31,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DATEONLY,
         allowNull: true,
       },
+      
       signedContractReceivedDate: {
         type: Sequelize.DATEONLY
       },

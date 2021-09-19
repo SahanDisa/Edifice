@@ -395,7 +395,7 @@ className={`form-control ${errors.estimatedCompletionDate ? 'is-invalid' : ''}`}
 <div className="invalid-feedback">{errors.estimatedCompletionDate?.message}</div>
               </div>
              
-              <div className="form-group">
+             {/* <div className="form-group">
                 <label htmlFor="actualCompletionDate">Actual Completion Date :</label>
  
               <input
@@ -408,7 +408,7 @@ className={`form-control ${errors.estimatedCompletionDate ? 'is-invalid' : ''}`}
 className={`form-control`}
               />
 
-              </div>
+            </div>*/}
             <div className="form-group">
             <button type="submit" onClick={()=>{saveCommitment();setTimeout(getLastCommitmentID({position:1}), 3000);}} className="btn btn-success">
               Save
