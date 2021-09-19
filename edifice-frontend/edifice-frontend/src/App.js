@@ -12,6 +12,7 @@ import profileAvatar from "././assets/profile-navbar.jpg";
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
+import ForgetPassword from "./components/forgetpassword.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Homereal from "./components/homereal.component";
@@ -294,6 +295,7 @@ class App extends Component {
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/logincode" component={ForgetPassword}/>
             <Route path="/photos/:id" component={PhotosHome} />
             <Route component={ErrorPage}/>
           </Switch>  
