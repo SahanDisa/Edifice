@@ -16,6 +16,7 @@ import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import CommitmentDataService from "./../../../services/commitment.service";
+import cogoToast from 'cogo-toast';
 
 const Sov = props => {
 
@@ -118,6 +119,31 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
         console.log(e);
       });
   };
+
+  const updatePublished = (status) => {
+
+    var data = {
+      id: currentSov.id,
+      costCode: currentSov.costCode,
+      description: currentSov.description,
+      date: currentSov.date,
+     amount:currentSov.amount,
+      published:status
+    };
+    SovDataService.update(currentSov.id, data)
+      .then(response => {
+        props.history.push("/viewsov/"+currentSov.projectId+"/"+currentSov.commitmentId);
+        cogoToast.success("SoV Deleted Successfully!");
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+   
+
+    
+  };
+
 
   const deleteSov = () => {
     SovDataService.remove(currentSov.id)
@@ -232,14 +258,14 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
             </div>
             <div className="form-group">
 
-            <button className="btn btn-danger" onClick={deleteSov}>
+            <button className="btn btn-danger" onClick={() =>{updatePublished(false);reset()}}>
             Delete <DeleteIcon/> 
           </button>
 
           <button
             type="submit"
             className="btn btn-success m-2"
-            onClick={updateSov}
+            onClick={()=>{updateSov();reset()}}
           >
             Update <UpdateIcon/>
           </button>

@@ -9,6 +9,7 @@ import PublishIcon from '@material-ui/icons/Publish';
 import AddIcon from '@material-ui/icons/Add';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import cogoToast from 'cogo-toast';
+import CostCodeDataService from "./../../../services/costcode.service";
 
 
 const BudgetEstimates = (props) => {
@@ -17,12 +18,26 @@ const BudgetEstimates = (props) => {
   const [searchCostCode, setSearchCostCode] = useState("");
   const budgetsRef = useRef();
   budgetsRef.current = budgets;
-
+  const [costcodes, setCostCodes] = useState([]);
 
   useEffect(() => {
     retrieveBudgets();    
+    retrieveCostCodes(); 
 
   }, []);
+
+
+
+  const retrieveCostCodes = () => {
+    
+    CostCodeDataService.getAll(id)//passing project id as id
+      .then((response) => {
+        setCostCodes(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
 
 
@@ -224,16 +239,16 @@ updatePublished(rowIdx)
             value={searchCostCode}
             onChange={onChangeSearchCostCode}
               >
-                <option  selected value="">All Budget Estimates</option>
-                {budgets &&
-                budgets.map((budget, index) => (
+               <option value="" selected>All Budget Estimates</option>
+        {costcodes &&
+                costcodes.map((c, index) => (
                 <option
-                    //value={budget.costCode}
-                    //onChange={onChangeSearchCostCode}
+                    value={c.costCode}
+                    onChange={onChangeSearchCostCode}
                     key={index}
                 >
                 {/* unit data */}
-                {budget.costCode}
+                {c.costCode}
                 </option>
                 ))}
 

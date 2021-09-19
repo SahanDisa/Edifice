@@ -20,6 +20,7 @@ exports.create = (req, res) => {
     description:req.body.description,
     amount:req.body.amount,
     date:req.body.date,
+    published: req.body.published,
   
     commitmentId: req.body.commitmentId,
     projectId: req.body.projectId,
@@ -41,10 +42,11 @@ exports.create = (req, res) => {
 // Get sovs for a given commitment
 exports.findAll = (req, res) => {
   const id = req.params.id;
-
+  const published = true;
 
   Sov.findAll({ where: {
     commitmentId: id,
+    published: published
 
   }})
     .then(data => {
@@ -131,12 +133,14 @@ exports.update = (req, res) => {
 /*********************************************** */
 exports.findByCostCode= (req, res) => {
   const id = req.params.id;
+  const published = true;
   //const costCode = req.query.costCode;
   const costCode = req.params.costCode;
     //var condition = costCode ? { costCode: { [Op.like]: `%${costCode}%` } } : null;
 
   Sov.findAll({ where: {
     commitmentId: id,
+    published : published,
     //condition:condition
     costCode:costCode
   }})
@@ -154,7 +158,7 @@ exports.findByCostCode= (req, res) => {
 exports.getTotalSovs = (req,res)=>{
   const id = req.params.id;
 Sov.findAll({
-where: {projectId:id },
+where: {projectId:id ,published:true},
 attributes: [[sequelize.fn('sum', sequelize.col('amount')), 'total']],
 raw: true,
 }).then(data => {
@@ -173,7 +177,7 @@ exports.getSTotalOfCostCodes = (req,res)=>{
   const id = req.params.id;
   const costCode = req.params.costCode;
 Sov.findAll({
-where: { costCode:costCode,projectId:id },
+where: { costCode:costCode,projectId:id,published:true },
 attributes: [[sequelize.fn('sum', sequelize.col('amount')), 'total']],
 raw: true,
 }).then(data => {
@@ -186,3 +190,4 @@ res.status(500).send({
 });
 });  
 }
+

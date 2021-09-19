@@ -77,6 +77,7 @@ db.sovs = require("./sov.model.js")(sequelize, Sequelize);
 db.primecontracts = require("./primecontract.model.js")(sequelize, Sequelize);
 db.invoices = require("./invoice.model.js")(sequelize, Sequelize);
 db.payments = require("./payment.model.js")(sequelize, Sequelize);
+db.costcodes = require("./costcode.model.js")(sequelize, Sequelize);
 
 // Resource management
 db.equipments = require("./equipment.model")(sequelize, Sequelize);
@@ -515,6 +516,16 @@ db.timesheets.hasMany(db.workedHours, {
 db.workedHours.belongsTo(db.timesheets, {
   foreignKey: "timesheetId",
   as: "timesheet",
+});
+
+//----------------------------------------
+// One project has many costcodes
+db.projects.hasMany(db.costcodes, {
+  as: "costcodes"
+});
+db.costcodes.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
 });
 
 
