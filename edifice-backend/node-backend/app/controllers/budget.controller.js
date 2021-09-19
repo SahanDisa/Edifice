@@ -112,6 +112,14 @@ exports.delete = (req, res) => {
 //update a budget
 
 exports.update = (req, res) => {
+
+  if (!req.body.costCode) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+
   const id = req.params.id;
 
   Budget.update(req.body, {

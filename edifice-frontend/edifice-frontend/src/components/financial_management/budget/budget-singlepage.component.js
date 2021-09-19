@@ -32,6 +32,8 @@ const Budget = props => {
   };
   const [currentBudget, setCurrentBudget] = useState(initialBudgetState);
   const [submitted, setSubmitted] = useState(false);
+  const [message, setMessage] = useState("");
+
 
   const getBudget = id => {
     BudgetDataService.get(id)
@@ -92,6 +94,8 @@ const Budget = props => {
       .then(response => {
         setSubmitted(true);
         console.log(response.data);
+        setMessage("The budget line item was updated successfully!");
+        
       })
       .catch(e => {
         console.log(e);
@@ -143,10 +147,7 @@ const Budget = props => {
 
   return (
     <div className="container">
-      {submitted ? (
-         viewBudget()
- 
- ) : (
+
  
         <div class="container">
           <h2>Edit Budget Estimate</h2>
@@ -185,8 +186,8 @@ const Budget = props => {
                 name="costCode"
                 value={currentBudget.costCode}
                 {...register('costCode')}
-                
-                onChange={handleInputChange}
+                readonly
+                //onChange={handleInputChange}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
                
               />
@@ -300,11 +301,12 @@ const Budget = props => {
           
           
           </div>
-
+          <p>{message}</p>
+         
         </div>
         
        
-      )}
+   
     </div>
   );
 };

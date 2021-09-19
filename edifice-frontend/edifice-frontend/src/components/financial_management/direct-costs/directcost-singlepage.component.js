@@ -68,7 +68,7 @@ const DirectCost = props => {
   const [employees, setEmployees] = useState([]);
 const [currentDirectCost, setCurrentDirectCost] = useState(initialDirectCostState);
 const [submitted, setSubmitted] = useState(false);
-
+const [message, setMessage] = useState("");
 
 
   const getDirectCost = id => {
@@ -136,6 +136,7 @@ const [submitted, setSubmitted] = useState(false);
       .then(response => {
         console.log(response.data);
         setSubmitted(true);
+        setMessage("The budget line item was updated successfully!");
       })
       .catch(e => {
         console.log(e);
@@ -188,10 +189,10 @@ const [submitted, setSubmitted] = useState(false);
 
   return (
     <div className="container">
-           {submitted ? (
+          {/* {submitted ? (
          viewDirectCost()
  
- ) : (
+          ) : (*/}
         <div class="container">
           <h2>Direct Costs</h2>
           <Breadcrumbs aria-label="breadcrumb">
@@ -421,7 +422,7 @@ const [submitted, setSubmitted] = useState(false);
           </div>
           
         </div>
-      )}
+    { /* )} */}
     </div>
   );
 };
