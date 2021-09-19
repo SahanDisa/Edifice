@@ -127,7 +127,7 @@ export default class Drawings extends Component {
                   Home
                 </Link>
                 <Link color="inherit" to={"/projectmanagementhome/"+id}>
-                  App Dashboard
+                  {project.title} / App Dashboard
                 </Link>
                 <Link color="textPrimary" to={"/drawing/"+id} aria-current="page">
                   Drawing Home

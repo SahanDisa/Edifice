@@ -113,6 +113,7 @@ export default class PortfolioHome extends Component {
     }
   
     componentDidMount() {
+      window.scrollTo(0, 0);
       this.retrieveDrawingStatus(this.props.match.params.id);
       this.retrieveDocumentStatus(this.props.match.params.id);
       this.retrieveDepartments(this.props.match.params.id);
@@ -364,18 +365,28 @@ export default class PortfolioHome extends Component {
 
         return (
             <div>
-            <h2>PORTFOLIO</h2>
-            <Breadcrumbs aria-label="breadcrumb">
-              <Link color="inherit" to="/home">
-                Home
-              </Link>
-              <Link color="inherit" to={"/projectmanagementhome/"+id}>
-                App Dashboard
-              </Link>
-              <Link color="textPrimary" to={"/portfolio/"+id} aria-current="page">
-                Portfolio
-              </Link>
-            </Breadcrumbs>
+            <div className="row">
+              <div className="col-9">
+                <h2>PORTFOLIO</h2>
+                <Breadcrumbs aria-label="breadcrumb">
+                  <Link color="inherit" to="/home">
+                    Home
+                  </Link>
+                  <Link color="inherit" to={"/projectmanagementhome/"+id}>
+                    {project.title} / App Dashboard
+                  </Link>
+                  <Link color="textPrimary" to={"/portfolio/"+id} aria-current="page">
+                    Portfolio
+                  </Link>
+                </Breadcrumbs>
+              </div>
+              <div className="col-3">
+                <h4>{project.title}</h4>
+                {/* <h6>{project.description}</h6> */}
+                <h6>{project.location}</h6>
+              </div>
+            </div>
+           
             <hr></hr>
             <div>
               <h3>Project Analytics</h3>
