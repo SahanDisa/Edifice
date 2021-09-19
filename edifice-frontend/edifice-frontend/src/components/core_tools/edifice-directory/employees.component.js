@@ -100,7 +100,7 @@ class Employee extends Component {
   }
 
   searchName() {
-    console.log("meka hadala daamu")
+    //console.log("meka hadala daamu")
   }
 
   render() {
@@ -128,7 +128,7 @@ class Employee extends Component {
         temp.email=employee.email,
         temp.mobile=employee.mobile,
         temp.edit=<a href={"/editUser/"+temp.id} className="btn btn-primary"> edit</a>,
-        temp.create=<a href={"/register/"+temp.id} className="btn btn-secondary"> Create Acc.</a>,
+        employee.hasAccount? temp.create=<p> sdadsd</p> : temp.create=<a href={"/register/"+temp.id} className="btn btn-secondary"> Create Acc.</a>,
         data1.push(temp)
       )
       )}
@@ -164,7 +164,7 @@ class Employee extends Component {
 
             <div className="col-auto">
               <select className="form-control" name="" id="">
-                <option value="role1">civil engineer</option>
+                <option value="role1">Civil engineer</option>
                 <option value="role2">Project manager</option>
                 <option value="role3">Site supervisor</option>
               </select><br />
