@@ -19,11 +19,15 @@ class DailyLogHome extends Component {
         this.retrieveCallLog = this.retrieveCallLog.bind(this);
         this.retrieveWeatherLog = this.retrieveWeatherLog.bind(this);
         this.retrieveGeneralLog = this.retrieveGeneralLog.bind(this);
+        this.deleteAccidentLog = this.deleteAccidentLog.bind(this);
+        this.deleteWeatherLog = this.deleteWeatherLog.bind(this);
+        this.deleteCallLog = this.deleteCallLog.bind(this);
         this.state = {
-            accidentlog: [],
+            dlaccident: [],
             dlweather: [],
             dlcall: [],
             dlgeneral: [],
+            isDeleted: 0,
             projectId: this.props.match.params.id
         };
     }
@@ -38,7 +42,7 @@ class DailyLogHome extends Component {
         DLAccidentService.getAll(id)
         .then(response => {
             this.setState({
-                accidentlog: response.data
+                dlaccident: response.data
             });
             console.log(response.data);
         })
@@ -85,9 +89,39 @@ class DailyLogHome extends Component {
             console.log(e);
         });
     }
+
+    deleteAccidentLog(accidentid){
+        var data = {
+            isDeleted: 1
+        }
+        DLAccidentService.update(accidentid, data)
+        .then(response => {
+            // window.location.reload();
+        })
+    }
+
+    deleteCallLog(callid){
+        var data = {
+            isDeleted: 1
+        }
+        DLCallService.update(callid, data)
+        .then(response => {
+            // window.location.reload();
+        })
+    }
+
+    deleteWeatherLog(weatherid){
+        var data = {
+            isDeleted: 1
+        }
+        DLWeatherService.update(weatherid, data)
+        .then(response => {
+            // window.location.reload();
+        })
+    }
     
     render() {
-        const { projectId, accidentlog, dlcall, dlgeneral, dlweather} = this.state;
+        const { projectId, dlaccident, dlcall, dlgeneral, dlweather} = this.state;
         return (
             <div className="">
                 <h2>Daily Logs</h2>
@@ -139,7 +173,7 @@ class DailyLogHome extends Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {accidentlog && accidentlog.map((dla) => (
+                                            {dlaccident && dlaccident.map((dla) => (
                                                 <tr key={dla.id}>
                                                     <td>{dla.date}</td>
                                                     <td>{dla.time}</td>
@@ -149,9 +183,7 @@ class DailyLogHome extends Component {
                                                         <Link to={"/viewaccidentlog/" + projectId + "/" + dla.id}>
                                                             <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
                                                         </Link>
-                                                        <Link to={"/deletepl/" + dla.id}>
-                                                            <button className="btn btn-danger">Delete <DeleteIcon/></button>
-                                                        </Link>
+                                                        <button className="btn btn-danger mr-2"  id="updateBtn" data-target="#deleteaccidentModal" data-toggle="modal">Delete</button>
                                                     </td>    
                                                 </tr>
                                             ))}
@@ -192,9 +224,7 @@ class DailyLogHome extends Component {
                                                     <Link to={"/viewweatherlog/" + projectId + "/" + dlw.id}>
                                                         <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
                                                     </Link>
-                                                    <Link to={"/deletepl/" + dlw.id}>
-                                                        <button className="btn btn-danger">Delete <DeleteIcon/></button>
-                                                    </Link>
+                                                    <button className="btn btn-danger mr-2"  id="updateBtn" data-target="#deleteweatherModal" data-toggle="modal">Delete</button>
                                                 </td>    
                                             </tr>
                                             ))}
@@ -239,9 +269,7 @@ class DailyLogHome extends Component {
                                                     <Link to={"/viewcalllog/" + projectId + "/" + dlc.id}>
                                                         <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
                                                     </Link>
-                                                    <Link to={"/deletepl/" + dlc.id}>
-                                                        <button className="btn btn-danger">Delete <DeleteIcon/></button>
-                                                    </Link>
+                                                    <button className="btn btn-danger mr-2"  id="updateBtn" data-target="#deletecallModal" data-toggle="modal">Delete</button>
                                                 </td>    
                                             </tr>
                                             ))}
@@ -280,9 +308,6 @@ class DailyLogHome extends Component {
                                                     <Link to={"/viewgenerallog/" + projectId + "/" + dlg.id}>
                                                         <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
                                                     </Link>
-                                                    <Link to={"/deletepl/" + dlg.id}>
-                                                        <button className="btn btn-danger">Delete <DeleteIcon/></button>
-                                                    </Link>
                                                 </td>    
                                             </tr>
                                             ))}
@@ -293,6 +318,60 @@ class DailyLogHome extends Component {
                         </div>
                     </div>        
                 </div>
+                {/* Delete accident modal Starts */}
+                <div className="modal fade" id="deleteaccidentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <p className="modal-title" id="exampleModalCenterTitle">Are you sure you want to delete?</p>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteAccidentLog(dlaccident.id)} data-dismiss="modal"> Yes, Delete</a>
+                                <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* Delete accident modal Ends */}
+                {/* Delete weather modal Starts */}
+                <div className="modal fade" id="deleteweatherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <p className="modal-title" id="exampleModalCenterTitle">Are you sure you want to delete?</p>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteWeatherLog(dlweather.id)} data-dismiss="modal"> Yes, Delete</a>
+                                <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* Delete weather modal Ends */}
+                {/* Delete call modal Starts */}
+                <div className="modal fade" id="deletecallModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <p className="modal-title" id="exampleModalCenterTitle">Are you sure you want to delete?</p>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteCallLog(dlcall.id)} data-dismiss="modal"> Yes, Delete</a>
+                                <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* Delete call modal Ends */}
             </div>
         );
     }

@@ -78,6 +78,8 @@ require('./app/routes/payment.routes')(app);
 
 require('./app/routes/project-management/meeting.routes')(app);
 require('./app/routes/project-management/meetingcategory.routes')(app);
+require('./app/routes/project-management/meetingagenda.routes')(app);
+require('./app/routes/project-management/meetingattendees.routes')(app);
 
 require('./app/routes/project-management/punchlist.routes')(app);
 require('./app/routes/project-management/punchlisttypes.routes')(app);

@@ -84,7 +84,8 @@ import UpdateDocument from "./components/project_management/document/updatedocum
 
 import MeetingsHome from "./components/project_management/meetings/meeting.component";
 import CreateMeetings from "./components/project_management/meetings/createmeeting.component";
-import ViewMeetings from "./components/project_management/meetings/view.component";
+import CreateFollowupMeetings from "./components/project_management/meetings/createfollowup.component";
+import ViewMeeting from "./components/project_management/meetings/view.component";
 
 import BudgetHome from "./components/financial_management/budget/budget.component";
 import PrimeContracts from "./components/financial_management/prime-contracts/primecontracts.component";
@@ -106,8 +107,6 @@ import AddAPSection from "./components/project_management/actionplan/addapsectio
 import ViewActionPlan from "./components/project_management/actionplan/viewactionplan.component";
 
 import DailyLogHome from "./components/project_management/dailylog/dailylog.component";
-import UpdateDls from "./components/project_management/dailylog/update.component";
-import ViewDls from "./components/project_management/dailylog/view.component";
 import CreateDCL from "./components/project_management/dailylog/createcalllog.component";
 import CreateDAL from "./components/project_management/dailylog/createaccidentlog.component";
 import CreateDGL from "./components/project_management/dailylog/creategenerallog.component";
@@ -336,8 +335,9 @@ class App extends Component {
               <Route path="/managestasks/view" component={ViewTasks} />
               {/* Meeting */}
               <Route path="/meetings/:id" component={MeetingsHome} />
-              <Route path="/meetings/view/:id" component={ViewMeetings} />
               <Route path="/createmeetings/:id" component={CreateMeetings} />
+              <Route path="/createfollowup/:id/:cid" component={CreateFollowupMeetings} />
+              <Route path="/viewmeeting/:id/:mtid" component={ViewMeeting} />
               {/* RFI */}
               <Route path="/rfi" component={rfiHome} />
               <Route path="/managerfi/create" component={CreateRFI} />
@@ -353,15 +353,13 @@ class App extends Component {
               <Route exact path="/viewactionplan/:id" component={ViewActionPlan} />
               {/* Punch List */}
               <Route path="/punchlist/:id" component={punchlistHome} />
-              <Route path="/managepunchlist/createaddphoto/:id" component={CreatePhotos} />
-              <Route path="/managepunchlist/createaddassignee/:id" component={CreateAssignees} />
+              <Route path="/managepunchlist/createaddphoto/:id/plid" component={CreatePhotos} />
+              <Route path="/managepunchlist/createaddassignee/:id/plid" component={CreateAssignees} />
               <Route path="/managepunchlist/create/:id" component={CreatePL} />
               <Route path="/viewtype/:pltid" component={PLTView} />
               <Route path="/view/:pliid" component={PLIView} />
               {/* Daily Logs */}
               <Route path="/dailylogs/:id" component={DailyLogHome} />
-              <Route path="/dailylogs/update/:id" component={UpdateDls} />
-              <Route path="/dailylogs/view/:id" component={ViewDls} />
               <Route path="/createaccidentlog/:id" component={CreateDAL} />
               <Route path="/createcalllog/:id" component={CreateDCL} />
               <Route path="/creategenerallog/:id" component={CreateDGL} />
