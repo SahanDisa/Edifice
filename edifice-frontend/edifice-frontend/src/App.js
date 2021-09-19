@@ -12,6 +12,7 @@ import profileAvatar from "././assets/profile-navbar.jpg";
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
+import ForgetPassword from "./components/forgetpassword.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Homereal from "./components/homereal.component";
@@ -45,6 +46,7 @@ import PhotosHome from "./components/project_management/photos/photos.component"
 import AddAlbum from "./components/project_management/photos/addalbum.component";
 import ViewSingleAlbum from "./components/project_management/photos/album-singlepage.component";
 import MoveCapturetoAlbum from "./components/project_management/photos/movecapturestoalbum.component";
+import CameraSinglePage from "./components/project_management/photos/camera.component";
 import UpdateAlbum from "./components/project_management/photos/updatealbum.component";
 import UpdatePhoto from "./components/project_management/photos/updatephoto.component";
 
@@ -294,7 +296,8 @@ class App extends Component {
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
-            <Route path="/photos/:id" component={PhotosHome} />
+            <Route exact path="/logincode" component={ForgetPassword}/>
+            <Route path="/camera" component={CameraSinglePage} />
             <Route component={ErrorPage}/>
           </Switch>  
         )}
@@ -398,6 +401,7 @@ class App extends Component {
               <Route path="/photos/:id" component={PhotosHome} />
               <Route path="/addphoto/:id" component={AddPhoto} />
               <Route path="/uploadphoto/:name" component={UploadPhotos} />
+              <Route path="/camera/:id" component={CameraSinglePage}/>
               <Route path="/viewalbum/:id" component={ViewSingleAlbum} />
               <Route path="/addalbum/:id" component={AddAlbum} />
               <Route exact path={"/updatealbum/:pid/:id"} component={UpdateAlbum} />
@@ -464,6 +468,12 @@ class App extends Component {
             </Switch>
           </div>
         )}
+        <div className="mt-50">
+          <div style={{'height': '150px'}}></div>
+          <center>
+          <h6>Edifice 2021 © All rights reserved - G42</h6>
+          </center>
+        </div>
       </div>
     );
   }
