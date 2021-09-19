@@ -258,22 +258,22 @@ export default class BoardUser extends Component {
                 <div className="row">
                   <div  className="col-6">
                     <Link ActiveClassName=" nav-heading text-left ml-4 mt-3 mb-1 pb-3" style={{ textDecoration: 'none' }}>
-                        <div classname="row">
-                          <h4 style={{color: "#273F7D"}} className="mb-6 pb-2"> {project.title}</h4>
-                              <div className="col-sm-6 mb-2" id="project1">
-                                <ProgressBar now={project.progressValue} label={project.progressValue} />
-                              </div>
-                            <div className="col-sm-6" id="project1_d">
-                              <div className="row pb-2">
-                                <h5 className="pr-5 pl-2"> <SupervisorAccount style={{ fontSize:24 }}/>  0</h5>
-                                <h5> <LocationOn style={{ fontSize:24 }}/>  {project.location}</h5>
-                              </div>
-                            </div>
-                            <div className="col-2">
-                              <div className="list-group" id="list-tab" role="tablist"></div>
-                                <a className="btn btn-primary p-2" onClick={()=>{this.generatePDF(project);}} id="list-settings-list">Report</a>
-                            </div>
+                        
+                      <h4 style={{color: "#273F7D"}} className="mb-6 py-2 pl-2"> {project.title}</h4>
+                          <div className="col-sm-6 mb-2" id="project1">
+                            <ProgressBar now={project.progressValue} label={project.progressValue} />
+                          </div>
+                        <div className="col-sm-6" id="project1_d">
+                          <div className="row pb-2">
+                            <h5 className="pr-5 pl-3"> <SupervisorAccount style={{ fontSize:24 }}/>  0</h5>
+                            <h5> <LocationOn style={{ fontSize:24 }}/>  {project.location}</h5>
+                          </div>
                         </div>
+                        <div className="col-2">
+                          <div className="list-group" id="list-tab" role="tablist"></div>
+                            <a className="btn btn-primary p-2" onClick={()=>{this.generatePDF(project);}} id="list-settings-list">Report</a>
+                        </div>
+                        
                         
 
                     </Link>
