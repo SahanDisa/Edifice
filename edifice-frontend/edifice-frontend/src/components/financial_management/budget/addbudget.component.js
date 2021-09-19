@@ -212,10 +212,10 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
           >
             Reset
           </button>&nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
-            <Link to={"/budgetestimates/" + budget.projectId}>
+          {/*  <Link to={"/budgetestimates/" + budget.projectId}>
             <button className="btn btn-success">
             Cancel
-            </button></Link>
+            </button></Link> */}
             </div>
             </form>
             </div>

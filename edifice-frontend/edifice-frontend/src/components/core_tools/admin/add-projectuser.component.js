@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ProjectUserDataService from "./../../../services/projectuser.service";
+import ProjectDataService from "./../../../services/projectuser.service";
 import PortfolioDataService from "./../../../services/portfolio.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -232,12 +233,6 @@ export default class AssignUserProject extends Component {
                 disabled
               />
             </div>
-            {employees &&
-                employees.map((employee,index) => {
-                  return(
-                  <p>{employee.name}</p>
-                  )
-                })}
             <button onClick={this.saveProjectUser} className="btn btn-success">
               Assign User
             </button>
