@@ -45,7 +45,7 @@ class PLTView extends Component {
   }
 
   render() {
-    const { projectId, id, title, description, plitems } = this.state;
+    const { projectId, title, description, plitems } = this.state;
     return (
       <div>
         <h2>Punch List Type - {title}</h2>
@@ -53,7 +53,7 @@ class PLTView extends Component {
           <Link color="inherit" to="/home">Home</Link>
           <Link color="inherit" to={"/projectmanagementhome/" + projectId}>App Dashboard</Link>
           <Link color="inherit" to={"/punchlist/" + projectId}>Punch List</Link>
-          <Link color="inherit" aria-current="page" className="disabledLink">Add New Punch List</Link>
+          <Link color="inherit" aria-current="page" className="disabledLink">View Punch List Types</Link>
         </Breadcrumbs>
         <hr />
         <h5>{description}</h5>
