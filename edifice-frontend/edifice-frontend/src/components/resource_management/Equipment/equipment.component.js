@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import { Modal } from "react-bootstrap";
+import Table from 'react-bootstrap/Table';
 
 import EquipmentDataService from "./../../../services/equipment.service";
 import EquipmentCategoryDataService from "./../../../services/equipment-category.service";
@@ -12,6 +14,8 @@ import Card from 'react-bootstrap/Card';
 
 import NewCategory from './new-category.component';
 import AddEquip from './new-equipment.component';
+import Allocate from './allocateEquipment.component';
+import Release from './releaseEquipment.component';
 
 
 
@@ -29,6 +33,7 @@ class Equipment extends Component {
       currentIndex: -1,
       searchTitle: "",
       content: "",
+      currentEquipment: ""
     };
   }
 
@@ -86,9 +91,27 @@ class Equipment extends Component {
       });
   }
 
+  setActiveAllocateEquipment(equipment) {
+    this.setState({
+      currentEquipment: equipment
+    });
+    this.openAllocateModal();
+  }
+
+  setActiveReleaseEquipment(equipment) {
+    this.setState({
+      currentEquipment: equipment
+    });
+    this.openReleaseModal();
+  }
+
+  openAllocateModal = () => this.setState({ isAllocateOpen: true });
+  closeAllocateModal = () => this.setState({ isAllocateOpen: false });
+  openReleaseModal = () => this.setState({ isReleaseOpen: true });
+  closeReleaseModal = () => this.setState({ isReleaseOpen: false });
+
   render() {
-    const { equipments, id, categorys, searchTitle } = this.state;
-    //console.log(equipments[0])
+    const { equipments, id, categorys, searchTitle, currentEquipment } = this.state;
 
     return (
       <div>
@@ -132,7 +155,6 @@ class Equipment extends Component {
                 data-target="#newCategory">
                 New Category
               </a>
-
               <a
                 className="btn btn-primary"
                 data-toggle="modal"
@@ -142,8 +164,6 @@ class Equipment extends Component {
             </div>
           </div>
         </div>
-
-
         <div>
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="status" role="tabpanel" aria-labelledby="allmeetings">
@@ -161,21 +181,56 @@ class Equipment extends Component {
                     <div id={`collapse${currentIndex}`} class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                       <div class="card-body">
                         <div className="">
-                          <div class="col-md-12 text-right mb-2">
-                            {/* {equipments && equipments.map((equipmentList, currentIndex) => (
-                              equipment.category == equipmentList.category ?
+                          <Table responsive>
+                            <thead>
+                              <tr>
+                                <th>Code</th>
+                                <th>Condition</th>
+                                <th>Issue Date</th>
+                                <th>Description</th>
+                                <th>Assigned project</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {equipments && equipments.map((equipment) => (
+                                category.id === equipment.equipmentCategoryId ?
+                                  <tr
+                                    key={equipment.code}
+                                  >
+                                    <td>{equipment.code}</td>
+                                    <td>{equipment.condition}</td>
+                                    <td>{equipment.date}</td>
+                                    <td>{equipment.description}</td>
+                                    <td>{equipment.projectId}</td>
+                                    <td>
+                                      {equipment.projectId === null ?
+                                        <button
+                                          className="btn btn-success m-2"
+                                          onClick={() => this.setActiveAllocateEquipment(equipment)}
+                                        >
+                                          Allocate
+                                        </button> :
+                                        <button
+                                          className="btn btn-danger m-2"
+                                          onClick={() => this.setActiveReleaseEquipment(equipment)}
+                                        >
+                                          Release
+                                        </button>
+                                      }
 
-                                <List component="nav" aria-label="mailbox folders">
-                                  <ListItem button>
+                                      <Link
+                                        to={"/equipDetails/" + equipment.code}
+                                        className="btn btn-primary m-2" >
+                                        More
+                                      </Link>
 
-                                    <Link to={"/equipDetails/" + equipment.code} > {equipmentList.code} {equipmentList.description}</Link>
-                                  </ListItem>
-                                  <Divider />
-                                  <Divider light />
-                                </List> : ""
-                            ))} */}
-                          </div>
-
+                                    </td>
+                                  </tr> : ""
+                              ))}
+                            </tbody>
+                            {/*Ends */}
+                          </Table>
                         </div>
                       </div>
                     </div>
@@ -198,11 +253,19 @@ class Equipment extends Component {
         </div>
         {/* New Equipment Ends */}
 
+        {/* allocate Starts */}
+        <Modal show={this.state.isAllocateOpen} onHide={this.closeAllocateModal}>
+          <Allocate
+            code={currentEquipment.code} />
+        </Modal>
 
+        {/* release Starts */}
+        <Modal show={this.state.isReleaseOpen} onHide={this.closeReleaseModal}>
+          <Release
+            code={currentEquipment.code}
+            projectId={currentEquipment.projectId} />
+        </Modal>
       </div >
-
-
-
     );
   }
 }
