@@ -99,14 +99,10 @@ class DailyLogHome extends Component {
                 <div className="mb-3">
                     <form>
                         <div className="form-row">
-                            <div className="form-group col-md-6"></div>
+                            <div className="form-group col-md-8"></div>
                             <div className="form-group col-md-2 form-check">
                                 <input type="checkbox" className="form-check-input mt-3" id="singledayCheck" required/>
-                                <label htmlFor="singledayCheck" className="form-check-label">View Single Day</label>
-                            </div>
-                            <div className="form-group col-md-2 form-check">
-                                <input type="checkbox" className="form-check-input mt-3" id="multipledayCheck" required/>
-                                <label htmlFor="multipledayCheck" className="form-check-label">View Multiple Days</label>
+                                <label htmlFor="singledayCheck" className="form-check-label">View Today</label>
                             </div>
                             <div className="form-group col-md-2 form-check">
                                 <a className="btn btn-primary" href="">Export PDF</a>
@@ -124,7 +120,7 @@ class DailyLogHome extends Component {
                         <div class="card">
                             <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
-                                <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target="#accidentlog" aria-controls="accidentlog">Accident log</button>
+                                <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target="#accidentlog" aria-controls="accidentlog">Accident</button>
                             </h2>
                             </div>
                             <div id="accidentlog" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
@@ -167,7 +163,7 @@ class DailyLogHome extends Component {
                         <div class="card">
                             <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
-                                <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target="#weatherlog" aria-controls="weatherlog">Weather log</button>
+                                <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target="#weatherlog" aria-controls="weatherlog">Weather</button>
                             </h2>
                             </div>
                             <div id="weatherlog" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
@@ -210,7 +206,7 @@ class DailyLogHome extends Component {
                         <div class="card">
                             <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
-                                <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target="#calllog" aria-controls="calllog">Call log</button>
+                                <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target="#calllog" aria-controls="calllog">Call</button>
                             </h2>
                             </div>
                             <div id="calllog" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
@@ -257,7 +253,7 @@ class DailyLogHome extends Component {
                         <div class="card">
                             <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
-                                <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target="#generallog" aria-controls="generallog">General log</button>
+                                <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target="#generallog" aria-controls="generallog">General</button>
                             </h2>
                             </div>
                             <div id="generallog" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">

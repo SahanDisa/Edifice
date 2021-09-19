@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
 
 class PLIView extends Component {
@@ -111,10 +112,16 @@ class PLIView extends Component {
     }
     
     render() {
-        const { plItem, projectId } = this.state;
+        const { plItem } = this.state;
         return (
             <div>
                 <h2>Punch List Item - {plItem.title}</h2>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="inherit" to="/home">Home</Link>
+                    <Link color="inherit" to={"/projectmanagementhome/" + plItem.projectId}>App Dashboard</Link>
+                    <Link color="inherit" to={"/punchlist/" + plItem.projectId}>Punch List</Link>
+                    <Link color="inherit" aria-current="page" className="disabledLink">View Punch List</Link>
+                </Breadcrumbs>
                 <div className="container">
                     <div className="form-row">
                         <div className="form-group col-md-6">
@@ -194,7 +201,7 @@ class PLIView extends Component {
                     <button
                         className="btn btn-danger mr-2"
                         onClick={this.deletePunchList}>Delete</button>
-                    <Link to={"/punchlist/"+projectId} className="">Cancel</Link>
+                    <Link to={"/punchlist/"+plItem.projectId} className="">Cancel</Link>
                 </div>            
             </div>
         );
