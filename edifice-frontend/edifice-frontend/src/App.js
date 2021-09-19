@@ -46,6 +46,7 @@ import PhotosHome from "./components/project_management/photos/photos.component"
 import AddAlbum from "./components/project_management/photos/addalbum.component";
 import ViewSingleAlbum from "./components/project_management/photos/album-singlepage.component";
 import MoveCapturetoAlbum from "./components/project_management/photos/movecapturestoalbum.component";
+import CameraSinglePage from "./components/project_management/photos/camera.component";
 import UpdateAlbum from "./components/project_management/photos/updatealbum.component";
 import UpdatePhoto from "./components/project_management/photos/updatephoto.component";
 
@@ -296,7 +297,7 @@ class App extends Component {
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/logincode" component={ForgetPassword}/>
-            <Route path="/photos/:id" component={PhotosHome} />
+            <Route path="/camera" component={CameraSinglePage} />
             <Route component={ErrorPage}/>
           </Switch>  
         )}
@@ -400,6 +401,7 @@ class App extends Component {
               <Route path="/photos/:id" component={PhotosHome} />
               <Route path="/addphoto/:id" component={AddPhoto} />
               <Route path="/uploadphoto/:name" component={UploadPhotos} />
+              <Route path="/camera/:id" component={CameraSinglePage}/>
               <Route path="/viewalbum/:id" component={ViewSingleAlbum} />
               <Route path="/addalbum/:id" component={AddAlbum} />
               <Route exact path={"/updatealbum/:pid/:id"} component={UpdateAlbum} />
