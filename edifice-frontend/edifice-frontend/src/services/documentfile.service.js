@@ -17,8 +17,8 @@ class DocumentDataService {
     return http.get(`/projects/documents/cat/${id}`);
   }
 
-  getStatus(status){
-    return http.get(`/projects/documents/status/${status}`);
+  getStatus(pid,status){
+    return http.get(`/projects/documents/status/${pid}/${status}`);
   }
 
   recent(){

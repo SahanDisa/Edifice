@@ -28,11 +28,17 @@ class ProjectDataService {
   findByTitle(title) {
     return http.get(`/projects?title=${title}`);
   }
+
   userProjects(id){
     return http.get(`/projects/user/list/${id}`);
   }
+
   findlastProject(){
     return http.get(`/projects/app/last`);
+  }
+
+  findRecentProgress(id){
+    return http.get(`/projects/progress/${id}`);
   }
   // findPublished(){
   //   return http.get(`/projects?published=`)

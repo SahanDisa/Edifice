@@ -24,6 +24,7 @@ import ErrorPage from "./components/error.component";
 
 import AddProject from './components/core_tools/admin/add-project.component';
 import AddDepartment from "./components/core_tools/admin/add-department.component";
+import AddCustomDepartment from "./components/core_tools/admin/add-department-custom.component";
 import AddMilestone from "./components/core_tools/admin/add-milestone.component";
 import AddMilestoneGeneral from "./components/core_tools/admin/add-milestone-custom.component";
 import AssignUserProject from "./components/core_tools/admin/add-projectuser.component";
@@ -206,7 +207,9 @@ class App extends Component {
           <div className="navbar-nav mr-auto">
             {currentUser && (
               <li className="nav-item">
-                <Link to={"/home"} className="nav-link"></Link>
+                <Link to={"/home"} className="nav-link">
+                  <h6>Home</h6>
+                </Link>
               </li>
             )}
             {/* {currentUser && (
@@ -300,13 +303,14 @@ class App extends Component {
           <div className="container mt-3">
             <Switch>
               <Route exact path={["/", "/home"]} component={Home} />
-              <Route exact path={["/", "/homereal"]} component={Homereal} />
+              {/* <Route exact path={["/", "/homereal"]} component={Homereal} /> */}
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/register/:id" component={Register} />
               <Route exact path="/profile" component={Profile} />
               <Route path="/projectmanagement" component={BoardUser} />
               <Route path="/adddepartment/:id" component={AddDepartment} />
+              <Route path={"/addcustomdepartment/:id"} component={AddCustomDepartment}/>
               <Route path="/addmilestone/:id" component={AddMilestone} />
               <Route path="/addmilestoneproject/:id" component={AddMilestoneGeneral} />
               <Route path="/assignuser/:id" component={AssignUserProject} />

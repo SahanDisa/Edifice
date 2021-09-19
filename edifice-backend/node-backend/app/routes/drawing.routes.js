@@ -16,7 +16,7 @@ module.exports = app => {
     router.get("/cat/:id", drawing.findAllCat);
 
     //Get Complete/Pending/Incomplete drawings
-    router.get("/status/:status",drawing.findAllbyStatus);
+    router.get("/status/:pid/:status",drawing.findAllbyStatus);
 
     // Update a Drawing with id
     router.put("/:id", drawing.update);
