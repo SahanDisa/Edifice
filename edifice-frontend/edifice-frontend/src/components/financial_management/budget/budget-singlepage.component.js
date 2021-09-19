@@ -186,8 +186,8 @@ const Budget = props => {
                 name="costCode"
                 value={currentBudget.costCode}
                 {...register('costCode')}
-                
-                onChange={handleInputChange}
+                readonly
+                //onChange={handleInputChange}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
                
               />
