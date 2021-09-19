@@ -201,21 +201,21 @@ export default class BoardUser extends Component {
         <div className="row">
             <div className="col-lg-3 col-sm-6 pb-2" id="employeecard">
               <div className="card card-hover shadow-sm" style={cardStyle}>
-              <a className="d-block nav-heading text-center mt-3" href="/employees" style={linkText}>
+              <a className="d-block nav-heading text-center mt-3" style={linkText}> <Link  style={linkText} to="/employees">
 
                 <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{employeeCount}</h1>
                 <h5 mb-0> <SupervisorAccount style={{ fontSize:25 }}/>  Employees</h5>
-              </a>
+              </Link></a>
               </div>
             </div>
 
             <div className="col-lg-3 col-sm-6 pb-5" id="projectcard">
               <div className="card card-hover shadow-sm" style={cardStyle}>
-              <a className="d-block nav-heading text-center mt-3" style={linkText} href="/projects">
+              <a className="d-block nav-heading text-center mt-3" style={linkText}> <Link to="/projects" style={linkText}>
 
                 <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
                 <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>
-              </a>
+              </Link></a>
               {/* <Link to={"/projects"}>
               <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
                 <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>
@@ -226,11 +226,11 @@ export default class BoardUser extends Component {
 
             <div className="col-lg-3 col-sm-6" id="vendorcard">
               <div className="card card-hover shadow-sm" style={cardStyle}>
-              <a className="d-block nav-heading text-center mt-3" style={linkText} href="/vendor">
+              <a className="d-block nav-heading text-center mt-3" style={linkText}> <Link to="/vendor" style={linkText}>
 
                 <h1 className="nav-heading-title" style={{ fontSize:55 }}>{vendorCount}</h1>
                 <h6> <HomeWork style={{ fontSize:25 }}/>  Vendors & Subcontractors</h6>
-              </a>
+              </Link></a>
               </div>
             </div>
 
@@ -265,7 +265,7 @@ export default class BoardUser extends Component {
                           </div>
                         <div className="col-sm-6" id="project1_d">
                           <div className="row pb-2">
-                            <h5 className="pr-5 pl-3"> <SupervisorAccount style={{ fontSize:24 }}/>  0</h5>
+                            
                             <h5> <LocationOn style={{ fontSize:24 }}/>  {project.location}</h5>
                           </div>
                         </div>
@@ -283,6 +283,8 @@ export default class BoardUser extends Component {
                       <h2><b>{progressInDays(project.startdate,project.enddate)}{" "}</b>Days</h2>
                       <h3>Remaining</h3>
                     </div>
+                    <h5 className="pr-5 pt-5"> <SupervisorAccount style={{ fontSize:24 }}/>  From <b>{project.startdate}</b> to <b>{project.enddate}</b> </h5>
+                    
                   </div>
                 </div>
               </div>
