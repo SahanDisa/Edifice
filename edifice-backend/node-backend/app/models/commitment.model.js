@@ -7,7 +7,8 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING
       },
       status: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue:"Ongoing 🔴"
       },
       /*executed: {
         type: Sequelize.STRING

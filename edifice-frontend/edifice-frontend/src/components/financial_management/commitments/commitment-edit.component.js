@@ -117,6 +117,29 @@ exclusions:"",
       });
   };
 
+  const updateStatus=(status)=> {
+    var data = {
+      id: currentCommitment.id,
+   title :currentCommitment.title,
+    contractCompany :currentCommitment.contractCompany,
+    status :currentCommitment.status,
+    description :currentCommitment.description,
+    startDate :currentCommitment.startDate,
+    estimatedCompletionDate :currentCommitment.estimatedCompletionDate,
+actualCompletionDate :currentCommitment.actualCompletionDate,
+signedContractReceivedDate :currentCommitment.signedContractReceivedDate,
+    };
+
+    CommitmentDataService.update(currentCommitment.id, currentCommitment)
+      .then(response => {
+ setCurrentCommitment({ ...currentCommitment,status: status });
+        })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+
   //delete is working but when deleting, validation errors occur
   const deleteCommitment = () => {
     CommitmentDataService.delete(currentCommitment.id)
@@ -209,30 +232,28 @@ exclusions:"",
               <div className="form-group">
                 <label htmlFor="status">Status :</label>
             
-              <select
+              <input
            
-            
+            type="text"
                 id="status"
                 {...register('status')}
                 value={currentCommitment.status}
                 onChange={handleInputChange}
                 name="status"
   className={`form-control ${errors.status ? 'is-invalid' : ''}`}
-              >
-                <option value="" disabled selected>Select the Status</option>
-                {currentCommitment.commitmentStatuses &&
-                currentCommitment.commitmentStatuses.map((commitmentStatus, index) => (
+              />
+               {/* {currentCommitment &&
+                currentCommitment.map((c, index) => (
                 <option
-                    value={commitmentStatus}
-                    onChange={handleInputChange }
+                    value={c.status}
+                    onChange={handleInputChange}
                     key={index}
-                    selected
                 >
-                {/* unit data */}
-                {commitmentStatus}
+
+                {c.status}
                 </option>
-                ))}
-              </select>
+                ))} 
+              </select>*/}
 <div className="invalid-feedback">{errors.status?.message}</div>
               </div>
               {/*<div className="form-group">
@@ -335,10 +356,23 @@ exclusions:"",
           >
             Update <UpdateIcon/>
           </button>
-          <Link to={"/commitment/" + currentCommitment.projectId}>
-            <button className="btn btn-success">
-            Cancel
-            </button></Link>
+          {currentCommitment.status == "Ongoing 🔴" ? (
+                <button
+                
+                className="btn btn-success m-2"
+                  onClick={() => updateStatus("Completed 🟢")}
+                >
+                  Set Complete
+                </button>
+             ) : 
+              (
+                <button
+                className="btn btn-success m-2"
+                  onClick={() => updateStatus("Ongoing 🔴")}
+                >
+                  Set Incomplete
+                </button>
+              )}
           <button
             type="button"
             onClick={() => reset()}

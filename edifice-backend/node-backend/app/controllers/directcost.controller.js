@@ -23,6 +23,7 @@ exports.create = (req, res) => {
     paidDate: req.body.paidDate,
     amount: req.body.amount,
     projectId: req.body.projectId,
+    published:req.body.published,
   };
 
   // Save direct cost in the database
@@ -41,10 +42,11 @@ exports.create = (req, res) => {
 // Get direct costs for a given project
 exports.findAll = (req, res) => {
   const id = req.params.id;
-  
+  const published = true;
 
   DirectCost.findAll({ where: {
-    projectId: id
+    projectId: id,
+    published: published
   
   }})
     .then(data => {
@@ -134,9 +136,10 @@ exports.findByCostCode= (req, res) => {
   //const costCode = req.query.costCode;
   const costCode = req.params.costCode;
     //var condition = costCode ? { costCode: { [Op.like]: `%${costCode}%` } } : null;
-
+    const published = true;
   DirectCost.findAll({ where: {
     projectId: id,
+    published : published,
     //condition:condition
     costCode:costCode
   }})
@@ -155,7 +158,7 @@ exports.getDTotalOfCostCodes = (req,res)=>{
   const id = req.params.id;
   const costCode = req.params.costCode;
 DirectCost.findAll({
-where: { costCode:costCode,projectId:id },
+where: { costCode:costCode,projectId:id,published:true },
 attributes: [[sequelize.fn('sum', sequelize.col('amount')), 'total']],
 raw: true,
 }).then(data => {
@@ -173,7 +176,7 @@ res.status(500).send({
 exports.getTotalDirectCosts = (req,res)=>{
   const id = req.params.id;
 DirectCost.findAll({
-where: {projectId:id },
+where: {projectId:id,published:true },
 attributes: [[sequelize.fn('sum', sequelize.col('amount')), 'total']],
 raw: true,
 }).then(data => {

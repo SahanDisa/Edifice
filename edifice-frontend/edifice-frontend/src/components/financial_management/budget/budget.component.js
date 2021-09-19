@@ -7,7 +7,6 @@ import Table from 'react-bootstrap/Table';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import CheckIcon from '@material-ui/icons/Check';
-import HomeIcon from '@material-ui/icons/Home';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
 import {
@@ -19,9 +18,6 @@ import {
   Tooltip,
   Legend
 } from "recharts";
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
 
 export default class BudgetList extends Component {
     constructor(props) {
@@ -151,11 +147,11 @@ export default class BudgetList extends Component {
         const data = [
           {
             name: "Estimated Budget",
-            EB: (budgetTotal),
+            EB: (parseFloat(budgetTotal).toFixed(2)),
           },
           {
             name: "Total Cost",
-            TC : (sovTotal + directCostTotal)
+            TC : (parseFloat(sovTotal + directCostTotal).toFixed(2))
           }
         ];
         return (
@@ -180,8 +176,10 @@ export default class BudgetList extends Component {
 <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2" >
 <div className="card card-hover shadow-sm" style={{alignItems: "center"}} ><br />
  {(Number(sovTotal)+Number(directCostTotal)) > budgetTotal ? 
-              <div className="row"><ReportProblemOutlinedIcon style={{ color: "red" }}/><h3 className="h5 nav-heading-title mb-0">&nbsp;Over Budgeted</h3></div>
-: <CheckIcon/>
+              <div className="row"><ReportProblemOutlinedIcon style={{ color: "red" }}/><h3 className="h5 nav-heading-title mb-0">&nbsp;Over Budget</h3></div>
+: (Number(sovTotal)+Number(directCostTotal)) < budgetTotal ? 
+<div className="row"><ReportProblemOutlinedIcon style={{ color: "green" }}/><h3 className="h5 nav-heading-title mb-0">&nbsp;Under Budget</h3></div>
+:<div className="row"><CheckIcon  style={{ color: "green" }}/><h3 className="h5 nav-heading-title mb-0">&nbsp;On Budget</h3></div>
 }
 <br />
 </div>
@@ -189,7 +187,7 @@ export default class BudgetList extends Component {
 
 <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2" >
 <div className="card card-hover shadow-sm" style={{alignItems: "center"}} ><br />
-  <h3 className="h6 nav-heading-title mb-0">Revised Amount(Rs.) : <span style={{ color: 'red' }}>{Number(sovTotal)+Number(directCostTotal)-Number(budgetTotal)}</span></h3>
+  <h3 className="h6 nav-heading-title mb-0">Revised (Rs.) : <span style={{ color: 'red' }}>{ parseFloat(Number(sovTotal)+Number(directCostTotal)-Number(budgetTotal)).toFixed(2)}</span></h3>
 <br />
 </div>
 </div>
@@ -215,13 +213,13 @@ Financial Management Home
               <div className="row" style={{alignItems: "center"}} >
               <div className="col" >
               <BarChart
-      width={500}
+      width={400}
       height={200}
       data={data}
       margin={{
         top: 5,
-        right: 30,
-        left: 20,
+        right: 5,
+        left: 40,
         bottom: 5
       }}
     >
@@ -240,29 +238,30 @@ Financial Management Home
           <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2" >
             <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Estimated Budget</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. {budgetTotal}</span>
-              </div>
-            </div>
-<div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2">
-            <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
-                <h3 className="h5 nav-heading-title mb-0">Total Direct Cost</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. {directCostTotal}</span>
-              </div>
-    </div>
-    </div>
-    <div className="row" style={{alignItems: "center"}} >
-          <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2">
-            <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
-                <h3 className="h5 nav-heading-title mb-0">Total Commited Cost</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. {sovTotal} </span>
+                <span className="fs-sm fw-normal text-muted">Rs. {parseFloat(budgetTotal).toFixed(2)}</span>
               </div>
             </div>
             <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Cost</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. {sovTotal+directCostTotal}</span>
+                <span className="fs-sm fw-normal text-muted">Rs. {parseFloat(sovTotal+directCostTotal).toFixed(2)}</span>
               </div>
             </div>
+    </div>
+    <div className="row" style={{alignItems: "center"}} >
+          <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
+                <h3 className="h5 nav-heading-title mb-0">Total Commited Cost</h3>
+                <span className="fs-sm fw-normal text-muted">Rs. {parseFloat(sovTotal).toFixed(2)} </span>
+              </div>
+            </div>
+            <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
+                <h3 className="h5 nav-heading-title mb-0">Total Direct Cost</h3>
+                <span className="fs-sm fw-normal text-muted">Rs. {parseFloat(directCostTotal).toFixed(2)}</span>
+              </div>
+    </div>
+         
             </div>
             {/*<div className="form-group col-md-4">
         <div className="input-group mb-3">
@@ -340,11 +339,11 @@ Financial Management Home
 
 <td>{budget.id}</td>
                     <td>{budget.costCode}</td>
-                    <td>{budget.btotal}</td>
-                    <td>{budget.dtotal}</td>
-                    <td>{budget.stotal}</td>
-                    <td>{Number(budget.stotal)+Number(budget.dtotal)}.00</td>
-                    <td>{Number(Number(budget.stotal)+Number(budget.dtotal))-Number(budget.btotal)}.00</td> 
+                    <td>{(budget.btotal !== null) ? budget.btotal:"0.00"}</td>
+                    <td>{(budget.dtotal !== null ) ? budget.dtotal:"0.00" }</td>
+                    <td>{(budget.stotal !== null ) ? budget.stotal:"0.00" }</td>
+                    <td>{(Number(budget.stotal)+Number(budget.dtotal) !== null) ? parseFloat(Number(budget.stotal)+Number(budget.dtotal)).toFixed(2) : "0.00" }</td>
+                    <td>{( Number(Number(budget.stotal)+Number(budget.dtotal))-Number(budget.btotal) !== null) ?  parseFloat(Number(Number(budget.stotal)+Number(budget.dtotal))-Number(budget.btotal)).toFixed(2) : "0.00"}</td> 
                     <td>{(Number(budget.stotal)+Number(budget.dtotal)) > budget.btotal ? <ArrowUpwardIcon style={{ color: "red" }}/>:(Number(budget.stotal)+Number(budget.dtotal)) < budget.btotal ? <ArrowDownwardIcon style={{ color: "green" }}/>:<CheckIcon/>}</td>    
                     </tr>
                     ))}

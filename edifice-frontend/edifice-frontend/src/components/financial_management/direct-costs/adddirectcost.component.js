@@ -337,10 +337,10 @@ const AddDirectCost = (props) => {
           >
             Reset
           </button>&nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
-            <Link to={"/directcost/" + directcost.projectId}>
+           {/* <Link to={"/directcost/" + directcost.projectId}>
             <button className="btn btn-success">
             Cancel
-            </button></Link>
+                </button></Link> */}
             </div>
             </form>
             </div>
