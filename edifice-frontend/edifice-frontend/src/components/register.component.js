@@ -9,6 +9,7 @@ import Chip from "@material-ui/core/Chip";
 //import Stack from '@material-ui/core/Stack';
 
 import EmployeeDataService from "../services/employee.service";
+import DesignationDataService from "../services/designation.service";
 import AuthService from "../services/auth.service";
 
 const required = value => {
@@ -63,17 +64,18 @@ export default class Register extends Component {
     this.state = {
       id: this.props.match.params.id,
       username: "",
+      empname: "",
       email: "",
       password: "",
       successful: false,
       message: "",
       rolesSelected: [],
-      designations:["Quantity Surveyor","Project Engineer","Site Engineer"],
+      designations:[],
       rolesColors: [],
       signupDisabled:true
     };
 
-    this.makeRolearray(this.state.id,this.state.designations)
+    this.makeRolearray(this.state.id)
   }
 
   onChangeUsername(e) {
@@ -136,13 +138,14 @@ export default class Register extends Component {
 
   //handle frontend input
 
-  makeRolearray(id,roles){
+  makeRolearray(id){
     if(id!="undefined"){
 
       EmployeeDataService.getOne(id)
       .then(response => {
         this.setState({
-          email: response.data.email
+          email: response.data.email,
+          empname: response.data.name
         });
         
         console.log(this.state.email);
@@ -150,13 +153,26 @@ export default class Register extends Component {
       .catch(e => {
         console.log(e);
       });
+
+      DesignationDataService.getAllDesignations()
+      .then(response => {
+        this.setState({
+          designations: response.data
+        });
+        
+        console.log(this.state.designations);
+        this.state.designations.forEach(element => {
+          this.state.rolesSelected.push(
+            "default"
+          )
+        });
+        
+      })
+      .catch(e => {
+        console.log(e);
+      });
     }
-    //console.log(employeeDetails);
-    {roles.map((value,index) => { 
-      this.state.rolesSelected.push(
-        "default"
-      )
-    })}
+    
     console.log(this.state.rolesSelected);
   }
 
@@ -267,6 +283,7 @@ export default class Register extends Component {
           </div>
           <div className="col-6">
             <h3 className="pd-3">Select Roles </h3>
+            <p>Allocate roles for employee </p>
             <div className="row">
             {roles.map((value,index) => { 
               return(
@@ -274,7 +291,7 @@ export default class Register extends Component {
                 <div className="pr-2">
                   <Chip 
                     className="py-1"
-                    label={value}
+                    label={value.name}
                     onClick={() =>this.addToRoles(index)}
                     clickable={true} color={this.state.rolesSelected[index]} />
                 </div>
