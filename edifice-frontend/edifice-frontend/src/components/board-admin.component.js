@@ -196,7 +196,7 @@ export default class BoardUser extends Component {
     `,
       <div className="container">
 
-        <h3> Core tools home</h3>
+        <h3> Core Tools Home</h3>
         <p>Current statistics of ongoing projects </p>
         <div className="row">
             <div className="col-lg-3 col-sm-6 pb-2" id="employeecard">
@@ -211,11 +211,10 @@ export default class BoardUser extends Component {
 
             <div className="col-lg-3 col-sm-6 pb-5" id="projectcard">
               <div className="card card-hover shadow-sm" style={cardStyle}>
-              <a className="d-block nav-heading text-center mt-3" style={linkText} href="/projects">
-
+              <Link className="d-block nav-heading text-center mt-3" style={linkText} to="/projects">
                 <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
                 <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>
-              </a>
+              </Link>
               {/* <Link to={"/projects"}>
               <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
                 <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>

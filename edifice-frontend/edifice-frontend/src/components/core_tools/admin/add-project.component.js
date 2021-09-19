@@ -31,7 +31,7 @@ export default class AddProject extends Component {
       enddate: "",
       message: "",
 
-      submitted: true,
+      submitted: false,
       lastproject:[],
       currentIndex: -1,
     };
