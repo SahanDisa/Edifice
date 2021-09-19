@@ -68,7 +68,7 @@ export default class PhotosHome extends Component {
       const { albums, currentIndex,id,fileInfos, Captures } = this.state;
       return (
         <div>
-          <h2>Photos</h2>
+          <h2>PHOTOS HOME</h2>
           <Breadcrumbs aria-label="breadcrumb">
             <Link color="inherit" to="/home">
               Home

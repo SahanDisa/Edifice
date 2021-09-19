@@ -364,7 +364,7 @@ export default class PortfolioHome extends Component {
 
         return (
             <div>
-            <h2>Portfolio</h2>
+            <h2>PORTFOLIO</h2>
             <Breadcrumbs aria-label="breadcrumb">
               <Link color="inherit" to="/home">
                 Home

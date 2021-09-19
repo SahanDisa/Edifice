@@ -119,7 +119,7 @@ export default class Documents extends Component {
 
       return (
           <div>
-          <h2>Document Home</h2>
+          <h2>DOCUMENT HOME</h2>
           <Breadcrumbs aria-label="breadcrumb">
             <Link color="inherit" to="/home">
               Home

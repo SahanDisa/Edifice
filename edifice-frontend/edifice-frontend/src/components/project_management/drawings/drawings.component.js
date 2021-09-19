@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import DrawingCategoryService from "../../../services/drawing-category.service";
+import ProjectService from "../../../services/project.service";
 import { Breadcrumbs } from "@material-ui/core";
 import Pdfviewer from "./pdfviewer.component";
 import Card from 'react-bootstrap/Card';
 import drawingcover from "././../../../assets/PM/photos/drawing.jpg";
 import ProgressBar from 'react-bootstrap/ProgressBar';
-import ProgressBarCust from 'react-customizable-progressbar';
+// import ProgressBarCust from 'react-customizable-progressbar';
 
 export default class Drawings extends Component {
     constructor(props) {
@@ -18,8 +19,11 @@ export default class Drawings extends Component {
         drawingcategories: [],
         currentIndex: -1,
         content: "",
+        project: [],
+
         drawingcount: 0,
         drawcategorycount: 0,
+        revisioncount: 0,
         drawingComplete: 0,
         drawingPending: 0,
         drawingIncomplete: 0,
@@ -31,6 +35,7 @@ export default class Drawings extends Component {
       this.retrieveDrawing(this.props.match.params.id);
       this.retriveDrawingCategory(this.props.match.params.id);
       this.retrieveDrawingStatus(this.props.match.params.id);
+      this.retriveProject(this.props.match.params.id);
     }
     retrieveDrawing(id) {
       DrawingDataService.getAll(id)
@@ -44,6 +49,17 @@ export default class Drawings extends Component {
         .catch(e => {
           console.log(e);
         });
+    }
+    retriveProject(id){
+      ProjectService.get(id).then(response => {
+        this.setState({
+          project: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
     }
     retriveDrawingCategory(id){
         DrawingCategoryService.getAll(id)
@@ -96,7 +112,7 @@ export default class Drawings extends Component {
 
     render() {
         const { drawings, drawingcount , drawingcategories, drawcategorycount, currentIndex,id,drawingComplete,
-          drawingPending,drawingIncomplete } = this.state;
+          drawingPending,drawingIncomplete, project } = this.state;
         const completePercentage = Math.ceil((drawingComplete/drawingcount)*100);
         const pendingPercentage = Math.ceil((drawingPending/drawingcount)*100);
         const incompletePerentage = Math.ceil((drawingIncomplete/drawingcount)*100);
@@ -104,8 +120,8 @@ export default class Drawings extends Component {
         return (
         <div>
           <div className="container row">
-            <div className="col-12">
-              <h2>Drawing Home</h2>
+            <div className="col-9">
+              <h2>DRAWING HOME</h2>
                 <Breadcrumbs aria-label="breadcrumb">
                 <Link color="inherit" to="/home">
                   Home
@@ -117,6 +133,11 @@ export default class Drawings extends Component {
                   Drawing Home
                 </Link>
                 </Breadcrumbs>
+            </div>
+            <div className="col-3">
+                <h4>{project.title}</h4>
+                {/* <h6>{project.description}</h6> */}
+                <h6>{project.location}</h6>
             </div>
           </div>
           <hr></hr>

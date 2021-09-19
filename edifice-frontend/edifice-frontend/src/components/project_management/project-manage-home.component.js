@@ -5,6 +5,7 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import UserService from "./../../services/user.service";
 import ProjectDataService from "./../../services/project.service";
 import AuthService from "./../../services/auth.service";
+import AppService from "./../../App";
 import ProgressBar from 'react-customizable-progressbar';
 
 import portfolioIcon from "././../../assets/portfolio.png";
@@ -30,7 +31,7 @@ import Card from 'react-bootstrap/Card';
 export default class BoardUser extends Component {
   constructor(props) {
     super(props);
-
+    console.log("Super props"+this.props);
     this.state = {
       content: "",
       projects: [],
@@ -80,11 +81,17 @@ export default class BoardUser extends Component {
         this.setState({
           projects: response.data
         });
+        this.updateNavBar(response.data.title, response.data.id);
         console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
+  }
+  updateNavBar(name,pid){
+    console.log("Navbar ekata yawanne meka"+name+" "+pid);
+    AppService.setProjectName(name,pid);
+
   }
   getRecentProgress(id){
     var data = 0;
@@ -120,14 +127,14 @@ export default class BoardUser extends Component {
     console.log(remainDays + " remain days");
     return (
       <div className="container">
-        <h2>App Dashboard</h2>
+        <h2>APP DASHBOARD</h2>
         {/* Breadcrumb starts */}
         <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" to="/home">
             Home
           </Link>
           <Link color="inherit" to={"/projectmanagementhome/"+id}>
-            App Dashboard
+          {projects.title} / App Dashboard  
           </Link>
           {/* <Link color="textPrimary" href="/components/breadcrumbs/" aria-current="page">
             Breadcrumb

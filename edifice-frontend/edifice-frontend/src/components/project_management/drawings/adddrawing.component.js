@@ -252,7 +252,9 @@ export default class AddDrawing extends Component {
               </select>
               </div>
               <div className="col-3">
-                <a href={"/adddrawingcategory/"+projectId} className="btn btn-primary">Add Category</a>
+                <Link to={"/adddrawingcategory/"+projectId} style={{'text-decoration': 'none'}} className="btn btn-primary">
+                Add Category
+                </Link>
               </div>
               </div>
             </div>

@@ -171,6 +171,8 @@ class App extends Component {
       showModeratorBoard: false,
       showAdminBoard: false,
       currentUser: undefined,
+      projectname: "",
+      projectId: 1,
     };
   }
 
@@ -186,12 +188,20 @@ class App extends Component {
     }
   }
 
+  setProjectName(name,pid){
+    this.setState({
+      projectname: name,
+      projectId: pid
+    });
+    console.log("navbar name set to "+name+" "+pid); 
+  }
+
   logOut() {
     AuthService.logout();
   }
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
+    const { currentUser, showModeratorBoard, showAdminBoard,projectId } = this.state;
 
     return (
       <div>
