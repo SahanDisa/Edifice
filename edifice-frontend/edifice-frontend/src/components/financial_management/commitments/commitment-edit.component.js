@@ -16,6 +16,7 @@ import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
 import SubDataService from "./../../../services/subcontractor.service";
+import CheckIcon from '@material-ui/icons/Check';
 
 
 const EditCommitment = props => {
@@ -119,18 +120,12 @@ exclusions:"",
 
   const updateStatus=(status)=> {
     var data = {
-      id: currentCommitment.id,
-   title :currentCommitment.title,
-    contractCompany :currentCommitment.contractCompany,
-    status :currentCommitment.status,
-    description :currentCommitment.description,
-    startDate :currentCommitment.startDate,
-    estimatedCompletionDate :currentCommitment.estimatedCompletionDate,
-actualCompletionDate :currentCommitment.actualCompletionDate,
-signedContractReceivedDate :currentCommitment.signedContractReceivedDate,
+
+    status :status,
+
     };
 
-    CommitmentDataService.update(currentCommitment.id, currentCommitment)
+    CommitmentDataService.update(currentCommitment.id,data)
       .then(response => {
  setCurrentCommitment({ ...currentCommitment,status: status });
         })
@@ -233,14 +228,12 @@ signedContractReceivedDate :currentCommitment.signedContractReceivedDate,
                 <label htmlFor="status">Status :</label>
             
               <input
-           
             type="text"
                 id="status"
-                {...register('status')}
                 value={currentCommitment.status}
-                onChange={handleInputChange}
                 name="status"
-  className={`form-control ${errors.status ? 'is-invalid' : ''}`}
+                className={`form-control`}
+                readonly
               />
                {/* {currentCommitment &&
                 currentCommitment.map((c, index) => (
@@ -254,7 +247,7 @@ signedContractReceivedDate :currentCommitment.signedContractReceivedDate,
                 </option>
                 ))} 
               </select>*/}
-<div className="invalid-feedback">{errors.status?.message}</div>
+
               </div>
               {/*<div className="form-group">
                 <label htmlFor="defaultRetainage">Default Retainage % :</label>
@@ -360,17 +353,17 @@ signedContractReceivedDate :currentCommitment.signedContractReceivedDate,
                 <button
                 
                 className="btn btn-success m-2"
-                  onClick={() => updateStatus("Completed 🟢")}
+                  onClick={() => {updateStatus("Completed 🟢");reset();}}
                 >
-                  Set Complete
+                 <CheckIcon />&nbsp; Set Completed
                 </button>
              ) : 
               (
                 <button
                 className="btn btn-success m-2"
-                  onClick={() => updateStatus("Ongoing 🔴")}
+                  onClick={() =>{ updateStatus("Ongoing 🔴");reset();}}
                 >
-                  Set Incomplete
+                  Set Ongoing
                 </button>
               )}
           <button

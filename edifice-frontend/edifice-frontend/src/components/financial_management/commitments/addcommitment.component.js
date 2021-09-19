@@ -21,14 +21,10 @@ const AddCommitment = (props) => {
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
     contractCompany: Yup.string().required('Contract Company is required'),
-    status: Yup.string().required('Status is required'),
     description: Yup.string().required('Description is required'),
     startDate: Yup.string().required('Start Date is required'),
     estimatedCompletionDate: Yup.string().required('Estimated Copletion Date is required'),
-    actualCompletionDate: Yup.string().required('Actual Completion Date is required'),
     signedContractReceivedDate: Yup.string().required('Signed Contract Received Date is required'),
-    inclusions: Yup.string().required('Inclusions are required'),
-    exclusions: Yup.string().required('Exclusions are required'),
   });
 
   const {
@@ -124,9 +120,6 @@ startDate:commitment.startDate,
 estimatedCompletionDate: commitment.estimatedCompletionDate,
 actualCompletionDate:commitment.actualCompletionDate,
 signedContractReceivedDate:commitment.signedContractReceivedDate,
-inclusions:commitment.inclusions,
-exclusions:commitment.exclusions,
-  
 
       projectId: commitment.projectId,
     };
@@ -158,8 +151,6 @@ startDate:response.data.startDate,
 estimatedCompletionDate: response.data.estimatedCompletionDate,
 actualCompletionDate:response.data.actualCompletionDate,
 signedContractReceivedDate:response.data.signedContractReceivedDate,
-inclusions:response.data.inclusions,
-exclusions:response.data.exclusions,
 
           projectId: response.data.projectId,
      
@@ -179,7 +170,7 @@ exclusions:response.data.exclusions,
 
   const viewCommitment = () => {
     props.history.push("/editcommitment/"+ commitment.id);
-    cogoToast.success("Commitment Saved Successfully!");
+    cogoToast.success("Commitment Details Saved Successfully!");
    }
 
  
@@ -275,12 +266,11 @@ className={`form-control ${errors.contractCompany ? 'is-invalid' : ''}`}
                 <input
                 type="text"
                 id="status"
-                {...register('status')}
                 value="Ongoing 🔴"
                 disabled
                 onChange={handleInputChange}
                 name="status"
-className={`form-control ${errors.status ? 'is-invalid' : ''}`}
+className={`form-control`}
               />
                 
 
@@ -299,7 +289,7 @@ className={`form-control ${errors.status ? 'is-invalid' : ''}`}
                 </option> 
                 ))} 
               </select>*/}
-<div className="invalid-feedback">{errors.status?.message}</div>
+
               </div>
            
            {/*<div className="form-group">
@@ -412,13 +402,12 @@ className={`form-control ${errors.estimatedCompletionDate ? 'is-invalid' : ''}`}
                 type="date"
             
                 id="actualCompletionDate"
-              {...register('actualCompletionDate')}
                 value={commitment.actualCompletionDate}
                 onChange={handleInputChange}
                 name="actualCompletionDate"
-className={`form-control ${errors.actualCompletionDate ? 'is-invalid' : ''}`}
+className={`form-control`}
               />
-<div className="invalid-feedback">{errors.actualCompletionDate?.message}</div>
+
               </div>
             <div className="form-group">
             <button type="submit" onClick={()=>{saveCommitment();setTimeout(getLastCommitmentID({position:1}), 3000);}} className="btn btn-success">
