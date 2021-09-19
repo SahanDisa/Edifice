@@ -468,6 +468,12 @@ class App extends Component {
             </Switch>
           </div>
         )}
+        <div className="mt-50">
+          <div style={{'height': '150px'}}></div>
+          <center>
+          <h6>Edifice 2021 © All rights reserved - G42</h6>
+          </center>
+        </div>
       </div>
     );
   }
