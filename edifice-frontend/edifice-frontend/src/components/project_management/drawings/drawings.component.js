@@ -222,7 +222,7 @@ export default class Drawings extends Component {
                     key={index}
                 >
                 {/* unit data */}
-                <Link to={"/viewdrawingcategory/"+drawingcategory.id}>
+                <Link to={"/viewdrawingcategory/"+id +"/"+drawingcategory.id}>
                         <Card
                         bg={'secondary'}
                         text={'dark'}

@@ -28,7 +28,7 @@ export default class AddDrawing extends Component {
       title: "",
       description: "",
       // category default value is 1(gallery mode)
-      category: "1",
+      category: 1,
       status: "Not Complete",
       version: 1, 
       projectId: this.props.match.params.id, 
