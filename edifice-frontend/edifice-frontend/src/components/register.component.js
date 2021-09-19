@@ -56,8 +56,8 @@ export default class Register extends Component {
   constructor(props) {
     super(props);
     this.handleRegister = this.handleRegister.bind(this);
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
+    // this.onChangeUsername = this.onChangeUsername.bind(this);
+    // this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     //this.addToRoles=this.addToRoles.bind(this);
 
@@ -78,23 +78,23 @@ export default class Register extends Component {
     this.makeRolearray(this.state.id)
   }
 
-  onChangeUsername(e) {
-    this.setState({
-      username: e.target.value
-    });
-  }
+  // onChangeUsername(e) {
+  //   this.setState({
+  //     username: e.target.value
+  //   });
+  // }
 
-  onChangeEmail(e) {
-    this.setState({
-      email: e.target.value
-    });
-  }
+  // onChangeEmail(e) {
+  //   this.setState({
+  //     email: e.target.value
+  //   });
+  // }
 
-  onChangePassword(e) {
+   onChangePassword(e) {
     this.setState({
-      password: e.target.value
+       password: e.target.value
     });
-  }
+   }
 
   handleRegister(e) {
     e.preventDefault();
@@ -176,6 +176,23 @@ export default class Register extends Component {
     console.log(this.state.rolesSelected);
   }
 
+  generatePassword(){
+    var generator = require('generate-password');
+
+    var password = generator.generate({
+	  length: 10,
+	  numbers: true
+    });
+
+    this.setState({
+      password: "12345"
+    });
+
+    // 'uEyMTw32v9'
+    console.log(this.state);
+    console.log(password);
+  }
+
   addToRoles(index){
     //console.log(index)
     if(this.state.rolesSelected[index]=="default"){
@@ -240,15 +257,19 @@ export default class Register extends Component {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <Input
-                      type="password"
-                      className="form-control"
+                    <div className="row">
+                      <div className="col">
+                        <label htmlFor="password">Password</label>
+                      </div>
+                      <div className="col">
+                        <button className="btn btn-primary" onClick={() =>this.generatePassword()}>Generate Password</button>
+                      </div>
+                    </div>
+                    <h5
                       name="password"
-                      value={this.state.password}
                       onChange={this.onChangePassword}
                       validations={[required, vpassword]}
-                    />
+                    >{this.state.password}</h5>
                   </div>
 
                   <div className="roles">
