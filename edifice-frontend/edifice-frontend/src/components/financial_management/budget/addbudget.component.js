@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from 'react-hook-form';
+import { Route, useParams } from "react-router-dom";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 //import { Route, useParams } from "react-router-dom";
 import BudgetDataService from "./../../../services/budget.service";
+import CostCodeDataService from "./../../../services/costcode.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -50,7 +52,26 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
     
   };
   const [budget, setBudget] = useState(initialBudgetState);
+  const [costcodes, setCostCodes] = useState([]);
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    retrieveCostCodes();  
+  }, []);
+
+
+  const {id}= useParams();
+
+  const retrieveCostCodes = () => {
+    
+    CostCodeDataService.getAll(id)//passing project id as id
+      .then((response) => {
+        setCostCodes(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const handleInputChange = event => {
     const { name, value } = event.target;
@@ -135,8 +156,8 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
                 onChange={this.onChangeCostCode}
                 name="costCode"
              />*/}
-                <input
-                type="text"
+                <select
+                
                 id="costCode"
            
                 
@@ -145,7 +166,20 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
                 value={budget.costCode}
                 onChange={handleInputChange}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
-              />
+              >
+ <option value="" disabled selected>Select a Cost Code</option>
+        {costcodes &&
+                costcodes.map((c, index) => (
+                <option
+                    value={c.costCode}
+                    onChange={handleInputChange}
+                    key={index}
+                >
+                {/* unit data */}
+                {c.costCode}
+                </option>
+                ))}
+                </select>
               <div className="invalid-feedback">{errors.costCode?.message}</div>
             </div>
 

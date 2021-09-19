@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import { Link } from "react-router-dom";
 import CommitmentDataService from "./../../../services/commitment.service";
 import DeleteIcon from '@material-ui/icons/Delete';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import UpdateIcon from '@material-ui/icons/Update';
 import { Route, useParams } from "react-router-dom";
 import Timeline from '@material-ui/lab/Timeline';
@@ -16,11 +15,52 @@ import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
 import SubDataService from "./../../../services/subcontractor.service";
+import CheckIcon from '@material-ui/icons/Check';
+import cogoToast from 'cogo-toast';
 
 
 const EditCommitment = props => {
 
-/**validation */
+
+  //const {projectId}= useParams();
+  const initialCommitmentState = {
+    id: null,
+    title :"",
+    contractCompany :"",
+    status :"",
+    description :"",
+    startDate :"",
+    estimatedCompletionDate :"",
+actualCompletionDate :"",
+signedContractReceivedDate :"",
+    inclusions: "",
+exclusions:"",
+    projectId:props.match.params.id,  
+    commitmentStatuses: ["Ongoing 🔴", "Completed 🟢"],
+    
+  };
+  const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentState);
+  const [subcontractors, setSubcontractors] = useState([]);
+  const [message, setMessage] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const getCommitment = id => {
+    CommitmentDataService.get(id)
+      .then(response => {
+        setCurrentCommitment(response.data);
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  useEffect(() => {
+    getCommitment(props.match.params.id);
+    retrieveSubcontractors();  
+  },[props.match.params.id]);
+
+  /**validation */
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
     contractCompany: Yup.string().required('Contract Company is required'),
@@ -48,44 +88,6 @@ exclusions: Yup.string().required('Exclusions are required'),
   };
 /**End of validation */
 
-
-  //const {projectId}= useParams();
-  const initialCommitmentState = {
-    id: null,
-    title :"",
-    contractCompany :"",
-    status :"",
-    description :"",
-    startDate :"",
-    estimatedCompletionDate :"",
-actualCompletionDate :"",
-signedContractReceivedDate :"",
-    inclusions: "",
-exclusions:"",
-    projectId:props.match.params.id,  
-    commitmentStatuses: ["Ongoing 🔴", "Completed 🟢"],
-    
-  };
-  const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentState);
-  const [subcontractors, setSubcontractors] = useState([]);
-  const [message, setMessage] = useState("");
-
-  const getCommitment = id => {
-    CommitmentDataService.get(id)
-      .then(response => {
-        setCurrentCommitment(response.data);
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  };
-
-  useEffect(() => {
-    getCommitment(props.match.params.id);
-    retrieveSubcontractors();  
-  },[props.match.params.id]);
-
   const retrieveSubcontractors=()=>{
     
     SubDataService.getAll()//passing project id as id
@@ -107,32 +109,78 @@ exclusions:"",
 
 
   const updateCommitment = () => {
-    CommitmentDataService.update(currentCommitment.id, currentCommitment)
+
+    var data = {
+      id: currentCommitment.id,
+      title: currentCommitment.title,
+      contractCompany: currentCommitment.contractCompany,
+      status:currentCommitment.status,
+      description: currentCommitment.description,
+      startDate:currentCommitment.startDate,
+      estimatedCompletiondate:currentCommitment.estimatedCompletiondate,
+      actualCompletionDate:currentCommitment.actualCompletionDate,
+      signedContractReceivedDate:currentCommitment.signedContractReceivedDate,
+      published:currentCommitment.published
+
+
+    };
+    CommitmentDataService.update(currentCommitment.id, data)
       .then(response => {
+          props.history.push("/editcommitment/"+ currentCommitment.id);
+    cogoToast.success("Subcontract Updated Successfully!");
         console.log(response.data);
-        setMessage("The commitment was updated successfully!");
+     
       })
       .catch(e => {
         console.log(e);
       });
   };
 
-  const updateStatus=(status)=> {
+
+  const viewC = () => {
+    props.history.push("/editcommitment/"+ currentCommitment.id);
+    cogoToast.success("Subcontract Updated Successfully!");
+   }
+
+   const updatePublished = (status) => {
+
     var data = {
       id: currentCommitment.id,
-   title :currentCommitment.title,
-    contractCompany :currentCommitment.contractCompany,
-    status :currentCommitment.status,
-    description :currentCommitment.description,
-    startDate :currentCommitment.startDate,
-    estimatedCompletionDate :currentCommitment.estimatedCompletionDate,
-actualCompletionDate :currentCommitment.actualCompletionDate,
-signedContractReceivedDate :currentCommitment.signedContractReceivedDate,
+      title: currentCommitment.title,
+      contractCompany: currentCommitment.contractCompany,
+      status:currentCommitment.status,
+      description: currentCommitment.description,
+      startDate:currentCommitment.startDate,
+      estimatedCompletiondate:currentCommitment.estimatedCompletiondate,
+      actualCompletionDate:currentCommitment.actualCompletionDate,
+      signedContractReceivedDate:currentCommitment.signedContractReceivedDate,
+      published:status
+    };
+    CommitmentDataService.update(currentCommitment.id, data)
+      .then(response => {
+        props.history.push("/commitment/"+currentCommitment.projectId);
+        cogoToast.success("Commitment Deleted Successfully!");
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+   
+
+    
+  };
+
+  const updateStatus=(status)=> {
+    var data = {
+
+    status :status,
+
     };
 
-    CommitmentDataService.update(currentCommitment.id, currentCommitment)
+    CommitmentDataService.update(currentCommitment.id,data)
       .then(response => {
  setCurrentCommitment({ ...currentCommitment,status: status });
+ cogoToast.success("Subcontract set to "+ status);
         })
       .catch(e => {
         console.log(e);
@@ -154,7 +202,10 @@ signedContractReceivedDate :currentCommitment.signedContractReceivedDate,
 
   return (
     <div className="container">
-      {currentCommitment ? (
+        { /* {submitted ? (
+         viewC()
+ 
+         ) : (*/}
         <div class="container">
           <h4>Edit Subcontract</h4>
           <Breadcrumbs aria-label="breadcrumb">
@@ -233,14 +284,12 @@ signedContractReceivedDate :currentCommitment.signedContractReceivedDate,
                 <label htmlFor="status">Status :</label>
             
               <input
-           
             type="text"
                 id="status"
-                {...register('status')}
                 value={currentCommitment.status}
-                onChange={handleInputChange}
                 name="status"
-  className={`form-control ${errors.status ? 'is-invalid' : ''}`}
+                className={`form-control`}
+                readonly
               />
                {/* {currentCommitment &&
                 currentCommitment.map((c, index) => (
@@ -254,7 +303,7 @@ signedContractReceivedDate :currentCommitment.signedContractReceivedDate,
                 </option>
                 ))} 
               </select>*/}
-<div className="invalid-feedback">{errors.status?.message}</div>
+
               </div>
               {/*<div className="form-group">
                 <label htmlFor="defaultRetainage">Default Retainage % :</label>
@@ -345,34 +394,17 @@ signedContractReceivedDate :currentCommitment.signedContractReceivedDate,
 
             <div className="form-group">
 
-            <button className="btn btn-danger" onClick={deleteCommitment}>
+            <button className="btn btn-danger" onClick={() =>{updatePublished(false);reset()}}>
             Delete <DeleteIcon/> 
           </button>
 
           <button
             type="submit"
             className="btn btn-success m-2"
-            onClick={updateCommitment}
+            onClick={()=>{updateCommitment();reset();}}
           >
             Update <UpdateIcon/>
           </button>
-          {currentCommitment.status == "Ongoing 🔴" ? (
-                <button
-                
-                className="btn btn-success m-2"
-                  onClick={() => updateStatus("Completed 🟢")}
-                >
-                  Set Complete
-                </button>
-             ) : 
-              (
-                <button
-                className="btn btn-success m-2"
-                  onClick={() => updateStatus("Ongoing 🔴")}
-                >
-                  Set Incomplete
-                </button>
-              )}
           <button
             type="button"
             onClick={() => reset()}
@@ -383,6 +415,23 @@ signedContractReceivedDate :currentCommitment.signedContractReceivedDate,
 
             </div>
 </form>
+{currentCommitment.status == "Ongoing 🔴" ? (
+                <button
+                
+                className="btn btn-success m-2"
+                  onClick={() => {updateStatus("Completed 🟢");}}
+                >
+                 <CheckIcon />&nbsp; Set Completed
+                </button>
+             ) : 
+              (
+                <button
+                className="btn btn-success m-2"
+                  onClick={() =>{ updateStatus("Ongoing 🔴");}}
+                >
+                  Set Ongoing
+                </button>
+              )}
           </div>
           
          <div className="col-sm-6">
@@ -425,14 +474,9 @@ signedContractReceivedDate :currentCommitment.signedContractReceivedDate,
 
 
      
-          <p>{message}</p>
+       
         </div>
-      ) : (
-        <div>
-          <br />
-          <p>Please click on a Tutorial...</p>
-        </div>
-      )}
+      {/* )} */}
     </div>
   );
 };
