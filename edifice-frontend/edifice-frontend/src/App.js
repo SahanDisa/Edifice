@@ -245,7 +245,7 @@ class App extends Component {
           {currentUser ? (
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link to={"/schedule"} className="nav-link">
+                <Link to={"/schedule/" + 1} className="nav-link">
                   <h6>Schedule</h6>
                 </Link>
               </li>

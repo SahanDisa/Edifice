@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import { Modal } from "react-bootstrap";
-import Table from 'react-bootstrap/Table';
 
 import EquipmentDataService from "./../../../services/equipment.service";
 import EquipmentCategoryDataService from "./../../../services/equipment-category.service";
 
-
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
 import Card from 'react-bootstrap/Card';
+import { Modal } from "react-bootstrap";
+import Table from 'react-bootstrap/Table';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 import NewCategory from './new-category.component';
 import AddEquip from './new-equipment.component';
 import Allocate from './allocateEquipment.component';
 import Release from './releaseEquipment.component';
-
 
 
 class Equipment extends Component {
@@ -115,14 +111,23 @@ class Equipment extends Component {
 
     return (
       <div>
-        <Card
-          bg={'success'}
-          text={'white'}
-          className="mb-2">
-          <Card.Body>
-            <Card.Title><h4>Equipment</h4></Card.Title>
-          </Card.Body>
-        </Card>
+        <div className="row">
+          <div className="col" >
+            <h2>EQUIPMENTS</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/" + id}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/equipments"} aria-current="page">
+                Equipments
+              </Link>
+            </Breadcrumbs>
+          </div>
+        </div>
+        <hr />
         <br />
 
         <div className="row">

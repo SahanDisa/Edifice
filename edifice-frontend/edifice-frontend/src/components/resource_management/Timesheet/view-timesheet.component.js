@@ -5,6 +5,7 @@ import Approve from "./approve.component";
 import RemoveApprove from "./remove-approve.component";
 import Card from 'react-bootstrap/Card';
 import { Link } from "react-router-dom";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 import MarkWorker from './mark-worker.component';
 
@@ -87,18 +88,31 @@ class ViewTimesheet extends Component {
   closeModal = () => this.setState({ isOpen: false });
 
   render() {
-    const { id, timesheet, workedHours, crews, currentWorker } = this.state;
+    const { id, timesheet, workedHours, crews, currentWorker, code } = this.state;
 
     return (
       <div>
-        <Card
-          bg={'success'}
-          text={'white'}
-          className="mb-2">
-          <Card.Body>
-            <h4>Timesheet</h4>
-          </Card.Body>
-        </Card>
+        <div className="row">
+          <div className="col" >
+            <h2>MANAGE TIMESHEET</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/" + id}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/timesheet/" + id} aria-current="page">
+                Timesheet
+              </Link>
+              <Link color="textPrimary" to={"/viewTimesheet/" + id + "/" + code} aria-current="page">
+                Manage Timesheet
+              </Link>
+            </Breadcrumbs>
+          </div>
+        </div>
+        <hr />
+        <br />
 
 
         <Card
