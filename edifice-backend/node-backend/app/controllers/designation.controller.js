@@ -40,6 +40,23 @@ exports.findAll = (req, res) => {
       });
 };
 
+
+//find all only designations
+exports.findAllDesignations = (req, res) => {
+  Designation.findAll({attributes: ['name']})
+  
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving job roles."
+      });
+    });
+};
+
+
 // Find a single sub with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;

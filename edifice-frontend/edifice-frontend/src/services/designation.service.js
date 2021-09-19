@@ -5,7 +5,7 @@ class DesignationDataService {
     return http.get(`/designation/${id}`);
   }
 
-  getAll() {
+  getAllDesignations() {
     return http.get(`/designation/`);
   }
 

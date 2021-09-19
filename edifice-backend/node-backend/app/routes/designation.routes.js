@@ -7,7 +7,7 @@ module.exports = app => {
     router.post("/", designation.create);
   
     // Retrieve all job roles
-    router.get("/", designation.findAll);
+    router.get("/", designation.findAllDesignations);
   
     // Retrieve a single job roles with id
     router.get("/:id", designation.findOne);
