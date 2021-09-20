@@ -47,6 +47,9 @@ export default class viewAPType extends Component {
 
     render() {
         const { id, title, description, projectId, actionplans } = this.state;
+        console.log(id);
+        console.log(title);
+        console.log(description);
         return (
             <div>
                 <h2>Action Plan Type - {title}</h2>

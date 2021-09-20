@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table'
 import { Link } from "react-router-dom";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 import CrewDataService from "../../../services/crew.service";
 import WorkersDataService from "../../../services/worker.service";
@@ -116,7 +117,28 @@ class Workers extends Component {
 
     return (
       <div>
-        <h2>Add workers to the timesheet</h2>
+        <div className="row">
+          <div className="col" >
+            <h2>ADD WORKERS</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/" + id}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/timesheet/" + id} aria-current="page">
+                Timesheet
+              </Link>
+              <Link color="textPrimary" to={"/viewTimesheet/" + id + "/" + code} aria-current="page">
+                Manage Timesheet
+              </Link>
+              <Link color="textPrimary" to={"/addWorkers/" + id + "/" + code} aria-current="page">
+                Add Workers
+              </Link>
+            </Breadcrumbs>
+          </div>
+        </div>
         <hr />
         <br />
 
@@ -137,7 +159,7 @@ class Workers extends Component {
                   onClick={this.searchTitle}
                 >
                   Search
-              </button>
+                </button>
               </div>
             </div>
           </div>

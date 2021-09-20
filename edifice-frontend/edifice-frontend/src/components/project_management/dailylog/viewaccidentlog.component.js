@@ -20,6 +20,7 @@ class ViewDAL extends Component {
                 time: "",
                 crew: "",
                 description: "",
+                isDeleted: 0,
                 projectId: this.props.match.params.id
             }
         };
@@ -107,10 +108,13 @@ class ViewDAL extends Component {
     }
 
     deleteAccidentLog(){
-        DLAccidentService.update(this.props.match.params.dlid)
+        var data = {
+            isDeleted: 1
+        }
+        DLAccidentService.update(this.props.match.params.dlid, data)
         .then(response => {
             console.log(response.data);
-            // this.props.history.push('/punchlist/');
+            this.props.history.push('/dailylogs/'+ this.props.match.params.id);
         })
     }
     
@@ -191,7 +195,7 @@ class ViewDAL extends Component {
                         </button>
                     </div>
                     <div className="modal-body">
-                        <a onClick={this.updateAccidentLog} className="btn btn-primary pr-3 ml-2 mr-3"> Yes, Update</a>
+                        <a onClick={this.updateAccidentLog} className="btn btn-primary pr-3 ml-2 mr-3" data-dismiss="modal"> Yes, Update</a>
                         <a className="btn btn-secondary ml-6 mr-6 pl-3" data-dismiss="modal"> Cancel</a>
                     </div>
                     </div>
@@ -210,7 +214,7 @@ class ViewDAL extends Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteAccidentLog} > Yes, Delete</a>
+                            <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteAccidentLog} data-dismiss="modal"> Yes, Delete</a>
                             <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
                         </div>
                     </div>

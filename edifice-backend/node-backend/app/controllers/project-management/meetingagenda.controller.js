@@ -61,7 +61,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    MeetingAgenda.update({isDeleted = 1}, {
+    MeetingAgenda.update({
         where: { id: id }
     })
     .then(num => {

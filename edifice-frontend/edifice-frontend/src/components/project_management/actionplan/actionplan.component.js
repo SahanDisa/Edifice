@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import ActionPlanTypeDataService from "../../../services/project_management/actionplantype.service";
 import ActionPlanService from "../../../services/project_management/actionplan.service";
 import Card from 'react-bootstrap/Card';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 export default class ActionPlan extends Component {
     constructor(props) {
@@ -17,7 +18,6 @@ export default class ActionPlan extends Component {
         projectId: this.props.match.params.id,
         actionplans: [],
         currentIndex: -1,
-        content: "",
 
         submitted: false
       };
@@ -56,6 +56,7 @@ export default class ActionPlan extends Component {
       var data = {
         title : this.state.title,
         description: this.state.description,
+        projectId: this.props.match.params.id
       };
 
       ActionPlanTypeDataService.create(data)
@@ -79,12 +80,12 @@ export default class ActionPlan extends Component {
         const { actionplans, aptypes, currentIndex, projectId } = this.state;
         return (
           <div>
-            <div className="container row">
-                <div className="col-12">
-                    <h2>Action Plan</h2>
-                    <h6>Ensure that unique company and project specific requirements are clearly defined, centralized and organized</h6>
-                </div>
-            </div><hr/>
+          <h2>Action Plan</h2>
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link color="inherit" to="/home">Home</Link>
+            <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
+            <Link color="inherit" aria-current="page" className="disabledLink">Action Plan</Link>
+          </Breadcrumbs><hr/>
           <div className="container">
             <h4 className="mt-2">Action Plan Types</h4>
             <div className="container">

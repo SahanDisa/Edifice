@@ -2,12 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ActionPlanDataService from "./../../../services/project_management/actionplan.service";
 import ActionPlanTypeDataService from "../../../services/project_management/actionplantype.service";
-import Timeline from '@material-ui/lab/Timeline';
-import TimelineItem from '@material-ui/lab/TimelineItem';
-import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
-import TimelineConnector from '@material-ui/lab/TimelineConnector';
-import TimelineContent from '@material-ui/lab/TimelineContent';
-import TimelineDot from '@material-ui/lab/TimelineDot';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 export default class AddActionPlan extends Component {
   constructor(props) {
@@ -131,22 +126,14 @@ export default class AddActionPlan extends Component {
     const {projectId, currentIndex, actionplantypes} = this.state;
     return (
       <div className="container">
-        {this.state.submitted ? (
-          <div>
-          <center>
-            <h4>Action Plan details successfully submitted!</h4>
-            <Link to={"/actionplan/"+projectId} className="btn btn-primary mr-2"  style={{ 'text-decoration': 'none' }}>
-              Back Home
-            </Link>
-            <Link to={"/addactionplan/"+projectId} className="btn btn-primary mr-2"  style={{ 'text-decoration': 'none' }}>
-              Add Action Plan
-            </Link>
-          </center>
-          </div>
-        ) : (
           <div class="container">
             <h2>Add New Action Plan</h2>
-            <hr/>
+            <Breadcrumbs aria-label="breadcrumb">
+            <Link color="inherit" to="/home">Home</Link>
+            <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
+            <Link color="inherit" to={"/actionplan/"+projectId}>Action Plan</Link>
+            <Link color="inherit" aria-current="page" className="disabledLink">Add New Action Plan</Link>
+          </Breadcrumbs><hr/>
             <div className="">
               <div className="form-row">
                 <div className="form-group col-md-9">
@@ -194,16 +181,14 @@ export default class AddActionPlan extends Component {
                     value={this.state.actiontype}
                     onChange={this.onChangeActionType}
                   >
-                    {actionplantypes &&
-                    actionplantypes.map((actionplantype, index) => (
-                    <option
+                    {actionplantypes && actionplantypes.map((actionplantype, index) => (
+                      <option
                         value={actionplantype.title}
                         onChange={this.onChangeActionType}
                         key={index}
-                    >
-                    {/* unit data */}
-                    {actionplantype.title}
-                    </option>
+                      >
+                      {actionplantype.title}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -238,7 +223,6 @@ export default class AddActionPlan extends Component {
             <button onClick={this.saveActionPlan} className="btn btn-success mr-2">Create Action Plan</button>
             <a href="/actionplan">Cancel</a>
           </div>
-        )}
       </div>
     );
   }

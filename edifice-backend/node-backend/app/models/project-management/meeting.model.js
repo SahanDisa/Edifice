@@ -1,7 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
   const Meetings = sequelize.define("meetings", {
     category: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING
+    },
+    name: {
+      type: Sequelize.STRING
     },
     date: {
       type: Sequelize.DATEONLY

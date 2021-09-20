@@ -101,7 +101,7 @@ exports.findOne = (req, res) => {
 exports.findAll = (req, res) => {
   const id = req.params.id;
   ActionPlanType.findAll({ where: {
-    actionplanId: id,
+    projectId: id,
     isDeleted: 0
   }})
   .then(data => {
