@@ -22,6 +22,7 @@ class Equipment extends Component {
     this.retrieveEquipment = this.retrieveEquipment.bind(this);
     this.retrieveEquipmentCategory = this.retrieveEquipmentCategory.bind(this);
     this.searchTitle = this.searchTitle.bind(this);
+    this.retrieveProjects = this.retrieveProjects.bind(this);
 
     this.state = {
       equipments: [],
@@ -29,13 +30,28 @@ class Equipment extends Component {
       currentIndex: -1,
       searchTitle: "",
       content: "",
-      currentEquipment: ""
+      currentEquipment: "",
+      projects: []
     };
   }
 
   componentDidMount() {
     this.retrieveEquipment();
     this.retrieveEquipmentCategory();
+    this.retrieveProjects();
+  }
+
+  retrieveProjects() {
+    EquipmentDataService.getAllProjects()
+      .then(response => {
+        this.setState({
+          projects: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   retrieveEquipment() {
@@ -107,7 +123,7 @@ class Equipment extends Component {
   closeReleaseModal = () => this.setState({ isReleaseOpen: false });
 
   render() {
-    const { equipments, id, categorys, searchTitle, currentEquipment } = this.state;
+    const { equipments, id, categorys, searchTitle, currentEquipment, projects } = this.state;
 
     return (
       <div>
@@ -207,7 +223,11 @@ class Equipment extends Component {
                                     <td>{equipment.condition}</td>
                                     <td>{equipment.date}</td>
                                     <td>{equipment.description}</td>
-                                    <td>{equipment.projectId}</td>
+                                    {projects && projects.map((project) => (
+                                      equipment.projectId === project.id ?
+                                        <td>{project.title}</td> : null
+                                    ))}
+
                                     <td>
                                       {equipment.projectId === null ?
                                         <button
