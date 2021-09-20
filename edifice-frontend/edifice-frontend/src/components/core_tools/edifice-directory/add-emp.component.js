@@ -22,6 +22,8 @@ class AddEmployee extends Component {
         email:"",
         mobile:"",
         projCount:0,
+        hasAccount:"",
+        username:"",
         other:"",
 
         submitted: false,
@@ -82,6 +84,8 @@ class AddEmployee extends Component {
       role: this.state.role,
       projCount:this.state.projCount,
       email:this.state.email,
+      username:"",
+      hasAccount:0,
       other: this.state.other
     };
 
@@ -96,6 +100,8 @@ class AddEmployee extends Component {
         mobile: response.data.mobile,
         email: response.data.email,
         projCount: response.data.projCount,
+        username:"",
+        hasAccount:0,
         other: response.data.other,
       });
       console.log(response.data);
@@ -115,7 +121,9 @@ class AddEmployee extends Component {
       role: "",
       mobile:"",
       email:"",
+      username:"",
       projCount:0,
+      hasAccount:"",
       other: "",
 
       submitted: false
@@ -209,7 +217,7 @@ class AddEmployee extends Component {
 
           <div className="row">
             <div className="pr-2"> 
-              <a onClick={()=>{this.saveEmployee(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastEmployee(); this.displayResult();}} className="btn btn-success">Add</a>
+              <a onClick={()=>{this.saveEmployee(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastEmployee();}} className="btn btn-success">Add</a>
             </div>
             <div className="pr-4"> 
               <a className="btn btn-secondary" type="reset">Cancel</a>
