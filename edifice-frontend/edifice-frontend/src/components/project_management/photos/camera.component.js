@@ -36,6 +36,7 @@ export default class CameraSinglePage extends Component {
               Camera
             </Link>
           </Breadcrumbs>
+          <hr></hr>
          <WebcamCapture/>
          <hr></hr>
          <center>

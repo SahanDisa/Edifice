@@ -46,7 +46,7 @@ export default class BoardUser extends Component {
   }
   componentDidMount() {
     window.scrollTo(0, 0);
-    cogoToast.loading("Project Changed Successfully!");
+    cogoToast.loading("Project is Loading ...");
     const user = AuthService.getCurrentUser();
 
     if (user) {

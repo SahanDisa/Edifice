@@ -371,6 +371,7 @@ export default class UpdateDrawing extends Component {
                   </div>
               {/* End the container uploading here */}
               </div> 
+              <hr></hr>
               {/* End File Uploading */}
 
               {currentDrawing.status == "Not Complete" ? (
