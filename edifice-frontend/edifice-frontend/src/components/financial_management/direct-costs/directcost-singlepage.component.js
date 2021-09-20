@@ -136,7 +136,8 @@ const [message, setMessage] = useState("");
       .then(response => {
         console.log(response.data);
         setSubmitted(true);
-        setMessage("The budget line item was updated successfully!");
+        props.history.push("/directcost/"+ currentDirectCost.projectId);
+        cogoToast.success("Direct Cost Updated Successfully!");
       })
       .catch(e => {
         console.log(e);

@@ -224,10 +224,15 @@ const AddDirectCost = (props) => {
                 id="description"
                 name="description"
                 {...register('description')}
+                list="suggest"
                 value={directcost.description}
                 onChange={handleInputChange}
                 className={`form-control ${errors.description ? 'is-invalid' : ''}`}
               />
+              <datalist id="suggest">
+                                            <option value="LCD Monitor for finance department 001">LCD Monitor for finance department 001</option>
+                                            <option value="telephone cost in finance department">telephone cost in finance department</option>
+                                    </datalist>
                <div className="invalid-feedback">{errors.description?.message}</div>
             </div>
             <div className="form-group">
