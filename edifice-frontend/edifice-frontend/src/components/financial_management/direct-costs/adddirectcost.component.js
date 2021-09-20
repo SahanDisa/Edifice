@@ -161,8 +161,8 @@ const AddDirectCost = (props) => {
 
   
  const viewDirectCost = () => {
-  //props.history.push("/directcost/"+ directcost.projectId);
-  //cogoToast.success("Direct Cost Saved Successfully!");
+  props.history.push("/directcost/"+ directcost.projectId);
+  cogoToast.success("Direct Cost Saved Successfully!");
  }
 
   const newDirectCost = () => {
@@ -174,11 +174,11 @@ const AddDirectCost = (props) => {
   return (
         <div className="container">
        
-        {/* {submitted ? (
+        {submitted ? (
 
          viewDirectCost()
 
-        ) : ( */}
+        ) : (
           <div class="container">
             <h2>New Direct Cost</h2>
             <Breadcrumbs aria-label="breadcrumb">
@@ -397,7 +397,7 @@ const AddDirectCost = (props) => {
             </div><br />
           {/** */} 
           </div>
-        {/* )} */}
+        )} 
         <br /><br />
       </div>
   );
