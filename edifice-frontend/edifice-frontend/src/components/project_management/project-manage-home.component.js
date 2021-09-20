@@ -5,6 +5,7 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import UserService from "./../../services/user.service";
 import ProjectDataService from "./../../services/project.service";
 import AuthService from "./../../services/auth.service";
+import AppService from "./../../App";
 import ProgressBar from 'react-customizable-progressbar';
 
 import portfolioIcon from "././../../assets/portfolio.png";
@@ -26,11 +27,12 @@ import commitmentsIcon from "././../../assets/FM/commitments.png";
 import bulldozerIcon from "././../../assets/066-bulldozer.png";
 
 import Card from 'react-bootstrap/Card';
+import cogoToast from "cogo-toast";
 
 export default class BoardUser extends Component {
   constructor(props) {
     super(props);
-
+    console.log("Super props"+this.props);
     this.state = {
       content: "",
       projects: [],
@@ -44,6 +46,7 @@ export default class BoardUser extends Component {
   }
   componentDidMount() {
     window.scrollTo(0, 0);
+    cogoToast.success("Project Changed Successfully!");
     const user = AuthService.getCurrentUser();
 
     if (user) {
@@ -80,11 +83,17 @@ export default class BoardUser extends Component {
         this.setState({
           projects: response.data
         });
+        this.updateNavBar(response.data.title, response.data.id);
         console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
+  }
+  updateNavBar(name,pid){
+    console.log("Navbar ekata yawanne meka"+name+" "+pid);
+    AppService.setProjectName(name,pid);
+
   }
   getRecentProgress(id){
     var data = 0;
@@ -120,14 +129,14 @@ export default class BoardUser extends Component {
     console.log(remainDays + " remain days");
     return (
       <div className="container">
-        <h2>App Dashboard</h2>
+        <h2>APP DASHBOARD</h2>
         {/* Breadcrumb starts */}
         <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" to="/home">
             Home
           </Link>
           <Link color="inherit" to={"/projectmanagementhome/"+id}>
-            App Dashboard
+          {projects.title} - App Dashboard  
           </Link>
           {/* <Link color="textPrimary" href="/components/breadcrumbs/" aria-current="page">
             Breadcrumb
@@ -179,7 +188,6 @@ export default class BoardUser extends Component {
         <h3 className="mt-2">Project Tools</h3>
         <div className="row">
           <div className="col-lg-3 mb-grid-gutter pb-2">
-          
             <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
             <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
               <img src={portfolioIcon} alt="" width="50"/>
@@ -187,30 +195,8 @@ export default class BoardUser extends Component {
               {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
             </Link>
             </div>
-          
           </div>
-          <div className="col-lg-3 mb-grid-gutter pb-2">
-          
-            <div className="card card-hover shadow-sm" title="Manage meetings">
-            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/meetings/"+id} style={{ 'text-decoration': 'none' }}>
-              <img src={meetingIcon} alt="" width="50"/>
-              <h3 className="h5 nav-heading-title mb-0">Meetings</h3>                
-              {/* <span className="fs-sm fw-normal text-muted">Manage all aspects of your project meetings from agenda distribution</span> */}
-            </Link>
-            </div>
-            
-          </div>
-          <div className="col-lg-3 mb-grid-gutter pb-2">
-          
-            <div className="card card-hover shadow-sm" title="Organise & define project workflows">
-            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/actionplan/" + id}  style={{ 'text-decoration': 'none' }}>
-              <img src={actionplanIcon} alt="" width="50"/>
-              <h3 className="h5 nav-heading-title mb-0">Action Plan</h3>
-              {/* <span className="fs-sm fw-normal text-muted">Organise & define project workflows</span> */}
-            </Link>
-            </div>
-            
-          </div>
+
           <div className="col-lg-3 mb-grid-gutter pb-2">
           
             <div className="card card-hover shadow-sm" title="Manage the project Drawings">
@@ -222,6 +208,28 @@ export default class BoardUser extends Component {
             </div>
             
           </div>
+          <div className="col-lg-3 mb-grid-gutter pb-2">
+          
+          <div className="card card-hover shadow-sm" title="Manage & Capture Images">
+            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/photos/" + id} style={{ 'text-decoration': 'none' }}>
+              <img src={photosIcon} alt="" width="50"/>
+              <h3 className="h5 nav-heading-title mb-0">Photos</h3>
+              {/* <span className="fs-sm fw-normal text-muted">Manage and capture all the images</span> */}
+            </Link>
+          </div>
+          
+        </div>
+        <div className="col-lg-3 mb-grid-gutter pb-2">
+        
+          <div className="card card-hover shadow-sm" title="Manage Documents">
+            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/document/" + id} style={{ 'text-decoration': 'none' }}>
+              <img src={documentIcon} alt="" width="50"/>
+              <h3 className="h5 nav-heading-title mb-0">Documents</h3>
+              {/* <span className="fs-sm fw-normal text-muted">Manage documents</span> */}
+            </Link>
+          </div>
+          
+        </div>
         </div>
         <div className="row">
           {/* <div className="col-lg-4 mb-grid-gutter pb-2">
@@ -233,31 +241,27 @@ export default class BoardUser extends Component {
             </Link>
             </div>
           </div> */}
-          
+           <div className="col-lg-3 mb-grid-gutter pb-2">
+            <div className="card card-hover shadow-sm" title="Manage meetings">
+            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/meetings/"+id} style={{ 'text-decoration': 'none' }}>
+              <img src={meetingIcon} alt="" width="50"/>
+              <h3 className="h5 nav-heading-title mb-0">Meetings</h3>                
+              {/* <span className="fs-sm fw-normal text-muted">Manage all aspects of your project meetings from agenda distribution</span> */}
+            </Link>
+            </div> 
+          </div>
           <div className="col-lg-3 mb-grid-gutter pb-2">
-          
-            <div className="card card-hover shadow-sm" title="Manage & Capture Images">
-              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/photos/" + id} style={{ 'text-decoration': 'none' }}>
-                <img src={photosIcon} alt="" width="50"/>
-                <h3 className="h5 nav-heading-title mb-0">Photos</h3>
-                {/* <span className="fs-sm fw-normal text-muted">Manage and capture all the images</span> */}
-              </Link>
+            <div className="card card-hover shadow-sm" title="Organise & define project workflows">
+            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/actionplan/" + id}  style={{ 'text-decoration': 'none' }}>
+              <img src={actionplanIcon} alt="" width="50"/>
+              <h3 className="h5 nav-heading-title mb-0">Action Plan</h3>
+              {/* <span className="fs-sm fw-normal text-muted">Organise & define project workflows</span> */}
+            </Link>
             </div>
             
           </div>
-          <div className="col-lg-3 mb-grid-gutter pb-2">
-          
-            <div className="card card-hover shadow-sm" title="Manage Documents">
-              <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/document/" + id} style={{ 'text-decoration': 'none' }}>
-                <img src={documentIcon} alt="" width="50"/>
-                <h3 className="h5 nav-heading-title mb-0">Documents</h3>
-                {/* <span className="fs-sm fw-normal text-muted">Manage documents</span> */}
-              </Link>
-            </div>
-            
-          </div>
-          <div className="col-lg-3 mb-grid-gutter pb-2">
-          
+         
+          <div className="col-lg-3 mb-grid-gutter pb-2"> 
             <div className="card card-hover shadow-sm" title="Manage Punch Items">
               <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/punchlist/" + id} style={{ 'text-decoration': 'none' }}>
                 <img src={punchlistIcon} alt="" width="50"/>
@@ -268,7 +272,6 @@ export default class BoardUser extends Component {
             
           </div>
           <div className="col-lg-3 mb-grid-gutter pb-2">
-          
             <div className="card card-hover shadow-sm" title="Track the details at Site">
               <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/dailylogs/"+ id} style={{ 'text-decoration': 'none' }}>
                 <img src={dailylogIcon} alt="" width="50"/>

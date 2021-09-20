@@ -74,15 +74,18 @@ export default class AddDirectory extends Component {
     });
   }
   render() {
-    const {projectId} = this.state
+    const {projectId} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
           <div>
-            <h4>You submitted successfully!</h4>
+          <center>
+            <h4 className="alert alert-success">You submitted successfully!</h4>
             <button className="btn btn-success" onClick={this.newDirectory}>
               Add Another Directory
             </button>
+            <Link to={"/document/"+projectId} className="btn btn-primary ml-2">Back Home</Link>
+          </center>
           </div>
         ) : (
           <div class="container">

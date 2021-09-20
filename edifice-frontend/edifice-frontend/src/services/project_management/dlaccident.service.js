@@ -9,8 +9,8 @@ class DLAccidentService {
     return http.put(`/projects/dlaccident/update/${id}`, data);
   }
 
-  delete(id) {
-    return http.put(`/projects/dlaccident/delete/${id}`);
+  delete(id, data) {
+    return http.put(`/projects/dlaccident/delete/${id}`, data);
   }
 
   getOne(id) {
@@ -18,7 +18,6 @@ class DLAccidentService {
   }
 
   getAll(id) {
-    console.log("dla service ekata aawa");
     return http.get(`/projects/dlaccident/list/${id}`);
   }
 }

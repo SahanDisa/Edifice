@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
 import PLPhotosDataService from "../../../services/project_management/punchlistphotos.service.js";
 import { WebcamCapture } from './../photos/webcam.component';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -21,10 +22,11 @@ class CreatePhotos extends Component {
         this.closeCamera = this.closeCamera.bind(this);
 
         this.state = {
+            projectId: this.props.match.params.id,
+            punchlistNo: this.props.match.params.plid,
             id: null,
             name: "",
             description: "",
-            punchlistNo: "",
             lastpl: [],
             isCam: 0,
 
@@ -128,11 +130,17 @@ class CreatePhotos extends Component {
     }
 
     render() {
-        const {punchlistNo, isCam, buttonChanger} = this.state;
+        const {punchlistNo, isCam, buttonChanger, projectId} = this.state;
         return (
         <div className="">
             <div className="">
-                <h2>Add New Punch List Item</h2><hr/>
+                <h2>Add New Punch List Item</h2>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="inherit" to="/home">Home</Link>
+                    <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
+                    <Link color="inherit" to={"/punchlist/"+projectId}>Punch List</Link>
+                    <Link color="inherit" aria-current="page" className="disabledLink">Add New Punch List</Link>
+                </Breadcrumbs><hr/>
                 <div className="row mb-3">
                     <div className="col-sm-8">
                     <h5>Step 2: Link Photos</h5>
@@ -172,25 +180,22 @@ class CreatePhotos extends Component {
                                 </div>
                             )}
                             </div>
-                            {/* {isCam == 1 && (
-                                <WebcamCapture/>
-                            )} */}
                             <hr />
-                            {!buttonChanger &&
+                            {/* {!buttonChanger && */}
                                 <button
                                 type="button"
                                 onClick={this.savePhotos}
                                 className="btn btn-primary mr-2"
                                 >Save</button>
-                            }{buttonChanger &&
+                            {/* }{buttonChanger &&
                                 <Link
-                                to={"/managepunchlist/createaddassignee/" + punchlistNo}
+                                to={"/managepunchlist/createaddassignee/" + projectId + "/" + punchlistNo}
                                 type="button"
                                 onClick={this.buttonChange}
                                 className="btn btn-primary mr-2"
                                 >Next: Add Assignees</Link>
-                            }
-                            <a href="/punchlist" className="">Cancel</a>
+                            } */}
+                            <Link to={"/punchlist"+projectId} className="">Cancel</Link>
                         </form>
                     </div>
                     <div className="col-sm-4">
@@ -200,13 +205,13 @@ class CreatePhotos extends Component {
                                 <TimelineContent><h6><strong>Step 1</strong><br/>Basic Details</h6></TimelineContent>
                             </TimelineItem>
                             <TimelineItem>
-                            <TimelineSeparator><TimelineDot /><TimelineConnector /></TimelineSeparator>
+                            <TimelineSeparator><TimelineDot /></TimelineSeparator>
                                 <TimelineContent><h5><strong>Step 2</strong><br/>Link Photos</h5></TimelineContent>
                             </TimelineItem>
-                            <TimelineItem>
+                            {/* <TimelineItem>
                                 <TimelineSeparator><TimelineDot /></TimelineSeparator>
                                 <TimelineContent><h6><strong>Step 2</strong><br/>Add Assignees</h6></TimelineContent>
-                            </TimelineItem>
+                            </TimelineItem> */}
                         </Timeline>
                     </div>
                 </div>

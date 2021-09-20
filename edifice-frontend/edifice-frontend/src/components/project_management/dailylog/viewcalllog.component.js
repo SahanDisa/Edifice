@@ -25,6 +25,7 @@ class ViewDCL extends Component {
                 starttime: "",
                 endtime: "",
                 reason: "",
+                isDeleted: 0,
                 projectId: this.props.match.params.id,
                 submitted: false
             }
@@ -143,7 +144,10 @@ class ViewDCL extends Component {
     }
 
     deleteCallLog(){
-        DLCallService.update(this.props.match.params.dlid)
+        var data= {
+            isDeleted: 1
+        }
+        DLCallService.update(this.props.match.params.dlid, data)
         .then(response => {
             console.log(response.data);
             // this.props.history.push('/punchlist/');
@@ -254,7 +258,7 @@ class ViewDCL extends Component {
                         </button>
                     </div>
                     <div className="modal-body">
-                        <a onClick={this.updateCallLog} className="btn btn-primary pr-3 ml-2 mr-3"> Yes, Update</a>
+                        <a onClick={this.updateCallLog} className="btn btn-primary pr-3 ml-2 mr-3" data-dismiss="modal"> Yes, Update</a>
                         <a className="btn btn-secondary ml-6 mr-6 pl-3" data-dismiss="modal"> Cancel</a>
                     </div>
                     </div>
@@ -273,7 +277,7 @@ class ViewDCL extends Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteCallLog} > Yes, Delete</a>
+                            <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteCallLog} data-dismiss="modal"> Yes, Delete</a>
                             <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
                         </div>
                     </div>

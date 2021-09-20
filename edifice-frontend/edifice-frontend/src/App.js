@@ -8,8 +8,10 @@ import 'bootstrap/dist/js/bootstrap.js';
 // import Popper from 'popper.js';
 import "./App.css";
 import mainIcon from "././assets/Edifice.png";
-import profileAvatar from "././assets/profile-navbar.jpg";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import AuthService from "./services/auth.service";
+import ProjectUserService from "./services/projectuser.service";
+import cogoToast from 'cogo-toast';
 
 import Login from "./components/login.component";
 import ForgetPassword from "./components/forgetpassword.component";
@@ -86,7 +88,9 @@ import UpdateDocument from "./components/project_management/document/updatedocum
 
 import MeetingsHome from "./components/project_management/meetings/meeting.component";
 import CreateMeetings from "./components/project_management/meetings/createmeeting.component";
-import ViewMeetings from "./components/project_management/meetings/view.component";
+import CreateFollowupMeetings from "./components/project_management/meetings/createfollowup.component";
+import ViewMeeting from "./components/project_management/meetings/view.component";
+import ViewOnlyMeeting from "./components/project_management/meetings/viewonly.component";
 
 import BudgetHome from "./components/financial_management/budget/budget.component";
 import PrimeContracts from "./components/financial_management/prime-contracts/primecontracts.component";
@@ -108,8 +112,6 @@ import AddAPSection from "./components/project_management/actionplan/addapsectio
 import ViewActionPlan from "./components/project_management/actionplan/viewactionplan.component";
 
 import DailyLogHome from "./components/project_management/dailylog/dailylog.component";
-import UpdateDls from "./components/project_management/dailylog/update.component";
-import ViewDls from "./components/project_management/dailylog/view.component";
 import CreateDCL from "./components/project_management/dailylog/createcalllog.component";
 import CreateDAL from "./components/project_management/dailylog/createaccidentlog.component";
 import CreateDGL from "./components/project_management/dailylog/creategenerallog.component";
@@ -166,11 +168,17 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.logOut = this.logOut.bind(this);
-
+    this.retriveUserProjects = this.retriveUserProjects.bind(this);
+    this.shiftProject = this.shiftProject.bind(this);
+    this.onChnagePid = this.onChnagePid.bind(this);
     this.state = {
       showModeratorBoard: false,
       showAdminBoard: false,
       currentUser: undefined,
+      projectname: "",
+      projectId: 1,
+      uprojects: [],
+      id: "",
     };
   }
 
@@ -183,15 +191,37 @@ class App extends Component {
         showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
         showAdminBoard: user.roles.includes("ROLE_ADMIN"),
       });
+      this.retriveUserProjects(user.id);
     }
+    
   }
-
+  retriveUserProjects(id){
+    ProjectUserService.getProjectUserProjectDetails(id)
+    .then(response => {
+      this.setState({
+        uprojects: response.data
+      });
+      console.log(response.data);
+    })
+    .catch(e => {
+      console.log(e);
+    });
+  }
+  shiftProject(e){
+    //console.log("Project Id selected is : "+e.target.value);
+    // cogoToast.success("Project Changed Successfully!");
+  }
+  onChnagePid(e){
+    this.setState({
+      projectId: e.target.value
+    });
+  } 
   logOut() {
     AuthService.logout();
   }
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
+    const { currentUser, showModeratorBoard, showAdminBoard,projectId,uprojects } = this.state;
 
     return (
       <div>
@@ -207,13 +237,13 @@ class App extends Component {
           </Link>
 
           <div className="navbar-nav mr-auto">
-            {currentUser && (
+            {/* {currentUser && (
               <li className="nav-item">
                 <Link to={"/home"} className="nav-link">
                   <h6>Home</h6>
                 </Link>
               </li>
-            )}
+            )} */}
             {/* {currentUser && (
               <li className="nav-item">
                 <Link to={"/projectmanagement"} className="nav-link">
@@ -248,15 +278,43 @@ class App extends Component {
                 </Link>
               </li>
             )}
+            {currentUser && (
+              <li className="nav-item">
+                <select 
+                  className="form-control"
+                  value={this.state.projectId}
+                  onChange={this.onChnagePid}
+                >
+                  {uprojects &&
+                    uprojects.map((project, index) => (
+                      <option value={project.projectId}
+                        style={{'color': 'black'}}
+                        key={index}
+                        value={project.projectId}
+                        onChange={this.onChangePid}
+                      >
+                      {project.title}
+                      </option> 
+                    ))}
+                </select>
+              </li>
+            )}
+            {currentUser && (
+              <li className="nav-item">
+              <a href={"/projectmanagementhome/"+projectId} style={{'text-decoration':'none'}} className="nav-link"
+              onClick={this.shiftProject}
+              >
+                Go<ArrowForwardIosIcon/>
+              </a>
+              {/* <Switch>
+              <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
+              </Switch> */}
+              </li>
+            )}
           </div>
 
           {currentUser ? (
             <div className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link to={"/schedule"} className="nav-link">
-                  <h6>Schedule</h6>
-                </Link>
-              </li>
               {/* <img
                   src={profileAvatar}
                   style={{'width' : "40px", height: "40px"}}
@@ -276,20 +334,20 @@ class App extends Component {
             </div>
           ) : (
 
-              <div className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <Link to={"/login"} className="nav-link">
-                    Login
+            <div className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link to={"/login"} className="nav-link">
+                  Login
                 </Link>
-                </li>
+              </li>
 
-                {/* <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to={"/register"} className="nav-link">
                   Sign Up
                 </Link>
               </li> */}
-              </div>
-            )}
+            </div>
+          )}
 
         </nav>
         {!currentUser && (
@@ -300,6 +358,7 @@ class App extends Component {
             <Route path="/camera" component={CameraSinglePage} />
             <Route component={ErrorPage}/>
           </Switch>  
+
         )}
         {currentUser && (
 
@@ -339,8 +398,10 @@ class App extends Component {
               <Route path="/managestasks/view" component={ViewTasks} />
               {/* Meeting */}
               <Route path="/meetings/:id" component={MeetingsHome} />
-              <Route path="/meetings/view/:id" component={ViewMeetings} />
               <Route path="/createmeetings/:id" component={CreateMeetings} />
+              <Route path="/createfollowup/:id/:cid" component={CreateFollowupMeetings} />
+              <Route path="/viewmeeting/:id/:mtid" component={ViewMeeting} />
+              <Route path="/viewonlymeeting/:id/:mtid" component={ViewOnlyMeeting} />
               {/* RFI */}
               <Route path="/rfi" component={rfiHome} />
               <Route path="/managerfi/create" component={CreateRFI} />
@@ -349,22 +410,20 @@ class App extends Component {
               {/* Action Plan */}
               <Route path="/actionplan/:id" component={actionplanHome} />
               <Route path="/addactionplan/:id" component={AddActionPlan} />
-              <Route path="/actionplansingle/:id" component={ActionPlanSinglePage} />
+              <Route path="/actionplansingle/:id/:apid" component={ActionPlanSinglePage} />
               <Route path="/addactionplanitem" component={AddAPItem} />
               <Route path="/addactionplansection" component={AddAPSection} />
-              <Route path="/viewactionplantype/:id" component={ViewAPType} />
-              <Route exact path="/viewactionplan/:id" component={ViewActionPlan} />
+              <Route path="/viewactionplantype/:id/:apid" component={ViewAPType} />
+              <Route exact path="/viewactionplan/:id/:apid" component={ViewActionPlan} />
               {/* Punch List */}
               <Route path="/punchlist/:id" component={punchlistHome} />
-              <Route path="/managepunchlist/createaddphoto/:id" component={CreatePhotos} />
-              <Route path="/managepunchlist/createaddassignee/:id" component={CreateAssignees} />
+              <Route path="/managepunchlist/createaddphoto/:id/plid" component={CreatePhotos} />
+              <Route path="/managepunchlist/createaddassignee/:id/plid" component={CreateAssignees} />
               <Route path="/managepunchlist/create/:id" component={CreatePL} />
               <Route path="/viewtype/:pltid" component={PLTView} />
               <Route path="/view/:pliid" component={PLIView} />
               {/* Daily Logs */}
               <Route path="/dailylogs/:id" component={DailyLogHome} />
-              <Route path="/dailylogs/update/:id" component={UpdateDls} />
-              <Route path="/dailylogs/view/:id" component={ViewDls} />
               <Route path="/createaccidentlog/:id" component={CreateDAL} />
               <Route path="/createcalllog/:id" component={CreateDCL} />
               <Route path="/creategenerallog/:id" component={CreateDGL} />
@@ -392,8 +451,8 @@ class App extends Component {
               {/* Drawing Component Routes  */}
               <Route path="/drawing/:id" component={DrawingHome} />
               <Route path="/adddrawingcategory/:id" component={AddDrawingCategory} />
-              <Route path="/viewdrawingcategory/:id" component={ViewSingleDrawingCategory} />
-              <Route exact path={"/updatedrawingcategory/:pid/:id"} component={UpdateDrawingCategory} />
+              <Route path="/viewdrawingcategory/:pid/:cat" component={ViewSingleDrawingCategory} />
+              <Route exact path={"/updatedrawingcategory/:id/:pid"} component={UpdateDrawingCategory} />
               <Route path="/adddrawing/:id" component={AddDrawing} />
               <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
               <Route exact path="/updatedrawing/:id/:pid" component={UpdateDrawing} />
@@ -434,7 +493,7 @@ class App extends Component {
               {/* {/schedule/} */}
               <Route path="/schedule/:id" component={Schedule} />
               {/* {/equipment/} */}
-              <Route path="/equipments/:id" component={Equipments} />
+              <Route path="/equipments" component={Equipments} />
               <Route path="/equipDetails/:code" component={EquipDetails} />
               {/* {/<Route path="/equipDetails/:id/:code" component={EquipDetails} />/} */}
 

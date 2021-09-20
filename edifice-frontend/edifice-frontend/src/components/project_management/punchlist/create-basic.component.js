@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import AuthService from "../../../services/auth.service";
 import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
 import PunchListTypesDataService from "../../../services/project_management/punchlisttypes.service.js";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -28,11 +30,13 @@ class CreatePL extends Component {
             duedate: "",
             title: "",
             location: "",
-            // punchmanager: "",
+            assignee: "",
             description: "",
+            projectmanager: "",
             projectId: this.props.match.params.id,
             lastpl:"",
             buttonChanger: undefined,
+            currentUser: AuthService.getCurrentUser(),
             submitted: false
         };
     }
@@ -78,7 +82,8 @@ class CreatePL extends Component {
             title: this.state.title,
             type: this.state.type,
             location: this.state.location,
-            // punchmanager: this.state.punchmanager,
+            punchmanager: this.state.punchmanager,
+            assignee: this.state.assignee,
             description: this.state.description,
             projectId: this.props.match.params.id
         };
@@ -96,7 +101,8 @@ class CreatePL extends Component {
                 title: response.data.title,
                 type: response.data.type,
                 location: response.data.location,
-                // punchmanager: response.data.punchmanager,
+                punchmanager: response.data.punchmanager,
+                assignee: response.data.assignee,
                 description: response.data.description,
                 projectId: response.data.projectId,
 
@@ -151,12 +157,17 @@ class CreatePL extends Component {
     }
 
     render() {
-        const {lastpl, pltypes, buttonChanger, projectId} = this.state;
-        console.log(lastpl);
+        const {lastpl, pltypes, buttonChanger, projectId, projectmanager, currentUser} = this.state;
         return (
         <div className="">
             <div className="">
-                <h2>Add New Punch List Item</h2><hr/>
+                <h2>Add New Punch List Item</h2>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="inherit" to="/home">Home</Link>
+                    <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
+                    <Link color="inherit" to={"/punchlist/"+projectId}>Punch List</Link>
+                    <Link color="inherit" aria-current="page" className="disabledLink">Add New Punch List</Link>
+                </Breadcrumbs><hr/>
                 <div className="row mb-3">
                     <div className="col-sm-8">
                     <h5>Step 1: Basic Details</h5>
@@ -164,17 +175,6 @@ class CreatePL extends Component {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label htmlFor="">Title</label>
-                                    {/* <datalist
-                                        className="form-control"
-                                        name="title"
-                                        value={this.state.title}
-                                        onChange={this.onChangeTitle}
-                                        type="text"
-                                        required>
-                                            <option value="A/C doesn't work">A/C doesn't work</option>
-                                            <option value="Water line blocked">Water line blocked</option>
-                                            <option value=""></option> */}
-                                    {/* </datalist> */}
                                     <input
                                         className="form-control"
                                         name="title"
@@ -237,18 +237,18 @@ class CreatePL extends Component {
                                 </div>
                             </div>
                             <div className="form-row">
-                                <div className="form-group col-md-9">
-                                    <label htmlFor="">Description</label>
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="">Assignee</label>
                                     <input
                                         className="form-control"
-                                        name="description"
-                                        value={this.state.description}
-                                        onChange={this.onChangeDescription}
+                                        name="assignee"
+                                        value={this.state.assignee}
+                                        onChange={this.onChangeAssignee}
                                         type="text"
                                         required
                                     />
                                 </div>
-                                <div className="form-group col-md-3">
+                                <div className="form-group col-md-6">
                                     <label htmlFor="">Due Date</label>
                                     <input
                                         className="form-control"
@@ -257,6 +257,19 @@ class CreatePL extends Component {
                                         onChange={this.onChangeDuedate}
                                         type="date"
                                         min=""
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group col-md-12">
+                                    <label htmlFor="">Description</label>
+                                    <input
+                                        className="form-control"
+                                        name="description"
+                                        value={this.state.description}
+                                        onChange={this.onChangeDescription}
+                                        type="text"
                                         required
                                     />
                                 </div>
@@ -270,7 +283,7 @@ class CreatePL extends Component {
                                 >Save</button>
                             }{buttonChanger &&
                                 <Link
-                                to={"/managepunchlist/createaddphoto/" + lastpl}
+                                to={"/camera/" + projectId}
                                 type="button"
                                 onClick={this.buttonChange}
                                 className="btn btn-primary mr-2"
@@ -286,13 +299,13 @@ class CreatePL extends Component {
                                 <TimelineContent><h5><strong>Step 1</strong><br/>Basic Details</h5></TimelineContent>
                             </TimelineItem>
                             <TimelineItem>
-                            <TimelineSeparator><TimelineDot /><TimelineConnector /></TimelineSeparator>
+                            <TimelineSeparator><TimelineDot /></TimelineSeparator>
                                 <TimelineContent><h6><strong>Step 2</strong><br/>Link Photos</h6></TimelineContent>
                             </TimelineItem>
-                            <TimelineItem>
+                            {/* <TimelineItem>
                                 <TimelineSeparator><TimelineDot /></TimelineSeparator>
                                 <TimelineContent><h6><strong>Step 2</strong><br/>Add Assignees</h6></TimelineContent>
-                            </TimelineItem>
+                            </TimelineItem> */}
                         </Timeline>
                     </div>
                 </div>

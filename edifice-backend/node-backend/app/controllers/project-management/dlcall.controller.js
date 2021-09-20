@@ -62,7 +62,7 @@ exports.update = (req, res) => {
 // Delete a DLCall with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
-    DLCall.update({
+    DLCall.update(req.body, {
         where: { id: id }
     })
     .then(num => {

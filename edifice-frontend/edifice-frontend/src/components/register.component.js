@@ -6,7 +6,7 @@ import { isEmail } from "validator";
 import mainIcon from "././../assets/logoedifice.png";
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Chip from "@material-ui/core/Chip";
-//import Stack from '@material-ui/core/Stack';
+import cogoToast from 'cogo-toast';
 
 import EmployeeDataService from "../services/employee.service";
 import DesignationDataService from "../services/designation.service";
@@ -56,7 +56,7 @@ export default class Register extends Component {
   constructor(props) {
     super(props);
     this.handleRegister = this.handleRegister.bind(this);
-    // this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangeUsername = this.onChangeUsername.bind(this);
     // this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     //this.addToRoles=this.addToRoles.bind(this);
@@ -78,11 +78,11 @@ export default class Register extends Component {
     this.makeRolearray(this.state.id)
   }
 
-  // onChangeUsername(e) {
-  //   this.setState({
-  //     username: e.target.value
-  //   });
-  // }
+  onChangeUsername(e) {
+    this.setState({
+      username: e.target.value
+    });
+  }
 
   // onChangeEmail(e) {
   //   this.setState({
@@ -90,15 +90,29 @@ export default class Register extends Component {
   //   });
   // }
 
-   onChangePassword(e) {
+  onChangePassword(e) {
     this.setState({
-       password: e.target.value
+        password: e.target.value
     });
-   }
+  }
+
+  //make an array with indexes from state.rolesSelected
+  makeDesignations(){
+    const des=[]
+
+    this.state.rolesSelected.map((value,index) =>{
+      if(value=="secondary"){
+        des.push(index+1)
+      }
+      
+    });
+
+    console.log(des)
+    return des
+  }
 
   handleRegister(e) {
-    e.preventDefault();
-    //console.log("agagagagag")
+    //e.preventDefault();
     this.setState({
       message: "",
       successful: false
@@ -131,7 +145,36 @@ export default class Register extends Component {
             message: resMessage
           });
         }
+        
       );
+      console.log(this.state.successful)
+      if(!this.state.successful){
+        //UPDATE EMPLOYEE TABLE
+        const toupdate=this.makeDesignations()
+        console.log(toupdate)
+        //let rolesSelected = [...this.state.rolesSelected];
+        //let roleSelected = {...rolesSelected[1]};
+        toupdate.forEach((item, index)=>{
+          let currdes=this.state.designations[item-1]
+          var data = {
+            employeeid: this.state.id,
+            designationid: item,
+            designation: currdes.name
+          };
+      
+          console.log(data);
+      
+          DesignationDataService.AssignDesignations(data)
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+            //console.log(data);
+          });
+        });
+        cogoToast.success("Account successfully made for"+this.state.username);
+      }
     }
     
   }
@@ -176,6 +219,7 @@ export default class Register extends Component {
     console.log(this.state.rolesSelected);
   }
 
+  //Generate Password
   generatePassword(){
     var generator = require('generate-password');
 
@@ -190,6 +234,7 @@ export default class Register extends Component {
 
     // 'uEyMTw32v9'
     console.log(this.state);
+    //this.makeDesignations();
     console.log(password);
   }
 
@@ -225,7 +270,7 @@ export default class Register extends Component {
           <div className="col-6 pr-4">
 
             <Form
-              onSubmit={this.handleRegister}
+              //onSubmit={this.handleRegister}
               ref={c => {
                 this.form = c;
               }}
@@ -248,6 +293,7 @@ export default class Register extends Component {
                     <label htmlFor="email">Email</label>
                     <Input
                       type="text"
+                      disabled
                       className="form-control"
                       name="email"
                       value={this.state.email}
@@ -321,7 +367,7 @@ export default class Register extends Component {
             </div>
           </div>
           <div className="form-group">
-            <button className="btn btn-primary btn-block" onClick={this.handleRegister}>Sign Up</button>
+            <button className="btn btn-primary btn-block" onClick={() =>this.handleRegister()}>Sign Up</button>
           </div>
         
         </div>

@@ -18,8 +18,14 @@ module.exports = app => {
     // Find Last punch list item
     router.get("/last/",punchlist.findLastOne);
 
+    //Get Complete/Pending/Incomplete drawings
+    router.get("/status/:pid/:status",punchlist.findAllbyStatus);
+
     // Update a equipment with id
     router.put("/update/:id", punchlist.update);
+
+    // Update a equipment with id
+    router.put("/delete/:id", punchlist.update);
   
     app.use('/api/projects/punchlist', router);
   };
