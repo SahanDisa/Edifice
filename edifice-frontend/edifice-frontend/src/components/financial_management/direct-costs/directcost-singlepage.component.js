@@ -29,11 +29,19 @@ const DirectCost = props => {
     description: Yup.string().required('Description is required'),
     vendor: Yup.string().required('Vendor is required'),
     employee: Yup.string().required('Employee is required'),
-    receivedDate: Yup.string().required('Received Date is required'),
-    paidDate: Yup.string().required('Paid Date is required'),
+    receivedDate: Yup.date()
+    .typeError('Select a valid Received Date')
+    .required('Received Date is required'),
+    paidDate: Yup.date()
+    .typeError('Select a valid Paid Date')
+    .required('Paid Date is required')
+    .min(
+      Yup.ref('receivedDate'),
+      "Paid Date can't be before Received Date"
+    ),
     amount: Yup.number()
-    .typeError('You must specify a valid number')
-    .required('Amount is required'),
+    .required('Amount is required')
+    .typeError('You must specify a valid number'),
   });
 
   const {

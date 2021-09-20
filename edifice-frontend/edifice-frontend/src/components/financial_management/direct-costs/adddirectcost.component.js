@@ -25,13 +25,16 @@ const AddDirectCost = (props) => {
     description: Yup.string().required('Description is required'),
     vendor: Yup.string().required('Vendor is required'),
     employee: Yup.string().required('Employee is required'),
-    receivedDate: Yup.date().required('Received Date is required'),
+    receivedDate: Yup.date()
+    .typeError('Select a valid Received Date')
+    .required('Received Date is required'),
     paidDate: Yup.date()
-    .typeError('You must enter a valid date.')
+    .typeError('Select a valid Paid Date')
     .required('Paid Date is required')
-    .when(
-      "receivedDate",
-      ( receivedDate, schema) => receivedDate && schema.min( receivedDate)),
+    .min(
+      Yup.ref('receivedDate'),
+      "Paid Date can't be before Received Date"
+    ),
     amount: Yup.number()
     .required('Amount is required')
     .typeError('You must specify a valid number'),
