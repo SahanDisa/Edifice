@@ -31,7 +31,9 @@ const DirectCost = props => {
     employee: Yup.string().required('Employee is required'),
     receivedDate: Yup.string().required('Received Date is required'),
     paidDate: Yup.string().required('Paid Date is required'),
-    amount: Yup.string().required('Amount is required'),
+    amount: Yup.number()
+    .typeError('You must specify a valid number')
+    .required('Amount is required'),
   });
 
   const {

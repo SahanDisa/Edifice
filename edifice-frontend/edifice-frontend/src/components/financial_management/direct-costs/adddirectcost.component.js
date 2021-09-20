@@ -25,9 +25,16 @@ const AddDirectCost = (props) => {
     description: Yup.string().required('Description is required'),
     vendor: Yup.string().required('Vendor is required'),
     employee: Yup.string().required('Employee is required'),
-    receivedDate: Yup.string().required('Received Date is required'),
-    paidDate: Yup.string().required('Paid Date is required'),
-    amount: Yup.string().required('Amount is required'),
+    receivedDate: Yup.date().required('Received Date is required'),
+    paidDate: Yup.date()
+    .typeError('You must enter a valid date.')
+    .required('Paid Date is required')
+    .when(
+      "receivedDate",
+      ( receivedDate, schema) => receivedDate && schema.min( receivedDate)),
+    amount: Yup.number()
+    .required('Amount is required')
+    .typeError('You must specify a valid number'),
   });
 
   const {
@@ -151,8 +158,8 @@ const AddDirectCost = (props) => {
 
   
  const viewDirectCost = () => {
-  props.history.push("/directcost/"+ directcost.projectId);
-  cogoToast.success("Direct Cost Saved Successfully!");
+  //props.history.push("/directcost/"+ directcost.projectId);
+  //cogoToast.success("Direct Cost Saved Successfully!");
  }
 
   const newDirectCost = () => {
@@ -164,11 +171,11 @@ const AddDirectCost = (props) => {
   return (
         <div className="container">
        
-        {submitted ? (
+        {/* {submitted ? (
 
          viewDirectCost()
 
-        ) : (
+        ) : ( */}
           <div class="container">
             <h2>New Direct Cost</h2>
             <Breadcrumbs aria-label="breadcrumb">
@@ -387,7 +394,7 @@ const AddDirectCost = (props) => {
             </div><br />
           {/** */} 
           </div>
-        )}
+        {/* )} */}
         <br /><br />
       </div>
   );
