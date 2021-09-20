@@ -27,6 +27,7 @@ import commitmentsIcon from "././../../assets/FM/commitments.png";
 import bulldozerIcon from "././../../assets/066-bulldozer.png";
 
 import Card from 'react-bootstrap/Card';
+import cogoToast from "cogo-toast";
 
 export default class BoardUser extends Component {
   constructor(props) {
@@ -45,6 +46,7 @@ export default class BoardUser extends Component {
   }
   componentDidMount() {
     window.scrollTo(0, 0);
+    cogoToast.success("Project Changed Successfully!");
     const user = AuthService.getCurrentUser();
 
     if (user) {
@@ -134,7 +136,7 @@ export default class BoardUser extends Component {
             Home
           </Link>
           <Link color="inherit" to={"/projectmanagementhome/"+id}>
-          {projects.title} / App Dashboard  
+          {projects.title} - App Dashboard  
           </Link>
           {/* <Link color="textPrimary" href="/components/breadcrumbs/" aria-current="page">
             Breadcrumb
