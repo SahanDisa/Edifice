@@ -518,23 +518,26 @@ db.timesheets.belongsTo(db.projects, {
   as: "project",
 });
 
-//One worker has many workerhours
-db.workers.hasMany(db.workedHours, {
-  as: "workersHours"
-});
-db.workedHours.belongsTo(db.workers, {
-  foreignKey: "workerWId",
-  as: "worker",
-});
+// //One worker has many workerhours
+// db.workers.hasMany(db.workedHours, {
+//   as: "workersHours"
+// });
+// db.workedHours.belongsTo(db.workers, {
+//   foreignKey: "workerWId",
+//   as: "worker",
+// });
 
-//One timesheet has many workerhours
-db.timesheets.hasMany(db.workedHours, {
-  as: "workedhourstimesheet"
-});
-db.workedHours.belongsTo(db.timesheets, {
-  foreignKey: "timesheetId",
-  as: "timesheet",
-});
+// //One timesheet has many workerhours
+// db.timesheets.hasMany(db.workedHours, {
+//   as: "workedhourstimesheet"
+// });
+// db.workedHours.belongsTo(db.timesheets, {
+//   foreignKey: "timesheetId",
+//   as: "timesheet",
+// });
+
+db.workers.belongsToMany(db.timesheets, { through: db.workedHours });
+db.timesheets.belongsToMany(db.workers, { through: db.workedHours });
 
 //----------------------------------------
 // One project has many costcodes

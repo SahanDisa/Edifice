@@ -5,11 +5,14 @@ import { Link } from "react-router-dom";
 import AllocateEquip from './allocateEquipment.component';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import EquipmentDataService from "./../../../services/equipment.service";
+import EquipmentCategoryDataService from "./../../../services/equipment-category.service";
 
 class EquipDetails extends Component {
   constructor(props) {
     super(props);
     this.retrieveEquipment = this.retrieveEquipment.bind(this);
+    this.retrieveEquipmentCategory = this.retrieveEquipmentCategory.bind(this);
+
     this.onChangeCategory = this.onChangeCategory.bind(this);
     this.onChangeProjectId = this.onChangeProjectId.bind(this);
     this.onChangeCondition = this.onChangeCondition.bind(this);
@@ -29,13 +32,15 @@ class EquipDetails extends Component {
         projectId: "",
         condition: "",
         description: ""
-      }
+      },
+      categorys: []
 
     };
   }
 
   componentDidMount() {
     this.retrieveEquipment(this.props.match.params.code);
+    this.retrieveEquipmentCategory();
   }
 
   retrieveEquipment(id) {
@@ -49,6 +54,20 @@ class EquipDetails extends Component {
       .catch(e => {
         console.log(e);
       });
+  }
+
+  retrieveEquipmentCategory() {
+    EquipmentCategoryDataService.getAll()
+      .then(response => {
+        this.setState({
+          categorys: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+
   }
 
   onChangeCategory(e) {
@@ -131,7 +150,7 @@ class EquipDetails extends Component {
   }
 
   render() {
-    const { equipCode, currentEquipment, id } = this.state;
+    const { equipCode, currentEquipment, id, categorys } = this.state;
     return (
       <div>
         <div className="row">
@@ -160,7 +179,7 @@ class EquipDetails extends Component {
           <div class="container">
             <div class="row">
               <div class="col-6">
-                <label htmlFor="">Brand/code</label>
+                <label htmlFor="">Number/Code</label>
                 <input
                   className="form-control"
                   type="text"
@@ -177,15 +196,18 @@ class EquipDetails extends Component {
             <div class="row">
               <div class="col-6">
                 <label htmlFor="">Category</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  required
-                  id="category"
-                  name="category"
-                  value={currentEquipment.category}
-                  onChange={this.onChangeCategory}
-                />
+                {categorys && categorys.map((category) => (
+                  category.id === currentEquipment.equipmentCategoryId ?
+                    <input
+                      className="form-control"
+                      type="text"
+                      required
+                      id="category"
+                      name="category"
+                      value={category.name}
+                      onChange={this.onChangeCategory}
+                    /> : ""
+                ))}
               </div>
 
               <div class="col-6">

@@ -40,7 +40,7 @@ exports.create = (req, res) => {
 exports.getTimesheetDetails = (req, res) => {
 
   db.sequelize.query(
-    'SELECT worked_hours.id,worked_hours.location,worked_hours.start, worked_hours.lunch_start,worked_hours.lunch_stop,worked_hours.tea_start, worked_hours.tea_stop,worked_hours.stop, worker.firstName, worker.lastName FROM worked_hours INNER JOIN worker ON worker.wId=worked_hours.workerWId WHERE worked_hours.timesheetId=:id',
+    'SELECT worked_hours.workerWId,worked_hours.location,worked_hours.start, worked_hours.lunch_start,worked_hours.lunch_stop,worked_hours.tea_start, worked_hours.tea_stop,worked_hours.stop, worker.firstName, worker.lastName FROM worked_hours INNER JOIN worker ON worker.wId=worked_hours.workerWId WHERE worked_hours.timesheetId=:id',
     { replacements: { id: req.params.id }, type: db.sequelize.QueryTypes.SELECT })
     .then(data => {
       res.send(data);
