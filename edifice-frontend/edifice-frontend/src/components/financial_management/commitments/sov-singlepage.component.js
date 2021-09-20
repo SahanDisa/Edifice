@@ -113,8 +113,8 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
     SovDataService.update(currentSov.id, currentSov)
       .then(response => {
         console.log(response.data);
-        setMessage("The sovcost was updated successfully!");
-        props.history.push("/budgetestimates/"+currentSov.projectId);
+        //setMessage("SoV Updated successfully!");
+        props.history.push("/viewsov/"+currentSov.projectId+"/"+currentSov.commitmentId);
         cogoToast.success("SoV updated Successfully!");
       })
       .catch(e => {
@@ -167,16 +167,16 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
               <Link color="inherit" to="/home">
                 Home
               </Link>
-              <Link color="inherit" to={"/projectmanagementhome/"+pid}>
+              <Link color="inherit" to={"/projectmanagementhome/"+currentSov.projectId}>
                 App Dashboard
               </Link>
-              <Link color="textPrimary" to={"/commitment/"+pid} aria-current="page">
+              <Link color="textPrimary" to={"/commitment/"+currentSov.projectId} aria-current="page">
                Commitments
               </Link>
-              <Link color="textPrimary" to={"/editcommitment/"+id} aria-current="page">
+              <Link color="textPrimary" to={"/editcommitment/"+currentSov.id} aria-current="page">
               #{id} - {currentCommitment.title}
               </Link>
-              <Link color="textPrimary" to={"/viewsov/"+pid+"/"+id} aria-current="page">
+              <Link color="textPrimary" to={"/viewsov/"+currentSov.projectId+"/"+currentSov.id} aria-current="page">
                Schedule of Values
               </Link>
               <Link color="textPrimary" to={"/viewsinglesov/"+currentSov.id} aria-current="page">
@@ -271,10 +271,10 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
           >
             Update <UpdateIcon/>
           </button>
-          <Link to={"/viewsov/" +currentSov.projectId+"/"+ currentSov.commitmentId}>
+          {/* <Link to={"/viewsov/" +currentSov.projectId+"/"+ currentSov.commitmentId}>
             <button className="btn btn-success">
             Cancel
-            </button></Link>
+            </button></Link> */}
           <button
             type="button"
             onClick={() => reset()}
