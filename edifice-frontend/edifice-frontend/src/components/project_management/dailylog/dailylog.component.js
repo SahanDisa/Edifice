@@ -5,6 +5,7 @@ import DLAccidentService from "../../../services/project_management/dlaccident.s
 import DLCallService from "../../../services/project_management/dlcall.service";
 import DLWeatherService from "../../../services/project_management/dlweather.service";
 import DLGeneralService from "../../../services/project_management/dlgeneral.service";
+import cogoToast from 'cogo-toast';
 
 import Table from 'react-bootstrap/Table';
 
@@ -36,6 +37,7 @@ class DailyLogHome extends Component {
             projectId: this.props.match.params.id
         };
     }
+
     componentDidMount() {
         this.retrieveAccidentLog(this.props.match.params.id);
         this.retrieveCallLog(this.props.match.params.id);
@@ -114,6 +116,7 @@ class DailyLogHome extends Component {
         .then(response => {
             // window.location.reload();
         })
+        // cogoToast.success("Accident Log Deleted Successfully!", { position: 'top-right', heading: 'success' });
     }
 
     deleteCallLog(callid){
@@ -124,6 +127,7 @@ class DailyLogHome extends Component {
         .then(response => {
             // window.location.reload();
         })
+        // cogoToast.success("Call Log Deleted Successfully!", { position: 'top-right', heading: 'success' });
     }
 
     deleteWeatherLog(weatherid){
@@ -134,6 +138,7 @@ class DailyLogHome extends Component {
         .then(response => {
             // window.location.reload();
         })
+        // cogoToast.success("Weather Log Deleted Successfully!", { position: 'top-right', heading: 'success' });
     }
     
     render() {

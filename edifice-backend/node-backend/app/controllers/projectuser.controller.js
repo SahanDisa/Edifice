@@ -150,9 +150,8 @@ exports.getProjectUserDetails = (req,res)=>{
 
 exports.getUserDetails = (req,res)=>{
   id = req.params.id;
-  pos = req.params.pos;
 
-  db.sequelize.query('select projectuser.*, user.* FROM projectuser INNER JOIN projects ON projectuser.userId = users.id AND projectuser.userId = '+id+' AND projectuser.position = '+pos+';',
+  db.sequelize.query('select projectuser.*, users.* FROM projectuser, users where projectuser.userId = users.id AND projectuser.projectId = '+id+' AND projectuser.position = "Engineer";',
    { type: db.sequelize.QueryTypes.SELECT})
   .then(data => {
       res.send(data);

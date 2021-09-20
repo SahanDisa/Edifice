@@ -12,6 +12,7 @@ class PLIView extends Component {
         // this.onChangeType = this.onChangeType.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.onChangeStatus = this.onChangeStatus.bind(this);
         this.retrivePLItemInfo = this.retrivePLItemInfo.bind(this);
         this.updatePunchList = this.updatePunchList.bind(this);
         this.deletePunchList = this.deletePunchList.bind(this);
@@ -74,6 +75,18 @@ class PLIView extends Component {
                 plItem: {
                     ...prevState.plItem,
                     description: description
+                }
+            }
+        });
+    }
+
+    onChangeStatus(e) {
+        const status = e.target.value
+        this.setState(function(prevState){
+            return {
+                plItem: {
+                    ...prevState.plItem,
+                    status: status
                 }
             }
         });
@@ -143,18 +156,6 @@ class PLIView extends Component {
                             />
                         </div>
                         <div className="form-group col-md-6">
-                            <label htmlFor="">Status</label>
-                            <input
-                                className="form-control"
-                                name="status"
-                                type="text"
-                                value={plItem.status}
-                                readOnly
-                            />
-                        </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-6">
                             <label htmlFor="">Type</label>
                             <input
                                 className="form-control"
@@ -163,6 +164,68 @@ class PLIView extends Component {
                                 type="text"
                                 readOnly
                             />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
+                            <label htmlFor="">Status</label>
+                            {plItem.status == "Initiated" ?
+                                <select
+                                className="form-control"
+                                name="status"
+                                type="text"
+                                value={plItem.status}
+                                required>
+                                    <option value="Initiated">Initiated</option>
+                                    <option value="WIP">Work in Progress</option>
+                                    <option value="RFR">Ready for Review</option>
+                                    <option value="RTC">Ready to Close</option>
+                                    <option value="WNA">Work not Accepted</option>
+                                </select>
+                            : plItem.status == "WIP" ?
+                                <select
+                                className="form-control"
+                                name="status"
+                                type="text"
+                                value={plItem.status}
+                                required>
+                                    <option value="WIP">Work in Progress</option>
+                                    <option value="RFR">Ready for Review</option>
+                                    <option value="RTC">Ready to Close</option>
+                                    <option value="WNA">Work not Accepted</option>
+                                </select>
+                            : plItem.status == "RFR" ?
+                                <select
+                                className="form-control"
+                                name="status"
+                                type="text"
+                                value={plItem.status}
+                                required>
+                                    <option value="RFR">Ready for Review</option>
+                                    <option value="RTC">Ready to Close</option>
+                                    <option value="WNA">Work not Accepted</option>
+                                </select>
+                            : plItem.status == "RTC" ?
+                                <select
+                                className="form-control"
+                                name="status"
+                                type="text"
+                                value={plItem.status}
+                                required>
+                                    <option value="RFR">Ready to Close</option>
+                                    <option value="WNA">Work not Accepted</option>
+                                </select>
+                            : 
+                                <select
+                                className="form-control"
+                                name="status"
+                                type="text"
+                                value={plItem.status}
+                                required>
+                                    <option value="Initiated">Initiated</option>
+                                    <option value="RFR">Work not Accepted</option>
+                                </select>
+                            }
                         </div>
                         <div className="form-group col-md-6">
                             <label htmlFor="">Location</label>

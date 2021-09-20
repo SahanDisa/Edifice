@@ -260,7 +260,7 @@ class CreatePL extends Component {
                                         required
                                     >{users && users.map((u, index) => (
                                         <option
-                                            value={u.userId}
+                                            value={u.username}
                                             onChange={this.onChangeAssignee}
                                             key={index}
                                         >

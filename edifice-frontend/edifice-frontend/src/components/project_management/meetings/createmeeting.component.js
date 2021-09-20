@@ -4,7 +4,6 @@ import MeetingDataService from "../../../services/project_management/meeting.ser
 import MeetingCategoryDataService from "../../../services/project_management/meetingcategory.service.js";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import cogoToast from 'cogo-toast';
-import { TextareaAutosize } from "@material-ui/core";
 
 class CreateMeeting extends Component {
     constructor(props) {
