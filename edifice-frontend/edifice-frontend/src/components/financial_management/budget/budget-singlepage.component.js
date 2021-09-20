@@ -94,7 +94,8 @@ const Budget = props => {
       .then(response => {
         setSubmitted(true);
         console.log(response.data);
-        setMessage("The budget line item was updated successfully!");
+        props.history.push("/budgetestimates/"+currentBudget.projectId);
+        cogoToast.success("Budget Estimate Updated Successfully!");
         
       })
       .catch(e => {
@@ -184,15 +185,13 @@ const Budget = props => {
                type="text"
                 id="costCode"
                 name="costCode"
+                disabled
                 value={currentBudget.costCode}
-                {...register('costCode')}
                 readonly
                 //onChange={handleInputChange}
-                className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
+                className={`form-control`}
                
               />
-
-              <div className="invalid-feedback">{errors.costCode?.message}</div>
             </div>
             <div className="form-group">
               <label htmlFor="title">Description</label>
@@ -272,7 +271,7 @@ const Budget = props => {
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 1</strong><br/>Edit a Budget Line Item</h6> </TimelineContent>
+                <TimelineContent><h6><strong>Step 1</strong><br/>Create a Budget Line Item</h6> </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>
@@ -301,7 +300,7 @@ const Budget = props => {
           
           
           </div>
-          <p>{message}</p>
+     
          
         </div>
         
