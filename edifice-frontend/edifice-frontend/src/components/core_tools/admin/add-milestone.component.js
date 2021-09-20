@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import MilestoneDataService from "./../../../services/milestone.service";
 import ProjectDataService from "./../../../services/project.service";
+import PortfolioDataService from "../../../services/portfolio.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
-
+import { Card } from "@material-ui/core";
 
 export default class AddMilestone extends Component {
   constructor(props) {
@@ -28,11 +29,13 @@ export default class AddMilestone extends Component {
       currentIndex: -1,
       projectId: "",
 
+      milestones: [],
       submitted: false
     };
   }
   componentDidMount() {
     this.getLastProjectID();
+    this.retriveMilestones(this.props.match.params.id);
   }
   onChangeTitle(e) {
     this.setState({
@@ -62,6 +65,18 @@ export default class AddMilestone extends Component {
         .catch(e => {
           console.log(e);
         });
+  }
+  retriveMilestones(id){
+    PortfolioDataService.getAllMilestones(id)
+      .then(response => {
+        this.setState({
+          milestones: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
   saveMilestone() {
     var data = {
@@ -100,7 +115,7 @@ export default class AddMilestone extends Component {
   }
 
   render() {
-    const {lastproject, currentIndex, projectId} = this.state;
+    const {lastproject, currentIndex, projectId, milestones} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
@@ -161,6 +176,28 @@ export default class AddMilestone extends Component {
             <button onClick={this.saveMilestone} className="btn btn-success">
               Create Milestone
             </button>
+            {/* Show Current Milestones */}
+            <div>
+            <div className="col-md-8">
+              <div className="list-group">
+              <h5 className="mt-2">Current Milestones</h5>
+              {milestones &&
+                milestones.map((milestone, index) => (
+                  <Card style={{ width: '40rem'}} className="m-2 shadow-md">
+                  <div className="row">
+                    <div className="col-9">
+                      <br/>
+                        <h6><b>Title : {milestone.title}</b></h6>
+                        <h6>Description : {milestone.description}</h6>
+                        <h6>Duration : {milestone.duration}</h6>
+                    </div>
+                  </div>
+                  </Card>
+                ))}
+                </div>
+            </div>
+            </div>
+            {/* Show Current Milestones ends  */}
             </div>
             <div className="container col-4">
             <Timeline>

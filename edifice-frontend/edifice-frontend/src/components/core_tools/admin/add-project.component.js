@@ -8,6 +8,7 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
+import Alert from "react-bootstrap/Alert";
 
 export default class AddProject extends Component {
   constructor(props) {
@@ -28,8 +29,9 @@ export default class AddProject extends Component {
       published: false,
       startdate: "",
       enddate: "",
+      message: "",
 
-      submitted: false,
+      submitted: true,
       lastproject:[],
       currentIndex: -1,
     };
@@ -63,32 +65,46 @@ export default class AddProject extends Component {
   }
 
   saveProject() {
-    var data = {
-      title: this.state.title,
-      description: this.state.description,
-      location: this.state.location,
-      startdate: this.state.startdate,
-      enddate: this.state.enddate
-    };
-
-    ProjectDataService.create(data)
-      .then(response => {
-        this.setState({
-          id: response.data.id,
-          title: response.data.title,
-          description: response.data.description,
-          location: response.data.location,
-          startdate: response.data.startdate,
-          enddate: response.data.enddate,
-          published: response.data.published,
-
-          submitted: true
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
+    var date1 = new Date(this.state.startdate);
+    var date2 = new Date(this.state.enddate);
+    if(date1.getTime() > date2.getTime()){
+      console.log("Error"+date1.getTime()+" "+date2.getTime());
+      this.setState({
+        message: "End Date should larger than Start Date"
       });
+    }else{
+      console.log("Duration is fine "+date1.getTime()+" "+date2.getTime());
+      this.setState({
+        message: "Duration is Appicable"
+      });
+      // backend
+      var data = {
+        title: this.state.title,
+        description: this.state.description,
+        location: this.state.location,
+        startdate: this.state.startdate,
+        enddate: this.state.enddate
+      };
+  
+      ProjectDataService.create(data)
+        .then(response => {
+          this.setState({
+            id: response.data.id,
+            title: response.data.title,
+            description: response.data.description,
+            location: response.data.location,
+            startdate: response.data.startdate,
+            enddate: response.data.enddate,
+            published: response.data.published,
+  
+            submitted: true
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
     //this.state.getLastProjectID();
   }
 
@@ -116,20 +132,21 @@ export default class AddProject extends Component {
         })
         .catch(e => {
           console.log(e);
-        });
+    });
   }
 
   render() {
-    const {lastproject, currentIndex} = this.state;
+    const {lastproject, currentIndex, message} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
           <div>
           <center>
-            <h4>You submitted successfully!</h4>
-            <button className="btn btn-success m-2" onClick={this.newProject}>Add Project</button>
+            <h4 className="alert alert-success">You submitted the project successfully!</h4>
+            <button className="btn btn-success m-2" onClick={this.newProject}>Add Another Project</button>
             <Link className="btn btn-primary m-2" to={"/projects"}>Back Home</Link>
             <div>
+              <h5>Proceed to Step 02 : Define Departments</h5>
               {lastproject && lastproject.map((project, index) => (
                 <div
                     className={
@@ -228,7 +245,16 @@ export default class AddProject extends Component {
                 name="endDate"
               />
             </div>
-
+            {message != "Duration is Appicable" &&
+            <Alert variant="danger">
+              <Alert.Heading>{this.state.message}</Alert.Heading>
+            </Alert>
+            }
+            {message == "Duration is Appicable" && 
+            <Alert variant="success">
+              <Alert.Heading>{this.state.message}</Alert.Heading>
+            </Alert>
+            }
             <button onClick={()=>{this.saveProject(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastProjectID()}} className="btn btn-success">
               Create Project
             </button>
