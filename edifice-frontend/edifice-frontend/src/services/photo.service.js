@@ -9,6 +9,10 @@ class PhotoFileDataService {
     return http.get(`/photofile/${id}`);
   }
 
+  findByTitle(title) {
+    return http.get(`/photofile?title=${title}`);
+  }
+
   create(data) {
     return http.post(`/photofile/`, data);
   }

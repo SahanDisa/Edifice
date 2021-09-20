@@ -65,7 +65,7 @@ export default class ActionPlan extends Component {
           id: response.data.id,
           title: response.data.title,
           description: response.data.description,
-
+          projectId: response.data.projectId,
           submitted: true
         });
         console.log(response.data);
@@ -73,20 +73,19 @@ export default class ActionPlan extends Component {
       .catch(e => {
         console.log(e);
       });
-      window.location.reload();
     }
 
     render() {
         const { actionplans, aptypes, currentIndex, projectId } = this.state;
         return (
           <div>
-          <h2>Action Plan</h2>
+          <h2>ACTION PLAN HOME</h2>
           <Breadcrumbs aria-label="breadcrumb">
             <Link color="inherit" to="/home">Home</Link>
             <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
             <Link color="inherit" aria-current="page" className="disabledLink">Action Plan</Link>
           </Breadcrumbs><hr/>
-          <div className="container">
+          <div>
             <h4 className="mt-2">Action Plan Types</h4>
             <div className="container">
                 <div className="form-row">
@@ -121,8 +120,9 @@ export default class ActionPlan extends Component {
                     </div>
                 </div>
             </div>
-            <h4>Action Plans</h4><hr/>
-            <div className="container">
+            <hr/>
+            <h4>Action Plans</h4>
+            <div>
               <Link className="btn btn-primary mb-3" to={"/addactionplan/"+projectId}>+ Add Action Plan</Link>
             </div>
             <div className="container">
@@ -152,7 +152,7 @@ export default class ActionPlan extends Component {
                             </div>
                             <div className="col-6">
                               <p>Plan Manager : {api.planmanager}</p>
-                              {api.isapprove == false ? "Not Approved 🔴" : "Approved 🟢"}
+                              {api.isApproved == false ? "Not Approved 🔴" : "Approved 🟢"}
                             </div>
                           </div>
                         </Card.Text>

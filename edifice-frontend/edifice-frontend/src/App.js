@@ -411,8 +411,8 @@ class App extends Component {
               <Route path="/actionplan/:id" component={actionplanHome} />
               <Route path="/addactionplan/:id" component={AddActionPlan} />
               <Route path="/actionplansingle/:id/:apid" component={ActionPlanSinglePage} />
-              <Route path="/addactionplanitem" component={AddAPItem} />
-              <Route path="/addactionplansection" component={AddAPSection} />
+              <Route path="/addactionplanitem/:id/:apid" component={AddAPItem} />
+              <Route path="/addactionplansection/:id/:apid" component={AddAPSection} />
               <Route path="/viewactionplantype/:id/:apid" component={ViewAPType} />
               <Route exact path="/viewactionplan/:id/:apid" component={ViewActionPlan} />
               {/* Punch List */}

@@ -208,6 +208,7 @@ export default class UpdateDocument extends Component {
                     id="title"
                     value={currentDocument.title}
                     onChange={this.onChangeTitle}
+                    disabled
                   />
                 </div>
                 <div className="form-group">
@@ -253,7 +254,7 @@ export default class UpdateDocument extends Component {
                     ))}
                 </select>
                 </div>
-                <div className="form-group">
+                {/* <div className="form-group">
                   <label htmlFor="description">Version</label>
                   <input
                     type="text"
@@ -263,7 +264,7 @@ export default class UpdateDocument extends Component {
                     onChange={this.onChangeVersion}
                     disabled
                   />
-                </div>
+                </div> */}
                 <div className="form-group">
                   <label>
                     <strong>Status:</strong>
