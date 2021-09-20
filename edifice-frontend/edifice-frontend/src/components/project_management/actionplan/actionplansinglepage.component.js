@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
+import ActionPlanService from "../../../services/project_management/actionplan.service";
 import ActionPlanSectionService from "../../../services/project_management/actionplansection.service";
 import AddAPItem from './addapitem.component';
 import AddAPSection from './addapsection.component';
@@ -14,6 +15,7 @@ import TimelineDot from '@material-ui/lab/TimelineDot';
 import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import { Breadcrumbs } from "@material-ui/core";
 
 export default class ActionPlanSinglePage extends Component {
     constructor(props) {
@@ -30,11 +32,25 @@ export default class ActionPlanSinglePage extends Component {
 
         currentUser: AuthService.getCurrentUser(),
         actionplansections: [],
+        actionplan: [],
       };
     }
     
     componentDidMount() {
-        this.getActionPlanSections(this.props.match.params.id);
+        this.getActionPlanSections(this.props.match.params.apid);
+        this.getActionPlanDetails(this.props.match.params.apid);
+    }
+    getActionPlanDetails(id){
+        ActionPlanService.getOne(id)
+        .then(response => {
+            this.setState({
+              actionplan: response.data
+            });
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+    });
     }
     getActionPlanSections(id){
         ActionPlanSectionService.getAll(id)
@@ -50,13 +66,18 @@ export default class ActionPlanSinglePage extends Component {
     }
     
     render() {
-        const { id, actionplansections } = this.state;
+        const { id, actionplansections, actionplan, apid } = this.state;
         return (
             <div>
-                <h2>Action Plan Single Page</h2>
-                <p>Manage a single Action Plan with sections and action items</p>
+                <h2>Action Plan - {actionplan.title}</h2>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="inherit" to="/home">Home</Link>
+                    <Link color="inherit" to={"/projectmanagementhome/"+id}>App Dashboard</Link>
+                    <Link color="inherit" to={"/actionplan/"+id}>Action Plan Home</Link>
+                    <Link color="inherit" aria-current="page" className="disabledLink">{actionplan.title}</Link>
+                </Breadcrumbs>
                 <hr/>
-                <h3>Action Plan Workflow</h3>
+                <h3>Workflow</h3>
                 <div className="row">
                     <div className="col-8">
                         {/* Starts */}
@@ -108,28 +129,28 @@ export default class ActionPlanSinglePage extends Component {
                         {/* Ends */}
                     </div>
                     <div className="col-4">
-                        <h4>Title : Action Plan #1</h4>
-                        <h6>Plan Manager : Name of Plan Manager</h6>
-                        <h6>Action Type : Construction</h6>
-                        <h6>Location : </h6>
-                        <h6>Description : </h6>
-                        <h6>Approved : Yes/No</h6>
+                        <h6>Plan Manager : {actionplan.planmanager}</h6>
+                        <h6>Action Type : {actionplan.actiontype}</h6>
+                        <h6>Location : {actionplan.location}</h6>
+                        <h6>Description : {actionplan.description}</h6>
+                        <h6>{actionplan.isApproved == false ? "Not Approved 🔴" : "Approved 🟢" }</h6>
                         <hr></hr>
-                        <Link href="#" className="btn btn-primary mr-2"  to="">+ Add Section</Link>
-                        <Link href="#" className="btn btn-primary"  to="">+ Add Item</Link>
+                        <Link to={"/addactionplansection/"+id+"/"+apid} className="btn btn-primary mr-2" >+ Add Section</Link>
+                        <Link to={"/addactionplanitem/"+id+"/"+apid} className="btn btn-primary mr-2" >+ Add Item</Link>
+                        <Link href="#" className="btn btn-success mr-2"  to="">Update</Link>
                     </div>
                 </div>
-                {/* Add Section Starts */}
+                {/*                 
                   <div className="modal fade" id="addAPSection" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <AddAPSection actionplanId ={id} />
                   </div>
-                {/* Add Section Ends */}
+                
 
-                {/* Add item Starts */}
+                
                   <div className="modal fade" id="addAPItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <AddAPItem actionplanId ={id}/>
                   </div>
-                {/* Add item Ends */}
+                 */}
             </div>
         );
     }

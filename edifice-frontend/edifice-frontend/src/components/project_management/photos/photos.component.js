@@ -107,7 +107,7 @@ export default class PhotosHome extends Component {
           <hr></hr>
           <div>
             <h3>Insights</h3>
-            <h6>Overview of Document progress</h6>
+            <h6>Overview of Photo details</h6>
             <div className="row">
               <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
                 <div className="card card-hover shadow-sm" title="Albums Insights">
@@ -130,7 +130,7 @@ export default class PhotosHome extends Component {
                   {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
                 </div>
               </div>
-              <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
+              {/* <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
                 <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
                 <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
                   <center>
@@ -149,12 +149,10 @@ export default class PhotosHome extends Component {
                       pointerRadius={3}
                       pointerStrokeWidth={12}
                   />
-                  {/* <h3 className="h5 nav-heading-title mb-0">Progress</h3> */}
                   </center>
-                  {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
                 </Link>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <hr></hr>

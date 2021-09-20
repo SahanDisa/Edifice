@@ -221,12 +221,12 @@ export default class Register extends Component {
 
   //Generate Password
   generatePassword(){
-    var generator = require('generate-password');
+    //var generator = require('generate-password');
 
-    var password = generator.generate({
-	  length: 10,
-	  numbers: true
-    });
+    // var password = generator.generate({
+	  // length: 10,
+	  // numbers: true
+    // });
 
     this.setState({
       password: "12345"
@@ -235,7 +235,7 @@ export default class Register extends Component {
     // 'uEyMTw32v9'
     console.log(this.state);
     //this.makeDesignations();
-    console.log(password);
+    console.log(this.state.password);
   }
 
   addToRoles(index){
