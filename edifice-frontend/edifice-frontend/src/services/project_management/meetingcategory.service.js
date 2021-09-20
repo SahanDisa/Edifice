@@ -2,23 +2,23 @@ import http from "./../../http-common.js";
 
 class MeetingCategoryDataService {
     create(data) {
-        return http.post("/meetingcategory", data);
+        return http.post("/projects/meetingcategory", data);
     }
 
     update(id, data) {
-        return http.put(`/meetingcategory/update/${id}`, data);
+        return http.put(`/projects/meetingcategory/update/${id}`, data);
     }
 
     delete(id) {
-        return http.put(`/meetingcategory/delete/${id}`);
+        return http.put(`/projects/meetingcategory/delete/${id}`);
     }
 
-    getAll() {
-        return http.get("/meetingcategory/");
+    getAll(id) {
+        return http.get(`/projects/meetingcategory/all/${id}`);
     }
 
     get(id) {
-        return http.get(`/meetingcategory/${id}`);
+        return http.get(`/projects/meetingcategory/${id}`);
     }
 }
 

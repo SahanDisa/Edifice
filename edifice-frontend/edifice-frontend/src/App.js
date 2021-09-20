@@ -12,6 +12,7 @@ import profileAvatar from "././assets/profile-navbar.jpg";
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
+import ForgetPassword from "./components/forgetpassword.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Homereal from "./components/homereal.component";
@@ -24,6 +25,7 @@ import ErrorPage from "./components/error.component";
 
 import AddProject from './components/core_tools/admin/add-project.component';
 import AddDepartment from "./components/core_tools/admin/add-department.component";
+import AddCustomDepartment from "./components/core_tools/admin/add-department-custom.component";
 import AddMilestone from "./components/core_tools/admin/add-milestone.component";
 import AddMilestoneGeneral from "./components/core_tools/admin/add-milestone-custom.component";
 import AssignUserProject from "./components/core_tools/admin/add-projectuser.component";
@@ -44,6 +46,7 @@ import PhotosHome from "./components/project_management/photos/photos.component"
 import AddAlbum from "./components/project_management/photos/addalbum.component";
 import ViewSingleAlbum from "./components/project_management/photos/album-singlepage.component";
 import MoveCapturetoAlbum from "./components/project_management/photos/movecapturestoalbum.component";
+import CameraSinglePage from "./components/project_management/photos/camera.component";
 import UpdateAlbum from "./components/project_management/photos/updatealbum.component";
 import UpdatePhoto from "./components/project_management/photos/updatephoto.component";
 
@@ -81,10 +84,11 @@ import UploadDocment from "./components/project_management/document/uploaddocume
 import ViewSingleDocument from "./components/project_management/document/viewsingledocument.component";
 import UpdateDocument from "./components/project_management/document/updatedocument.component";
 
-import MeetingsConfig from "./components/project_management/meetings/configuration.component";
 import MeetingsHome from "./components/project_management/meetings/meeting.component";
-import UpdateMeetings from "./components/project_management/meetings/update.component";
-import ViewMeetings from "./components/project_management/meetings/view.component";
+import CreateMeetings from "./components/project_management/meetings/createmeeting.component";
+import CreateFollowupMeetings from "./components/project_management/meetings/createfollowup.component";
+import ViewMeeting from "./components/project_management/meetings/view.component";
+import ViewOnlyMeeting from "./components/project_management/meetings/viewonly.component";
 
 import BudgetHome from "./components/financial_management/budget/budget.component";
 import PrimeContracts from "./components/financial_management/prime-contracts/primecontracts.component";
@@ -106,12 +110,14 @@ import AddAPSection from "./components/project_management/actionplan/addapsectio
 import ViewActionPlan from "./components/project_management/actionplan/viewactionplan.component";
 
 import DailyLogHome from "./components/project_management/dailylog/dailylog.component";
-import UpdateDls from "./components/project_management/dailylog/update.component";
-import ViewDls from "./components/project_management/dailylog/view.component";
 import CreateDCL from "./components/project_management/dailylog/createcalllog.component";
 import CreateDAL from "./components/project_management/dailylog/createaccidentlog.component";
 import CreateDGL from "./components/project_management/dailylog/creategenerallog.component";
 import CreateDWL from "./components/project_management/dailylog/createweatherlog.component";
+import ViewDCL from "./components/project_management/dailylog/viewcalllog.component";
+import ViewDAL from "./components/project_management/dailylog/viewaccidentlog.component";
+import ViewDGL from "./components/project_management/dailylog/viewgenerallog.component";
+import ViewDWL from "./components/project_management/dailylog/viewweatherlog.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
 import CreatePL from "./components/project_management/punchlist/create-basic.component";
@@ -203,7 +209,9 @@ class App extends Component {
           <div className="navbar-nav mr-auto">
             {currentUser && (
               <li className="nav-item">
-                <Link to={"/home"} className="nav-link"></Link>
+                <Link to={"/home"} className="nav-link">
+                  <h6>Home</h6>
+                </Link>
               </li>
             )}
             {/* {currentUser && (
@@ -288,22 +296,30 @@ class App extends Component {
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
+
             <Route path="/photos/:id" component={PhotosHome} />
             <Route component={ErrorPage} />
           </Switch>
+
+            <Route exact path="/logincode" component={ForgetPassword}/>
+            <Route path="/camera" component={CameraSinglePage} />
+            <Route component={ErrorPage}/>
+          </Switch>  
+
         )}
         {currentUser && (
 
           <div className="container mt-3">
             <Switch>
               <Route exact path={["/", "/home"]} component={Home} />
-              <Route exact path={["/", "/homereal"]} component={Homereal} />
+              {/* <Route exact path={["/", "/homereal"]} component={Homereal} /> */}
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/register/:id" component={Register} />
               <Route exact path="/profile" component={Profile} />
               <Route path="/projectmanagement" component={BoardUser} />
               <Route path="/adddepartment/:id" component={AddDepartment} />
+              <Route path={"/addcustomdepartment/:id"} component={AddCustomDepartment}/>
               <Route path="/addmilestone/:id" component={AddMilestone} />
               <Route path="/addmilestoneproject/:id" component={AddMilestoneGeneral} />
               <Route path="/assignuser/:id" component={AssignUserProject} />
@@ -328,10 +344,11 @@ class App extends Component {
               <Route path="/managestasks/update" component={UpdateTasks} />
               <Route path="/managestasks/view" component={ViewTasks} />
               {/* Meeting */}
-              <Route path="/meetingsconfiguration" component={MeetingsConfig} />
-              <Route path="/meetings" component={MeetingsHome} />
-              <Route path="/managesmeetings/update" component={UpdateMeetings} />
-              <Route path="/managesmeetings/view" component={ViewMeetings} />
+              <Route path="/meetings/:id" component={MeetingsHome} />
+              <Route path="/createmeetings/:id" component={CreateMeetings} />
+              <Route path="/createfollowup/:id/:cid" component={CreateFollowupMeetings} />
+              <Route path="/viewmeeting/:id/:mtid" component={ViewMeeting} />
+              <Route path="/viewonlymeeting/:id/:mtid" component={ViewOnlyMeeting} />
               {/* RFI */}
               <Route path="/rfi" component={rfiHome} />
               <Route path="/managerfi/create" component={CreateRFI} />
@@ -347,19 +364,21 @@ class App extends Component {
               <Route exact path="/viewactionplan/:id" component={ViewActionPlan} />
               {/* Punch List */}
               <Route path="/punchlist/:id" component={punchlistHome} />
-              <Route path="/managepunchlist/createaddphoto/:id" component={CreatePhotos} />
-              <Route path="/managepunchlist/createaddassignee/:id" component={CreateAssignees} />
+              <Route path="/managepunchlist/createaddphoto/:id/plid" component={CreatePhotos} />
+              <Route path="/managepunchlist/createaddassignee/:id/plid" component={CreateAssignees} />
               <Route path="/managepunchlist/create/:id" component={CreatePL} />
               <Route path="/viewtype/:pltid" component={PLTView} />
               <Route path="/view/:pliid" component={PLIView} />
               {/* Daily Logs */}
               <Route path="/dailylogs/:id" component={DailyLogHome} />
-              <Route path="/dailylogs/update/:id" component={UpdateDls} />
-              <Route path="/dailylogs/view/:id" component={ViewDls} />
               <Route path="/createaccidentlog/:id" component={CreateDAL} />
               <Route path="/createcalllog/:id" component={CreateDCL} />
               <Route path="/creategenerallog/:id" component={CreateDGL} />
               <Route path="/createweatherlog/:id" component={CreateDWL} />
+              <Route path="/viewaccidentlog/:id/:dlid" component={ViewDAL} />
+              <Route path="/viewcalllog/:id/:dlid" component={ViewDCL} />
+              <Route path="/viewgenerallog/:id/:dlid" component={ViewDGL} />
+              <Route path="/viewweatherlog/:id/:dlid" component={ViewDWL} />
 
               <Route path="/addUser" component={AddEmployee} />
               <Route path="/editUser/:id" component={EditUser} />
@@ -388,6 +407,7 @@ class App extends Component {
               <Route path="/photos/:id" component={PhotosHome} />
               <Route path="/addphoto/:id" component={AddPhoto} />
               <Route path="/uploadphoto/:name" component={UploadPhotos} />
+              <Route path="/camera/:id" component={CameraSinglePage}/>
               <Route path="/viewalbum/:id" component={ViewSingleAlbum} />
               <Route path="/addalbum/:id" component={AddAlbum} />
               <Route exact path={"/updatealbum/:pid/:id"} component={UpdateAlbum} />
@@ -454,6 +474,12 @@ class App extends Component {
             </Switch>
           </div>
         )}
+        <div className="mt-50">
+          <div style={{'height': '150px'}}></div>
+          <center>
+          <h6>Edifice 2021 © All rights reserved - G42</h6>
+          </center>
+        </div>
       </div>
     );
   }

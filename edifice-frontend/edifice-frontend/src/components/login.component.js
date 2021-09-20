@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -123,7 +124,9 @@ export default class Login extends Component {
               />
             </div>
             <div className="form-group">
-            <a href="#" style={{'text-decoration': "none"}}>Forget Password?</a>
+            <Link style={{'text-decoration': 'none'}} to={"/logincode"}>
+              Forget Password?
+            </Link>
             </div>
             <div className="form-group">
               <button

@@ -15,6 +15,10 @@ module.exports = (sequelize, Sequelize) => {
       enddate:{
         type: Sequelize.STRING  
       },
+      progressValue:{
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
       published: {
         type: Sequelize.BOOLEAN
       }}, {

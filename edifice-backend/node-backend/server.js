@@ -70,6 +70,7 @@ require('./app/routes/worker.routes')(app);
 require('./app/routes/worked-hours.routes')(app);
 require('./app/routes/timesheet.routes')(app);
 require('./app/routes/employee.routes')(app);
+require('./app/routes/employee-designation.routes')(app);
 require('./app/routes/schedule.routes')(app);
 
 require('./app/routes/primecontract.routes')(app);
@@ -78,6 +79,8 @@ require('./app/routes/payment.routes')(app);
 
 require('./app/routes/project-management/meeting.routes')(app);
 require('./app/routes/project-management/meetingcategory.routes')(app);
+require('./app/routes/project-management/meetingagenda.routes')(app);
+require('./app/routes/project-management/meetingattendees.routes')(app);
 
 require('./app/routes/project-management/punchlist.routes')(app);
 require('./app/routes/project-management/punchlisttypes.routes')(app);
@@ -97,6 +100,9 @@ require('./app/routes/project-management/actionplanitem.routes')(app);
 
 require('./app/routes/vendor.routes')(app);
 require('./app/routes/subcontractor.routes')(app);
+require('./app/routes/employee.routes')(app);
+require('./app/routes/designation.routes')(app);
+require('./app/routes/costcode.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {

@@ -12,6 +12,10 @@ module.exports = (sequelize, Sequelize) => {
       date : {
         type: Sequelize.DATEONLY
       },
+      published: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
+      },  
     }, {
         freezeTableName: true,
     });

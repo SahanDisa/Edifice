@@ -103,8 +103,6 @@ export const WebcamCapture = () => {
     return (
         <div className="webcam-container">
             <div className="webcam-img">
-            <h3>Onsite Capturing</h3>
-            <p>Press Capture button to take an image and press Retake to undo the operation.</p>
             <>
             {/* {devices.map((device, key) => (
                 <div>
@@ -116,7 +114,7 @@ export const WebcamCapture = () => {
             </>
             <div className="row">
             <div className="form-group col-12">
-              <label htmlFor="category">Select Device</label>
+              {/* <h5>Select Device</h5> */}
               {devices &&
                 devices.map((device, index) => (
                 <button

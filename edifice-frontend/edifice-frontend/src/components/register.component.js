@@ -6,9 +6,10 @@ import { isEmail } from "validator";
 import mainIcon from "././../assets/logoedifice.png";
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Chip from "@material-ui/core/Chip";
-//import Stack from '@material-ui/core/Stack';
+import cogoToast from 'cogo-toast';
 
 import EmployeeDataService from "../services/employee.service";
+import DesignationDataService from "../services/designation.service";
 import AuthService from "../services/auth.service";
 
 const required = value => {
@@ -56,24 +57,25 @@ export default class Register extends Component {
     super(props);
     this.handleRegister = this.handleRegister.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
+    // this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     //this.addToRoles=this.addToRoles.bind(this);
 
     this.state = {
       id: this.props.match.params.id,
       username: "",
+      empname: "",
       email: "",
       password: "",
       successful: false,
       message: "",
       rolesSelected: [],
-      designations:["Quantity Surveyor","Project Engineer","Site Engineer"],
+      designations:[],
       rolesColors: [],
       signupDisabled:true
     };
 
-    this.makeRolearray(this.state.id,this.state.designations)
+    this.makeRolearray(this.state.id)
   }
 
   onChangeUsername(e) {
@@ -82,21 +84,35 @@ export default class Register extends Component {
     });
   }
 
-  onChangeEmail(e) {
-    this.setState({
-      email: e.target.value
-    });
-  }
+  // onChangeEmail(e) {
+  //   this.setState({
+  //     email: e.target.value
+  //   });
+  // }
 
   onChangePassword(e) {
     this.setState({
-      password: e.target.value
+        password: e.target.value
     });
   }
 
-  handleRegister(e) {
-    e.preventDefault();
+  //make an array with indexes from state.rolesSelected
+  makeDesignations(){
+    const des=[]
 
+    this.state.rolesSelected.map((value,index) =>{
+      if(value=="secondary"){
+        des.push(index+1)
+      }
+      
+    });
+
+    console.log(des)
+    return des
+  }
+
+  handleRegister(e) {
+    //e.preventDefault();
     this.setState({
       message: "",
       successful: false
@@ -129,20 +145,50 @@ export default class Register extends Component {
             message: resMessage
           });
         }
+        
       );
+      console.log(this.state.successful)
+      if(!this.state.successful){
+        //UPDATE EMPLOYEE TABLE
+        const toupdate=this.makeDesignations()
+        console.log(toupdate)
+        //let rolesSelected = [...this.state.rolesSelected];
+        //let roleSelected = {...rolesSelected[1]};
+        toupdate.forEach((item, index)=>{
+          let currdes=this.state.designations[item-1]
+          var data = {
+            employeeid: this.state.id,
+            designationid: item,
+            designation: currdes.name
+          };
+      
+          console.log(data);
+      
+          DesignationDataService.AssignDesignations(data)
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+            //console.log(data);
+          });
+        });
+        cogoToast.success("Account successfully made for"+this.state.username);
+      }
     }
     
   }
 
   //handle frontend input
 
-  makeRolearray(id,roles){
+  makeRolearray(id){
     if(id!="undefined"){
 
       EmployeeDataService.getOne(id)
       .then(response => {
         this.setState({
-          email: response.data.email
+          email: response.data.email,
+          empname: response.data.name
         });
         
         console.log(this.state.email);
@@ -150,39 +196,62 @@ export default class Register extends Component {
       .catch(e => {
         console.log(e);
       });
+
+      DesignationDataService.getAllDesignations()
+      .then(response => {
+        this.setState({
+          designations: response.data
+        });
+        
+        console.log(this.state.designations);
+        this.state.designations.forEach(element => {
+          this.state.rolesSelected.push(
+            "default"
+          )
+        });
+        
+      })
+      .catch(e => {
+        console.log(e);
+      });
     }
-    //console.log(employeeDetails);
-    {roles.map((value,index) => { 
-      this.state.rolesSelected.push(
-        "default"
-      )
-    })}
+    
     console.log(this.state.rolesSelected);
+  }
+
+  //Generate Password
+  generatePassword(){
+    var generator = require('generate-password');
+
+    var password = generator.generate({
+	  length: 10,
+	  numbers: true
+    });
+
+    this.setState({
+      password: "12345"
+    });
+
+    // 'uEyMTw32v9'
+    console.log(this.state);
+    //this.makeDesignations();
+    console.log(password);
   }
 
   addToRoles(index){
     //console.log(index)
     if(this.state.rolesSelected[index]=="default"){
-      // 1. Make a shallow copy of the items
       let rolesSelected = [...this.state.rolesSelected];
-      // 2. Make a shallow copy of the item you want to mutate
       let roleSelected = {...rolesSelected[1]};
-      // 3. Replace the property you're intested in
       roleSelected = 'secondary';
-      // 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
       rolesSelected[index] = roleSelected;
-      // 5. Set the state to our new copy
       this.setState({rolesSelected});
     }else{
-      // 1. Make a shallow copy of the items
+      //you cant use x[]= in state!
       let rolesSelected = [...this.state.rolesSelected];
-      // 2. Make a shallow copy of the item you want to mutate
       let roleSelected = {...rolesSelected[1]};
-      // 3. Replace the property you're intested in
       roleSelected = 'default';
-      // 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
       rolesSelected[index] = roleSelected;
-      // 5. Set the state to our new copy
       this.setState({rolesSelected});
     }
     //console.log(this.state.color)
@@ -201,7 +270,7 @@ export default class Register extends Component {
           <div className="col-6 pr-4">
 
             <Form
-              onSubmit={this.handleRegister}
+              //onSubmit={this.handleRegister}
               ref={c => {
                 this.form = c;
               }}
@@ -224,6 +293,7 @@ export default class Register extends Component {
                     <label htmlFor="email">Email</label>
                     <Input
                       type="text"
+                      disabled
                       className="form-control"
                       name="email"
                       value={this.state.email}
@@ -233,15 +303,19 @@ export default class Register extends Component {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <Input
-                      type="password"
-                      className="form-control"
+                    <div className="row">
+                      <div className="col">
+                        <label htmlFor="password">Password</label>
+                      </div>
+                      <div className="col">
+                        <button className="btn btn-primary" onClick={() =>this.generatePassword()}>Generate Password</button>
+                      </div>
+                    </div>
+                    <h5
                       name="password"
-                      value={this.state.password}
                       onChange={this.onChangePassword}
                       validations={[required, vpassword]}
-                    />
+                    >{this.state.password}</h5>
                   </div>
 
                   <div className="roles">
@@ -276,6 +350,7 @@ export default class Register extends Component {
           </div>
           <div className="col-6">
             <h3 className="pd-3">Select Roles </h3>
+            <p>Allocate roles for employee </p>
             <div className="row">
             {roles.map((value,index) => { 
               return(
@@ -283,7 +358,7 @@ export default class Register extends Component {
                 <div className="pr-2">
                   <Chip 
                     className="py-1"
-                    label={value}
+                    label={value.name}
                     onClick={() =>this.addToRoles(index)}
                     clickable={true} color={this.state.rolesSelected[index]} />
                 </div>
@@ -292,7 +367,7 @@ export default class Register extends Component {
             </div>
           </div>
           <div className="form-group">
-            <button className="btn btn-primary btn-block" disabled={this.state.signupDisabled}>Sign Up</button>
+            <button className="btn btn-primary btn-block" onClick={() =>this.handleRegister()}>Sign Up</button>
           </div>
         
         </div>

@@ -1,6 +1,9 @@
 module.exports = (sequelize, Sequelize) => {
   const Meetings = sequelize.define("meetings", {
-    overview: {
+    category: {
+      type: Sequelize.STRING
+    },
+    name: {
       type: Sequelize.STRING
     },
     date: {

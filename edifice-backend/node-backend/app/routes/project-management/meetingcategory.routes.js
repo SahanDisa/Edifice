@@ -16,7 +16,7 @@ module.exports = app => {
     router.get("/:id", meetingcategory.findOne);
   
     // Retrieve all meetingcategory
-    router.get("/", meetingcategory.findAll);
+    router.get("/all/:id", meetingcategory.findAll);
   
-    app.use('/api/meetingcategory', router);
+    app.use('/api/projects/meetingcategory', router);
   };

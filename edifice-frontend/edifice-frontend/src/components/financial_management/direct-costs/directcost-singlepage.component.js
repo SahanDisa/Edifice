@@ -67,8 +67,8 @@ const DirectCost = props => {
   const [vendors, setVendors] = useState([]);
   const [employees, setEmployees] = useState([]);
 const [currentDirectCost, setCurrentDirectCost] = useState(initialDirectCostState);
+const [submitted, setSubmitted] = useState(false);
 const [message, setMessage] = useState("");
-
 
 
   const getDirectCost = id => {
@@ -118,7 +118,7 @@ const [message, setMessage] = useState("");
 
   useEffect(() => {
     getDirectCost(props.match.params.id);
-    retrieveBudgets();  
+    retrieveBudgets(props.match.params.id);  
     retrieveVendors();
     retrieveEmployees();  
   },[props.match.params.id]);
@@ -131,15 +131,50 @@ const [message, setMessage] = useState("");
 
 
   const updateDirectCost = () => {
+
     DirectCostDataService.update(currentDirectCost.id, currentDirectCost)
       .then(response => {
         console.log(response.data);
-        setMessage("The direct cost was updated successfully!");
+        setSubmitted(true);
+        setMessage("The budget line item was updated successfully!");
       })
       .catch(e => {
         console.log(e);
       });
   };
+
+  const viewDirectCost = () => {
+    props.history.push("/directcost/"+ currentDirectCost.projectId);
+    cogoToast.success("Direct Cost Updated Successfully!");
+   }
+
+   const updatePublished = (status) => {
+
+    var data = {
+      id: currentDirectCost.id,
+      costCode: currentDirectCost.costCode,
+      description: currentDirectCost.description,
+      vendor: currentDirectCost.vendor,
+      employee: currentDirectCost.employee,
+      receivedDate: currentDirectCost.receivedDate,
+      paidDate: currentDirectCost.paidDate,
+      amount: currentDirectCost.amount,
+      published:status
+    };
+    DirectCostDataService.update(currentDirectCost.id, data)
+      .then(response => {
+        props.history.push("/directcost/"+currentDirectCost.projectId);
+        cogoToast.success("Direct Cost Deleted Successfully!");
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+   
+
+    
+  };
+
 
   const deleteDirectCost = () => {
     DirectCostDataService.remove(currentDirectCost.id)
@@ -154,7 +189,10 @@ const [message, setMessage] = useState("");
 
   return (
     <div className="container">
-      {currentDirectCost ? (
+          {/* {submitted ? (
+         viewDirectCost()
+ 
+          ) : (*/}
         <div class="container">
           <h2>Direct Costs</h2>
           <Breadcrumbs aria-label="breadcrumb">
@@ -188,26 +226,26 @@ const [message, setMessage] = useState("");
              />*/}
                 <select
                 id="costCode"
+                name="costCode"
                 {...register('costCode')}
                 value={currentDirectCost.costCode}
                 onChange={handleInputChange}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
-                name="costCode"
+              
               >
-                  <option value="" disabled selected>Select a Cost Code</option>
-        {budgets &&
+       <option value={currentDirectCost.costCode} selected>{currentDirectCost.costCode}</option>
+       {budgets &&
                 budgets.map((budget, index) => (
                 <option
-                    value={budget.costCode}
-                    onChange={handleInputChange}
+                    //value={budget.costCode}
+                    //onChange={onChangeSearchCostCode}
                     key={index}
                 >
                 {/* unit data */}
                 {budget.costCode}
                 </option>
                 ))}
-
-                </select>
+              </select>
           
               <div className="invalid-feedback">{errors.costCode?.message}</div>
             </div>
@@ -319,21 +357,21 @@ const [message, setMessage] = useState("");
             </div>
             <div className="form-group">
 
-            <button className="btn btn-danger" onClick={deleteDirectCost}>
+            <button className="btn btn-danger" onClick={() =>{updatePublished(false);reset()}}>
             Delete <DeleteIcon/> 
           </button>
 
           <button
             type="submit"
             className="btn btn-success m-2"
-            onClick={updateDirectCost}
+            onClick={() =>{updateDirectCost();reset()}}
           >
             Update <UpdateIcon/>
           </button>
-          <Link to={"/directcost/" + currentDirectCost.projectId}>
+         {/* <Link to={"/directcost/" + currentDirectCost.projectId}>
             <button className="btn btn-success">
             Cancel
-            </button></Link>
+                </button></Link> */}
           <button
             type="button"
             onClick={() => reset()}
@@ -383,17 +421,8 @@ const [message, setMessage] = useState("");
           
           </div>
           
-
-
-     
-          <p>{message}</p>
         </div>
-      ) : (
-        <div>
-          <br />
-          <p>Please click on a direct Cost...</p>
-        </div>
-      )}
+    { /* )} */}
     </div>
   );
 };

@@ -77,6 +77,7 @@ db.sovs = require("./sov.model.js")(sequelize, Sequelize);
 db.primecontracts = require("./primecontract.model.js")(sequelize, Sequelize);
 db.invoices = require("./invoice.model.js")(sequelize, Sequelize);
 db.payments = require("./payment.model.js")(sequelize, Sequelize);
+db.costcodes = require("./costcode.model.js")(sequelize, Sequelize);
 
 // Resource management
 db.equipments = require("./equipment.model")(sequelize, Sequelize);
@@ -91,6 +92,7 @@ db.schedule = require("./schedule.model")(sequelize, Sequelize);
 db.vendor = require("./vendor.model")(sequelize, Sequelize);
 db.employee = require("./employee.model")(sequelize, Sequelize);
 db.subcontractor = require("./subcontractor.model")(sequelize, Sequelize);
+db.employeedesignation = require("./employee-designation.model")(sequelize, Sequelize);
 
 //This section is for testing purposes
 db.demo = require("./demo.model")(sequelize, Sequelize);
@@ -320,6 +322,15 @@ db.plbasic.belongsTo(db.punchlist, {
   as: "punchlist",
 });
 
+// One project has many action plans types
+db.projects.hasMany(db.actionplantype, {
+  as: "actionplantype"
+});
+db.actionplantype.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
 // One project has many action plans
 db.projects.hasMany(db.actionplan, {
   as: "actionplans"
@@ -371,16 +382,6 @@ db.projects.hasMany(db.dlgeneral, {
 });
 db.dlgeneral.belongsTo(db.projects, {
   foreignKey: "projectId",
-  as: "type",
-});
-
-// One daily log general has many daily questions
-db.dlgeneral.hasMany(db.dlquestions, {
-  as: "dlquestions"
-});
-
-db.dlquestions.belongsTo(db.dlgeneral, {
-  foreignKey: "dlgeneralId",
   as: "type",
 });
 
@@ -533,6 +534,16 @@ db.timesheets.hasMany(db.workedHours, {
 db.workedHours.belongsTo(db.timesheets, {
   foreignKey: "timesheetId",
   as: "timesheet",
+});
+
+//----------------------------------------
+// One project has many costcodes
+db.projects.hasMany(db.costcodes, {
+  as: "costcodes"
+});
+db.costcodes.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
 });
 
 

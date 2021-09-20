@@ -18,6 +18,7 @@ exports.create = (req, res) => {
         callto: req.body.callto,
         starttime: req.body.starttime,
         endtime: req.body.endtime,
+        reason: req.body.reason,
         isDeleted: req.body.isDeleted ? req.body.isDeleted : false,
         projectId: req.body.projectId
     };
@@ -61,7 +62,7 @@ exports.update = (req, res) => {
 // Delete a DLCall with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
-    DLCall.update({
+    DLCall.update(req.body, {
         where: { id: id }
     })
     .then(num => {
@@ -85,9 +86,7 @@ exports.delete = (req, res) => {
 // Find a single DLCall with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
-    DLCall.findByPk({id}, { where: {
-        isDeleted: 0
-    }})
+    DLCall.findByPk(id)
     .then(data => {
         res.send(data);
     })

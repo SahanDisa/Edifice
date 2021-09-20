@@ -1,4 +1,7 @@
-import React, { Component } from "react";
+import React, { Component} from "react";
+import {Link } from 'react-router-dom';
+import cogoToast from 'cogo-toast';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import EmployeeDataService from "./../../../services/employee.service";
 
 class AddEmployee extends Component {
@@ -134,13 +137,27 @@ class AddEmployee extends Component {
         });
   }
 
+  displayResult(){
+
+    cogoToast.success(
+      <div>
+        
+        <div>Employee <b>{this.state.name}</b>added Successfully</div>
+      </div>
+    );
+
+    setTimeout(() => {
+      window.location.href="/employees"
+    }, 1000);
+  }
+
   render() {
 
     return (
       <div className="container">
-        <h2>New User</h2><hr/>
+        <h2><AddCircleOutlineIcon/> New Employee</h2><hr/>
         <div className="">
-          <h5>Enter user details</h5>
+          <h5>Enter Employee details</h5>
 
           <label htmlFor="" hidden>Id</label>
           <input className="form-control" type="number" hidden/>
@@ -190,9 +207,16 @@ class AddEmployee extends Component {
             name="other" required/>
           <br/>
 
-          <div>
-          <a onClick={()=>{this.saveEmployee(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastEmployee()}} className="btn btn-success">Add</a>
-          <a className="btn btn-secondary" type="reset">Cancel</a>
+          <div className="row">
+            <div className="pr-2"> 
+              <a onClick={()=>{this.saveEmployee(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastEmployee(); this.displayResult();}} className="btn btn-success">Add</a>
+            </div>
+            <div className="pr-4"> 
+              <a className="btn btn-secondary" type="reset">Cancel</a>
+            </div>
+            <div className="pr-4"> 
+              <a className="btn btn-primary">Create Account</a>
+            </div>
           </div>
           <div>
           

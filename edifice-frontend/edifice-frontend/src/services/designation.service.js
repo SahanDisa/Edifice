@@ -5,8 +5,19 @@ class DesignationDataService {
     return http.get(`/designation/${id}`);
   }
 
-  getAll() {
+  getAllDesignations() {
     return http.get(`/designation/`);
+  }
+
+  getDesforemp(id) {
+    return http.get(`/empdes/${id}`);
+  }
+
+  getAllEmpDesignations() {
+    return http.get(`/empdes/`);
+  }
+  AssignDesignations(data) {
+    return http.post(`/empdes/`,data);
   }
 
 }

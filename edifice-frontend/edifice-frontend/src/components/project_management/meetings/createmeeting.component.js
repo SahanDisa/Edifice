@@ -1,72 +1,223 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import MeetingDataService from "../../../services/project_management/meeting.service.js";
+import MeetingCategoryDataService from "../../../services/project_management/meetingcategory.service.js";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import cogoToast from 'cogo-toast';
 
 class CreateMeeting extends Component {
+    constructor(props) {
+        super(props);
+        this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeCategory = this.onChangeCategory.bind(this);
+        this.onChangeDate = this.onChangeDate.bind(this);
+        this.onChangeTime = this.onChangeTime.bind(this);
+        this.onChangeLocation = this.onChangeLocation.bind(this);
+        this.saveMeeting = this.saveMeeting.bind(this);
+
+        this.state = {
+            categories: [],
+            no: null,
+            name: "",
+            category: "",
+            status: "Scheduled",
+            date: "",
+            time: "",
+            location: "",
+            projectId: this.props.match.params.id,
+            submitted: false
+        };
+    }
+
+    componentDidMount() {
+        this.retrieveCategories(this.props.match.params.id);
+    }
+
+    onChangeName(e) {
+        this.setState({
+            name: e.target.value
+        });
+    }
+
+    onChangeCategory(e) {
+        this.setState({
+            category: e.target.value
+        });
+    }
+
+    onChangeDate(e) {
+        this.setState({
+            date: e.target.value
+        });
+    }
+
+    onChangeTime(e) {
+        this.setState({
+            time: e.target.value
+        });
+    }
+
+    onChangeLocation(e) {
+        this.setState({
+            location: e.target.value
+        });
+    }
+
+    saveMeeting() {
+        var data = {
+            name: this.state.name,
+            category: this.state.category,
+            status: this.state.status,
+            date: this.state.date,
+            time: this.state.time,
+            location: this.state.location,
+            projectId: this.props.match.params.id
+        };
+
+        MeetingDataService.create(data)
+        .then(response => {
+            this.setState({
+                id: response.data.id,
+                name: response.data.name,
+                category: response.data.category,
+                status: response.data.status,
+                date: response.data.date,
+                time: response.data.time,
+                location: response.data.location,
+                projectId: response.data.projectId,
+
+                submitted: true
+            });
+            console.log("save function service ekata enawa");
+            console.log(response.data);
+        })
+        .catch(e => {
+            console.log(e);
+        });
+        this.props.history.push("/meetings/"+ this.props.match.params.id);
+        cogoToast.success("Meeting Saved Successfully!", { position: 'top-right', heading: 'success' });
+    }
+
+    retrieveCategories(id){
+        MeetingCategoryDataService.getAll(id)
+        .then(response => {
+            this.setState({
+                categories: response.data
+            });
+        console.log(response.data);
+        })
+        .catch(e => {
+            console.log(e);
+        });
+    }
+
     render() {
-        return (  
-        <div>
-            <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div className="modal-content">
-                    <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalCenterTitle">Add a New Meeting</h5>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+        const {categories, projectId} = this.state;
+        return (
+        <div className="">
+            <div className="">
+                <h2>Add New Meeting</h2>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="inherit" to="/home">Home</Link>
+                    <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
+                    <Link color="inherit" to={"/meetings/"+projectId}>Meetings</Link>
+                    <Link color="inherit" aria-current="page" className="disabledLink">Add New Meetings</Link>
+                </Breadcrumbs><hr/>
+                {/* <div className="row mb-3"> */}
+                    <div>
+                        <div className="form-row">
+                            <div className="form-group col-md-5">
+                                <label htmlFor="">Meeting Name</label>
+                                <input
+                                    className="form-control"
+                                    name="name"
+                                    value={this.state.name}
+                                    onChange={this.onChangeName}
+                                    type="text"
+                                    required
+                                />
+                            </div>
+                            <div className="form-group col-md-4">
+                                <label htmlFor="">Category</label>
+                                <select
+                                    className="form-control"
+                                    name="category"
+                                    value={this.state.category}
+                                    onChange={this.onChangeCategory}
+                                    type="text"
+                                    required
+                                >
+                                {categories && categories.map((cat, index) => (
+                                    <option
+                                        value={cat.id}
+                                        onChange={this.onChangeCategory}
+                                        key={index}
+                                    >
+                                        {cat.overview}
+                                    </option>
+                                ))}
+                                </select>
+                            </div>
+                            <div className="form-group col-md-3">
+                                <label htmlFor="">Status</label>
+                                <input
+                                    className="form-control"
+                                    name="status"
+                                    type="text"
+                                    value="Scheduled"
+                                    readOnly
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-md-4">
+                                <label htmlFor="">Date</label>
+                                <input
+                                    className="form-control"
+                                    name="date"
+                                    value={this.state.date}
+                                    onChange={this.onChangeDate}
+                                    type="date"
+                                    required
+                                />
+                            </div>
+                            <div className="form-group col-md-4">
+                                <label htmlFor="">Time</label>
+                                <input
+                                    className="form-control"
+                                    name="time"
+                                    value={this.state.time}
+                                    onChange={this.onChangeTime}
+                                    type="time"
+                                    required
+                                />
+                            </div>
+                            <div className="form-group col-md-4">
+                                <label htmlFor="">Location</label>
+                                <input
+                                    className="form-control"
+                                    name="location"
+                                    value={this.state.location}
+                                    onChange={this.onChangeLocation}
+                                    type="text"
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <hr />
+                        <button
+                        type="button"
+                        onClick={this.saveMeeting}
+                        className="btn btn-primary mr-2"
+                        >Save</button>
+                        <Link to={"/meeting/"+projectId} className="">Cancel</Link>
                     </div>
-                    <div className="modal-body">
-                        <form action="">
-                            <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <label htmlFor="">Meeting overview</label>
-                                    <input className="form-control" type="text" required/>
-                                </div>
-                                <div className="form-group col-md-6">
-                                    <label htmlFor="">Category</label>
-                                    <select className="form-control" name="" id="" required>
-                                        <option value="1">Cat #1</option>
-                                        <option value="2">Cat #2</option>
-                                        <option value="3">Cat #3</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-4">
-                                    <label htmlFor="">Date</label>
-                                    <input className="form-control" type="date" min="" required/>
-                                </div>
-                                <div className="form-group col-md-4">
-                                    <label htmlFor="">Time</label>
-                                    <input className="form-control" type="time" min="" required/>
-                                </div>
-                                <div className="form-group col-md-4">
-                                    <label htmlFor="">Location</label>
-                                    <input className="form-control" type="text" required/>
-                                </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <label htmlFor="">No. of Items</label>
-                                    <input className="form-control" type="number" required/>
-                                </div>
-                                <div className="form-group col-md-6">
-                                    <label htmlFor="">Status</label>
-                                    <select className="form-control" name="" id="" required>
-                                        <option value="1">Open</option>
-                                        <option value="2">Close</option>
-                                        <option value="3">Draft</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <a href="/managemeeting" className="btn btn-success">Add</a>
-                                <button type="button" className="btn btn-dark" data-dismiss="modal">Close</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                {/* </div> */}
             </div>
+        {/* )} */}
         </div>
         );
     }
-  }
+}
 
 export default CreateMeeting;

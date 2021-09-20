@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import DLCallService from "../../../services/project_management/dlcall.service.js";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import DLWeatherService from "../../../services/project_management/dlweather.service.js";
 
 class CreateDWL extends Component {
     constructor(props) {
@@ -15,7 +16,7 @@ class CreateDWL extends Component {
             id: null,
             date: "",
             time: "",
-            tempterature: "",
+            temperature: "",
             weather: "",
             projectId: this.props.match.params.id,
             submitted: false
@@ -36,7 +37,7 @@ class CreateDWL extends Component {
 
     onChangeTemperature(e) {
         this.setState({
-            tempterature: e.target.value
+            temperature: e.target.value
         });
     }
 
@@ -54,21 +55,21 @@ class CreateDWL extends Component {
 
     saveWeatherLog() {
         var data = {
-            date: this.status.date,
-            time: this.status.time,
-            tempterature: this.status.temptempterature,
-            weather: this.status.weather,
-            endtime: this.status.endtime,
+            date: this.state.date,
+            time: this.state.time,
+            temperature: this.state.temperature,
+            weather: this.state.weather,
+            endtime: this.state.endtime,
             projectId: this.props.match.params.id
         };
 
-        DLCallService.create(data)
+        DLWeatherService.create(data)
         .then(response => {
             this.setState({
                 no: response.data.no,
                 date: response.data.date,
                 time: response.data.time,
-                tempterature: response.data.temptempterature,
+                temperature: response.data.temperature,
                 weather: response.data.weather,
                 endtime: response.data.endtime,
                 projectId: response.data.projectId,
@@ -88,7 +89,13 @@ class CreateDWL extends Component {
         return (
         <div className="">
             <div className="">
-                <h2>Add New Weather Log</h2><hr/>
+                <h2>Add New Weather Log</h2>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="inherit" to="/home">Home</Link>
+                    <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
+                    <Link color="inherit" to={"/dailylogs/"+projectId}>Daily Log</Link>
+                    <Link color="inherit" aria-current="page" className="disabledLink">Add New Weather Log</Link>
+                </Breadcrumbs><hr/>
                 <div className="">
                     <div className="form-row">
                         <div className="form-group col-md-3">
@@ -117,10 +124,11 @@ class CreateDWL extends Component {
                             <label htmlFor="">Temprature</label>
                             <input
                                 className="form-control"
-                                type="tempterature"
-                                e={this.state.temptempterature}
+                                type="temperature"
+                                e={this.state.temperature}
                                 onChange={this.onChangeTemperature}
-                                type="text"
+                                type="number"
+                                min="0"
                                 required
                             />
                         </div>

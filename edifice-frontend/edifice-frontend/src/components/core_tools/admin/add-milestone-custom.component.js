@@ -7,7 +7,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
-
+import { Breadcrumbs } from "@material-ui/core";
 
 export default class AddMilestoneGeneral extends Component {
   constructor(props) {
@@ -92,9 +92,7 @@ export default class AddMilestoneGeneral extends Component {
         {this.state.submitted ? (
         <center>
           <div>
-          
             <h4>You add a Milestone successfully</h4>
-           
             <button className="btn btn-success" onClick={this.newMilestone}  style={{ 'text-decoration': 'none' }}>
               Add Another Milestone
             </button>
@@ -104,8 +102,22 @@ export default class AddMilestoneGeneral extends Component {
           <div class="container">
           <div className="row">
             <div className="container col-8">
-            <h2>Add New Milestone</h2>
-            <h5>Step 3 : Define Milestones {projectId}</h5>
+            <h2>Add Custom Milestone</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" to="/home">
+                  Home
+                </Link>
+                <Link color="inherit" to={"/admin"}>
+                  Core Dashboard
+                </Link>
+                <Link color="inherit" to={"/projects"}>
+                  Project Home
+                </Link>
+                <Link color="textPrimary" to={"/addmilestoneproject/"+projectId} aria-current="page">
+                  Custom Milestone / Add
+                </Link>
+            </Breadcrumbs>
+            <h5>Step 3 : Define Milestones</h5>
             <div className="form-group">
               <label htmlFor="title">Title</label>
               <input
@@ -142,7 +154,15 @@ export default class AddMilestoneGeneral extends Component {
                 value={this.state.duration}
                 onChange={this.onChangeDuration}
                 name="duration"
+                list={"dur"}
               />
+              <datalist id="dur">
+                <option>1 Months</option>
+                <option>2 Months</option>
+                <option>3 Months</option>
+                <option>6 Months</option>
+                <option>12 Months</option>
+              </datalist>
             </div>
             <button onClick={this.saveMilestone} className="btn btn-success">
               Create Milestone

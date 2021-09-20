@@ -170,10 +170,21 @@ export default class BoardUser extends Component {
     console.log(projects);
     const items = []
 
-    //this.getprojectDetails(1);
-    //for (const [index, value] of elements.entries()) {
-    //  items.push(<li key={index}>{value}</li>)
-    //}
+    const today = new Date();
+    
+    const progressInDays = (start,end) => {
+      let date1 = new Date(start);
+      let date2 = new Date(end);
+      let diffTime = Math.abs(date2 - date1);
+      let diffTime2 = Math.abs(date2 - today);
+      let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+      let remainDays = Math.ceil(diffTime2/(1000 * 60 * 60 * 24));
+      console.log(diffTime + " milliseconds");
+      console.log(diffDays + " days");
+      console.log(remainDays + " remain days");
+
+      return remainDays;
+    }
 
     return (
       `
@@ -190,21 +201,21 @@ export default class BoardUser extends Component {
         <div className="row">
             <div className="col-lg-3 col-sm-6 pb-2" id="employeecard">
               <div className="card card-hover shadow-sm" style={cardStyle}>
-              <a className="d-block nav-heading text-center mt-3" href="/employees" style={linkText}>
+              <a className="d-block nav-heading text-center mt-3" style={linkText}> <Link  style={linkText} to="/employees">
 
                 <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{employeeCount}</h1>
                 <h5 mb-0> <SupervisorAccount style={{ fontSize:25 }}/>  Employees</h5>
-              </a>
+              </Link></a>
               </div>
             </div>
 
             <div className="col-lg-3 col-sm-6 pb-5" id="projectcard">
               <div className="card card-hover shadow-sm" style={cardStyle}>
-              <a className="d-block nav-heading text-center mt-3" style={linkText} href="/projects">
+              <a className="d-block nav-heading text-center mt-3" style={linkText}> <Link to="/projects" style={linkText}>
 
                 <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
                 <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>
-              </a>
+              </Link></a>
               {/* <Link to={"/projects"}>
               <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
                 <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>
@@ -213,21 +224,21 @@ export default class BoardUser extends Component {
               </div>
             </div>
 
-            <div className="col-lg-3 col-sm-6 pb-2" id="vendorcard">
+            <div className="col-lg-3 col-sm-6" id="vendorcard">
               <div className="card card-hover shadow-sm" style={cardStyle}>
-              <a className="d-block nav-heading text-center mt-3" style={linkText} href="/vendor">
+              <a className="d-block nav-heading text-center mt-3" style={linkText}> <Link to="/vendor" style={linkText}>
 
-                <h1 className="nav-heading-title mb-1" style={{ fontSize:55 }}>{vendorCount}</h1>
+                <h1 className="nav-heading-title" style={{ fontSize:55 }}>{vendorCount}</h1>
                 <h6> <HomeWork style={{ fontSize:25 }}/>  Vendors & Subcontractors</h6>
-              </a>
+              </Link></a>
               </div>
             </div>
 
-            <div className="col-lg-3 col-sm-6 pb-2" id="capitalcard" hidden>
+            <div className="col-lg-3 col-sm-6" id="capitalcard" hidden>
               <div className="card card-hover shadow-sm" style={cardStyle}>
               <a className="d-block nav-heading text-center mt-3" style={linkText} href="#">
 
-                <h3 className="nav-heading-title mb-0" style={{ fontSize:55 }}>5</h3>
+                <h3 className="nav-heading-title" style={{ fontSize:55 }}>5</h3>
                 <h5> <SupervisorAccount style={{ fontSize:25 }}/>  Pending Tasks</h5>
               </a>
               </div>
@@ -235,43 +246,51 @@ export default class BoardUser extends Component {
 
           <div className="col-8 mb-4 mr-5">
             <a className="btn btn-primary p-2" onClick={()=>{this.generatePDF();}} id="list-settings-list"><Description style={{ fontSize:20 }}/> Generate Report</a>
-            <a className="btn btn-primary p-2 ml-5 mr-5" id="list-settings-list" href="/list-report"> <Assessment style={{ fontSize:20 }}/> Analytics</a>
-            <a className="btn btn-secondary p-2 ml-5" onClick={()=>{this.createUser(5);}}><AddCircleOutline style={{ fontSize:20 }}/> Add User</a>
-            
-          </div>
-          <div className="col-4 mb-4 mr-5">
-
-            
+            <a className="btn btn-primary p-2 ml-5 mr-5" id="list-settings-list" href="/list-report"> <Assessment style={{ fontSize:20 }}/> Analytics</a> 
           </div>
           </div>
-            <div classname-="mt-2 mb-2">
+            <div classname-="mb-2 pb-4">
               <h3> Ongoing Projects:</h3>
             </div>
-          <div classname="row">
+          
             {projects.map(project =>(
-              <div className="card card-hover shadow-sm col-lg-12 pt-1 mb-3 pb-3" id="project1">
-              <a style={{ textDecoration: 'none' }} className="d-block nav-heading text-left ml-4 mt-3 mb-1 pb-3">
-                  <div classname="row">
-                    <h4 style={{color: "#273F7D"}} className="mb-6">{project.title}</h4>
-                        <div className="col-sm-6 mb-2" id="project1">
-                          <ProgressBar now={20} label="20" />
+              <div className=" card card-hover shadow-sm pt-1 mb-3 pb-3">
+                <div className="row">
+                  <div  className="col-6">
+                    <Link ActiveClassName=" nav-heading text-left ml-4 mt-3 mb-1 pb-3" style={{ textDecoration: 'none' }}>
+                        
+                      <h4 style={{color: "#273F7D"}} className="mb-6 py-2 pl-2"> {project.title}</h4>
+                          <div className="col-sm-6 mb-2" id="project1">
+                            <ProgressBar now={project.progressValue} label={project.progressValue} />
+                          </div>
+                        <div className="col-sm-6" id="project1_d">
+                          <div className="row pb-2">
+                            
+                            <h5> <LocationOn style={{ fontSize:24 }}/>  {project.location}</h5>
+                          </div>
                         </div>
-                      <div className="col-sm-6" id="project1_d">
-                        <div className="row pb-2">
-                          <h5 className="pr-5 pl-2"> <SupervisorAccount style={{ fontSize:24 }}/>  0</h5>
-                          <h5> <LocationOn style={{ fontSize:24 }}/>  {project.location}</h5>
+                        <div className="col-2">
+                          <div className="list-group" id="list-tab" role="tablist"></div>
+                            <a className="btn btn-primary p-2" onClick={()=>{this.generatePDF(project);}} id="list-settings-list">Report</a>
                         </div>
-                      </div>
-                      <div className="col-2">
-                        <div className="list-group" id="list-tab" role="tablist"></div>
-                          <a className="btn btn-primary p-2" onClick={()=>{this.generatePDF(project);}} id="list-settings-list">Report</a>
-                      </div>
+                        
+                        
+
+                    </Link>
                   </div>
-              </a>
+                  <div  className="col-6 card-text-edifice">
+                    <div>
+                      <h2><b>{progressInDays(project.startdate,project.enddate)}{" "}</b>Days</h2>
+                      <h3>Remaining</h3>
+                    </div>
+                    <h5 className="pr-5 pt-5"> <SupervisorAccount style={{ fontSize:24 }}/>  From <b>{project.startdate}</b> to <b>{project.enddate}</b> </h5>
+                    
+                  </div>
+                </div>
               </div>
             ))}
 
-          </div>
+          
         <div className="row">
           
           {/* Admin content */}

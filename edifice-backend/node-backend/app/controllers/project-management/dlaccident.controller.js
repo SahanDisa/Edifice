@@ -14,7 +14,8 @@ exports.create = (req, res) => {
     const dla = {
         date: req.body.date,    
         time: req.body.time,
-        partyinvolved: req.body.partyinvolved,
+        crew: req.body.crew,
+        description: req.body.description,
         isDeleted: req.body.isDeleted ? req.body.isDeleted : false,
         projectId: req.body.projectId
     };
@@ -39,13 +40,13 @@ exports.update = (req, res) => {
     })
     .then(num => {
         if (num == 1) {
-        res.send({
-            message: "AccidentLog was updated successfully."
-        });
+            res.send({
+                message: "AccidentLog was updated successfully."
+            });
         } else {
-        res.send({
-            message: `Cannot update AccidentLog with id=${id}. Maybe AccidentLog was not found or req.body is empty!`
-        });
+            res.send({
+                message: `Cannot update AccidentLog with id=${id}. Maybe Accident Log was not found or req.body is empty!`
+            });
         }
     })
     .catch(err => {
@@ -58,7 +59,7 @@ exports.update = (req, res) => {
 // Delete a AccidentLog with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
-    AccidentLog.update({
+    AccidentLog.update(req.body, {
         where: { id: id }
     })
     .then(num => {
@@ -82,11 +83,7 @@ exports.delete = (req, res) => {
 // Find a single AccidentLog with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
-    AccidentLog.findByPk({id}, { where:
-        {
-        isDeleted: 0
-        }
-    })
+    AccidentLog.findByPk(id)
     .then(data => {
         res.send(data);
     })

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
+import { Link } from "react-router-dom";
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import EmployeeDataService from "./../../../services/employee.service";
 
@@ -100,21 +101,12 @@ class Employee extends Component {
   }
 
   searchName() {
-    console.log("meka hadala daamu")
+    //console.log("meka hadala daamu")
   }
 
   render() {
 
     const {employees, currentEmployee, currentIndex } = this.state;
-
-    const data = [
-      {id: 1, name: 'randie pathirage',role:'Engineer',email:'cat@gmail.com',mobile:'0215448990', edit:<a href="/editUser" className="btn btn-primary"> edit</a>, delete:<a href="/register" className="btn btn-secondary"> Create Acc.</a>},
-      {id: 2, name: 'Osumali Liyanage', role:'Project Manager',email:'cat@gmail.com',mobile:'0215448990',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>, delete:<a href="/register" className="btn btn-secondary"> Create Acc.</a>},
-      {id: 3, name: 'Shanuka Fernando', role:'Project Manager',email:'cat@gmail.com',mobile:'0215448990',  edit:<a href="/editUser" className="btn btn-primary">edit</a>, delete:<a href="/register" className="btn btn-secondary"> Create Acc.</a>},
-      {id: 4, name: 'Sahan Dissanayaka', role:'Quanttity Surveyor',email:'cat@gmail.com',mobile:'0215448990',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>, delete:<a href="/register" className="btn btn-secondary"> Create Acc.</a>},
-      {id: 5, name: 'Buddhika Ranasinghe', role:'Engineer',email:'cat@gmail.com',mobile:'0215448990',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>, delete:<a href="/register" className="btn btn-secondary"> Create Acc.</a>},
-      {id: 6, name: 'Malithya Fernando',role:'Administrator',email:'cat@gmail.com',mobile:'0215448990',  edit:<a href="/editUser" className="btn btn-primary"> edit</a>, delete:<a href="/register" className="btn btn-secondary"> Create Acc.</a>}
-    ];
 
     //assigning table values
     var data1=[];
@@ -127,8 +119,8 @@ class Employee extends Component {
         temp.role=employee.role,
         temp.email=employee.email,
         temp.mobile=employee.mobile,
-        temp.edit=<a href={"/editUser/"+temp.id} className="btn btn-primary"> edit</a>,
-        temp.create=<a href={"/register/"+temp.id} className="btn btn-secondary"> Create Acc.</a>,
+        temp.edit=<Link to={"/editUser/"+temp.id}> <a className="btn btn-primary">edit</a></Link>,
+        employee.hasAccount? temp.create=<p></p> : temp.create=<Link to={"/register/"+temp.id} ><a className="btn btn-secondary"> Create Acc.</a></Link>,
         data1.push(temp)
       )
       )}
@@ -142,10 +134,10 @@ class Employee extends Component {
               <a class="nav-link active" aria-current="page" href="#">Employees</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/vendor">Vendors</a>
+              <Link to={"/vendor"}><a class="nav-link">Vendors</a></Link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/subcontractor">Sub-Contractors</a>
+              <Link to={"/subcontractor"}><a class="nav-link">Sub-Contractors</a></Link>
             </li>
           </ul>
 
@@ -164,14 +156,14 @@ class Employee extends Component {
 
             <div className="col-auto">
               <select className="form-control" name="" id="">
-                <option value="role1">civil engineer</option>
+                <option value="role1">Civil engineer</option>
                 <option value="role2">Project manager</option>
                 <option value="role3">Site supervisor</option>
               </select><br />
             </div>
 
             <div>
-              <a href="/addUser" className="btn btn-primary"> +add employee</a>
+              <Link to={"/addUser"}><a className="btn btn-primary"> +add employee</a></Link>
             </div>
           </form>
 

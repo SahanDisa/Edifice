@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import UserService from "./../services/user.service";
+import ProjectService from "../services/project.service";
 import ProjectUserService from "../services/projectuser.service";
 import AuthService from "./../services/auth.service";
 import { Card } from "react-bootstrap";
@@ -11,9 +12,6 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ProjectIcon from '@material-ui/icons/Apartment';
 import FinanceIcon from '@material-ui/icons/MonetizationOn';
 import ResourceIcon from '@material-ui/icons/EmojiTransportation';
-// import CircularProgress from '@material-ui/core/CircularProgress';
-// import ProgressBar from 'react-bootstrap/ProgressBar';
-// import Badge from 'react-bootstrap/Badge';
 import ProgressBarCust from 'react-customizable-progressbar';
 
 export default class Home extends Component {
@@ -66,16 +64,16 @@ export default class Home extends Component {
     );
   }
   retrieveUserProjectCount(id) {
-    ProjectUserService.getProjectUserProjectDetails(id)
-      .then(response => {
-        this.setState({
-          projectcount: response.data.length
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    // ProjectUserService.getProjectUserProjectDetails(id)
+    //   .then(response => {
+    //     this.setState({
+    //       projectcount: response.data.length
+    //     });
+    //     console.log(response.data);
+    //   })
+    //   .catch(e => {
+    //     console.log(e);
+    //   });
   }
   retriveUserProjects(id){
     ProjectUserService.getProjectUserProjectDetails(id)
@@ -99,9 +97,19 @@ export default class Home extends Component {
       buttonToggle: 0
     });
   }
+  showRecentProgress(id){
+    ProjectService.findRecentProgress(id.target.value)
+    .then(response =>{
+      if(response.data.length>0){
+        console.log(response.data);
+        console.log(response.data[0].progress);
+      }
+    });
+  }
 
   render() {
     const { currentIndex,currentUser, showEngineerBoard,showManagerBoard,showAdminBoard, uprojects, projectcount } = this.state;
+
     return (
       <div className="container">
         <center>
@@ -321,9 +329,9 @@ export default class Home extends Component {
                 /> */}
                   <ProgressBarCust
                       radius={50}
-                      progress={66}
+                      progress={project.progressValue}
                       initialAnimation
-                      initialAnimationDelay={2000}
+                      initialAnimationDelay={1000}
                       strokeWidth={10}
                       strokeColor="#273f7d"
                       transition="2s ease"
@@ -332,18 +340,9 @@ export default class Home extends Component {
                       trackTransition="1s ease"
                       pointerRadius={1}
                       pointerStrokeWidth={15}
-                      pointerStrokeColor="#5c81cd"
+                      pointerStrokeColor="#cd5c5c"
                       className="mt-2"
                   />
-                  {/* <h5>Progress</h5>
-                  <ProgressBar>
-                    <ProgressBar  variant="primary" now={35} key={1} />
-                    <ProgressBar variant="success" now={20} key={2} />
-                    <ProgressBar variant="danger" now={10} key={3} />
-                  </ProgressBar>
-                  <h6>Progress</h6>
-                  <CircularProgress variant="determinate" color="success" value={61} />
-                    <p>61%</p> */}
                 </center>
                 </div> 
               </div>

@@ -135,7 +135,9 @@ exports.delete = (req, res) => {
 // Get drawings for a given category
 exports.findAllbyStatus = (req, res) => {
   const status = req.params.status;
+  const projectId = req.params.pid;
   Drawing.findAll({ where: {
+    projectId: projectId,
     status: status
   }})
     .then(data => {

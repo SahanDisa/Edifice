@@ -11,23 +11,8 @@ import Icon2 from "././../../../assets/PM/photos/albumicon.jpg";
 import UploadPhotoService from "../../../services/photoupload.service";
 import Card from 'react-bootstrap/Card';
 import ProgressBar from 'react-customizable-progressbar';
-
-if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-  console.log("Let's get this party started")
-}
-navigator.mediaDevices.enumerateDevices({video: {
-  width: {
-    min: 1280,
-    ideal: 1920,
-    max: 2560,
-  },
-  height: {
-    min: 720,
-    ideal: 1080,
-    max: 1440
-  },
-  facingMode: 'user'
-}});
+import { IconButton } from "@material-ui/core";
+import { PhotoCamera } from "@material-ui/icons";
 
 export default class PhotosHome extends Component {
   
@@ -200,7 +185,6 @@ export default class PhotosHome extends Component {
           <div>
             <h4>Recent Photos</h4>
             <div className="container row">
-            
               {fileInfos &&
                 fileInfos.map((file, index) => (
                   <div className="container col-4 mt-1" key={index}>
@@ -223,7 +207,16 @@ export default class PhotosHome extends Component {
         {/* onsite capturing component import dynamically*/}
         <div>
           <Typography>
-          <WebcamCapture/>      
+          <h3>Onsite Capturing</h3>
+          <p>Press Capture button to take an image and press Retake to undo the operation.</p>
+          <center>
+          <Link style={{'text-decoration':'none'}} to={"/camera/"+id}>
+          <IconButton color="primary" aria-label="start camera" component="span">
+            <PhotoCamera  style={{'height': '100px', 'width': '100px'}} />
+          </IconButton>  
+          <h5>Start Camera</h5>
+          </Link>
+          </center>   
           </Typography>
         </div>
         {/* <CameraViewer/>     */}

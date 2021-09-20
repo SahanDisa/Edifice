@@ -6,11 +6,11 @@ module.exports = (sequelize, Sequelize) => {
         time: {
             type: Sequelize.TIME
         },
-        tempterature: {
+        temperature: {
             type: Sequelize.INTEGER
         },
         weather: {
-            type: Sequelize.TIME
+            type: Sequelize.STRING
         },
         isDeleted: {
             type: Sequelize.BOOLEAN,

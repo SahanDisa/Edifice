@@ -22,11 +22,9 @@ exports.create = (req, res) => {
     description:req.body.description,
     startDate:req.body.startDate,
     estimatedCompletionDate:req.body.estimatedCompletionDate,
-    actualCompletionDate:req.body.actualCompletionDate,
+    //actualCompletionDate:req.body.actualCompletionDate,
     signedContractReceivedDate:req.body.signedContractReceivedDate,
-    inclusions:req.body.inclusions,
-    exclusions:req.body.exclusions,
-
+    published:req.body.published,
 
     projectId: req.body.projectId,
   };

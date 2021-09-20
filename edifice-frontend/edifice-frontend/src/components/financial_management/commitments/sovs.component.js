@@ -11,6 +11,7 @@ import AddIcon from '@material-ui/icons/Add';
 import HomeIcon from '@material-ui/icons/Home';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import CommitmentDataService from "./../../../services/commitment.service";
+import cogoToast from 'cogo-toast';
 
 const SovList = (props) => {
   const {id}= useParams();
@@ -105,6 +106,31 @@ exclusions:"",
     props.history.push("/viewsinglesov/" + id);
   };
 
+  //remove item from table
+  const updatePublished = (rowIndex) => {
+
+    var data = {
+      id:  sovsRef.current[rowIndex].id,
+      costCode: sovsRef.current[rowIndex].costCode,
+      description:sovsRef.current[rowIndex].description,
+      date: sovsRef.current[rowIndex].date,
+     amount:sovsRef.current[rowIndex].amount,
+      published:false
+      //project id ?
+    };
+    SovDataService.update(sovsRef.current[rowIndex].id, data)
+      .then(response => {
+        let newSovs = [...sovsRef.current];
+        newSovs.splice(rowIndex, 1);
+        setSovs(newSovs);
+        cogoToast.success("SoV Deleted Successfully!");
+      })
+      .catch(e => {
+        console.log(e);
+      });
+   
+    };
+
 
 
   const deleteSov = (rowIndex) => {
@@ -165,7 +191,15 @@ exclusions:"",
               <EditIcon></EditIcon>&nbsp;&nbsp;
               </span>
 
-              <span onClick={() => deleteSov(rowIdx)}>
+              <span onClick={() => {
+
+const confirmBox = window.confirm(
+  "Do you really want to delete this item ?"
+)
+if (confirmBox === true) {
+updatePublished(rowIdx)
+}
+}}>
                 <DeleteIcon></DeleteIcon>
               </span>
             </div>

@@ -10,7 +10,7 @@ import Table from 'react-bootstrap/Table';
 
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import DeleteIcon from '@material-ui/icons/Delete';
-import UpdateIcon from '@material-ui/icons/Update';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 class DailyLogHome extends Component {
     constructor(props) {
@@ -19,11 +19,15 @@ class DailyLogHome extends Component {
         this.retrieveCallLog = this.retrieveCallLog.bind(this);
         this.retrieveWeatherLog = this.retrieveWeatherLog.bind(this);
         this.retrieveGeneralLog = this.retrieveGeneralLog.bind(this);
+        this.deleteAccidentLog = this.deleteAccidentLog.bind(this);
+        this.deleteWeatherLog = this.deleteWeatherLog.bind(this);
+        this.deleteCallLog = this.deleteCallLog.bind(this);
         this.state = {
-            accidentlog: [],
+            dlaccident: [],
             dlweather: [],
             dlcall: [],
             dlgeneral: [],
+            isDeleted: 0,
             projectId: this.props.match.params.id
         };
     }
@@ -38,7 +42,7 @@ class DailyLogHome extends Component {
         DLAccidentService.getAll(id)
         .then(response => {
             this.setState({
-                accidentlog: response.data
+                dlaccident: response.data
             });
             console.log(response.data);
         })
@@ -85,28 +89,54 @@ class DailyLogHome extends Component {
             console.log(e);
         });
     }
+
+    deleteAccidentLog(accidentid){
+        var data = {
+            isDeleted: 1
+        }
+        DLAccidentService.update(accidentid, data)
+        .then(response => {
+            // window.location.reload();
+        })
+    }
+
+    deleteCallLog(callid){
+        var data = {
+            isDeleted: 1
+        }
+        DLCallService.update(callid, data)
+        .then(response => {
+            // window.location.reload();
+        })
+    }
+
+    deleteWeatherLog(weatherid){
+        var data = {
+            isDeleted: 1
+        }
+        DLWeatherService.update(weatherid, data)
+        .then(response => {
+            // window.location.reload();
+        })
+    }
     
     render() {
-        const { projectId, accidentlog, dlcall, dlgeneral, dlweather} = this.state;
+        const { projectId, dlaccident, dlcall, dlgeneral, dlweather} = this.state;
         return (
             <div className="">
-                <h2>Manage Daily Logs</h2>
+                <h2>Daily Logs</h2>
                 <Breadcrumbs aria-label="breadcrumb">
                     <Link color="inherit" to="/home">Home</Link>
                     <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
-                    <Link color="inherit" aria-current="page">Manage Daily Logs</Link>
+                    <Link color="inherit" aria-current="page" className="disabledLink">Daily Logs</Link>
                 </Breadcrumbs><hr/>
                 <div className="mb-3">
                     <form>
                         <div className="form-row">
-                            <div className="form-group col-md-6"></div>
+                            <div className="form-group col-md-8"></div>
                             <div className="form-group col-md-2 form-check">
                                 <input type="checkbox" className="form-check-input mt-3" id="singledayCheck" required/>
-                                <label htmlFor="singledayCheck" className="form-check-label">View Single Day</label>
-                            </div>
-                            <div className="form-group col-md-2 form-check">
-                                <input type="checkbox" className="form-check-input mt-3" id="multipledayCheck" required/>
-                                <label htmlFor="multipledayCheck" className="form-check-label">View Multiple Days</label>
+                                <label htmlFor="singledayCheck" className="form-check-label">View Today</label>
                             </div>
                             <div className="form-group col-md-2 form-check">
                                 <a className="btn btn-primary" href="">Export PDF</a>
@@ -124,7 +154,7 @@ class DailyLogHome extends Component {
                         <div class="card">
                             <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
-                                <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target="#accidentlog" aria-controls="accidentlog">Accident log</button>
+                                <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target="#accidentlog" aria-controls="accidentlog">Accident</button>
                             </h2>
                             </div>
                             <div id="accidentlog" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
@@ -137,23 +167,23 @@ class DailyLogHome extends Component {
                                             <tr>
                                                 <th>Date</th>
                                                 <th>Time</th>
-                                                <th>Party Involved</th>
+                                                <th>Crew</th>
+                                                <th>Description</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {accidentlog && accidentlog.map((dla) => (
+                                            {dlaccident && dlaccident.map((dla) => (
                                                 <tr key={dla.id}>
                                                     <td>{dla.date}</td>
                                                     <td>{dla.time}</td>
-                                                    <td>{dla.partyinvolved}</td>
+                                                    <td>{dla.crew}</td>
+                                                    <td>{dla.description}</td>
                                                     <td>
-                                                        <Link to={"/view/"+ dla.id}>
-                                                            <button className="btn btn-success m-2">Update<UpdateIcon/></button>
+                                                        <Link to={"/viewaccidentlog/" + projectId + "/" + dla.id}>
+                                                            <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
                                                         </Link>
-                                                        <Link to={"/deletepl/" + dla.id}>
-                                                            <button className="btn btn-danger m-2">Delete<DeleteIcon/></button>
-                                                        </Link>
+                                                        <button className="btn btn-danger mr-2"  id="updateBtn" data-target="#deleteaccidentModal" data-toggle="modal">Delete</button>
                                                     </td>    
                                                 </tr>
                                             ))}
@@ -165,7 +195,7 @@ class DailyLogHome extends Component {
                         <div class="card">
                             <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
-                                <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target="#weatherlog" aria-controls="weatherlog">Weather log</button>
+                                <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target="#weatherlog" aria-controls="weatherlog">Weather</button>
                             </h2>
                             </div>
                             <div id="weatherlog" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
@@ -188,15 +218,13 @@ class DailyLogHome extends Component {
                                             <tr key={index}>
                                                 <td>{dlw.date}</td>
                                                 <td>{dlw.time}</td>
-                                                <td>{dlw.tempterature}</td>
+                                                <td>{dlw.temperature}</td>
                                                 <td>{dlw.weather}</td>
                                                 <td>
-                                                    <Link to={"/view/"+ dlw.id}>
-                                                        <button className="btn btn-success m-2">Update<UpdateIcon/></button>
+                                                    <Link to={"/viewweatherlog/" + projectId + "/" + dlw.id}>
+                                                        <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
                                                     </Link>
-                                                    <Link to={"/deletepl/" + dlw.id}>
-                                                        <button className="btn btn-danger m-2">Delete<DeleteIcon/></button>
-                                                    </Link>
+                                                    <button className="btn btn-danger mr-2"  id="updateBtn" data-target="#deleteweatherModal" data-toggle="modal">Delete</button>
                                                 </td>    
                                             </tr>
                                             ))}
@@ -208,7 +236,7 @@ class DailyLogHome extends Component {
                         <div class="card">
                             <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
-                                <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target="#calllog" aria-controls="calllog">Call log</button>
+                                <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target="#calllog" aria-controls="calllog">Call</button>
                             </h2>
                             </div>
                             <div id="calllog" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
@@ -224,6 +252,7 @@ class DailyLogHome extends Component {
                                             <th>Call To</th>
                                             <th>Start Time</th>
                                             <th>End Time</th>
+                                            <th>Reason</th>
                                             <th></th>
                                         </tr>
                                         </thead>
@@ -235,13 +264,12 @@ class DailyLogHome extends Component {
                                                 <td>{dlc.callto}</td>
                                                 <td>{dlc.starttime}</td>
                                                 <td>{dlc.endtime}</td>
+                                                <td>{dlc.reason}</td>
                                                 <td>
-                                                    <Link to={"/view/"+ dlc.id}>
-                                                        <button className="btn btn-success m-2">Update<UpdateIcon/></button>
+                                                    <Link to={"/viewcalllog/" + projectId + "/" + dlc.id}>
+                                                        <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
                                                     </Link>
-                                                    <Link to={"/deletepl/" + dlc.id}>
-                                                        <button className="btn btn-danger m-2">Delete<DeleteIcon/></button>
-                                                    </Link>
+                                                    <button className="btn btn-danger mr-2"  id="updateBtn" data-target="#deletecallModal" data-toggle="modal">Delete</button>
                                                 </td>    
                                             </tr>
                                             ))}
@@ -253,7 +281,7 @@ class DailyLogHome extends Component {
                         <div class="card">
                             <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
-                                <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target="#generallog" aria-controls="generallog">General log</button>
+                                <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target="#generallog" aria-controls="generallog">General</button>
                             </h2>
                             </div>
                             <div id="generallog" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
@@ -277,11 +305,8 @@ class DailyLogHome extends Component {
                                                 <td>{dlg.questions}</td>
                                                 <td>{dlg.isHappened ? "Yes" : "No"}</td>
                                                 <td>
-                                                    <Link to={"/view/"+ dlg.id}>
-                                                        <button className="btn btn-success m-2">Update<UpdateIcon/></button>
-                                                    </Link>
-                                                    <Link to={"/deletepl/" + dlg.id}>
-                                                        <button className="btn btn-danger m-2">Delete<DeleteIcon/></button>
+                                                    <Link to={"/viewgenerallog/" + projectId + "/" + dlg.id}>
+                                                        <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
                                                     </Link>
                                                 </td>    
                                             </tr>
@@ -293,7 +318,60 @@ class DailyLogHome extends Component {
                         </div>
                     </div>        
                 </div>
-                <a className="btn btn-success" href="/projectmanagementhome/1">Done</a>           
+                {/* Delete accident modal Starts */}
+                <div className="modal fade" id="deleteaccidentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <p className="modal-title" id="exampleModalCenterTitle">Are you sure you want to delete?</p>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteAccidentLog(dlaccident.id)} data-dismiss="modal"> Yes, Delete</a>
+                                <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* Delete accident modal Ends */}
+                {/* Delete weather modal Starts */}
+                <div className="modal fade" id="deleteweatherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <p className="modal-title" id="exampleModalCenterTitle">Are you sure you want to delete?</p>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteWeatherLog(dlweather.id)} data-dismiss="modal"> Yes, Delete</a>
+                                <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* Delete weather modal Ends */}
+                {/* Delete call modal Starts */}
+                <div className="modal fade" id="deletecallModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <p className="modal-title" id="exampleModalCenterTitle">Are you sure you want to delete?</p>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteCallLog(dlcall.id)} data-dismiss="modal"> Yes, Delete</a>
+                                <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* Delete call modal Ends */}
             </div>
         );
     }

@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import BudgetDataService from "./../../../services/budget.service";
 import { useTable } from "react-table";
-import { Route, useParams } from "react-router-dom";
+import {useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import HomeIcon from '@material-ui/icons/Home';
 import PublishIcon from '@material-ui/icons/Publish';
 import AddIcon from '@material-ui/icons/Add';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import cogoToast from 'cogo-toast';
+import CostCodeDataService from "./../../../services/costcode.service";
 
 
 const BudgetEstimates = (props) => {
@@ -17,15 +18,30 @@ const BudgetEstimates = (props) => {
   const [searchCostCode, setSearchCostCode] = useState("");
   const budgetsRef = useRef();
   budgetsRef.current = budgets;
-  const [published, setPublished] = useState(false);
+  const [costcodes, setCostCodes] = useState([]);
 
   useEffect(() => {
     retrieveBudgets();    
+    retrieveCostCodes(); 
 
   }, []);
 
 
 
+  const retrieveCostCodes = () => {
+    
+    CostCodeDataService.getAll(id)//passing project id as id
+      .then((response) => {
+        setCostCodes(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+
+
+  
   const onChangeSearchCostCode = (e) => {
     const searchCostCode = e.target.value;
     setSearchCostCode(searchCostCode);
@@ -42,15 +58,17 @@ const BudgetEstimates = (props) => {
       });
   };
 
-  const refreshList = () => {
-    retrieveBudgets();
-    
-  };
-
   const findByCostCode = () => {
-    BudgetDataService.findByCostCode(id,searchCostCode)
+  
+
+    BudgetDataService.findByCostCode(id,searchCostCode)//searchCostCode
       .then((response) => {
         setBudgets(response.data);
+        console.log("clicked")
+        console.log(response.data)
+        console.log(searchCostCode)
+        console.log(id)
+        console.log(response)
       })
       .catch((e) => {
         console.log(e);
@@ -65,28 +83,30 @@ const BudgetEstimates = (props) => {
   };
 
 
+//remove item from table
+  const updatePublished = (rowIndex) => {
 
-  const deleteBudget = (rowIndex) => {
-    const id = budgetsRef.current[rowIndex].id;
-    //const projectId = directcostsRef.current[rowIndex].projectId;
-
-    BudgetDataService.budgetUnpublished(id)
-    .then((response) => {
-        
-      //props.history.push("/directcost/"+id);
-
-      let newBudgets = [...budgetsRef.current];
-      newBudgets.splice(rowIndex, 1);
-
-      setBudgets(newBudgets);
-      retrieveBudgets();
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-
-  };
-
+    var data = {
+      id:  budgetsRef.current[rowIndex].id,
+      costCode: budgetsRef.current[rowIndex].costCode,
+      description: budgetsRef.current[rowIndex].description,
+      date: budgetsRef.current[rowIndex].date,
+      estimatedBudget: budgetsRef.current[rowIndex].estimatedBudget,
+      published:false
+      //project id ?
+    };
+    BudgetDataService.update(budgetsRef.current[rowIndex].id, data)
+      .then(response => {
+        let newBudgets = [...budgetsRef.current];
+        newBudgets.splice(rowIndex, 1);
+        setBudgets(newBudgets);
+        cogoToast.success("Budget Estimate Deleted Successfully!");
+      })
+      .catch(e => {
+        console.log(e);
+      });
+   
+    };
  /* const deleteBudget = (rowIndex) => {
     const id = budgetsRef.current[rowIndex].id;
     //const projectId = directcostsRef.current[rowIndex].projectId;
@@ -139,7 +159,15 @@ const BudgetEstimates = (props) => {
               <EditIcon></EditIcon>&nbsp;&nbsp;
               </span>
 
-              <span onClick={() => deleteBudget(rowIdx)}>
+              <span onClick={() => {
+
+const confirmBox = window.confirm(
+  "Do you really want to delete this item ?"
+)
+if (confirmBox === true) {
+updatePublished(rowIdx)
+}
+}}>
                 <DeleteIcon></DeleteIcon>
               </span>
             </div>
@@ -211,16 +239,16 @@ const BudgetEstimates = (props) => {
             value={searchCostCode}
             onChange={onChangeSearchCostCode}
               >
-                <option  selected value="">All Budget Estimates</option>
-             {budgets &&
-                budgets.map((budget, index) => (
+               <option value="" selected>All Budget Estimates</option>
+        {costcodes &&
+                costcodes.map((c, index) => (
                 <option
-                    value={budget.costCode}
+                    value={c.costCode}
                     onChange={onChangeSearchCostCode}
                     key={index}
                 >
                 {/* unit data */}
-                {budget.costCode}
+                {c.costCode}
                 </option>
                 ))}
 

@@ -85,6 +85,7 @@ export default class PortfolioHome extends Component {
       this.findCompleteCount = this.findCompleteCount.bind(this);
       this.checkMilestone = this.checkMilestone.bind(this);
       this.getPoints = this.getPoints.bind(this);
+      this.getTimeline = this.getTimeline.bind(this);
       
       this.state = {
         drawings: [],
@@ -94,7 +95,6 @@ export default class PortfolioHome extends Component {
         content: "",
         milestoneCount: 0,
         completeMilestoneCount: 0,
-
 
         drawingComplete: 0,
         drawingPending: 0,
@@ -107,17 +107,20 @@ export default class PortfolioHome extends Component {
 
         points: [],
         project:[],
+        totaldays: 0,
+        remaindays: 0,
       };
     }
   
     componentDidMount() {
-      this.retrieveDrawingStatus();
-      this.retrieveDocumentStatus();
+      this.retrieveDrawingStatus(this.props.match.params.id);
+      this.retrieveDocumentStatus(this.props.match.params.id);
       this.retrieveDepartments(this.props.match.params.id);
       this.retriveMilestones(this.props.match.params.id);
       this.findCompleteCount(this.props.match.params.id);
       this.getPoints(this.props.match.params.id);
       this.retrieveProjectDetails(this.state.id);
+      this.getTimeline();
     }
     retrieveProjectDetails(id) {
       ProjectDataService.get(id)
@@ -169,8 +172,8 @@ export default class PortfolioHome extends Component {
           console.log(e);
         });
     }
-    retrieveDrawingStatus() {
-      DrawingDataService.getStatus("Complete")
+    retrieveDrawingStatus(id) {
+      DrawingDataService.getStatus(id,"Complete")
         .then(response => {
           this.setState({
             drawingComplete: response.data.length,
@@ -181,7 +184,7 @@ export default class PortfolioHome extends Component {
         .catch(e => {
           console.log(e);
         });
-        DrawingDataService.getStatus("Pending")
+        DrawingDataService.getStatus(id,"Pending")
         .then(response => {
           this.setState({
             drawingPending: response.data.length,
@@ -192,7 +195,7 @@ export default class PortfolioHome extends Component {
         .catch(e => {
           console.log(e);
         });
-        DrawingDataService.getStatus("Not Complete")
+        DrawingDataService.getStatus(id,"Not Complete")
         .then(response => {
           this.setState({
             drawingIncomplete: response.data.length,
@@ -204,8 +207,8 @@ export default class PortfolioHome extends Component {
           console.log(e);
         });
     }
-    retrieveDocumentStatus() {
-      DocumentDataService.getStatus("Complete")
+    retrieveDocumentStatus(id) {
+      DocumentDataService.getStatus(id,"Complete")
         .then(response => {
           this.setState({
             documentComplete: response.data.length,
@@ -216,7 +219,7 @@ export default class PortfolioHome extends Component {
         .catch(e => {
           console.log(e);
         });
-        DocumentDataService.getStatus("Pending")
+        DocumentDataService.getStatus(id,"Pending")
         .then(response => {
           this.setState({
             documentPending: response.data.length,
@@ -227,7 +230,7 @@ export default class PortfolioHome extends Component {
         .catch(e => {
           console.log(e);
         });
-        DocumentDataService.getStatus("Not Complete")
+        DocumentDataService.getStatus(id,"Not Complete")
         .then(response => {
           this.setState({
             documentIncomplete: response.data.length,
@@ -271,6 +274,7 @@ export default class PortfolioHome extends Component {
         .catch(e => {
           console.log(e);
       });
+
       var datapoint = {
         name : (new Date().getFullYear()) + " "+(new Date().toLocaleString('en-us', { month: 'long' })),
         progress: ( (this.state.completeMilestoneCount + 1)/this.state.milestoneCount).toFixed(3),
@@ -291,7 +295,42 @@ export default class PortfolioHome extends Component {
       .catch(e => {
         console.log(e);
       });
-      window.location.reload();
+
+      // refresh the list
+      this.getPoints(this.state.id);
+      this.retriveMilestones(this.state.id);
+
+      // update the project progress value
+      var dataprogress = {
+        progressValue: Math.ceil(((this.state.completeMilestoneCount + 1)/this.state.milestoneCount).toFixed(3)*100),
+        projectId: this.state.projectId,
+      }
+      console.log("Progress Value is "+dataprogress.progressValue+" "+dataprogress.projectId);
+
+      ProjectDataService.update(this.state.id,dataprogress)
+        .then(response => {
+          console.log(response.data);
+          this.setState({
+            message: "The project was updated successfully!"
+          });
+          this.props.history.push('/projectmanagementhome/'+this.state.projectId);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+
+    }
+    getTimeline(){
+      // const today = new Date();
+      // const date1 = new Date(this.project.startdate);
+      // const date2 = new Date(this.project.enddate);
+      // const diffTime = Math.abs(date2 - date1);
+      // const diffTime2 = Math.abs(date2 - today);
+      // const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+      // const remainDays = Math.ceil(diffTime2/(1000 * 60 * 60 * 24));
+      // console.log(diffTime + " milliseconds");
+      // console.log(diffDays + " days");
+      // console.log(remainDays + " remain days");
     }
     
     uncheckMilestone(){
@@ -316,17 +355,6 @@ export default class PortfolioHome extends Component {
         const x = cx + radius * Math.cos(-midAngle * RADIAN);
         const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
-        const today = new Date();
-        const date1 = new Date(project.startdate);
-        const date2 = new Date(project.enddate);
-        const diffTime = Math.abs(date2 - date1);
-        const diffTime2 = Math.abs(date2 - today);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-        const remainDays = Math.ceil(diffTime2/(1000 * 60 * 60 * 24));
-        console.log(diffTime + " milliseconds");
-        console.log(diffDays + " days");
-        console.log(remainDays + " remain days");
-          
         return (
           <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
             {`${(percent * 100).toFixed(0)}%`}
@@ -520,13 +548,16 @@ export default class PortfolioHome extends Component {
                       {milestone.description}
                       <br/>
                       { milestone.completed ? 
-                      <h6>Completed {" "}
+                      <div>
+                      <h6>Completed {" "}</h6>
                       <input type="checkbox" name="check" value={milestone.id} onChange={this.uncheckMilestone} checked></input>
-                      </h6>
-                      : 
-                      <h6>Incomplete
+                      
+                      </div>
+                      :
+                      <div> 
+                      <h6>Incomplete {" "}</h6>
                       <input type="checkbox" name="uncheck" value={milestone.id} onChange={this.checkMilestone}></input>
-                      </h6>
+                      </div>
                       }
                       </Typography>
                     </Paper>

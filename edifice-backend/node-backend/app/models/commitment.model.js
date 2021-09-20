@@ -28,17 +28,18 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DATEONLY
       },
       actualCompletionDate: {
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATEONLY,
+        allowNull: true,
       },
+      
       signedContractReceivedDate: {
         type: Sequelize.DATEONLY
       },
-     inclusions: {
-        type: Sequelize.STRING
-      },
-      exclusions: {
-        type: Sequelize.STRING
-      }}, {
+      published: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
+      },  
+},{
         freezeTableName: true,
     });
   

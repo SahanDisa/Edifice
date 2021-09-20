@@ -59,7 +59,7 @@ exports.update = (req, res) => {
 // Delete a DLGeneral with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
-    DLGeneral.update({
+    DLGeneral.update(req.body, {
         where: { id: id }
     })
     .then(num => {
@@ -83,9 +83,7 @@ exports.delete = (req, res) => {
 // Find a single DLGeneral with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
-    DLGeneral.findByPk({id}, { where: {
-        isDeleted: 0
-    }})
+    DLGeneral.findByPk(id)
     .then(data => {
         res.send(data);
     })

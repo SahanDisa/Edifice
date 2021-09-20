@@ -34,6 +34,7 @@ export default class BoardUser extends Component {
     this.state = {
       content: "",
       projects: [],
+      progress: 0,
       id: this.props.match.params.id,
       currentUser: AuthService.getCurrentUser(),
       showEngineerBoard: false,
@@ -71,6 +72,7 @@ export default class BoardUser extends Component {
       }
     );
     this.retrieveProjects(this.state.id);
+    this.getRecentProgress(this.state.id);
   }
   retrieveProjects(id) {
     ProjectDataService.get(id)
@@ -84,9 +86,30 @@ export default class BoardUser extends Component {
         console.log(e);
       });
   }
+  getRecentProgress(id){
+    var data = 0;
+    ProjectDataService.findRecentProgress(id)
+    .then(response =>{
+      if(response.data.length>0){
+        console.log("Progress is "+response.data[0].progress);
+        data = Math.ceil(response.data[0].progress*100);
+        // this.setState({
+        //   progress: response.data[0].progress
+        // }).catch(e =>{
+        //   console.log(e);
+        // });
+      }
+      console.log("Data assigned"+data);
+      this.setState({
+        progress: data 
+      });
+    });
+  }
 
   render() {
-    const { id, showEngineerBoard, showManagerBoard, showAdminBoard, projects } = this.state;
+
+    const {id,showEngineerBoard,showManagerBoard,showAdminBoard,projects,progress} = this.state;
+
     const today = new Date();
     const date1 = new Date(projects.startdate);
     const date2 = new Date(projects.enddate);
@@ -115,12 +138,58 @@ export default class BoardUser extends Component {
         <br></br>
         {/* Breadcrumb ends */}
         <div className="card card-hover shadow-sm card-text-edifice">
-          <div className="row">
-            <div className="col-5 m-2">
-              <h4>{projects.title}</h4>
-              <h6>Description : {projects.description}</h6>
-              <h6>Location: {projects.location}</h6>
-              <h6>From : {projects.startdate} to {projects.enddate}</h6>
+
+        <div className="row">
+          <div className="col-5 m-2">
+          <h4>{projects.title}</h4>
+          <h6>Description : {projects.description}</h6>
+          <h6>Location: {projects.location}</h6> 
+          <h6>From : {projects.startdate} to {projects.enddate}</h6>
+          </div>
+          <div className="col-4 mt-4">
+          <center>
+          <h2><b>{remainDays}{" "}</b>Days</h2>
+          <h3>Remaining</h3>
+          </center>
+          </div>
+          <div className="col-2">
+          <center>
+          <ProgressBar
+              radius={60}
+              progress={projects.progressValue}
+              cut={120}
+              rotate={-210}
+              initialAnimation
+              initialAnimationDelay={1}
+              strokeWidth={13}
+              strokeColor="#273f7d"
+              transition="2s ease"
+              trackStrokeWidth={12}
+              trackTransition="1s ease"
+              pointerRadius={3}
+              pointerStrokeWidth={12}
+          />
+          {/* <h6 className="mb-10"><b>66%</b></h6>  */}
+          </center> 
+          </div>
+          </div>
+        </div>
+        {/* Only Manager and Admin has Access to Project/Finance/Resource */}
+        
+        { showManagerBoard && showEngineerBoard &&
+        <div>
+        {/* Project Tools Starts */}
+        <h3 className="mt-2">Project Tools</h3>
+        <div className="row">
+          <div className="col-lg-3 mb-grid-gutter pb-2">
+          
+            <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
+            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
+              <img src={portfolioIcon} alt="" width="50"/>
+              <h3 className="h5 nav-heading-title mb-0">Portfolio</h3>
+              {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
+            </Link>
+
             </div>
             <div className="col-4 mt-4">
               <center>
