@@ -250,7 +250,8 @@ class ViewTimesheet extends Component {
         {/* mark Worker Starts */}
         <Modal show={this.state.isOpen} onHide={this.closeModal}>
           <MarkWorker
-            id={currentWorker.id}
+            workerWId={currentWorker.workerWId}
+            timesheetId={timesheet.id}
             location={currentWorker.location}
             start={currentWorker.start}
             lunch_start={currentWorker.lunch_start}
