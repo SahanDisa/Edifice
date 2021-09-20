@@ -26,6 +26,10 @@ class PunchlistDataService {
         return http.get(`/projects/punchlist/type/${id}`);
     }
 
+    getStatus(pid,status){
+        return http.get(`/projects/punchlist/status/${pid}/${status}`);
+      }
+
     findlastItem(){
         return http.get(`/projects/punchlist/last/`);
     }

@@ -54,7 +54,8 @@ exports.findAllintype = (req, res) => {
 exports.findAll = (req, res) => {
     const id = req.params.id;
     Punchlist.findAll({ where: {
-        projectId: id
+        projectId: id,
+        isDeleted: 0
     }})
     .then(data => {
         res.send(data);
@@ -96,6 +97,24 @@ exports.findLastOne = (req,res) =>{
         });
     });
 }
+
+// Get drawings for a given category
+exports.findAllbyStatus = (req, res) => {
+    const status = req.params.status;
+    const projectId = req.params.pid;
+    Punchlist.findAll({ where: {
+      projectId: projectId,
+      status: status
+    }})
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: "Error retrieving Complete Drawings with id=" + id
+        });
+    });  
+};
 
 // Update a equipment by the id in the request
 exports.update = (req, res) => {

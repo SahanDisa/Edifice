@@ -354,11 +354,6 @@ class App extends Component {
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
-
-            <Route path="/photos/:id" component={PhotosHome} />
-            <Route component={ErrorPage} />
-          </Switch>
-
             <Route exact path="/logincode" component={ForgetPassword}/>
             <Route path="/camera" component={CameraSinglePage} />
             <Route component={ErrorPage}/>
@@ -415,11 +410,11 @@ class App extends Component {
               {/* Action Plan */}
               <Route path="/actionplan/:id" component={actionplanHome} />
               <Route path="/addactionplan/:id" component={AddActionPlan} />
-              <Route path="/actionplansingle/:id" component={ActionPlanSinglePage} />
+              <Route path="/actionplansingle/:id/:apid" component={ActionPlanSinglePage} />
               <Route path="/addactionplanitem" component={AddAPItem} />
               <Route path="/addactionplansection" component={AddAPSection} />
-              <Route path="/viewactionplantype/:id" component={ViewAPType} />
-              <Route exact path="/viewactionplan/:id" component={ViewActionPlan} />
+              <Route path="/viewactionplantype/:id/:apid" component={ViewAPType} />
+              <Route exact path="/viewactionplan/:id/:apid" component={ViewActionPlan} />
               {/* Punch List */}
               <Route path="/punchlist/:id" component={punchlistHome} />
               <Route path="/managepunchlist/createaddphoto/:id/plid" component={CreatePhotos} />
