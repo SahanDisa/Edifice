@@ -114,6 +114,8 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
       .then(response => {
         console.log(response.data);
         setMessage("The sovcost was updated successfully!");
+        props.history.push("/budgetestimates/"+currentSov.projectId);
+        cogoToast.success("SoV updated Successfully!");
       })
       .catch(e => {
         console.log(e);
