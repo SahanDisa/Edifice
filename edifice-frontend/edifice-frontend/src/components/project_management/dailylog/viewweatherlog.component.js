@@ -21,6 +21,7 @@ class CreateDWL extends Component {
                 time: "",
                 temperature: "",
                 weather: "",
+                isDeleted: 0,
                 projectId: this.props.match.params.id,
                 submitted: false
             }
@@ -109,7 +110,10 @@ class CreateDWL extends Component {
     }
 
     deleteWeatherLog(){
-        DLWeatherService.update(this.props.match.params.dlid)
+        var data= {
+            isDeleted: 1
+        }
+        DLWeatherService.update(this.props.match.params.dlid, data)
         .then(response => {
             console.log(response.data);
             // this.props.history.push('/punchlist/');
@@ -196,7 +200,7 @@ class CreateDWL extends Component {
                         </button>
                     </div>
                     <div className="modal-body">
-                        <a onClick={this.updateWeatherLog} className="btn btn-primary pr-3 ml-2 mr-3"> Yes, Update</a>
+                        <a onClick={this.updateWeatherLog} className="btn btn-primary pr-3 ml-2 mr-3" data-dismiss="modal"> Yes, Update</a>
                         <a className="btn btn-secondary ml-6 mr-6 pl-3" data-dismiss="modal"> Cancel</a>
                     </div>
                     </div>
@@ -215,7 +219,7 @@ class CreateDWL extends Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteWeatherLog} > Yes, Delete</a>
+                            <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteWeatherLog} data-dismiss="modal"> Yes, Delete</a>
                             <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
                         </div>
                     </div>

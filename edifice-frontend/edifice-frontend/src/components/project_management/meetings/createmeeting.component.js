@@ -1,18 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
-import PunchListTypesDataService from "../../../services/project_management/punchlisttypes.service.js";
-import Timeline from '@material-ui/lab/Timeline';
-import TimelineItem from '@material-ui/lab/TimelineItem';
-import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
-import TimelineConnector from '@material-ui/lab/TimelineConnector';
-import TimelineContent from '@material-ui/lab/TimelineContent';
-import TimelineDot from '@material-ui/lab/TimelineDot';
+import MeetingDataService from "../../../services/project_management/meeting.service.js";
+import MeetingCategoryDataService from "../../../services/project_management/meetingcategory.service.js";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import cogoToast from 'cogo-toast';
 
 class CreateMeeting extends Component {
     constructor(props) {
         super(props);
-        this.onChangeTitle = this.onChangeTitle.bind(this);
+        this.onChangeName = this.onChangeName.bind(this);
         this.onChangeCategory = this.onChangeCategory.bind(this);
         this.onChangeDate = this.onChangeDate.bind(this);
         this.onChangeTime = this.onChangeTime.bind(this);
@@ -22,7 +18,7 @@ class CreateMeeting extends Component {
         this.state = {
             categories: [],
             no: null,
-            title: "",
+            name: "",
             category: "",
             status: "Scheduled",
             date: "",
@@ -37,9 +33,9 @@ class CreateMeeting extends Component {
         this.retrieveCategories(this.props.match.params.id);
     }
 
-    onChangeTitle(e) {
+    onChangeName(e) {
         this.setState({
-            title: e.target.value
+            name: e.target.value
         });
     }
 
@@ -69,7 +65,7 @@ class CreateMeeting extends Component {
 
     saveMeeting() {
         var data = {
-            title: this.state.title,
+            name: this.state.name,
             category: this.state.category,
             status: this.state.status,
             date: this.state.date,
@@ -78,11 +74,11 @@ class CreateMeeting extends Component {
             projectId: this.props.match.params.id
         };
 
-        PunchlistDataService.create(data)
+        MeetingDataService.create(data)
         .then(response => {
             this.setState({
                 id: response.data.id,
-                title: response.data.title,
+                name: response.data.name,
                 category: response.data.category,
                 status: response.data.status,
                 date: response.data.date,
@@ -98,10 +94,12 @@ class CreateMeeting extends Component {
         .catch(e => {
             console.log(e);
         });
+        this.props.history.push("/meetings/"+ this.props.match.params.id);
+        cogoToast.success("Meeting Saved Successfully!", { position: 'top-right', heading: 'success' });
     }
 
     retrieveCategories(id){
-        PunchListTypesDataService.getAll(id)
+        MeetingCategoryDataService.getAll(id)
         .then(response => {
             this.setState({
                 categories: response.data
@@ -118,22 +116,28 @@ class CreateMeeting extends Component {
         return (
         <div className="">
             <div className="">
-                <h2>Add New Punch List Item</h2><hr/>
-                <div className="row mb-3">
+                <h2>Add New Meeting</h2>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="inherit" to="/home">Home</Link>
+                    <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
+                    <Link color="inherit" to={"/meetings/"+projectId}>Meetings</Link>
+                    <Link color="inherit" aria-current="page" className="disabledLink">Add New Meetings</Link>
+                </Breadcrumbs><hr/>
+                {/* <div className="row mb-3"> */}
                     <div>
                         <div className="form-row">
-                            <div className="form-group col-md-6">
+                            <div className="form-group col-md-5">
                                 <label htmlFor="">Meeting Name</label>
                                 <input
                                     className="form-control"
-                                    name="title"
-                                    value={this.state.title}
-                                    onChange={this.onChangeTitle}
+                                    name="name"
+                                    value={this.state.name}
+                                    onChange={this.onChangeName}
                                     type="text"
                                     required
                                 />
                             </div>
-                            <div className="form-group col-md-3">
+                            <div className="form-group col-md-4">
                                 <label htmlFor="">Category</label>
                                 <select
                                     className="form-control"
@@ -149,7 +153,7 @@ class CreateMeeting extends Component {
                                         onChange={this.onChangeCategory}
                                         key={index}
                                     >
-                                        {cat.title}
+                                        {cat.overview}
                                     </option>
                                 ))}
                                 </select>
@@ -160,7 +164,7 @@ class CreateMeeting extends Component {
                                     className="form-control"
                                     name="status"
                                     type="text"
-                                    value="Initiated"
+                                    value="Scheduled"
                                     readOnly
                                 />
                             </div>
@@ -208,7 +212,7 @@ class CreateMeeting extends Component {
                         >Save</button>
                         <Link to={"/meeting/"+projectId} className="">Cancel</Link>
                     </div>
-                </div>
+                {/* </div> */}
             </div>
         {/* )} */}
         </div>

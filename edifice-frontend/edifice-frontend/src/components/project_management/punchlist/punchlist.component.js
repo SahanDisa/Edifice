@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import PunchListTypesDataService  from "./../../../services/project_management/punchlisttypes.service.js";
 import PunchlistDataService  from "./../../../services/project_management/punchlist.service.js";
+import cogoToast from 'cogo-toast';
 
 class PunchList extends Component {
     constructor(props) {
@@ -78,7 +80,8 @@ class PunchList extends Component {
             });
         console.log(response.data);
         });
-        window.location.reload();
+        this.props.history.push("/punchlist/"+ this.props.match.params.id);
+        cogoToast.success("Punch List Type Added Successfully!", { position: 'top-right', heading: 'success' });
     }
 
     newPunchListType() {
@@ -97,7 +100,11 @@ class PunchList extends Component {
             <div className="">
                 <div>
                 <h2>Punch Lists</h2>
-                <h6>Manage Punch Items in the site</h6><hr/>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="inherit" to="/home">Home</Link>
+                    <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
+                    <Link color="inherit" aria-current="page" className="disabledLink">Punch List</Link>
+                </Breadcrumbs><hr/>
                 <div className="container row">
                     <div className="container col-3 mb-2">
                         <Card bg={'success'} text={'white'} style={{ width: '14rem'}} className="mb-2">
@@ -159,23 +166,20 @@ class PunchList extends Component {
                         </div>
                         <div className="form-group col-md-1">
                             <label htmlFor="">.</label>
-                            <button
+                            <Link
                                 className="btn btn-primary"
                                 onClick={this.savePunchListType}
-                            >Add</button>
+                            >Add</Link>
                         </div>
                     </div>
                     <div className="container row">
                         {pltypes && pltypes.map((plt, index) => (
-                            <div className={"container col-3"} key={index}>
-                                <Link 
-                                    to={"/viewtype/"+plt.id}
-                                    style={{'text-decoration': 'none'}}
-                                >
+                            <div className={"container col-3"+ (index === currentIndex ? "active" : "")} key={index}>
+                                <Link to={"/viewtype/"+plt.id} style={{'text-decoration': 'none'}}>
                                     <Card
                                         bg={'light'}
                                         text={'dark'}
-                                        style={{ width: '17rem' }}
+                                        style={{ width: '16rem' }}
                                         className="bg-light mb-2"
                                         variant="outline"
                                     >

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+
 import MeetingCategoryDataService from "../../../services/project_management/meetingcategory.service";
 import MeetingDataService from "../../../services/project_management/meeting.service";
 
@@ -17,15 +18,18 @@ class MeetingsHome extends Component {
       this.saveMeetingCategory = this.saveMeetingCategory.bind(this);
       this.retrieveMeetingCategory = this.retrieveMeetingCategory.bind(this);
       this.retrieveMeeting = this.retrieveMeeting.bind(this);
+      // this.setActiveViewMeeting = this.setActiveViewMeeting.bind(this);
+      
       this.state = {
+        categories: [],
+        meeting: [],
         id: null,
         category: "",
         description: "",
         projectId: this.props.match.params.id,
-        categories: [],
-        meeting: [],
-        currentIndex: -1,
         content: "",
+        currentViewMeeting:"",
+        currentViewIndex:-1,
 
         submitted: false
       };
@@ -42,6 +46,10 @@ class MeetingsHome extends Component {
           this.setState({
             categories: response.data
           });
+          console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
       });
     }
 
@@ -51,6 +59,10 @@ class MeetingsHome extends Component {
           this.setState({
             meeting: response.data
           });
+          console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
       });
     }
 
@@ -82,16 +94,17 @@ class MeetingsHome extends Component {
 
           submitted: true
         });
+        console.log("save una");
         console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
-      window.location.reload();
+      // window.location.reload();
     }
 
     render() {
-      const {categories, meeting, projectId} = this.state;
+      const {categories, meeting, projectId, currentViewMeeting} = this.state;
       console.log(projectId);
       return (
         <div className="">
@@ -106,11 +119,12 @@ class MeetingsHome extends Component {
             <div className="container">
               <div className="form-row">
                 <div className="form-group col-md-3">
-                  <label htmlFor="">Overview</label>
+                  <label htmlFor="">Name</label>
                   <input
                     className="form-control" 
                     type="text"
                     name="overview"
+                    placeholder="Enter type name"
                     value={this.state.overview}
                     onChange={this.onChangeOverview}
                     required
@@ -122,6 +136,7 @@ class MeetingsHome extends Component {
                     className="form-control" 
                     type="text"
                     name="description"
+                    placeholder="Enter description about the type"
                     value={this.state.description}
                     onChange={this.onChangeDescription}
                     required
@@ -145,28 +160,28 @@ class MeetingsHome extends Component {
                 <div className="form-group col-md-4">
                   <input className="form-control" type="text" placeholder="Search" />
                 </div>
-                <a href="#" className="btn btn-outline-dark mb-3">Add Filter</a>
+                <a href="#" className="btn btn-outline-dark mb-3">Search</a>
               </div>
             </form>
             <div class="accordion" id="accordionExample">
               {categories && categories.map((cat, index) => (
-                <div class="card" key={cat.id}>
+                <div class="card" key={cat.id + index}>
                   <div class="card-header" id="headingOne">
                     <h2 class="mb-0">
-                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${index}`} aria-expanded="true" aria-controls="collapseOne">{cat.name}</button>
+                      <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target={`#collapse${index}`} aria-expanded="true" aria-controls="collapseOne">{cat.overview}</button>
                     </h2>
                   </div>
-                  <div id={`#collapse${index}`} class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div id={`collapse${index}`} class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
                       <div className="">
-                        <div class="col-md-12 text-right mb-2">
-                          <Link to="#" className="btn btn-primary">+ Follow-up Meeting</Link>
-                        </div>
+                          <div class="col-md-12 text-right mb-2">
+                            <Link to={"/createfollowup/" + projectId + "/" + cat.id} className="btn btn-primary">+ Follow-up Meeting</Link>
+                          </div>
                         <Table striped bordered hover variant="" responsive>
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th>Overview</th>
+                                    <th>Name</th>
                                     <th>Time</th>
                                     <th>Location</th>
                                     <th>Status</th>
@@ -174,23 +189,31 @@ class MeetingsHome extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {meeting && meeting.map((mt) => ( meeting.overview === categories.id ?
-                                    <tr key={mt.id}>
-                                        <td>{mt.date}</td>
-                                        <td>{mt.overview}</td>
-                                        <td>{mt.time}</td>
-                                        <td>{mt.location}</td>
-                                        <td>{mt.status}</td>
-                                        <td>
-                                            <Link to={"/viewmeeting/" + projectId + "/" + mt.id}>
-                                                <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
-                                            </Link>
-                                            <Link to="">
-                                                <button className="btn btn-danger">Delete <DeleteIcon/></button>
-                                            </Link>
-                                        </td>    
-                                    </tr> : ""
-                                ))}
+                              {meeting && meeting.map((mt, index) => ( meeting.category == categories.id ?
+                                <tr key={mt.id + index}>
+                                    <td>{mt.date}</td>
+                                    <td>{mt.name}</td>
+                                    <td>{mt.time}</td>
+                                    <td>{mt.location}</td>
+                                    <td>
+                                      {mt.status == "Scheduled"
+                                        ? "🟢 - Scheduled"
+                                        : "🔴 - Ended"}
+                                    </td>
+                                    <td>
+                                      {mt.status == "Scheduled" ? (
+                                        <Link to={"/viewmeeting/" + projectId + "/" + mt.id}>
+                                          <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
+                                        </Link>
+                                      ) : (
+                                        <Link to={"/viewonlymeeting/" + projectId + "/" + mt.id}>
+                                          <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
+                                        </Link>
+                                      )}
+                                      <button className="btn btn-danger mr-2"  id="updateBtn" data-target="#deleteModal" data-toggle="modal">Delete<DeleteIcon/></button>
+                                    </td>    
+                                </tr> : ""
+                              ))}
                             </tbody>
                         </Table>
                       </div>
@@ -200,6 +223,24 @@ class MeetingsHome extends Component {
               ))}
             </div>
           </div>
+          {/* Delete modal Starts */}
+          <div className="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div className="modal-dialog modal-dialog-centered" role="document">
+                  <div className="modal-content">
+                      <div className="modal-header">
+                          <p className="modal-title" id="exampleModalCenterTitle">Are you sure you want to delete?</p>
+                          <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div className="modal-body">
+                          <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteMeeting} data-dismiss="modal"> Yes, Delete</a>
+                          <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {/* Delete modal Ends */}
         </div>
       );
     }

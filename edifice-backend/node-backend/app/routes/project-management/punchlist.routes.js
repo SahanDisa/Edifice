@@ -20,6 +20,9 @@ module.exports = app => {
 
     // Update a equipment with id
     router.put("/update/:id", punchlist.update);
+
+    // Update a equipment with id
+    router.put("/delete/:id", punchlist.update);
   
     app.use('/api/projects/punchlist', router);
   };

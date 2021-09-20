@@ -322,6 +322,15 @@ db.plbasic.belongsTo(db.punchlist, {
   as: "punchlist",
 });
 
+// One project has many action plans types
+db.projects.hasMany(db.actionplantype, {
+  as: "actionplantype"
+});
+db.actionplantype.belongsTo(db.projects, {
+  foreignKey: "projectId",
+  as: "project",
+});
+
 // One project has many action plans
 db.projects.hasMany(db.actionplan, {
   as: "actionplans"

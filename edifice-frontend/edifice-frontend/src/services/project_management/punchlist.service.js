@@ -9,6 +9,10 @@ class PunchlistDataService {
         return http.put(`/projects/punchlist/update/${id}`, data);
     }
 
+    delete(id, data) {
+        return http.put(`/projects/punchlist/delete/${id}`, data);
+    }
+
     create(data) {
         console.log("punch list service ekata enawa");
         return http.post(`/projects/punchlist/`, data);

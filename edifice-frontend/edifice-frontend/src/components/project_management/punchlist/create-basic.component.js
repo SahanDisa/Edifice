@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
 import PunchListTypesDataService from "../../../services/project_management/punchlisttypes.service.js";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -156,7 +157,13 @@ class CreatePL extends Component {
         return (
         <div className="">
             <div className="">
-                <h2>Add New Punch List Item</h2><hr/>
+                <h2>Add New Punch List Item</h2>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="inherit" to="/home">Home</Link>
+                    <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
+                    <Link color="inherit" to={"/punchlist/"+projectId}>Punch List</Link>
+                    <Link color="inherit" aria-current="page" className="disabledLink">Add New Punch List</Link>
+                </Breadcrumbs><hr/>
                 <div className="row mb-3">
                     <div className="col-sm-8">
                     <h5>Step 1: Basic Details</h5>
@@ -270,7 +277,7 @@ class CreatePL extends Component {
                                 >Save</button>
                             }{buttonChanger &&
                                 <Link
-                                to={"/managepunchlist/createaddphoto/" + lastpl}
+                                to={"/managepunchlist/createaddphoto/" + projectId + "/" + lastpl}
                                 type="button"
                                 onClick={this.buttonChange}
                                 className="btn btn-primary mr-2"

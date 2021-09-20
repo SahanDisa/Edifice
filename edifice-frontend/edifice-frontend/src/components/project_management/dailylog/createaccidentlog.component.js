@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import DLAccidentService from "../../../services/project_management/dlaccident.service.js";
+import cogoToast from 'cogo-toast';
 
 class CreateDAL extends Component {
     constructor(props) {
@@ -69,6 +70,9 @@ class CreateDAL extends Component {
                 submitted: true
             });
         })
+        this.props.history.push("/dailylogs/"+ this.props.match.params.id);
+        window.location.reload();
+        cogoToast.success("Accident Log Saved Successfully!", { position: 'top-right', heading: 'success' });
     }
     
     render() {
