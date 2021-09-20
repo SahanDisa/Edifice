@@ -155,11 +155,11 @@ const BudgetEstimates = (props) => {
           const rowIdx = props.row.id;
           return (
             <div>
-              <span onClick={() => openBudget(rowIdx)}>
+              <span style={{cursor: 'pointer'}} onClick={() => openBudget(rowIdx)}>
               <EditIcon></EditIcon>&nbsp;&nbsp;
               </span>
 
-              <span onClick={() => {
+              <span style={{cursor: 'pointer'}} onClick={() => {
 
 const confirmBox = window.confirm(
   "Do you really want to delete this item ?"
@@ -212,9 +212,9 @@ updatePublished(rowIdx)
             <Link className="btn btn-primary mr-2" to={"/addbudget/"+id}>{/*check this again*/}
             <AddIcon/>&nbsp;Create
                 </Link>
-                <Link className="btn btn-import mr-2" to={"/bexcelupload/"+id}>
+                {/* <Link className="btn btn-import mr-2" to={"/bexcelupload/"+id}>
                 < PublishIcon/>&nbsp;Import
-                </Link>
+                </Link> */}
                 {/*<Link className="btn btn-primary mr-2" to={"/adddirectcost/"+1}>
                 Export 
                 </Link>*/}

@@ -86,11 +86,7 @@ exports.delete = (req, res) => {
 // Find a single ActionPlan with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  ActionPlan.findByPk({id}, { where:
-    {
-      isDeleted: 0
-    }
-  })
+  ActionPlan.findByPk(id)
   .then(data => {
     res.send(data);
   })

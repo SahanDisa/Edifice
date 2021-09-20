@@ -25,9 +25,19 @@ const AddDirectCost = (props) => {
     description: Yup.string().required('Description is required'),
     vendor: Yup.string().required('Vendor is required'),
     employee: Yup.string().required('Employee is required'),
-    receivedDate: Yup.string().required('Received Date is required'),
-    paidDate: Yup.string().required('Paid Date is required'),
-    amount: Yup.string().required('Amount is required'),
+    receivedDate: Yup.date()
+    .typeError('Select a valid Received Date')
+    .required('Received Date is required'),
+    paidDate: Yup.date()
+    .typeError('Select a valid Paid Date')
+    .required('Paid Date is required')
+    .min(
+      Yup.ref('receivedDate'),
+      "Paid Date can't be before Received Date"
+    ),
+    amount: Yup.number()
+    .required('Amount is required')
+    .typeError('You must specify a valid number'),
   });
 
   const {
@@ -224,10 +234,15 @@ const AddDirectCost = (props) => {
                 id="description"
                 name="description"
                 {...register('description')}
+                list="suggest"
                 value={directcost.description}
                 onChange={handleInputChange}
                 className={`form-control ${errors.description ? 'is-invalid' : ''}`}
               />
+              <datalist id="suggest">
+                                            <option value="LCD Monitor for finance department 001">LCD Monitor for finance department 001</option>
+                                            <option value="telephone cost in finance department">telephone cost in finance department</option>
+                                    </datalist>
                <div className="invalid-feedback">{errors.description?.message}</div>
             </div>
             <div className="form-group">
@@ -382,7 +397,7 @@ const AddDirectCost = (props) => {
             </div><br />
           {/** */} 
           </div>
-        )}
+        )} 
         <br /><br />
       </div>
   );

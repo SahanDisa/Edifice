@@ -38,7 +38,7 @@ export default class Documents extends Component {
     this.retrieveDocuments(this.props.match.params.id);
     this.retrieveDirectory(this.props.match.params.id);
     this.retrieveDocumentStatus(this.props.match.params.id);
-    this.recentDocuments();
+    this.recentDocuments(this.props.match.params.id);
     this.retrieveProject(this.props.match.params.id);
   }
   retrieveProject(id){
@@ -112,8 +112,8 @@ export default class Documents extends Component {
         console.log(e);
       });
   }
-  recentDocuments(){
-    DocumentfileService.recent()
+  recentDocuments(id){
+    DocumentfileService.recent(id)
     .then(response => {
         this.setState({
           recentdocuments: response.data

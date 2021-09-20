@@ -166,7 +166,7 @@ class AddWorker extends Component {
         <div class="container">
           <div class="row">
             <div class="col-6">
-              <label htmlFor="">Id</label>
+              <label htmlFor="">NIC</label>
               <input
                 className="form-control"
                 type="text"

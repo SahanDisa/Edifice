@@ -2,24 +2,31 @@ import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table'
 import { Link } from "react-router-dom";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Chip from "@material-ui/core/Chip";
 
 import CrewDataService from "../../../services/crew.service";
 import WorkersDataService from "../../../services/worker.service";
 import WorkedHoursDataService from "./../../../services/worked-hours.service";
+import TimesheetDataService from "./../../../services/timesheet.service";
 
 class Workers extends Component {
   constructor(props) {
     super(props);
     this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
     this.searchTitle = this.searchTitle.bind(this);
+
     this.retrieveCrew = this.retrieveCrew.bind(this);
     this.retrieveWorkers = this.retrieveWorkers.bind(this);
+    this.retrieveWorkedHours = this.retrieveWorkedHours.bind(this);
+
     this.setActiveWorker = this.setActiveWorker.bind(this);
     this.addWorker = this.addWorker.bind(this);
     this.state = {
       crews: [],
       workers: [],
+      workedHoursID: [],
       currentWorker: "",
+      workedHours: "",
       currentIndex: -1,
       content: "",
       searchTitle: "",
@@ -33,6 +40,34 @@ class Workers extends Component {
   componentDidMount() {
     this.retrieveCrew(this.props.match.params.id);
     this.retrieveWorkers(this.props.match.params.id);
+    this.retrieveWorkedHours(this.props.match.params.code);
+  }
+
+  retrieveTimesheet(id) {
+    TimesheetDataService.get(id)
+      .then(response => {
+        this.setState({
+          timesheet: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
+  retrieveWorkedHours(id) {
+    WorkedHoursDataService.getTimesheetDetails(id)
+      .then(response => {
+        this.setState({
+          workedHours: response.data
+        });
+        console.log("workedHOurs")
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   retrieveCrew(id) {
@@ -96,8 +131,6 @@ class Workers extends Component {
       timesheetId: this.state.code,
     };
     console.log(data)
-    console.log("heloooooooooooooooooooo")
-
 
     WorkedHoursDataService.create(data)
       .then(response => {
@@ -110,10 +143,15 @@ class Workers extends Component {
       .catch(e => {
         console.log(e);
       });
+    this.refs.btn.setAttribute("disabled", "disabled");
   }
 
   render() {
-    const { crews, id, workers, searchTitle, code, currentWorker, currentIndex } = this.state;
+    const { crews, id, workers, searchTitle, code, currentWorker, currentIndex, workedHours, workedHoursID } = this.state;
+    workedHours && workedHours.map((workedHour) => (
+      workedHoursID.includes(workedHour.workerWId) ? null : workedHoursID.push(workedHour.workerWId)));
+    console.log("workedHoursID")
+    console.log(workedHoursID)
 
     return (
       <div>
@@ -204,13 +242,24 @@ class Workers extends Component {
                                       <td>{worker.wId}</td>
                                       <td>{worker.firstName} {worker.lastName}</td>
                                       <td>
-
-                                        <button
-                                          className="btn btn-primary"
-                                          onClick={() => this.addWorker(worker.wId)}
-                                        >
-                                          + Add
-                                        </button>
+                                        {
+                                          workedHoursID.includes(worker.wId) ?
+                                            <button
+                                              ref="btn"
+                                              className="btn btn-primary"
+                                              disabled
+                                              onClick={() => this.addWorker(worker.wId)}
+                                            >
+                                              Added
+                                            </button> :
+                                            <button
+                                              ref="btn"
+                                              className="btn btn-primary"
+                                              onClick={() => this.addWorker(worker.wId)}
+                                            >
+                                              + Add
+                                            </button>
+                                        }
                                       </td>
                                     </tr> : ""
                                 ))}
@@ -241,8 +290,3 @@ class Workers extends Component {
 }
 
 export default Workers;
-
-
-
-
-

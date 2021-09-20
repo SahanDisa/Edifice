@@ -15,6 +15,7 @@ exports.create = (req, res) => {
   const actionplantype = {
     title: req.body.title,
     description: req.body.description,
+    projectId: req.body.projectId,
   };
   // Save ActionPlanType in the database
   ActionPlanType.create(actionplantype)

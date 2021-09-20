@@ -12,11 +12,13 @@ export default class Commitments extends Component {
     constructor(props) {
       super(props);
      
-      this.onChangeSearchContractCompany = this.onChangeSearchContractCompany.bind(this);
+      //this.onChangeSearchContractCompany = this.onChangeSearchContractCompany.bind(this);
+      this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
       this.retrieveCommitment = this.retrieveCommitment.bind(this);
       this.refreshList = this.refreshList.bind(this);
       this.setActiveCommitment = this.setActiveCommitment.bind(this);
-      this.searchContractCompany  = this.searchContractCompany.bind(this);
+      //this.searchContractCompany  = this.searchContractCompany.bind(this);
+      this.searchTitle  = this.searchTitle.bind(this);
       this.getOngoingCount=this.getOngoingCount.bind(this);
       this.getCompletedCount=this.getCompletedCount.bind(this);
       this.deleteCommitment = this.deleteCommitment.bind(this);
@@ -28,7 +30,8 @@ export default class Commitments extends Component {
         currentCommitment: null,
         currentIndex: -1,
         content: "",
-        searchContractCompany : "",
+        //searchContractCompany : "",
+        searchTitle : "",
         sovTotal:"",
         ongoingCount: 0,
         completedCount: 0,
@@ -44,11 +47,19 @@ export default class Commitments extends Component {
       this.retrieveSubcontractors();
     }
 
-    onChangeSearchContractCompany (e) {
-      const searchContractCompany  = e.target.value;
+    // onChangeSearchContractCompany (e) {
+    //   const searchContractCompany  = e.target.value;
+  
+    //   this.setState({
+    //     searchContractCompany : searchContractCompany 
+    //   });
+    // }
+
+    onChangeSearchTitle (e) {
+      const searchTitle  = e.target.value;
   
       this.setState({
-        searchContractCompany : searchContractCompany 
+        searchTitle : searchTitle
       });
     }
 
@@ -111,9 +122,23 @@ export default class Commitments extends Component {
       });
     }
 
-    searchContractCompany () {
+    // searchContractCompany () {
      
-      CommitmentDataService.findByContractCompany (this.state.id, this.state.searchContractCompany )
+    //   CommitmentDataService.findByContractCompany (this.state.id, this.state.searchContractCompany )
+    //     .then(response => {
+    //       this.setState({
+    //         commitments: response.data
+    //       });
+    //       console.log(response.data);
+    //     })
+    //     .catch(e => {
+    //       console.log(e);
+    //     });
+    // }
+
+    searchTitle () {
+     
+      CommitmentDataService.findByTitle(this.state.id, this.state.searchTitle )
         .then(response => {
           this.setState({
             commitments: response.data
@@ -182,7 +207,7 @@ export default class Commitments extends Component {
     }
     
     render() {
-        const { searchContractCompany , commitments ,currentIndex,id,sovTotal, ongoingCount,completedCount,subcontractors} = this.state;
+        const { /*searchContractCompany*/ searchTitle , commitments ,currentIndex,id,sovTotal, ongoingCount,completedCount,subcontractors} = this.state;
         const today = new Date();
         const date1 = new Date(commitments.startdate);
         const date2 = new Date(commitments.estimatedCompletionDate);
@@ -251,22 +276,22 @@ export default class Commitments extends Component {
                 <div className="col-md-4">
                 <div className="input-group mb-3">
                 <select
-              id="contractCompany"
+              id="title"
               className="form-control"
-              placeholder="Search by Contract Company"
-              value={searchContractCompany}
-              onChange={this.onChangeSearchContractCompany}
+              placeholder="Search by Contract Title"
+              value={searchTitle}
+              onChange={this.onChangeSearchTitle}
             >
               <option  selected value="">All Subcontracts</option>
-              {subcontractors &&
-                subcontractors.map((subcontractor, index) => (
+              {commitments &&
+                commitments.map((c, index) => (
                 <option
-                    value={subcontractor.contractCompany}
-                    onChange={this.onChangeSearchContractCompany}
+                    value={c.title}
+                    onChange={this.onChangeSearchTitle}
                     key={index}
                 >
                 {/* unit data */}
-                {subcontractor.contractCompany}
+                {c.title}
                 </option>
                 ))}
               </select>
@@ -274,7 +299,7 @@ export default class Commitments extends Component {
               <button
                 className="btn btn-outline-secondary"
                 type="button"
-                onClick={this.searchContractCompany}
+                onClick={this.searchTitle}
               >
                 Search
               </button>

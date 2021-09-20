@@ -2,124 +2,135 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import DrawingCategoryService from "../../../services/drawing-category.service";
+import UploadService from "./../../../services/document.service";
 import { Breadcrumbs } from "@material-ui/core";
+import cogoToast from "cogo-toast";
 
 export default class UpdateDrawing extends Component {
-  constructor(props) {
-    super(props);
-    this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeCategory = this.onChangeCategory.bind(this);
-    this.onChangeVersion = this.onChangeVersion.bind(this);
-    this.getDrawing = this.getDrawing.bind(this);
-    this.updatePublished = this.updatePublished.bind(this);
-    this.updateDrawing = this.updateDrawing.bind(this);
-    this.deleteDrawing = this.deleteDrawing.bind(this);
+    constructor(props) {
+      super(props);
+      this.onChangeTitle = this.onChangeTitle.bind(this);
+      this.onChangeDescription = this.onChangeDescription.bind(this);
+      this.onChangeCategory = this.onChangeCategory.bind(this);
+      this.onChangeVersion = this.onChangeVersion.bind(this);
+      this.getDrawing = this.getDrawing.bind(this);
+      this.updatePublished = this.updatePublished.bind(this);
+      this.updateDrawing = this.updateDrawing.bind(this);
+      this.deleteDrawing = this.deleteDrawing.bind(this);
+      this.selectFile = this.selectFile.bind(this);
+      this.upload = this.upload.bind(this);
 
-    this.state = {
-      currentDrawing: {
-        id: null,
-        title: "",
-        description: "",
-        category: "",
-        status: "",
-        version: 0,
-        published: false
-        
-      },
-      message: "",
-      temp: this.props.match.params.id,
-      pid: this.props.match.params.pid,
-      drawingcategories: [],
-    };
-  }
+      this.state = {
+        currentDrawing: {
+          id: null,
+          title: "",
+          description: "",
+          category: "",
+          status: "",
+          version: 0,
+          published: false
+          
+        },
+        message: "",
+        temp: this.props.match.params.id,
+        pid: this.props.match.params.pid,
+        url: "http://localhost:8080/api/files/",
+        drawingcategories: [],
 
-  componentDidMount() {
-    this.getDrawing(this.props.match.params.id);
-    this.retriveDrawingCategory(this.props.match.params.pid);
-  }
+        //file
+        selectedFiles: undefined,
+        currentFile: undefined,
+        progress: 0,
+        message: "",
+      };
+    }
 
-  onChangeTitle(e) {
-    const title = e.target.value;
+    componentDidMount() {
+      this.getDrawing(this.props.match.params.id);
+      this.retriveDrawingCategory(this.props.match.params.pid);
+    }
 
-    this.setState(function(prevState) {
-      return {
+    onChangeTitle(e) {
+      const title = e.target.value;
+
+      this.setState(function(prevState) {
+        return {
+          currentDrawing: {
+            ...prevState.currentDrawing,
+            title: title
+          }
+        };
+      });
+    }
+
+    onChangeDescription(e) {
+      const description = e.target.value;
+      
+      this.setState(prevState => ({
         currentDrawing: {
           ...prevState.currentDrawing,
-          title: title
+          description: description
         }
-      };
-    });
-  }
+      }));
+    }
 
-  onChangeDescription(e) {
-    const description = e.target.value;
-    
-    this.setState(prevState => ({
-      currentDrawing: {
-        ...prevState.currentDrawing,
-        description: description
-      }
-    }));
-  }
+    onChangeCategory(e) {
+      const category = e.target.value;
+      
+      this.setState(prevState => ({
+        currentDrawing: {
+          ...prevState.currentDrawing,
+          category: category
+        }
+      }));
+    }
+    onChangeStatus(e) {
+      const status = e.target.value;
+      
+      this.setState(prevState => ({
+        currentDrawing: {
+          ...prevState.currentDrawing,
+          status: status
+        }
+      }));
+    }
 
-  onChangeCategory(e) {
-    const category = e.target.value;
-    
-    this.setState(prevState => ({
-      currentDrawing: {
-        ...prevState.currentDrawing,
-        category: category
-      }
-    }));
-  }
-  onChangeStatus(e) {
-    const status = e.target.value;
-    
-    this.setState(prevState => ({
-      currentDrawing: {
-        ...prevState.currentDrawing,
-        status: status
-      }
-    }));
-  }
+    onChangeVersion(e) {
+      const version = e.target.value;
+      
+      this.setState(prevState => ({
+        currentDrawing: {
+          ...prevState.currentDrawing,
+          version: version
+        }
+      }));
+    }
 
-  onChangeVersion(e) {
-    const version = e.target.value;
-    
-    this.setState(prevState => ({
-      currentDrawing: {
-        ...prevState.currentDrawing,
-        version: version
-      }
-    }));
-  }
-
-  retriveDrawingCategory(id){
-    DrawingCategoryService.getAll(id)
-    .then(response => {
-        this.setState({
-          drawingcategories: response.data
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
-
-  getDrawing(id) {
-    DrawingDataService.get(id)
+    retriveDrawingCategory(id){
+      DrawingCategoryService.getAll(id)
       .then(response => {
-        this.setState({
-          currentDrawing: response.data
+          this.setState({
+            drawingcategories: response.data
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
         });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
+    }
+
+    getDrawing(id) {
+      DrawingDataService.get(id)
+        .then(response => {
+          this.setState({
+            currentDrawing: response.data
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
 
   updatePublished(status) {
     var data = {
@@ -166,19 +177,65 @@ export default class UpdateDrawing extends Component {
       });
   }
 
-  deleteDrawing() {    
-    DrawingDataService.delete(this.state.currentDrawing.id)
-      .then(response => {
-        console.log(response.data);
-        this.props.history.push('/drawings/'+this.state.pid);
-      })
-      .catch(e => {
-        console.log(e);
+    deleteDrawing() {    
+      DrawingDataService.delete(this.state.currentDrawing.id)
+        .then(response => {
+          console.log(response.data);
+          this.props.history.push('/drawings/'+this.state.pid);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+    selectFile(event) {
+      this.setState({
+        selectedFiles: event.target.files,
       });
-  }
+    }
+    upload() {
+      let currentFile = this.state.selectedFiles[0];
+      let fileName = this.state.currentDrawing.title+".pdf";
+      console.log(currentFile);
+      console.log(fileName);
+      
+      this.setState({
+        progress: 0,
+        currentFile: currentFile,
+      });
+
+      UploadService.upload(currentFile, fileName, (event) => {
+        this.setState({
+          progress: Math.round((100 * event.loaded) / event.total),
+        });
+      })
+        .then((response) => {
+          this.setState({
+            message: response.data.message,
+          });
+          return UploadService.getFiles();
+        })
+        .then((files) => {
+          this.setState({
+            fileInfos: files.data,
+          });
+        })
+        .catch(() => {
+          this.setState({
+            progress: 0,
+            message: "Could not upload the file!",
+            currentFile: undefined,
+          });
+        });
+
+      this.setState({
+        selectedFiles: undefined,
+      });
+      cogoToast.success("File Source Updated Successfully");
+    }
 
     render() {
-      const { currentDrawing, temp, drawingcategories,pid} = this.state;
+      const { currentDrawing, temp, drawingcategories,pid,url,selectedFiles,
+        currentFile,progress,message,fileInfos} = this.state;
   
       return (
         <div>
@@ -208,6 +265,7 @@ export default class UpdateDrawing extends Component {
                     id="title"
                     value={currentDrawing.title}
                     onChange={this.onChangeTitle}
+                    disabled
                   />
                 </div>
                 <div className="form-group">
@@ -271,6 +329,50 @@ export default class UpdateDrawing extends Component {
                   {currentDrawing.status}
                 </div>
               </form>
+              {/* File Uploading */}
+              <hr></hr>
+              <div>
+                <h5>Upload the Drawing Source</h5>
+                <a href={url+currentDrawing.title+".pdf"} target="_blank" style={{'text-decoration': 'none'}}>
+                Current Source(Click to View)
+                </a>
+                <p>File source document : - <b>{currentDrawing.title}{".pdf"}</b></p>
+                {/* Div starts */}
+                <div>
+                  {currentFile && (
+                    <div className="progress">
+                      <div
+                        className="progress-bar progress-bar-info progress-bar-striped"
+                        role="progressbar"
+                        aria-valuenow={progress}
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        style={{ width: progress + "%" }}
+                      >
+                        {progress}%
+                      </div>
+                    </div>
+                  )}
+
+                  <label className="btn btn-default">
+                    <input type="file" onChange={this.selectFile} />
+                  </label>
+
+                  <button className="btn btn-success"
+                    disabled={!selectedFiles}
+                    onClick={this.upload}
+                  >
+                    Upload
+                  </button>
+                  <div className="alert alert-light" role="alert">
+                    {message}
+                  </div>
+                  {/*Ends div here  */}
+                  </div>
+              {/* End the container uploading here */}
+              </div> 
+              <hr></hr>
+              {/* End File Uploading */}
 
               {currentDrawing.status == "Not Complete" ? (
                 <button
@@ -311,7 +413,6 @@ export default class UpdateDrawing extends Component {
               >
                 Update
               </button>
-              <p>{this.state.message}</p>
             </div>
           ) : (
             <div>

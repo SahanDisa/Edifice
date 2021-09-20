@@ -21,6 +21,10 @@ class EmployeeDataService {
     return http.put(`/employee/${id}`, data);
   }
 
+  updateAccountStatus(id) {
+    return http.post(`/employee/${id}`);
+  }
+
   delete(id) {
     return http.delete(`/employee/${id}`);
   }

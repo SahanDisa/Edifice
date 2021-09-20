@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { Modal } from "react-bootstrap";
 
@@ -201,12 +202,14 @@ class ViewTimesheet extends Component {
                     <td>{worker.tea_stop} </td>
                     <td>{worker.stop}</td>
                     <td>
-                      <button
+                      {timesheet.status === "Pending" ? <button
                         className="btn btn-secondary mr-3"
                         onClick={() => this.setActiveWorker(worker)}
                       >
                         Mark
-                      </button>
+                      </button> : ""
+                      }
+
                     </td>
                   </tr>
                 ))}
@@ -257,10 +260,6 @@ class ViewTimesheet extends Component {
             stop={currentWorker.stop}
           />
         </Modal>
-
-
-
-
       </div>
 
     );

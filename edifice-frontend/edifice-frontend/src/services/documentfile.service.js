@@ -13,6 +13,10 @@ class DocumentDataService {
     return http.post(`/projects/documents/`, data);
   }
 
+  findByTitle(title) {
+    return http.get(`/projects/documents/search?title=${title}`);
+  }
+
   getCat(id){
     return http.get(`/projects/documents/cat/${id}`);
   }
@@ -21,8 +25,8 @@ class DocumentDataService {
     return http.get(`/projects/documents/status/${pid}/${status}`);
   }
 
-  recent(){
-    return http.get(`/projects/documents/data/recent`);
+  recent(id){
+    return http.get(`/projects/documents/data/recent/${id}`);
   }
 
   update(id, data) {

@@ -10,6 +10,7 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
+import Alert from "react-bootstrap/Alert";
 
 export default class AddDocument extends Component {
   constructor(props) {
@@ -34,6 +35,7 @@ export default class AddDocument extends Component {
       directory: [],
       currentIndex: -1,
       submitted: false,
+      isTitleValid: 0,
 
       //file
       selectedFiles: undefined,
@@ -43,11 +45,21 @@ export default class AddDocument extends Component {
     };
   }
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.retriveDocumentCategory(this.props.match.params.id);
   }
   onChangeName(e) {
     this.setState({
       title: e.target.value
+    });
+    DocumentDataService.findByTitle(e.target.value)
+    .then(response => {
+      this.setState({
+        isTitleValid: response.data.length
+      });
+    })
+    .catch(e => {
+      console.log(e);
     });
   }
   onChangeDescription(e) {
@@ -166,7 +178,7 @@ export default class AddDocument extends Component {
     const {projectId, title,currentIndex, directory,selectedFiles,
       currentFile,
       progress,
-      message,
+      message,isTitleValid
     } = this.state;
     return (
       <div className="container">
@@ -202,7 +214,7 @@ export default class AddDocument extends Component {
             <div className="row">
             <div className="col-sm-8">
             <div className="form-group">
-              <label htmlFor="name">Document Title</label>
+              <label htmlFor="name">Document Title<b> : should be unique</b></label>
               <input
                 type="text"
                 className="form-control"
@@ -213,7 +225,15 @@ export default class AddDocument extends Component {
                 name="title"
               />
             </div>
-
+            <div className="form-group">
+            {this.state.title == "" ? "" : isTitleValid > 0 ? 
+            <Alert variant="danger">
+              Title is already taken
+            </Alert> :
+            <Alert variant="success">
+              Title is avaliable to use
+            </Alert> }
+            </div>
             <div className="form-group">
               <label htmlFor="description">Description</label>
               <input

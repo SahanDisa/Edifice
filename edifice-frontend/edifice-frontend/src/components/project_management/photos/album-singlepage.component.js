@@ -71,7 +71,7 @@ export default class ViewSingleAlbum extends Component {
         const { id,title,description,photos,currentIndex,projectId,showManagerBoard } = this.state;
         return (
             <div>
-              <h2>Drawing Category Single Page</h2>
+              <h2>Album - {title}</h2>
               <Breadcrumbs aria-label="breadcrumb">
                 <Link color="inherit" to="/home">
                   Home
@@ -83,12 +83,12 @@ export default class ViewSingleAlbum extends Component {
                   Photos Home
                 </Link>
                 <Link color="textPrimary" to={"/viewalbum/"+projectId} aria-current="page">
-                  View Album
+                  {title}
                 </Link>
               </Breadcrumbs>
               
               <hr></hr>
-              <h3>Category details</h3>
+              <h3>Album details</h3>
               <div className="row">
                   <div className="col-9">
                   <h6>Name : {title}</h6>
@@ -104,7 +104,7 @@ export default class ViewSingleAlbum extends Component {
               </div>
               <hr></hr>
               
-              <h3>Drawing List</h3>
+              <h3>Photo List</h3>
               <h6>Manage the drawing in each drawing category</h6>
               {/* Drawing List */}
               <Table striped bordered hover variant="secondary" responsive>

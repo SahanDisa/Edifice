@@ -18,13 +18,18 @@ import cogoToast from 'cogo-toast';
 
 const AddBudget = (props) => {
 
+
   /**validation */
+
   const validationSchema = Yup.object().shape({
     costCode: Yup.string().required('Cost Code is required'),
     description: Yup.string().required('Description is required'),
     date: Yup.string().required('Date is required'),
-estimatedBudget: Yup.string().required('Budget Amount is required'),
+estimatedBudget: Yup.number()
+.typeError('You must specify a valid number')
+.required('Budget Amount is required'),
   });
+
 
   const {
     register,
@@ -42,22 +47,36 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
 
   //const {pid}= useParams();
 
+  
+
   const initialBudgetState = {
     id: null,
     costCode :"",
     description :"",
     date :"",
     estimatedBudget: "",
-    projectId:props.match.params.id,  
-    
+    projectId:props.match.params.id,    
   };
+
+  
+  useEffect(() => {
+    retrieveCostCodes();  
+    getDateTime();
+  }, []);
+
   const [budget, setBudget] = useState(initialBudgetState);
   const [costcodes, setCostCodes] = useState([]);
   const [submitted, setSubmitted] = useState(false);
+  const [today,setToday] = useState("");
 
-  useEffect(() => {
-    retrieveCostCodes();  
-  }, []);
+  const getDateTime = () => {
+    let tempDate = new Date();
+    let today = (tempDate.getMonth()+1) + '/' + tempDate.getDate() + '/' + tempDate.getFullYear(); 
+    const currDate = today;
+    console.log(currDate)
+   setToday(currDate);
+  }
+
 
 
   const {id}= useParams();
@@ -102,6 +121,7 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
         console.log(response.data);
       })
       .catch(e => {
+        cogoToast.error("There's a problem with estimating this budget. Check if you have already estimated budget for this or any field is blank.!");
         console.log(e);
       });
 
@@ -118,8 +138,10 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
     setSubmitted(false);
   };
 
- 
+
+  
   return (
+    
         <div className="container">
        
         {submitted ? (       
@@ -160,14 +182,14 @@ estimatedBudget: Yup.string().required('Budget Amount is required'),
                 
                 id="costCode"
            
-                
+                autocomplete="on"
                 name="costCode"
                 {...register('costCode')}
                 value={budget.costCode}
                 onChange={handleInputChange}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
               >
- <option value="" disabled selected>Select a Cost Code</option>
+ <option  type="text" value="" disabled selected>Select a Cost Code</option>
         {costcodes &&
                 costcodes.map((c, index) => (
                 <option

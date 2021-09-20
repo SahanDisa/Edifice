@@ -3,19 +3,19 @@ module.exports = app => {
   
     var router = require("express").Router();
   
-    // Create a new Tutorial
+    // Create a new Photo
     router.post("/", projects.create);
   
-    // Retrieve all Tutorials
+    // Retrieve all Photos
     router.get("/", projects.findAll);
   
-    // Retrieve a single Tutorial with id
+    // Retrieve a single Photo with id
     router.get("/:id", projects.findOne);
 
     // Get all category drawings
     router.get("/cat/:id", projects.findAllCat);
   
-    // Update a Tutorial with id
+    // Update a Photo with id
     router.put("/:id", projects.update);
   
     // Delete a Tutorial with id
