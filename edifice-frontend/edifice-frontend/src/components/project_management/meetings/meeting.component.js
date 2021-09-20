@@ -108,7 +108,7 @@ class MeetingsHome extends Component {
       console.log(projectId);
       return (
         <div className="">
-          <h2>Meetings</h2>
+          <h2>MEETING</h2>
           <Breadcrumbs aria-label="breadcrumb">
             <Link color="inherit" to="/home">Home</Link>
             <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
