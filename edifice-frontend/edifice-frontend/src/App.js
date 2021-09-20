@@ -86,6 +86,7 @@ import MeetingsHome from "./components/project_management/meetings/meeting.compo
 import CreateMeetings from "./components/project_management/meetings/createmeeting.component";
 import CreateFollowupMeetings from "./components/project_management/meetings/createfollowup.component";
 import ViewMeeting from "./components/project_management/meetings/view.component";
+import ViewOnlyMeeting from "./components/project_management/meetings/viewonly.component";
 
 import BudgetHome from "./components/financial_management/budget/budget.component";
 import PrimeContracts from "./components/financial_management/prime-contracts/primecontracts.component";
@@ -338,6 +339,7 @@ class App extends Component {
               <Route path="/createmeetings/:id" component={CreateMeetings} />
               <Route path="/createfollowup/:id/:cid" component={CreateFollowupMeetings} />
               <Route path="/viewmeeting/:id/:mtid" component={ViewMeeting} />
+              <Route path="/viewonlymeeting/:id/:mtid" component={ViewOnlyMeeting} />
               {/* RFI */}
               <Route path="/rfi" component={rfiHome} />
               <Route path="/managerfi/create" component={CreateRFI} />

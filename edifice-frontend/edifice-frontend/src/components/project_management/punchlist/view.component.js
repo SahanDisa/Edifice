@@ -110,11 +110,12 @@ class PLIView extends Component {
         PunchlistDataService.delete(this.props.match.params.pliid, data)
         .then(response => {
             console.log(response.data);
-            this.props.history.push('/punchlist/'+this.state.plItem.projectId);
         })
         .catch(e => {
             console.log(e);
         });
+        this.props.history.push("/punchlist/"+ this.props.match.params.id);
+        cogoToast.success("Punch List Deleted Successfully!", { position: 'top-right', heading: 'success' });
     }
     
     render() {

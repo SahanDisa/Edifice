@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import PunchListTypesDataService  from "./../../../services/project_management/punchlisttypes.service.js";
 import PunchlistDataService  from "./../../../services/project_management/punchlist.service.js";
+import cogoToast from 'cogo-toast';
 
 class PunchList extends Component {
     constructor(props) {
@@ -79,7 +80,8 @@ class PunchList extends Component {
             });
         console.log(response.data);
         });
-        window.location.reload();
+        this.props.history.push("/punchlist/"+ this.props.match.params.id);
+        cogoToast.success("Punch List Type Added Successfully!", { position: 'top-right', heading: 'success' });
     }
 
     newPunchListType() {
@@ -164,23 +166,20 @@ class PunchList extends Component {
                         </div>
                         <div className="form-group col-md-1">
                             <label htmlFor="">.</label>
-                            <button
+                            <Link
                                 className="btn btn-primary"
                                 onClick={this.savePunchListType}
-                            >Add</button>
+                            >Add</Link>
                         </div>
                     </div>
                     <div className="container row">
                         {pltypes && pltypes.map((plt, index) => (
-                            <div className={"container col-3"} key={index}>
-                                <Link 
-                                    to={"/viewtype/"+plt.id}
-                                    style={{'text-decoration': 'none'}}
-                                >
+                            <div className={"container col-3"+ (index === currentIndex ? "active" : "")} key={index}>
+                                <Link to={"/viewtype/"+plt.id} style={{'text-decoration': 'none'}}>
                                     <Card
                                         bg={'light'}
                                         text={'dark'}
-                                        style={{ width: '17rem' }}
+                                        style={{ width: '16rem' }}
                                         className="bg-light mb-2"
                                         variant="outline"
                                     >

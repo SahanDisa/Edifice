@@ -160,12 +160,12 @@ class MeetingsHome extends Component {
                 <div className="form-group col-md-4">
                   <input className="form-control" type="text" placeholder="Search" />
                 </div>
-                <a href="#" className="btn btn-outline-dark mb-3">Add Filter</a>
+                <a href="#" className="btn btn-outline-dark mb-3">Search</a>
               </div>
             </form>
             <div class="accordion" id="accordionExample">
               {categories && categories.map((cat, index) => (
-                <div class="card" key={cat.id}>
+                <div class="card" key={cat.id + index}>
                   <div class="card-header" id="headingOne">
                     <h2 class="mb-0">
                       <button class="btn btn-link card-text-edifice" type="button" data-toggle="collapse" data-target={`#collapse${index}`} aria-expanded="true" aria-controls="collapseOne">{cat.overview}</button>
@@ -181,7 +181,7 @@ class MeetingsHome extends Component {
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th>Overview</th>
+                                    <th>Name</th>
                                     <th>Time</th>
                                     <th>Location</th>
                                     <th>Status</th>
@@ -189,28 +189,31 @@ class MeetingsHome extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {meeting && meeting.map((mt) => ( meeting.category === categories.id ?
-                                    <tr key={mt.id}>
-                                        <td>{mt.date}</td>
-                                        <td>{mt.name}</td>
-                                        <td>{mt.time}</td>
-                                        <td>{mt.location}</td>
-                                        <td>
-                                          {mt.status == "Scheduled"
-                                            ? "🟢 - Scheduled"
-                                            : "🔴 - Ended"}
-                                        </td>
-                                        <td>
-                                            <Link
-                                              to={"/viewmeeting/" + projectId + "/" + mt.id}>
-                                                <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
-                                            </Link>
-                                            <Link to="">
-                                                <button className="btn btn-danger">Delete <DeleteIcon/></button>
-                                            </Link>
-                                        </td>    
-                                    </tr> : ""
-                                ))}
+                              {meeting && meeting.map((mt, index) => ( meeting.category == categories.id ?
+                                <tr key={mt.id + index}>
+                                    <td>{mt.date}</td>
+                                    <td>{mt.name}</td>
+                                    <td>{mt.time}</td>
+                                    <td>{mt.location}</td>
+                                    <td>
+                                      {mt.status == "Scheduled"
+                                        ? "🟢 - Scheduled"
+                                        : "🔴 - Ended"}
+                                    </td>
+                                    <td>
+                                      {mt.status == "Scheduled" ? (
+                                        <Link to={"/viewmeeting/" + projectId + "/" + mt.id}>
+                                          <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
+                                        </Link>
+                                      ) : (
+                                        <Link to={"/viewonlymeeting/" + projectId + "/" + mt.id}>
+                                          <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
+                                        </Link>
+                                      )}
+                                      <button className="btn btn-danger mr-2"  id="updateBtn" data-target="#deleteModal" data-toggle="modal">Delete<DeleteIcon/></button>
+                                    </td>    
+                                </tr> : ""
+                              ))}
                             </tbody>
                         </Table>
                       </div>
@@ -220,6 +223,24 @@ class MeetingsHome extends Component {
               ))}
             </div>
           </div>
+          {/* Delete modal Starts */}
+          <div className="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div className="modal-dialog modal-dialog-centered" role="document">
+                  <div className="modal-content">
+                      <div className="modal-header">
+                          <p className="modal-title" id="exampleModalCenterTitle">Are you sure you want to delete?</p>
+                          <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div className="modal-body">
+                          <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteMeeting} data-dismiss="modal"> Yes, Delete</a>
+                          <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {/* Delete modal Ends */}
         </div>
       );
     }
