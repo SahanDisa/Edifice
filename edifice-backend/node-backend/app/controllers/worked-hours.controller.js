@@ -71,6 +71,7 @@ exports.update = (req, res) => {
       });
     });
 };
+
 /*
 // Retrieve all workers from a given project
 exports.findAll = (req, res) => {

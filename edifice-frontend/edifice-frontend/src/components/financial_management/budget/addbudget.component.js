@@ -18,13 +18,18 @@ import cogoToast from 'cogo-toast';
 
 const AddBudget = (props) => {
 
+
   /**validation */
+
   const validationSchema = Yup.object().shape({
     costCode: Yup.string().required('Cost Code is required'),
     description: Yup.string().required('Description is required'),
     date: Yup.string().required('Date is required'),
-estimatedBudget: Yup.string().required('Budget Amount is required'),
+estimatedBudget: Yup.number()
+.typeError('You must specify a valid number')
+.required('Budget Amount is required'),
   });
+
 
   const {
     register,

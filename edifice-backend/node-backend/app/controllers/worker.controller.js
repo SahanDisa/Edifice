@@ -35,20 +35,22 @@ exports.create = (req, res) => {
 
 // Retrieve all workers from a given project
 exports.findAll = (req, res) => {
-    //const id = req.query.id;
-      
-    Worker.findAll(/*{ where: {
-      projectId: id
-    }}*/)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving data"
-        });
+  //const id = req.query.id;
+
+  Worker.findAll({
+    where: {
+      isDeleted: 0
+    }
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving data"
       });
+    });
 };
 /*
 // Find a single crew with an id
@@ -68,52 +70,52 @@ exports.findOne = (req, res) => {
 
 // Update a worker by the id in the request
 exports.update = (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
 
-    Worker.update(req.body, {
-      where: { wId: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "worker was updated successfully."
-          });
-        } else {
-          res.send({
-            message: `Cannot update crew with id=${id}. Maybe worker was not found or req.body is empty!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: err
+  Worker.update(req.body, {
+    where: { wId: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "worker was updated successfully."
         });
+      } else {
+        res.send({
+          message: `Cannot update crew with id=${id}. Maybe worker was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err
       });
+    });
 };
 
 // Delete a worker with the specified id in the request
 exports.delete = (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
 
-    Worker.destroy({
-      where: { wId: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "worker was deleted successfully!"
-          });
-        } else {
-          res.send({
-            message: `Cannot delete worker with id=${id}. Maybe worker was not found!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Could not delete worker with id=" + id
+  Worker.update({ isDeleted: 1 }, {
+    where: { wId: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "worker was deleted successfully!"
         });
+      } else {
+        res.send({
+          message: `Cannot delete worker with id=${id}. Maybe worker was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete worker with id=" + id
       });
+    });
 };
 
 /*

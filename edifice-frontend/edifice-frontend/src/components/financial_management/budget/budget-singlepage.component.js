@@ -55,7 +55,9 @@ const Budget = props => {
     costCode: Yup.string().required('Cost Code is required'),
     description: Yup.string().required('Description is required'),
     date: Yup.string().required('Date is required'),
-    estimatedBudget: Yup.string().required('Amount is required'),
+    estimatedBudget:  Yup.number()
+    .typeError('You must specify a valid number')
+    .required('Budget Amount is required'),
   });
   
 

@@ -8,10 +8,10 @@ class EquipmentDataService {
   getAll() {
     return http.get(`/equipments/list/`);
   }
-    get(id) {
+  get(id) {
     return http.get(`/equipments/${id}`);
   }
-  
+
   create(data) {
     return http.post("/equipments", data);
 
@@ -24,17 +24,21 @@ class EquipmentDataService {
   delete(id) {
     return http.delete(`/equipments/delete/${id}`);
   }
-/*
-  deleteAll() {
-    return http.delete(`/projects`);
-  }
 
-  findByTitle(title) {
-    return http.get(`/projects?title=${title}`);
+  getAllProjects() {
+    return http.get(`/equipments/projects`);
   }
-  userProjects(id){
-    return http.get(`/projects/user/list/${id}`);
-  }*/
+  /*
+    deleteAll() {
+      return http.delete(`/projects`);
+    }
+  
+    findByTitle(title) {
+      return http.get(`/projects?title=${title}`);
+    }
+    userProjects(id){
+      return http.get(`/projects/user/list/${id}`);
+    }*/
   // findPublished(){
   //   return http.get(`/projects?published=`)
   // }
