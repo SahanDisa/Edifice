@@ -5,6 +5,7 @@ import ActionPlanDataService from "../../../services/project_management/actionpl
 import Table from 'react-bootstrap/Table';
 import DeleteIcon from '@material-ui/icons/Delete';
 import UpdateIcon from '@material-ui/icons/Update';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 export default class viewAPType extends Component {
     constructor(props) {
@@ -47,13 +48,15 @@ export default class viewAPType extends Component {
 
     render() {
         const { id, title, description, projectId, actionplans } = this.state;
-        console.log(id);
-        console.log(title);
-        console.log(description);
         return (
             <div>
                 <h2>Action Plan Type - {title}</h2>
-                <p>{description}</p>
+                <Breadcrumbs aria-label="breadcrumb">
+                  <Link color="inherit" to="/home">Home</Link>
+                  <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
+                  <Link color="inherit" aria-current="page" className="disabledLink">Action Plan</Link>
+                </Breadcrumbs><hr/>
+                
                 <hr />
                 <h3 className="mb-3">Action Plan List</h3>
                 <Table striped bordered hover variant="" responsive>

@@ -22,6 +22,7 @@ export default class ActionPlanSinglePage extends Component {
     
       this.state = {
         id: this.props.match.params.id,
+        apid: this.props.match.params.apid,
         title: "",
         description: "",
         category: "",
@@ -114,10 +115,8 @@ export default class ActionPlanSinglePage extends Component {
                         <h6>Description : </h6>
                         <h6>Approved : Yes/No</h6>
                         <hr></hr>
-                        <a href="#" className="btn btn-primary mr-2"  data-toggle="modal" data-target="#addAPSection">+ Add Section</a>
-                        <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#addAPItem">+ Add Item</a>
-                        {/* <Link className="btn btn-primary m-2" to={"/addactionplansection"}>Add Section</Link> */}
-                        {/* <Link className="btn btn-primary m-2" to={"/addactionplanitem"}>Add Action Items</Link> */}
+                        <Link href="#" className="btn btn-primary mr-2"  to="">+ Add Section</Link>
+                        <Link href="#" className="btn btn-primary"  to="">+ Add Item</Link>
                     </div>
                 </div>
                 {/* Add Section Starts */}

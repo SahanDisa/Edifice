@@ -181,21 +181,21 @@ class CreatePhotos extends Component {
                             )}
                             </div>
                             <hr />
-                            {!buttonChanger &&
+                            {/* {!buttonChanger && */}
                                 <button
                                 type="button"
                                 onClick={this.savePhotos}
                                 className="btn btn-primary mr-2"
                                 >Save</button>
-                            }{buttonChanger &&
+                            {/* }{buttonChanger &&
                                 <Link
                                 to={"/managepunchlist/createaddassignee/" + projectId + "/" + punchlistNo}
                                 type="button"
                                 onClick={this.buttonChange}
                                 className="btn btn-primary mr-2"
                                 >Next: Add Assignees</Link>
-                            }
-                            <a href="/punchlist" className="">Cancel</a>
+                            } */}
+                            <Link to={"/punchlist"+projectId} className="">Cancel</Link>
                         </form>
                     </div>
                     <div className="col-sm-4">
@@ -205,13 +205,13 @@ class CreatePhotos extends Component {
                                 <TimelineContent><h6><strong>Step 1</strong><br/>Basic Details</h6></TimelineContent>
                             </TimelineItem>
                             <TimelineItem>
-                            <TimelineSeparator><TimelineDot /><TimelineConnector /></TimelineSeparator>
+                            <TimelineSeparator><TimelineDot /></TimelineSeparator>
                                 <TimelineContent><h5><strong>Step 2</strong><br/>Link Photos</h5></TimelineContent>
                             </TimelineItem>
-                            <TimelineItem>
+                            {/* <TimelineItem>
                                 <TimelineSeparator><TimelineDot /></TimelineSeparator>
                                 <TimelineContent><h6><strong>Step 2</strong><br/>Add Assignees</h6></TimelineContent>
-                            </TimelineItem>
+                            </TimelineItem> */}
                         </Timeline>
                     </div>
                 </div>

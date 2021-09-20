@@ -132,12 +132,12 @@ export default class ActionPlan extends Component {
                         <Card.Header>
                         <div className="row">
                           <div className="col-9">
-                            <Link to={"/actionplansingle/" + api.id} style={{'text-decoration': 'none'}}>
+                            <Link to={"/actionplansingle/" + projectId + "/" + api.id} style={{'text-decoration': 'none'}}>
                               <h5>{api.title}</h5>
                             </Link>
                           </div>
                           <div className="col-3">
-                            <Link to={"/viewactionplantype/"+ api.id} style={{'text-decoration': 'none'}}>
+                            <Link to={"/viewactionplantype/" + projectId + "/" + api.id} style={{'text-decoration': 'none'}}>
                               <h6>Action Type: {api.actiontype}</h6>
                             </Link>
                           </div>
