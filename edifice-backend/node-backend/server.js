@@ -70,6 +70,7 @@ require('./app/routes/worker.routes')(app);
 require('./app/routes/worked-hours.routes')(app);
 require('./app/routes/timesheet.routes')(app);
 require('./app/routes/employee.routes')(app);
+require('./app/routes/employee-designation.routes')(app);
 require('./app/routes/schedule.routes')(app);
 
 require('./app/routes/primecontract.routes')(app);

@@ -207,6 +207,12 @@ export default class ProjectsList extends Component {
               >
                 Edit
               </Link>
+              <Link
+                to={"/costcode/" + currentProject.id}
+                className="m-1 btn btn-sm btn-secondary"
+              >
+                Add Cost Codes
+              </Link>
             </div>
           ) : (
             <div>
