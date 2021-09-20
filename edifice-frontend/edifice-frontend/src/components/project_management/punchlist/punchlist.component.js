@@ -121,7 +121,7 @@ class PunchList extends Component {
     return (
       <div className="">
         <div>
-          <h2>Punch Lists</h2>
+          <h2>PUNCH LISTS</h2>
           <Breadcrumbs aria-label="breadcrumb">
             <Link color="inherit" to="/home">
               Home
@@ -197,8 +197,7 @@ class PunchList extends Component {
               </div>
             </div>
             <div className="container row">
-              {pltypes &&
-                pltypes.map((plt, index) => (
+              {pltypes && pltypes.map((plt, index) => (
                   <div className={"container col-3" + (index === currentIndex ? "active" : "")} key={index} >
                     <Link
                       to={"/viewtype/" + plt.id}

@@ -225,7 +225,7 @@ class CreateMeeting extends Component {
                         <div className="form-row">
                             <div className="form-group col-md-12">
                                 <label htmlFor="">Description</label>
-                                <TextareaAutosize
+                                <textarea
                                     rows="2"
                                     className="form-control"
                                     name="description"

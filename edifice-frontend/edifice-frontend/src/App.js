@@ -11,7 +11,6 @@ import mainIcon from "././assets/Edifice.png";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import AuthService from "./services/auth.service";
 import ProjectUserService from "./services/projectuser.service";
-import cogoToast from 'cogo-toast';
 
 import Login from "./components/login.component";
 import ForgetPassword from "./components/forgetpassword.component";
@@ -120,6 +119,10 @@ import ViewDCL from "./components/project_management/dailylog/viewcalllog.compon
 import ViewDAL from "./components/project_management/dailylog/viewaccidentlog.component";
 import ViewDGL from "./components/project_management/dailylog/viewgenerallog.component";
 import ViewDWL from "./components/project_management/dailylog/viewweatherlog.component";
+import ViewDCLall from "./components/project_management/dailylog/viewallcall.component";
+import ViewDALall from "./components/project_management/dailylog/viewallaccident.component";
+import ViewDGLall from "./components/project_management/dailylog/viewallgeneral.component";
+import ViewDWLall from "./components/project_management/dailylog/viewallweather.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
 import CreatePL from "./components/project_management/punchlist/create-basic.component";
@@ -357,8 +360,7 @@ class App extends Component {
             <Route exact path="/logincode" component={ForgetPassword}/>
             <Route path="/camera" component={CameraSinglePage} />
             <Route component={ErrorPage}/>
-          </Switch>  
-
+          </Switch>
         )}
         {currentUser && (
 
@@ -432,6 +434,11 @@ class App extends Component {
               <Route path="/viewcalllog/:id/:dlid" component={ViewDCL} />
               <Route path="/viewgenerallog/:id/:dlid" component={ViewDGL} />
               <Route path="/viewweatherlog/:id/:dlid" component={ViewDWL} />
+              <Route path="/viewaccidentall/:id" component={ViewDALall} />
+              <Route path="/viewcallall/:id" component={ViewDCLall} />
+              <Route path="/viewgeneralall/:id" component={ViewDGLall} />
+              <Route path="/viewweatherall/:id" component={ViewDWLall} />
+              
 
               <Route path="/addUser" component={AddEmployee} />
               <Route path="/editUser/:id" component={EditUser} />

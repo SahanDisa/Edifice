@@ -20,16 +20,9 @@ class CreateFollowupMeetings extends Component {
                 overview: "",
                 projectId: this.props.match.params.id,
             },
-            meeting: {
-                projectId: this.props.match.params.id,
-                category: this.props.match.params.cid,
-                no: null,
-                name: "",
-                status: "Scheduled",
-                date: "",
-                time: "",
-                location: ""
-            },
+            meeting: [],
+            projectId: this.props.match.params.id,
+            category: this.props.match.params.cid,
             submitted: false
         };
     }
@@ -66,7 +59,6 @@ class CreateFollowupMeetings extends Component {
                     name: name
                 }
             }
-            
         });
     }
 
@@ -79,7 +71,6 @@ class CreateFollowupMeetings extends Component {
                     date: date
                 }
             }
-            
         });
     }
 
@@ -146,15 +137,14 @@ class CreateFollowupMeetings extends Component {
 
     render() {
         const {meeting, meetingcategory} = this.state;
-        console.log(meeting.projectId);
         return (
         <div className="">
             <div className="">
                 <h2>Add a Follow-up Meeting</h2>
                 <Breadcrumbs aria-label="breadcrumb">
                     <Link color="inherit" to="/home">Home</Link>
-                    <Link color="inherit" to={"/projectmanagementhome/"+meeting.projectId}>App Dashboard</Link>
-                    <Link color="inherit" to={"/meetings/"+meeting.projectId}>Meetings</Link>
+                    <Link color="inherit" to={"/projectmanagementhome/"+meetingcategory.projectId}>App Dashboard</Link>
+                    <Link color="inherit" to={"/meetings/"+meetingcategory.projectId}>Meetings</Link>
                     <Link color="inherit" aria-current="page" className="disabledLink">Add a Follow-up Meetings</Link>
                 </Breadcrumbs><hr/>
                 <div>
@@ -222,6 +212,26 @@ class CreateFollowupMeetings extends Component {
                                 value={meeting.location}
                                 onChange={this.onChangeLocation}
                                 type="text"
+                                required
+                            />
+                            <datalist id="suggest">
+                                <option value="ZOOM">ZOOM</option>
+                                <option value="Microsoft Teams">Microsoft Teams</option>
+                                <option value="Google Meet">Google Meet</option>
+                            </datalist>
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-12">
+                            <label htmlFor="">Description</label>
+                            <textarea
+                                rows="2"
+                                className="form-control"
+                                name="description"
+                                placeholder="Any other information"
+                                value={this.state.description}
+                                onChange={this.onChangeDescription}
+                                type="description"
                                 required
                             />
                         </div>

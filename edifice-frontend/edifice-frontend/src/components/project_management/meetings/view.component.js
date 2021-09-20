@@ -39,7 +39,7 @@ class ViewMeeting extends Component {
     }
 
     retrieveMeeting(mtid){
-      MeetingDataService.getAll(mtid)
+      MeetingDataService.get(mtid)
       .then(response => {
           this.setState({
             meeting: response.data
@@ -153,9 +153,6 @@ class ViewMeeting extends Component {
           console.log(response.data);
           this.props.history.push("/meetings/"+ this.state.meeting.projectId);
           cogoToast.success("Meeting Deleted Successfully!", { position: 'top-right', heading: 'success' });
-      })
-      .catch(e => {
-          console.log(e);
       });
     }
 
@@ -179,7 +176,7 @@ class ViewMeeting extends Component {
                                 <input
                                     className="form-control"
                                     name="name"
-                                    value={this.state.name}
+                                    value={meeting.name}
                                     onChange={this.onChangeName}
                                     type="text"
                                     required
@@ -213,7 +210,7 @@ class ViewMeeting extends Component {
                                 <input
                                     className="form-control"
                                     name="date"
-                                    value={this.state.date}
+                                    value={meeting.date}
                                     onChange={this.onChangeDate}
                                     type="date"
                                     required
@@ -224,7 +221,7 @@ class ViewMeeting extends Component {
                                 <input
                                     className="form-control"
                                     name="time"
-                                    value={this.state.time}
+                                    value={meeting.time}
                                     onChange={this.onChangeTime}
                                     type="time"
                                     required
@@ -235,7 +232,7 @@ class ViewMeeting extends Component {
                                 <input
                                     className="form-control"
                                     name="location"
-                                    value={this.state.location}
+                                    value={meeting.location}
                                     onChange={this.onChangeLocation}
                                     type="text"
                                     required

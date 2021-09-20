@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
 import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
 import PunchListTypesDataService from "../../../services/project_management/punchlisttypes.service.js";
+import ProjectUserDataService from "../../../services/projectuser.service.js";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -10,6 +11,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
+import cogoToast from 'cogo-toast';
 
 class CreatePL extends Component {
     constructor(props) {
@@ -20,12 +22,13 @@ class CreatePL extends Component {
         this.onChangeLocation = this.onChangeLocation.bind(this);
         // this.onChangePunchmanager = this.onChangePunchmanager.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.onChangeAssignee = this.onChangeAssignee.bind(this);
         this.savePunchListItem = this.savePunchListItem.bind(this);
-        this.newPunchListItem = this.newPunchListItem.bind(this);
         this.buttonChange = this.buttonChange.bind(this);
 
         this.state = {
             no: null,
+            position: "Engineer",
             status: "Initiated",
             duedate: "",
             title: "",
@@ -35,6 +38,7 @@ class CreatePL extends Component {
             projectmanager: "",
             projectId: this.props.match.params.id,
             lastpl:"",
+            users: [],
             buttonChanger: undefined,
             currentUser: AuthService.getCurrentUser(),
             submitted: false
@@ -43,6 +47,33 @@ class CreatePL extends Component {
 
     componentDidMount() {
         this.retrievePLT(this.props.match.params.id);
+        this.retrieveUsers(this.props.match.params.id);
+    }
+
+    retrievePLT(id){
+        PunchListTypesDataService.getAll(id)
+        .then(response => {
+            this.setState({
+                pltypes: response.data
+            });
+        console.log(response.data);
+        })
+        .catch(e => {
+            console.log(e);
+        });
+    }
+
+    retrieveUsers(id){
+        ProjectUserDataService.getProjectUserDetails(id)
+        .then(response => {
+            this.setState({
+                users: response.data
+            });
+        console.log(response.data);
+        })
+        .catch(e => {
+            console.log(e);
+        });
     }
 
     onChangeDuedate(e) {
@@ -69,9 +100,15 @@ class CreatePL extends Component {
         });
     }
 
-    onChangeDescription(e) {
+    onChangeAssignee(e) {
         this.setState({
             description: e.target.value
+        });
+    }
+
+    onChangeDescription(e) {
+        this.setState({
+            assignee: e.target.value
         });
     }
 
@@ -108,39 +145,12 @@ class CreatePL extends Component {
 
                 submitted: true
             });
-            console.log("save function service ekata enawa");
             console.log(response.data);
         })
         .catch(e => {
             console.log(e);
         });
-    }
-    
-    newPunchListItem() {
-        this.setState({
-            no: null,
-            duedate: "",
-            title: "",
-            location: "",
-            // punchmanager: "",
-            description: "",
-            projectId: this.props.match.params.id,
-
-            submitted: false
-        });
-    }
-
-    retrievePLT(id){
-        PunchListTypesDataService.getAll(id)
-        .then(response => {
-            this.setState({
-                pltypes: response.data
-            });
-        console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
-        });
+        cogoToast.success("Punch List - Basic Details Saved Successfully!", { position: 'top-right', heading: 'success' });
     }
 
     getLastPunchListID(){
@@ -157,7 +167,9 @@ class CreatePL extends Component {
     }
 
     render() {
-        const {lastpl, pltypes, buttonChanger, projectId, projectmanager, currentUser} = this.state;
+        const {lastpl, pltypes, buttonChanger, projectId, projectmanager, currentUser, users} = this.state;
+        console.log("users");
+        console.log(users);
         return (
         <div className="">
             <div className="">
@@ -239,14 +251,23 @@ class CreatePL extends Component {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label htmlFor="">Assignee</label>
-                                    <input
+                                    <select
                                         className="form-control"
                                         name="assignee"
                                         value={this.state.assignee}
                                         onChange={this.onChangeAssignee}
                                         type="text"
                                         required
-                                    />
+                                    >{users && users.map((u, index) => (
+                                        <option
+                                            value={u.userId}
+                                            onChange={this.onChangeAssignee}
+                                            key={index}
+                                        >
+                                            {u.username} - {u.position}
+                                        </option>
+                                    ))}
+                                    </select>
                                 </div>
                                 <div className="form-group col-md-6">
                                     <label htmlFor="">Due Date</label>
@@ -264,7 +285,7 @@ class CreatePL extends Component {
                             <div className="form-row">
                                 <div className="form-group col-md-12">
                                     <label htmlFor="">Description</label>
-                                    <input
+                                    <textarea
                                         className="form-control"
                                         name="description"
                                         value={this.state.description}
