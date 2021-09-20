@@ -107,12 +107,14 @@ db.demo2.belongsTo(db.demo1, {
   as: "demo1"
 })
 
-//db.employee.hasOne(db.users,{as: "users"});
-//db.users.belongsTo(db.employee,{
-//  foreignKey: "username",
-//  as: "username"
-//})
-//Testing section ends
+// // One employee has one user
+// db.employee.hasOne(db.users, {
+//   as: "meetingagenda"
+// });
+// db.meetingagenda.belongsTo(db.meetings, {
+//   foreignKey: "projectId",
+//   as: "project",
+// });
 
 // ----------- Project Management Starts -------------
 // One project has many departments
