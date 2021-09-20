@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AlbumDataService from "./../../../services/album.service";
+import ProjectService from "../../../services/project.service";
 import { WebcamCapture } from './webcam.component';
 // import { CameraViewer } from "./viewphoto.component";
 // import Accordion from 'react-bootstrap/Accordion';
@@ -28,12 +29,14 @@ export default class PhotosHome extends Component {
         currentFile: undefined,
         progress: 0,
         message: "",
+        project: [],
 
         fileInfos: [],
         Captures: [],
       };
     }
     componentDidMount() {
+      window.scrollTo(0, 0);
       this.retriveAlbums(this.props.match.params.id);
       UploadPhotoService.getFiles().then((response) => {
         this.setState({
@@ -45,10 +48,22 @@ export default class PhotosHome extends Component {
           Captures: response.data,
         });
       });
+      this.retriveProjectDetails(this.props.match.params.id);
     }
     selectFile(event) {
       this.setState({
         selectedFiles: event.target.files,
+      });
+    }
+    retriveProjectDetails(id){
+      ProjectService.get(id).then(response => {
+        this.setState({
+          project: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
       });
     }
     retriveAlbums(id){
@@ -65,21 +80,30 @@ export default class PhotosHome extends Component {
     }
     
     render() {
-      const { albums, currentIndex,id,fileInfos, Captures } = this.state;
+      const { albums, currentIndex,id,fileInfos, Captures, project } = this.state;
       return (
         <div>
-          <h2>Photos</h2>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link color="inherit" to="/home">
-              Home
-            </Link>
-            <Link color="inherit" to={"/projectmanagementhome/"+id}>
-              App Dashboard
-            </Link>
-            <Link color="textPrimary" to={"/photos/"+id} aria-current="page">
-              Photos Home
-            </Link>
-          </Breadcrumbs>
+        <div className="row">
+          <div className="col-9">
+            <h2>PHOTOS HOME</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+id}>
+                {project.title} / App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/photos/"+id} aria-current="page">
+                Photos Home
+              </Link>
+            </Breadcrumbs>
+          </div>
+          <div className="col-3">
+            <h4>{project.title}</h4>
+            {/* <h6>{project.description}</h6> */}
+            <h6>{project.location}</h6>
+          </div>
+        </div>
           <hr></hr>
           <div>
             <h3>Insights</h3>

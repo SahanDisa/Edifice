@@ -277,7 +277,7 @@ class CreatePL extends Component {
                                 >Save</button>
                             }{buttonChanger &&
                                 <Link
-                                to={"/managepunchlist/createaddphoto/" + projectId + "/" + lastpl}
+                                to={"/camera/" + projectId}
                                 type="button"
                                 onClick={this.buttonChange}
                                 className="btn btn-primary mr-2"

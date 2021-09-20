@@ -8,8 +8,10 @@ import 'bootstrap/dist/js/bootstrap.js';
 // import Popper from 'popper.js';
 import "./App.css";
 import mainIcon from "././assets/Edifice.png";
-import profileAvatar from "././assets/profile-navbar.jpg";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import AuthService from "./services/auth.service";
+import ProjectUserService from "./services/projectuser.service";
+import cogoToast from 'cogo-toast';
 
 import Login from "./components/login.component";
 import ForgetPassword from "./components/forgetpassword.component";
@@ -166,11 +168,17 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.logOut = this.logOut.bind(this);
-
+    this.retriveUserProjects = this.retriveUserProjects.bind(this);
+    this.shiftProject = this.shiftProject.bind(this);
+    this.onChnagePid = this.onChnagePid.bind(this);
     this.state = {
       showModeratorBoard: false,
       showAdminBoard: false,
       currentUser: undefined,
+      projectname: "",
+      projectId: 1,
+      uprojects: [],
+      id: "",
     };
   }
 
@@ -183,15 +191,37 @@ class App extends Component {
         showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
         showAdminBoard: user.roles.includes("ROLE_ADMIN"),
       });
+      this.retriveUserProjects(user.id);
     }
+    
   }
-
+  retriveUserProjects(id){
+    ProjectUserService.getProjectUserProjectDetails(id)
+    .then(response => {
+      this.setState({
+        uprojects: response.data
+      });
+      console.log(response.data);
+    })
+    .catch(e => {
+      console.log(e);
+    });
+  }
+  shiftProject(e){
+    //console.log("Project Id selected is : "+e.target.value);
+    // cogoToast.success("Project Changed Successfully!");
+  }
+  onChnagePid(e){
+    this.setState({
+      projectId: e.target.value
+    });
+  } 
   logOut() {
     AuthService.logout();
   }
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
+    const { currentUser, showModeratorBoard, showAdminBoard,projectId,uprojects } = this.state;
 
     return (
       <div>
@@ -207,13 +237,13 @@ class App extends Component {
           </Link>
 
           <div className="navbar-nav mr-auto">
-            {currentUser && (
+            {/* {currentUser && (
               <li className="nav-item">
                 <Link to={"/home"} className="nav-link">
                   <h6>Home</h6>
                 </Link>
               </li>
-            )}
+            )} */}
             {/* {currentUser && (
               <li className="nav-item">
                 <Link to={"/projectmanagement"} className="nav-link">
@@ -248,15 +278,43 @@ class App extends Component {
                 </Link>
               </li>
             )}
+            {currentUser && (
+              <li className="nav-item">
+                <select 
+                  className="form-control"
+                  value={this.state.projectId}
+                  onChange={this.onChnagePid}
+                >
+                  {uprojects &&
+                    uprojects.map((project, index) => (
+                      <option value={project.projectId}
+                        style={{'color': 'black'}}
+                        key={index}
+                        value={project.projectId}
+                        onChange={this.onChangePid}
+                      >
+                      {project.title}
+                      </option> 
+                    ))}
+                </select>
+              </li>
+            )}
+            {currentUser && (
+              <li className="nav-item">
+              <a href={"/projectmanagementhome/"+projectId} style={{'text-decoration':'none'}} className="nav-link"
+              onClick={this.shiftProject}
+              >
+                Go<ArrowForwardIosIcon/>
+              </a>
+              {/* <Switch>
+              <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
+              </Switch> */}
+              </li>
+            )}
           </div>
 
           {currentUser ? (
             <div className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link to={"/schedule/" + 1} className="nav-link">
-                  <h6>Schedule</h6>
-                </Link>
-              </li>
               {/* <img
                   src={profileAvatar}
                   style={{'width' : "40px", height: "40px"}}
@@ -398,8 +456,8 @@ class App extends Component {
               {/* Drawing Component Routes  */}
               <Route path="/drawing/:id" component={DrawingHome} />
               <Route path="/adddrawingcategory/:id" component={AddDrawingCategory} />
-              <Route path="/viewdrawingcategory/:id" component={ViewSingleDrawingCategory} />
-              <Route exact path={"/updatedrawingcategory/:pid/:id"} component={UpdateDrawingCategory} />
+              <Route path="/viewdrawingcategory/:pid/:cat" component={ViewSingleDrawingCategory} />
+              <Route exact path={"/updatedrawingcategory/:id/:pid"} component={UpdateDrawingCategory} />
               <Route path="/adddrawing/:id" component={AddDrawing} />
               <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
               <Route exact path="/updatedrawing/:id/:pid" component={UpdateDrawing} />
