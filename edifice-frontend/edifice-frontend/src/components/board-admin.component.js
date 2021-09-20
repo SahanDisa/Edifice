@@ -196,7 +196,7 @@ export default class BoardUser extends Component {
     `,
       <div className="container">
 
-        <h3> Core Tools Home</h3>
+        <h3> CORE TOOLS HOME</h3>
         <p>Current statistics of ongoing projects </p>
         <div className="row">
             <div className="col-lg-3 col-sm-6 pb-2" id="employeecard">
@@ -258,11 +258,11 @@ export default class BoardUser extends Component {
               <div className=" card card-hover shadow-sm pt-1 mb-3 pb-3">
                 <div className="row">
                   <div  className="col-6">
-                    <Link ActiveClassName=" nav-heading text-left ml-4 mt-3 mb-1 pb-3" to={"/projectmanagementhome/"+project.id} style={{ textDecoration: 'none' }}>
+                    <Link ActiveClassName=" nav-heading text-left ml-4 mt-3 mb-1 pb-3" style={{ textDecoration: 'none' }}>
                         
                       <h4 style={{color: "#273F7D"}} className="mb-6 py-2 pl-2"> {project.title}</h4>
                           <div className="col-sm-6 mb-2" id="project1">
-                            <ProgressBar now={project.progressValue} label={project.progressValue} />
+                            <ProgressBar now={project.progressValue} label={project.progressValue} classes={{colorPrimary: "secondary"}}/>
                           </div>
                         <div className="col-sm-6" id="project1_d">
                           <div className="row pb-2">

@@ -46,10 +46,11 @@ exports.findAll = (req, res) => {
   const id = req.params.id;
   const published = true;
 
-  CostCode.findAll({ where: {
+  CostCode.findAll({attributes: ['id', 'date', 'costCode']},{where: {
     projectId: id,
     published: published
-  }})
+  }}
+  )
     .then(data => {
       res.send(data);
     })
