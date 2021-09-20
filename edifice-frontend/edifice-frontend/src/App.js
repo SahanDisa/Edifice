@@ -253,7 +253,7 @@ class App extends Component {
           {currentUser ? (
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link to={"/schedule"} className="nav-link">
+                <Link to={"/schedule/" + 1} className="nav-link">
                   <h6>Schedule</h6>
                 </Link>
               </li>
@@ -276,30 +276,36 @@ class App extends Component {
             </div>
           ) : (
 
-              <div className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <Link to={"/login"} className="nav-link">
-                    Login
+            <div className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link to={"/login"} className="nav-link">
+                  Login
                 </Link>
-                </li>
+              </li>
 
-                {/* <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to={"/register"} className="nav-link">
                   Sign Up
                 </Link>
               </li> */}
-              </div>
-            )}
+            </div>
+          )}
 
         </nav>
         {!currentUser && (
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
+
+            <Route path="/photos/:id" component={PhotosHome} />
+            <Route component={ErrorPage} />
+          </Switch>
+
             <Route exact path="/logincode" component={ForgetPassword}/>
             <Route path="/camera" component={CameraSinglePage} />
             <Route component={ErrorPage}/>
           </Switch>  
+
         )}
         {currentUser && (
 
@@ -434,7 +440,7 @@ class App extends Component {
               {/* {/schedule/} */}
               <Route path="/schedule/:id" component={Schedule} />
               {/* {/equipment/} */}
-              <Route path="/equipments/:id" component={Equipments} />
+              <Route path="/equipments" component={Equipments} />
               <Route path="/equipDetails/:code" component={EquipDetails} />
               {/* {/<Route path="/equipDetails/:id/:code" component={EquipDetails} />/} */}
 

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Card from 'react-bootstrap/Card';
+import { Link } from "react-router-dom";
 
 import ScheduleDataService from "./../../../services/schedule.service";
 import AuthService from "./../../../services/auth.service";
@@ -8,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react-scheduler';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { makeStyles } from '@material-ui/core/styles';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import {
   Scheduler,
   DayView,
@@ -89,17 +91,17 @@ const day = new Date();
 const Appointment = ({
   children, style, ...restProps
 }) => (
-    <Appointments.Appointment
-      {...restProps}
-      style={{
-        ...style,
-        backgroundColor: '#273f7d',
-        borderRadius: '8px',
-      }}
-    >
-      {children}
-    </Appointments.Appointment>
-  );
+  <Appointments.Appointment
+    {...restProps}
+    style={{
+      ...style,
+      backgroundColor: '#273f7d',
+      borderRadius: '8px',
+    }}
+  >
+    {children}
+  </Appointments.Appointment>
+);
 
 export default class Schedule extends React.PureComponent {
   constructor(props) {
@@ -109,6 +111,7 @@ export default class Schedule extends React.PureComponent {
       data1: [],
       currentDate: day,
       userId: AuthService.getCurrentUser().id,
+      id: this.props.match.params.id,
 
 
       addedAppointment: {},
@@ -218,21 +221,29 @@ export default class Schedule extends React.PureComponent {
 
 
   render() {
-    const { currentDate, data, addedAppointment, appointmentChanges, editingAppointment, } = this.state;
+    const { currentDate, data, addedAppointment, appointmentChanges, editingAppointment, id } = this.state;
 
     return (
 
       <div>
-        <Card
-          bg={'success'}
-          text={'white'}
-          //style={{ width: '14rem' }}
-          className="mb-2">
-
-          <Card.Body>
-            <Card.Title><h4>Schedule</h4></Card.Title>
-          </Card.Body>
-        </Card>
+        <div className="row">
+          <div className="col" >
+            <h2>SCHEDULE</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/" + id}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/schedule/" + id} aria-current="page">
+                Schedule
+              </Link>
+            </Breadcrumbs>
+          </div>
+        </div>
+        <hr />
+        <br />
         <Paper>
           <Scheduler
             data={data}

@@ -5,17 +5,17 @@ const sequelize = new Sequelize(
   config.DB,
   config.USER,
   config.PASSWORD, {
-    host: config.HOST,
-    dialect: config.dialect,
-    operatorsAliases: false,
+  host: config.HOST,
+  dialect: config.dialect,
+  operatorsAliases: false,
 
-    pool: {
-      max: config.pool.max,
-      min: config.pool.min,
-      acquire: config.pool.acquire,
-      idle: config.pool.idle
-    }
+  pool: {
+    max: config.pool.max,
+    min: config.pool.min,
+    acquire: config.pool.acquire,
+    idle: config.pool.idle
   }
+}
 );
 
 const db = {};
@@ -81,7 +81,7 @@ db.costcodes = require("./costcode.model.js")(sequelize, Sequelize);
 
 // Resource management
 db.equipments = require("./equipment.model")(sequelize, Sequelize);
-db.categorys = require("./equipment-category.model")(sequelize, Sequelize);
+db.equipmentCategorys = require("./equipment-category.model")(sequelize, Sequelize);
 db.crews = require("./crew.model")(sequelize, Sequelize);
 db.workers = require("./worker.model")(sequelize, Sequelize);
 db.timesheets = require("./timesheet.model")(sequelize, Sequelize);
@@ -464,6 +464,15 @@ db.invoices.belongsTo(db.commitments, {
 // ----------- Finance Management Ends -----------
 
 // ----------- Resource Management Starts --------
+//One equipmentcategory has many equipments
+db.equipmentCategorys.hasMany(db.equipments, {
+  as: "equipments"
+});
+db.equipments.belongsTo(db.equipmentCategorys, {
+  foreignKey: "equipmentCategoryId",
+  as: "categorys",
+});
+
 //One project has many equipments
 db.projects.hasMany(db.equipments, {
   as: "equipments"
@@ -472,7 +481,6 @@ db.equipments.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
 });
-
 
 //One crew has many workers
 db.crews.hasMany(db.workers, {
