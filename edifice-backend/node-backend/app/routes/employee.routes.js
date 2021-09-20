@@ -14,6 +14,9 @@ module.exports = app => {
   
     // Update a Tutorial with id
     router.put("/:id", employee.update);
+
+    // Update an employee's account status with id
+    router.post("/:id", employee.updateAccountStatus);
   
     // Delete a Tutorial with id
     router.delete("/:id/", employee.delete);
@@ -22,7 +25,7 @@ module.exports = app => {
     router.delete("/", employee.deleteAll);
 
     // Find Last employee
-    router.get("/app/last/",employee.findLastOne);
+    //router.get("/app/last/",employee.findLastOne);
   
     app.use('/api/employee', router);
   };

@@ -113,6 +113,31 @@ exports.update = (req, res) => {
       });
 };
 
+//update employee as to account created
+exports.updateAccountStatus = (req, res) => {
+  const id = req.params.id;
+
+  Employee.update({ hasAccount: 1 }, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Account status for Employee changed."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Account status forEmployee with id=${id}. `
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Account status for Employee with id=" + id
+      });
+    });
+};
+
 // Delete a Employee with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;

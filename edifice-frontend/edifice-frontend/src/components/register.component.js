@@ -190,6 +190,17 @@ export default class Register extends Component {
             //console.log(data);
           });
         });
+
+        EmployeeDataService.updateAccountStatus(this.state.id)
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+            //console.log(data);
+          });
+
+        
         //cogoToast.success("Account successfully made for"+this.state.username);
       }
     }
@@ -246,7 +257,8 @@ export default class Register extends Component {
     });
 
     this.setState({
-      password: "12345"
+      password: "12345",
+      signupDisabled: false
     });
 
     // 'uEyMTw32v9'
@@ -325,7 +337,7 @@ export default class Register extends Component {
                         <label htmlFor="password">Password</label>
                       </div>
                       <div className="col">
-                        <button className="btn btn-primary" onClick={() =>this.generatePassword()}>Generate Password</button>
+                        <a className="btn btn-primary" onClick={() =>this.generatePassword()}>Generate Password</a>
                       </div>
                     </div>
                     <h5
@@ -384,7 +396,7 @@ export default class Register extends Component {
             </div>
           </div>
           <div className="form-group">
-            <button className="btn btn-primary btn-block" onClick={() =>this.handleRegister()}>Sign Up</button>
+            <button className="btn btn-primary btn-block" onClick={() =>this.handleRegister()} disabled={this.state.signupDisabled}>Sign Up</button>
           </div>
         
         </div>
