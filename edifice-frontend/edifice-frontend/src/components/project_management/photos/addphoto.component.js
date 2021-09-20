@@ -10,6 +10,7 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
+import Alert from "react-bootstrap/Alert";
 // import CameraCapture from './cameracpature.component';
 
 export default class AddPhoto extends Component {
@@ -35,6 +36,7 @@ export default class AddPhoto extends Component {
       albums: [],
       currentIndex: -1,
       submitted: false,
+      isTitleValid: 0,
 
       //file
       selectedFiles: undefined,
@@ -44,11 +46,21 @@ export default class AddPhoto extends Component {
     };
   }
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.retriveAlbum(this.props.match.params.id);
   }
   onChangeTitle(e) {
     this.setState({
       title: e.target.value
+    });
+    PhotoFileDataService.findByTitle(e.target.value)
+    .then(response => {
+      this.setState({
+        isTitleValid: response.data.length
+      });
+    })
+    .catch(e => {
+      console.log(e);
     });
   }
   onChangeDescription(e) {
@@ -168,7 +180,7 @@ export default class AddPhoto extends Component {
       currentFile,
       progress,
       message,
-      fileInfos,} = this.state;
+      fileInfos,isTitleValid} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
@@ -203,7 +215,7 @@ export default class AddPhoto extends Component {
             <div className="row">
             <div className="col-sm-8">
             <div className="form-group">
-              <label htmlFor="name">Image Name</label>
+              <label htmlFor="name">Image Name<b> : should be unique</b></label>
               <input
                 type="text"
                 className="form-control"
@@ -214,7 +226,15 @@ export default class AddPhoto extends Component {
                 name="title"
               />
             </div>
-
+            <div className="form-group">
+            {this.state.title == "" ? "" : isTitleValid > 0 ? 
+            <Alert variant="danger">
+              Image name is already taken
+            </Alert> :
+            <Alert variant="success">
+              Image name is avaliable to use
+            </Alert> }
+            </div>
             <div className="form-group">
               <label htmlFor="description">Description</label>
               <input
@@ -253,7 +273,7 @@ export default class AddPhoto extends Component {
             </div>  
             <div>
               <h5>Upload the Image Source</h5>
-              <p>File source document : - {title}{".png"}</p>
+              <p>Uploaded Image Name : - <b>{title}{".png"}</b></p>
               {/* Div starts */}
               <div>
                 {currentFile && (
@@ -306,6 +326,13 @@ export default class AddPhoto extends Component {
                 <TimelineContent><h6><strong>Step 2</strong><br/>Submit</h6></TimelineContent>
               </TimelineItem>
             </Timeline>
+            <Alert variant="warning">
+            <h6>Warning</h6>
+            <b>Image extension automatically assigned by the system.</b><br/>
+            demophoto.png❌ demophoto ✔️
+            <br/>
+            
+            </Alert>
             </div>
             </div>
             <button onClick={this.savePhoto} className="btn btn-success">

@@ -46,6 +46,7 @@ export default class AddDrawing extends Component {
     };
   }
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.retriveDrawingCategory(this.props.match.params.id);
   }
   onChangeName(e) {
@@ -220,7 +221,7 @@ export default class AddDrawing extends Component {
               />
             </div>
             <div className="form-group">
-            {isTitleValid > 0 ? 
+            {this.state.title == "" ? "" : isTitleValid > 0 ? 
             <Alert variant="danger">
               Title is already taken
             </Alert> :

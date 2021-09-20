@@ -207,7 +207,7 @@ export default class AddProject extends Component {
               />
             </div>
             <div className="form-group">
-            {isTitleValid > 0 ? 
+            {this.state.title == "" ? "" : isTitleValid > 0 ? 
             <Alert variant="danger">
               Title is already taken
             </Alert> :
@@ -310,6 +310,11 @@ export default class AddProject extends Component {
                 <TimelineContent><h6><strong>Step 4 :</strong>Assign users for the project</h6></TimelineContent>
               </TimelineItem>
             </Timeline>
+            <Alert variant="warning">
+              <h6>Warning!</h6>
+              <b>Start Date should less than the End Date for sucsessful project creation</b><br/>
+              E.g. :- 2021-10-20 to 2022-10-20
+            </Alert>
             </div>
 
           </div>
