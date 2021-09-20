@@ -64,14 +64,25 @@ exclusions:"",
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
     contractCompany: Yup.string().required('Contract Company is required'),
-    status: Yup.string().required('Status is required'),
     description: Yup.string().required('Description is required'),
-    startDate: Yup.string().required('Start Date is required'),
-    estimatedCompletionDate: Yup.string().required('Estimated Copletion Date is required'),
- actualCompletionDate: Yup.string().required('Actual Completion Date is required'),
- signedContractReceivedDate: Yup.string().required('Signed Contract Received Date is required'),
-    inclusions: Yup.string().required('Inclusions are required'),
-exclusions: Yup.string().required('Exclusions are required'),
+    signedContractReceivedDate: Yup.date()
+    .typeError('Select a valid Date')
+    .required('Signed Contract Received Date is required'),
+    startDate: Yup.date()
+    .required('Start Date is required')
+    .typeError('Select a valid Date')
+    .min(
+      Yup.ref('signedContractReceivedDate'),
+      "Start Date can't be before Signed Contract Received Date"
+    ),
+    estimatedCompletionDate: Yup.date()
+    .required('Estimated Completion Date is required')
+    .typeError('Select a valid Date') 
+    .min(
+      Yup.ref('startDate'),
+      "Estimated Completion Date can't be before Start Date"
+    ),
+    
   });
 
   const {
@@ -80,7 +91,9 @@ exclusions: Yup.string().required('Exclusions are required'),
     reset,
     formState: { errors }
   } = useForm({
-    resolver: yupResolver(validationSchema)
+    resolver: yupResolver(validationSchema),
+    validateCriteriaMode: "all",
+    // mode: "onChange"
   });
 
   const onSubmit = data => {
