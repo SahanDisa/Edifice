@@ -201,11 +201,11 @@ const updatePublished = (rowIndex) => {
           const rowIdx = props.row.id;
           return (
             <div>
-              <span onClick={() => openDirectCost(rowIdx)}>
+              <span style={{cursor: 'pointer'}} onClick={() => openDirectCost(rowIdx)}>
               <EditIcon></EditIcon>&nbsp;&nbsp;
               </span>
 
-              <span onClick={() => {
+              <span style={{cursor: 'pointer'}} onClick={() => {
 
 const confirmBox = window.confirm(
   "Do you really want to delete this item ?"

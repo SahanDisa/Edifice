@@ -3,9 +3,9 @@ module.exports = (sequelize, Sequelize) => {
       costCode: {
         type: Sequelize.STRING
       },
-      category: {
-        type: Sequelize.STRING
-      },
+      // category: {
+      //   type: Sequelize.STRING
+      // },
       date: {
         type: Sequelize.DATEONLY
       },

@@ -17,7 +17,7 @@ exports.create = (req, res) => {
   // Create a Budget Line Item
   const costcode = {
     costCode: req.body.costCode,
-    category: req.body.category,
+    // category: req.body.category,
     date: req.body.date,
     published: req.body.published,
     //directCosts:req.body.directCosts,

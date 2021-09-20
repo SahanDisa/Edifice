@@ -222,14 +222,33 @@ exclusions: Yup.string().required('Exclusions are required'),
               #{currentCommitment.id} - {currentCommitment.title}
               </Link>
             </Breadcrumbs>
-<br />
+<hr />
                     <ul class="nav nav-tabs">
+                    <div className="col-md-12 text-right">
+            {currentCommitment.status == "Ongoing 🔴" ? (
+                <button
+                className="btn btn-complete m-2"
+                  onClick={() => {updateStatus("Completed 🟢");}}
+                >
+                 <CheckIcon />&nbsp; Mark as Completed
+                </button>
+             ) : 
+              (
+                <button
+                className="btn btn-ongoing m-2"
+                  onClick={() =>{ updateStatus("Ongoing 🔴");}}
+                >
+                Mark as Ongoing
+                </button>
+              )}
+              </div>
             <li class="nav-item">
                        <Link class="nav-link active" aria-current="page"to={"#"}>Sub Contract Details</Link>
             </li>
             <li class="nav-item">
              <Link to={"/viewsov/" +currentCommitment.projectId+"/"+currentCommitment.id}  class="nav-link">SoVs</Link>
             </li>
+
           </ul>
                     {/*<Link to={"/viewpayment/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">Payments </button>
@@ -331,6 +350,21 @@ exclusions: Yup.string().required('Exclusions are required'),
 <div className="invalid-feedback">{errors.description?.message}</div>
               </div>
               <div className="form-group">
+                <label htmlFor="signedContractReceivedDate">Signed Contract Received Date :</label>
+ 
+              <input
+                type="date"
+   
+                id="signedContractReceivedDate"
+                      {...register('signedContractReceivedDate')}
+                value={currentCommitment.signedContractReceivedDate}
+                onChange={handleInputChange}
+                name="signedContractReceivedDate"
+ className={`form-control ${errors.signedContractReceivedDate? 'is-invalid' : ''}`}
+              />
+<div className="invalid-feedback">{errors.signedContractReceivedDate?.message}</div>
+              </div>
+              <div className="form-group">
                 <label htmlFor="startDate">Start Date :</label>
             
               <input
@@ -376,21 +410,7 @@ exclusions: Yup.string().required('Exclusions are required'),
               />
 <div className="invalid-feedback">{errors.actualCompletionDate?.message}</div>
               </div>
-              <div className="form-group">
-                <label htmlFor="signedContractReceivedDate">Signed Contract Received Date :</label>
- 
-              <input
-                type="date"
-   
-                id="signedContractReceivedDate"
-                      {...register('signedContractReceivedDate')}
-                value={currentCommitment.signedContractReceivedDate}
-                onChange={handleInputChange}
-                name="signedContractReceivedDate"
- className={`form-control ${errors.signedContractReceivedDate? 'is-invalid' : ''}`}
-              />
-<div className="invalid-feedback">{errors.signedContractReceivedDate?.message}</div>
-              </div>
+
 
             <div className="form-group">
 
@@ -415,23 +435,7 @@ exclusions: Yup.string().required('Exclusions are required'),
 
             </div>
 </form>
-{currentCommitment.status == "Ongoing 🔴" ? (
-                <button
-                
-                className="btn btn-success m-2"
-                  onClick={() => {updateStatus("Completed 🟢");}}
-                >
-                 <CheckIcon />&nbsp; Set Completed
-                </button>
-             ) : 
-              (
-                <button
-                className="btn btn-success m-2"
-                  onClick={() =>{ updateStatus("Ongoing 🔴");}}
-                >
-                  Set Ongoing
-                </button>
-              )}
+
           </div>
           
          <div className="col-sm-6">

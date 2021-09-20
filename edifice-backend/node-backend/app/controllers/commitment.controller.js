@@ -130,16 +130,37 @@ exports.update = (req, res) => {
 };
 
 /*********************************************** */
-exports.findByContractCompany= (req, res) => {
+// exports.findByContractCompany= (req, res) => {
+//   const id = req.params.id;
+//   //const costCode = req.query.costCode;
+//   const title = req.params.title;
+//     //var condition = costCode ? { costCode: { [Op.like]: `%${costCode}%` } } : null;
+
+//   Commitment.findAll({ where: {
+//     projectId: id,
+//     //condition:condition
+//    title : title
+//   }})
+//     .then(data => {
+//       res.send(data);
+//     })
+//     .catch(err => {
+//       res.status(500).send({
+//         message: "Error retrieving Project Budget with id=" + id
+//       });
+//     });  
+// };
+
+exports.findByTitle= (req, res) => {
   const id = req.params.id;
   //const costCode = req.query.costCode;
-  const contractCompany = req.params.contractCompany;
+  const title = req.params.title;
     //var condition = costCode ? { costCode: { [Op.like]: `%${costCode}%` } } : null;
 
   Commitment.findAll({ where: {
     projectId: id,
     //condition:condition
-    contractCompany : contractCompany
+   title : title
   }})
     .then(data => {
       res.send(data);

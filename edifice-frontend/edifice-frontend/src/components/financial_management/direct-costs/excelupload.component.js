@@ -3,6 +3,8 @@ import ExcelService from "./../../../services/excelupload.service";
 import DirectCostDataService from "./../../../services/directcost.service";
 import { Link } from "react-router-dom";
 import { Route, useParams } from "react-router-dom";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import cogoToast from 'cogo-toast';
 
 // excel file upload
 const ExcelUploadFiles = (props) => {
@@ -42,11 +44,14 @@ const ExcelUploadFiles = (props) => {
           setProgress(Math.round((100 * event.loaded) / event.total));
         })
           .then((response) => {
-            setMessage(response.data.message);
+            // setMessage(response.data.message);
+          
             return ExcelService.getFiles();
           })
           .then((files) => {
             setFileInfos(files.data);
+            // props.history.push("/directcost/"+ id);
+            cogoToast.success("ExcelFile uploaded successfully!");
           })
           .catch(() => {
             setProgress(0);
@@ -76,7 +81,21 @@ const ExcelUploadFiles = (props) => {
                 </div>
     <div className="modal-body">*/}
       <div>
-        <h4>Import Direct Costs</h4>  
+        <h4>Import Direct Costs</h4> 
+        <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+id}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/directcost/"+id} aria-current="page">
+              Direct Costs
+              </Link>
+              <Link color="textPrimary" to={"/excelupload/"+id} aria-current="page">
+               Import Direct Costs
+              </Link>
+            </Breadcrumbs> 
         <hr />
           {currentFile && (
             <div className="progress">
@@ -104,11 +123,11 @@ const ExcelUploadFiles = (props) => {
           >
             Upload
           </button><br />
-          <Link  to={"/directcost/"+id} className="btn btn-success">View Direct Costs</Link>
+          {/* <Link  to={"/directcost/"+id} className="btn btn-success">View Direct Costs</Link> */}
     
-          <div className="alert alert-light" role="alert">
+          {/* <div className="alert alert-light" role="alert">
             {message}
-          </div>
+          </div> */}
 
          </div>
               { /* <div className="modal-footer">
