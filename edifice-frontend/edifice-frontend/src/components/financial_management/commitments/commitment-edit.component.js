@@ -43,6 +43,58 @@ exclusions:"",
   const [subcontractors, setSubcontractors] = useState([]);
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [today,setToday] = useState("");
+  const [todayNull,setTodayNull] = useState("");
+
+  const getDateTime = () => {
+    let tempDate = new Date();
+    let t = (tempDate.getMonth()+1) + '/' + tempDate.getDate() + '/' + tempDate.getFullYear(); 
+    const currDate = t;
+    console.log(currDate)
+   setToday(currDate);
+  }
+
+  const updateDate=()=> {
+   
+   
+    var data = {
+
+      actualCompletionDate :today,
+
+    };
+
+    CommitmentDataService.update(currentCommitment.id,data)
+      .then(response => {
+ setCurrentCommitment({ ...currentCommitment,actualCompletionDate: today });
+//  props.history.push("/editcommitment/"+ currentCommitment.id);
+ cogoToast.success("Subcontract Actual Completion Date set to "+ today);
+        })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  const removeDate=()=> {
+
+    setTodayNull(new Date());
+   
+    var data = {
+
+      actualCompletionDate :todayNull,
+
+    };
+
+    CommitmentDataService.update(currentCommitment.id,data)
+      .then(response => {
+ setCurrentCommitment({ ...currentCommitment,actualCompletionDate: todayNull});
+//  props.history.push("/editcommitment/"+ currentCommitment.id);
+//  cogoToast.success("Subcontract Actual Completion Date set to "+ today);
+        })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
 
   const getCommitment = id => {
     CommitmentDataService.get(id)
@@ -58,6 +110,7 @@ exclusions:"",
   useEffect(() => {
     getCommitment(props.match.params.id);
     retrieveSubcontractors();  
+    getDateTime();
   },[props.match.params.id]);
 
   /**validation */
@@ -182,6 +235,21 @@ exclusions:"",
 
     
   };
+  const day = new Date();
+
+  const progressInDays = (start,end) => {
+    let date1 = new Date(start);
+    let date2 = new Date(end);
+    let diffTime = Math.abs(date2 - date1);
+    let diffTime2 = Math.abs(date2 - day);
+    let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    let remainDays = Math.ceil(diffTime2/(1000 * 60 * 60 * 24));
+    console.log(diffTime + " milliseconds");
+    console.log(diffDays + " days");
+    console.log(remainDays + " remain days");
+
+    return remainDays;
+  }
 
   const updateStatus=(status)=> {
     var data = {
@@ -193,6 +261,7 @@ exclusions:"",
     CommitmentDataService.update(currentCommitment.id,data)
       .then(response => {
  setCurrentCommitment({ ...currentCommitment,status: status });
+//  props.history.push("/editcommitment/"+ currentCommitment.id);
  cogoToast.success("Subcontract set to "+ status);
         })
       .catch(e => {
@@ -236,12 +305,23 @@ exclusions:"",
               </Link>
             </Breadcrumbs>
 <hr />
-                    <ul class="nav nav-tabs">
+<ul class="nav nav-tabs">      
                     <div className="col-md-12 text-right">
+{/* 
+                    <div class="col-6 text-right">    */}
+                    {/* <div className="row">   */}
+                    {/* <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2" >
+<div className="card card-hover shadow-sm" style={{alignItems: "center"}} ><br />
+  <h3 className="h6 nav-heading-title mb-0"> {progressInDays(currentCommitment.startDate,currentCommitment.estimatedCompletionDate)}&nbsp;Days Remaining.</h3>
+<br />
+</div>
+</div> */}
+{/* </div>
+<div className="col-md-12 text-right"> */}
             {currentCommitment.status == "Ongoing 🔴" ? (
                 <button
                 className="btn btn-complete m-2"
-                  onClick={() => {updateStatus("Completed 🟢");}}
+                  onClick={() => {updateDate();updateStatus("Completed 🟢");}}
                 >
                  <CheckIcon />&nbsp; Mark as Completed
                 </button>
@@ -249,12 +329,16 @@ exclusions:"",
               (
                 <button
                 className="btn btn-ongoing m-2"
-                  onClick={() =>{ updateStatus("Ongoing 🔴");}}
+                  onClick={() =>{ removeDate();updateStatus("Ongoing 🔴");}}
                 >
                 Mark as Ongoing
                 </button>
               )}
+        
+              {/* </div> */}
               </div>
+              {/* </div> */}
+             
             <li class="nav-item">
                        <Link class="nav-link active" aria-current="page"to={"#"}>Sub Contract Details</Link>
             </li>
@@ -263,6 +347,7 @@ exclusions:"",
             </li>
 
           </ul>
+
                     {/*<Link to={"/viewpayment/"+currentCommitment.id}>
                     <button className="btn btn-success m-2">Payments </button>
                     </Link><br />
@@ -321,7 +406,7 @@ exclusions:"",
                 value={currentCommitment.status}
                 name="status"
                 className={`form-control`}
-                readonly
+                readOnly
               />
                {/* {currentCommitment &&
                 currentCommitment.map((c, index) => (
@@ -415,13 +500,14 @@ exclusions:"",
                 type="date"
       
                 id="actualCompletionDate"
-                   {...register('actualCompletionDate')}
+                  //  {...register('actualCompletionDate')}
                 value={currentCommitment.actualCompletionDate}
-                onChange={handleInputChange}
+                // onChange={handleInputChange}
                 name="actualCompletionDate"
-  className={`form-control ${errors.actualCompletionDate? 'is-invalid' : ''}`}
+                readOnly
+  className={`form-control`}
               />
-<div className="invalid-feedback">{errors.actualCompletionDate?.message}</div>
+{/* <div className="invalid-feedback">{errors.actualCompletionDate?.message}</div> */}
               </div>
 
 
