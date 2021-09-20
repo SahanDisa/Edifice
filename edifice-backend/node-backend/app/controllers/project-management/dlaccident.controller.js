@@ -110,3 +110,32 @@ exports.findAll = (req, res) => {
         });
     });  
 };
+
+//get the AccidentLog in a week
+exports.findAllweek = (req, res) => {
+    const id = req.params.id;
+    db.sequelize.query('select * from dlaccident where projectId = '+id+' and date > date_sub(now(), interval 1 week) AND isDeleted = 0;',
+    { type: db.sequelize.QueryTypes.SELECT})
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+        message: "Error retrieving AccidentLog Drawings with id=" + id
+        });
+    });  
+};
+
+exports.findToday = (req, res) => {
+    const id = req.params.id;
+    db.sequelize.query('select * from dlaccident where projectId = '+id+' and date=now() AND isDeleted = 0;',
+    { type: db.sequelize.QueryTypes.SELECT})
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+        message: "Error retrieving AccidentLog Drawings with id=" + id
+        });
+    });  
+};
