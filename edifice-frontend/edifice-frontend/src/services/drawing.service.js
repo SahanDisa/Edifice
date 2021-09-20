@@ -13,6 +13,10 @@ class DrawingDataService {
     return http.post(`/projects/drawing/`, data);
   }
 
+  findByTitle(title) {
+    return http.get(`/projects/drawing/search?title=${title}`);
+  }
+
   getCat(id){
     return http.get(`/projects/drawing/cat/${id}`);
   }

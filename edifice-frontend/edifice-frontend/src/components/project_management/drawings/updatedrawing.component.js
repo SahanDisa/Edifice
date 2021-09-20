@@ -208,6 +208,7 @@ export default class UpdateDrawing extends Component {
                     id="title"
                     value={currentDrawing.title}
                     onChange={this.onChangeTitle}
+                    disabled
                   />
                 </div>
                 <div className="form-group">

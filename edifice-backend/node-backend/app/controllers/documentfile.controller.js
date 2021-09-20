@@ -1,5 +1,6 @@
 const db = require("./../models/index");
 const Document = db.document;
+const Op = db.Sequelize.Op;
 
 // create a drawing
 exports.create = (req, res) => {
@@ -131,6 +132,24 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+// Search All
+exports.SearchAll = (req, res) => {
+  const title = req.query.title;
+  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+
+  Document.findAll({ where: condition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving projects."
+      });
+    });
+};
+
 // Get drawings for a given category
 exports.findAllbyStatus = (req, res) => {
   const status = req.params.status;
@@ -153,13 +172,13 @@ exports.findAllbyStatus = (req, res) => {
 exports.recent = (req, res) => {
   const id = req.params.id;
 
-  Document.findAll({order: [['id', 'DESC']], limit: 5})
+  Document.findAll({where:{projectId: id}},{order: [['id', 'DESC']], limit: 5})
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving directiry with id=" + id
+        message: "Error retrieving recent documents for project id=" + id
       });
     });  
 };

@@ -5,6 +5,9 @@ module.exports = app => {
   
     // Create a new Drawing
     router.post("/", drawing.create);
+
+    // Search Drawings
+    router.get("/search/", drawing.SearchAll);
   
     // Retrieve all Drawings for a project
     router.get("/list/:id", drawing.findAll);

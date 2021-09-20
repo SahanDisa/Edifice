@@ -4,7 +4,7 @@ import DrawingDataService from "./../../../services/drawing.service";
 import DrawingCategoryService from "../../../services/drawing-category.service";
 import UploadService from "./../../../services/document.service";
 import { Breadcrumbs } from "@material-ui/core";
-
+import Alert from "react-bootstrap/Alert";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -36,6 +36,7 @@ export default class AddDrawing extends Component {
       drawingcategories: [],
       currentIndex: -1,
       submitted: false,
+      isTitleValid: 0,
 
       //file
       selectedFiles: undefined,
@@ -50,6 +51,15 @@ export default class AddDrawing extends Component {
   onChangeName(e) {
     this.setState({
       title: e.target.value
+    });
+    DrawingDataService.findByTitle(e.target.value)
+    .then(response => {
+      this.setState({
+        isTitleValid: response.data.length
+      });
+    })
+    .catch(e => {
+      console.log(e);
     });
   }
 
@@ -163,10 +173,7 @@ export default class AddDrawing extends Component {
   render() {
     const {projectId, currentIndex, drawingcategories,selectedFiles,
       currentFile,
-      progress,
-      message,
-      fileInfos,
-      title} = this.state;
+      progress,message,fileInfos,title, isTitleValid} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
@@ -201,7 +208,7 @@ export default class AddDrawing extends Component {
             <div className="row">
             <div className="col-sm-8">
             <div className="form-group">
-              <label htmlFor="title">Name</label>
+              <label htmlFor="title">Title<b> : should be unique</b></label>
               <input
                 type="text"
                 className="form-control"
@@ -212,7 +219,15 @@ export default class AddDrawing extends Component {
                 name="title"
               />
             </div>
-
+            <div className="form-group">
+            {isTitleValid > 0 ? 
+            <Alert variant="danger">
+              Title is already taken
+            </Alert> :
+            <Alert variant="success">
+              Title is avaliable to use
+            </Alert> }
+            </div>
             <div className="form-group">
               <label htmlFor="description">Description</label>
               <input

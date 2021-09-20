@@ -5,6 +5,9 @@ module.exports = app => {
   
     // Create a new Doc
     router.post("/", documents.create);
+
+    // Search documents
+    router.get("/search/", documents.SearchAll);
   
     // Retrieve all Doc for a project
     router.get("/list/:id", documents.findAll);
@@ -19,7 +22,7 @@ module.exports = app => {
     router.get("/status/:pid/:status",documents.findAllbyStatus);
 
     // Get recent lists
-    router.get("/data/recent", documents.recent);
+    router.get("/data/recent/:id", documents.recent);
 
     // Update a Drawing with id
     router.put("/:id", documents.update);
