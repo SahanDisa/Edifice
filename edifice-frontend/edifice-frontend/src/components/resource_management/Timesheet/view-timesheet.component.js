@@ -260,10 +260,6 @@ class ViewTimesheet extends Component {
             stop={currentWorker.stop}
           />
         </Modal>
-
-
-
-
       </div>
 
     );

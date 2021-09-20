@@ -206,7 +206,7 @@ class Crew extends Component {
                           <Table responsive>
                             <thead>
                               <tr>
-                                <th>Id</th>
+                                <th>NIC</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Mobile</th>
