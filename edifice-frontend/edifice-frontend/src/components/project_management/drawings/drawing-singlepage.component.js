@@ -105,7 +105,7 @@ export default class ViewSingleDrawing extends Component {
         });
     }
     render() {
-        const { id,title,description,category,version,status,url,revisions,currentUser } = this.state;
+        const { id,title,description,category,version,status,url,revisions,currentUser,projectId } = this.state;
         return (
            // Main Div
             <div>
@@ -114,10 +114,10 @@ export default class ViewSingleDrawing extends Component {
                 <Link color="inherit" to="/home">
                   Home
                 </Link>
-                <Link color="inherit" to={"/projectmanagementhome/"+id}>
+                <Link color="inherit" to={"/projectmanagementhome/"+projectId}>
                   App Dashboard
                 </Link>
-                <Link color="inherit" to={"/drawing/"+id}>
+                <Link color="inherit" to={"/drawing/"+projectId}>
                   Drawing Home
                 </Link>
                 <Link color="textPrimary" to={"/viewdrawing/"+id} aria-current="page">

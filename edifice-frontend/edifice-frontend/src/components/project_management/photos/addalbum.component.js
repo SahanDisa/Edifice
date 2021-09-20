@@ -81,7 +81,7 @@ export default class AddAlbum extends Component {
         {this.state.submitted ? (
           <center>
           <div>
-            <h4>Album details successfully submitted!</h4>
+            <h4 className="alert alert-success">Album details successfully submitted!</h4>
             <button className="btn btn-success m-2" onClick={this.newDrawing}>
             Add Another Album
             </button>

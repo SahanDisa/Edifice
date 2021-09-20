@@ -14,7 +14,8 @@ export default class ViewSingleDrawingCategory extends Component {
       super(props);
       this.retrieveCategoryDrawing = this.retrieveCategoryDrawing.bind(this);
       this.state = {
-        id: this.props.match.params.id,
+        id: this.props.match.params.pid,
+        cat: this.props.match.params.cat,
         drawings: [],
         title: "",
         description: "", 
@@ -27,8 +28,8 @@ export default class ViewSingleDrawingCategory extends Component {
     }
   
     componentDidMount() {
-      this.retrieveCategoryDrawing(this.props.match.params.id);
-      this.retriveCategoryInfo(this.props.match.params.id);
+      this.retrieveCategoryDrawing(this.props.match.params.cat);
+      this.retriveCategoryInfo(this.props.match.params.cat);
       const user = AuthService.getCurrentUser();
   
       if (user) {
@@ -68,7 +69,7 @@ export default class ViewSingleDrawingCategory extends Component {
         });
     }
     render() {
-        const { id,title,description,drawings,currentIndex,showManagerBoard,projectId } = this.state;
+        const { id,title,description,drawings,currentIndex,showManagerBoard,projectId,cat } = this.state;
         return (
             <div>
               <h2>Drawing Category Single Page</h2>
@@ -79,10 +80,10 @@ export default class ViewSingleDrawingCategory extends Component {
               <Link color="inherit" to={"/projectmanagementhome/"+projectId}>
                 App Dashboard
               </Link>
-              <Link color="textPrimary" to={"/drawing/"+projectId} aria-current="page">
+              <Link color="textPrimary" to={"/drawing/"+id} aria-current="page">
                 Drawing Home
               </Link>
-              <Link color="textPrimary" to={"/viewdrawingcategory/"+id} aria-current="page">
+              <Link color="textPrimary" to={"/viewdrawingcategory/"+id+"/"+cat} aria-current="page">
                 {title}
               </Link>
             </Breadcrumbs>
@@ -99,7 +100,7 @@ export default class ViewSingleDrawingCategory extends Component {
                   </div>
                   { showManagerBoard &&
                   <div className="col-3">
-                  <Link className="btn btn-primary" to={"/updatedrawingcategory/"+projectId+"/"+id} style={{'text-decoration': 'none'}}>
+                  <Link className="btn btn-primary" to={"/updatedrawingcategory/"+projectId+"/"+cat} style={{'text-decoration': 'none'}}>
                   ⚙️ Manage
                   </Link>
                   </div>
@@ -143,7 +144,7 @@ export default class ViewSingleDrawingCategory extends Component {
                         <Link to={"/viewdrawing/"+drawing.id}>
                         <button className="btn btn-primary">View <VisibilityIcon/> </button>
                         </Link>
-                        <Link to={"/updatedrawing/"+drawing.id+"/"+id}>
+                        <Link to={"/updatedrawing/"+drawing.id+"/"+projectId}>
                         <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
                         </Link>
                         {/* <Link to={"/viewdrawing/"+drawing.id}>

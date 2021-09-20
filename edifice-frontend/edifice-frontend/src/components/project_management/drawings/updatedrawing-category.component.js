@@ -21,8 +21,8 @@ export default class UpdateDrawingCategory extends Component {
         
       },
       message: "",
-      temp: this.props.match.params.id,
-      pid: this.props.match.params.pid,
+      temp: this.props.match.params.pid,
+      pid: this.props.match.params.id,
       
     };
   }

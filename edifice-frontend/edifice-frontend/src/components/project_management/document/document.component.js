@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DirectoryService from "../../../services/directory.service";
 import DocumentfileService from "../../../services/documentfile.service";
+import ProjectService from "../../../services/project.service";
 import Card from 'react-bootstrap/Card';
 import UploadFiles from "./fileupload.component";
 import directorycover from "././../../../assets/PM/photos/directory1.jpg";
@@ -23,6 +24,8 @@ export default class Documents extends Component {
       recentdocuments: [],
       currentIndex: -1,
       content: "",
+      project: [],
+
       documentcount: 0,
       directorycount: 0,
       documentComplete: 0,
@@ -36,6 +39,18 @@ export default class Documents extends Component {
     this.retrieveDirectory(this.props.match.params.id);
     this.retrieveDocumentStatus(this.props.match.params.id);
     this.recentDocuments();
+    this.retrieveProject(this.props.match.params.id);
+  }
+  retrieveProject(id){
+    ProjectService.get(id).then(response => {
+      this.setState({
+        project: response.data
+      });
+      console.log(response.data);
+    })
+    .catch(e => {
+      console.log(e);
+    });
   }
   retrieveDocuments(id) {
     DocumentfileService.getAll(id)
@@ -112,25 +127,34 @@ export default class Documents extends Component {
 
   render() {
       const {id, directories, currentIndex, recentdocuments,documentComplete,documentPending,documentIncomplete
-      ,documentcount,directorycount} = this.state;
+      ,documentcount,directorycount, project} = this.state;
       const completePercentage = Math.ceil((documentComplete/documentcount)*100);
       const pendingPercentage = Math.ceil((documentPending/documentcount)*100);
       const incompletePerentage = Math.ceil((documentIncomplete/documentcount)*100);
 
       return (
           <div>
-          <h2>Document Home</h2>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link color="inherit" to="/home">
-              Home
-            </Link>
-            <Link color="inherit" to={"/projectmanagementhome/"+id}>
-              App Dashboard
-            </Link>
-            <Link color="textPrimary" to={"/document/"+id} aria-current="page">
-              Document Home
-            </Link>
-          </Breadcrumbs>
+          <div className="row">
+            <div className="col-9">
+            <h2>DOCUMENT HOME</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+id}>
+                {project.title} / App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/document/"+id} aria-current="page">
+                Document Home
+              </Link>
+            </Breadcrumbs>
+            </div>
+            <div className="col-3">
+                <h4>{project.title}</h4>
+                {/* <h6>{project.description}</h6> */}
+                <h6>{project.location}</h6>
+            </div>
+          </div>
           <hr></hr>
           <div>
             <h3>Insights</h3>
