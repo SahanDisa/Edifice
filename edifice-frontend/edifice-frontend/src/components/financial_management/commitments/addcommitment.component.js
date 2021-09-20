@@ -22,9 +22,24 @@ const AddCommitment = (props) => {
     title: Yup.string().required('Title is required'),
     contractCompany: Yup.string().required('Contract Company is required'),
     description: Yup.string().required('Description is required'),
-    startDate: Yup.string().required('Start Date is required'),
-    estimatedCompletionDate: Yup.string().required('Estimated Copletion Date is required'),
-    signedContractReceivedDate: Yup.string().required('Signed Contract Received Date is required'),
+    signedContractReceivedDate: Yup.date()
+    .typeError('Select a valid Date')
+    .required('Signed Contract Received Date is required'),
+    startDate: Yup.date()
+    .required('Start Date is required')
+    .typeError('Select a valid Date')
+    .min(
+      Yup.ref('signedContractReceivedDate'),
+      "Start Date can't be before Signed Contract Received Date"
+    ),
+    estimatedCompletionDate: Yup.date()
+    .required('Estimated Completion Date is required')
+    .typeError('Select a valid Date') 
+    .min(
+      Yup.ref('startDate'),
+      "Estimated Completion Date can't be before Start Date"
+    ),
+    
   });
 
   const {
@@ -33,7 +48,9 @@ const AddCommitment = (props) => {
     reset,
     formState: { errors }
   } = useForm({
-    resolver: yupResolver(validationSchema)
+    resolver: yupResolver(validationSchema),
+    validateCriteriaMode: "all",
+    // mode: "onChange"
   });
 
   const onSubmit = data => {
@@ -157,6 +174,8 @@ signedContractReceivedDate:response.data.signedContractReceivedDate,
         });
         setSubmitted(true);
         console.log(response.data);
+        // props.history.push("/editcommitment/"+ commitment.id);
+        // cogoToast.success("Commitment Details Saved Successfully!");
       })
       .catch(e => {
         console.log(e);
@@ -421,10 +440,10 @@ className={`form-control`}
           >
             Reset
           </button>&nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
-            <Link to={"/commitment/" + commitment.projectId}>
+            {/* <Link to={"/commitment/" + commitment.projectId}>
             <button className="btn btn-success">
             Cancel
-            </button></Link>
+            </button></Link> */}
             </div>
             </form>
             </div>
@@ -466,7 +485,7 @@ className={`form-control`}
             </div><br />
           {/** */} 
           </div>
-        )}
+      )} 
         <br /><br />
       </div>
   );
