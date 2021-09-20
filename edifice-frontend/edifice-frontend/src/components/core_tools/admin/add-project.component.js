@@ -9,6 +9,7 @@ import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
 import Alert from "react-bootstrap/Alert";
+import cogoToast from "cogo-toast";
 
 export default class AddProject extends Component {
   constructor(props) {
@@ -30,6 +31,7 @@ export default class AddProject extends Component {
       startdate: "",
       enddate: "",
       message: "",
+      isTitleValid: -1,
 
       submitted: false,
       lastproject:[],
@@ -40,6 +42,15 @@ export default class AddProject extends Component {
   onChangeTitle(e) {
     this.setState({
       title: e.target.value
+    });
+    ProjectDataService.findByTitle(e.target.value)
+    .then(response => {
+      this.setState({
+        isTitleValid: response.data.length
+      });
+    })
+    .catch(e => {
+      console.log(e);
     });
   }
 
@@ -69,14 +80,16 @@ export default class AddProject extends Component {
     var date2 = new Date(this.state.enddate);
     if(date1.getTime() > date2.getTime()){
       console.log("Error"+date1.getTime()+" "+date2.getTime());
-      this.setState({
-        message: "End Date should larger than Start Date"
-      });
+      // this.setState({
+      //   message: "End Date should larger than Start Date"
+      // });
+      cogoToast.error('End date should be greater than start date');
     }else{
       console.log("Duration is fine "+date1.getTime()+" "+date2.getTime());
-      this.setState({
-        message: "Duration is Appicable"
-      });
+      // this.setState({
+      //   message: "Duration is Appicable"
+      // });
+      cogoToast.success('Duration applicable, Successfully validated');
       // backend
       var data = {
         title: this.state.title,
@@ -136,7 +149,7 @@ export default class AddProject extends Component {
   }
 
   render() {
-    const {lastproject, currentIndex, message} = this.state;
+    const {lastproject, currentIndex, message, isTitleValid} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
@@ -180,9 +193,9 @@ export default class AddProject extends Component {
                   Add New Project
                 </Link>
             </Breadcrumbs>
-            <h5>Step 1: Project Settings</h5>
+            {/* <h5>Step 1: Project Settings</h5> */}
             <div className="form-group">
-              <label htmlFor="title">Title</label>
+              <label htmlFor="title">Title<b> : should be unique</b></label>
               <input
                 type="text"
                 className="form-control"
@@ -193,7 +206,15 @@ export default class AddProject extends Component {
                 name="title"
               />
             </div>
-
+            <div className="form-group">
+            {isTitleValid > 0 ? 
+            <Alert variant="danger">
+              Title is already taken
+            </Alert> :
+            <Alert variant="success">
+              Title is avaliable to use
+            </Alert> }
+            </div>
             <div className="form-group">
               <label htmlFor="description">Description</label>
               <input
@@ -245,16 +266,16 @@ export default class AddProject extends Component {
                 name="endDate"
               />
             </div>
-            {message != "Duration is Appicable" &&
+            {/* {message != "Duration is Appicable" &&
             <Alert variant="danger">
-              <Alert.Heading>{this.state.message}</Alert.Heading>
+              {this.state.message}
             </Alert>
             }
             {message == "Duration is Appicable" && 
             <Alert variant="success">
-              <Alert.Heading>{this.state.message}</Alert.Heading>
+              {this.state.message}
             </Alert>
-            }
+            } */}
             <button onClick={()=>{this.saveProject(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastProjectID()}} className="btn btn-success">
               Create Project
             </button>
