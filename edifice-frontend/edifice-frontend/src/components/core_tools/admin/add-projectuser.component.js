@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import ProjectUserDataService from "./../../../services/projectuser.service";
 import ProjectDataService from "./../../../services/project.service";
 import PortfolioDataService from "./../../../services/portfolio.service";
+import DesignationDataService from "./../../../services/designation.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -31,8 +32,8 @@ export default class AssignUserProject extends Component {
       currentIndex: -1,
       projectId: this.props.match.params.id,
       departments: [],
-      employees: [],
       accounts: [],
+      currDesignations: [],
       project: [],
       submitted: false
     };
@@ -41,13 +42,14 @@ export default class AssignUserProject extends Component {
   componentDidMount() {
     this.retrieveDepartments(this.props.match.params.id);
     this.retrieveProject(this.props.match.params.id);
-    this.getEmployees();
     this.getUsers();
   }
   onChangeUserID(e) {
     this.setState({
       userId: e.target.value
     });
+    this.getPositions(e.target.value);
+    console.log(this.state.currDesignations);
   }
   onChangeDepartment(e) {
     this.setState({
@@ -71,6 +73,20 @@ export default class AssignUserProject extends Component {
         console.log(e);
       });
   }
+
+  getPositions(id){
+    DesignationDataService.getDesforemp(id)
+      .then(response => {
+        this.setState({
+          currDesignations: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
   retrieveDepartments(id){
     PortfolioDataService.getAllDep(id)
       .then(response => {
@@ -135,23 +151,8 @@ export default class AssignUserProject extends Component {
     });
   }
 
-  getEmployees(){
-    EmployeeDataService.getUsers()
-      .then(response => {
-        this.setState({
-          employees: response.data
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-    
-      //console.log(this.state.employees)
-  }
-
   render() {
-    const {departments, currentIndex, projectId,employees, accounts, project} = this.state;
+    const {departments, currentIndex, projectId,employees, accounts, project,currDesignations} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
@@ -225,13 +226,9 @@ export default class AssignUserProject extends Component {
                 value={this.state.position}
                 onChange={this.onChangePosition}
               >
-                <option value={""} onChange={this.onChangePosition}></option>
-                <option value={"Project Manager"} onChange={this.onChangePosition}>Project Manager</option>
-                <option value={"Senior Architect"} onChange={this.onChangePosition}>Senior Enginner</option>
-                <option value={"Senior Enginner"} onChange={this.onChangePosition}>Senior Architect</option>
-                <option value={"Engineer"} onChange={this.onChangePosition}>Engineer</option>
-                <option value={"Architect"} onChange={this.onChangePosition}>Architect</option>
-                <option value={"QA Enginner"} onChange={this.onChangePosition}>QA Enginner</option>
+                {currDesignations.map(desig =>(
+                  <option value={desig.designation} onChange={this.onChangePosition}>{desig.designation}</option>
+                ))}
               </select>
             </div>
             <div className="form-group">
