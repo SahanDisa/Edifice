@@ -56,6 +56,26 @@ exports.findAll = (req, res) => {
       });
 };
 
+exports.findUsers = (req, res) => {
+  //const id = req.query.id;
+  //var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+
+  Employee.findAll({
+    where: {
+      hasAccount: 1
+    }
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving employees."
+      });
+    });
+};
+
 // Find single Employee with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
@@ -111,6 +131,31 @@ exports.update = (req, res) => {
           message: "Error updating Employee with id=" + id
         });
       });
+};
+
+//update employee as to account created
+exports.updateAccountStatus = (req, res) => {
+  const id = req.params.id;
+
+  Employee.update({ hasAccount: 1 }, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Account status for Employee changed."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Account status forEmployee with id=${id}. `
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Account status for Employee with id=" + id
+      });
+    });
 };
 
 // Delete a Employee with the specified id in the request

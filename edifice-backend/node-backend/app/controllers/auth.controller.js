@@ -11,6 +11,7 @@ var bcrypt = require("bcryptjs");
 exports.signup = (req, res) => {
   // Save User to Database
   User.create({
+    id:req.body.id,
     username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8)

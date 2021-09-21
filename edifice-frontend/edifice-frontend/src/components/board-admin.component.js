@@ -7,17 +7,18 @@ import { Link } from "react-router-dom";
 //import PDF generating
 import Report from './report/report.component'
 
-import ProgressBar from 'react-bootstrap/ProgressBar';
+import ProgressBar from 'react-customizable-progressbar';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 //import LocationOnIcon from '@material-ui/icons/LocationOn';
-import {Assessment,HomeWork,LocationOn,Description,SupervisorAccount,AddCircleOutline} from '@material-ui/icons';
+import {Assessment,HomeWork,LocationOn,Description,SupervisorAccount,Timeline} from '@material-ui/icons';
 
 import UserService from "../services/user.service";
 import EmployeeDataService from "../services/employee.service";
 import VendorDataService from "../services/vendor.service";
+import CostCodeDataService from "../services/costcode.service";
 import ProjectDataService from "../services/project.service";
 
 //css styles
@@ -48,6 +49,7 @@ export default class BoardUser extends Component {
       vendorCount: 0,
       employeeCount: 0,
       currProjectId: 0,
+      costCodes:[],
       id: "this.props.match.params.id"
     };
 
@@ -162,6 +164,31 @@ export default class BoardUser extends Component {
     }
   }
 
+  getProjectCostCodes(id){
+
+    CostCodeDataService.getAll(id)
+        .then(response => {
+        this.setState({
+            costCodes: response.data
+        })
+        console.log(response.data);
+        console.log(this.state);
+        })
+        .catch(e => {
+        console.log(e);
+    });
+    console.log(this.state)
+    const temp=[];
+
+    this.state.costCodes.forEach((item, index)=>{
+        console.log(item.costCode)
+        temp.push(item.costCode)
+    })
+    
+    console.log(temp);
+    return temp;
+  }
+
   render() {
     const { projectDetails,projectCount,vendorCount,employeeCount,projects } = this.state;
     
@@ -196,7 +223,7 @@ export default class BoardUser extends Component {
     `,
       <div className="container">
 
-        <h3> Core Tools Home</h3>
+        <h3> <Timeline/> CORE TOOLS HOME</h3>
         <p>Current statistics of ongoing projects </p>
         <div className="row">
             <div className="col-lg-3 col-sm-6 pb-2" id="employeecard">
@@ -246,8 +273,7 @@ export default class BoardUser extends Component {
             </div>
 
           <div className="col-8 mb-4 mr-5">
-            <a className="btn btn-primary p-2" onClick={()=>{this.generatePDF();}} id="list-settings-list"><Description style={{ fontSize:20 }}/> Generate Report</a>
-            <a className="btn btn-primary p-2 ml-5 mr-5" id="list-settings-list" href="/list-report"> <Assessment style={{ fontSize:20 }}/> Analytics</a> 
+            <a onClick={()=>{this.generatePDF();}} className="btn btn-primary p-2"><Description style={{ fontSize:20 }}/> Generate Report</a>
           </div>
           </div>
             <div classname-="mb-2 pb-4">
@@ -255,38 +281,41 @@ export default class BoardUser extends Component {
             </div>
           
             {projects.map(project =>(
-              <div className=" card card-hover shadow-sm pt-1 mb-3 pb-3">
-                <div className="row">
-                  <div  className="col-6">
-                    <Link ActiveClassName=" nav-heading text-left ml-4 mt-3 mb-1 pb-3" style={{ textDecoration: 'none' }}>
-                        
-                      <h4 style={{color: "#273F7D"}} className="mb-6 py-2 pl-2"> {project.title}</h4>
-                          <div className="col-sm-6 mb-2" id="project1">
-                            <ProgressBar now={project.progressValue} label={project.progressValue} />
-                          </div>
-                        <div className="col-sm-6" id="project1_d">
-                          <div className="row pb-2">
-                            
-                            <h5> <LocationOn style={{ fontSize:24 }}/>  {project.location}</h5>
-                          </div>
-                        </div>
-                        <div className="col-2">
-                          <div className="list-group" id="list-tab" role="tablist"></div>
-                            <a className="btn btn-primary p-2" onClick={()=>{this.generatePDF(project);}} id="list-settings-list">Report</a>
-                        </div>
-                        
-                        
-
-                    </Link>
-                  </div>
-                  <div  className="col-6 card-text-edifice">
-                    <div>
-                      <h2><b>{progressInDays(project.startdate,project.enddate)}{" "}</b>Days</h2>
-                      <h3>Remaining</h3>
-                    </div>
-                    <h5 className="pr-5 pt-5"> <SupervisorAccount style={{ fontSize:24 }}/>  From <b>{project.startdate}</b> to <b>{project.enddate}</b> </h5>
-                    
-                  </div>
+              <div className="card card-hover shadow-sm card-text-edifice my-3">
+              <div className="row">
+                <div className="col-5 m-2">
+                <h4>{project.title}</h4>
+                <h6>Description : {project.description}</h6>
+                <h6>Location: {project.location}</h6> 
+                <h6>From : {project.startdate} to {project.enddate}</h6>
+                <a onClick={()=>{this.generatePDF(project,this.getProjectCostCodes(project.id));}} className="btn btn-primary p-2 my-2"><Description style={{ fontSize:20 }}/> Generate Report</a>
+                </div>
+                <div className="col-4 mt-4">
+                <center>
+                <h2><b>{progressInDays(project.startdate,project.enddate)}{" "}</b>Days</h2>
+                <h3>Remaining</h3>
+                </center>
+                </div>
+                <div className="col-2">
+                <center>
+                <ProgressBar
+                    radius={60}
+                    progress={project.progressValue}
+                    cut={120}
+                    rotate={-210}
+                    initialAnimation
+                    initialAnimationDelay={1}
+                    strokeWidth={13}
+                    strokeColor="#273f7d"
+                    transition="2s ease"
+                    trackStrokeWidth={12}
+                    trackTransition="1s ease"
+                    pointerRadius={3}
+                    pointerStrokeWidth={12}
+                />
+                {/* <h6 className="mb-10"><b>66%</b></h6>  */}
+                </center> 
+                </div>
                 </div>
               </div>
             ))}

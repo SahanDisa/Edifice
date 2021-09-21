@@ -1,13 +1,15 @@
 module.exports = (sequelize, Sequelize) => {
     const Budget = sequelize.define("budget", {
       costCode: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       description: {
         type: Sequelize.STRING
       },
       date: {
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
       },
       estimatedBudget: {
         type: Sequelize.DECIMAL(20, 2)

@@ -21,9 +21,14 @@ class CommitmentDataService {
     return http.delete(`/projects/commitment/${id}`);
   }
 
-  findByContractCompany(id,contractCompany) {
-    return http.get(`/projects/commitment/list/${id}/${contractCompany}`);
+  // findByContractCompany(id,contractCompany) {
+  //   return http.get(`/projects/commitment/list/${id}/${contractCompany}`);
+  // }
+
+  findByTitle(id,title) {
+    return http.get(`/projects/commitment/list/${id}/${title}`);
   }
+
   findByStatusOngoing(id,status) {
     return http.get(`/projects/commitment/list/${id}/${status}/status`);
   }

@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
 import { Modal } from "react-bootstrap";
@@ -151,29 +152,29 @@ class Crew extends Component {
                 value={searchTitle}
                 onChange={this.onChangeSearchTitle}
               />
-
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={this.searchTitle}
-              >
-                Search
-              </button>
-
+              <div className="input-group-append">
+                <button
+                  className="btn btn-outline-secondary"
+                  type="button"
+                  onClick={this.searchTitle}
+                >
+                  Search
+                </button>
+              </div>
             </div>
           </div>
 
           <div className="col-md-12">
             <div className="text-right">
               <a
-                className="m-3 btn btn btn-success"
+                className="mr-3 btn btn btn-success"
                 data-toggle="modal"
                 data-target="#newCrew">
                 New Crew
               </a>
 
               <Link
-                className="m-3 btn btn btn-primary"
+                className="btn btn btn-primary"
                 to={"/addWorker/" + id}
               >
                 Add Workers
@@ -181,6 +182,7 @@ class Crew extends Component {
             </div>
           </div>
         </div>
+        <br />
 
         <div>
           <div class="tab-content" id="myTabContent">
@@ -204,7 +206,7 @@ class Crew extends Component {
                           <Table responsive>
                             <thead>
                               <tr>
-                                <th>Id</th>
+                                <th>NIC</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Mobile</th>
@@ -299,7 +301,7 @@ class Crew extends Component {
             mobile={currentViewWorker.mobile}
           />
         </Modal>
-      </div>
+      </div >
 
     );
   }

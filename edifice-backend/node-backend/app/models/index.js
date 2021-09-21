@@ -107,12 +107,14 @@ db.demo2.belongsTo(db.demo1, {
   as: "demo1"
 })
 
-//db.employee.hasOne(db.users,{as: "users"});
-//db.users.belongsTo(db.employee,{
-//  foreignKey: "username",
-//  as: "username"
-//})
-//Testing section ends
+// // One employee has one user
+// db.employee.hasOne(db.users, {
+//   as: "meetingagenda"
+// });
+// db.meetingagenda.belongsTo(db.meetings, {
+//   foreignKey: "projectId",
+//   as: "project",
+// });
 
 // ----------- Project Management Starts -------------
 // One project has many departments
@@ -518,23 +520,26 @@ db.timesheets.belongsTo(db.projects, {
   as: "project",
 });
 
-//One worker has many workerhours
-db.workers.hasMany(db.workedHours, {
-  as: "workersHours"
-});
-db.workedHours.belongsTo(db.workers, {
-  foreignKey: "workerWId",
-  as: "worker",
-});
+// //One worker has many workerhours
+// db.workers.hasMany(db.workedHours, {
+//   as: "workersHours"
+// });
+// db.workedHours.belongsTo(db.workers, {
+//   foreignKey: "workerWId",
+//   as: "worker",
+// });
 
-//One timesheet has many workerhours
-db.timesheets.hasMany(db.workedHours, {
-  as: "workedhourstimesheet"
-});
-db.workedHours.belongsTo(db.timesheets, {
-  foreignKey: "timesheetId",
-  as: "timesheet",
-});
+// //One timesheet has many workerhours
+// db.timesheets.hasMany(db.workedHours, {
+//   as: "workedhourstimesheet"
+// });
+// db.workedHours.belongsTo(db.timesheets, {
+//   foreignKey: "timesheetId",
+//   as: "timesheet",
+// });
+
+db.workers.belongsToMany(db.timesheets, { through: db.workedHours });
+db.timesheets.belongsToMany(db.workers, { through: db.workedHours });
 
 //----------------------------------------
 // One project has many costcodes

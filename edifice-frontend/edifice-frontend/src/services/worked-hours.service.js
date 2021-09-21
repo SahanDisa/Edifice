@@ -22,8 +22,8 @@ class WorkedHoursDataService {
     return http.get(`/workedHours/list/${id}`);
   }
 
-  update(id, data) {
-    return http.put(`/workedHours/${id}`, data);
+  update(wid, tid, data) {
+    return http.put(`/workedHours/${tid}/${wid}`, data);
   }
   /*
     delete(id) {

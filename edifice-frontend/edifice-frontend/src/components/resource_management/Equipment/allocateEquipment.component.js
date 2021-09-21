@@ -10,10 +10,11 @@ class AllocateEquip extends Component {
     this.retrieveProjects = this.retrieveProjects.bind(this);
     this.updateEquipment = this.updateEquipment.bind(this);
     this.onChangeProject = this.onChangeProject.bind(this);
+
     this.state = {
       currentEquipment: {
         projectId: "",
-        code: this.props.code
+        code: this.props.code,
       },
       projects: [],
 
@@ -23,6 +24,19 @@ class AllocateEquip extends Component {
 
   componentDidMount() {
     this.retrieveProjects();
+  }
+
+  retrieveProjects() {
+    EquipmentDataService.getAllProjects()
+      .then(response => {
+        this.setState({
+          projects: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   onChangeProject(e) {
@@ -71,6 +85,7 @@ class AllocateEquip extends Component {
   }
 
   render() {
+    const { projects } = this.state;
     return (
       <div>
         <Modal.Header closeButton>
@@ -80,12 +95,18 @@ class AllocateEquip extends Component {
           <div class="container">
             <div class="row">
               <div class="col-12">
-                <input
+
+                <select
                   className="form-control"
-                  type="text"
-                  required
-                  onChange={this.onChangeProject}
-                />
+                  name="project"
+                  id="project"
+                  onChange={this.onChangeProject}>
+                  <option value="--">- - </option>
+
+                  {projects && projects.map((project) => (
+                    <option value={project.id}>{project.title}</option>
+                  ))}
+                </select>
               </div>
             </div>
           </div>

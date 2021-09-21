@@ -29,9 +29,19 @@ const DirectCost = props => {
     description: Yup.string().required('Description is required'),
     vendor: Yup.string().required('Vendor is required'),
     employee: Yup.string().required('Employee is required'),
-    receivedDate: Yup.string().required('Received Date is required'),
-    paidDate: Yup.string().required('Paid Date is required'),
-    amount: Yup.string().required('Amount is required'),
+    receivedDate: Yup.date()
+    .typeError('Select a valid Received Date')
+    .required('Received Date is required'),
+    paidDate: Yup.date()
+    .typeError('Select a valid Paid Date')
+    .required('Paid Date is required')
+    .min(
+      Yup.ref('receivedDate'),
+      "Paid Date can't be before Received Date"
+    ),
+    amount: Yup.number()
+    .required('Amount is required')
+    .typeError('You must specify a valid number'),
   });
 
   const {
@@ -136,7 +146,8 @@ const [message, setMessage] = useState("");
       .then(response => {
         console.log(response.data);
         setSubmitted(true);
-        setMessage("The budget line item was updated successfully!");
+        props.history.push("/directcost/"+ currentDirectCost.projectId);
+        cogoToast.success("Direct Cost Updated Successfully!");
       })
       .catch(e => {
         console.log(e);

@@ -132,7 +132,7 @@ class NewEquip extends Component {
                   </div>
 
                   <div class="col-6">
-                    <label htmlFor="">Brand/code</label>
+                    <label htmlFor="">Number/Code</label>
                     <input
                       className="form-control"
                       type="text"

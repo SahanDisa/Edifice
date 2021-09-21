@@ -244,11 +244,31 @@ button.bg-dark:focus {
   color: white;
 }
 
-.card-text-edifice{
+.btn-complete.btn,
+.btn-complete.btn:hover,
+.btn-complete.btn:active,
+.btn-complete.btn:visited .btn-complete.btn:focus {
+  background-color: #00a36c !important;
+  border-color: #00a36c;
+  box-shadow: none;
+  color: white;
+}
+
+.btn-ongoing.btn,
+.btn-ongoing.btn:hover,
+.btn-ongoing.btn:active,
+.btn-ongoing.btn:visited .btn-ongoing.btn:focus {
+  background-color: #dc143c !important;
+  border-color: #dc143c;
+  box-shadow: none;
+  color: white;
+}
+
+.card-text-edifice {
   color: #273f7d !important;
   text-decoration: none !important;
 }
 
-.disabledLink{
+.disabledLink {
   pointer-events: none;
 }

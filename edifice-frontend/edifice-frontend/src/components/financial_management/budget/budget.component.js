@@ -179,7 +179,8 @@ export default class BudgetList extends Component {
               <div className="row"><ReportProblemOutlinedIcon style={{ color: "red" }}/><h3 className="h5 nav-heading-title mb-0">&nbsp;Over Budget</h3></div>
 : (Number(sovTotal)+Number(directCostTotal)) < budgetTotal ? 
 <div className="row"><ReportProblemOutlinedIcon style={{ color: "green" }}/><h3 className="h5 nav-heading-title mb-0">&nbsp;Under Budget</h3></div>
-:<div className="row"><CheckIcon  style={{ color: "green" }}/><h3 className="h5 nav-heading-title mb-0">&nbsp;On Budget</h3></div>
+:(Number(sovTotal)+Number(directCostTotal) === budgetTotal) ? <div className="row"><CheckIcon  style={{ color: "green" }}/><h3 className="h5 nav-heading-title mb-0">&nbsp;On Budget</h3></div>
+:<div>No Data</div>
 }
 <br />
 </div>
@@ -238,13 +239,13 @@ Financial Management Home
           <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2" >
             <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Estimated Budget</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. {parseFloat(budgetTotal).toFixed(2)}</span>
+                <span className="fs-sm fw-normal text-muted">Rs. {isNaN(parseFloat(budgetTotal).toFixed(2)) ? "0.00": parseFloat(budgetTotal).toFixed(2)}</span>
               </div>
             </div>
             <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2">
               <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Cost</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. {parseFloat(sovTotal+directCostTotal).toFixed(2)}</span>
+                <span className="fs-sm fw-normal text-muted">Rs. {isNaN(parseFloat(sovTotal+directCostTotal).toFixed(2))? "0.00":parseFloat(sovTotal+directCostTotal).toFixed(2)}</span>
               </div>
             </div>
     </div>
@@ -252,13 +253,13 @@ Financial Management Home
           <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Commited Cost</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. {parseFloat(sovTotal).toFixed(2)} </span>
+                <span className="fs-sm fw-normal text-muted">Rs. {isNaN(parseFloat(sovTotal).toFixed(2))? "0.00":parseFloat(sovTotal).toFixed(2)} </span>
               </div>
             </div>
             <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2">
             <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
                 <h3 className="h5 nav-heading-title mb-0">Total Direct Cost</h3>
-                <span className="fs-sm fw-normal text-muted">Rs. {parseFloat(directCostTotal).toFixed(2)}</span>
+                <span className="fs-sm fw-normal text-muted">Rs. {isNaN(parseFloat(directCostTotal).toFixed(2))? "0.00":parseFloat(directCostTotal).toFixed(2)}</span>
               </div>
     </div>
          

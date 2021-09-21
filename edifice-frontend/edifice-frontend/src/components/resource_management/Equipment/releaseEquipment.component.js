@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Modal } from "react-bootstrap";
 
-import ProjectDataService from "./../../../services/project.service";
 import EquipmentDataService from "./../../../services/equipment.service";
 
 class AllocateEquip extends Component {
     constructor(props) {
         super(props);
+        this.retrieveProjects = this.retrieveProjects.bind(this);
         this.updateEquipment = this.updateEquipment.bind(this);
         this.state = {
             currentEquipment: {
@@ -14,10 +14,27 @@ class AllocateEquip extends Component {
                 code: this.props.code
             },
             projectId: this.props.projectId,
-            code: this.props.code
+            code: this.props.code,
+            projects: []
         }
-
     };
+
+    componentDidMount() {
+        this.retrieveProjects();
+    }
+
+    retrieveProjects() {
+        EquipmentDataService.getAllProjects()
+            .then(response => {
+                this.setState({
+                    projects: response.data
+                });
+                console.log(response.data);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
 
     updateEquipment() {
         var data = {
@@ -39,7 +56,7 @@ class AllocateEquip extends Component {
     }
 
     render() {
-        const { code, projectId } = this.state;
+        const { code, projectId, projects } = this.state;
         return (
             <div>
                 <Modal.Header closeButton>
@@ -49,7 +66,11 @@ class AllocateEquip extends Component {
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
-                                <p>Are you sure you want to release equipment code: {code} from project {projectId}</p>
+
+                                {projects && projects.map((project) => (
+                                    projectId === project.id ?
+                                        <p>Are you sure you want to release equipment code: {code} from project {project.title}</p> : null
+                                ))}
 
                             </div>
                         </div>

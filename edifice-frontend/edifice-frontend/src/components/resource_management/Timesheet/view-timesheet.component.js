@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { Modal } from "react-bootstrap";
 
@@ -10,6 +11,7 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import MarkWorker from './mark-worker.component';
 
 import TimesheetDataService from "../../../services/timesheet.service";
+import AuthService from "./../../../services/auth.service";
 import CrewDataService from "./../../../services/crew.service";
 import WorkedHoursDataService from "./../../../services/worked-hours.service";
 
@@ -88,7 +90,8 @@ class ViewTimesheet extends Component {
   closeModal = () => this.setState({ isOpen: false });
 
   render() {
-    const { id, timesheet, workedHours, crews, currentWorker, code } = this.state;
+    const { id, timesheet, workedHours, crews, currentWorker, code, user } = this.state;
+    console.log(user)
 
     return (
       <div>
@@ -201,12 +204,14 @@ class ViewTimesheet extends Component {
                     <td>{worker.tea_stop} </td>
                     <td>{worker.stop}</td>
                     <td>
-                      <button
+                      {timesheet.status === "Pending" ? <button
                         className="btn btn-secondary mr-3"
                         onClick={() => this.setActiveWorker(worker)}
                       >
                         Mark
-                      </button>
+                      </button> : ""
+                      }
+
                     </td>
                   </tr>
                 ))}
@@ -233,7 +238,8 @@ class ViewTimesheet extends Component {
             {/*------------------------------------ Approve Starts------------------------------------------------------------------ */}
             <div className="modal fade" id="approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <Approve
-                timesheetId={timesheet.id} />
+                timesheetId={timesheet.id}
+                userID={AuthService.getCurrentUser().id} />
             </div>
             {/*-------------------------------------Approve Ends----------------------------------------------------------------------*/}
 
@@ -247,7 +253,8 @@ class ViewTimesheet extends Component {
         {/* mark Worker Starts */}
         <Modal show={this.state.isOpen} onHide={this.closeModal}>
           <MarkWorker
-            id={currentWorker.id}
+            workerWId={currentWorker.workerWId}
+            timesheetId={timesheet.id}
             location={currentWorker.location}
             start={currentWorker.start}
             lunch_start={currentWorker.lunch_start}
@@ -257,10 +264,6 @@ class ViewTimesheet extends Component {
             stop={currentWorker.stop}
           />
         </Modal>
-
-
-
-
       </div>
 
     );

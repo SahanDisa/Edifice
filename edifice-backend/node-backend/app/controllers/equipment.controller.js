@@ -38,7 +38,11 @@ exports.create = (req, res) => {
 // Retrieve all equipments
 exports.findAll = (req, res) => {
 
-  Equipment.findAll()
+  Equipment.findAll({
+    where: {
+      isDeleted: 0
+    }
+  })
     .then(data => {
       res.send(data);
     })
@@ -94,7 +98,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Equipment.destroy({
+  Equipment.update({ isDeleted: 1 }, {
     where: { code: id }
   })
     .then(num => {
@@ -115,36 +119,12 @@ exports.delete = (req, res) => {
     });
 };
 
-/*
-// Delete all Tutorials from the database.
-exports.deleteAll = (req, res) => {
-    equipment.destroy({
-        where: {},
-        truncate: false
-      })
-        .then(nums => {
-          res.send({ message: `${nums} Tutorials were deleted successfully!` });
-        })
-        .catch(err => {
-          res.status(500).send({
-            message:
-              err.message || "Some error occurred while removing all tutorials."
-          });
-        });
-};*/
-/*
-// Find all published Tutorials
-exports.findAllPublished = (req, res) => {
-    equipment.findAll({ where: { published: true } })
+exports.getAllProjects = (req, res) => {
+
+  db.sequelize.query(
+    'SELECT projects.id,projects.title from projects',
+    { replacements: {}, type: db.sequelize.QueryTypes.SELECT })
     .then(data => {
       res.send(data);
     })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials."
-      });
-    });
-};*/
-///////////////////////////////////
-// Improve for pagination as well
+}

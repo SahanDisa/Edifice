@@ -17,7 +17,7 @@ exports.create = (req, res) => {
   // Create a Budget Line Item
   const costcode = {
     costCode: req.body.costCode,
-    category: req.body.category,
+    // category: req.body.category,
     date: req.body.date,
     published: req.body.published,
     //directCosts:req.body.directCosts,
@@ -46,10 +46,11 @@ exports.findAll = (req, res) => {
   const id = req.params.id;
   const published = true;
 
-  CostCode.findAll({ where: {
+  CostCode.findAll({attributes: ['id', 'date', 'costCode']},{where: {
     projectId: id,
     published: published
-  }})
+  }}
+  )
     .then(data => {
       res.send(data);
     })

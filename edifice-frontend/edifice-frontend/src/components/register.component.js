@@ -7,6 +7,8 @@ import mainIcon from "././../assets/logoedifice.png";
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Chip from "@material-ui/core/Chip";
 import cogoToast from 'cogo-toast';
+//import welcomeMail from "../components/email/email.component";
+import emailjs from 'emailjs-com';
 
 import EmployeeDataService from "../services/employee.service";
 import DesignationDataService from "../services/designation.service";
@@ -122,6 +124,7 @@ export default class Register extends Component {
 
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.register(
+        this.state.id,
         this.state.username,
         this.state.email,
         this.state.password
@@ -147,8 +150,22 @@ export default class Register extends Component {
         }
         
       );
+
+      //sendemail
+      emailjs.send('service_ufoheny','template_gthofqi',{
+        empname: this.state.empname,
+        username: this.state.username,
+        password: this.state.password,
+        to_email: this.state.email
+    },'user_fvU6SYbToOsc7pAT3U5ZY')
+    .then(function(response) {
+        console.log('SUCCESS!', response.status, response.text);
+    }, function(error) {
+        console.log('FAILED...', error);
+    });
+      //welcomeMail()
       console.log(this.state.successful)
-      if(!this.state.successful){
+      if(true){
         //UPDATE EMPLOYEE TABLE
         const toupdate=this.makeDesignations()
         console.log(toupdate)
@@ -173,7 +190,18 @@ export default class Register extends Component {
             //console.log(data);
           });
         });
-        cogoToast.success("Account successfully made for"+this.state.username);
+
+        EmployeeDataService.updateAccountStatus(this.state.id)
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+            //console.log(data);
+          });
+
+        
+        //cogoToast.success("Account successfully made for"+this.state.username);
       }
     }
     
@@ -229,7 +257,8 @@ export default class Register extends Component {
     // });
 
     this.setState({
-      password: "12345"
+      password: "12345",
+      signupDisabled: false
     });
 
     // 'uEyMTw32v9'
@@ -308,7 +337,7 @@ export default class Register extends Component {
                         <label htmlFor="password">Password</label>
                       </div>
                       <div className="col">
-                        <button className="btn btn-primary" onClick={() =>this.generatePassword()}>Generate Password</button>
+                        <a className="btn btn-primary" onClick={() =>this.generatePassword()}>Generate Password</a>
                       </div>
                     </div>
                     <h5
@@ -367,7 +396,7 @@ export default class Register extends Component {
             </div>
           </div>
           <div className="form-group">
-            <button className="btn btn-primary btn-block" onClick={() =>this.handleRegister()}>Sign Up</button>
+            <button className="btn btn-primary btn-block" onClick={() =>this.handleRegister()} disabled={this.state.signupDisabled}>Sign Up</button>
           </div>
         
         </div>

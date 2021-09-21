@@ -40,7 +40,7 @@ exports.create = (req, res) => {
 exports.getTimesheetDetails = (req, res) => {
 
   db.sequelize.query(
-    'SELECT worked_hours.id,worked_hours.location,worked_hours.start, worked_hours.lunch_start,worked_hours.lunch_stop,worked_hours.tea_start, worked_hours.tea_stop,worked_hours.stop, worker.firstName, worker.lastName FROM worked_hours INNER JOIN worker ON worker.wId=worked_hours.workerWId WHERE worked_hours.timesheetId=:id',
+    'SELECT worked_hours.workerWId,worked_hours.location,worked_hours.start, worked_hours.lunch_start,worked_hours.lunch_stop,worked_hours.tea_start, worked_hours.tea_stop,worked_hours.stop, worker.firstName, worker.lastName FROM worked_hours INNER JOIN worker ON worker.wId=worked_hours.workerWId WHERE worked_hours.timesheetId=:id',
     { replacements: { id: req.params.id }, type: db.sequelize.QueryTypes.SELECT })
     .then(data => {
       res.send(data);
@@ -49,10 +49,11 @@ exports.getTimesheetDetails = (req, res) => {
 
 // Update a workedhours by the id in the request
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const tid = req.params.tid;
+  const wid = req.params.wid;
 
   WorkedHours.update(req.body, {
-    where: { id: id }
+    where: { workerWId: wid, timesheetId: tid }
   })
     .then(num => {
       if (num == 1) {
@@ -61,16 +62,17 @@ exports.update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot update workedhours with id=${id}. Maybe workedhours was not found or req.body is empty!`
+          message: `Cannot update workedhours with id=${wid}. Maybe workedhours was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating workedhours with id=" + id
+        message: "Error updating workedhours with id=" + wid
       });
     });
 };
+
 /*
 // Retrieve all workers from a given project
 exports.findAll = (req, res) => {

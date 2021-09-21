@@ -15,6 +15,7 @@ class Timesheet extends Component {
     this.state = {
       name: "",
       timesheets: [],
+      users: [],
       id: this.props.match.params.id
     };
   }
@@ -101,11 +102,10 @@ class Timesheet extends Component {
                   <div class="col-6">
                     <p>Id: {timesheet.id}</p>
                     <h5 >Date: {timesheet.date}</h5>
+
                     {timesheet.status == "Pending" ?
-                      <p>🔴 Not Approved</p> : <p>🟢 Approved</p>}
-
+                      <p>🔴 Not Approved</p> : <p>🟢 Approved by {timesheet.username}</p>}
                   </div>
-
                   <div className="col-6 text-right">
                     <Link
                       className="btn btn-primary mt-5"
