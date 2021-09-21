@@ -122,7 +122,7 @@ export default class Home extends Component {
         <h4>You are Login as <b>Manager</b></h4>
         }
         {!showAdminBoard && !showManagerBoard && showEngineerBoard &&
-        <h4>You are Login as <b>Engineer</b></h4>
+        <h4>You are Login as <b>an Engineer</b></h4>
         }
           <img
               src={mainIcon}
@@ -271,7 +271,7 @@ export default class Home extends Component {
       {!showAdminBoard && !showManagerBoard && showEngineerBoard &&
         <center>
         <div className="row">
-          <div className="col-14">
+          <div className="col-12">
             <Card border="dark" style={{ width: '14rem' }}>
                 {/* <Card.Header>Manager/Enginner/Architect</Card.Header>  */}
                 <Card.Body>

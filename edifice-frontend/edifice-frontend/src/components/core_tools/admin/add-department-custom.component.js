@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DepartmentDataService from "./../../../services/department.service";
+import PortfolioDataService from "./../../../services/portfolio.service";
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -8,6 +9,9 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
+import { Card } from "@material-ui/core";
+import Alert from "react-bootstrap/Alert";
+import cogoToast from "cogo-toast";
 
 export default class AddCustomDepartment extends Component {
   constructor(props) {
@@ -15,6 +19,7 @@ export default class AddCustomDepartment extends Component {
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangePurpose = this.onChangePurpose.bind(this);
+    this.retrieveDepartments = this.retrieveDepartments.bind(this);
     this.saveDepartment = this.saveDepartment.bind(this);
     this.newDepartment = this.newDepartment.bind(this);
 
@@ -26,12 +31,13 @@ export default class AddCustomDepartment extends Component {
       purpose: "", 
       currentIndex: -1,
       projectId: this.props.match.params.id,
+      departments: [],
 
       submitted: false
     };
   }
   componentDidMount() {
-    
+    this.retrieveDepartments(this.props.match.params.id);
   }
   onChangeTitle(e) {
     this.setState({
@@ -49,7 +55,20 @@ export default class AddCustomDepartment extends Component {
       purpose: e.target.value
     });
   }
+  retrieveDepartments(id){
+    PortfolioDataService.getAllDep(id)
+      .then(response => {
+        this.setState({
+          departments: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
   saveDepartment() {
+    cogoToast.success("Department "+ this.state.title+" created successfully");
     var data = {
       title: this.state.title,
       description: this.state.description,
@@ -72,6 +91,7 @@ export default class AddCustomDepartment extends Component {
       .catch(e => {
         console.log(e);
       });
+    this.retrieveDepartments(this.state.projectId);
   }
   newDepartment() {
     this.setState({
@@ -86,20 +106,19 @@ export default class AddCustomDepartment extends Component {
   }
 
   render() {
-    const {lastproject, currentIndex, projectId} = this.state;
+    const {lastproject, currentIndex, projectId, departments} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
           <div>
             <center>
-                <h4>You add a Department successfully</h4>
-            
+                <h4 className="alert alert-success">You add a department successfully</h4>
                 <button className="btn btn-success" onClick={this.newDepartment}  style={{ 'text-decoration': 'none' }}>
                 Add Another Department
                 </button>
-                {/* <Link to={"/addmilestone/"+projectId} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
-                        Add Milestone
-                    </Link> */}
+                <Link className="btn btn-primary m-2" to={"/projects"}>
+                Back Home
+                </Link>
             </center>
           </div>
         ) : (
@@ -163,6 +182,28 @@ export default class AddCustomDepartment extends Component {
             <button onClick={this.saveDepartment} className="btn btn-success">
               Create Department
             </button>
+            <hr></hr>
+            {/* Show Current Departments */}
+            <div>
+            <div className="col-md-12">
+              <div className="list-group">
+              <h4 className="mt-2">Current Departments</h4>
+              {departments &&
+                departments.map((department, index) => (
+                  <Card style={{ width: '40rem'}} className="m-2 shadow-md">
+                  <div className="row">
+                    <div className="col-9">
+                      <br/>
+                        <h6><b>Title : {department.title}</b></h6>
+                        <h6>Description : {department.description}</h6>
+                    </div>
+                  </div>
+                  </Card>
+                ))}
+                </div>
+            </div>
+            </div>
+            {/* Show Current Departments ends  */}
             </div>
             <div className="container col-4">
             <Timeline>

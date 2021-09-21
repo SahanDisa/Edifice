@@ -79,13 +79,17 @@ export default class AddProject extends Component {
     var date1 = new Date(this.state.startdate);
     var date2 = new Date(this.state.enddate);
     if(date1.getTime() > date2.getTime()){
-      console.log("Error"+date1.getTime()+" "+date2.getTime());
-      // this.setState({
-      //   message: "End Date should larger than Start Date"
-      // });
-      cogoToast.error('End date should be greater than start date');
+      // console.log("Error"+date1.getTime()+" "+date2.getTime());
+      if(this.state.isTitleValid > 0){
+        cogoToast.error('Title is invalid, Dates are invalid');
+      }else{
+        cogoToast.error('End date should be greater than start date');
+      }
     }else{
-      console.log("Duration is fine "+date1.getTime()+" "+date2.getTime());
+      // console.log("Duration is fine "+date1.getTime()+" "+date2.getTime());
+      if(this.state.isTitleValid > 0){
+        cogoToast.error('Title is invalid');
+      }else{
       // this.setState({
       //   message: "Duration is Appicable"
       // });
@@ -117,6 +121,8 @@ export default class AddProject extends Component {
         .catch(e => {
           console.log(e);
         });
+        // end of else
+      }
     }
     //this.state.getLastProjectID();
   }
@@ -149,7 +155,7 @@ export default class AddProject extends Component {
   }
 
   render() {
-    const {lastproject, currentIndex, message, isTitleValid} = this.state;
+    const {lastproject, currentIndex, message, isTitleValid,id} = this.state;
     return (
       <div className="container">
         {this.state.submitted ? (
@@ -160,6 +166,7 @@ export default class AddProject extends Component {
             <Link className="btn btn-primary m-2" to={"/projects"}>Back Home</Link>
             <div>
               <h5>Proceed to Step 02 : Define Departments</h5>
+              <Link to={"/adddepartment/"+id} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>Add Departments</Link>
               {lastproject && lastproject.map((project, index) => (
                 <div
                     className={
@@ -276,8 +283,11 @@ export default class AddProject extends Component {
               {this.state.message}
             </Alert>
             } */}
-            <button onClick={()=>{this.saveProject(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastProjectID()}} className="btn btn-success">
+            {/* <button onClick={()=>{this.saveProject(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastProjectID()}} className="btn btn-success">
               Create Project
+            </button> */}
+            <button onClick={this.saveProject} className="btn btn-success">
+            Create Project
             </button>
             </div>
             <div className="container col-4">
