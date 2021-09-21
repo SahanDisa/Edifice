@@ -58,25 +58,27 @@ estimatedBudget: Yup.number()
     projectId:props.match.params.id,    
   };
 
-  
-  useEffect(() => {
-    retrieveCostCodes();  
-    getDateTime();
-  }, []);
-
   const [budget, setBudget] = useState(initialBudgetState);
   const [costcodes, setCostCodes] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [today,setToday] = useState("");
 
-  const getDateTime = () => {
-    let tempDate = new Date();
-    let today = (tempDate.getMonth()+1) + '/' + tempDate.getDate() + '/' + tempDate.getFullYear(); 
-    const currDate = today;
-    console.log(currDate)
-   setToday(currDate);
-  }
+  // const getDateTime = () => {
 
+  //   let tempDate = new Date();
+  //   let t = tempDate.getFullYear() + '-' +(tempDate.getMonth()+1) + '-' +tempDate.getDate() ; 
+  //   const currDate =  t;
+  //   console.log(currDate);
+  //  setToday(currDate);
+  //  setBudget({ ...budget, date: currDate });
+  // };
+
+    
+  useEffect(() => {
+    // getDateTime();
+    retrieveCostCodes();  
+    
+  }, []);
 
 
   const {id}= useParams();
@@ -96,6 +98,7 @@ estimatedBudget: Yup.number()
     const { name, value } = event.target;
     setBudget({ ...budget, [name]: value });
   };
+
 
   const saveBudget = () => {
     var data = {
@@ -230,7 +233,7 @@ estimatedBudget: Yup.number()
                 
                 id="date"
                 
-                
+                // onLoad={budget.date}
                 name="date"
                 {...register('date')}
                 value={budget.date}
@@ -261,13 +264,13 @@ estimatedBudget: Yup.number()
               Save
             </button>
             &nbsp;&nbsp;
-            <button
+            {/* <button
             type="button"
             onClick={() => reset()}
             className="btn btn-warning float-right"
           >
             Reset
-          </button>&nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
+          </button>&nbsp;&nbsp;reset not working properly. values doesn't reset, only the error msgs */}
           {/*  <Link to={"/budgetestimates/" + budget.projectId}>
             <button className="btn btn-success">
             Cancel
@@ -297,7 +300,7 @@ estimatedBudget: Yup.number()
                   <TimelineDot />
                   <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent><h6><strong>Step 3</strong><br/>View the Budget.</h6></TimelineContent>
+                <TimelineContent><h6><strong>Step 3</strong><br/>View the Estimated Budget.</h6></TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator>

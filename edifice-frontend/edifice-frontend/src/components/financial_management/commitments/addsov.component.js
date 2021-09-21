@@ -168,21 +168,21 @@ const viewS = () => {
           viewS()
         ) : (
           <div class="container">
-            <h2>New SoV</h2>
+            <h2>New Schedule of Value</h2>
             <Breadcrumbs aria-label="breadcrumb">
-              <Link color="inherit" to="/home">
+            <Link color="inherit" to="/home">
                 Home
               </Link>
-              <Link color="inherit" to={"/projectmanagementhome/"+pid}>
+              <Link color="inherit" to={"/projectmanagementhome/"+sov.projectId}>
                 App Dashboard
               </Link>
-              <Link color="textPrimary" to={"/commitment/"+pid} aria-current="page">
+              <Link color="textPrimary" to={"/commitment/"+sov.projectId} aria-current="page">
                Commitments
               </Link>
-              <Link color="textPrimary" to={"/editcommitment/"+id} aria-current="page">
+              <Link color="textPrimary" to={"/editcommitment/"+sov.commitmentId} aria-current="page">
               #{id} - {currentCommitment.title}
               </Link>
-              <Link color="textPrimary" to={"/viewsov/"+pid+"/"+id} aria-current="page">
+              <Link color="textPrimary" to={"/viewsov/"+sov.projectId+"/"+sov.commitmentId} aria-current="page">
                Schedule of Values
               </Link>
               <Link color="textPrimary" to={"/addsov/"+sov.projectId+"/"+sov.commitmentId} aria-current="page">
@@ -294,17 +294,18 @@ const viewS = () => {
               Save
             </button>
             &nbsp;&nbsp;
-            <button
+            {/* <button
             type="button"
             onClick={() => reset()}
             className="btn btn-warning float-right"
           >
             Reset
-          </button>&nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
-            <Link to={"/viewsov/" +sov.projectId+"/"+ sov.commitmentId}>
+          </button> */}
+          &nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
+            {/* <Link to={"/viewsov/" +sov.projectId+"/"+ sov.commitmentId}>
             <button className="btn btn-success">
             Cancel
-            </button></Link>
+            </button></Link> */}
             </div>
             </form>
             </div>
