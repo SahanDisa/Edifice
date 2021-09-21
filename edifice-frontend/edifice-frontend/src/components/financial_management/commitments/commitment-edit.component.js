@@ -44,7 +44,7 @@ exclusions:"",
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [today,setToday] = useState("");
-  const [todayNull,setTodayNull] = useState("");
+  const [todayNull,setTodayNull] = useState("Not set yet");
 
   const getDateTime = () => {
     let tempDate = new Date();
@@ -76,23 +76,23 @@ exclusions:"",
 
   const removeDate=()=> {
 
-    setTodayNull(new Date());
-   
-    var data = {
+    // var data = {
 
-      actualCompletionDate :todayNull,
+    //   actualCompletionDate :todayNull,
 
-    };
+    // };
 
-    CommitmentDataService.update(currentCommitment.id,data)
-      .then(response => {
- setCurrentCommitment({ ...currentCommitment,actualCompletionDate: todayNull});
-//  props.history.push("/editcommitment/"+ currentCommitment.id);
+    // CommitmentDataService.update(currentCommitment.id,data)
+    //   .then(response => {
+ setCurrentCommitment({ ...currentCommitment,actualCompletionDate:todayNull});
+ console.log(todayNull)
+//  console.log(response)
+// props.history.push("/editcommitment/"+ currentCommitment.id);
 //  cogoToast.success("Subcontract Actual Completion Date set to "+ today);
-        })
-      .catch(e => {
-        console.log(e);
-      });
+      //   })
+      // .catch(e => {
+      //   console.log(e);
+      // });
   };
 
 
@@ -344,7 +344,7 @@ exclusions:"",
               (
                 <button
                 className="btn btn-ongoing m-2"
-                  onClick={() =>{ removeDate();updateStatus("Ongoing 🔴");}}
+                  onClick={() => {removeDate();updateStatus("Ongoing 🔴");}}
                 >
                 Mark as Ongoing
                 </button>
@@ -512,12 +512,12 @@ exclusions:"",
                 <label htmlFor="actualCompletionDate">Actual Completion Date :</label>
  
               <input
-                type="date"
+                type="text"
       
                 id="actualCompletionDate"
                   //  {...register('actualCompletionDate')}
                 value={currentCommitment.actualCompletionDate}
-                // onChange={handleInputChange}
+                onChange={handleInputChange}
                 name="actualCompletionDate"
                 readOnly
   className={`form-control`}
