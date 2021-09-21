@@ -134,3 +134,24 @@ exports.getAllProjects = (req, res) => {
       res.send(data);
     })
 }
+
+exports.getAllEquipmentProjects = (req, res) => {
+  const id = req.params.id;
+
+  Equipment.findAll({
+    where: {
+      isDeleted: 0,
+      projectId: id
+
+    }
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving data."
+      });
+    });
+}

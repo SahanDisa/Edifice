@@ -12,6 +12,9 @@ module.exports = app => {
    // Retrieve all projects
    router.get("/projects", equipments.getAllProjects);
 
+   // Retrieve all equipments to given project
+   router.get("/allocated/:id", equipments.getAllEquipmentProjects);
+
    // Retrieve a single equipment with id
    router.get("/:id", equipments.findOne);
 
