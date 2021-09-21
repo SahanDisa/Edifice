@@ -68,8 +68,8 @@ exclusions:"",
    
         //props.history.push("/editcommitment/"+ currentCommitment.id);
  setCurrentCommitment({ ...currentCommitment,actualCompletionDate: today });
- window.location.reload(true);
- cogoToast.success("Subcontract Actual Completion Date set to "+ today);
+//  window.location.reload(true);
+//  cogoToast.success("Subcontract Actual Completion Date set to "+ today);
         })
       .catch(e => {
         console.log(e);
@@ -88,12 +88,12 @@ exclusions:"",
       .then(response => {
 
  setCurrentCommitment({ ...currentCommitment,actualCompletionDate:todayNull});
- window.location.reload(true);
+//  window.location.reload(true);
  //props.history.push("/editcommitment/"+ currentCommitment.id);
  console.log(todayNull)
  console.log(response)
 // props.history.push("/editcommitment/"+ currentCommitment.id);
-//  cogoToast.success("Subcontract Actual Completion Date set to "+ today);
+// cogoToast.success("Subcontract Actual Completion Date removed");
         })
       .catch(e => {
         console.log(e);
@@ -266,8 +266,10 @@ exclusions:"",
     CommitmentDataService.update(currentCommitment.id,data)
       .then(response => {
  setCurrentCommitment({ ...currentCommitment,status: status });
- props.history.push("/editcommitment/"+ currentCommitment.id);
- cogoToast.success("Subcontract set to "+ status);
+//  props.history.push("/editcommitment/"+ currentCommitment.id);
+cogoToast.success("Subcontract set to "+ status);
+ window.location.reload(true);
+ 
         })
       .catch(e => {
         console.log(e);
