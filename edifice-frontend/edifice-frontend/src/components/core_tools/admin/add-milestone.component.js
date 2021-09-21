@@ -32,7 +32,7 @@ export default class AddMilestone extends Component {
       projectId: this.props.match.params.id,
 
       milestones: [],
-      submitted: true
+      submitted: false
     };
   }
   componentDidMount() {
@@ -97,7 +97,7 @@ export default class AddMilestone extends Component {
           duration: response.data.duration,
           projectId: response.data.projectId,
 
-          submitted: false
+          submitted: true
         });
         console.log(response.data);
       })
