@@ -8,6 +8,7 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
+import cogoToast from "cogo-toast";
 
 export default class AddAlbum extends Component {
   constructor(props) {
@@ -45,6 +46,7 @@ export default class AddAlbum extends Component {
       description: this.state.description,
       projectId: this.state.projectId
     };
+    cogoToast.success("Album "+this.state.title+" created successfully");
 
     AlbumDataService.create(data)
       .then(response => {

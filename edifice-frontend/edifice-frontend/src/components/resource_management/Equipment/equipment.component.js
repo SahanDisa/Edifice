@@ -134,8 +134,8 @@ class Equipment extends Component {
               <Link color="inherit" to="/home">
                 Home
               </Link>
-              <Link color="inherit" to={"/projectmanagementhome/" + id}>
-                App Dashboard
+              <Link color="inherit" to={"/admin"}>
+                Core Dashboard
               </Link>
               <Link color="textPrimary" to={"/equipments"} aria-current="page">
                 Equipments

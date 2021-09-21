@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table'
 import { Link } from "react-router-dom";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import Chip from "@material-ui/core/Chip";
+import cogoToast from "cogo-toast";
 
 import CrewDataService from "../../../services/crew.service";
 import WorkersDataService from "../../../services/worker.service";
@@ -140,6 +140,7 @@ class Workers extends Component {
         });
         console.log(response.data);
         window.location.reload();
+        cogoToast.success("Crew Added successfully!");
       })
       .catch(e => {
         console.log(e);
