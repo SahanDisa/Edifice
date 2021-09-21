@@ -283,13 +283,13 @@ export default class BoardUser extends Component {
             {projects.map(project =>(
               <div className="card card-hover shadow-sm card-text-edifice my-3">
               <div className="row">
-                <div className="col-5 m-2">
+                <Link className="col-5 m-2" style={{ textDecoration:'none' }}>
                 <h4>{project.title}</h4>
                 <h6>Description : {project.description}</h6>
                 <h6>Location: {project.location}</h6> 
                 <h6>From : {project.startdate} to {project.enddate}</h6>
                 <a onClick={()=>{this.generatePDF(project,this.getProjectCostCodes(project.id));}} className="btn btn-primary p-2 my-2"><Description style={{ fontSize:20 }}/> Generate Report</a>
-                </div>
+                </Link>
                 <div className="col-4 mt-4">
                 <center>
                 <h2><b>{progressInDays(project.startdate,project.enddate)}{" "}</b>Days</h2>

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { Link } from "react-router-dom";
-import cellEditFactory from 'react-bootstrap-table2-editor';
 import { Breadcrumbs } from "@material-ui/core";
+import PeopleIcon from '@material-ui/icons/People';
 import EmployeeDataService from "./../../../services/employee.service";
 
   const columns = [{
@@ -120,7 +120,7 @@ class Employee extends Component {
         temp.role=employee.role,
         temp.email=employee.email,
         temp.mobile=employee.mobile,
-        temp.edit=<Link to={"/editUser/"+temp.id}> <a className="btn btn-primary">edit</a></Link>,
+        temp.edit=<Link to={"/editUser/"+temp.id}> <a className="btn btn-primary">View</a></Link>,
         employee.hasAccount? temp.create=<p></p> : temp.create=<Link to={"/register/"+temp.id} ><a className="btn btn-secondary"> Create Acc.</a></Link>,
         data1.push(temp)
       )
@@ -130,7 +130,7 @@ class Employee extends Component {
       return (
         <div>
 
-          <h2>EMPLOYEES</h2>
+          <h2><PeopleIcon/> EMPLOYEES</h2>
 
           <Breadcrumbs aria-label="breadcrumb">
             <Link color="inherit" to="/home">
