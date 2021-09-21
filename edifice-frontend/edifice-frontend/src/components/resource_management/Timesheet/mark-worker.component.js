@@ -20,6 +20,8 @@ class EditWorker extends Component {
             //currentIndex: -1,
             //content: "",
             currentWorker: {
+                workerWId: this.props.workerWId,
+                timesheetId: this.props.timesheetId,
                 id: this.props.id,
                 location: this.props.location,
                 start: this.props.start,
@@ -137,7 +139,7 @@ class EditWorker extends Component {
             tea_stop: this.state.currentWorker.tea_stop,
             stop: this.state.currentWorker.stop
         };
-        WorkedHoursDataService.update(this.props.id, data)
+        WorkedHoursDataService.update(this.props.workerWId, this.props.timesheetId, data)
             .then(response => {
                 this.setState(prevState => ({
                     currentWorker: {
