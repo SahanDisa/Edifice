@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { Link } from "react-router-dom";
 import cellEditFactory from 'react-bootstrap-table2-editor';
+import { Breadcrumbs } from "@material-ui/core";
 import EmployeeDataService from "./../../../services/employee.service";
 
   const columns = [{
@@ -128,22 +129,22 @@ class Employee extends Component {
     //console.log(employees);
       return (
         <div>
-        
-          <ul class="nav nav-tabs">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Employees</a>
-            </li>
-            <li class="nav-item">
-              <Link to={"/vendor"}><a class="nav-link">Vendors</a></Link>
-            </li>
-            <li class="nav-item">
-              <Link to={"/subcontractor"}><a class="nav-link">Sub-Contractors</a></Link>
-            </li>
-          </ul>
 
-          <h2>Employees</h2>
+          <h2>EMPLOYEES</h2>
 
-          <form className="row g-3">
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link color="inherit" to="/home">
+              Home
+            </Link>
+            <Link color="inherit" to={"/admin"}>
+              Core Dashboard
+            </Link>
+            <Link color="inherit" to={"#/"}>
+              Employees
+            </Link>
+          </Breadcrumbs>
+
+          <form className="row g-3 mt-2">
             <div className="col-auto">
               <input className="form-control" type="text" placeholder="Search employee"/>  
             </div>
@@ -163,7 +164,7 @@ class Employee extends Component {
             </div>
 
             <div>
-              <Link to={"/addUser"}><a className="btn btn-primary"> +add employee</a></Link>
+              <Link to={"/addUser"}><a className="btn btn-primary"> + Add Employee</a></Link>
             </div>
           </form>
 

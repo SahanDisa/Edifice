@@ -2,6 +2,7 @@ import React, { Component} from "react";
 import {Link } from 'react-router-dom';
 import cogoToast from 'cogo-toast';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { Breadcrumbs } from "@material-ui/core";
 import EmployeeDataService from "./../../../services/employee.service";
 
 class AddEmployee extends Component {
@@ -30,7 +31,8 @@ class AddEmployee extends Component {
         lastEmployee:[],
         lastEmployeeID:undefined,
         currentIndex: -1,
-        id: undefined
+        id: undefined,
+        isSuccess: false
       };
     }
   
@@ -103,15 +105,20 @@ class AddEmployee extends Component {
         username:"",
         hasAccount:0,
         other: response.data.other,
+        
       });
       console.log(response.data);
-      this.getLastEmployee();
     })
     .catch(e => {
       console.log(e);
       //console.log(data);
     });
-      this.getLastEmployee();
+    
+    this.getLastEmployee();
+    this.setState({
+      isSuccess: true
+    })
+      
   }
 
   newEmployee() {
@@ -147,15 +154,24 @@ class AddEmployee extends Component {
 
   displayResult(){
 
-    cogoToast.success(
-      <div>
-        
-        <div>Employee <b>{this.state.name}</b>added Successfully</div>
-      </div>
-    );
+    if(this.state.isSuccess){
+      cogoToast.success(
+        <div>
+          <div>Employee <b>{this.state.name}</b>added Successfully</div>
+        </div>
+      );
+    }else{
+      cogoToast.error(
+        <div>
+          <div>Failed to add Employee <b>{this.state.name}</b></div>
+        </div>
+      );
+      
+    }
+    
 
     setTimeout(() => {
-      window.location.href="/employees"
+      //window.location.href="/employees"
     }, 1000);
   }
 
@@ -163,8 +179,23 @@ class AddEmployee extends Component {
 
     return (
       <div className="container">
-        <h2><AddCircleOutlineIcon/> New Employee</h2><hr/>
-        <div className="">
+        <h2><AddCircleOutlineIcon/> NEW EMPLOYEE</h2><hr/>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link color="inherit" to="/home">
+            Home
+          </Link>
+          <Link color="inherit" to={"/admin"}>
+            Core Dashboard
+          </Link>
+          <Link color="inherit" to={"/employees"}>
+            Employees
+          </Link>
+          <Link color="inherit">
+            Add Employee
+          </Link>
+        </Breadcrumbs>
+
+        <div className="mt-2">
           <h5>Enter Employee details</h5>
 
           <label htmlFor="" hidden>Id</label>
@@ -179,7 +210,7 @@ class AddEmployee extends Component {
             name="name" required/>
           <br/>
 
-          <label htmlFor="">Role</label>
+          <label htmlFor=""> Main Role</label>
 
           <select className="form-control" name="" id="role"
           required
@@ -217,7 +248,7 @@ class AddEmployee extends Component {
 
           <div className="row">
             <div className="pr-2"> 
-              <a onClick={()=>{this.saveEmployee(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastEmployee();}} className="btn btn-success">Add</a>
+              <a onClick={()=>{this.saveEmployee(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.getLastEmployee();this.displayResult();}} className="btn btn-success">Add</a>
             </div>
             <div className="pr-4"> 
               <a className="btn btn-secondary" type="reset">Cancel</a>
