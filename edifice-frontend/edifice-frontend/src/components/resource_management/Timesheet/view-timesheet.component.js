@@ -11,6 +11,7 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import MarkWorker from './mark-worker.component';
 
 import TimesheetDataService from "../../../services/timesheet.service";
+import AuthService from "./../../../services/auth.service";
 import CrewDataService from "./../../../services/crew.service";
 import WorkedHoursDataService from "./../../../services/worked-hours.service";
 
@@ -89,7 +90,8 @@ class ViewTimesheet extends Component {
   closeModal = () => this.setState({ isOpen: false });
 
   render() {
-    const { id, timesheet, workedHours, crews, currentWorker, code } = this.state;
+    const { id, timesheet, workedHours, crews, currentWorker, code, user } = this.state;
+    console.log(user)
 
     return (
       <div>
@@ -236,7 +238,8 @@ class ViewTimesheet extends Component {
             {/*------------------------------------ Approve Starts------------------------------------------------------------------ */}
             <div className="modal fade" id="approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <Approve
-                timesheetId={timesheet.id} />
+                timesheetId={timesheet.id}
+                userID={AuthService.getCurrentUser().id} />
             </div>
             {/*-------------------------------------Approve Ends----------------------------------------------------------------------*/}
 
