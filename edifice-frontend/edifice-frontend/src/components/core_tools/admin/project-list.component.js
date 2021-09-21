@@ -1,8 +1,31 @@
 import React, { Component } from "react";
+import CostCodeDataService from "./../../../services/costcode.service";
 import ProjectDataService from "./../../../services/project.service";
 import { Link } from "react-router-dom";
-import { ListGroup } from "react-bootstrap";
+import { Modal,ListGroup } from "react-bootstrap";
+import Chip from "@material-ui/core/Chip";
+import BootstrapTable from 'react-bootstrap-table-next';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import { Breadcrumbs } from "@material-ui/core";
+
+//table for costtcodes
+const columns = [{
+  dataField: 'id',
+  text: 'ID',
+  headerStyle: (column, colIndex) => {
+      return { width: '7%', textAlign: 'center' };}
+}, {
+  dataField: 'Date',
+  text: 'date',
+  headerStyle: (column, colIndex) => {
+      return { width: '22%', textAlign: 'center' };}
+}, {
+  dataField: 'costCode',
+  text: 'Cost Code',
+  headerStyle: (column, colIndex) => {
+      return { width: '18%', textAlign: 'center' };}
+}
+];
 
 export default class ProjectsList extends Component {
   constructor(props) {
@@ -18,7 +41,8 @@ export default class ProjectsList extends Component {
       projects: [],
       currentProject: null,
       currentIndex: -1,
-      searchTitle: ""
+      searchTitle: "",
+      currentCostCodes:[]
     };
   }
 
@@ -44,7 +68,7 @@ export default class ProjectsList extends Component {
       })
       .catch(e => {
         console.log(e);
-      });
+    });
   }
 
   refreshList() {
@@ -84,6 +108,48 @@ export default class ProjectsList extends Component {
       .catch(e => {
         console.log(e);
       });
+  }
+
+  getCostCodesForProjects(id){
+    CostCodeDataService.getAll(id)
+      .then(response => {
+        this.setState({
+          currentCostCodes: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+    });
+
+    console.log(this.state.currentCostCodes);
+  }
+
+  returnCostCodes(){
+
+    var data1=[];
+    var temp={};
+    // this.state.currentCostCodes && this.state.currentCostCodes.map((value,index) => { 
+    //   temp={},
+    //   temp.id=value.id,
+    //   temp.date= value.date,
+    //   temp.costCode=value.costCode,
+    //   data1.push(temp)
+    // })
+    return(
+      <div className="pr-2 pb-5">
+        <BootstrapTable 
+            hover
+            keyField='id'
+            data={ data1 }
+            columns={ columns } 
+            cellEdit={ false }
+
+      />
+      </div>
+  )
+        
+    
   }
 
   render() {
@@ -208,10 +274,12 @@ export default class ProjectsList extends Component {
                 Edit
               </Link>
               <Link
-                to={"/costcode/" + currentProject.id}
+                onClick={() =>this.getCostCodesForProjects(this.state.currentProject.id)}
+                data-target="#costcodeModal"
+                data-toggle="modal"
                 className="m-1 btn btn-sm btn-secondary"
               >
-                Add Cost Codes
+                Cost Codes
               </Link>
             </div>
           ) : (
@@ -222,6 +290,46 @@ export default class ProjectsList extends Component {
           )}
         </div>
       </div>
+
+      {/* Costcode modal Starts */}
+      <div className="modal fade" id="costcodeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
+              <div className="modal-content">
+                
+                <div className="modal-header">
+                  <h4 className="modal-title" style={{ fontSize:20 }}> <AttachMoneyIcon/>Cost Codes</h4>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                
+                <div className="modal-body">
+                <div className="row">
+                {(this.state.currentCostCodes && this.state.currentCostCodes.length)
+                  ? 
+                        
+                  <div className="pr-2">
+                    <BootstrapTable 
+                      hover
+                      keyField='id'
+                      data={ this.state.currentCostCodes }
+                      columns={ columns } 
+                      cellEdit={ false }
+                    />
+                  </div>
+
+                  : <b style={{ fontSize:20 },{color: 'red'}}> 
+                    No Cost Codes</b>
+                }
+                </div> 
+                  <a  className="btn btn-primary pr-3 ml-2 mr-3" > + Add Cost code </a>
+                  <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
+                </div>
+                </div>
+              </div>
+            
+          </div>
+          {/* Costcode modal Ends */}
       </div>
     );
   }
