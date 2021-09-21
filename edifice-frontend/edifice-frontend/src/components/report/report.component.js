@@ -32,7 +32,7 @@ class Report extends Component {
             .then(response => {
             this.setState({
                 costCodes: response.data
-            });
+            })
             console.log(response.data);
             console.log(this.state);
             })
