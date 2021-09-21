@@ -93,7 +93,7 @@ export default class ProjectsList extends Component {
       <div>
       {/* Top */}
       <div>
-          <h2>Project Dashboard</h2>
+          <h2>PROJECT DASHBOARD</h2>
           <Breadcrumbs aria-label="breadcrumb">
             <Link color="inherit" to="/home">
               Home
