@@ -8,6 +8,9 @@ module.exports = app => {
   
     // Retrieve all employees
     router.get("/", employee.findAll);
+
+    // Retrieve all employees with user accouns
+    router.get("/user", employee.findUsers);
   
     // Retrieve a single Tutorial with id
     router.get("/:id", employee.findOne);

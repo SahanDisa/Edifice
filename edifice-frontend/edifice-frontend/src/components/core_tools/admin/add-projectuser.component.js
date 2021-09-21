@@ -104,7 +104,7 @@ export default class AssignUserProject extends Component {
   }
 
   getEmployees(){
-    EmployeeDataService.getAll()
+    EmployeeDataService.getUsers()
       .then(response => {
         this.setState({
           employees: response.data
