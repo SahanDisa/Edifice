@@ -138,7 +138,7 @@ exclusions:"",
     .typeError('Select a valid Date') 
     .min(
       Yup.ref('startDate'),
-      "Estimated Completion Date can't be before Start Date"
+      "Estimated Completion Date can't be before Start Date or Signed Contract Received Date"
     ),
     
   });
@@ -195,6 +195,7 @@ exclusions:"",
 
 
     };
+    if(currentCommitment.signedContractReceivedDate <= currentCommitment.estimatedCompletionDate && currentCommitment.signedContractReceivedDate <= currentCommitment.startDate && currentCommitment.startDate <= currentCommitment.estimatedCompletionDate && currentCommitment.title !== "" && currentCommitment.description !== "" ){
     CommitmentDataService.update(currentCommitment.id, data)
       .then(response => {
           props.history.push("/editcommitment/"+ currentCommitment.id);
@@ -205,6 +206,7 @@ exclusions:"",
       .catch(e => {
         console.log(e);
       });
+    }
   };
 
 
