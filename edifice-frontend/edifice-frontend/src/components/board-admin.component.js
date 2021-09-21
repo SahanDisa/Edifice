@@ -1,18 +1,10 @@
 import React, { Component } from "react";
-import Dates from './core_tools/admin/dates.component'
-import Defaults from './core_tools/admin/defaults.component'
-import Roles from './core_tools/admin/roles.component'
 import { Link } from "react-router-dom";
 
 //import PDF generating
 import Report from './report/report.component'
 
 import ProgressBar from 'react-customizable-progressbar';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import LinearProgress from '@material-ui/core/LinearProgress';
-
-//import LocationOnIcon from '@material-ui/icons/LocationOn';
 import {Assessment,HomeWork,LocationOn,Description,SupervisorAccount,Timeline,  Build} from '@material-ui/icons';
 
 import UserService from "../services/user.service";

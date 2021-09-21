@@ -139,10 +139,10 @@ class Vendors extends Component {
         
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Vendors</a>
+            <a class="nav-link active" aria-current="page">Vendors</a>
           </li>
           <li class="nav-item">
-            <Link to="/subcontractor"><a class="nav-link" style={{textDecoration:'none'}}>Sub-Contractors</a></Link>
+            <Link to="/subcontractors"><a class="nav-link" style={{textDecoration:'none'}}>Sub-Contractors</a></Link>
           </li>
         </ul>
 

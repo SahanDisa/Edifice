@@ -71,6 +71,7 @@ import Vendors from "./components/core_tools/edifice-directory/vendors.component
 import Employee from "./components/core_tools/edifice-directory/employees.component";
 import AddVendor from "./components/core_tools/edifice-directory/add-vendor.component";
 import EditVendor from "./components/core_tools/edifice-directory/edit-vendor.component";
+import Subcontractors from "./components/core_tools/edifice-directory/subcontractors.component";
 
 import TaskConfiguration from "./components/core_tools/tasks/configuration.component";
 import ManageTasks from "./components/core_tools/tasks/manage.component";
@@ -414,6 +415,7 @@ class App extends Component {
               <Route path="/employees" component={Employee} />
               <Route path="/addVendor" component={AddVendor} />
               <Route path="/editVendor/:id" component={EditVendor} />
+              <Route path="/subcontractors" component={Subcontractors} />
               {/* Document */}
               <Route path="/directory/:id" component={AddDirectory} />
               <Route path="/document/:id" component={DocumentHome} />
