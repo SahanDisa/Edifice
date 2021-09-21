@@ -119,13 +119,6 @@ exports.findMetinCategory = (req, res) => {
   const id = req.params.id;
   db.sequelize.query('select * from meetings where projectId = '+id+' and isDeleted = 0 order by id desc limit 1;',
   { type: db.sequelize.QueryTypes.SELECT})
-  // Meeting.findAll({
-  //   limit: 1,
-  //   order: [['id', 'DESC']]
-  // },{ where: {
-  //   category: id,
-  //   isDeleted: 0,
-  // }})
   .then(data => {
     res.send(data);
   })

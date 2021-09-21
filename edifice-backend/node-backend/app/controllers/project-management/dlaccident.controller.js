@@ -128,7 +128,7 @@ exports.findAllweek = (req, res) => {
 
 exports.findToday = (req, res) => {
     const id = req.params.id;
-    db.sequelize.query('select * from dlaccident where projectId = '+id+' and date=now() AND isDeleted = 0;',
+    db.sequelize.query('select * from dlaccident where projectId = '+id+' and date=current_date() AND isDeleted = 0;',
     { type: db.sequelize.QueryTypes.SELECT})
     .then(data => {
         res.send(data);

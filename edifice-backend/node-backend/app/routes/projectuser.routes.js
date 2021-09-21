@@ -19,7 +19,7 @@ module.exports = app => {
     router.get("/projectdata/user/:id", projectuser.getProjectUserDetails);
 
     // Get users project details as an array
-    router.get("/projectdata/users/search/:id", projectuser.searchUser);
+    router.get("/projectdata/users/:id/:position", projectuser.searchUser);
 
     // Update a Tutorial with id
     router.put("/:id", projectuser.update);

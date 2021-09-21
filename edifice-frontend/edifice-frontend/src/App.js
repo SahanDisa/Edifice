@@ -127,7 +127,6 @@ import ViewDWLall from "./components/project_management/dailylog/viewallweather.
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
 import CreatePL from "./components/project_management/punchlist/create-basic.component";
 import CreatePhotos from "./components/project_management/punchlist/create-addphoto.component";
-import CreateAssignees from "./components/project_management/punchlist/create-addassignee.component";
 import PLTView from "./components/project_management/punchlist/viewtype.component";
 import PLIView from "./components/project_management/punchlist/view.component";
 
@@ -420,10 +419,9 @@ class App extends Component {
               {/* Punch List */}
               <Route path="/punchlist/:id" component={punchlistHome} />
               <Route path="/managepunchlist/createaddphoto/:id/plid" component={CreatePhotos} />
-              <Route path="/managepunchlist/createaddassignee/:id/plid" component={CreateAssignees} />
               <Route path="/managepunchlist/create/:id" component={CreatePL} />
               <Route path="/viewtype/:pltid" component={PLTView} />
-              <Route path="/view/:pliid" component={PLIView} />
+              <Route path="/view/:id/:pliid" component={PLIView} />
               {/* Daily Logs */}
               <Route path="/dailylogs/:id" component={DailyLogHome} />
               <Route path="/createaccidentlog/:id" component={CreateDAL} />
