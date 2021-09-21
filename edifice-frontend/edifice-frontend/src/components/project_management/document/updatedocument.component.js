@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DocumentDataService from "./../../../services/documentfile.service";
 import DirectoryCategoryService from "../../../services/directory.service";
+import UploadService from "./../../../services/document.service";
 import { Breadcrumbs } from "@material-ui/core";
+import cogoToast from "cogo-toast";
 
 export default class UpdateDocument extends Component {
   constructor(props) {
@@ -15,6 +17,8 @@ export default class UpdateDocument extends Component {
     this.updatePublished = this.updatePublished.bind(this);
     this.updateDocument = this.updateDocument.bind(this);
     this.deleteDocument = this.deleteDocument.bind(this);
+    this.selectFile = this.selectFile.bind(this);
+    this.upload = this.upload.bind(this);
 
     this.state = {
       currentDocument: {
@@ -31,6 +35,12 @@ export default class UpdateDocument extends Component {
       temp: this.props.match.params.id,
       pid: this.props.match.params.pid,
       drawingcategories: [],
+
+      //file
+      selectedFiles: undefined,
+      currentFile: undefined,
+      progress: 0,
+      message: "",
     };
   }
 
@@ -154,6 +164,7 @@ export default class UpdateDocument extends Component {
       status: this.state.currentDocument.status,
       version: this.state.currentDocument.version,
     };
+    cogoToast.success("Document updated successfully!");
     DocumentDataService.update(this.state.currentDocument.id,data)
       .then(response => {
         console.log(response.data);
@@ -176,151 +187,234 @@ export default class UpdateDocument extends Component {
         console.log(e);
       });
   }
+  selectFile(event) {
+    this.setState({
+      selectedFiles: event.target.files,
+    });
+  }
+  upload() {
+    let currentFile = this.state.selectedFiles[0];
+    let fileName = this.state.currentDocument.title+".pdf";
+    console.log(currentFile);
+    console.log(fileName);
+    
+    this.setState({
+      progress: 0,
+      currentFile: currentFile,
+    });
 
-    render() {
-      const { pid, currentDocument, temp, drawingcategories} = this.state;
-  
-      return (
-        <div>
-          {currentDocument ? (
-            <div className="container">
-              <h2>Update a Document</h2>
-              <Breadcrumbs aria-label="breadcrumb">
-                <Link color="inherit" to="/home">
-                  Home
-                </Link>
-                <Link color="inherit" to={"/projectmanagementhome/"+pid}>
-                  App Dashboard
-                </Link>
-                <Link color="textPrimary" to={"/document/"+pid}>
-                  Document Home
-                </Link>
-                <Link color="textPrimary" to={"/updatedocument/"+pid+"/"+temp} aria-current="page">
-                  Update Document / {temp}
-                </Link>
-              </Breadcrumbs>
-              <form>
-                <div className="form-group">
-                  <label htmlFor="title">Title</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="title"
-                    value={currentDocument.title}
-                    onChange={this.onChangeTitle}
-                    disabled
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="description">Description</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="description"
-                    value={currentDocument.description}
-                    onChange={this.onChangeDescription}
-                  />
-                </div>
-                {/* <div className="form-group">
-                  <label htmlFor="description">Category</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="category"
-                    value={currentDocument.category}
-                    onChange={this.onChangeCategory}
-                  />
-                </div> */}
-                <div className="form-group">
-                <label htmlFor="category">Document Category</label>
-                <select 
-                    className="form-control"
-                    id="category"
-                    required
-                    name="category"
-                    value={this.state.category}
-                    onChange={this.onChangeCategory}
-                >
-                    {drawingcategories &&
-                    drawingcategories.map((drawingcategory, index) => (
-                    <option
-                        value={drawingcategory.id}
-                        onChange={this.onChangeCategory}
-                        key={index}
-                    >
-                    {/* unit data */}
-                    {drawingcategory.title}
-                    </option>
-                    ))}
-                </select>
-                </div>
-                {/* <div className="form-group">
-                  <label htmlFor="description">Version</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="category"
-                    value={currentDocument.version + 1}
-                    onChange={this.onChangeVersion}
-                    disabled
-                  />
-                </div> */}
-                <div className="form-group">
-                  <label>
-                    <strong>Status:</strong>
-                  </label>
-                  {currentDocument.status}
-                </div>
-              </form>
+    UploadService.upload(currentFile, fileName, (event) => {
+      this.setState({
+        progress: Math.round((100 * event.loaded) / event.total),
+      });
+    })
+      .then((response) => {
+        this.setState({
+          message: response.data.message,
+        });
+        return UploadService.getFiles();
+      })
+      .then((files) => {
+        this.setState({
+          fileInfos: files.data,
+        });
+      })
+      .catch(() => {
+        this.setState({
+          progress: 0,
+          message: "Could not upload the file!",
+          currentFile: undefined,
+        });
+      });
 
-              {currentDocument.status == "Not Complete" ? (
-                <button
-                  className="btn btn-primary mr-2"
-                  onClick={() => this.updatePublished("Pending")}
-                >
-                  Set Pending
-                </button>
-              ) : 
-              (currentDocument.status == "Pending" ?
-                <button
-                  className="btn btn-primary mr-2"
-                  onClick={() => this.updatePublished("Complete")}
-                >
-                  Set Complete
-                </button>
-              :
-              (
-                <button
-                  className="btn btn-success mr-2"
-                  onClick={() => this.updatePublished("Not Complete")}
-                >
-                  Set Incomplete
-                </button>
-              ))}
-  
-              <button
-                className="btn btn-danger  mr-2"
-                onClick={this.deleteDocument}
+    this.setState({
+      selectedFiles: undefined,
+    });
+    cogoToast.success("File uploaded successfully!");
+  }
+
+  render() {
+    const { pid, currentDocument, temp, drawingcategories,selectedFiles,
+      currentFile,progress,message} = this.state;
+
+    return (
+      <div>
+        {currentDocument ? (
+          <div className="container">
+            <h2>Update a Document</h2>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" to="/home">
+                Home
+              </Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+pid}>
+                App Dashboard
+              </Link>
+              <Link color="textPrimary" to={"/document/"+pid}>
+                Document Home
+              </Link>
+              <Link color="textPrimary" to={"/updatedocument/"+pid+"/"+temp} aria-current="page">
+                Update Document / {temp}
+              </Link>
+            </Breadcrumbs>
+            <form>
+              <div className="form-group">
+                <label htmlFor="title">Title</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="title"
+                  value={currentDocument.title}
+                  onChange={this.onChangeTitle}
+                  disabled
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="description">Description</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="description"
+                  value={currentDocument.description}
+                  onChange={this.onChangeDescription}
+                />
+              </div>
+              {/* <div className="form-group">
+                <label htmlFor="description">Category</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="category"
+                  value={currentDocument.category}
+                  onChange={this.onChangeCategory}
+                />
+              </div> */}
+              <div className="form-group">
+              <label htmlFor="category">Document Category</label>
+              <select 
+                  className="form-control"
+                  id="category"
+                  required
+                  name="category"
+                  value={this.state.category}
+                  onChange={this.onChangeCategory}
               >
-                Delete
-              </button>
-  
-              <button
-                type="submit"
-                className="btn btn-warning mr-2"
-                onClick={this.updateDocument}
-              >
-                Update
-              </button>
-              <p>{this.state.message}</p>
-            </div>
-          ) : (
+                  {drawingcategories &&
+                  drawingcategories.map((drawingcategory, index) => (
+                  <option
+                      value={drawingcategory.id}
+                      onChange={this.onChangeCategory}
+                      key={index}
+                  >
+                  {/* unit data */}
+                  {drawingcategory.title}
+                  </option>
+                  ))}
+              </select>
+              </div>
+              {/* <div className="form-group">
+                <label htmlFor="description">Version</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="category"
+                  value={currentDocument.version + 1}
+                  onChange={this.onChangeVersion}
+                  disabled
+                />
+              </div> */}
+              <div className="form-group">
+                <label>
+                  <strong>Status:</strong>
+                </label>
+                {currentDocument.status}
+              </div>
+            </form>
+            <hr></hr>
+            {/* Uploading started */}
             <div>
-              <br />
-              <p>Please click on a Document...</p>
-            </div>
-          )}
-        </div>
-      );
+              <h5>Update the Document source</h5>
+              <p>Document name : - {currentDocument.title}{".pdf"}</p>
+              {/* Div starts */}
+              <div>
+                {currentFile && (
+                  <div className="progress">
+                    <div
+                      className="progress-bar progress-bar-info progress-bar-striped"
+                      role="progressbar"
+                      aria-valuenow={progress}
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      style={{ width: progress + "%" }}
+                    >
+                      {progress}%
+                    </div>
+                  </div>
+                )}
+
+                <label className="btn btn-default">
+                  <input type="file" onChange={this.selectFile} />
+                </label>
+
+                <button className="btn btn-success"
+                  disabled={!selectedFiles}
+                  onClick={this.upload}
+                >
+                  Upload
+                </button>
+                
+                {/*Ends div here  */}
+                </div>
+            {/* End the container uploading here */}
+            </div>   
+
+            {currentDocument.status == "Not Complete" ? (
+              <button
+                className="btn btn-primary mr-2"
+                onClick={() => this.updatePublished("Pending")}
+              >
+                Set Pending
+              </button>
+            ) : 
+            (currentDocument.status == "Pending" ?
+              <button
+                className="btn btn-primary mr-2"
+                onClick={() => this.updatePublished("Complete")}
+              >
+                Set Complete
+              </button>
+            :
+            (
+              <button
+                className="btn btn-success mr-2"
+                onClick={() => this.updatePublished("Not Complete")}
+              >
+                Set Incomplete
+              </button>
+            ))}
+
+            <button
+              className="btn btn-danger  mr-2"
+              onClick={this.deleteDocument}
+            >
+              Delete
+            </button>
+
+            <button
+              type="submit"
+              className="btn btn-warning mr-2"
+              onClick={this.updateDocument}
+            >
+              Update
+            </button>
+            <p>{this.state.message}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a Document...</p>
+          </div>
+        )}
+      </div>
+    );
   }
 }

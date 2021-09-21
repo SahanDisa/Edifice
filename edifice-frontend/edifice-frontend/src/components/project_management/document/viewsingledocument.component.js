@@ -35,6 +35,7 @@ export default  class SingleDocument extends Component {
         };
       }
       componentDidMount() {
+        window.scrollTo(0, 0);
         this.retrieveDocument(this.props.match.params.id);
         this.getRevisions(this.props.match.params.id);
       }
@@ -116,7 +117,7 @@ export default  class SingleDocument extends Component {
               <h3>View & Manage Document</h3>
               <h6>Manage as single document and add measurements and versioning</h6>
               <div className="row">
-              <div className="col-sm-9">
+              <div className="col-sm-8">
               <embed
                     //src="https://vancouver.ca/files/cov/sample-drawing-package-1and2family.pdf"
                     src={"http://localhost:8080/api/files/"+title+".pdf"}
@@ -174,19 +175,19 @@ export default  class SingleDocument extends Component {
                   </div>
                 </div> */}
                 </div>
-                <div className="col-sm-3">
+                <div className="col-sm-4">
                   <h3>File details</h3>
                   {/* <h6>Document Id : {id}</h6> */}
-                  <h6>Name : {title}</h6>
-                  <h6>Description : {description}</h6>
-                  <h6>Document Type : {category}</h6>
+                  <h6>Name : <b>{title}</b></h6>
+                  <h6>Description : <b>{description}</b></h6>
+                  {/* <h6>Document Type : <b>{category}</b></h6> */}
                   <hr></hr>
                   <h4>Full Screen</h4>
                   <a href={url+title+".pdf"} target="_blank" style={{'text-decoration': 'none'}}>
                   
                   <PdfIcon style={{ fontSize: 100 }} />
                   </a>
-                  <div>
+                  {/* <div>
                       <h4>Measurements</h4>
                       <p>Main measurements : Area, Distance</p>
                       <button className="btn btn-primary">Add</button>
@@ -194,7 +195,7 @@ export default  class SingleDocument extends Component {
                   <div>
                       <h4>Version</h4>
                       <h5>{version}{".0"}</h5>   
-                  </div> 
+                  </div>  */}
                 </div>
               </div>
               </div>
