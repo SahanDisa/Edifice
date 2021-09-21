@@ -146,11 +146,13 @@ class EquipDetails extends Component {
       .then(response => {
         console.log(response.data);
         //this.props.history.push('/equipments');
-        cogoToast.success("Equipment deleted successfully!");
+
       })
       .catch(e => {
         console.log(e);
+
       });
+    cogoToast.success("Equipment deleted successfully!");
   }
 
   render() {

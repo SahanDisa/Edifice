@@ -8,21 +8,22 @@ module.exports = app => {
 
   // Retrieve all equipment categorys
   router.get("/", categorys.findAll);
+
+  // Retrieve all crews for a name
+  router.get("/search", categorys.findAllName);
+
   /*  
-     // Retrieve all published equipments
-     router.get("/published", equipment.findAllPublished);
-   
-     // Retrieve a single equipment with id
-     router.get("/:id", equipment.findOne);
-   
-     // Update a equipment with id
-     router.put("/:id", equipment.update);
-   
-     // Delete a equipment with id
-     router.delete("/:id/", equipment.delete);
-   
-     // Delete all equipments
-     router.delete("/", equipment.deleteAll);
-   */
+    // Retrieve a single equipment with id
+    router.get("/:id", equipment.findOne);
+  
+    // Update a equipment with id
+    router.put("/:id", equipment.update);
+  
+    // Delete a equipment with id
+    router.delete("/:id/", equipment.delete);
+  
+    // Delete all equipments
+    router.delete("/", equipment.deleteAll);
+  */
   app.use('/api/categorys', router);
 };

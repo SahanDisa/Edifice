@@ -32,7 +32,6 @@ class EquipmentDataService {
   getAllEquipmentProjects(id) {
     return http.get(`/equipments/allocated/${id}`);
   }
-
 }
 
 export default new EquipmentDataService();
