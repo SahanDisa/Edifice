@@ -13,7 +13,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 //import LocationOnIcon from '@material-ui/icons/LocationOn';
-import {Assessment,HomeWork,LocationOn,Description,SupervisorAccount,Timeline} from '@material-ui/icons';
+import {Assessment,HomeWork,LocationOn,Description,SupervisorAccount,Timeline,  Build} from '@material-ui/icons';
 
 import UserService from "../services/user.service";
 import EmployeeDataService from "../services/employee.service";
@@ -25,10 +25,11 @@ import ProjectDataService from "../services/project.service";
 const cardStyle = {
   backgroundColor: "#6B7BA4",
   "&:hover": {
-    backgroundColor: "#efefef"}
+    backgroundColor: "#efefef"
+  }
 }
 
-const linkText={
+const linkText = {
   color: "#FFFFFF",
   textDecoration: "none"
 }
@@ -37,19 +38,19 @@ export default class BoardUser extends Component {
   constructor(props) {
     super(props);
 
-    this.getprojectCount=this.getprojectCount.bind(this);
-    this.getVendorCount=this.getVendorCount.bind(this);
-    this.getEmployeeCount=this.getEmployeeCount.bind(this);
-    this.getprojectDetails=this.getprojectCount.bind(this);
+    this.getprojectCount = this.getprojectCount.bind(this);
+    this.getVendorCount = this.getVendorCount.bind(this);
+    this.getEmployeeCount = this.getEmployeeCount.bind(this);
+    this.getprojectDetails = this.getprojectCount.bind(this);
     this.retrieveProjects = this.retrieveProjects.bind(this);
     this.state = {
-      projects:[],
+      projects: [],
       content: "",
       projectCount: 0,
       vendorCount: 0,
       employeeCount: 0,
       currProjectId: 0,
-      costCodes:[],
+      costCodes: [],
       id: "this.props.match.params.id"
     };
 
@@ -66,10 +67,10 @@ export default class BoardUser extends Component {
   }
 
   toggleTheme() {
-      let docu = document.querySelector('html');
+    let docu = document.querySelector('html');
 
-      docu.classList.toggle('light-theme');
-      docu.classList.toggle('dark-theme');
+    docu.classList.toggle('light-theme');
+    docu.classList.toggle('dark-theme');
   }
 
   componentDidMount() {
@@ -97,21 +98,21 @@ export default class BoardUser extends Component {
     this.getEmployeeCount();
   }
 
-  getEmployeeCount(){
+  getEmployeeCount() {
     //get Employee count
     EmployeeDataService.getAll().then(response => {
       this.setState({
         employeeCount: response.data.length,
-        
+ 
       });
       //console.log(this.employeeCount);
     })
-    .catch(e => {
-      console.log(e);
-    });
+      .catch(e => {
+        console.log(e);
+      });
   }
 
-  getprojectCount(){
+  getprojectCount() {
     //get Project count
     ProjectDataService.getAll().then(response => {
       this.setState({
@@ -125,7 +126,7 @@ export default class BoardUser extends Component {
     });
   }
 
-  getVendorCount(){
+  getVendorCount() {
     //get Project count
     VendorDataService.getAll().then(response => {
       this.setState({
@@ -156,7 +157,7 @@ export default class BoardUser extends Component {
     Report.generatePDF(project);
   }
   
-  createUser(userId){
+  createUser(userId) {
     if (typeof userId == 'undefined') {
       window.location="/register"
     }else{
@@ -262,15 +263,14 @@ export default class BoardUser extends Component {
               </div>
             </div>
 
-            <div className="col-lg-3 col-sm-6" id="capitalcard" hidden>
-              <div className="card card-hover shadow-sm" style={cardStyle}>
-              <a className="d-block nav-heading text-center mt-3" style={linkText} href="#">
-
-                <h3 className="nav-heading-title" style={{ fontSize:55 }}>5</h3>
-                <h5> <SupervisorAccount style={{ fontSize:25 }}/>  Pending Tasks</h5>
-              </a>
-              </div>
+            <div className="col-lg-3 col-sm-6" id="equipmentcard">
+            <div className="card card-hover shadow-sm" style={cardStyle}>
+              <a className="d-block nav-heading text-center mt-3" style={linkText}> <Link to="/equipments" style={linkText}>
+                <h1 className="nav-heading-title" style={{ fontSize: 55 }}>{vendorCount}</h1>
+                <h6> <Build style={{ fontSize: 25 }} />  Equipments</h6>
+              </Link></a>
             </div>
+          </div>
 
           <div className="col-8 mb-4 mr-5">
             <a onClick={()=>{this.generatePDF();}} className="btn btn-primary p-2"><Description style={{ fontSize:20 }}/> Generate Report</a>
