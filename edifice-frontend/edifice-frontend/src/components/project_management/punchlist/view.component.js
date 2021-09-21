@@ -15,6 +15,7 @@ class PLIView extends Component {
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeStatus = this.onChangeStatus.bind(this);
         this.retrivePLItemInfo = this.retrivePLItemInfo.bind(this);
+        // this.retriveType = this.retriveType.bind(this);
         this.updatePunchList = this.updatePunchList.bind(this);
         this.deletePunchList = this.deletePunchList.bind(this);
         this.state = {
@@ -27,14 +28,20 @@ class PLIView extends Component {
                 duedate: "",
                 type: "",
                 isDeleted: 0,
-                projectId: ""
-            }
+                projectId: this.props.match.params.id
+            },
+            // pltype: {
+            //     no: "",
+            //     title: "",
+            //     description: "",
+            //     projectId: this.props.match.params.id
+            // }
         };
     }
   
     componentDidMount() {
         this.retrivePLItemInfo(this.props.match.params.pliid);
-        this.retriveType(this.props.match.params.pliid);
+        // this.retriveType(this.props.match.params.pliid, this.props.match.params.id);
     }
 
     retrivePLItemInfo(plid){
@@ -46,15 +53,28 @@ class PLIView extends Component {
         });
     }
 
-    retrivePLItemInfo(plid){
-        punchlisttypesService.getType(plid)
-        .then(response => {
-            this.setState({
-                plItem: response.data
-            });
+    // retriveType(plid, id){
+    //     punchlisttypesService.getType(plid, id)
+    //     .then(response => {
+    //         this.setState({
+    //             pltype: response.data
+    //         });
+    //         console.log(response.data);
+    //     });
+    // }
+
+    onChangeStatus(e) {
+        const status = e.target.value
+        this.setState(function(prevState){
+            return {
+                plItem: {
+                    ...prevState.plItem,
+                    status: status
+                }
+            }
         });
     }
-
+    
     onChangeDuedate(e) {
         const duedate = e.target.value
         this.setState(function(prevState){
@@ -106,6 +126,7 @@ class PLIView extends Component {
     updatePunchList(){
         var data = {
             description: this.state.plItem.description,
+            status: this.state.plItem.status,
             duedate: this.state.plItem.duedate,
             location: this.state.plItem.location,
             projectId: this.state.plItem.projectId
@@ -123,8 +144,8 @@ class PLIView extends Component {
         .catch(e => {
             console.log(e);
         });
-        this.props.history.push("/punchlist/"+ this.props.match.params.id);
-        cogoToast.success("Punch List updated Successfully!", { position: 'top-right', heading: 'success' });
+        this.props.history.push("/view/"+ this.props.match.params.id + "/" + this.props.match.params.pliid);
+        cogoToast.success("Punch List updated Successfully!");
     }
 
     deletePunchList(){
@@ -139,7 +160,7 @@ class PLIView extends Component {
             console.log(e);
         });
         this.props.history.push("/punchlist/"+ this.props.match.params.id);
-        cogoToast.success("Punch List Deleted Successfully!", { position: 'top-right', heading: 'success' });
+        cogoToast.success("Punch List Deleted Successfully!");
     }
     
     render() {
@@ -152,7 +173,7 @@ class PLIView extends Component {
                     <Link color="inherit" to={"/projectmanagementhome/" + plItem.projectId}>App Dashboard</Link>
                     <Link color="inherit" to={"/punchlist/" + plItem.projectId}>Punch List</Link>
                     <Link color="inherit" aria-current="page" className="disabledLink">View Punch List</Link>
-                </Breadcrumbs>
+                </Breadcrumbs><hr />
                 <div className="container">
                     <div className="form-row">
                         <div className="form-group col-md-6">
@@ -161,7 +182,7 @@ class PLIView extends Component {
                                 className="form-control"
                                 name="title"
                                 value={plItem.title}
-                                onChange={this.onChangeTitle}
+                                onChange={this.onChangeStatus}
                                 type="text"
                                 readOnly
                             />
@@ -172,6 +193,7 @@ class PLIView extends Component {
                                 className="form-control"
                                 name="type"
                                 value={plItem.type}
+                                onChange={this.onChangeStatus}
                                 type="text"
                                 readOnly
                             />
@@ -185,6 +207,7 @@ class PLIView extends Component {
                                 className="form-control"
                                 name="status"
                                 type="text"
+                                onChange={this.onChangeStatus}
                                 value={plItem.status}
                                 required>
                                     <option value="Initiated">Initiated</option>
@@ -198,6 +221,7 @@ class PLIView extends Component {
                                 className="form-control"
                                 name="status"
                                 type="text"
+                                onChange={this.onChangeStatus}
                                 value={plItem.status}
                                 required>
                                     <option value="WIP">Work in Progress</option>
@@ -210,6 +234,7 @@ class PLIView extends Component {
                                 className="form-control"
                                 name="status"
                                 type="text"
+                                onChange={this.onChangeStatus}
                                 value={plItem.status}
                                 required>
                                     <option value="RFR">Ready for Review</option>

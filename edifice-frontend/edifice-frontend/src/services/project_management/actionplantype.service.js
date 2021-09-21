@@ -26,7 +26,7 @@ class ActionPlanTypeDataService {
   }
 
   findByTitle(title, id) {
-    return http.get(`/projects/actionplantype/search?title=${title}/${id}`);
+    return http.get(`/projects/actionplantype/search/${id}?title=${title}`);
   }
 }
 

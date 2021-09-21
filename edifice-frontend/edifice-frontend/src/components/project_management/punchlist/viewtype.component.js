@@ -99,7 +99,7 @@ class PLTView extends Component {
                       : "🟢"}
                   </td>
                   <td>
-                    <Link to={"/view/" + pli.no}>
+                    <Link to={"/view/" + projectId + "/" + pli.no}>
                       <button className="btn btn-success mr-2">
                         View
                         <VisibilityIcon />

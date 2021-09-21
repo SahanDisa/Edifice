@@ -21,6 +21,7 @@ class CreatePL extends Component {
         this.onChangeType = this.onChangeType.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
         // this.onChangePunchmanager = this.onChangePunchmanager.bind(this);
+        this.viewPunchList = this.viewPunchList.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeAssignee = this.onChangeAssignee.bind(this);
         this.savePunchListItem = this.savePunchListItem.bind(this);
@@ -143,7 +144,6 @@ class CreatePL extends Component {
                 submitted: true
             });
         });
-        cogoToast.success("Punch List - Basic Details Saved Successfully!", { position: 'top-right', heading: 'success' });
     }
 
     getLastPunchListID(){
@@ -159,10 +159,17 @@ class CreatePL extends Component {
         console.log("Yes, Linking Button is succesful");
     }
 
+    viewPunchList(){
+        cogoToast.success("Punch List - Basic Details Saved Successfully!");
+    }
+
     render() {
-        const {lastpl, pltypes, buttonChanger, projectId, projectmanager, currentUser, users} = this.state;
+        const {lastpl, pltypes, buttonChanger, projectId, projectmanager, currentUser, users, viewPunchList} = this.state;
         return (
         <div className="">
+            {this.state.submitted ? (
+                viewPunchList()
+            ):(
             <div className="">
                 <h2>Add New Punch List Item</h2>
                 <Breadcrumbs aria-label="breadcrumb">
@@ -188,10 +195,10 @@ class CreatePL extends Component {
                                         required
                                     />
                                     <datalist id="suggest">
-                                            <option value="A/C doesn't work">A/C doesn't work</option>
-                                            <option value="Water line blocked">Water line blocked</option>
-                                            <option value="Dim Light">Dim Light</option>
-                                            <option value="Chipped door frame">Chipped door frame</option>
+                                        <option value="A/C doesn't work">A/C doesn't work</option>
+                                        <option value="Water line blocked">Water line blocked</option>
+                                        <option value="Dim Light">Dim Light</option>
+                                        <option value="Chipped door frame">Chipped door frame</option>
                                     </datalist>
                                 </div>
                                 <div className="form-group col-md-6">
@@ -216,6 +223,7 @@ class CreatePL extends Component {
                                         type="text"
                                         required
                                     >
+                                        <option value="">Select a type</option>
                                         {pltypes && pltypes.map((pli, index) => (
                                             <option
                                                 value={pli.id}
@@ -249,7 +257,9 @@ class CreatePL extends Component {
                                         onChange={this.onChangeAssignee}
                                         type="text"
                                         required
-                                    >{users && users.map((u, index) => (
+                                    >
+                                    <option value="">Select an Assignee</option>
+                                    {users && users.map((u, index) => (
                                         <option
                                             value={u.username}
                                             onChange={this.onChangeAssignee}
@@ -322,6 +332,7 @@ class CreatePL extends Component {
                     </div>
                 </div>
             </div>
+            )}
         {/* )} */}
         </div>
         );

@@ -82,50 +82,51 @@ export default class ActionPlanSinglePage extends Component {
                     <div className="col-8">
                         {/* Starts */}
                         <Timeline align="right">
-                                {/* First Item starts */}
-                                {actionplansections && actionplansections.map((actionplansection, index) => (
-                                
-                                <TimelineItem>
-                                <TimelineOppositeContent>
-                                <Paper  elevation={5} className="container">
-                                <Typography color="textSecondary">
-                                    {/* <h4>Action Items #1</h4>
-                                    <h4>Action Items #2</h4> */}
-                                    <Link className="btn btn-success m-2" to={"/viewactionplanitems/"+id+"/"+actionplansection.id}>View Items</Link>
+                            {/* First Item starts */}
+                            {actionplansections && actionplansections.map((actionplansection, index) => (
+                            
+                            <TimelineItem>
+                            {/* <TimelineOppositeContent>
+                            <Paper  elevation={5} className="container">
+                            <Typography color="textSecondary">
+                                <h4>Action Items #1</h4>
+                                <h4>Action Items #2</h4>
+                                <Link className="btn btn-success m-2" to={"/viewactionplanitems/"+id+"/"+actionplansection.id}>View Items</Link>
+                            </Typography>
+                            </Paper>  
+                            </TimelineOppositeContent> */}
+                            <TimelineSeparator>
+                                <TimelineDot />
+                                <TimelineConnector />
+                            </TimelineSeparator>
+                            <TimelineContent>
+                            <Paper elevation={3} className="container">
+                                <Typography variant="h6" component="h1">
+                                    {actionplansection.title}
                                 </Typography>
-                                </Paper>  
-                                </TimelineOppositeContent>
+                                <Typography>
+                                <p>{actionplansection.acceptance}</p>
+                                <p>Due Date is {actionplansection.duedate}</p>
+                                <p>Ref type : {actionplansection.reftype} {actionplansection.refid}</p>
+                                <hr></hr>
+                                <Link className="btn btn-success m-2" to={"/viewactionplanitems/"+id+"/"+actionplansection.id}>View Items</Link>
+                                <Link className="btn btn-primary m-2" to="#">⚙️Manage</Link>
+                                </Typography>
+                            </Paper>
+                            </TimelineContent>
+                            </TimelineItem>
+
+                            ))}
+                            {/* First Item ends */}
+                            <TimelineItem>
                                 <TimelineSeparator>
-                                    <TimelineDot />
-                                    <TimelineConnector />
+                                <TimelineDot variant="outlined" />
                                 </TimelineSeparator>
                                 <TimelineContent>
-                                <Paper elevation={3} className="container">
-                                    <Typography variant="h6" component="h1">
-                                        {actionplansection.title}
-                                    </Typography>
-                                    <Typography>
-                                    <p>{actionplansection.acceptance}</p>
-                                    <p>Due Date is {actionplansection.duedate}</p>
-                                    <p>Ref type : {actionplansection.reftype} {actionplansection.refid}</p>
-                                    <hr></hr>
-                                    <Link className="btn btn-primary m-2" to="#">⚙️Manage</Link>
-                                    </Typography>
-                                </Paper>
+                                    <h5>End</h5>
                                 </TimelineContent>
-                                </TimelineItem>
-
-                                ))}
-                                {/* First Item ends */}
-                                <TimelineItem>
-                                    <TimelineSeparator>
-                                    <TimelineDot variant="outlined" />
-                                    </TimelineSeparator>
-                                    <TimelineContent>
-                                        <h5>End</h5>
-                                    </TimelineContent>
-                                </TimelineItem>
-                            </Timeline>
+                            </TimelineItem>
+                        </Timeline>
                         {/* Ends */}
                     </div>
                     <div className="col-4">

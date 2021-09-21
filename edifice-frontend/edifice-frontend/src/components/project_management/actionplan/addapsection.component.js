@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import ActionPlanSectionDataService from "./../../../services/project_management/actionplansection.service";
 import ActionPlanTypeDataService from "../../../services/project_management/actionplantype.service";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import cogoToast from 'cogo-toast';
 
 export default class AddAPSection extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ export default class AddAPSection extends Component {
         this.onChangeRefid = this.onChangeRefid.bind(this);
         this.onChangeAcceptance = this.onChangeAcceptance.bind(this);
         this.onChangeDuedate = this.onChangeDuedate.bind(this);
+        this.viewAPSection = this.viewAPSection.bind(this);
         this.saveAPsection = this.saveAPsection.bind(this);
 
         this.state = {
@@ -85,10 +87,17 @@ export default class AddAPSection extends Component {
         })
     }
 
+    viewAPSection(){
+        cogoToast.success("Punch List - Basic Details Saved Successfully!");
+    }
+
     render() {
-        const {actionplanId, currentIndex, actionplantypes, projectId} = this.state;
+        const {actionplanId, currentIndex, actionplantypes, projectId, viewAPSection} = this.state;
         return (
             <div className="container">
+                {this.state.submitted ? (
+                    viewAPSection()
+                ):(
                 <div class="container">
                     <h2>Add New Action Plan Section</h2>
                     <Breadcrumbs aria-label="breadcrumb">
@@ -140,8 +149,8 @@ export default class AddAPSection extends Component {
                                 />
                             </div>
                         </div>
-                        <div className="form-row">
-                            <div className="form-group col-md-4">
+                        {/* <div className="form-row">
+                            <div className="form-group col-md-6">
                             <label htmlFor="reftype">Reference type</label>
                             <input
                                 type="text"
@@ -154,8 +163,8 @@ export default class AddAPSection extends Component {
                                 name="reftype"
                             />
                             </div>
-                            <div className="form-group col-md-8">
-                                <label htmlFor="refid">Ref Id</label>
+                            <div className="form-group col-md-6">
+                                <label htmlFor="refid">Reference Id</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -166,11 +175,12 @@ export default class AddAPSection extends Component {
                                     name="refid"
                                 />
                             </div>
-                        </div>
-                    </div>
+                        </div> */}
+                    </div><hr />
                     <button onClick={this.saveActionPlan} className="btn btn-success mr-2">Create Action Plan</button>
                     <a href="/actionplan">Cancel</a>
                 </div>
+                )}
             </div>
         );
     }

@@ -24,21 +24,24 @@ class DailyLogHome extends Component {
         this.retrieveCallLog = this.retrieveCallLog.bind(this);
         this.retrieveWeatherLog = this.retrieveWeatherLog.bind(this);
         this.retrieveGeneralLog = this.retrieveGeneralLog.bind(this);
-        // this.checkedToday = this.checkedToday.bind(this);
+        this.checkedToday = this.checkedToday.bind(this);
+        this.uncheckedToday = this.uncheckedToday.bind(this);
         this.deleteAccidentLog = this.deleteAccidentLog.bind(this);
-        this.deleteWeatherLog = this.deleteWeatherLog.bind(this);
-        this.deleteCallLog = this.deleteCallLog.bind(this);
+        // this.deleteWeatherLog = this.deleteWeatherLog.bind(this);
+        // this.deleteCallLog = this.deleteCallLog.bind(this);
         this.state = {
             dlaccident: [],
             dlweather: [],
             dlcall: [],
             dlgeneral: [],
             isDeleted: 0,
+            isTodaySelected: false,
             projectId: this.props.match.params.id
         };
     }
 
     componentDidMount() {
+        window.scroll(0,0);
         this.retrieveAccidentLog(this.props.match.params.id);
         this.retrieveCallLog(this.props.match.params.id);
         this.retrieveWeatherLog(this.props.match.params.id);
@@ -51,6 +54,7 @@ class DailyLogHome extends Component {
             this.setState({
                 dlaccident: response.data
             });
+            console.log(response.data);
         });
     }
 
@@ -60,6 +64,7 @@ class DailyLogHome extends Component {
             this.setState({
                 dlcall: response.data
             });
+            console.log(response.data);
         });
     }
 
@@ -69,6 +74,7 @@ class DailyLogHome extends Component {
             this.setState({
                 dlweather: response.data
             });
+            console.log(response.data);
         });
     }
 
@@ -78,71 +84,120 @@ class DailyLogHome extends Component {
             this.setState({
                 dlgeneral: response.data
             });
+            console.log(response.data);
         });
     }
 
-    // checkedToday(id){
-    //     DLAccidentService.getToday(id)
-    //     .then(response => {
-    //         this.setState({
-    //             dlaccident: response.data
-    //         });
-    //     });
-    //     DLCallService.getToday(id)
-    //     .then(response => {
-    //         this.setState({
-    //             dlcall: response.data
-    //         });
-    //     });
-    //     DLWeatherService.getToday(id)
-    //     .then(response => {
-    //         this.setState({
-    //             dlweather: response.data
-    //         });
-    //     });
-    //     DLGeneralService.getToday(id)
-    //     .then(response => {
-    //         this.setState({
-    //             dlgeneral: response.data
-    //         });
-    //     });
-    // }
-
-    deleteAccidentLog(accidentid){
-        var data = {
-            isDeleted: 1
-        }
-        DLAccidentService.update(accidentid, data)
-        .then(response => {
-            // window.location.reload();
+    checkedToday(e){
+        console.log("checked...");
+        this.setState({
+            isTodaySelected: true
         })
-        // cogoToast.success("Accident Log Deleted Successfully!", { position: 'top-right', heading: 'success' });
+        DLAccidentService.getToday(e.target.value)
+        .then(response => {
+            this.setState({
+                dlaccident: response.data
+            });
+        });
+        DLCallService.getToday(e.target.value)
+        .then(response => {
+            this.setState({
+                dlcall: response.data
+            });
+        });
+        DLWeatherService.getToday(e.target.value)
+        .then(response => {
+            this.setState({
+                dlweather: response.data
+            });
+        });
+        DLGeneralService.getToday(e.target.value)
+        .then(response => {
+            this.setState({
+                dlgeneral: response.data
+            });
+        });
     }
 
-    deleteCallLog(callid){
-        var data = {
-            isDeleted: 1
-        }
-        DLCallService.update(callid, data)
-        .then(response => {
-            // window.location.reload();
+    uncheckedToday(e){
+        console.log("unchecked...");
+        this.setState({
+            isTodaySelected: false
         })
-        // cogoToast.success("Call Log Deleted Successfully!", { position: 'top-right', heading: 'success' });
+        DLAccidentService.getAllweek(e.target.value)
+        .then(response => {
+            this.setState({
+                dlaccident: response.data
+            });
+            console.log(response.data);
+        });
+
+        DLCallService.getAllweek(e.target.value)
+        .then(response => {
+            this.setState({
+                dlcall: response.data
+            });
+            console.log(response.data);
+        });
+    
+        DLWeatherService.getAllweek(e.target.value)
+        .then(response => {
+            this.setState({
+                dlweather: response.data
+            });
+            console.log(response.data);
+        });
+    
+        DLGeneralService.getAllweek(e.target.value)
+        .then(response => {
+            this.setState({
+                dlgeneral: response.data
+            });
+            console.log(response.data);
+        });
     }
 
-    deleteWeatherLog(weatherid){
+    deleteAccidentLog(e){
+        console.log(e.target.value);
         var data = {
             isDeleted: 1
         }
-        DLWeatherService.update(weatherid, data)
+        DLAccidentService.update(e.target.value, data)
         .then(response => {
-            // window.location.reload();
+            console.log(response.data);
         })
-        // cogoToast.success("Weather Log Deleted Successfully!", { position: 'top-right', heading: 'success' });
+        window.location.reload();
+        cogoToast.success("Accident Log Deleted Successfully!");
+    }
+
+    deleteCallLog(e){
+        console.log(e.target.value);
+        var data = {
+            isDeleted: 1
+        }
+        DLCallService.update(e.target.value, data)
+        .then(response => {
+            console.log(response.data);
+        })
+        window.location.reload();
+        cogoToast.success("Call Log Deleted Successfully!");
+    }
+
+    deleteWeatherLog(e){
+        console.log(e.target.value);
+        var data = {
+            isDeleted: 1
+        }
+        DLWeatherService.update(e.target.value, data)
+        .then(response => {
+            console.log(response.data);
+        })
+        window.location.reload();
+        cogoToast.success("Weather Log Deleted Successfully!");
     }
     
     render() {
-        const { projectId, dlaccident, dlcall, dlgeneral, dlweather} = this.state;
+        const { projectId, dlaccident, dlcall, dlgeneral, dlweather, isTodaySelected} = this.state;
         return (
             <div className="">
                 <h2>DAILY LOG</h2>
@@ -165,16 +220,22 @@ class DailyLogHome extends Component {
                                 <input className="form-control" type="text" />
                             </div>
                             <a href="#" className="btn btn-dark mb-3 mr-3">Search</a>
-                            <div className="form-group col-md-3"></div>
+                            <div className="form-group col-md-5"></div>
                             <div className="form-group col-md-2 form-check">
-                                <input type="checkbox" className="form-check-input mt-3" id="singledayCheck" 
-                                // onchange={this.checkedToday(projectId)}
-                                 required/>
-                                <label htmlFor="singledayCheck" className="form-check-label">View Today</label>
+                                {!isTodaySelected && 
+                                <div>
+                                    <button className="btn btn-success" onClick={this.checkedToday} value={projectId}>View Today</button>
+                                </div>
+                                }
+                                {isTodaySelected &&
+                                <div>
+                                    <button className="btn btn-success" onClick={this.uncheckedToday} value={projectId}>View Past 7 Days</button>
+                                </div>
+                                }
                             </div>
-                            <div className="form-group col-md-2 form-check">
+                            {/* <div className="form-group col-md-2 form-check">
                                 <a className="btn btn-primary" href="">Export PDF</a>
-                            </div>
+                            </div> */}
                         </div>
                     </form>
                     <div class="accordion" id="accordionExample">
@@ -211,7 +272,7 @@ class DailyLogHome extends Component {
                                                         <Link to={"/viewaccidentlog/" + projectId + "/" + dla.id}>
                                                             <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
                                                         </Link>
-                                                        <button className="btn btn-danger mr-2"  id="updateBtn" data-target="#deleteaccidentModal" data-toggle="modal">Delete <DeleteIcon/></button>
+                                                        <button className="btn btn-danger mr-2"  id="updateBtn" value={dla.id} onClick={this.deleteAccidentLog}>Delete <DeleteIcon/></button>
                                                     </td>    
                                                 </tr>
                                             ))}
@@ -253,7 +314,7 @@ class DailyLogHome extends Component {
                                                     <Link to={"/viewweatherlog/" + projectId + "/" + dlw.id}>
                                                         <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
                                                     </Link>
-                                                    <button className="btn btn-danger mr-2"  id="updateBtn" data-target="#deleteweatherModal" data-toggle="modal">Delete <DeleteIcon/></button>
+                                                    <button className="btn btn-danger mr-2"  id="updateBtn" value={dlw.id} onClick={this.deleteWeatherLog}>Delete <DeleteIcon/></button>
                                                 </td>    
                                             </tr>
                                             ))}
@@ -299,7 +360,7 @@ class DailyLogHome extends Component {
                                                     <Link to={"/viewcalllog/" + projectId + "/" + dlc.id}>
                                                         <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
                                                     </Link>
-                                                    <button className="btn btn-danger mr-2"  id="updateBtn" data-target="#deletecallModal" data-toggle="modal">Delete <DeleteIcon/></button>
+                                                    <button className="btn btn-danger mr-2"  id="updateBtn" value={dlc.id} onClick={this.deleteCallLog}>Delete <DeleteIcon/></button>
                                                 </td>    
                                             </tr>
                                             ))}
@@ -345,60 +406,6 @@ class DailyLogHome extends Component {
                         </div> */}
                     </div>        
                 </div>
-                {/* Delete accident modal Starts */}
-                <div className="modal fade" id="deleteaccidentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <p className="modal-title" id="exampleModalCenterTitle">Are you sure you want to delete?</p>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteAccidentLog(dlaccident.id)} data-dismiss="modal"> Yes, Delete</a>
-                                <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {/* Delete accident modal Ends */}
-                {/* Delete weather modal Starts */}
-                <div className="modal fade" id="deleteweatherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <p className="modal-title" id="exampleModalCenterTitle">Are you sure you want to delete?</p>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteWeatherLog(dlweather.id)} data-dismiss="modal"> Yes, Delete</a>
-                                <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {/* Delete weather modal Ends */}
-                {/* Delete call modal Starts */}
-                <div className="modal fade" id="deletecallModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <p className="modal-title" id="exampleModalCenterTitle">Are you sure you want to delete?</p>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteCallLog(dlcall.id)} data-dismiss="modal"> Yes, Delete</a>
-                                <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {/* Delete call modal Ends */}
             </div>
         );
     }

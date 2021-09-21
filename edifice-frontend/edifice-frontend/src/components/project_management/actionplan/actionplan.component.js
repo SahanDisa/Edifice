@@ -5,12 +5,14 @@ import ActionPlanService from "../../../services/project_management/actionplan.s
 import Card from "react-bootstrap/Card";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Alert from "react-bootstrap/Alert";
+import cogoToast from 'cogo-toast';
 
 export default class ActionPlan extends Component {
   constructor(props) {
     super(props);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.viewActionPlan = this.viewActionPlan.bind(this);
     this.saveActionPlanCategory = this.saveActionPlanCategory.bind(this);
     this.state = {
       id: null,
@@ -25,6 +27,7 @@ export default class ActionPlan extends Component {
     };
   }
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.retriveActionPlanTypes(this.props.match.params.id);
   }
 
@@ -63,7 +66,6 @@ export default class ActionPlan extends Component {
   }
 
   saveActionPlanCategory() {
-    console.log("click kala");
     var data = {
       title: this.state.title,
       description: this.state.description,
@@ -86,10 +88,19 @@ export default class ActionPlan extends Component {
       });
   }
 
+  viewActionPlan(id){
+    this.props.history.push("/actionplan/"+ id);
+    cogoToast.success("Action Plan Type Saved Successfully!");
+  }
+
   render() {
-    const { actionplans, aptypes, currentIndex, projectId, isTitleValid } =
+    const { actionplans, currentIndex, projectId, isTitleValid, submitted, viewActionPlan } =
       this.state;
     return (
+      <div>
+      {this.state.submitted ? (
+        viewActionPlan(projectId)
+      ) : (
       <div>
         <h2>ACTION PLAN HOME</h2>
         <Breadcrumbs aria-label="breadcrumb">
@@ -212,6 +223,8 @@ export default class ActionPlan extends Component {
               ))}
           </div>
         </div>
+      </div>
+      )}
       </div>
     );
   }

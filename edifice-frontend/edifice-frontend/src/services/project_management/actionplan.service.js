@@ -30,7 +30,7 @@ class ActionPlanDataService {
   }
 
   findByTitle(name, id) {
-    return http.get(`/projects/actionplan/search?name=${name}/${id}`);
+    return http.get(`/projects/actionplan/search/${id}?name=${name}`);
   }
 }
 
