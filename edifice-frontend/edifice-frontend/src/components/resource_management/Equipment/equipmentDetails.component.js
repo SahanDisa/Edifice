@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Card from 'react-bootstrap/Card';
 import { Link } from "react-router-dom";
+import cogoToast from "cogo-toast";
 
 import AllocateEquip from './allocateEquipment.component';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
@@ -12,6 +12,7 @@ class EquipDetails extends Component {
     super(props);
     this.retrieveEquipment = this.retrieveEquipment.bind(this);
     this.retrieveEquipmentCategory = this.retrieveEquipmentCategory.bind(this);
+
 
     this.onChangeCategory = this.onChangeCategory.bind(this);
     this.onChangeProjectId = this.onChangeProjectId.bind(this);
@@ -28,7 +29,7 @@ class EquipDetails extends Component {
       // content: "",
       currentEquipment: {
         equipCode: this.props.match.params.code,
-        category: "",
+        categoryId: "",
         projectId: "",
         condition: "",
         description: ""
@@ -76,7 +77,7 @@ class EquipDetails extends Component {
       return {
         currentEquipment: {
           ...prevState.currentEquipment,
-          category: category
+          categoryId: category
         }
       };
     });
@@ -119,20 +120,22 @@ class EquipDetails extends Component {
 
   updateEquipment() {
     var data = {
-      category: this.state.currentEquipment.category,
-      projectId: this.state.currentEquipment.projectId,
+      equipmentCategoryId: this.state.currentEquipment.categoryId,
       condition: this.state.currentEquipment.condition,
       description: this.state.currentEquipment.description,
     };
 
     EquipmentDataService.update(this.props.match.params.code, data)
       .then(response => {
+        cogoToast.success("Equipment updated successfully!");
         this.setState(prevState => ({
           currentEquipment: {
             ...prevState.currentEquipment,
           }
         }));
+
         console.log(response.data);
+
       })
       .catch(e => {
         console.log(e);
@@ -142,7 +145,8 @@ class EquipDetails extends Component {
     EquipmentDataService.delete(this.props.match.params.code)
       .then(response => {
         console.log(response.data);
-        //this.props.history.push('/equipments/1');
+        //this.props.history.push('/equipments');
+        cogoToast.success("Equipment deleted successfully!");
       })
       .catch(e => {
         console.log(e);
@@ -196,18 +200,24 @@ class EquipDetails extends Component {
             <div class="row">
               <div class="col-6">
                 <label htmlFor="">Category</label>
+
                 {categorys && categorys.map((category) => (
                   category.id === currentEquipment.equipmentCategoryId ?
-                    <input
+
+                    <select
                       className="form-control"
-                      type="text"
-                      required
-                      id="category"
                       name="category"
-                      value={category.name}
-                      onChange={this.onChangeCategory}
-                    /> : ""
+                      id="category"
+                      onChange={this.onChangeCategory}>
+                      <option value={currentEquipment.equipmentCategoryId} selected="selected" hidden="hidden">{category.name} </option>
+
+                      {categorys && categorys.map((category) => (
+                        <option value={category.id}>{category.name}</option>
+                      ))}
+                    </select> : ""
                 ))}
+
+
               </div>
 
               <div class="col-6">
@@ -216,6 +226,7 @@ class EquipDetails extends Component {
                   className="form-control"
                   type="text"
                   required
+                  disabled
                   id="projectId"
                   name="projectId"
                   value={currentEquipment.projectId}
@@ -243,7 +254,8 @@ class EquipDetails extends Component {
                 <select
                   className="form-control"
                   name="condition"
-                  id="condition">
+                  id="condition"
+                  onChange={this.onChangeCondition}>
                   <option value={currentEquipment.condition} selected="selected" hidden="hidden">{currentEquipment.condition}</option>
                   <option value="Good">Good(New)</option>
                   <option value="Fair">Fair</option>

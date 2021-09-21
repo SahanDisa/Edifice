@@ -38,6 +38,7 @@ exports.create = (req, res) => {
 // Retrieve all equipments
 exports.findAll = (req, res) => {
 
+
   Equipment.findAll({
     where: {
       isDeleted: 0
@@ -57,6 +58,11 @@ exports.findAll = (req, res) => {
 // Find a single equipment with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
+
+
+  // db.sequelize.query(
+  //   'SELECT equipments.code,equipments.date,equipments.condition,equipments.description,equipments.equipmentCategoryId,equipments.projectId,projects.id FROM equipments LEFT JOIN projects WHERE equipments.code=:id',
+  //   { replacements: { id: req.params.id }, type: db.sequelize.QueryTypes.SELECT })
 
   Equipment.findByPk(id)
     .then(data => {

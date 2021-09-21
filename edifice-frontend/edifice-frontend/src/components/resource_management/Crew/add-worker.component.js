@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import cogoToast from "cogo-toast";
 
 import WorkerDataService from "./../../../services/worker.service";
 import CrewDataService from "./../../../services/crew.service";
@@ -103,6 +104,7 @@ class AddWorker extends Component {
         });
         console.log(response.data);
         this.props.history.push('/crew/1');
+        cogoToast.success("Worker added successfully!");
       })
       .catch(e => {
         console.log(e);
