@@ -79,9 +79,10 @@ const DirectCostList = (props) => {
 
   const openDirectCost = (rowIndex) => {
     const id = directcostsRef.current[rowIndex].id;
+    const pid = directcostsRef.current[rowIndex].projectId;
     //const projectId = directcostsRef.current[rowIndex].projectId;
 
-    props.history.push("/viewdirectcost/"+ id);//here id is direct cost id
+    props.history.push("/viewdirectcost/"+pid+"/"+id);//here id is direct cost id
   };
 
 //remove item from table

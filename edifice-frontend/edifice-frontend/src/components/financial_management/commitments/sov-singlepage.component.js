@@ -92,7 +92,7 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
 
   const retrieveBudgets = () => {
     
-    BudgetDataService.getAll(currentSov.projectId)//passing project id as id
+    BudgetDataService.getAll(pid)//passing project id as id
       .then((response) => {
         setBudgets(response.data);
       })

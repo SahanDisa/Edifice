@@ -73,6 +73,7 @@ const DirectCost = props => {
   };
 
   const {id}= useParams();
+  const {pid}= useParams();
   const [budgets, setBudgets] = useState([]);
   const [vendors, setVendors] = useState([]);
   const [employees, setEmployees] = useState([]);
@@ -94,7 +95,7 @@ const [message, setMessage] = useState("");
 
   const retrieveBudgets = () => {
     
-    BudgetDataService.getAll(currentDirectCost.projectId)//passing project id as id
+    BudgetDataService.getAll(pid)//passing project id as id
       .then((response) => {
         setBudgets(response.data);
       })
@@ -127,10 +128,10 @@ const [message, setMessage] = useState("");
   };
 
   useEffect(() => {
-    getDirectCost(props.match.params.id);
-    retrieveBudgets();  
+    getDirectCost(props.match.params.id); 
     retrieveVendors();
-    retrieveEmployees();  
+    retrieveEmployees();
+    retrieveBudgets();   
   },[props.match.params.id]);
 
   const handleInputChange = event => {
@@ -216,7 +217,7 @@ const [message, setMessage] = useState("");
               <Link color="textPrimary" to={"/directcost/"+currentDirectCost.projectId} aria-current="page">
               Direct Costs
               </Link>
-              <Link color="textPrimary" to={"/viewdirectcost/"+currentDirectCost.id} aria-current="page">
+              <Link color="textPrimary" to={"/viewdirectcost/"+currentDirectCost.projectId + "/"+currentDirectCost.id} aria-current="page">
                Edit Direct Cost
               </Link>
             </Breadcrumbs>
