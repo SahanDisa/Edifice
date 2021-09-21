@@ -305,19 +305,34 @@ exclusions:"",
               </Link>
             </Breadcrumbs>
 <hr />
-<ul class="nav nav-tabs">      
-                    <div className="col-md-12 text-right">
+
 {/* 
                     <div class="col-6 text-right">    */}
                     {/* <div className="row">   */}
-                    {/* <div className="col-lg-6 col-sm-6 mb-grid-gutter pb-2" >
+                    {/* <div className="col-md-4  mb-grid-gutter pb-2 text-right" > */}
+                    {/* <div className="row">
+                    <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2" >
 <div className="card card-hover shadow-sm" style={{alignItems: "center"}} ><br />
   <h3 className="h6 nav-heading-title mb-0"> {progressInDays(currentCommitment.startDate,currentCommitment.estimatedCompletionDate)}&nbsp;Days Remaining.</h3>
 <br />
-</div>
-</div> */}
+</div></div>
+<div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2" >
+<div className="card card-hover shadow-sm" style={{alignItems: "center"}} ><br />
+  <h3 className="h6 nav-heading-title mb-0"> {progressInDays(currentCommitment.startDate,currentCommitment.estimatedCompletionDate)}&nbsp;Days Remaining.</h3>
+<br />
+</div></div>
+<div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2" >
+<div className="card card-hover shadow-sm" style={{alignItems: "center"}} ><br />
+  <h3 className="h6 nav-heading-title mb-0"> {progressInDays(currentCommitment.startDate,currentCommitment.estimatedCompletionDate)}&nbsp;Days Remaining.</h3>
+<br />
+</div></div></div> */}
+
+{/* </div> */}
 {/* </div>
 <div className="col-md-12 text-right"> */}
+ <ul class="nav nav-tabs">   
+{/* <div className="row"> */}
+                    <div className="col-md-12 text-right">
             {currentCommitment.status == "Ongoing 🔴" ? (
                 <button
                 className="btn btn-complete m-2"
@@ -338,7 +353,7 @@ exclusions:"",
               {/* </div> */}
               </div>
               {/* </div> */}
-             
+                 
             <li class="nav-item">
                        <Link class="nav-link active" aria-current="page"to={"#"}>Sub Contract Details</Link>
             </li>
@@ -524,13 +539,13 @@ exclusions:"",
           >
             Update <UpdateIcon/>
           </button>
-          <button
+          {/* <button
             type="button"
             onClick={() => reset()}
             className="btn btn-warning float-right"
           >
             Reset
-          </button>
+          </button> */}
 
             </div>
 </form>

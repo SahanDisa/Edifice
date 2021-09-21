@@ -47,7 +47,8 @@ exports.findAll = (req, res) => {
   const id = req.params.id;
 
   Commitment.findAll({ where: {
-    projectId: id
+    projectId: id,
+    published:true
   }})
     .then(data => {
       res.send(data);
@@ -160,7 +161,8 @@ exports.findByTitle= (req, res) => {
   Commitment.findAll({ where: {
     projectId: id,
     //condition:condition
-   title : title
+   title : title,
+   published:true
   }})
     .then(data => {
       res.send(data);
@@ -178,7 +180,8 @@ exports.findByStatusOngoing= (req, res) => {
 
   Commitment.findAll({ where: {
     projectId: id,
-    status : status
+    status : status,
+    published:true
   }})
     .then(data => {
       res.send(data);
@@ -196,7 +199,8 @@ exports.findByStatusCompleted = (req, res) => {
 
   Commitment.findAll({ where: {
     projectId: id,
-    status : status
+    status : status,
+    published:true
   }})
     .then(data => {
       res.send(data);
@@ -214,6 +218,7 @@ exports.findLastOne = (req,res) =>{
   Commitment.findAll({
     where: {
       projectId: pid,
+      published:true
     },
     limit: 1,
     order: [['id', 'DESC']]

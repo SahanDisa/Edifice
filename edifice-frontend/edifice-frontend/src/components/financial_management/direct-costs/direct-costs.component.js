@@ -177,7 +177,7 @@ const updatePublished = (rowIndex) => {
         accessor: "vendor",
       },
       {
-        Header: "Employee",
+        Header: "Reporting Employee",
         accessor: "employee",
       },
 
@@ -256,9 +256,9 @@ updatePublished(rowIdx)
                 </Link>
                 
               
-                <Link className="btn btn-import mr-2" to={"/excelupload/"+id}>
+                {/* <Link className="btn btn-import mr-2" to={"/excelupload/"+id}>
                 <PublishIcon/>&nbsp;Import
-                </Link>
+                </Link> */}
                {/* <a href="#" className="btn btn-primary"  data-toggle="modal" data-target="#newCrew">+ Import</a>&nbsp;&nbsp;
          
             <div className="modal fade" id="newCrew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

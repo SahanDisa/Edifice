@@ -433,13 +433,14 @@ className={`form-control`}
               Save
             </button>
             &nbsp;&nbsp;
-            <button
+            {/* <button
             type="button"
             onClick={() => reset()}
             className="btn btn-warning float-right"
           >
             Reset
-          </button>&nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
+          </button>  */}
+          &nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
             {/* <Link to={"/commitment/" + commitment.projectId}>
             <button className="btn btn-success">
             Cancel

@@ -17,6 +17,7 @@ import TimelineDot from '@material-ui/lab/TimelineDot';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import CommitmentDataService from "./../../../services/commitment.service";
 import cogoToast from 'cogo-toast';
+import BudgetDataService from "./../../../services/budget.service";
 
 const Sov = props => {
 
@@ -56,6 +57,7 @@ const Sov = props => {
   };
   const [currentSov, setCurrentSov] = useState(initialSovState);
   const [message, setMessage] = useState("");
+  const [budgets, setBudgets] = useState([]);
 
   const {id}= useParams();
 const {pid}= useParams();
@@ -88,9 +90,22 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
       });
   };
 
+  const retrieveBudgets = () => {
+    
+    BudgetDataService.getAll(currentSov.projectId)//passing project id as id
+      .then((response) => {
+        setBudgets(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+
   useEffect(() => {
     getSov(props.match.params.id);
     getCommitment(id);
+    retrieveBudgets();
   },[props.match.params.id]);
 
   const getCommitment = id => {
@@ -164,7 +179,7 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
     <div className="container">
       {currentSov ? (
         <div class="container">
-          <h4>SoVs</h4>
+          <h4>#{currentSov.id}&nbsp;Schedule of Value</h4>
           <Breadcrumbs aria-label="breadcrumb">
               <Link color="inherit" to="/home">
                 Home
@@ -175,10 +190,10 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
               <Link color="textPrimary" to={"/commitment/"+currentSov.projectId} aria-current="page">
                Commitments
               </Link>
-              <Link color="textPrimary" to={"/editcommitment/"+currentSov.id} aria-current="page">
+              <Link color="textPrimary" to={"/editcommitment/"+currentSov.commitmentId} aria-current="page">
               #{id} - {currentCommitment.title}
               </Link>
-              <Link color="textPrimary" to={"/viewsov/"+currentSov.projectId+"/"+currentSov.id} aria-current="page">
+              <Link color="textPrimary" to={"/viewsov/"+currentSov.projectId+"/"+currentSov.commitmentId} aria-current="page">
                Schedule of Values
               </Link>
               <Link color="textPrimary" to={"/viewsinglesov/"+currentSov.id} aria-current="page">
@@ -190,7 +205,7 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
-              <label htmlFor="costCode">Cost Code</label>
+              <label htmlFor="costCode">Cost Code :</label>
              {/* <input
                 type="text"
                 className="form-control"
@@ -203,22 +218,30 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
                 <select 
                
                 id="costCode"
+                name="costCode"
                 {...register('costCode')}
                 value={currentSov.costCode}
                 onChange={handleInputChange}
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
-                name="costCode"
+                
               >
-                <option>010-Maintenance Equipment</option>
-                <option>924-Sodding</option>
-                <option>100-Visual Display Boards</option>
-                <option>230-Site Clearing</option>
-                <option>240-Dewatering</option>
+                 <option value="" disabled selected>Select a Cost Code</option>
+                {budgets &&
+                budgets.map((budget, index) => (
+                <option
+                    value={budget.costCode}
+                    onChange={handleInputChange}
+                    key={index}
+                >
+                {/* unit data */}
+                {budget.costCode}
+                </option>
+                ))}
               </select>
               <div className="invalid-feedback">{errors.costCode?.message}</div>
             </div>
             <div className="form-group">
-              <label htmlFor="title">Description</label>
+              <label htmlFor="title">Description :</label>
               <input
                 type="text"
                 
@@ -233,7 +256,7 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
             </div>
     
             <div className="form-group">
-              <label htmlFor="description">Date</label>
+              <label htmlFor="description">Date :</label>
               <input
                 type="date"
                
@@ -247,7 +270,7 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
               <div className="invalid-feedback">{errors.date?.message}</div>
             </div>
             <div className="form-group">
-              <label htmlFor="description">Amount</label>
+              <label htmlFor="description">Amount :</label>
               <input
                 type="text"
                
@@ -277,13 +300,13 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
             <button className="btn btn-success">
             Cancel
             </button></Link> */}
-          <button
+          {/* <button
             type="button"
             onClick={() => reset()}
             className="btn btn-warning float-right"
           >
             Reset
-          </button>
+          </button> */}
 
             </div>
 </form>

@@ -94,7 +94,7 @@ const [message, setMessage] = useState("");
 
   const retrieveBudgets = () => {
     
-    BudgetDataService.getAll(id)//passing project id as id
+    BudgetDataService.getAll(currentDirectCost.projectId)//passing project id as id
       .then((response) => {
         setBudgets(response.data);
       })
@@ -128,7 +128,7 @@ const [message, setMessage] = useState("");
 
   useEffect(() => {
     getDirectCost(props.match.params.id);
-    retrieveBudgets(props.match.params.id);  
+    retrieveBudgets();  
     retrieveVendors();
     retrieveEmployees();  
   },[props.match.params.id]);
@@ -244,12 +244,12 @@ const [message, setMessage] = useState("");
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
               
               >
-       <option value={currentDirectCost.costCode} selected>{currentDirectCost.costCode}</option>
+       <option value="" disabled selected>Select a Cost Code</option>
        {budgets &&
                 budgets.map((budget, index) => (
                 <option
-                    //value={budget.costCode}
-                    //onChange={onChangeSearchCostCode}
+                    value={budget.costCode}
+                    onChange={handleInputChange}
                     key={index}
                 >
                 {/* unit data */}
@@ -300,7 +300,7 @@ const [message, setMessage] = useState("");
               <div className="invalid-feedback">{errors.vendor?.message}</div>
             </div>
             <div className="form-group">
-              <label htmlFor="title">Employee :</label>
+              <label htmlFor="title">Reporting Employee :</label>
               <select
                 id="employee"
                 name="employee"
@@ -383,13 +383,13 @@ const [message, setMessage] = useState("");
             <button className="btn btn-success">
             Cancel
                 </button></Link> */}
-          <button
+          {/* <button
             type="button"
             onClick={() => reset()}
             className="btn btn-warning float-right"
           >
             Reset
-          </button>
+          </button> */}
 
             </div>
 </form>
