@@ -19,20 +19,27 @@ class Report extends Component {
             type:"",
             currentDate: date,
             currentTime: today.toLocaleTimeString(),
-            isPDF:false,
-            costCodes:[]
+            isPDF: false,
+            costCodes: [],
+            sad: ""
         }
 
 
     }
+
+    componentDidMount() {
+        this.getProjectCostCodes(2)
+    }
+
 
     getProjectCostCodes(id){
 
         CostCodeDataService.getAll(id)
             .then(response => {
             this.setState({
-                costCodes: response.data
-            })
+                costCodes: response.data,
+                sad: "Ppppp"
+            });
             console.log(response.data);
             console.log(this.state);
             })
