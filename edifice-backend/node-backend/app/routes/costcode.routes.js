@@ -12,11 +12,8 @@ module.exports = app => {
     // Retrieve a single direct cost with id
     router.get("/:id", costcode.findOne);
 
-        // Update a direct cost with id
-  router.put("/:id", costcode.update);
-
- 
-
+    // Update a direct cost with id
+    router.put("/:id", costcode.update);
 
     app.use('/api/projects/costcode', router);
   };

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { jsPDF } from "jspdf";
+import CostCodeDataService from "./../../services/costcode.service";
 //import mainIcon from "./././../assets/logoedifice.png";
 
-
-const doc = new jsPDF();
 
 // Default export is a4 paper, portrait, using millimeters for units
 
@@ -20,13 +19,40 @@ class Report extends Component {
             type:"",
             currentDate: date,
             currentTime: today.toLocaleTimeString(),
-            isPDF:false
+            isPDF:false,
+            costCodes:[]
         }
 
 
     }
 
+    getProjectCostCodes(id){
+
+        CostCodeDataService.getAll(id)
+            .then(response => {
+            this.setState({
+                costCodes: response.data
+            });
+            console.log(response.data);
+            console.log(this.state);
+            })
+            .catch(e => {
+            console.log(e);
+        });
+        console.log(this.state)
+        let temp=[];
+
+        this.state.costCodes.forEach((item, index)=>{
+            console.log(item.costCode)
+            temp.push(item.costCode)
+        })
+
+        return temp;
+    }
+
     generatePDF(project){
+
+        const doc = new jsPDF();
 
         doc.setFont("times");
         doc.setFontSize(12);
@@ -63,34 +89,57 @@ class Report extends Component {
         doc.setFont("times", "bold");
         doc.text(project.location,35, 72, null, null, "left");
 
+        //Start Date
+        doc.setFontSize(12);
+        doc.setFont("times","normal");
+        doc.text("Start Date   :",10, 81, null, null, "left");
+
+        doc.setFont("times", "bold");
+        doc.text(project.startdate,35, 81, null, null, "left");
+
+        //End Date
+        doc.setFontSize(12);
+        doc.setFont("times","normal");
+        doc.text("End Date   :",95, 81, null, null, "left");
+
+        doc.setFont("times", "bold");
+        doc.text(project.startdate,120, 81, null, null, "left");
+
         //COST CODES
         doc.setFontSize(12);
         doc.setFont("times","normal");
-        doc.text("Cost Codes   :",10, 79, null, null, "left");
+        doc.text("Cost Codes   :",10, 88, null, null, "left");
 
         doc.setFont("times", "bold");
-        doc.text("<CODE1 >",35, 79, null, null, "left");
-        doc.text("<CODE2 >",59, 79, null, null, "left");
-        doc.text("<CODE3 >",83, 79, null, null, "left");
+        var x1=35
+        const temp=this.getProjectCostCodes(project.id)
+        temp.forEach((item, index)=>{
+            doc.text(item,x1, 88, null, null, "left");
+            x1+=5;
+        })
+
+        // doc.text("<CODE1 >",35, 88, null, null, "left");
+        // doc.text("<CODE2 >",59, 88, null, null, "left");
+        // doc.text("<CODE3 >",83, 88, null, null, "left");
 
 
         //other details-
         //DESCRIPTION
         doc.setFontSize(12);
         doc.setFont("times","normal");
-        doc.text("Description :",10, 85, null, null, "left");
+        doc.text("Description :",10, 95, null, null, "left");
 
         doc.setFont("times", "normal");
-        doc.text(project.description,10, 91, null, null, "left");
+        doc.text(project.description,10, 101, null, null, "left");
 
         //WORKING EMPLOYEES
         //LOCATION
         doc.setFontSize(16);
         doc.setFont("times","normal");
-        doc.text(" No. of Employees  :",10, 104, null, null, "left");
+        doc.text(" No. of Employees  :",10, 114, null, null, "left");
 
         doc.setFont("times", "bold");
-        doc.text("<NO >",59, 104, null, null, "left");
+        doc.text("<NO >",59, 114, null, null, "left");
 
         //final save
         //TABLE OF WORKING EMPLOYEES
@@ -113,7 +162,7 @@ class Report extends Component {
 
         const headers=["empID","name","role","enrollDate","mobileNo"];
 
-        doc.table(12, 107, tempdata, headers,{ fontSize: 10 },{ autoSize: true });
+        doc.table(12, 117, tempdata, headers,{ fontSize: 10 },{ autoSize: true });
 
         doc.save("ProjectReport.pdf");
     }
