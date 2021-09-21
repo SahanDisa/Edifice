@@ -8,6 +8,7 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
+import cogoToast from "cogo-toast";
 
 export default class AddDirectory extends Component {
   constructor(props) {
@@ -39,13 +40,13 @@ export default class AddDirectory extends Component {
   }
 
   saveDirectory() {
-    console.log("click kala");  
+    if(this.state.title.length >= 6){ 
     var data = {
       title : this.state.title,
       description: this.state.description,
       projectId: this.state.projectId
     };
-
+      cogoToast.success("Directory created successfully");
     DirectoryService.create(data)
       .then(response => {
         this.setState({
@@ -61,6 +62,9 @@ export default class AddDirectory extends Component {
       .catch(e => {
         console.log(e);
       });
+    }else{
+      cogoToast.error("Add a proper Title with at least 6 ");
+    }
   }
 
   newDirectory() {

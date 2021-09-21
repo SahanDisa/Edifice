@@ -11,6 +11,8 @@ import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
 import { Card } from "@material-ui/core";
+import Alert from "react-bootstrap/Alert";
+import cogoToast from "cogo-toast";
 
 export default class AddDepartment extends Component {
   constructor(props) {
@@ -29,7 +31,7 @@ export default class AddDepartment extends Component {
       description: "",
       purpose: "", 
       currentIndex: -1,
-      projectId: "",
+      projectId: this.props.match.params.id,
 
       departments: [],
 
@@ -37,7 +39,7 @@ export default class AddDepartment extends Component {
     };
   }
   componentDidMount() {
-    this.getLastProjectID();
+    //this.getLastProjectID();
     this.retrieveDepartments(this.props.match.params.id);
   }
   onChangeTitle(e) {
@@ -88,6 +90,7 @@ export default class AddDepartment extends Component {
       purpose: this.state.purpose,
       projectId: this.state.projectId
     };
+    cogoToast.success("Department "+this.state.title+" created successfully!");
     DepartmentDataService.create(data)
       .then(response => {
         this.setState({
@@ -115,6 +118,7 @@ export default class AddDepartment extends Component {
 
       submitted: false
     });
+    this.retrieveDepartments(this.state.projectId);
   }
 
   render() {
@@ -123,14 +127,20 @@ export default class AddDepartment extends Component {
       <div className="container">
         {this.state.submitted ? (
           <div>
-            <h4>You add a Department successfully</h4>
+          <center>
+            <h4 className="alert alert-success">You add a department successfully</h4>
            
-            <button className="btn btn-success" onClick={this.newDepartment}  style={{ 'text-decoration': 'none' }}>
+            <button className="btn btn-success m-2" onClick={this.newDepartment}  style={{ 'text-decoration': 'none' }}>
               Add Another Department
             </button>
-            <Link to={"/addmilestone/"+projectId} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
+            <Link className="btn btn-primary m-2" to={"/projects"}>Back Home</Link>
+            <div>
+            <h5>Proceed to Step 03 : Define Milestones</h5>
+            <Link to={"/addmilestone/"+projectId} className="btn btn-warning m-2"  style={{ 'text-decoration': 'none' }}>
                        Add Milestone
-                </Link>
+            </Link>
+            </div>
+          </center>
           </div>
         ) : (
           <div class="container">
@@ -193,11 +203,12 @@ export default class AddDepartment extends Component {
             <button onClick={this.saveDepartment} className="btn btn-success">
               Create Department
             </button>
+            <hr></hr>
             {/* Show Current Departments */}
             <div>
-            <div className="col-md-8">
+            <div className="col-md-12">
               <div className="list-group">
-              <h5 className="mt-2">Current Departments</h5>
+              <h4 className="mt-2">Current Departments</h4>
               {departments &&
                 departments.map((department, index) => (
                   <Card style={{ width: '40rem'}} className="m-2 shadow-md">

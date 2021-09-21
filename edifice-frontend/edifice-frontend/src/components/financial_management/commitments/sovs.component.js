@@ -102,8 +102,9 @@ exclusions:"",
 
   const openSov = (rowIndex) => {
     const id = sovsRef.current[rowIndex].id;
+    const pid = sovsRef.current[rowIndex].projectId;
 
-    props.history.push("/viewsinglesov/" + id);
+    props.history.push("/viewsinglesov/" + pid +"/"+id);
   };
 
   //remove item from table

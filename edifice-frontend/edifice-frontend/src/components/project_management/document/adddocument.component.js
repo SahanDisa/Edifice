@@ -11,6 +11,7 @@ import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
 import Alert from "react-bootstrap/Alert";
+import cogoToast from "cogo-toast";
 
 export default class AddDocument extends Component {
   constructor(props) {
@@ -90,6 +91,7 @@ export default class AddDocument extends Component {
       });
   }
   saveDocument() {  
+    if(this.state.title.length >= 5 && this.state.category != "" ){
     var data = {
       title: this.state.title,
       description: this.state.description,
@@ -97,7 +99,7 @@ export default class AddDocument extends Component {
       status: this.state.status,
       projectId: this.state.projectId
     };
-
+    cogoToast.success("Document created successfully!");
     DocumentDataService.create(data)
       .then(response => {
         this.setState({
@@ -115,6 +117,10 @@ export default class AddDocument extends Component {
       .catch(e => {
         console.log(e);
       });
+    }else{
+      cogoToast.error("Document cannot created without Directory");
+      cogoToast.error("Title,Directory fields cannot be empty");
+    }
   }
 
   newDocument() {

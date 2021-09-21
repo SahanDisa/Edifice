@@ -8,9 +8,8 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
+import cogoToast from "cogo-toast";
 
-//JSX(Javascript XML)
-//https://addrwaing/projectId?=1
 export default class AddDrawingCategory extends Component {
   constructor(props) {
     super(props);
@@ -41,13 +40,13 @@ export default class AddDrawingCategory extends Component {
   }
 
   saveDrawingCategory() {
-    console.log("click kala");  
+    if(this.state.title.length > 5){ 
     var data = {
       title : this.state.title,
       description: this.state.description,
       projectId: this.state.projectId
     };
-
+    cogoToast.success("Drawing category created successfully!");
     DrawingCategoryDataService.create(data)
       .then(response => {
         this.setState({
@@ -63,6 +62,9 @@ export default class AddDrawingCategory extends Component {
       .catch(e => {
         console.log(e);
       });
+    }else{
+      cogoToast.error("Add a proper category Title");
+    }
   }
 
   newDrawingCategory() {
@@ -84,7 +86,7 @@ export default class AddDrawingCategory extends Component {
          <center> 
           <div>
             <h4>Category details successfully submitted!</h4>
-            <button className="btn btn-success m-2" onClick={this.newDrawing}>
+            <button className="btn btn-success m-2" onClick={this.newDrawingCategory}>
             Add Another Drawing Category
             </button>
             <Link className="btn btn-primary m-2" to={"/drawing/"+projectId }>

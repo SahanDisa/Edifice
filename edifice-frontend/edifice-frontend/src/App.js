@@ -138,7 +138,6 @@ import EquipDetails from "./components/resource_management/Equipment/equipmentDe
 import ViewTimesheet from "./components/resource_management/Timesheet/view-timesheet.component";
 import AddWorkers from "./components/resource_management/Timesheet/add-workers.component";
 import AddWorker from "./components/resource_management/Crew/add-worker.component";
-import EquipView from "./components/resource_management/Equipment/equipmentView.component";
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
@@ -179,6 +178,7 @@ class App extends Component {
       projectname: "",
       projectId: 1,
       uprojects: [],
+      projectLength: 0,
       id: "",
     };
   }
@@ -194,35 +194,36 @@ class App extends Component {
       });
       this.retriveUserProjects(user.id);
     }
-
+    
   }
-  retriveUserProjects(id) {
+  retriveUserProjects(id){
     ProjectUserService.getProjectUserProjectDetails(id)
-      .then(response => {
-        this.setState({
-          uprojects: response.data
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
+    .then(response => {
+      this.setState({
+        uprojects: response.data,
+        projectLength: response.data.length,
       });
+      console.log(response.data);
+    })
+    .catch(e => {
+      console.log(e);
+    });
   }
-  shiftProject(e) {
+  shiftProject(e){
     //console.log("Project Id selected is : "+e.target.value);
     // cogoToast.success("Project Changed Successfully!");
   }
-  onChnagePid(e) {
+  onChnagePid(e){
     this.setState({
       projectId: e.target.value
     });
-  }
+  } 
   logOut() {
     AuthService.logout();
   }
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard, projectId, uprojects } = this.state;
+    const { currentUser, showModeratorBoard, showAdminBoard,projectId,uprojects,projectLength } = this.state;
 
     return (
       <div>
@@ -238,40 +239,6 @@ class App extends Component {
           </Link>
 
           <div className="navbar-nav mr-auto">
-            {/* {currentUser && (
-              <li className="nav-item">
-                <Link to={"/home"} className="nav-link">
-                  <h6>Home</h6>
-                </Link>
-              </li>
-            )} */}
-            {/* {currentUser && (
-              <li className="nav-item">
-                <Link to={"/projectmanagement"} className="nav-link">
-                  <h6>Manage Projects</h6>
-                </Link>
-              </li>
-            )}
-            {showModeratorBoard && (
-              <li className="nav-item">
-                <Link to={"/financialmanagement"} className="nav-link">
-                  <h6>Manage Finance</h6>
-                </Link>
-              </li>
-            )}
-            {showModeratorBoard && (
-              <li className="nav-item">
-                <Link to={"/resource"} className="nav-link">
-                  <h6>Manage Resources</h6>
-                </Link>
-
-                { /*    <NavDropdown title="Manage Resources" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/timesheet">Timesheets</NavDropdown.Item>
-                <NavDropdown.Item href="/equipments">Equipments</NavDropdown.Item>
-                <NavDropdown.Item href="/crew">Crews</NavDropdown.Item>
-              </NavDropdown>
-              </li>*/}
-
             {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
@@ -279,49 +246,56 @@ class App extends Component {
                 </Link>
               </li>
             )}
-            {currentUser && (
-              <li className="nav-item">
-                <select
-                  className="form-control"
-                  value={this.state.projectId}
-                  onChange={this.onChnagePid}
-                >
-                  {uprojects &&
-                    uprojects.map((project, index) => (
-                      <option value={project.projectId}
-                        style={{ 'color': 'black' }}
-                        key={index}
-                        value={project.projectId}
-                        onChange={this.onChangePid}
-                      >
-                        {project.title}
-                      </option>
-                    ))}
-                </select>
-              </li>
-            )}
-            {currentUser && (
-              <li className="nav-item">
-                <a href={"/projectmanagementhome/" + projectId} style={{ 'text-decoration': 'none' }} className="nav-link"
-                  onClick={this.shiftProject}
-                >
-                  Go<ArrowForwardIosIcon />
-                </a>
-                {/* <Switch>
-              <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
-              </Switch> */}
-              </li>
-            )}
           </div>
 
           {currentUser ? (
             <div className="navbar-nav ml-auto">
-              {/* <img
-                  src={profileAvatar}
-                  style={{'width' : "40px", height: "40px"}}
-                  alt="profile-img"
-                  className = "mr-1"
-                /> */}
+              {projectLength > 1 &&
+              <li className="nav-item">
+                <select 
+                  className="form-control"
+                  value={this.state.projectId}
+                  onChange={this.onChnagePid}
+                  style={{'font-weight': 'bold'}}
+                >
+                {uprojects &&
+                  uprojects.map((project, index) => (
+                    <option
+                      style={{'color': 'black','font-weight': 'bold'}}
+                      key={index}
+                      value={project.projectId}
+                      onChange={this.onChangePid}
+                    >
+                    {project.title}
+                    </option> 
+                  ))}
+                </select>
+              </li>
+              }
+              {projectLength > 1 &&
+              <li className="nav-item">
+              <a href={"/projectmanagementhome/"+projectId} style={{'text-decoration':'none'}} className="nav-link mb"
+              onClick={this.shiftProject}>
+                <ArrowForwardIosIcon style={{'fontSize': '25px'}}/>
+              </a>
+              </li>
+              }
+              {projectLength == 1 &&
+              <li className="nav-item">
+              {uprojects &&
+                  uprojects.map((project, index) => (
+                    <Link className="nav-link"
+                      style={{'color': 'white','font-weight': 'bold'}}
+                      key={index}
+                      value={project.projectId}
+                      onChange={this.onChangePid}
+                      to={"/projectmanagementhome/"+project.projectId}
+                    >
+                    <h6>{project.title}</h6>
+                    </Link> 
+              ))}
+              </li>
+              }  
               <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
                   <h6>Profile</h6>
@@ -355,10 +329,10 @@ class App extends Component {
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/logincode" component={ForgetPassword} />
+            <Route exact path="/logincode" component={ForgetPassword}/>
             <Route path="/camera" component={CameraSinglePage} />
-            <Route component={ErrorPage} />
-          </Switch>
+            <Route component={ErrorPage}/>
+          </Switch>  
 
         )}
         {currentUser && (
@@ -373,7 +347,7 @@ class App extends Component {
               <Route exact path="/profile" component={Profile} />
               <Route path="/projectmanagement" component={BoardUser} />
               <Route path="/adddepartment/:id" component={AddDepartment} />
-              <Route path={"/addcustomdepartment/:id"} component={AddCustomDepartment} />
+              <Route path={"/addcustomdepartment/:id"} component={AddCustomDepartment}/>
               <Route path="/addmilestone/:id" component={AddMilestone} />
               <Route path="/addmilestoneproject/:id" component={AddMilestoneGeneral} />
               <Route path="/assignuser/:id" component={AssignUserProject} />
@@ -461,7 +435,7 @@ class App extends Component {
               <Route path="/photos/:id" component={PhotosHome} />
               <Route path="/addphoto/:id" component={AddPhoto} />
               <Route path="/uploadphoto/:name" component={UploadPhotos} />
-              <Route path="/camera/:id" component={CameraSinglePage} />
+              <Route path="/camera/:id" component={CameraSinglePage}/>
               <Route path="/viewalbum/:id" component={ViewSingleAlbum} />
               <Route path="/addalbum/:id" component={AddAlbum} />
               <Route exact path={"/updatealbum/:pid/:id"} component={UpdateAlbum} />
@@ -496,7 +470,6 @@ class App extends Component {
               {/* {/equipment/} */}
               <Route path="/equipments" component={Equipments} />
               <Route path="/equipDetails/:code" component={EquipDetails} />
-              <Route path="/equipView/:id" component={EquipView} />
               {/* {/<Route path="/equipDetails/:id/:code" component={EquipDetails} />/} */}
 
               {/*financial management */}
@@ -530,9 +503,9 @@ class App extends Component {
           </div>
         )}
         <div className="mt-50">
-          <div style={{ 'height': '150px' }}></div>
+          <div style={{'height': '150px'}}></div>
           <center>
-            <h6>Edifice 2021 © All rights reserved - G42</h6>
+          <h6>Edifice 2021 © All rights reserved - G42</h6>
           </center>
         </div>
       </div>

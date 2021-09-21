@@ -73,6 +73,7 @@ const DirectCost = props => {
   };
 
   const {id}= useParams();
+  const {pid}= useParams();
   const [budgets, setBudgets] = useState([]);
   const [vendors, setVendors] = useState([]);
   const [employees, setEmployees] = useState([]);
@@ -94,7 +95,7 @@ const [message, setMessage] = useState("");
 
   const retrieveBudgets = () => {
     
-    BudgetDataService.getAll(id)//passing project id as id
+    BudgetDataService.getAll(pid)//passing project id as id
       .then((response) => {
         setBudgets(response.data);
       })
@@ -127,10 +128,10 @@ const [message, setMessage] = useState("");
   };
 
   useEffect(() => {
-    getDirectCost(props.match.params.id);
-    retrieveBudgets(props.match.params.id);  
+    getDirectCost(props.match.params.id); 
     retrieveVendors();
-    retrieveEmployees();  
+    retrieveEmployees();
+    retrieveBudgets();   
   },[props.match.params.id]);
 
   const handleInputChange = event => {
@@ -216,7 +217,7 @@ const [message, setMessage] = useState("");
               <Link color="textPrimary" to={"/directcost/"+currentDirectCost.projectId} aria-current="page">
               Direct Costs
               </Link>
-              <Link color="textPrimary" to={"/viewdirectcost/"+currentDirectCost.id} aria-current="page">
+              <Link color="textPrimary" to={"/viewdirectcost/"+currentDirectCost.projectId + "/"+currentDirectCost.id} aria-current="page">
                Edit Direct Cost
               </Link>
             </Breadcrumbs>
@@ -244,12 +245,12 @@ const [message, setMessage] = useState("");
                 className={`form-control ${errors.costCode ? 'is-invalid' : ''}`}
               
               >
-       <option value={currentDirectCost.costCode} selected>{currentDirectCost.costCode}</option>
+       <option value="" disabled selected>Select a Cost Code</option>
        {budgets &&
                 budgets.map((budget, index) => (
                 <option
-                    //value={budget.costCode}
-                    //onChange={onChangeSearchCostCode}
+                    value={budget.costCode}
+                    onChange={handleInputChange}
                     key={index}
                 >
                 {/* unit data */}
@@ -300,7 +301,7 @@ const [message, setMessage] = useState("");
               <div className="invalid-feedback">{errors.vendor?.message}</div>
             </div>
             <div className="form-group">
-              <label htmlFor="title">Employee :</label>
+              <label htmlFor="title">Reporting Employee :</label>
               <select
                 id="employee"
                 name="employee"
@@ -383,13 +384,13 @@ const [message, setMessage] = useState("");
             <button className="btn btn-success">
             Cancel
                 </button></Link> */}
-          <button
+          {/* <button
             type="button"
             onClick={() => reset()}
             className="btn btn-warning float-right"
           >
             Reset
-          </button>
+          </button> */}
 
             </div>
 </form>

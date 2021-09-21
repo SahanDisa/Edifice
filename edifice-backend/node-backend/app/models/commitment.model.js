@@ -28,8 +28,9 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DATEONLY
       },
       actualCompletionDate: {
-        type: Sequelize.DATEONLY,
-        allowNull: true,
+        type: Sequelize.STRING
+        // type: Sequelize.DATEONLY,
+        // allowNull: true,
       },
       
       signedContractReceivedDate: {

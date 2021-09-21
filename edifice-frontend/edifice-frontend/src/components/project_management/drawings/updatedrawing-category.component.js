@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DrawingCategoryDataService from "../../../services/drawing-category.service";
 import { Breadcrumbs } from "@material-ui/core";
+import cogoToast from "cogo-toast";
 
 export default class UpdateDrawingCategory extends Component {
   constructor(props) {
@@ -75,7 +76,7 @@ export default class UpdateDrawingCategory extends Component {
       title: this.state.currentDrawingCategory.title,
       description: this.state.currentDrawingCategory.description,
     };
-
+    if(this.state.currentDrawingCategory.title >= 6){ 
     DrawingCategoryDataService.update(this.state.currentDrawingCategory.id,data)
       .then(response => {
         console.log(response.data);
@@ -86,6 +87,10 @@ export default class UpdateDrawingCategory extends Component {
       .catch(e => {
         console.log(e);
       });
+      cogoToast.success("Drawing category updated successfully!");
+    }else{
+      cogoToast.error("Change Title into proper name length at least 6");
+    }
   }
 
   deleteDrawingCategory() {    
