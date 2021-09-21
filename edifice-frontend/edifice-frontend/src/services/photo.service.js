@@ -2,7 +2,7 @@ import http from "./../http-common.js";
 
 class PhotoFileDataService {
   getAll(id) {
-    return http.get(`/photofile/`);
+    return http.get(`/photofile/list/${id}`);
   }
 
   get(id) {

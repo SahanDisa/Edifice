@@ -11,6 +11,7 @@ import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
+import cogoToast from "cogo-toast";
 
 export default class AddDrawing extends Component {
   constructor(props) {
@@ -86,7 +87,8 @@ export default class AddDrawing extends Component {
         console.log(e);
       });
   }
-  saveDrawing() {  
+  saveDrawing() {
+    if(this.state.title.length != "" && this.state.category != ""){  
     var data = {
       title: this.state.title,
       description: this.state.description,
@@ -95,7 +97,7 @@ export default class AddDrawing extends Component {
       status: this.state.status,
       projectId: this.state.projectId
     };
-
+    cogoToast.success("Drawing "+this.state.title+" created successfully!");
     DrawingDataService.create(data)
       .then(response => {
         this.setState({
@@ -114,6 +116,10 @@ export default class AddDrawing extends Component {
       .catch(e => {
         console.log(e);
       });
+    }else{
+      cogoToast.warn("Validation warning!");
+      cogoToast.error("Fields cannot be empty!");
+    }
   }
   selectFile(event) {
     this.setState({
@@ -254,6 +260,7 @@ export default class AddDrawing extends Component {
                 value={this.state.category}
                 onChange={this.onChangeType}
               >
+                <option value="">Select a Drawing Category ...</option>
                 {drawingcategories &&
                 drawingcategories.map((drawingcategory, index) => (
                 <option

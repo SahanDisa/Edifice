@@ -173,7 +173,7 @@ const Budget = props => {
        <div className="col-sm-6">
        <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
-              <label htmlFor="costCode">Cost Code</label>
+              <label htmlFor="costCode">Cost Code :</label>
              {/* <input
                 type="text"
                 className="form-control"
@@ -196,7 +196,7 @@ const Budget = props => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="title">Description</label>
+              <label htmlFor="title">Description :</label>
               <input
                 type="text"
                className={`form-control ${errors.description ? 'is-invalid' : ''}`}
@@ -210,7 +210,7 @@ const Budget = props => {
               <div className="invalid-feedback">{errors.description?.message}</div>
             </div>
             <div className="form-group">
-              <label htmlFor="description"> Date</label>
+              <label htmlFor="description"> Date :</label>
               <input
                 type="date"
                
@@ -224,7 +224,7 @@ const Budget = props => {
               <div className="invalid-feedback">{errors.date?.message}</div>
             </div>
             <div className="form-group">
-              <label htmlFor="description">Estimated Budget Amount</label>
+              <label htmlFor="description">Estimated Budget Amount :</label>
               <input
                 type="text"
                
@@ -254,13 +254,13 @@ const Budget = props => {
             <button className="btn btn-success">
             Cancel
             </button></Link> */}
-          <button
+          {/* <button
             type="button"
             onClick={() => reset()}
             className="btn btn-warning float-right"
           >
             Reset
-          </button>
+          </button> */}
 
             </div>
 </form>

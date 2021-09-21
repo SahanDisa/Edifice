@@ -273,7 +273,7 @@ const AddDirectCost = (props) => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="amount">Employee :</label>
+              <label htmlFor="amount">Reporting Employee :</label>
               <select
                 id="employee"
                 name="employee"
@@ -345,13 +345,14 @@ const AddDirectCost = (props) => {
               Save
             </button>
             &nbsp;&nbsp;
-            <button
+            {/* <button
             type="button"
             onClick={() => reset()}
             className="btn btn-warning float-right"
           >
             Reset
-          </button>&nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
+          </button> */}
+          &nbsp;&nbsp;{/*reset not working properly. values doesn't reset, only the error msgs*/}
            {/* <Link to={"/directcost/" + directcost.projectId}>
             <button className="btn btn-success">
             Cancel

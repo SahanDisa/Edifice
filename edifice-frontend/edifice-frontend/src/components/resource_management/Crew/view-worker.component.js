@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Modal } from "react-bootstrap";
 import DeleteIcon from '@material-ui/icons/Delete';
+import cogoToast from "cogo-toast";
+
 import WorkersDataService from "./../../../services/worker.service";
 
 class ViewWorker extends Component {
@@ -22,17 +24,14 @@ class ViewWorker extends Component {
   deleteWorker() {
     WorkersDataService.delete(this.state.wId)
       .then(response => {
+        cogoToast.success("Worker Deleted successfully!");
         console.log(response.data);
         window.location.reload();
-        // this.props.history.push('/drawings/'+this.state.pid);
       })
       .catch(e => {
         console.log(e);
       });
   }
-
-
-
 
   render() {
     const { wId, fristName, lastName, mobile } = this.state;
@@ -40,7 +39,7 @@ class ViewWorker extends Component {
     return (
       <div>
         <Modal.Header closeButton>
-          <h5 className="modal-title" id="exampleModalCenterTitle">Edit Worker Details</h5>
+          <h5>Edit Worker Details</h5>
         </Modal.Header>
         <Modal.Body>
           <div>
@@ -69,7 +68,7 @@ class ViewWorker extends Component {
               </button> */}
 
         </Modal.Footer>
-      </div>
+      </div >
     );
   }
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Card from 'react-bootstrap/Card';
 import { Link } from "react-router-dom";
+import cogoToast from "cogo-toast";
 
 import ScheduleDataService from "./../../../services/schedule.service";
 import AuthService from "./../../../services/auth.service";
@@ -183,6 +183,7 @@ export default class Schedule extends React.PureComponent {
             });
             console.log(response.data);
             window.location.reload();
+            cogoToast.success("Task added successfully!");
           })
           .catch(e => {
             console.log(e);
@@ -195,6 +196,7 @@ export default class Schedule extends React.PureComponent {
         data = data.map(appointment => (
           changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
         console.log(changed)
+        cogoToast.success("Task updated successfully!");
 
       }
       //delete a schedule 
@@ -206,6 +208,7 @@ export default class Schedule extends React.PureComponent {
             console.log(response.data);
             window.location.reload();
             // this.props.history.push('/drawings/'+this.state.pid);
+            cogoToast.success("Task deleted successfully!");
           })
           .catch(e => {
             console.log(e);
@@ -251,7 +254,7 @@ export default class Schedule extends React.PureComponent {
             <ViewState
               currentDate={currentDate}
               onCurrentDateChange={this.currentDateChange}
-              defaultCurrentViewName="Day"
+              defaultCurrentViewName="Week"
             />
 
             <EditingState

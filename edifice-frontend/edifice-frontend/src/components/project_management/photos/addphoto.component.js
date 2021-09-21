@@ -11,6 +11,7 @@ import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
 import Alert from "react-bootstrap/Alert";
+import cogoToast from "cogo-toast";
 // import CameraCapture from './cameracpature.component';
 
 export default class AddPhoto extends Component {
@@ -98,7 +99,7 @@ export default class AddPhoto extends Component {
       path: this.state.path,
       projectId: this.state.projectId
     };
-
+    cogoToast.success("Photo "+this.state.title+" created successfully");
     PhotoFileDataService.create(data)
       .then(response => {
         this.setState({
