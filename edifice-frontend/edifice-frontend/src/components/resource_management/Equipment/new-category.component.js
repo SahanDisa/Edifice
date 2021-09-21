@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import cogoToast from "cogo-toast";
 
 import EquipmentCategoryDataService from "./../../../services/equipment-category.service";
 
@@ -37,6 +38,7 @@ class NewCategory extends Component {
         });
         console.log(response.data);
         window.location.reload();
+        cogoToast.success("New Category Created successfully!");
       })
       .catch(e => {
         console.log(e);
