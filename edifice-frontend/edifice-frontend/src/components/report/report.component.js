@@ -50,7 +50,7 @@ class Report extends Component {
         return temp;
     }
 
-    generatePDF(project){
+    generatePDF(project,costCodes){
 
         const doc = new jsPDF();
 
@@ -113,6 +113,7 @@ class Report extends Component {
         doc.setFont("times", "bold");
         var x1=35
         const temp=this.getProjectCostCodes(project.id)
+        console.log(costCodes);
         temp.forEach((item, index)=>{
             doc.text(item,x1, 88, null, null, "left");
             x1+=5;
