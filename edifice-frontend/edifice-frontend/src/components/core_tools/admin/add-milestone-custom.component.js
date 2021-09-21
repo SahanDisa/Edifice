@@ -8,6 +8,7 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
+import cogoToast from "cogo-toast";
 
 export default class AddMilestoneGeneral extends Component {
   constructor(props) {
@@ -56,6 +57,7 @@ export default class AddMilestoneGeneral extends Component {
       duration: this.state.duration,
       projectId: this.state.projectId
     };
+    cogoToast.success("Milestone "+this.state.title+" created successfully!");
     MilestoneDataService.create(data)
       .then(response => {
         this.setState({
@@ -160,7 +162,9 @@ export default class AddMilestoneGeneral extends Component {
                 <option>1 Months</option>
                 <option>2 Months</option>
                 <option>3 Months</option>
+                <option>4 Months</option>
                 <option>6 Months</option>
+                <option>8 Months</option>
                 <option>12 Months</option>
               </datalist>
             </div>
