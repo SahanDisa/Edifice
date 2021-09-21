@@ -10,7 +10,7 @@ module.exports = app => {
   router.get("/list/:id", workedHours.getTimesheetDetails);
 
   // Update a worker with id
-  router.put("/:id", workedHours.update);
+  router.put("/:tid/:wid", workedHours.update);
   /*  
       // Retrieve all workedHours
       router.get("/list/", workedHours.findAll);

@@ -33,13 +33,10 @@ exports.create = (req, res) => {
 
 // Retrieve all timesheets from a given project
 exports.findAll = (req, res) => {
-  const id = req.params.id;
 
-  Timesheet.findAll({
-    where: {
-      projectId: id
-    }
-  })
+  db.sequelize.query(
+    'SELECT timesheet.id,timesheet.date,timesheet.status,timesheet.aprrovedId,users.username FROM timesheet LEFT JOIN users ON users.id=timesheet.aprrovedId WHERE timesheet.projectId=:id',
+    { replacements: { id: req.params.id }, type: db.sequelize.QueryTypes.SELECT })
     .then(data => {
       res.send(data);
     })
@@ -90,60 +87,13 @@ exports.update = (req, res) => {
       });
     });
 };
-/*
-// Delete a crew with the specified id in the request
-exports.delete = (req, res) => {
-    const id = req.params.id;
 
-    crew.destroy({
-      where: { id: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "crew was deleted successfully!"
-          });
-        } else {
-          res.send({
-            message: `Cannot delete crew with id=${id}. Maybe crew was not found!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Could not delete crew with id=" + id
-        });
-      });
-};*/
+exports.getUserDetails = (req, res) => {
 
-/*
-// Delete all Tutorials from the database.
-exports.deleteAll = (req, res) => {
-    crew.destroy({
-        where: {},
-        truncate: false
-      })
-        .then(nums => {
-          res.send({ message: `${nums} Tutorials were deleted successfully!` });
-        })
-        .catch(err => {
-          res.status(500).send({
-            message:
-              err.message || "Some error occurred while removing all tutorials."
-          });
-        });
-};*/
-/*
-// Find all published Tutorials
-exports.findAllPublished = (req, res) => {
-    equipment.findAll({ where: { published: true } })
+  db.sequelize.query(
+    'SELECT users.id,users.username FROM users',
+    { replacements: {}, type: db.sequelize.QueryTypes.SELECT })
     .then(data => {
       res.send(data);
     })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials."
-      });
-    });
-};*/
+}

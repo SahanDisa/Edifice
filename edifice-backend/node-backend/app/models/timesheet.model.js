@@ -5,10 +5,13 @@ module.exports = (sequelize, Sequelize) => {
     },
     status: {
       type: Sequelize.STRING
+    },
+    aprrovedId: {
+      type: Sequelize.INTEGER
     }
   }, {
-      freezeTableName: true,
-    });
+    freezeTableName: true,
+  });
 
   return timesheet;
 };

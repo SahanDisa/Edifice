@@ -15,6 +15,9 @@ module.exports = app => {
     // Retrive users of a particular project
     router.get("/project/:id",projectuser.findProjectUsers);
 
+    // Get Accounts
+    router.get("/accounts/list/",projectuser.getAllAccounts);
+
     // Get users project details as an array
     router.get("/projectdata/user/:id", projectuser.getProjectUserDetails);
 

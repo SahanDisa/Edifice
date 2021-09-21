@@ -139,6 +139,7 @@ class Workers extends Component {
           timesheetId: response.data.timesheetId,
         });
         console.log(response.data);
+        window.location.reload();
       })
       .catch(e => {
         console.log(e);
@@ -150,8 +151,6 @@ class Workers extends Component {
     const { crews, id, workers, searchTitle, code, currentWorker, currentIndex, workedHours, workedHoursID } = this.state;
     workedHours && workedHours.map((workedHour) => (
       workedHoursID.includes(workedHour.workerWId) ? null : workedHoursID.push(workedHour.workerWId)));
-    console.log("workedHoursID")
-    console.log(workedHoursID)
 
     return (
       <div>

@@ -10,6 +10,8 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Card } from "@material-ui/core";
+import Alert from "react-bootstrap/Alert";
+import cogoToast from "cogo-toast";
 
 export default class AddMilestone extends Component {
   constructor(props) {
@@ -27,14 +29,14 @@ export default class AddMilestone extends Component {
       description: "",
       duration: "", 
       currentIndex: -1,
-      projectId: "",
+      projectId: this.props.match.params.id,
 
       milestones: [],
-      submitted: false
+      submitted: true
     };
   }
   componentDidMount() {
-    this.getLastProjectID();
+    //this.usermailProjectID();
     this.retriveMilestones(this.props.match.params.id);
   }
   onChangeTitle(e) {
@@ -85,6 +87,7 @@ export default class AddMilestone extends Component {
       duration: this.state.duration,
       projectId: this.state.projectId
     };
+    cogoToast.success("Milestone "+this.state.title+" created successfully!");
     MilestoneDataService.create(data)
       .then(response => {
         this.setState({
@@ -94,7 +97,7 @@ export default class AddMilestone extends Component {
           duration: response.data.duration,
           projectId: response.data.projectId,
 
-          submitted: true
+          submitted: false
         });
         console.log(response.data);
       })
@@ -112,6 +115,7 @@ export default class AddMilestone extends Component {
 
       submitted: false
     });
+    this.retriveMilestones(this.state.projectId);
   }
 
   render() {
@@ -120,14 +124,20 @@ export default class AddMilestone extends Component {
       <div className="container">
         {this.state.submitted ? (
           <div>
-            <h4>You add a Milestone successfully</h4>
-           
-            <button className="btn btn-success" onClick={this.newMilestone}  style={{ 'text-decoration': 'none' }}>
+          <center>
+            <h4 className="alert alert-success">You add a Milestone successfully</h4>
+            <button className="btn btn-success m-2" onClick={this.newMilestone}  style={{ 'text-decoration': 'none' }}>
               Add Another Milestone
             </button>
-            <Link to={"/assignuser/"+projectId} className="btn btn-warning"  style={{ 'text-decoration': 'none' }}>
+            <Link className="btn btn-primary m-2" to={"/projects"}>Back Home</Link>
+            <div>
+            <h5>Proceed to Step 04 : Assign Users</h5>
+            <Link to={"/assignuser/"+projectId} className="btn btn-warning m-2"  style={{ 'text-decoration': 'none' }}>
               Assign Users
             </Link>
+            </div>
+            
+          </center>
           </div>
         ) : (
           <div class="container">
@@ -171,16 +181,26 @@ export default class AddMilestone extends Component {
                 value={this.state.duration}
                 onChange={this.onChangeDuration}
                 name="duration"
+                list={"dur"}
               />
+              <datalist id="dur">
+                <option>1 Months</option>
+                <option>2 Months</option>
+                <option>3 Months</option>
+                <option>4 Months</option>
+                <option>6 Months</option>
+                <option>8 Months</option>
+                <option>12 Months</option>
+              </datalist>
             </div>
             <button onClick={this.saveMilestone} className="btn btn-success">
               Create Milestone
             </button>
             {/* Show Current Milestones */}
             <div>
-            <div className="col-md-8">
+            <div className="col-md-12">
               <div className="list-group">
-              <h5 className="mt-2">Current Milestones</h5>
+              <h4 className="mt-2">Current Milestones</h4>
               {milestones &&
                 milestones.map((milestone, index) => (
                   <Card style={{ width: '40rem'}} className="m-2 shadow-md">

@@ -56,6 +56,26 @@ exports.findAll = (req, res) => {
       });
 };
 
+exports.findUsers = (req, res) => {
+  //const id = req.query.id;
+  //var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+
+  Employee.findAll({
+    where: {
+      hasAccount: 1
+    }
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving employees."
+      });
+    });
+};
+
 // Find single Employee with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;

@@ -1,5 +1,6 @@
 const db = require("./../models/index");
 const ProjectUser = db.projectuser;
+const Users = db.users;
 
 // create a user
 exports.create = (req, res) => {
@@ -60,6 +61,19 @@ exports.findOne = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message: "Error retrieving ProjectUser with id=" + id
+      });
+    });  
+};
+
+exports.getAllAccounts = (req, res) => {
+  console.log("Accounts loading");
+  Users.findAll()
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving User Accounts"
       });
     });  
 };

@@ -180,6 +180,7 @@ class App extends Component {
       projectname: "",
       projectId: 1,
       uprojects: [],
+      projectLength: 0,
       id: "",
     };
   }
@@ -201,7 +202,8 @@ class App extends Component {
     ProjectUserService.getProjectUserProjectDetails(id)
     .then(response => {
       this.setState({
-        uprojects: response.data
+        uprojects: response.data,
+        projectLength: response.data.length,
       });
       console.log(response.data);
     })
@@ -223,7 +225,7 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard,projectId,uprojects } = this.state;
+    const { currentUser, showModeratorBoard, showAdminBoard,projectId,uprojects,projectLength } = this.state;
 
     return (
       <div>
@@ -239,40 +241,6 @@ class App extends Component {
           </Link>
 
           <div className="navbar-nav mr-auto">
-            {/* {currentUser && (
-              <li className="nav-item">
-                <Link to={"/home"} className="nav-link">
-                  <h6>Home</h6>
-                </Link>
-              </li>
-            )} */}
-            {/* {currentUser && (
-              <li className="nav-item">
-                <Link to={"/projectmanagement"} className="nav-link">
-                  <h6>Manage Projects</h6>
-                </Link>
-              </li>
-            )}
-            {showModeratorBoard && (
-              <li className="nav-item">
-                <Link to={"/financialmanagement"} className="nav-link">
-                  <h6>Manage Finance</h6>
-                </Link>
-              </li>
-            )}
-            {showModeratorBoard && (
-              <li className="nav-item">
-                <Link to={"/resource"} className="nav-link">
-                  <h6>Manage Resources</h6>
-                </Link>
-
-                { /*    <NavDropdown title="Manage Resources" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/timesheet">Timesheets</NavDropdown.Item>
-                <NavDropdown.Item href="/equipments">Equipments</NavDropdown.Item>
-                <NavDropdown.Item href="/crew">Crews</NavDropdown.Item>
-              </NavDropdown>
-              </li>*/}
-
             {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
@@ -280,49 +248,56 @@ class App extends Component {
                 </Link>
               </li>
             )}
-            {currentUser && (
+          </div>
+
+          {currentUser ? (
+            <div className="navbar-nav ml-auto">
+              {projectLength > 1 &&
               <li className="nav-item">
                 <select 
                   className="form-control"
                   value={this.state.projectId}
                   onChange={this.onChnagePid}
+                  style={{'font-weight': 'bold'}}
                 >
-                  {uprojects &&
-                    uprojects.map((project, index) => (
-                      <option value={project.projectId}
-                        style={{'color': 'black'}}
-                        key={index}
-                        value={project.projectId}
-                        onChange={this.onChangePid}
-                      >
-                      {project.title}
-                      </option> 
-                    ))}
+                {uprojects &&
+                  uprojects.map((project, index) => (
+                    <option
+                      style={{'color': 'black','font-weight': 'bold'}}
+                      key={index}
+                      value={project.projectId}
+                      onChange={this.onChangePid}
+                    >
+                    {project.title}
+                    </option> 
+                  ))}
                 </select>
               </li>
-            )}
-            {currentUser && (
+              }
+              {projectLength > 1 &&
               <li className="nav-item">
-              <a href={"/projectmanagementhome/"+projectId} style={{'text-decoration':'none'}} className="nav-link"
-              onClick={this.shiftProject}
-              >
-                Go<ArrowForwardIosIcon/>
+              <a href={"/projectmanagementhome/"+projectId} style={{'text-decoration':'none'}} className="nav-link mb"
+              onClick={this.shiftProject}>
+                <ArrowForwardIosIcon style={{'fontSize': '25px'}}/>
               </a>
-              {/* <Switch>
-              <Route path="/projectmanagementhome/:id" component={ProjectManagementHome} />
-              </Switch> */}
               </li>
-            )}
-          </div>
-
-          {currentUser ? (
-            <div className="navbar-nav ml-auto">
-              {/* <img
-                  src={profileAvatar}
-                  style={{'width' : "40px", height: "40px"}}
-                  alt="profile-img"
-                  className = "mr-1"
-                /> */}
+              }
+              {projectLength == 1 &&
+              <li className="nav-item">
+              {uprojects &&
+                  uprojects.map((project, index) => (
+                    <Link className="nav-link"
+                      style={{'color': 'white','font-weight': 'bold'}}
+                      key={index}
+                      value={project.projectId}
+                      onChange={this.onChangePid}
+                      to={"/projectmanagementhome/"+project.projectId}
+                    >
+                    <h6>{project.title}</h6>
+                    </Link> 
+              ))}
+              </li>
+              }  
               <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
                   <h6>Profile</h6>
