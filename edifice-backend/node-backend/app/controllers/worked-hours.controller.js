@@ -49,10 +49,11 @@ exports.getTimesheetDetails = (req, res) => {
 
 // Update a workedhours by the id in the request
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const tid = req.params.tid;
+  const wid = req.params.wid;
 
   WorkedHours.update(req.body, {
-    where: { id: id }
+    where: { workerWId: wid, timesheetId: tid }
   })
     .then(num => {
       if (num == 1) {
@@ -61,13 +62,13 @@ exports.update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot update workedhours with id=${id}. Maybe workedhours was not found or req.body is empty!`
+          message: `Cannot update workedhours with id=${wid}. Maybe workedhours was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating workedhours with id=" + id
+        message: "Error updating workedhours with id=" + wid
       });
     });
 };

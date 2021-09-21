@@ -104,7 +104,7 @@ class AllocateEquip extends Component {
                   <option value="--">- - </option>
 
                   {projects && projects.map((project) => (
-                    <option value={project.id}>{project.id} {project.title}</option>
+                    <option value={project.id}>{project.title}</option>
                   ))}
                 </select>
               </div>
