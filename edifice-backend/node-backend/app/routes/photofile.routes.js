@@ -1,31 +1,34 @@
 module.exports = app => {
-    const projects = require("./../controllers/photo.controller");
+    const photos = require("./../controllers/photo.controller");
   
     var router = require("express").Router();
   
     // Create a new Photo
-    router.post("/", projects.create);
+    router.post("/", photos.create);
   
     // Retrieve all Photos
-    router.get("/", projects.findAll);
+    router.get("/", photos.findAll);
+
+    // Retrive project photos
+    router.get("/list/:id",photos.getAll);
   
     // Retrieve a single Photo with id
-    router.get("/:id", projects.findOne);
+    router.get("/:id", photos.findOne);
 
     // Get all category drawings
-    router.get("/cat/:id", projects.findAllCat);
+    router.get("/cat/:id", photos.findAllCat);
   
     // Update a Photo with id
-    router.put("/:id", projects.update);
+    router.put("/:id", photos.update);
   
     // Delete a Tutorial with id
-    router.delete("/:id/", projects.delete);
+    router.delete("/:id/", photos.delete);
   
     // Delete all Tutorials
-    router.delete("/", projects.deleteAll);
+    router.delete("/", photos.deleteAll);
 
     // // Find Last Project
-    // router.get("/app/last/",projects.findLastOne);
+    // router.get("/app/last/",photos.findLastOne);
   
     app.use('/api/photofile', router);
   };

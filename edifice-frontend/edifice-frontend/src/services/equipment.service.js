@@ -28,20 +28,11 @@ class EquipmentDataService {
   getAllProjects() {
     return http.get(`/equipments/projects`);
   }
-  /*
-    deleteAll() {
-      return http.delete(`/projects`);
-    }
-  
-    findByTitle(title) {
-      return http.get(`/projects?title=${title}`);
-    }
-    userProjects(id){
-      return http.get(`/projects/user/list/${id}`);
-    }*/
-  // findPublished(){
-  //   return http.get(`/projects?published=`)
-  // }
+
+  getAllEquipmentProjects(id) {
+    return http.get(`/equipments/allocated/${id}`);
+  }
+
 }
 
 export default new EquipmentDataService();

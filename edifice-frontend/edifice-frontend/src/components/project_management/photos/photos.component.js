@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AlbumDataService from "./../../../services/album.service";
 import ProjectService from "../../../services/project.service";
+import PhotoService from "../../../services/photo.service";
 import { WebcamCapture } from './webcam.component';
 // import { CameraViewer } from "./viewphoto.component";
 // import Accordion from 'react-bootstrap/Accordion';
@@ -33,11 +34,15 @@ export default class PhotosHome extends Component {
 
         fileInfos: [],
         Captures: [],
+        capturecount: 0,
+        albumcount: 0,
+        photocount: 0,
       };
     }
     componentDidMount() {
       window.scrollTo(0, 0);
       this.retriveAlbums(this.props.match.params.id);
+      this.retrivePhotos(this.props.match.params.id);
       UploadPhotoService.getFiles().then((response) => {
         this.setState({
           fileInfos: response.data,
@@ -46,6 +51,7 @@ export default class PhotosHome extends Component {
       UploadPhotoService.getCaptures().then((response) => {
         this.setState({
           Captures: response.data,
+          capturecount: response.data.length,
         });
       });
       this.retriveProjectDetails(this.props.match.params.id);
@@ -70,7 +76,8 @@ export default class PhotosHome extends Component {
         AlbumDataService.getAll(id)
         .then(response => {
             this.setState({
-              albums: response.data
+              albums: response.data,
+              albumcount: response.data.length
             });
             console.log(response.data);
           })
@@ -78,9 +85,22 @@ export default class PhotosHome extends Component {
             console.log(e);
           });
     }
+    retrivePhotos(id){
+      PhotoService.getAll(id)
+      .then(response => {
+        this.setState({
+          photocount: response.data.length
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    }
     
     render() {
-      const { albums, currentIndex,id,fileInfos, Captures, project } = this.state;
+      const { albums, currentIndex,id,fileInfos, Captures, project, 
+        capturecount, albumcount, photocount } = this.state;
       return (
         <div>
         <div className="row">
@@ -111,21 +131,21 @@ export default class PhotosHome extends Component {
             <div className="row">
               <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
                 <div className="card card-hover shadow-sm" title="Albums Insights">
-                  <h1 className="m-2">4</h1>
+                  <h1 className="m-2">{albumcount}</h1>
                   <h3 className="h5 nav-heading-title m-2">Albums</h3>
                   {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
                 </div>
               </div>
               <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
                 <div className="card card-hover shadow-sm" title="Photos Insights">
-                  <h1 className="m-2" >9</h1>
+                  <h1 className="m-2" >{photocount}</h1>
                   <h3 className="h5 nav-heading-title mb-0 m-2">Photos</h3>
                   {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
                 </div>
               </div>
               <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
                 <div className="card card-hover shadow-sm" title="Capture Insights">
-                  <h1 className="m-2">15</h1>
+                  <h1 className="m-2">{capturecount}</h1>
                   <h3 className="h5 nav-heading-title mb-0 m-2">Captures</h3>
                   {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
                 </div>

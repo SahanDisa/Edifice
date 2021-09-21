@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
 import DrawingCategoryService from "../../../services/drawing-category.service";
 import ProjectService from "../../../services/project.service";
+import DrawRevisionService from "../../../services/drawrevision.service";
 import { Breadcrumbs } from "@material-ui/core";
 import Pdfviewer from "./pdfviewer.component";
 import Card from 'react-bootstrap/Card';
@@ -36,6 +37,7 @@ export default class Drawings extends Component {
       this.retriveDrawingCategory(this.props.match.params.id);
       this.retrieveDrawingStatus(this.props.match.params.id);
       this.retriveProject(this.props.match.params.id);
+      this.getRevisions(this.props.match.params.id);
     }
     retrieveDrawing(id) {
       DrawingDataService.getAll(id)
@@ -109,9 +111,21 @@ export default class Drawings extends Component {
           console.log(e);
         });
     }
+    getRevisions(id){
+      DrawRevisionService.getAll(id)
+      .then(response => {
+          this.setState({
+            revisioncount: response.data.length
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
 
     render() {
-        const { drawings, drawingcount , drawingcategories, drawcategorycount, currentIndex,id,drawingComplete,
+        const { drawings, drawingcount , drawingcategories, drawcategorycount,revisioncount,currentIndex,id,drawingComplete,
           drawingPending,drawingIncomplete, project } = this.state;
         const completePercentage = Math.ceil((drawingComplete/drawingcount)*100);
         const pendingPercentage = Math.ceil((drawingPending/drawingcount)*100);
@@ -161,7 +175,7 @@ export default class Drawings extends Component {
             </div>
             <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
               <div className="card card-hover shadow-sm" title="Revision Insights">
-                <h1 className="m-2">14</h1>
+                <h1 className="m-2">{revisioncount}</h1>
                 <h3 className="h5 nav-heading-title mb-0 m-2">Revision</h3>
                 {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
               </div>

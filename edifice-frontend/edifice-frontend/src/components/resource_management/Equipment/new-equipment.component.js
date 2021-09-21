@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import cogoToast from "cogo-toast";
+
 import EquipmentDataService from "./../../../services/equipment.service";
 import EquipmentCategoryDataService from "./../../../services/equipment-category.service";
 
@@ -92,6 +94,7 @@ class NewEquip extends Component {
           category: response.data.category,
         });
         console.log(response.data);
+        cogoToast.success("Equipment Added successfully!");
         window.location.reload();
       })
       .catch(e => {
@@ -166,10 +169,10 @@ class NewEquip extends Component {
                       id="condition"
                       value={this.state.condition}
                       onChange={this.onChangeCondition}>
-                      <option value="good">- - </option>
-                      <option value="good">Good(New)</option>
-                      <option value="fair">Fair</option>
-                      <option value="poor">Poor</option>
+                      <option value="Good">- - </option>
+                      <option value="Good">Good(New)</option>
+                      <option value="Fair">Fair</option>
+                      <option value="Poor">Poor</option>
                     </select>
                   </div>
                 </div>

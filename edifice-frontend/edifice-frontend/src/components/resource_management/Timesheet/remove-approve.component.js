@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TimesheetDataService from "../../../services/timesheet.service";
+import cogoToast from "cogo-toast";
 
 class Approve extends Component {
   constructor(props) {
@@ -30,6 +31,7 @@ class Approve extends Component {
         }));
         console.log(response.data);
         window.location.reload();
+        cogoToast.success("Approval removed!");
       })
       .catch(e => {
         console.log(e);

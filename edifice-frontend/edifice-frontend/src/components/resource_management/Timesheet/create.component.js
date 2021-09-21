@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 
 import TimesheetDataService from "./../../../services/timesheet.service";
 
-
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import cogoToast from "cogo-toast";
 
 class CreateTimesheet extends Component {
   constructor(props) {
@@ -54,9 +52,12 @@ class CreateTimesheet extends Component {
         });
         console.log(response.data);
         window.location.reload();
+        cogoToast.success("New Timesheet created!");
+
       })
       .catch(e => {
         console.log(e);
+        cogoToast.error("Error!");
       });
   }
 
@@ -112,7 +113,7 @@ class CreateTimesheet extends Component {
                 data-dismiss="modal"
                 onClick={this.saveTimesheet}>
                 Create
-                        </button>
+              </button>
             </div>
           </div>
         </div>
