@@ -482,7 +482,7 @@ class App extends Component {
               {/* {/<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />/} */}
               <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
               <Route exact path="/addsov/:pid/:id" component={AddSov} />
-              <Route path="/viewdirectcost/:pid/:id" component={ViewSingleDirectCost} />
+              <Route path="/viewdirectcost/:id" component={ViewSingleDirectCost} />
               {/* <Route path="/viewsov/:id" component={ViewSingleSov} />*/}
               <Route exact path="/viewsov/:pid/:id" component={SovHome} />
 
@@ -490,7 +490,7 @@ class App extends Component {
               <Route path="/addpayment/:id" component={AddPayment} />
               <Route path="/viewpayment/:id" component={PaymentHome} />
               <Route path="/editcommitment/:id" component={EditSingleCommitment} />
-              <Route path="/viewsinglesov/:pid/:id" component={ViewSingleSov} />
+              <Route path="/viewsinglesov/:id" component={ViewSingleSov} />
               <Route path="/viewbudget/:id" component={ViewSingleBudget} />
               <Route path="/excelupload/:id" component={UploadExcel} />
               <Route path="/budgetestimates/:id" component={EstimateBudget} />
