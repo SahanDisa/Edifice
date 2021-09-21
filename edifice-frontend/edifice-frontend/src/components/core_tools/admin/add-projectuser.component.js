@@ -12,6 +12,7 @@ import TimelineDot from '@material-ui/lab/TimelineDot';
 import { Breadcrumbs } from "@material-ui/core";
 import EmployeeDataService from "./../../../services/employee.service";
 import cogoToast from "cogo-toast";
+import Alert from "react-bootstrap/Alert";
 
 export default class AssignUserProject extends Component {
   constructor(props) {
@@ -312,6 +313,11 @@ export default class AssignUserProject extends Component {
                 <TimelineContent><h5><strong>Step 4 </strong>Assign users for the project</h5></TimelineContent>
               </TimelineItem>
             </Timeline>
+            <Alert variant="warning">
+              <h6>Warning!</h6>
+              <b>To successfully assign a user, make sure to select correct username and position</b><br/>
+              You can verify before adding users from <a href="/employees">employee section</a>
+            </Alert>
             </div>
           </div>
           </div>
