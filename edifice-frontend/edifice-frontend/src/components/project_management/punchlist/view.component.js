@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
 import cogoToast from 'cogo-toast';
+import punchlisttypesService from "../../../services/project_management/punchlisttypes.service.js";
 
 class PLIView extends Component {
     constructor(props) {
@@ -33,10 +34,20 @@ class PLIView extends Component {
   
     componentDidMount() {
         this.retrivePLItemInfo(this.props.match.params.pliid);
+        this.retriveType(this.props.match.params.pliid);
     }
 
     retrivePLItemInfo(plid){
         PunchlistDataService.getOne(plid)
+        .then(response => {
+            this.setState({
+                plItem: response.data
+            });
+        });
+    }
+
+    retrivePLItemInfo(plid){
+        punchlisttypesService.getType(plid)
         .then(response => {
             this.setState({
                 plItem: response.data

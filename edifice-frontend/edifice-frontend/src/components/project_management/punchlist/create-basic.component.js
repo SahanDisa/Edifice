@@ -56,20 +56,17 @@ class CreatePL extends Component {
             this.setState({
                 pltypes: response.data
             });
-        console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
         });
     }
 
     retrieveUsers(id){
-        ProjectUserDataService.getProjectUserDetails(id)
+        ProjectUserDataService.searchUserDetails(id, "Engineer")
         .then(response => {
             this.setState({
                 users: response.data
             });
         console.log(response.data);
+        console.log("enineer gaththa");
         })
         .catch(e => {
             console.log(e);
@@ -145,10 +142,6 @@ class CreatePL extends Component {
 
                 submitted: true
             });
-            console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
         });
         cogoToast.success("Punch List - Basic Details Saved Successfully!", { position: 'top-right', heading: 'success' });
     }
@@ -168,8 +161,6 @@ class CreatePL extends Component {
 
     render() {
         const {lastpl, pltypes, buttonChanger, projectId, projectmanager, currentUser, users} = this.state;
-        console.log("users");
-        console.log(users);
         return (
         <div className="">
             <div className="">

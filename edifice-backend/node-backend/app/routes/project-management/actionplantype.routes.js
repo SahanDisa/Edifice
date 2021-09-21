@@ -12,6 +12,9 @@ module.exports = app => {
     // Delete a action plan type with id
     router.delete("/delete/:id/", actionplantype.delete);
 
+    // Search Action plan type
+    router.get("/search/:id", actionplantype.searchAll);
+
     // Retrieve a single action plan type with id
     router.get("/single/:id", actionplantype.findOne);
   

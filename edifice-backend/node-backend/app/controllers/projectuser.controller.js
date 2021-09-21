@@ -148,17 +148,19 @@ exports.getProjectUserDetails = (req,res)=>{
     });
 }
 
-exports.getUserDetails = (req,res)=>{
-  id = req.params.id;
-
-  db.sequelize.query('select projectuser.*, users.* FROM projectuser, users where projectuser.userId = users.id AND projectuser.projectId = '+id+' AND projectuser.position = "Engineer";',
-   { type: db.sequelize.QueryTypes.SELECT})
+exports.searchUser = (req,res)=>{
+  const position = req.query.position;
+  const id = req.params.id;
+  db.sequelize.query('select p.position, u.username FROM projectuser p, users u where p.userId = u.id AND p.projectId = '+id+' AND p.position = "'+position+'";',
+  { type: db.sequelize.QueryTypes.SELECT})
+  // ProjectUser.findAll({ where: condition })
   .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Could not get the project user project details=" + id
-      });
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving projects."
     });
+  });
 }

@@ -144,3 +144,20 @@ exports.findAllApproved = (req, res) => {
     });
   });
 };
+
+// Search All
+exports.SearchAll = (req, res) => {
+  const name = req.query.name;
+  const id = req.params.id;
+  var condition = name ? { name: { [Op.like]: `%${name}%` }, projectId: id } : null;
+  ActionPlan.findAll({ where: condition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving projects."
+      });
+    });
+};

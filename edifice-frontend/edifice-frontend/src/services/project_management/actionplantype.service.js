@@ -24,6 +24,10 @@ class ActionPlanTypeDataService {
   getAll(id) {
     return http.get(`/projects/actionplantype/all/${id}`);
   }
+
+  findByTitle(title, id) {
+    return http.get(`/projects/actionplantype/search?title=${title}/${id}`);
+  }
 }
 
 export default new ActionPlanTypeDataService();

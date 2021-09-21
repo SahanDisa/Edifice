@@ -17,7 +17,7 @@ export default class AddActionPlan extends Component {
 
     this.state = {
       id: null,
-      title: "",
+      name: "",
       planmanager: "",
       actiontype: "",
       location: "",
@@ -36,7 +36,16 @@ export default class AddActionPlan extends Component {
   }
   onChangeName(e) {
     this.setState({
-      title: e.target.value
+      name: e.target.value
+    });
+    ActionPlanTypeDataService.findByTitle(e.target.value, this.props.match.params.id)
+    .then((response) => {
+      this.setState({
+        isTitleValid: response.data.length,
+      });
+    })
+    .catch((e) => {
+      console.log(e);
     });
   }
 
@@ -78,7 +87,7 @@ export default class AddActionPlan extends Component {
   }
   saveActionPlan() {  
     var data = {
-      title: this.state.title,
+      name: this.state.name,
       planmanager:this.state.planmanager,
       actiontype: this.state.actiontype,
       location: this.state.location,
@@ -91,7 +100,7 @@ export default class AddActionPlan extends Component {
       .then(response => {
         this.setState({
           id: response.data.id,
-          title: response.data.title,
+          name: response.data.name,
           description: response.data.description,
           actiontype: response.data.actiontype,
           location: response.data.location,
@@ -111,7 +120,7 @@ export default class AddActionPlan extends Component {
   newDrawing() {
     this.setState({
       id: null,
-      title: "",
+      name: "",
       description: "",
       actiontype: "",
       location: "",
@@ -137,15 +146,16 @@ export default class AddActionPlan extends Component {
             <div className="">
               <div className="form-row">
                 <div className="form-group col-md-9">
-                  <label htmlFor="title">Title</label>
+                  <label htmlFor="name">Name</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="title"
+                    id="name"
                     required
-                    value={this.state.title}
+                    placeholder="Enter a action plan name"
+                    value={this.state.name}
                     onChange={this.onChangeName}
-                    name="title"
+                    name="name"
                   />
                 </div>
                 <div className="form-group col-md-3">
