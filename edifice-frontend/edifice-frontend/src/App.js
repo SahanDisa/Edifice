@@ -163,6 +163,7 @@ import Report from "./components/report/report.component";
 import UploadExcel from "./components/financial_management/direct-costs/excelupload.component";
 import EstimateBudget from "./components/financial_management/budget/budgetestimates.component";
 import BUploadExcel from "./components/financial_management/budget/bexcelupload.component";
+import CommitmentCompletedHome from "./components/financial_management/commitments/commitmentsCompleted.component";
 
 class App extends Component {
   constructor(props) {
@@ -495,6 +496,7 @@ class App extends Component {
               <Route path="/excelupload/:id" component={UploadExcel} />
               <Route path="/budgetestimates/:id" component={EstimateBudget} />
               <Route path="/bexcelupload/:id" component={BUploadExcel} />
+              <Route path="/commitmentCompleted/:id" component={CommitmentCompletedHome} />
 
               {/*Report and PDF */}
               <Route path="/report/" component={Report} />
