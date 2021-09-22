@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import cogoToast from "cogo-toast";
 
 import ScheduleDataService from "./../../../services/schedule.service";
+import MeetingDataService from "./../../../services/project_management/meeting.service";
 import AuthService from "./../../../services/auth.service";
 
 import Paper from '@material-ui/core/Paper';
@@ -124,11 +125,26 @@ export default class Schedule extends React.PureComponent {
     this.changeEditingAppointment = this.changeEditingAppointment.bind(this);
     this.currentDateChange = (currentDate) => { this.setState({ currentDate }); };
     this.retrieveAppointments = this.retrieveAppointments.bind(this);
+    this.retrieveMeetings = this.retrieveMeetings.bind(this);
   }
 
   componentDidMount() {
     const user = AuthService.getCurrentUser().id;
     this.retrieveAppointments(user);
+    this.retrieveMeetings(this.props.match.params.id);
+  }
+
+  retrieveMeetings(id) {
+    MeetingDataService.getMeetings(id)
+      .then(response => {
+        this.setState({
+          data1: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   retrieveAppointments(id) {
@@ -224,7 +240,7 @@ export default class Schedule extends React.PureComponent {
 
 
   render() {
-    const { currentDate, data, addedAppointment, appointmentChanges, editingAppointment, id } = this.state;
+    const { currentDate, data, addedAppointment, appointmentChanges, editingAppointment, id, data1 } = this.state;
 
     return (
 
