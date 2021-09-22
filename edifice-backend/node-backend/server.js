@@ -58,9 +58,9 @@ require('./app/routes/budget.routes')(app);
 require('./app/routes/directcost.routes')(app);
 require('./app/routes/commitment.routes')(app);
 require('./app/routes/sov.routes')(app);
-require('./app/routes/primecontract.routes')(app);
-require('./app/routes/invoice.routes')(app);
-require('./app/routes/payment.routes')(app);
+// require('./app/routes/primecontract.routes')(app);
+// require('./app/routes/invoice.routes')(app);
+// require('./app/routes/payment.routes')(app);
 require('./app/routes/excel.routes')(app);
 //require('./app/routes/bexcel.routes')(app);
 
@@ -74,9 +74,9 @@ require('./app/routes/employee.routes')(app);
 require('./app/routes/employee-designation.routes')(app);
 require('./app/routes/schedule.routes')(app);
 
-require('./app/routes/primecontract.routes')(app);
-require('./app/routes/invoice.routes')(app);
-require('./app/routes/payment.routes')(app);
+// require('./app/routes/primecontract.routes')(app);
+// require('./app/routes/invoice.routes')(app);
+// require('./app/routes/payment.routes')(app);
 
 require('./app/routes/project-management/meeting.routes')(app);
 require('./app/routes/project-management/meetingcategory.routes')(app);

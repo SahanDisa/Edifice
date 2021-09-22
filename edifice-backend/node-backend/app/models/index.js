@@ -75,9 +75,9 @@ db.budgets = require("./budget.model.js")(sequelize, Sequelize);
 db.directcosts = require("./directcost.model.js")(sequelize, Sequelize);
 db.commitments = require("./commitment.model.js")(sequelize, Sequelize);
 db.sovs = require("./sov.model.js")(sequelize, Sequelize);
-db.primecontracts = require("./primecontract.model.js")(sequelize, Sequelize);
-db.invoices = require("./invoice.model.js")(sequelize, Sequelize);
-db.payments = require("./payment.model.js")(sequelize, Sequelize);
+// db.primecontracts = require("./primecontract.model.js")(sequelize, Sequelize);
+// db.invoices = require("./invoice.model.js")(sequelize, Sequelize);
+// db.payments = require("./payment.model.js")(sequelize, Sequelize);
 db.costcodes = require("./costcode.model.js")(sequelize, Sequelize);
 
 // Resource management
@@ -455,24 +455,24 @@ db.sovs.belongsTo(db.projects, {
 });
 
 // One commitment has many 
-db.commitments.hasMany(db.payments, {
-  as: "payments"
-});
-db.payments.belongsTo(db.commitments, {
-  foreignKey: "commitmentId",
-  as: "commitment",
-});
+// db.commitments.hasMany(db.payments, {
+//   as: "payments"
+// });
+// db.payments.belongsTo(db.commitments, {
+//   foreignKey: "commitmentId",
+//   as: "commitment",
+// });
 
 
 
 // One commitment has many invoices
-db.commitments.hasMany(db.invoices, {
-  as: "invoices"
-});
-db.invoices.belongsTo(db.commitments, {
-  foreignKey: "commitmentId",
-  as: "commitment",
-});
+// db.commitments.hasMany(db.invoices, {
+//   as: "invoices"
+// });
+// db.invoices.belongsTo(db.commitments, {
+//   foreignKey: "commitmentId",
+//   as: "commitment",
+// });
 // ----------- Finance Management Ends -----------
 
 // ----------- Resource Management Starts --------
