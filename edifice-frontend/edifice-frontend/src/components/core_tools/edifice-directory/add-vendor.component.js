@@ -16,7 +16,7 @@ class AddVendor extends Component {
     this.onChangeContactPersonName = this.onChangeContactPersonName.bind(this);
     this.saveVendor = this.saveVendor.bind(this);
     this.newVendor = this.newVendor.bind(this);
-    //this.retriveVendors = this.retrieveVendors.bind(this);
+    this.displayResult = this.displayResult.bind(this);
     this.state = {
       companyName: "",
       type: "",
@@ -29,7 +29,8 @@ class AddVendor extends Component {
       lastVendorID:undefined,
       currentIndex: -1,
       id: undefined,
-      disableSubmitButton:true
+      disableSubmitButton:true,
+      isSuccess: true
     };
   }
   componentDidMount() {
@@ -99,7 +100,13 @@ class AddVendor extends Component {
         console.log(e);
         //console.log(data);
       });
-    //this.state.getLastvendorID();
+    this.state.getLastvendorID();
+
+    this.setState({
+      isSuccess: true
+    })
+
+    this.displayResult();
   }
 
   newVendor() {
