@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import cogoToast from "cogo-toast";
+import Alert from "react-bootstrap/Alert";
 
 import WorkerDataService from "./../../../services/worker.service";
 import CrewDataService from "./../../../services/crew.service";
@@ -21,12 +22,14 @@ class AddWorker extends Component {
 
 
     this.state = {
-      wId: null,
+      wId: "",
       firstName: "",
       lastName: "",
       mobile: "",
       crewId: "",
       crews: [],
+      isNICValid: -1,
+      isMobileValid: -1,
       //projectId: this.props.match.params.id
       projectId: 1
 
@@ -54,6 +57,16 @@ class AddWorker extends Component {
     this.setState({
       wId: e.target.value
     });
+
+    WorkerDataService.findVaildNIC(e.target.value)
+      .then(response => {
+        this.setState({
+          isNICValid: response.data.length
+        });
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   onChangefirstName(e) {
@@ -72,6 +85,17 @@ class AddWorker extends Component {
     this.setState({
       mobile: e.target.value
     });
+
+    WorkerDataService.findVaildMobile(e.target.value)
+      .then(response => {
+        this.setState({
+          isMobileValid: response.data.length
+        });
+      })
+      .catch(e => {
+        console.log(e);
+      });
+
   }
 
   onChangecrewId(e) {
@@ -81,38 +105,50 @@ class AddWorker extends Component {
   }
 
   saveWorker() {
-    var data = {
-      wId: this.state.wId,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      mobile: this.state.mobile,
-      crewId: this.state.crewId,
-      projectId: this.props.projectId
-    };
+    if (this.state.isNICValid > 0) {
+      cogoToast.error('NIC is already added');
+    } else if (this.state.wId.length != 10) {
+      cogoToast.error('Invalid NIC number');
+    } else if (this.state.mobile.length !== 10) {
+      cogoToast.error('Invalid mobile number');
+    } else if (this.state.isMobileValid > 0) {
+      cogoToast.error('Mobile number is already added');
+    } else {
+
+      var data = {
+        wId: this.state.wId,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        mobile: this.state.mobile,
+        crewId: this.state.crewId,
+        projectId: this.props.projectId
+      };
 
 
-    WorkerDataService.create(data)
-      .then(response => {
-        this.setState({
-          wId: response.data.wId,
-          firstName: response.data.firstName,
-          lastName: response.data.lastName,
-          mobile: response.data.mobile,
-          crewId: response.data.crewId,
-          projectId: this.state.projectId,
+      WorkerDataService.create(data)
+        .then(response => {
+          this.setState({
+            wId: response.data.wId,
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            mobile: response.data.mobile,
+            crewId: response.data.crewId,
+            projectId: this.state.projectId,
 
+          });
+          console.log(response.data);
+          this.props.history.push('/crew/1');
+          cogoToast.success("Worker added successfully!");
+        })
+        .catch(e => {
+          console.log(e);
         });
-        console.log(response.data);
-        this.props.history.push('/crew/1');
-        cogoToast.success("Worker added successfully!");
-      })
-      .catch(e => {
-        console.log(e);
-      });
+
+    }
   }
 
   render() {
-    const { crews, projectId } = this.state;
+    const { crews, projectId, isNICValid, isMobileValid } = this.state;
     return (
       <div>
         <div className="row">
@@ -177,6 +213,18 @@ class AddWorker extends Component {
                 value={this.state.wId}
                 onChange={this.onChangewId}
                 name="wId" />
+
+              <div className="form-group">
+                {this.state.wId.length === 10 || this.state.wId.length === 0 ?
+                  (isNICValid > 0) ?
+                    <Alert variant="danger">
+                      Worker is already added
+                    </Alert> : "" :
+                  <Alert variant="danger">
+                    Invalid NIC number
+                  </Alert>}
+              </div>
+
             </div>
 
             <div class="col-6">
@@ -189,6 +237,17 @@ class AddWorker extends Component {
                 value={this.state.mobile}
                 onChange={this.onChangemobile}
                 name="mobile" />
+
+              <div className="form-group">
+                {this.state.mobile.length === 10 || this.state.mobile.length === 0 ?
+                  (isMobileValid > 0) ?
+                    <Alert variant="danger">
+                      Mobile number is already added
+                    </Alert> : "" :
+                  <Alert variant="danger">
+                    Invalid mobile number
+                  </Alert>}
+              </div>
             </div>
           </div>
         </div>

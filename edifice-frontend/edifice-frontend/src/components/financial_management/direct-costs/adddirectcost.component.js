@@ -241,7 +241,7 @@ if(directcost.receivedDate <= directcost.paidDate){
                 className={`form-control ${errors.description ? 'is-invalid' : ''}`}
               />
               <datalist id="suggest">
-                                            <option value="LCD Monitor for finance department 001">LCD Monitor for finance department 001</option>
+                                            <option value="bond paper 3 bundles for architectural drawings">bond paper 3 bundles for architectural drawings</option>
                                             <option value="telephone cost in finance department">telephone cost in finance department</option>
                                     </datalist>
                <div className="invalid-feedback">{errors.description?.message}</div>
