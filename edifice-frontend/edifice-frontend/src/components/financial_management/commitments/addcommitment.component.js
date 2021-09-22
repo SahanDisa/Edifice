@@ -37,7 +37,7 @@ const AddCommitment = (props) => {
     .typeError('Select a valid Date') 
     .min(
       Yup.ref('startDate'),
-      "Estimated Completion Date can't be before Start Date"
+      "Estimated Completion Date can't be before Start Date or Signed Contract Received Date"
     ),
     
   });
@@ -155,7 +155,7 @@ signedContractReceivedDate:commitment.signedContractReceivedDate,
       });
   }
   */   
-
+  if(commitment.signedContractReceivedDate <= commitment.estimatedCompletionDate && commitment.signedContractReceivedDate <= commitment.startDate && commitment.startDate <= commitment.estimatedCompletionDate ){
     CommitmentDataService.create(data)
       .then(response => {
         setCommitment({
@@ -180,6 +180,7 @@ signedContractReceivedDate:response.data.signedContractReceivedDate,
       .catch(e => {
         console.log(e);
       });
+    }
   };
 
   const newCommitment = () => {
@@ -226,7 +227,7 @@ signedContractReceivedDate:response.data.signedContractReceivedDate,
     
               <input
                 type="text"
-            
+            list="suggest"
                 id="title"
                {...register('title')}
                 value={commitment.title}
@@ -234,6 +235,10 @@ signedContractReceivedDate:response.data.signedContractReceivedDate,
                 name="title"
 className={`form-control ${errors.title ? 'is-invalid' : ''}`}
               />
+                          <datalist id="suggest">
+                                            <option value="Concrete Reinforcement, Cast-In-Place Concrete, Slab Foundations">Concrete Reinforcement, Cast-In-Place Concrete, Slab Foundations</option>
+                                            
+                                    </datalist>
 <div className="invalid-feedback">{errors.title?.message}</div>
               </div>
               <div className="form-group">

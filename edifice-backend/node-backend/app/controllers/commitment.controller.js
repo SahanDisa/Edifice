@@ -131,37 +131,18 @@ exports.update = (req, res) => {
 };
 
 /*********************************************** */
-// exports.findByContractCompany= (req, res) => {
-//   const id = req.params.id;
-//   //const costCode = req.query.costCode;
-//   const title = req.params.title;
-//     //var condition = costCode ? { costCode: { [Op.like]: `%${costCode}%` } } : null;
-
-//   Commitment.findAll({ where: {
-//     projectId: id,
-//     //condition:condition
-//    title : title
-//   }})
-//     .then(data => {
-//       res.send(data);
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message: "Error retrieving Project Budget with id=" + id
-//       });
-//     });  
-// };
-
-exports.findByTitle= (req, res) => {
+exports.findByContractCompany= (req, res) => {
   const id = req.params.id;
   //const costCode = req.query.costCode;
-  const title = req.params.title;
+  const contractCompany = req.params.contractCompany;
+  const status = req.params.status;
     //var condition = costCode ? { costCode: { [Op.like]: `%${costCode}%` } } : null;
 
   Commitment.findAll({ where: {
     projectId: id,
     //condition:condition
-   title : title,
+   contractCompany: contractCompany ,
+   status:status,
    published:true
   }})
     .then(data => {
@@ -173,6 +154,30 @@ exports.findByTitle= (req, res) => {
       });
     });  
 };
+
+// exports.findByTitle= (req, res) => {
+//   const id = req.params.id;
+//   //const costCode = req.query.costCode;
+//   const title = req.params.title;
+//   const status = req.params.status;
+//     //var condition = costCode ? { costCode: { [Op.like]: `%${costCode}%` } } : null;
+
+//   Commitment.findAll({ where: {
+//     projectId: id,
+//     //condition:condition
+//    title : title,
+//    published:true,
+//    status : status
+//   }})
+//     .then(data => {
+//       res.send(data);
+//     })
+//     .catch(err => {
+//       res.status(500).send({
+//         message: "Error retrieving Project Budget with id=" + id
+//       });
+//     });  
+// };
 
 exports.findByStatusOngoing= (req, res) => {
   const id = req.params.id;

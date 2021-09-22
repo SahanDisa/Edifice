@@ -249,15 +249,15 @@ export default class Register extends Component {
 
   //Generate Password
   generatePassword(){
-    //var generator = require('generate-password');
+    var generator = require('generate-password');
 
-    // var password = generator.generate({
-	  // length: 10,
-	  // numbers: true
-    // });
+    var password = generator.generate({
+	  length: 10,
+	  numbers: true
+    });
 
     this.setState({
-      password: "12345",
+      password: password,
       signupDisabled: false
     });
 

@@ -127,6 +127,7 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
 
 
   const updateSov= () => {
+    if(currentSov.description !== ""){
     SovDataService.update(currentSov.id, currentSov)
       .then(response => {
         console.log(response.data);
@@ -137,6 +138,7 @@ const [currentCommitment, setCurrentCommitment] = useState(initialCommitmentStat
       .catch(e => {
         console.log(e);
       });
+    }
   };
 
   const updatePublished = (status) => {

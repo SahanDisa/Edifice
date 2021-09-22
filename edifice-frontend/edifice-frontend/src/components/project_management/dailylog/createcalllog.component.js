@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import DLCallService from "../../../services/project_management/dlcall.service.js";
+import cogoToast from 'cogo-toast';
 
 class CreateDCL extends Component {
     constructor(props) {
@@ -64,6 +65,13 @@ class CreateDCL extends Component {
     }
 
     saveCallLog() {
+        if (this.state.date != "" &&
+        this.state.callfrom != "" &&
+        this.state.callto != "" &&
+        this.state.starttime != "" &&
+        this.state.endtime != "" &&
+        this.state.reason != "") {
+        if(this.state.starttime < this.state.endtime){
         var data = {
             date: this.state.date,
             callfrom: this.state.callfrom,
@@ -88,7 +96,16 @@ class CreateDCL extends Component {
 
                 submitted: true
             });
+            this.props.history.push("/dailylogs/"+ this.props.match.params.id);
+            window.location.reload();
+            cogoToast.success("Weather Log Saved Successfully!");
         });
+        } else {
+            cogoToast.error("End time should be greater than after the start time");
+        }
+        } else {
+            cogoToast.error("Field/s cannot be empty");
+        }
     }
     
     render() {
@@ -110,6 +127,7 @@ class CreateDCL extends Component {
                             <input
                                 className="form-control"
                                 name="title"
+                                max="2021-09-23"
                                 value={this.state.date}
                                 onChange={this.onChangeDate}
                                 type="date"

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import EquipmentDataService from "./../../../services/equipment.service";
 import EquipmentCategoryDataService from "./../../../services/equipment-category.service";
 
-import Card from 'react-bootstrap/Card';
 import { Modal } from "react-bootstrap";
 import Table from 'react-bootstrap/Table';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
@@ -22,6 +21,7 @@ class Equipment extends Component {
     this.retrieveEquipment = this.retrieveEquipment.bind(this);
     this.retrieveEquipmentCategory = this.retrieveEquipmentCategory.bind(this);
     this.searchTitle = this.searchTitle.bind(this);
+    this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
     this.retrieveProjects = this.retrieveProjects.bind(this);
 
     this.state = {
@@ -91,10 +91,10 @@ class Equipment extends Component {
   }
 
   searchTitle() {
-    EquipmentDataService.findByTitle(this.state.searchTitle)
+    EquipmentCategoryDataService.findByTitle(this.state.searchTitle)
       .then(response => {
         this.setState({
-          crews: response.data
+          categorys: response.data
         });
         console.log(response.data);
       })
@@ -152,7 +152,7 @@ class Equipment extends Component {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Search crew"
+                placeholder="Enter Equipment Category"
                 value={searchTitle}
                 onChange={this.onChangeSearchTitle}
               />

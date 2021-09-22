@@ -126,8 +126,8 @@ export default class Commitments extends Component {
     }
 
     searchContractCompany () {
-      const ongoingStatus ="Ongoing 🔴";
-      CommitmentDataService.findByContractCompany (this.state.id, this.state.searchContractCompany,ongoingStatus )
+      const completedStatus ="Completed 🟢";
+      CommitmentDataService.findByContractCompany (this.state.id, this.state.searchContractCompany,completedStatus  )
         .then(response => {
           this.setState({
             commitments: response.data
@@ -140,9 +140,8 @@ export default class Commitments extends Component {
     }
 
     // searchTitle () {
-    //   const ongoingStatus ="Ongoing 🔴";
-    //   // CommitmentDataService.findByTitle(this.state.id, this.state.searchTitle,ongoingStatus )
-    //   CommitmentDataService.findByTitle(this.state.id, this.state.searchTitle,ongoingStatus )
+    //     const completedStatus ="Completed 🟢";
+    //   CommitmentDataService.findByTitle(this.state.id, this.state.searchTitle,completedStatus )
     //     .then(response => {
     //       this.setState({
     //         commitments: response.data
@@ -160,7 +159,7 @@ export default class Commitments extends Component {
         .then(response => {
           this.setState({
             ongoingCount: response.data.length,
-            commitments: response.data
+           
           });
           console.log(response.data.length);
         })
@@ -174,7 +173,8 @@ export default class Commitments extends Component {
       CommitmentDataService.findByStatusCompleted(this.state.id,completedStatus)
         .then(response => {
           this.setState({
-            completedCount: response.data.length
+            completedCount: response.data.length,
+            commitments: response.data
           });
           console.log(response.data.length);
         })
@@ -212,7 +212,7 @@ export default class Commitments extends Component {
     }
     
     render() {
-        const { searchContractCompany,commitments ,currentIndex,id,sovTotal, ongoingCount,completedCount,subcontractors} = this.state;
+        const { searchContractCompany, commitments ,currentIndex,id,sovTotal, ongoingCount,completedCount,subcontractors} = this.state;
         const today = new Date();
         const date1 = new Date(commitments.startdate);
         const date2 = new Date(commitments.estimatedCompletionDate);
@@ -267,12 +267,13 @@ export default class Commitments extends Component {
             </div><br />
 
             <ul class="nav nav-tabs">  
-<li class="nav-item">
-                       <Link class="nav-link active" aria-current="page"to={"#"}><TimerIcon style={{ color: "red" }} />&nbsp;Ongoing Subcontracts</Link>
-            </li>
             <li class="nav-item">
-             <Link to={"/commitmentCompleted/" +id}  class="nav-link"><DoneIcon style={{ color: "green" }}/>&nbsp;Completed Subcontracts</Link>
+             <Link to={"/commitment/" +id}  class="nav-link"><TimerIcon style={{ color: "red" }} />&nbsp;Ongoing Subcontracts</Link>
             </li>
+<li class="nav-item">
+                       <Link class="nav-link active" aria-current="page"to={"#"}><DoneIcon style={{ color: "green" }}/>&nbsp;Completed Subcontracts</Link>
+            </li>
+           
 
           </ul><br />
 
@@ -297,15 +298,15 @@ export default class Commitments extends Component {
               value={searchContractCompany}
               onChange={this.onChangeSearchContractCompany}
             >
-                <option  value="" selected>All Subcontracts</option>
+              <option  value="" selected>All Subcontracts</option>
               {subcontractors &&
-              subcontractors.map((c, index) => (
+                subcontractors.map((c, index) => (
                 <option
                     value={c.companyName}
                     onChange={this.onChangeSearchContractCompany}
                     key={index}
                 >
-              
+                {/* unit data */}
                 {c.companyName}
                 </option>
                 ))}
@@ -320,10 +321,7 @@ export default class Commitments extends Component {
               </button>
             </div>
                       
-                      </div>
-
-       
-                      </div>
+                      </div></div>
                     </div>
             {/* Commitments List */}
             <ul className="list-group">

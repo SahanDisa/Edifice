@@ -27,11 +27,12 @@ class TimesheetDataService {
   update(id, data) {
     return http.put(`/timesheets/status/${id}`, data);
   }
-  /*
-    delete(id) {
-      return http.delete(`/projects/${id}`);
-    }
-  
+
+  findByDate(title) {
+    return http.get(`/timesheets?date=${title}`);
+  }
+
+  /* 
     deleteAll() {
       return http.delete(`/projects`);
     }

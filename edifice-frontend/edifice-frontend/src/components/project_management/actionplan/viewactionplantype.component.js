@@ -12,52 +12,40 @@ export default class viewAPType extends Component {
       super(props);
       this.retrieveCategoryAP = this.retrieveCategoryAP.bind(this);
       this.state = {
-        id: this.props.match.params.id,
+        id: "",
+        title: this.props.match.params.apid,
+        projectId: this.props.match.params.id,
         actionplans: [],
-        title: "",
-        description: "", 
-        projectId: ""
+        description: ""
       };
     }
   
     componentDidMount() {
-      this.retrieveCategoryAP(this.props.match.params.id);
-      this.retriveCategoryInfo(this.props.match.params.id);
+      this.retrieveCategoryAP(this.props.match.params.apid);
     }
 
-    retriveCategoryInfo(acid){
-      ActionPlanTypeDataService.getOne(acid)
-      .then(response => {
-        this.setState({
-          id: response.data.id,
-          title: response.data.title,
-          description: response.data.description,
-          projectId: response.data.projectId
-        });
-      });
-    }
-
-    retrieveCategoryAP(acid) {
-      ActionPlanDataService.getType(acid)
+    retrieveCategoryAP(apid) {
+      ActionPlanDataService.getType(apid)
       .then(response => {
         this.setState({
           actionplans: response.data
         });
+        console.log(response.data);
       })
     }
 
     render() {
-        const { id, title, description, projectId, actionplans } = this.state;
+        const { title, projectId, actionplans } = this.state;
+        console.log(projectId);
         return (
             <div>
                 <h2>Action Plan Type - {title}</h2>
                 <Breadcrumbs aria-label="breadcrumb">
                   <Link color="inherit" to="/home">Home</Link>
-                  <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
-                  <Link color="inherit" aria-current="page" className="disabledLink">Action Plan</Link>
+                  <Link color="inherit" to={"/projectmanagementhome/" + projectId}>App Dashboard</Link>
+                  <Link color="inherit" to={"/actionplan/" + projectId}>Action Plan</Link>
+                  <Link color="inherit" aria-current="page" className="disabledLink">View Action Plan Type</Link>
                 </Breadcrumbs><hr/>
-                
-                <hr />
                 <h3 className="mb-3">Action Plan List</h3>
                 <Table striped bordered hover variant="" responsive>
                     <thead>
@@ -82,7 +70,7 @@ export default class viewAPType extends Component {
                           <td>{api.isapprove == 0 ? "🔴 Not Approved": "🟢 Approved"}</td>
                           <td>
                             <Link to={"/viewactionplan/" + api.id}>
-                              <button className="btn btn-success m-2">Update <UpdateIcon/> </button>
+                              <button className="btn btn-success mr-2">Update <UpdateIcon/> </button>
                             </Link>
                             <Link to={"/viewdrawing/" + api.id}>
                               <button className="btn btn-danger">Delete <DeleteIcon/> </button>

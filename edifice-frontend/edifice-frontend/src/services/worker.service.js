@@ -8,10 +8,15 @@ class WorkerDataService {
   getAll() {
     return http.get(`/workers/list/`);
   }
-  /*  get(id) {
-    return http.get(`/projects/${id}`);
+
+  findVaildNIC(NIC) {
+    return http.get(`/workers/validNIC?NIC=${NIC}`);
   }
-  */
+
+  findVaildMobile(Mobile) {
+    return http.get(`/workers/validMobile?Mobile=${Mobile}`);
+  }
+
   create(data) {
     console.log(data)
     return http.post("/workers", data);
@@ -25,17 +30,17 @@ class WorkerDataService {
   delete(id) {
     return http.delete(`/workers/delete/${id}`);
   }
-/*
-  deleteAll() {
-    return http.delete(`/projects`);
-  }
-
-  findByTitle(title) {
-    return http.get(`/projects?title=${title}`);
-  }
-  userProjects(id){
-    return http.get(`/projects/user/list/${id}`);
-  }*/
+  /*
+    deleteAll() {
+      return http.delete(`/projects`);
+    }
+  
+    findByTitle(title) {
+      return http.get(`/projects?title=${title}`);
+    }
+    userProjects(id){
+      return http.get(`/projects/user/list/${id}`);
+    }*/
   // findPublished(){
   //   return http.get(`/projects?published=`)
   // }

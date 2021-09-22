@@ -140,7 +140,7 @@ class Workers extends Component {
         });
         console.log(response.data);
         window.location.reload();
-        cogoToast.success("Crew Added successfully!");
+        cogoToast.success("Worker Added successfully!");
       })
       .catch(e => {
         console.log(e);
@@ -186,7 +186,7 @@ class Workers extends Component {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Search crew"
+                placeholder="Enter Crew Name"
                 value={searchTitle}
                 onChange={this.onChangeSearchTitle}
               />

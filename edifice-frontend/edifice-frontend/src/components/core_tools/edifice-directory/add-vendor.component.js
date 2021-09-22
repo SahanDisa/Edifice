@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import {Link } from 'react-router-dom';
+import cogoToast from 'cogo-toast';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { Breadcrumbs } from "@material-ui/core";
 import VendorDataService from "./../../../services/vendor.service";
 
 class AddVendor extends Component {
@@ -12,10 +16,10 @@ class AddVendor extends Component {
     this.onChangeContactPersonName = this.onChangeContactPersonName.bind(this);
     this.saveVendor = this.saveVendor.bind(this);
     this.newVendor = this.newVendor.bind(this);
-    //this.retriveVendors = this.retrieveVendors.bind(this);
+    this.displayResult = this.displayResult.bind(this);
     this.state = {
       companyName: "",
-      type: "",
+      type: "Concrete",
       contactNo:"",
       email:"",
       contactPersonName: "",
@@ -24,7 +28,9 @@ class AddVendor extends Component {
       lastVendor:[],
       lastVendorID:undefined,
       currentIndex: -1,
-      id: undefined
+      id: undefined,
+      disableSubmitButton:true,
+      isSuccess: true
     };
   }
   componentDidMount() {
@@ -40,7 +46,8 @@ class AddVendor extends Component {
 
   onChangeType(e) {
     this.setState({
-      type: e.target.value
+      type: e.target.value,
+      disableSubmitButton: true
     });
   }
 
@@ -93,7 +100,13 @@ class AddVendor extends Component {
         console.log(e);
         //console.log(data);
       });
-    //this.state.getLastvendorID();
+    this.getLastVendorID();
+
+    this.setState({
+      isSuccess: true
+    })
+
+    this.displayResult();
   }
 
   newVendor() {
@@ -123,15 +136,54 @@ class AddVendor extends Component {
         });
   }
 
+  displayResult(){
+    //this.state.isSuccess
+    if(true){
+      cogoToast.success(
+        <div>
+          <div>Vendor <b>{this.state.name}</b>has been added Successfully</div>
+        </div>
+      );
+    }else{
+      cogoToast.error(
+        <div>
+          <div>Failed to add Vendor <b>{this.state.name}</b></div>
+        </div>
+      );
+      
+    }
+    
+
+    setTimeout(() => {
+      window.location.href="/vendor"
+    }, 2000);
+  }
+
   render() {
     const {lastproject, currentIndex} = this.state;
 
 
     return (
       <div className="container ">
-        <h2>New Vendor </h2><hr/>
+        <h2><AddCircleOutlineIcon/> NEW VENDOR </h2><hr/>
+
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link color="inherit" to="/home">
+            Home
+          </Link>
+          <Link color="inherit" to={"/admin"}>
+            Core Dashboard
+          </Link>
+          <Link color="inherit" to={"/vendor"}>
+            Vendors
+          </Link>
+          <Link color="inherit">
+            Add Vendor
+          </Link>
+        </Breadcrumbs>
+
         <div className="vendorBox" >
-          <h5>Enter necessary vendor details</h5>
+          <h5 className="mt-3">Enter necessary vendor details</h5>
 
           <label htmlFor="" hidden>Id</label>
           <input className="form-control" type="number" hidden/>
@@ -152,9 +204,9 @@ class AddVendor extends Component {
                 value={this.state.type}
                 onChange={this.onChangeType}
                 name="companyName" required>
-            <option value="concrete">concrete</option>
-            <option value="electronic">electronic</option>
-            <option value="other">other</option>
+            <option value="Concrete">Concrete</option>
+            <option value="Electronic">Electronic</option>
+            <option value="Other">Other</option>
           </select><br />
 
           <label htmlFor="">Contact No</label>
@@ -184,7 +236,7 @@ class AddVendor extends Component {
           <br/>
 
           <div className="row">
-            <a onClick={()=>{this.saveVendor(); setTimeout(this.setState.bind(this, {position:1}), 3000);}}className="btn btn-success">Add </a>
+            <a onClick={()=>{this.saveVendor(); setTimeout(this.setState.bind(this, {position:1}), 3000);}}className="btn btn-success" disabled={this.state.disableSubmitButton}>Add </a>
             <div className="pl-4">  
               <a className="btn btn-secondary" type="reset">Cancel</a>
             </div>

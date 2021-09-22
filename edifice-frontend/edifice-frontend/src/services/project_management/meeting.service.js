@@ -24,6 +24,10 @@ class MeetingDataService {
     getLastCatMeeting(id) {
         return http.get(`/projects/meetings/category/${id}`);
     }
+
+    findByTitle(name) {
+        return http.get(`/meetings?name=${name}`);
+      }
 }
 
 export default new MeetingDataService();

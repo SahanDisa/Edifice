@@ -215,13 +215,17 @@ estimatedBudget: Yup.number()
             
                 id="description"
                 
-           
+           list="suggest"
                 name="description"
                 {...register('description')}
                 value={budget.description}
                 onChange={handleInputChange}
                 className={`form-control ${errors.description ? 'is-invalid' : ''}`}
               />
+                <datalist id="suggest">
+                                            <option value="Concrete Subcontractor,Concrete Reinforcement...">Concrete Subcontractor,Concrete Reinforcement...</option>
+                                            
+                                    </datalist>
                <div className="invalid-feedback">{errors.description?.message}</div>
             </div>
 

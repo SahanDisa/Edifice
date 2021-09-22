@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import MeetingDataService from "../../../services/project_management/meeting.service.js";
-import MeetingCategoryDataService from "../../../services/project_management/meetingcategory.service.js";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import cogoToast from 'cogo-toast';
+import { TextareaAutosize } from "@material-ui/core";
 
 class ViewMeeting extends Component {
     constructor(props) {
@@ -65,7 +64,6 @@ class ViewMeeting extends Component {
                                     className="form-control"
                                     name="name"
                                     value={meeting.name}
-                                    onChange={this.onChangeName}
                                     type="text"
                                     readOnly
                                 />
@@ -76,7 +74,6 @@ class ViewMeeting extends Component {
                                     className="form-control"
                                     name="category"
                                     value={meeting.category}
-                                    onChange={this.onChangeCategory}
                                     type="text"
                                     readOnly
                                 />
@@ -99,7 +96,6 @@ class ViewMeeting extends Component {
                                     className="form-control"
                                     name="date"
                                     value={meeting.date}
-                                    onChange={this.onChangeDate}
                                     type="date"
                                     readOnly
                                 />
@@ -110,7 +106,6 @@ class ViewMeeting extends Component {
                                     className="form-control"
                                     name="time"
                                     value={meeting.time}
-                                    onChange={this.onChangeTime}
                                     type="time"
                                     readOnly
                                 />
@@ -121,9 +116,20 @@ class ViewMeeting extends Component {
                                     className="form-control"
                                     name="location"
                                     value={meeting.location}
-                                    onChange={this.onChangeLocation}
                                     type="text"
                                     readOnly
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-md-12">
+                                <label htmlFor="">Description</label>
+                                <TextareaAutosize
+                                  className="form-control"
+                                  name="text"
+                                  value={meeting.description}
+                                  type="text"
+                                  readOnly
                                 />
                             </div>
                         </div>

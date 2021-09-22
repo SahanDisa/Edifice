@@ -14,7 +14,6 @@ class PunchlistDataService {
     }
 
     create(data) {
-        console.log("punch list service ekata enawa");
         return http.post(`/projects/punchlist/`, data);
     }
 
