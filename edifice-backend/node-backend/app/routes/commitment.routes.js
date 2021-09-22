@@ -22,7 +22,7 @@ module.exports = app => {
 
   router.get("/list/:id/:completed/status/completed",commitment.findByStatusCompleted);
 
-  router.get("/list/:id/:title/:status", commitment.findByTitle);
+  router.get("/list/:id/:contractCompany/:status", commitment.findByContractCompany);
 
       // Find Last Project
       router.get("/last/:id/view",commitment.findLastOne);

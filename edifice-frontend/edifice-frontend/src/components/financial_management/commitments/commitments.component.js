@@ -14,13 +14,13 @@ export default class Commitments extends Component {
     constructor(props) {
       super(props);
      
-      //this.onChangeSearchContractCompany = this.onChangeSearchContractCompany.bind(this);
-      this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
+      this.onChangeSearchContractCompany = this.onChangeSearchContractCompany.bind(this);
+      // this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
       // this.retrieveCommitment = this.retrieveCommitment.bind(this);
       this.refreshList = this.refreshList.bind(this);
       this.setActiveCommitment = this.setActiveCommitment.bind(this);
-      //this.searchContractCompany  = this.searchContractCompany.bind(this);
-      this.searchTitle  = this.searchTitle.bind(this);
+      this.searchContractCompany  = this.searchContractCompany.bind(this);
+      // this.searchTitle  = this.searchTitle.bind(this);
       this.getOngoingCount=this.getOngoingCount.bind(this);
       this.getCompletedCount=this.getCompletedCount.bind(this);
       this.deleteCommitment = this.deleteCommitment.bind(this);
@@ -32,8 +32,8 @@ export default class Commitments extends Component {
         currentCommitment: null,
         currentIndex: -1,
         content: "",
-        //searchContractCompany : "",
-        searchTitle : "",
+        searchContractCompany : "",
+        // searchTitle : "",
         sovTotal:"",
         ongoingCount: 0,
         completedCount: 0,
@@ -49,21 +49,21 @@ export default class Commitments extends Component {
       this.retrieveSubcontractors();
     }
 
-    // onChangeSearchContractCompany (e) {
-    //   const searchContractCompany  = e.target.value;
-  
-    //   this.setState({
-    //     searchContractCompany : searchContractCompany 
-    //   });
-    // }
-
-    onChangeSearchTitle (e) {
-      const searchTitle  = e.target.value;
+    onChangeSearchContractCompany (e) {
+      const searchContractCompany  = e.target.value;
   
       this.setState({
-        searchTitle : searchTitle
+        searchContractCompany : searchContractCompany 
       });
     }
+
+    // onChangeSearchTitle (e) {
+    //   const searchTitle  = e.target.value;
+  
+    //   this.setState({
+    //     searchTitle : searchTitle
+    //   });
+    // }
 
     // retrieveCommitment(id) {
     //   CommitmentDataService.getAll(id)
@@ -109,7 +109,7 @@ export default class Commitments extends Component {
     refreshList() {
       // this.retrieveCommitment();
       this.getOngoingCount();
-      //this.retrieveSubcontractors();
+      this.retrieveSubcontractors();
       //this.calculateTotalSovs();
       this.setState({
         currentCommitment: null,
@@ -125,23 +125,9 @@ export default class Commitments extends Component {
       });
     }
 
-    // searchContractCompany () {
-     
-    //   CommitmentDataService.findByContractCompany (this.state.id, this.state.searchContractCompany )
-    //     .then(response => {
-    //       this.setState({
-    //         commitments: response.data
-    //       });
-    //       console.log(response.data);
-    //     })
-    //     .catch(e => {
-    //       console.log(e);
-    //     });
-    // }
-
-    searchTitle () {
+    searchContractCompany () {
       const ongoingStatus ="Ongoing 🔴";
-      CommitmentDataService.findByTitle(this.state.id, this.state.searchTitle,ongoingStatus )
+      CommitmentDataService.findByContractCompany (this.state.id, this.state.searchContractCompany,ongoingStatus )
         .then(response => {
           this.setState({
             commitments: response.data
@@ -152,6 +138,21 @@ export default class Commitments extends Component {
           console.log(e);
         });
     }
+
+    // searchTitle () {
+    //   const ongoingStatus ="Ongoing 🔴";
+    //   // CommitmentDataService.findByTitle(this.state.id, this.state.searchTitle,ongoingStatus )
+    //   CommitmentDataService.findByTitle(this.state.id, this.state.searchTitle,ongoingStatus )
+    //     .then(response => {
+    //       this.setState({
+    //         commitments: response.data
+    //       });
+    //       console.log(response.data);
+    //     })
+    //     .catch(e => {
+    //       console.log(e);
+    //     });
+    // }
 
     getOngoingCount() {
       const ongoingStatus ="Ongoing 🔴";
@@ -211,7 +212,7 @@ export default class Commitments extends Component {
     }
     
     render() {
-        const { /*searchContractCompany*/ searchTitle , commitments ,currentIndex,id,sovTotal, ongoingCount,completedCount,subcontractors} = this.state;
+        const { searchContractCompany,commitments ,currentIndex,id,sovTotal, ongoingCount,completedCount,subcontractors} = this.state;
         const today = new Date();
         const date1 = new Date(commitments.startdate);
         const date2 = new Date(commitments.estimatedCompletionDate);
@@ -290,22 +291,22 @@ export default class Commitments extends Component {
                 <div className="col-md-4">
                 <div className="input-group mb-3">
                 <select
-              id="title"
+              id="contractCompany"
               className="form-control"
-              placeholder="Search by Contract Title"
-              value={searchTitle}
-              onChange={this.onChangeSearchTitle}
+              placeholder="Search by Contract Company"
+              value={searchContractCompany}
+              onChange={this.onChangeSearchContractCompany}
             >
               <option  selected value="">All Subcontracts</option>
-              {commitments &&
-                commitments.map((c, index) => (
+              {subcontractors &&
+              subcontractors.map((c, index) => (
                 <option
-                    value={c.title}
-                    onChange={this.onChangeSearchTitle}
+                    value={c.companyName}
+                    onChange={this.onChangeSearchContractCompany}
                     key={index}
                 >
-                {/* unit data */}
-                {c.title}
+              
+                {c.companyName}
                 </option>
                 ))}
               </select>
@@ -313,13 +314,16 @@ export default class Commitments extends Component {
               <button
                 className="btn btn-outline-secondary"
                 type="button"
-                onClick={this.searchTitle}
+                onClick={this.searchContractCompany}
               >
                 Search
               </button>
             </div>
                       
-                      </div></div>
+                      </div>
+
+       
+                      </div>
                     </div>
             {/* Commitments List */}
             <ul className="list-group">
