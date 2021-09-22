@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import CostCodeDataService from "./../../../services/costcode.service";
 import BudgetDataService from "./../../../services/budget.service";
 import DirectCostDataService from "./../../../services/directcost.service";
 import SovDataService from "./../../../services/sov.service";
@@ -366,12 +367,12 @@ Financial Management Home
 
 <td>{budget.id}</td>
                     <td>{budget.costCode}</td>
-                    <td>{(budget.btotal !== null) ? budget.btotal:"0.00"}</td>
+                    <td>{(budget.estimatedBudget !== null) ? budget.estimatedBudget:"0.00"}</td>
                     <td>{(budget.dtotal !== null ) ? budget.dtotal:"0.00" }</td>
                     <td>{(budget.stotal !== null ) ? budget.stotal:"0.00" }</td>
                     <td>{(Number(budget.stotal)+Number(budget.dtotal) !== null) ? parseFloat(Number(budget.stotal)+Number(budget.dtotal)).toFixed(2) : "0.00" }</td>
-                    <td>{( Number(Number(budget.stotal)+Number(budget.dtotal))-Number(budget.btotal) !== null) ?  parseFloat(Number(Number(budget.stotal)+Number(budget.dtotal))-Number(budget.btotal)).toFixed(2) : "0.00"}</td> 
-                    <td>{(Number(budget.stotal)+Number(budget.dtotal)) > budget.btotal ? <ArrowUpwardIcon style={{ color: "red" }}/>:(Number(budget.stotal)+Number(budget.dtotal)) < budget.btotal ? <ArrowDownwardIcon style={{ color: "green" }}/>:<CheckIcon/>}</td>    
+                    <td>{( Number(Number(budget.stotal)+Number(budget.dtotal))-Number(budget.estimatedBudget) !== null) ?  parseFloat(Number(Number(budget.stotal)+Number(budget.dtotal))-Number(budget.estimatedBudget)).toFixed(2) : "0.00"}</td> 
+                    <td>{(Number(budget.stotal)+Number(budget.dtotal)) > budget.estimatedBudget ? <ArrowUpwardIcon style={{ color: "red" }}/>:(Number(budget.stotal)+Number(budget.dtotal)) < budget.estimatedBudget ? <ArrowDownwardIcon style={{ color: "green" }}/>:<CheckIcon/>}</td>    
                     </tr>
                     ))}
                 </tbody>

@@ -240,7 +240,7 @@ updatePublished(rowIdx)
 </div></div>
 <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2" >
 <div className="card card-hover shadow-sm" style={{alignItems: "center"}} ><br />
-  <h3 className="h6 nav-heading-title mb-0 card-text-edifice">Total (Rs.) :&nbsp;<b> {parseFloat(budgetTotal).toFixed(2)}</b></h3>
+  <h3 className="h6 nav-heading-title mb-0 card-text-edifice">Total (Rs.) :&nbsp;<b> {isNaN(parseFloat(budgetTotal).toFixed(2))?"0.00":parseFloat(budgetTotal).toFixed(2)}</b></h3>
 <br />
 </div></div>
 </div>           

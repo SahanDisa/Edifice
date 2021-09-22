@@ -44,6 +44,12 @@ getTotalSovs(id){
 
 }
 
+getTotalSovByC(pid,id){
+
+  return http.get(`/commitments/sov/total/${pid}/${id}`);
+
+}
+
 getSTotalOfCostCodes(id,costCode){
 
   return http.get(`/commitments/sov/${id}/${costCode}/total`);
