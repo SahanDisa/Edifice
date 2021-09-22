@@ -83,7 +83,7 @@ export default class ForgetPassword extends Component {
           code: rand
         });
         //sendmail
-        emailjs.send('service_ufoheny','template_gthofqi',{
+        emailjs.send('service_ufoheny','template_eb701x4',{
           empname: "Forget Password",
           username: "By Edifice Admin",
           password: this.state.code,
