@@ -103,7 +103,9 @@ exports.findOne = (req, res) => {
 exports.findAll = (req, res) => {
   Meeting.findAll({ where: { 
     isDeleted: 0
-  }})
+  },
+  order: [['status', 'DESC'], ['date', 'DESC']]
+  })
   .then(data => {
     res.send(data);
   })
@@ -117,13 +119,8 @@ exports.findAll = (req, res) => {
 
 exports.findMetinCategory = (req, res) => {
   const id = req.params.id;
-  Meeting.findAll({
-    limit: 1,
-    order: [['id', 'DESC']]
-  },{ where: {
-    category: id,
-    isDeleted: 0,
-  }})
+  db.sequelize.query('select * from meetings where projectId = '+id+' and isDeleted = 0 order by id desc limit 1;',
+  { type: db.sequelize.QueryTypes.SELECT})
   .then(data => {
     res.send(data);
   })

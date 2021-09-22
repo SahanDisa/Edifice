@@ -14,9 +14,15 @@ module.exports = app => {
 
     // Retrive single daily log - accident for a project
     router.get("/single/:id", dlaccident.findOne);
-  
+
     // Retrieve all daily log - accident for a project
-    router.get("/list/:id", dlaccident.findAll);
-  
+    router.get("/list/:id", dlaccident.findAllweek);
+
+    // Retrieve all daily log - accident for a project
+    router.get("/list/all/:id", dlaccident.findAll);
+
+    // Retrieve all daily log - accident for a project
+    router.get("/today/:id", dlaccident.findToday);
+    
     app.use('/api/projects/dlaccident', router);
 };

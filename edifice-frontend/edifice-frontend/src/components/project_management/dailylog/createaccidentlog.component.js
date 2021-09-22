@@ -49,6 +49,10 @@ class CreateDAL extends Component {
     }
 
     saveAccidentLog() {
+        if (this.state.date != "" &&
+        this.state.time != "" &&
+        this.state.crew != "" &&
+        this.state.description != "") {
         var data = {
             date: this.state.date,
             time: this.state.time,
@@ -69,10 +73,13 @@ class CreateDAL extends Component {
 
                 submitted: true
             });
+            this.props.history.push("/dailylogs/"+ this.props.match.params.id);
+            window.location.reload();
+            cogoToast.success("Accident Log Saved Successfully!");
         })
-        this.props.history.push("/dailylogs/"+ this.props.match.params.id);
-        window.location.reload();
-        cogoToast.success("Accident Log Saved Successfully!", { position: 'top-right', heading: 'success' });
+        } else {
+            cogoToast.error("Field/s cannot be empty");
+        }
     }
     
     render() {
@@ -94,6 +101,7 @@ class CreateDAL extends Component {
                             <input
                                 className="form-control"
                                 name="date"
+                                max="2021-09-23"
                                 value={this.state.date}
                                 onChange={this.onChangeDate}
                                 type="date"

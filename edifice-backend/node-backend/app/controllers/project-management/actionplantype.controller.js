@@ -1,6 +1,7 @@
 const db = require("./../../models/index");
 const ActionPlanType = db.actionplantype;
 const sequelize = require("sequelize");
+const Op = db.Sequelize.Op;
 
 // create a drawing
 exports.create = (req, res) => {
@@ -82,12 +83,11 @@ exports.delete = (req, res) => {
 
 //Find a single drawing by Id
 exports.findOne = (req, res) => {
-  const id = req.params.id;
-  ActionPlanType.findByPk({id}, { where:
-    {
-      isDeleted: 0
-    }
-  })
+  const title = req.params.id;
+  ActionPlanType.findAll({ where: {
+    title: id,
+    isDeleted: 0
+  }})
   .then(data => {
     res.send(data);
   })
@@ -113,4 +113,21 @@ exports.findAll = (req, res) => {
       message: "Error retrieving ActionPlanType Drawings with id=" + id
     });
   });  
+};
+
+// Search All
+exports.searchAll = (req, res) => {
+  const title = req.query.title;
+  const id = req.params.id;
+  var condition = title ? { title: { [Op.like]: `%${title}%` }, projectId: id } : null;
+  ActionPlanType.findAll({ where: condition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving projects."
+      });
+    });
 };

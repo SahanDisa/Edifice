@@ -5,8 +5,7 @@ import UserService from "./../services/user.service";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
-import mainIcon from "././../assets/profile-gen.png";
-import buildIcon from "././../assets/PM/ibulldozer.png";
+import cogoToast from 'cogo-toast';
 import PersonIcon from '@material-ui/icons/Person';
 import Card from 'react-bootstrap/Card';
 import { Breadcrumbs } from "@material-ui/core";
@@ -60,12 +59,23 @@ export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.retrieveProjects = this.retrieveProjects.bind(this);
-
+    this.onChangePrevPassword = this.onChangePrevPassword.bind(this);
+    this.onChangeNewPassword = this.onChangeNewPassword.bind(this);
+    this.onChangeConfirmPassword = this.onChangeConfirmPassword.bind(this);
+    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
     this.state = {
       currentUser: AuthService.getCurrentUser(),
       projects: [],
+      username: "",
+      email: "",
       currentIndex: -1,
-      content: ""
+      prevPassword:"",
+      newPassword:"",
+      confirmPassword:"",
+      content: "",
+      updateButton: true,
+      pwButton: true
       //currentUserProfile: UserService.userProjects(currentUser.id)
     };
   }
@@ -84,6 +94,63 @@ export default class Profile extends Component {
       .catch(e => {
         console.log(e);
       });
+  }
+
+  onChangePrevPassword(e) {
+    this.setState({
+      prevPassword: e.target.value
+    });
+  }
+
+  onChangeUsername(e) {
+    this.setState({
+      username: e.target.value,
+      updateButton : false
+    });
+  }
+
+  onChangeEmail(e) {
+    this.setState({
+      email: e.target.value,
+      updateButton : false
+    });
+  }
+
+  onChangeNewPassword(e) {
+    this.setState({
+      newPassword: e.target.value
+    });
+    if(this.state.confirmPassword==e.target.value){
+      this.setState({
+        pwButton: false
+      });
+    }else{
+      this.setState({
+        pwButton: true
+      });
+    }
+  }
+
+  onChangeConfirmPassword(e) {
+    this.setState({
+      confirmPassword: e.target.value
+    });
+    if(this.state.newPassword==e.target.value){
+      this.setState({
+        pwButton: false
+      });
+    }else{
+      this.setState({
+        pwButton: true
+      });
+    }
+    // console.log(this.state.newPassword)
+    // console.log(this.state.confirmPassword)
+    // console.log(this.state.pwButton)
+  }
+
+  checkCurrentPW(){
+    console.log(this.state)
   }
 
   render() {
@@ -166,7 +233,7 @@ export default class Profile extends Component {
                 name="startDate"
               />
           </div>
-          <a href="#" className="btn btn-primary">Update Profile</a>
+          <button className="btn btn-primary" disabled={this.state.updateButton}>Update Profile</button>
           <hr></hr>
           <h3>Change Password</h3>
           <div className="form-group">
@@ -176,8 +243,7 @@ export default class Profile extends Component {
                 className="form-control"
                 id="startDate"
                 //required
-                value=""
-                // onChange={this.onChangeLocation}
+                onChange={this.onChangePrevPassword}
                 name="startDate"
               />
           </div>
@@ -188,8 +254,7 @@ export default class Profile extends Component {
                 className="form-control"
                 id="startDate"
                 //required
-                value=""
-                // onChange={this.onChangeLocation}
+                onChange={this.onChangeNewPassword}
                 name="startDate"
               />
           </div>
@@ -200,12 +265,11 @@ export default class Profile extends Component {
                 className="form-control"
                 id="startDate"
                 //required
-                value=""
-                // onChange={this.onChangeLocation}
+                onChange={this.onChangeConfirmPassword}
                 name="startDate"
               />
           </div>
-          <a href="#" className="btn btn-primary">Change Password</a>
+          <button className="btn btn-primary" disabled={this.state.pwButton} onClick={()=>this.checkCurrentPW()}>Change Password</button>
           </div>
           <div className="col-6">
           <h3>My Roles & Permission</h3>

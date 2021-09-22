@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import DLWeatherService from "../../../services/project_management/dlweather.service.js";
+import cogoToast from 'cogo-toast';
 
 class CreateDWL extends Component {
     constructor(props) {
@@ -90,6 +91,10 @@ class CreateDWL extends Component {
     }
 
     updateWeatherLog() {
+        if(this.state.dlweather.date != "" &&
+        this.state.dlweather.time != "" &&
+        this.state.dlweather.temperature != "" &&
+        this.state.dlweather.weather != "") {
         var data = {
             date: this.state.dlweather.date,
             time: this.state.dlweather.time,
@@ -105,8 +110,11 @@ class CreateDWL extends Component {
                     ...prevState.dlweather,
                 }
             }));
-            window.location.reload();
+            cogoToast.success("Weather Log Updated Successfully!");
         })
+    }else{
+        cogoToast.error("Field/s cannot be empty");
+    }
     }
 
     deleteWeatherLog(){
@@ -116,7 +124,8 @@ class CreateDWL extends Component {
         DLWeatherService.update(this.props.match.params.dlid, data)
         .then(response => {
             console.log(response.data);
-            // this.props.history.push('/punchlist/');
+            this.props.history.push('/dailylogs/'+ this.props.match.params.id);
+            cogoToast.success("Weather Log Deleted Successfully!");
         })
         .catch(e => {
             console.log(e);

@@ -17,8 +17,16 @@ class DLWeatherService {
     return http.get(`/projects/dlweather/single/${id}`);
   }
 
-  getAll(id) {
+  getAllweek(id) {
     return http.get(`/projects/dlweather/${id}`);
+  }
+  
+  getAll(id) {
+    return http.get(`/projects/dlweather/all/${id}`);
+  }
+
+  getToday(id) {
+    return http.get(`/projects/dlweather/today/${id}`);
   }
 }
 

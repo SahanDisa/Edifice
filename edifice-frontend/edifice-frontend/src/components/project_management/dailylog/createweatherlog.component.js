@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import DLWeatherService from "../../../services/project_management/dlweather.service.js";
+import cogoToast from 'cogo-toast';
 
 class CreateDWL extends Component {
     constructor(props) {
@@ -54,12 +55,15 @@ class CreateDWL extends Component {
     }
 
     saveWeatherLog() {
+        if(this.state.date != "" &&
+        this.state.time != "" &&
+        this.state.temperature != "" &&
+        this.state.weather != "") {
         var data = {
             date: this.state.date,
             time: this.state.time,
             temperature: this.state.temperature,
             weather: this.state.weather,
-            endtime: this.state.endtime,
             projectId: this.props.match.params.id
         };
 
@@ -76,12 +80,17 @@ class CreateDWL extends Component {
 
                 submitted: true
             });
-            console.log("save function service ekata enawa");
+            this.props.history.push("/dailylogs/"+ this.props.match.params.id);
+            window.location.reload();
+            cogoToast.success("Weather Log Saved Successfully!");
             console.log(response.data);
         })
         .catch(e => {
             console.log(e);
         });
+    } else {
+        cogoToast.error("Field/s cannot be empty");
+    }
     }
     
     render() {
@@ -105,6 +114,7 @@ class CreateDWL extends Component {
                                 name="title"
                                 value={this.state.date}
                                 onChange={this.onChangeDate}
+                                max="2021-09-23"
                                 type="date"
                                 required
                             />
@@ -116,6 +126,8 @@ class CreateDWL extends Component {
                                 name="time"
                                 type="time"
                                 value={this.state.time}
+                                min="07:00"
+                                max="22:00"
                                 onChange={this.onChangeTime}
                                 required
                             />

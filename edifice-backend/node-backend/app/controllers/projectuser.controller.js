@@ -153,11 +153,27 @@ exports.getProjectUserDetails = (req,res)=>{
   db.sequelize.query('select projectuser.id, projectuser.userId, projectuser.department, projectuser.position, projectuser.projectId, projects.title, projects.description, projects.location, projects.startdate, projects.enddate, projects.progressValue, projects.published FROM projectuser INNER JOIN projects ON projectuser.projectId = projects.id AND projectuser.userId = '+id+';',
    { type: db.sequelize.QueryTypes.SELECT})
   .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Could not get the project user project details=" + id
-      });
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Could not get the project user project details=" + id
     });
-}
+  });
+};
+
+exports.searchUser = (req,res)=>{
+  const position = req.params.position;
+  const id = req.params.id;
+  db.sequelize.query('select p.position, u.username FROM projectuser p, users u where p.userId = u.id AND p.projectId = '+id+' AND p.position = "'+position+'";',
+  { type: db.sequelize.QueryTypes.SELECT})
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving projects."
+    });
+  });
+};

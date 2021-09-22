@@ -60,3 +60,18 @@ exports.findOne = (req, res) => {
       });
     });  
 };
+
+exports.findType = (req, res) => {
+  const pliid = req.params.pliid;
+  const id = req.params.id;
+  db.sequelize.query('select pt.* FROM pltypes pt where id = (select type from punchlist where no = '+pliid+' and projectId = '+id+') and projectId='+id+';',
+  { type: db.sequelize.QueryTypes.SELECT})
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Error retrieving Punch List Types with id=" + id
+    });
+  });  
+};

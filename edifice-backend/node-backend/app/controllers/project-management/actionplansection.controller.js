@@ -84,11 +84,7 @@ exports.delete = (req, res) => {
 // Find a single ActionPlanSection with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  ActionPlanSection.findByPk({id}, { where:
-    {
-      isDeleted: 0
-    }
-  })
+  ActionPlanSection.findByPk(id)
   .then(data => {
     res.send(data);
   })
@@ -111,7 +107,7 @@ exports.findAll= (req, res) => {
   })
   .catch(err => {
     res.status(500).send({
-      message: "Error retrieving ActionPlanSection Drawings with id=" + id
+      message: "Error retrieving Action Plan Section with id=" + id
     });
   });  
 };

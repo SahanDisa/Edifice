@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Modal } from "react-bootstrap";
 import WorkedHoursDataService from "./../../../services/worked-hours.service";
+import Alert from "react-bootstrap/Alert";
+import cogoToast from "cogo-toast";
 
 class EditWorker extends Component {
     constructor(props) {
@@ -19,6 +21,7 @@ class EditWorker extends Component {
             //workers: [],
             //currentIndex: -1,
             //content: "",
+            flag: -1,
             currentWorker: {
                 workerWId: this.props.workerWId,
                 timesheetId: this.props.timesheetId,
@@ -31,7 +34,7 @@ class EditWorker extends Component {
                 tea_stop: this.props.tea_stop,
                 stop: this.props.stop
 
-            }
+            },
 
         };
     }
@@ -130,32 +133,43 @@ class EditWorker extends Component {
 
 
     updateWorker() {
-        var data = {
-            location: this.state.currentWorker.location,
-            start: this.state.currentWorker.start,
-            lunch_start: this.state.currentWorker.lunch_start,
-            lunch_stop: this.state.currentWorker.lunch_stop,
-            tea_start: this.state.currentWorker.tea_start,
-            tea_stop: this.state.currentWorker.tea_stop,
-            stop: this.state.currentWorker.stop
-        };
-        WorkedHoursDataService.update(this.props.workerWId, this.props.timesheetId, data)
-            .then(response => {
-                this.setState(prevState => ({
-                    currentWorker: {
-                        ...prevState.currentWorker,
-                    }
-                }));
-                console.log(response.data);
-                window.location.reload();
-            })
-            .catch(e => {
-                console.log(e);
-            });
+        if (this.state.currentWorker.start > this.state.currentWorker.lunch_start ||
+            this.state.currentWorker.lunch_start > this.state.currentWorker.lunch_stop ||
+            this.state.currentWorker.lunch_stop > this.state.currentWorker.tea_start ||
+            this.state.currentWorker.tea_start > this.state.currentWorker.tea_stop ||
+            this.state.currentWorker.tea_stop > this.state.currentWorker.stop) {
+
+            cogoToast.error('Please enter valid times');
+
+        } else {
+            var data = {
+                location: this.state.currentWorker.location,
+                start: this.state.currentWorker.start,
+                lunch_start: this.state.currentWorker.lunch_start,
+                lunch_stop: this.state.currentWorker.lunch_stop,
+                tea_start: this.state.currentWorker.tea_start,
+                tea_stop: this.state.currentWorker.tea_stop,
+                stop: this.state.currentWorker.stop
+            };
+            WorkedHoursDataService.update(this.props.workerWId, this.props.timesheetId, data)
+                .then(response => {
+                    this.setState(prevState => ({
+                        currentWorker: {
+                            ...prevState.currentWorker,
+                        }
+                    }));
+                    console.log(response.data);
+                    window.location.reload();
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+
+        }
     }
 
     render() {
-        const { currentWorker } = this.state;
+        const { currentWorker, flag } = this.state;
         return (
             <div>
                 <Modal.Header closeButton>
@@ -189,6 +203,13 @@ class EditWorker extends Component {
                                         required
                                         value={currentWorker.lunch_start}
                                         onChange={this.onChangeLunchStart} />
+
+                                    <div className="form-group">
+                                        {this.state.currentWorker.start > this.state.currentWorker.lunch_start ?
+                                            <Alert variant="danger">
+                                                Invalid time
+                                            </Alert> : ""}
+                                    </div>
                                 </div>
                                 <div class="col-6">
                                     <input
@@ -197,6 +218,15 @@ class EditWorker extends Component {
                                         required
                                         value={currentWorker.lunch_stop}
                                         onChange={this.onChangeLunchStop} />
+
+
+                                    <div className="form-group">
+                                        {this.state.currentWorker.lunch_start > this.state.currentWorker.lunch_stop ?
+
+                                            <Alert variant="danger">
+                                                Invalid time
+                                            </Alert> : ""}
+                                    </div>
                                 </div>
 
                             </div>
@@ -211,6 +241,13 @@ class EditWorker extends Component {
                                         required
                                         value={currentWorker.tea_start}
                                         onChange={this.onChangeTeaStart} />
+
+                                    <div className="form-group">
+                                        {this.state.currentWorker.lunch_stop > this.state.currentWorker.tea_start ?
+                                            <Alert variant="danger">
+                                                Invalid time
+                                            </Alert> : ""}
+                                    </div>
                                 </div>
                                 <div class="col-6">
                                     <input
@@ -220,8 +257,14 @@ class EditWorker extends Component {
                                         placeholder="start time"
                                         value={currentWorker.tea_stop}
                                         onChange={this.onChangeTeaStop} />
-                                </div>
 
+                                    <div className="form-group">
+                                        {this.state.currentWorker.tea_start > this.state.currentWorker.tea_stop ?
+                                            <Alert variant="danger">
+                                                Invalid time
+                                            </Alert> : ""}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -232,6 +275,13 @@ class EditWorker extends Component {
                             required
                             value={currentWorker.stop}
                             onChange={this.onChangeStop} />
+
+                        <div className="form-group">
+                            {this.state.currentWorker.tea_stop > this.state.currentWorker.stop ?
+                                <Alert variant="danger">
+                                    Invalid time
+                                </Alert> : ""}
+                        </div>
                         <br />
                     </div>
                 </Modal.Body>
