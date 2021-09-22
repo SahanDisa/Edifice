@@ -67,6 +67,22 @@ exports.findAllName = (req, res) => {
     });
 };
 
+exports.findValidName = (req, res) => {
+  const name = req.query.name;
+  var condition = name ? { name: { [Op.like]: name } } : null;
+
+  Crew.findAll({ where: condition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving projects."
+      });
+    });
+};
+
 /*
 // Update a crew by the id in the request
 exports.update = (req, res) => {

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Modal } from "react-bootstrap";
 import cogoToast from "cogo-toast";
+import Alert from "react-bootstrap/Alert";
+
 import WorkerDataService from "./../../../services/worker.service";
 
 class EditWorker extends Component {
@@ -21,7 +23,8 @@ class EditWorker extends Component {
         firstName: this.props.fName,
         lastName: this.props.lName,
         mobile: this.props.mobile
-      }
+      },
+      isMobileValid: -1
 
     };
   }
@@ -50,6 +53,16 @@ class EditWorker extends Component {
         }
       };
     });
+
+    WorkerDataService.findVaildMobile(e.target.value)
+      .then(response => {
+        this.setState({
+          isMobileValid: response.data.length
+        });
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   onChangeLastName(e) {
@@ -66,6 +79,13 @@ class EditWorker extends Component {
   }
 
   updateWorker() {
+
+    // if (this.state.currentWorker.mobile.length !== 10) {
+    //   cogoToast.error('Invalid mobile number');
+    // } else if (this.state.currentWorker.isMobileValid > 1) {
+    //   cogoToast.error('Mobile number is already added');
+    // } else {
+
     var data = {
       firstName: this.state.currentWorker.firstName,
       lastName: this.state.currentWorker.lastName,
@@ -86,10 +106,11 @@ class EditWorker extends Component {
       .catch(e => {
         console.log(e);
       });
+    // }
   }
 
   render() {
-    const { currentWorker } = this.state;
+    const { currentWorker, isMobileValid } = this.state;
     return (
       <div>
         <Modal.Header closeButton>
@@ -126,12 +147,25 @@ class EditWorker extends Component {
             <label htmlFor="">Mobile</label>
             <input
               className="form-control"
-              type="text"
+              type="number"
               required
               value={currentWorker.mobile}
               onChange={this.onChangeMobile} />
             <br />
+
+            {/* 
+            <div className="form-group">
+              {this.state.currentWorker.mobile.length === 10 || this.state.currentWorker.mobile.length === 0 || this.state.currentWorker.mobile.length === 9 ?
+                (isMobileValid > 1) ?
+                  <Alert variant="danger">
+                    Mobile number is already added
+                  </Alert> : "" :
+                <Alert variant="danger">
+                  Invalid mobile number
+                </Alert>}
+            </div> */}
           </div>
+
         </Modal.Body>
         <Modal.Footer>
           <button
