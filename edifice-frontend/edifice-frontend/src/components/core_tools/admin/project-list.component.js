@@ -111,6 +111,9 @@ export default class ProjectsList extends Component {
   }
 
   getCostCodesForProjects(id){
+    this.setState({
+      currentCostCodes: []
+    });
     CostCodeDataService.getAll(id)
       .then(response => {
         this.setState({
@@ -121,7 +124,7 @@ export default class ProjectsList extends Component {
       .catch(e => {
         console.log(e);
     });
-
+    console.log(id);
     console.log(this.state.currentCostCodes);
   }
 
@@ -273,14 +276,14 @@ export default class ProjectsList extends Component {
               >
                 Edit
               </Link>
-              <Link
-                onClick={() =>this.getCostCodesForProjects(this.state.currentProject.id)}
+              <a
+                onClick={() =>this.getCostCodesForProjects(1)}
                 data-target="#costcodeModal"
                 data-toggle="modal"
                 className="m-1 btn btn-sm btn-secondary"
               >
                 Cost Codes
-              </Link>
+              </a>
             </div>
           ) : (
             <div>
@@ -312,7 +315,7 @@ export default class ProjectsList extends Component {
                     <BootstrapTable 
                       hover
                       keyField='id'
-                      data={ this.state.currentCostCodes }
+                      data={ this.state.currentCostCodes}
                       columns={ columns } 
                       cellEdit={ false }
                     />

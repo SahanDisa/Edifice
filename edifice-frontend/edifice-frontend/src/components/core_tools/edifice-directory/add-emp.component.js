@@ -19,7 +19,7 @@ class AddEmployee extends Component {
       //this.retriveVendors = this.retrieveVendors.bind(this);
       this.state = {
         name: "",
-        role:"",
+        role:"Civil Engineer",
         email:"",
         mobile:"",
         projCount:0,
@@ -252,9 +252,6 @@ class AddEmployee extends Component {
             </div>
             <div className="pr-4"> 
               <a className="btn btn-secondary" type="reset">Cancel</a>
-            </div>
-            <div className="pr-4"> 
-              <a className="btn btn-primary">Create Account</a>
             </div>
           </div>
           <div>
