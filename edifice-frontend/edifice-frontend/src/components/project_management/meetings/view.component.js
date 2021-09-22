@@ -13,6 +13,7 @@ class ViewMeeting extends Component {
         this.onChangeDate = this.onChangeDate.bind(this);
         this.onChangeTime = this.onChangeTime.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
         this.retrieveMeeting = this.retrieveMeeting.bind(this);
         this.updateMeeting = this.updateMeeting.bind(this);
         this.deleteMeeting = this.deleteMeeting.bind(this);
@@ -130,6 +131,12 @@ class ViewMeeting extends Component {
     }
 
     updateMeeting() {
+      if (this.state.meeting.name != "" &&
+      this.state.meeting.category != "" &&
+      this.state.meeting.status != "" &&
+      this.state.meeting.date != "" &&
+      this.state.meeting.time != "" &&
+      this.state.meeting.location != "" ) {
         var data = {
             name: this.state.meeting.name,
             category: this.state.meeting.category,
@@ -147,25 +154,27 @@ class ViewMeeting extends Component {
                   ...prevState.meeting,
                 }
             }));
-            console.log("save function service ekata enawa");
+            this.props.history.push("/meetings/"+ this.props.match.params.id);
+            cogoToast.success("Meeting Updated Successfully!");
             console.log(response.data);
         })
         .catch(e => {
             console.log(e);
         });
-        this.props.history.push("/meetings/"+ this.props.match.params.id);
-        cogoToast.success("Meeting Updated Successfully!", { position: 'top-right', heading: 'success' });
+      } else {
+        cogoToast.error("Field/s cannot be empty");
+      }
     }
 
     deleteMeeting(){
       var data = {
           isDeleted: 1
       }
-      MeetingDataService.delete(this.props.match.params.pliid, data)
+      MeetingDataService.update(this.props.match.params.pliid, data)
       .then(response => {
           console.log(response.data);
           this.props.history.push("/meetings/"+ this.state.meeting.projectId);
-          cogoToast.success("Meeting Deleted Successfully!", { position: 'top-right', heading: 'success' });
+          cogoToast.success("Meeting Deleted Successfully!");
       });
     }
 
@@ -195,6 +204,30 @@ class ViewMeeting extends Component {
                                     required
                                 />
                             </div>
+                            <div className="form-group col-md-3">
+                                <label htmlFor="">Status</label>
+                                {meeting.status == "Scheduled" ?
+                                  <div>
+                                    <select
+                                      type="text"
+                                      className="form-control"
+                                      required
+                                    >
+                                      <option value="Scheduled" onChange={this.onChangeApproved}>Scheduled</option>
+                                      <option value="Ended" onChange={this.onChangeApproved}>Ended</option>
+                                    </select>
+                                  </div>
+                                :
+                                  <div>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      value="Ended"
+                                      readOnly
+                                    />
+                                  </div>
+                                }
+                            </div>
                             <div className="form-group col-md-4">
                                 <label htmlFor="">Category</label>
                                 <input
@@ -203,16 +236,6 @@ class ViewMeeting extends Component {
                                     value={meeting.category}
                                     onChange={this.onChangeCategory}
                                     type="text"
-                                    readOnly
-                                />
-                            </div>
-                            <div className="form-group col-md-3">
-                                <label htmlFor="">Status</label>
-                                <input
-                                    className="form-control"
-                                    name="status"
-                                    type="text"
-                                    value="Scheduled"
                                     readOnly
                                 />
                             </div>

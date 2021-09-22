@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import DLCallService from "../../../services/project_management/dlcall.service.js";
+import cogoToast from 'cogo-toast';
 
 class ViewDCL extends Component {
     constructor(props) {
@@ -118,6 +119,13 @@ class ViewDCL extends Component {
     }
 
     updateCallLog() {
+        if (this.state.date != "" &&
+        this.state.callfrom != "" &&
+        this.state.callto != "" &&
+        this.state.starttime != "" &&
+        this.state.endtime != "" &&
+        this.state.reason != "") {
+        if(this.state.starttime < this.state.endtime){
         var data = {
             date: this.state.dlcall.date,
             callfrom: this.state.dlcall.callfrom,
@@ -136,11 +144,17 @@ class ViewDCL extends Component {
                 }
             }));
             console.log("update function service ekata enawa");
-            window.location.reload();
+            cogoToast.success("Call Log Updated Successfully!");
         })
         .catch(e => {
             console.log(e);
         });
+    } else {
+        cogoToast.error("End time should be greater than after the start time");
+    }
+    } else {
+        cogoToast.error("Field/s cannot be empty");
+    }
     }
 
     deleteCallLog(){
