@@ -4,6 +4,7 @@ import MeetingDataService from "../../../services/project_management/meeting.ser
 import MeetingCategoryDataService from "../../../services/project_management/meetingcategory.service.js";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import cogoToast from 'cogo-toast';
+import { TextareaAutosize } from "@material-ui/core";
 
 class CreateMeeting extends Component {
     constructor(props) {
@@ -72,39 +73,47 @@ class CreateMeeting extends Component {
     }
 
     saveMeeting() {
-        var data = {
-            name: this.state.name,
-            category: this.state.category,
-            status: this.state.status,
-            date: this.state.date,
-            time: this.state.time,
-            location: this.state.location,
-            projectId: this.props.match.params.id
-        };
+        if (this.state.name != "" &&
+        this.state.category != "" &&
+        this.state.status != "" &&
+        this.state.date != "" &&
+        this.state.time != "" &&
+        this.state.location != "" ) {
+            var data = {
+                name: this.state.name,
+                category: this.state.category,
+                status: this.state.status,
+                date: this.state.date,
+                time: this.state.time,
+                location: this.state.location,
+                projectId: this.props.match.params.id
+            };
 
-        MeetingDataService.create(data)
-        .then(response => {
-            this.setState({
-                id: response.data.id,
-                name: response.data.name,
-                category: response.data.category,
-                status: response.data.status,
-                date: response.data.date,
-                time: response.data.time,
-                location: response.data.location,
-                projectId: response.data.projectId,
+            MeetingDataService.create(data)
+            .then(response => {
+                this.setState({
+                    id: response.data.id,
+                    name: response.data.name,
+                    category: response.data.category,
+                    status: response.data.status,
+                    date: response.data.date,
+                    time: response.data.time,
+                    location: response.data.location,
+                    projectId: response.data.projectId,
 
-                submitted: true
+                    submitted: true
+                });
+                console.log(response.data);
+                this.props.history.push("/meetings/"+ this.props.match.params.id);
+                window.location.reload();
+                cogoToast.success("Meeting Saved Successfully!");
+            })
+            .catch(e => {
+                console.log(e);
             });
-            console.log("save function service ekata enawa");
-            console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
-        });
-        this.props.history.push("/meetings/"+ this.props.match.params.id);
-        window.location.reload();
-        cogoToast.success("Meeting Saved Successfully!", { position: 'top-right', heading: 'success' });
+        } else {
+            cogoToast.error("Field/s cannot be empty");
+        }
     }
 
     retrieveCategories(id){
@@ -228,7 +237,7 @@ class CreateMeeting extends Component {
                         <div className="form-row">
                             <div className="form-group col-md-12">
                                 <label htmlFor="">Description</label>
-                                <textarea
+                                <TextareaAutosize
                                     rows="2"
                                     className="form-control"
                                     name="description"

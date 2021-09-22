@@ -5,6 +5,7 @@ import MeetingCategoryDataService from "../../../services/project_management/mee
 import MeetingDataService from "../../../services/project_management/meeting.service";
 
 import Table from 'react-bootstrap/Table';
+import cogoToast from 'cogo-toast';
 
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -21,6 +22,7 @@ class MeetingsHome extends Component {
       this.saveMeetingCategory = this.saveMeetingCategory.bind(this);
       this.retrieveMeetingCategory = this.retrieveMeetingCategory.bind(this);
       this.retrieveMeeting = this.retrieveMeeting.bind(this);
+      this.deleteMeeting = this.deleteMeeting.bind(this);
       // this.setActiveViewMeeting = this.setActiveViewMeeting.bind(this);
       
       this.state = {
@@ -95,28 +97,44 @@ class MeetingsHome extends Component {
     }
 
     saveMeetingCategory() { 
-      var data = {
-        overview : this.state.overview,
-        description: this.state.description,
-        projectId: this.props.match.params.id
-      };
+      if (this.state.overview != "" &&
+      this.state.description != "" ) {
+        var data = {
+          overview : this.state.overview,
+          description: this.state.description,
+          projectId: this.props.match.params.id
+        };
 
-      MeetingCategoryDataService.create(data)
-      .then(response => {
-        this.setState({
-          id: response.data.id,
-          overview: response.data.overview,
-          description: response.data.description,
+        MeetingCategoryDataService.create(data)
+        .then(response => {
+          this.setState({
+            id: response.data.id,
+            overview: response.data.overview,
+            description: response.data.description,
 
-          submitted: true
+            submitted: true
+          });
+          cogoToast.success("Meeting Saved Successfully!");
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
         });
-        console.log("save una");
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
+        window.location.reload();
+      } else {
+        cogoToast.error("Field/s cannot be empty");
+      }
+    }
+
+    deleteMeeting(e){
+      var data = {
+          isDeleted: 1
+      }
+      MeetingDataService.update(e.target.value, data)
+      .then(response => {
+          console.log(response.data);
+          cogoToast.success("Meeting Deleted Successfully!");
       });
-      window.location.reload();
     }
 
     render() {
@@ -225,7 +243,7 @@ class MeetingsHome extends Component {
                                           <button className="btn btn-success mr-2">View <VisibilityIcon/></button>
                                         </Link>
                                       )}
-                                      <button className="btn btn-danger mr-2"  id="updateBtn" data-target="#deleteModal" data-toggle="modal">Delete<DeleteIcon/></button>
+                                      <button className="btn btn-danger mr-2"  id="updateBtn" value={mt.id} onClick={this.deleteMeeting}>Delete <DeleteIcon/></button>
                                     </td>    
                                 </tr> : ""
                               ))}
