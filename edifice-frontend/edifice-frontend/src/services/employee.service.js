@@ -34,6 +34,10 @@ class EmployeeDataService {
     return http.get(`/employee/app/last`);
   }
 
+  findByName(name) {
+    return http.get(`/employee?name=${name}`);
+  }
+
 }
 
 export default new EmployeeDataService();

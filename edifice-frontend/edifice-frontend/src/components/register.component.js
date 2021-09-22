@@ -11,6 +11,7 @@ import cogoToast from 'cogo-toast';
 import emailjs from 'emailjs-com';
 
 import EmployeeDataService from "../services/employee.service";
+import ProjectUserDataService from "../services/projectuser.service";
 import DesignationDataService from "../services/designation.service";
 import AuthService from "../services/auth.service";
 
@@ -59,6 +60,7 @@ export default class Register extends Component {
     super(props);
     this.handleRegister = this.handleRegister.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangePrivilege = this.onChangePrivilege.bind(this);
     // this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     //this.addToRoles=this.addToRoles.bind(this);
@@ -69,6 +71,7 @@ export default class Register extends Component {
       empname: "",
       email: "",
       password: "",
+      privilege: "1",
       successful: false,
       message: "",
       rolesSelected: [],
@@ -86,11 +89,12 @@ export default class Register extends Component {
     });
   }
 
-  // onChangeEmail(e) {
-  //   this.setState({
-  //     email: e.target.value
-  //   });
-  // }
+  onChangePrivilege(e) {
+    this.setState({
+      privilege: e.target.value
+    });
+    console.log(this.state.privilege);
+  }
 
   onChangePassword(e) {
     this.setState({
@@ -203,6 +207,20 @@ export default class Register extends Component {
         
         //cogoToast.success("Account successfully made for"+this.state.username);
       }
+      var data1={
+        userId: this.state.id,
+        roleId: this.state.privilege
+      }
+      
+      ProjectUserDataService.addProjectRole(data1)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+
+      window.location.href ="/employees"
     }
     
   }
@@ -378,15 +396,15 @@ export default class Register extends Component {
           {/* row end down*/}
           </div>
           <div className="col-6">
-            <h3 className="pd-3">Select Roles </h3>
-            <p>Allocate roles for employee </p>
+            <h3 className="pd-3">Select Eligible positions </h3>
+            <p>Allocate positions for employee </p>
             <div className="row">
             {roles.map((value,index) => { 
               return(
 
                 <div className="pr-2">
                   <Chip 
-                    className="py-1"
+                    className="py-1 mb-2 ml-2"
                     label={value.name}
                     onClick={() =>this.addToRoles(index)}
                     clickable={true} color={this.state.rolesSelected[index]} />
@@ -394,6 +412,17 @@ export default class Register extends Component {
                 )
               })}
             </div>
+            <h3 className="mt-4 pd-3">Select Roles for User  </h3>
+              <p>Allocate Roles for user: </p>
+                <select className="form-control" name="" id="privilege"
+                  required
+                  value={this.state.privilege}
+                  onChange={this.onChangePrivilege}
+                  name="privilege 1" required>
+              <option  onChange={this.onChangePrivilege} value="1" >User</option>
+              <option onChange={this.onChangePrivilege} value="2">Moderator</option>
+              <option onChange={this.onChangePrivilege} value="3">Administrator</option>
+            </select><br />
           </div>
           <div className="form-group">
             <button className="btn btn-primary btn-block" onClick={() =>this.handleRegister()} disabled={this.state.signupDisabled}>Sign Up</button>

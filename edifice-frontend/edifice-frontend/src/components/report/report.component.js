@@ -115,12 +115,12 @@ class Report extends Component {
 
         //WORKING EMPLOYEES
         //LOCATION
-        doc.setFontSize(16);
-        doc.setFont("times","normal");
-        doc.text(" No. of Employees  :",10, 114, null, null, "left");
+        // doc.setFontSize(16);
+        // doc.setFont("times","normal");
+        // doc.text(" No. of Employees  :",10, 114, null, null, "left");
 
-        doc.setFont("times", "bold");
-        doc.text(noUsers,59, 114, null, null, "left");
+        // doc.setFont("times", "bold");
+        // doc.text(noUsers,59, 114, null, null, "left");
 
         //final save
         //TABLE OF WORKING EMPLOYEES
@@ -143,7 +143,7 @@ class Report extends Component {
 
         const headers=["empID","name","role","enrollDate","mobileNo"];
 
-        doc.table(12, 117, tempdata, headers,{ fontSize: 10 },{ autoSize: true });
+        //doc.table(12, 117, tempdata, headers,{ fontSize: 10 },{ autoSize: true });
 
         var saveName1="Status_report_"+project.title+"_"+this.state.currentDate+".pdf";
         doc.save(saveName1);
