@@ -133,3 +133,20 @@ exports.findAllCompleted = (req, res) => {
       });
     });
 };
+
+//get the ActionPlanSection action
+exports.findSection= (req, res) => {
+  const actionplansectionId = req.params.id;
+  ActionPlanItem.findAll({ where: {
+    actionplansectionId: actionplansectionId,
+    isDeleted: 0
+  }})
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Error retrieving Action Plan Section with id=" + id
+    });
+  });  
+};

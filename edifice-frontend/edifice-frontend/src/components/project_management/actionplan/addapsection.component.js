@@ -83,10 +83,12 @@ export default class AddAPSection extends Component {
     
     saveAPsection() {  
         if (this.state.acceptance != "" &&
-            this.state.duedate != "") {
+            this.state.duedate != "" &&
+            this.state.title != "") {
         var data = {
             // reftype: this.state.reftype,
             // refid: this.state.refid,
+            title: this.state.title,
             acceptance: this.state.acceptance,
             duedate: this.state.duedate,
             actionplanId: this.state.actionplanId,
@@ -95,7 +97,7 @@ export default class AddAPSection extends Component {
         ActionPlanSectionDataService.create(data)
         .then(response => {
             this.setState({
-            id: response.data.id,
+            id: response.data.title,
             // reftype: response.data.reftype,
             // refid: response.data.refid,
             acceptance: response.data.acceptance,
@@ -109,7 +111,7 @@ export default class AddAPSection extends Component {
             this.props.history.push("/actionplansingle/" + this.props.match.params.id + "/" + this.props.match.params.apid);
         })
     } else {
-        cogoToast.error("Field/s cannot be empty");            
+        cogoToast.error("Field/s cannot be empty");
     }
     }
 
@@ -127,7 +129,7 @@ export default class AddAPSection extends Component {
     }
 
     render() {
-        const {actionplanId, currentIndex, projectId, viewAPSection, actionplansections} = this.state;
+        const {actionplanId, projectId, actionplansections} = this.state;
         return (
             <div className="container">
                 <div class="container">
@@ -202,10 +204,10 @@ export default class AddAPSection extends Component {
                             <td>{aps.acceptance}</td>
                             <td>{aps.duedate}</td>
                             <td>
-                                <Link to={"/deletepl/" + aps.no}>
+                                <Link to={"/viewactionplansection/" + projectId +"/" + aps.id}>
                                     <button className="btn btn-success mr-2">Update <UpdateIcon/></button>
                                 </Link>
-                                <button className="btn btn-danger">Delete <DeleteIcon /></button>
+                                <button className="btn btn-danger" >Delete <DeleteIcon /></button>
                             </td>
                             </tr>
                         ))}
