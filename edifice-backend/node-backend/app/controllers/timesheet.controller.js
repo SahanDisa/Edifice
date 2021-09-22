@@ -97,3 +97,19 @@ exports.getUserDetails = (req, res) => {
       res.send(data);
     })
 }
+
+exports.findAllDate = (req, res) => {
+  const date = req.query.date;
+  var condition = date ? { date: { [Op.like]: `%${date}%` } } : null;
+
+  Timesheet.findAll({ where: condition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving projects."
+      });
+    });
+};

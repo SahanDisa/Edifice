@@ -186,7 +186,7 @@ class Workers extends Component {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Search crew"
+                placeholder="Enter Crew Name"
                 value={searchTitle}
                 onChange={this.onChangeSearchTitle}
               />

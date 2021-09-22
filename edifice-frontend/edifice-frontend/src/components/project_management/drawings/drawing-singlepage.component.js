@@ -19,6 +19,7 @@ export default class ViewSingleDrawing extends Component {
     
       this.state = {
         id: this.props.match.params.id,
+        cat: this.props.match.params.cat,
         url: "http://localhost:8080/api/files/", 
         title: "",
         description: "",
@@ -110,7 +111,7 @@ export default class ViewSingleDrawing extends Component {
       }
     }
     render() {
-        const { id,title,description,category,version,status,url,revisions,currentUser,projectId } = this.state;
+        const { id,cat,title,description,category,version,status,url,revisions,currentUser,projectId } = this.state;
         return (
            // Main Div
             <div>
@@ -124,6 +125,9 @@ export default class ViewSingleDrawing extends Component {
                 </Link>
                 <Link color="inherit" to={"/drawing/"+projectId}>
                   Drawing Home
+                </Link>
+                <Link color="inherit" to={"/viewdrawingcategory/"+projectId+"/"+cat}>
+                  Draw Category - {cat}
                 </Link>
                 <Link color="textPrimary" to={"/viewdrawing/"+id} aria-current="page">
                   View Drawing

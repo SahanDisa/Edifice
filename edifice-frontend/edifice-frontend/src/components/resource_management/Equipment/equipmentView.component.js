@@ -21,6 +21,7 @@ class Equipment extends Component {
         this.retrieveEquipment = this.retrieveEquipment.bind(this);
         this.retrieveEquipmentCategory = this.retrieveEquipmentCategory.bind(this);
         this.searchTitle = this.searchTitle.bind(this);
+        this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
         this.retrieveProjects = this.retrieveProjects.bind(this);
 
         this.state = {
@@ -91,10 +92,10 @@ class Equipment extends Component {
     }
 
     searchTitle() {
-        EquipmentDataService.findByTitle(this.state.searchTitle)
+        EquipmentCategoryDataService.findByTitle(this.state.searchTitle)
             .then(response => {
                 this.setState({
-                    crews: response.data
+                    categorys: response.data
                 });
                 console.log(response.data);
             })
@@ -115,10 +116,10 @@ class Equipment extends Component {
                             <Link color="inherit" to="/home">
                                 Home
                             </Link>
-                            <Link color="inherit" to={"/admin"}>
-                                Core Dashboard
+                            <Link color="inherit" to={"/projectmanagementhome/" + id}>
+                                App Dashboard
                             </Link>
-                            <Link color="textPrimary" to={"/equipments"} aria-current="page">
+                            <Link color="textPrimary" to={"/equipView/" + id} aria-current="page">
                                 Equipments
                             </Link>
                         </Breadcrumbs>
@@ -133,7 +134,7 @@ class Equipment extends Component {
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Search crew"
+                                placeholder="Enter Equipment Category"
                                 value={searchTitle}
                                 onChange={this.onChangeSearchTitle}
                             />

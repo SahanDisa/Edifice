@@ -5,13 +5,15 @@ import { Link } from "react-router-dom";
 import Report from './report/report.component'
 
 import ProgressBar from 'react-customizable-progressbar';
-import {Assessment,HomeWork,LocationOn,Description,SupervisorAccount,Timeline,  Build} from '@material-ui/icons';
+import {Assessment,HomeWork,LocationOn,Description,SupervisorAccount,Timeline,  Build, Visibility} from '@material-ui/icons';
 
 import UserService from "../services/user.service";
 import EmployeeDataService from "../services/employee.service";
 import VendorDataService from "../services/vendor.service";
+import SubDataService from "../services/subcontractor.service";
 import CostCodeDataService from "../services/costcode.service";
 import ProjectDataService from "../services/project.service";
+import ProjectUserDataService from "../services/projectuser.service";
 
 //css styles
 const cardStyle = {
@@ -40,9 +42,11 @@ export default class BoardUser extends Component {
       content: "",
       projectCount: 0,
       vendorCount: 0,
+      subCount: 0,
       employeeCount: 0,
       currProjectId: 0,
       costCodes: [],
+      projectUsers: [],
       id: "this.props.match.params.id"
     };
 
@@ -88,6 +92,7 @@ export default class BoardUser extends Component {
     this.getprojectCount();
     this.getVendorCount();
     this.getEmployeeCount();
+    this.getSubCount();
   }
 
   getEmployeeCount() {
@@ -131,6 +136,20 @@ export default class BoardUser extends Component {
       console.log(e);
     });
   }
+
+  getSubCount() {
+    //get Project count
+    SubDataService.getAll().then(response => {
+      this.setState({
+        subCount: response.data.length,
+        
+      });
+      //console.log(projectDetails);
+    })
+    .catch(e => {
+      console.log(e);
+    });
+  }
   //private  var projectDetails=[];
   retrieveProjects() {
     ProjectDataService.getAll()
@@ -145,8 +164,8 @@ export default class BoardUser extends Component {
       });
   }
 
-  generatePDF(project){
-    Report.generatePDF(project);
+  generatePDF(project,noUsers){
+    Report.generatePDF(project,noUsers);
   }
   
   createUser(userId) {
@@ -155,6 +174,28 @@ export default class BoardUser extends Component {
     }else{
       window.location="/register/"+userId
     }
+  }
+
+  getProjectUsers(projid){
+
+    ProjectUserDataService.getProjectUsers(projid)
+        .then(response => {
+        this.setState({
+            projectUsers: response.data.length
+        });
+        console.log(response.data);
+        console.log(this.state.projectUsers);
+        })
+        .catch(e => {
+        console.log(e);
+    });
+    console.log(this.state);
+
+    // //get employees per project one by one
+    // let tempEmp=[];
+    // this.state.projectUsers.map(emp =>(
+    //   EmployeeDataService.get
+    // ))
   }
 
   getProjectCostCodes(id){
@@ -183,7 +224,7 @@ export default class BoardUser extends Component {
   }
 
   render() {
-    const { projectDetails,projectCount,vendorCount,employeeCount,projects } = this.state;
+    const { projectDetails,projectCount,vendorCount,subCount,employeeCount,projects } = this.state;
     
     var elements = {};
     //this.getprojectDetails(elements);
@@ -249,7 +290,7 @@ export default class BoardUser extends Component {
               <div className="card card-hover shadow-sm" style={cardStyle}>
               <a className="d-block nav-heading text-center mt-3" style={linkText}> <Link to="/vendor" style={linkText}>
 
-                <h1 className="nav-heading-title" style={{ fontSize:55 }}>{vendorCount}</h1>
+                <h1 className="nav-heading-title" style={{ fontSize:55 }}>{vendorCount+subCount}</h1>
                 <h6> <HomeWork style={{ fontSize:25 }}/>  Vendors & Subcontractors</h6>
               </Link></a>
               </div>
@@ -275,13 +316,16 @@ export default class BoardUser extends Component {
             {projects.map(project =>(
               <div className="card card-hover shadow-sm card-text-edifice my-3">
               <div className="row">
-                <Link className="col-5 m-2" style={{ textDecoration:'none' }}>
+                <div className="col-5 m-2" style={{ textDecoration:'none' }}>
                 <h4>{project.title}</h4>
                 <h6>Description : {project.description}</h6>
                 <h6>Location: {project.location}</h6> 
                 <h6>From : {project.startdate} to {project.enddate}</h6>
-                <a onClick={()=>{this.generatePDF(project,this.getProjectCostCodes(project.id));}} className="btn btn-primary p-2 my-2"><Description style={{ fontSize:20 }}/> Generate Report</a>
-                </Link>
+                
+                <a onClick={()=>{this.getProjectUsers(project.id); this.generatePDF(project,this.state.projectUsers.toString());}} className="btn btn-primary p-2 my-2"><Description style={{ fontSize:20 }}/> Generate Report</a>
+                <Link to={"projectmanagementhome/"+project.id}><a className="btn btn-secondary p-2 ml-4 my-2"><Visibility style={{ fontSize:20 }}/> View</a></Link>
+                
+                </div>
                 <div className="col-4 mt-4">
                 <center>
                 <h2><b>{progressInDays(project.startdate,project.enddate)}{" "}</b>Days</h2>

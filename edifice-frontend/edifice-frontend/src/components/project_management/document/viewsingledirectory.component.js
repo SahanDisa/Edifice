@@ -72,7 +72,7 @@ export default class ViewDirectory extends Component {
           const { pid,id,title,description,documents,currentIndex, showManagerBoard } = this.state;
           return (
               <div>
-                <h2>Directory Single Page</h2>
+                <h2>{title} Documents</h2>
                 <Breadcrumbs aria-label="breadcrumb">
                 <Link color="inherit" to="/home">
                   Home
@@ -95,13 +95,19 @@ export default class ViewDirectory extends Component {
                   <h6>Name : {title}</h6>
                   <h6>Description : {description}</h6>
                   </div>
-                  { showManagerBoard &&
                   <div className="col-3">
+                  { showManagerBoard &&
+                  <div>
                   <Link className="btn btn-primary" to={"/updatedirectory/"+pid+"/"+id} style={{'text-decoration': 'none'}}>
                   ⚙️ Manage
                   </Link>
+                  <br/>
                   </div>
                   }
+                  <Link className="btn btn-primary mt-2" to={"/adddocument/"+pid} style={{'text-decoration': 'none'}}>
+                  Add Document
+                  </Link>
+                  </div>
                 </div>
                 <hr></hr>
                 
