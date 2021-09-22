@@ -63,6 +63,7 @@ class CreateTimesheet extends Component {
 
   render() {
     const { crews, currentIndex, id, workers } = this.state;
+    var today = new Date().toISOString().split('T')[0];
     //console.log(workers)
     return (
       <div>
@@ -96,6 +97,7 @@ class CreateTimesheet extends Component {
                         id="date"
                         name="date"
                         value={this.state.date}
+                        min={today}
                         onChange={this.onChangeDate}
                       />
                     </div>

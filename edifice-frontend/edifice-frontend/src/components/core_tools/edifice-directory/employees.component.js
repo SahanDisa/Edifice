@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { Link } from "react-router-dom";
 import { Breadcrumbs } from "@material-ui/core";
-import PeopleIcon from '@material-ui/icons/People';
+import {People,Search} from '@material-ui/icons';
 import EmployeeDataService from "./../../../services/employee.service";
 
   const columns = [{
@@ -130,7 +130,7 @@ class Employee extends Component {
       return (
         <div>
 
-          <h2><PeopleIcon/> EMPLOYEES</h2>
+          <h2><People/> EMPLOYEES</h2>
 
           <Breadcrumbs aria-label="breadcrumb">
             <Link color="inherit" to="/home">
@@ -150,17 +150,7 @@ class Employee extends Component {
             </div>
 
             <div className="col-auto">
-              <a href="" className="btn btn-success">search</a>
-            </div>
-
-            <p>Group By:</p>
-
-            <div className="col-auto">
-              <select className="form-control" name="" id="">
-                <option value="role1">Civil engineer</option>
-                <option value="role2">Project manager</option>
-                <option value="role3">Site supervisor</option>
-              </select><br />
+              <a href="" className="btn btn-success"><Search/> </a>
             </div>
 
             <div>
