@@ -6,7 +6,7 @@ import UserService from "./../../../services/user.service";
 import AuthService from "./../../../services/auth.service";
 import { Breadcrumbs } from "@material-ui/core";
 import { Avatar } from "@material-ui/core";
-
+import cogoToast from "cogo-toast";
 import PdfIcon from '@material-ui/icons/PictureAsPdf';
 
 export default class ViewSingleDrawing extends Component {
@@ -27,6 +27,7 @@ export default class ViewSingleDrawing extends Component {
         status: "", 
         projectId: "",
         revisions: [],
+        drawingId: this.props.match.params.id,
 
         //revision
         currentUser: AuthService.getCurrentUser(),
@@ -81,12 +82,13 @@ export default class ViewSingleDrawing extends Component {
         });
     }
     saveDrawingRevision() { 
+      if(this.state.comment != ""){
       var data = {
         username : this.state.currentUser.username,
         description: this.state.comment,
-        drawingId: this.state.id
+        drawingId: this.state.drawingId
       };
-  
+      cogoToast.success("Revision added to the thread");
       DrawRevisionService.create(data)
         .then(response => {
           this.setState({
@@ -98,11 +100,14 @@ export default class ViewSingleDrawing extends Component {
             // submitted: true
           });
           console.log(response.data);
-          window.location.reload();
+          this.getRevisions(this.state.drawingId);
         })
         .catch(e => {
           console.log(e);
         });
+      }else{
+        cogoToast.error("Message body cannot be empty");
+      }
     }
     render() {
         const { id,title,description,category,version,status,url,revisions,currentUser,projectId } = this.state;
@@ -153,6 +158,8 @@ export default class ViewSingleDrawing extends Component {
                           <Avatar>U</Avatar>
                           
                           <b>{revision.username}</b>{" : "}{revision.description}
+                          <br/>
+                          <p>{revision.createdAt} ✔️sent</p>
                         </li>
                         ))}
                   </ul>
