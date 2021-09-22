@@ -4,6 +4,8 @@ import PhotoDataService from "./../../../services/photo.service";
 import AlbumDataService from "../../../services/album.service";
 import UploadService from "./../../../services/photoupload.service";
 import { Breadcrumbs } from "@material-ui/core";
+import Alert from "react-bootstrap/Alert";
+import cogoToast from "cogo-toast";
 
 export default class UpdatePhoto extends Component {
   constructor(props) {
@@ -31,8 +33,10 @@ export default class UpdatePhoto extends Component {
       temp: this.props.match.params.id,
       pid: this.props.match.params.pid,
       albums: [],
+      isTitleValid: 0,
 
       //file
+      initPhoto: "",
       selectedFiles: undefined,
       currentFile: undefined,
       image: undefined,
@@ -55,6 +59,15 @@ export default class UpdatePhoto extends Component {
           title: title
         }
       };
+    });
+    PhotoDataService.findByTitle(e.target.value)
+    .then(response => {
+      this.setState({
+        isTitleValid: response.data.length
+      });
+    })
+    .catch(e => {
+      console.log(e);
     });
   }
 
@@ -106,7 +119,8 @@ export default class UpdatePhoto extends Component {
     PhotoDataService.get(id)
       .then(response => {
         this.setState({
-          currentPhoto: response.data
+          currentPhoto: response.data,
+          initPhoto: response.data.title,
         });
         console.log(response.data);
       })
@@ -181,14 +195,14 @@ export default class UpdatePhoto extends Component {
           currentFile: undefined,
         });
       });
-
+    cogoToast.success("File Uploaded successfully!");
     this.setState({
       selectedFiles: undefined,
     });
   }
 
     render() {
-      const { currentPhoto, temp, albums,selectedFiles,currentFile,progress,message,image,pid} = this.state;
+      const { currentPhoto, temp, albums,selectedFiles,currentFile,progress,message,image,pid, isTitleValid,initPhoto} = this.state;
   
       return (
         <div>
@@ -211,7 +225,7 @@ export default class UpdatePhoto extends Component {
             </Breadcrumbs>
               <form>
                 <div className="form-group">
-                  <label htmlFor="title">Title</label>
+                  <label htmlFor="title">Title <b>should be unique</b></label>
                   <input
                     type="text"
                     className="form-control"
@@ -219,6 +233,15 @@ export default class UpdatePhoto extends Component {
                     value={currentPhoto.title}
                     onChange={this.onChangeTitle}
                   />
+                </div>
+                <div className="form-group">
+                  {this.state.currentPhoto.title == this.state.initPhoto ? "" : isTitleValid > 0 ? 
+                  <Alert variant="danger">
+                    Image name is already taken
+                  </Alert> :
+                  <Alert variant="success">
+                    Image name is avaliable to use
+                  </Alert> }
                 </div>
                 <div className="form-group">
                   <label htmlFor="description">Description</label>
