@@ -432,7 +432,7 @@ class App extends Component {
               <Route path="/viewdrawingcategory/:pid/:cat" component={ViewSingleDrawingCategory} />
               <Route exact path={"/updatedrawingcategory/:id/:pid"} component={UpdateDrawingCategory} />
               <Route path="/adddrawing/:id" component={AddDrawing} />
-              <Route path="/viewdrawing/:id" component={ViewSingleDrawing} />
+              <Route path="/viewdrawing/:cat/:id" component={ViewSingleDrawing} />
               <Route exact path="/updatedrawing/:id/:pid" component={UpdateDrawing} />
               {/* Photo Component Routes */}
               <Route path="/photos/:id" component={PhotosHome} />

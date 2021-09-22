@@ -185,7 +185,7 @@ export const WebcamCapture = () => {
                 }
                 <div className="container">
                     <h3>Recent Captures</h3>
-                    <div className="row">
+                    <div className="row" style={{'overflow': 'auto','white-space': 'nowrap'}}>
                     {fileInfos &&
                             fileInfos.map((file, index) => (
                             <div className="container col-2 mt-1" key={index}>
