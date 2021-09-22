@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { jsPDF } from "jspdf";
 import CostCodeDataService from "./../../services/costcode.service";
-//import mainIcon from "./././../assets/logoedifice.png";
+//import mainIcon from "./././../assets/logoedifice.png";getProjectUsers(id)
 
 
 // Default export is a4 paper, portrait, using millimeters for units
@@ -21,7 +21,8 @@ class Report extends Component {
             currentTime: today.toLocaleTimeString(),
             isPDF: false,
             costCodes: [],
-            sad: ""
+            sad: "",
+            projectUsers: []
         }
 
 
@@ -31,33 +32,7 @@ class Report extends Component {
         this.getProjectCostCodes(2)
     }
 
-
-    getProjectCostCodes(id){
-
-        CostCodeDataService.getAll(id)
-            .then(response => {
-            this.setState({
-                costCodes: response.data,
-                sad: "Ppppp"
-            });
-            console.log(response.data);
-            console.log(this.state);
-            })
-            .catch(e => {
-            console.log(e);
-        });
-        console.log(this.state)
-        let temp=[];
-
-        this.state.costCodes.forEach((item, index)=>{
-            console.log(item.costCode)
-            temp.push(item.costCode)
-        })
-
-        return temp;
-    }
-
-    generatePDF(project,costCodes){
+    generatePDF(project,noUsers){
 
         const doc = new jsPDF();
 
@@ -119,12 +94,10 @@ class Report extends Component {
 
         doc.setFont("times", "bold");
         var x1=35
-        const temp=this.getProjectCostCodes(project.id)
-        console.log(costCodes);
-        temp.forEach((item, index)=>{
-            doc.text(item,x1, 88, null, null, "left");
-            x1+=5;
-        })
+        // temp.forEach((item, index)=>{
+        //     doc.text(item,x1, 88, null, null, "left");
+        //     x1+=5;
+        // })
 
         // doc.text("<CODE1 >",35, 88, null, null, "left");
         // doc.text("<CODE2 >",59, 88, null, null, "left");
@@ -147,7 +120,7 @@ class Report extends Component {
         doc.text(" No. of Employees  :",10, 114, null, null, "left");
 
         doc.setFont("times", "bold");
-        doc.text("<NO >",59, 114, null, null, "left");
+        doc.text(noUsers,59, 114, null, null, "left");
 
         //final save
         //TABLE OF WORKING EMPLOYEES

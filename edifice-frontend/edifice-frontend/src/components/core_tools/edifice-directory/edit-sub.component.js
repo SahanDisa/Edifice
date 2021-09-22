@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-//import SubDataService from "./../../../services/subcontractor.service";
-import DeleteIcon from '@material-ui/icons/Delete';
+import SubDataService from "./../../../services/subcontractor.service";
+import { Link } from "react-router-dom";
+import cogoToast from 'cogo-toast';
+import { Breadcrumbs } from "@material-ui/core";
+import {Edit,Delete} from '@material-ui/icons';
 
 
 class EditSub extends Component {
@@ -16,7 +19,9 @@ class EditSub extends Component {
       email:"",
       contactPersonName: "",
       disableButton:true,
-      currentIndex: -1
+      currentIndex: -1,
+      deleteSuccess: false,
+      updateSuccess: false
     }
 
       this.getSub(this.props.match.params.id);
@@ -57,62 +62,98 @@ class EditSub extends Component {
     });
   }
 
-  displaySuccess(){
-    
-    window.location.reload();
+  displayDeleteSuccess(name){
+    //this.state.deleteSuccess
+    if(true){
+      cogoToast.success(
+        <div>
+          <div>Sub-Contractor <b>{name}</b> deleted Successfully</div>
+        </div>
+      );
+    }else{
+      cogoToast.danger(
+        <div>
+          <div>Sub-Contractor <b>{name}</b> could not be deleted</div>
+        </div>
+      );
+    }
+    this.setState({
+      deleteSuccess: false
+    });
+  }
+
+  displayUpdateSuccess(name){
+
+    console.log("stateupd")
+    console.log(this.state.updateSuccess)
+    //this.state.updateSuccess
+    if(true){
+      cogoToast.success(
+        <div>
+          <div>Sub-Contractor <b>{name}</b> updated Successfully!</div>
+        </div>
+      );
+    }else{
+      cogoToast.warn(
+        <div>
+          <div>Sub-Contractor <b>{name}</b> could not be updated</div>
+        </div>
+      );
+    }
   }
 
   getSub(id){
-    // SubrDataService.getOne(id)
-    // .then(response => {
-    //   this.setState({
+    SubDataService.getOne(id)
+    .then(response => {
+      this.setState({
         
-    //     companyName: response.data.companyName,
-    //     type: response.data.type,
-    //     contactNo: response.data.contactNo,
-    //     email: response.data.email,
-    //     contactPersonName: response.data.contactPersonName,
-    //   });
-    //   console.log(response.data);
-    //   //this.getLastSub();
-    // })
-    // .catch(e => {
-    //   console.log(e);
-    //   //console.log(data);
-    // });
+        companyName: response.data.companyName,
+        type: response.data.type,
+        contactNo: response.data.contactNo,
+        email: response.data.email,
+        contactPersonName: response.data.contactPersonName,
+      });
+      console.log(response.data);
+      //this.getLastSub();
+    })
+    .catch(e => {
+      console.log(e);
+      //console.log(data);
+    });
   }
 
   updateSub(id){
-    // var data={
-    // companyName: this.state.companyName,
-    // type:this.state.type,
-    // contactNo:this.state.contactNo,
-    // email: this.state.email,
-    // contactPersonName: this.state.contactPersonName
-    // }
+    var data={
+    companyName: this.state.companyName,
+    type:this.state.type,
+    contactNo:this.state.contactNo,
+    email: this.state.email,
+    contactPersonName: this.state.contactPersonName
+    }
 
-    // SubDataService.update(id,data)
-    // .then(response => {
-    //   console.log(response.data);
-    // })
-    // .catch(e => {
-    //   console.log(e);;
-    // });
+    SubDataService.update(id,data)
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(e => {
+      console.log(e);;
+    });
 
-    // this.displaySuccess();
+    this.displayUpdateSuccess(this.state.name);
   }
 
   deleteSub(id){
 
-    // SubDataService.delete(id)
-    // .then(response => {
-    //   console.log(response.data);
-    // })
-    // .catch(e => {
-    //   console.log(e);
-    // });
+    SubDataService.delete(id)
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(e => {
+      console.log(e);
+    });
 
     console.log("Successfully deleted")
+    this.displayDeleteSuccess(this.state.name);
     window.location.href="/subcontractor";
   }
 
@@ -123,8 +164,24 @@ class EditSub extends Component {
 
     return (
       <div className="">
-        <h2>New Sub-contractor</h2><hr/>
-        <div className="">
+        <h2><Edit/>EDIT SUB-CONTRACTOR DETAILS</h2><hr/>
+        
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link color="inherit" to="/home">
+            Home
+          </Link>
+          <Link color="inherit" to={"/admin"}>
+            Core Dashboard
+          </Link>
+          <Link color="inherit" to={"/subcontractors"}>
+            Sub-Contractors
+          </Link>
+          <Link color="inherit">
+            Edit: {this.state.id}
+          </Link>
+        </Breadcrumbs>
+
+        <div className="mt-2">
           <h5>Enter Sub-contractor details</h5>
 
           <p>Sub-contractor ID:</p>
@@ -170,10 +227,10 @@ class EditSub extends Component {
             <button className="btn btn-success" disabled={this.state.disableButton} id="updateBtn" data-target="#promptModal" data-toggle="modal" >Update</button>
             </div>
             <div className="mx-3">
-            <a href="/employee" className="btn btn-success">Cancel</a>
+            <Link to="/employee"><a className="btn btn-success">Cancel</a></Link>
             </div>
             <div >
-            <button className="btn btn-danger" id="updateBtn" data-target="#deleteModal" data-toggle="modal" ><DeleteIcon style={{ fontSize:15 }}/> Delete</button>
+            <button className="btn btn-danger" id="updateBtn" data-target="#deleteModal" data-toggle="modal" ><Delete style={{ fontSize:15 }}/> Delete</button>
             </div>
           </div>
 
@@ -191,7 +248,7 @@ class EditSub extends Component {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <a onClick={() =>{this.updateVendor(id)}} className="btn btn-primary pr-3 ml-2 mr-3"> Yes, Update</a>
+                  <a onClick={() =>{this.updateSub(id)}} className="btn btn-primary pr-3 ml-2 mr-3"> Yes, Update</a>
                   <a className="btn btn-secondary ml-6 mr-6 pl-3" data-dismiss="modal"> Cancel</a>
                 </div>
               </div>
@@ -211,7 +268,7 @@ class EditSub extends Component {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={() =>{this.deleteVendor(id)}} > Yes, Delete</a>
+                  <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={() =>{this.deleteSub(id)}} > Yes, Delete</a>
                   <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
                 </div>
               </div>

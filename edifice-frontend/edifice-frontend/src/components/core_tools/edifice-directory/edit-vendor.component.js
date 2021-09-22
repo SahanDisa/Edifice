@@ -95,13 +95,13 @@ class EditVendor extends Component {
     if(true){
       cogoToast.success(
         <div>
-          <div>Employee <b>{name}</b> updated Successfully!</div>
+          <div>Vendor <b>{name}</b> updated Successfully!</div>
         </div>
       );
     }else{
       cogoToast.warn(
         <div>
-          <div>Employee <b>{name}</b> could not be updated</div>
+          <div>Vendor <b>{name}</b> could not be updated</div>
         </div>
       );
     }
@@ -234,7 +234,7 @@ class EditVendor extends Component {
             <a href="/employee" className="btn btn-success">Cancel</a>
             </div>
             <div >
-            <button className="btn btn-danger" id="updateBtn" data-target="#deleteModal" data-toggle="modal" ><DeleteIcon style={{ fontSize:15 }}/> Delete</button>
+            <button className="btn btn-danger" id="updateBtn" data-target="#deleteModal" data-toggle="modal" ><Delete style={{ fontSize:15 }}/> Delete</button>
             </div>
           </div>
 
@@ -246,13 +246,13 @@ class EditVendor extends Component {
             <div className="modal-dialog modal-dialog-centered" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <p className="modal-title" id="exampleModalCenterTitle" style={{ fontSize:20 }}>Are you sure you want to update details of Vendor <b>{this.state.companyName}?</b> </p>
+                  <p className="modal-title" id="exampleModalCenterTitle" style={{ fontSize:20 }} >Are you sure you want to update details of Vendor <b>{this.state.companyName}?</b> </p>
                   <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div className="modal-body">
-                  <a onClick={() =>{this.updateVendor(id)}} className="btn btn-primary pr-3 ml-2 mr-3"> Yes, Update</a>
+                  <a onClick={() =>{this.updateVendor(id)}} className="btn btn-primary pr-3 ml-2 mr-3" data-dismiss="modal"> Yes, Update</a>
                   <a className="btn btn-secondary ml-6 mr-6 pl-3" data-dismiss="modal"> Cancel</a>
                 </div>
               </div>

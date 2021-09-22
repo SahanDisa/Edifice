@@ -161,7 +161,7 @@ class Subcontractors extends Component {
           </Link>
         </Breadcrumbs>
 
-        <form className="row g-3">
+        <form className="row g-3 mt-3">
           <div className="col-auto">
             <input className="form-control" type="text" placeholder="Search Sub-contractor"/>  
           </div>
@@ -171,7 +171,7 @@ class Subcontractors extends Component {
           </div>
 
           <div>
-            <a href="/addSub" className="btn btn-primary"> + Add Sub-contractor</a>
+            <Link to="/addSub"><a className="btn btn-primary"> + Add Sub-contractor</a></Link>
           </div>
         </form>
 

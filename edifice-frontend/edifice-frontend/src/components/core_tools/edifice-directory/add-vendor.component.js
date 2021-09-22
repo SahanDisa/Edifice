@@ -16,10 +16,10 @@ class AddVendor extends Component {
     this.onChangeContactPersonName = this.onChangeContactPersonName.bind(this);
     this.saveVendor = this.saveVendor.bind(this);
     this.newVendor = this.newVendor.bind(this);
-    //this.retriveVendors = this.retrieveVendors.bind(this);
+    this.displayResult = this.displayResult.bind(this);
     this.state = {
       companyName: "",
-      type: "",
+      type: "Concrete",
       contactNo:"",
       email:"",
       contactPersonName: "",
@@ -29,7 +29,8 @@ class AddVendor extends Component {
       lastVendorID:undefined,
       currentIndex: -1,
       id: undefined,
-      disableSubmitButton:true
+      disableSubmitButton:true,
+      isSuccess: true
     };
   }
   componentDidMount() {
@@ -99,7 +100,13 @@ class AddVendor extends Component {
         console.log(e);
         //console.log(data);
       });
-    //this.state.getLastvendorID();
+    this.getLastVendorID();
+
+    this.setState({
+      isSuccess: true
+    })
+
+    this.displayResult();
   }
 
   newVendor() {
@@ -197,9 +204,9 @@ class AddVendor extends Component {
                 value={this.state.type}
                 onChange={this.onChangeType}
                 name="companyName" required>
-            <option value="concrete">Concrete</option>
-            <option value="electronic">Electronic</option>
-            <option value="other">Other</option>
+            <option value="Concrete">Concrete</option>
+            <option value="Electronic">Electronic</option>
+            <option value="Other">Other</option>
           </select><br />
 
           <label htmlFor="">Contact No</label>
@@ -229,7 +236,7 @@ class AddVendor extends Component {
           <br/>
 
           <div className="row">
-            <a onClick={()=>{this.saveVendor(); setTimeout(this.setState.bind(this, {position:1}), 3000); this.displayResult()}}className="btn btn-success" disabled={this.state.disableSubmitButton}>Add </a>
+            <a onClick={()=>{this.saveVendor(); setTimeout(this.setState.bind(this, {position:1}), 3000);}}className="btn btn-success" disabled={this.state.disableSubmitButton}>Add </a>
             <div className="pl-4">  
               <a className="btn btn-secondary" type="reset">Cancel</a>
             </div>

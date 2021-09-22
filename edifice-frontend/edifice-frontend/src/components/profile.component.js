@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import UserService from "./../services/user.service";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
 import mainIcon from "././../assets/profile-gen.png";
 import buildIcon from "././../assets/PM/ibulldozer.png";
@@ -70,6 +71,7 @@ export default class Profile extends Component {
   }
   componentDidMount() {
     this.retrieveProjects(this.state.currentUser.id);
+    console.log(this.state);
   }
   retrieveProjects(id) {
     UserService.userProjects(id)
@@ -88,7 +90,7 @@ export default class Profile extends Component {
     const { projects,currentIndex,currentUser } = this.state;
     return (
       <div className="container">
-        <h2>Profile</h2>
+        <h2><AccountBoxIcon/> PROFILE</h2>
         <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" to="/home">
             Home
@@ -166,7 +168,7 @@ export default class Profile extends Component {
           </div>
           <a href="#" className="btn btn-primary">Update Profile</a>
           <hr></hr>
-          <h3>Chanage Password</h3>
+          <h3>Change Password</h3>
           <div className="form-group">
               <label htmlFor="startDate"><h6>Previous Password : </h6></label>
               <input
@@ -213,8 +215,25 @@ export default class Profile extends Component {
             
           <h6>Permissions:</h6>
           <ul>
-          <li className="list-group-item"><b>Project Management</b></li>
-          <li className="list-group-item"><b>Finance Management</b></li>
+            
+            <li className="list-group-item"><b>Project Management</b></li>
+            {(() => {
+              if (this.state.currentUser.roles[currentUser.roles.length-1]=="ROLE_MODERATOR") {
+                return (
+                  <div>
+                     <li className="list-group-item"><b>Finance Management</b></li>
+                     <li className="list-group-item"><b>Resource Management</b></li>
+                  </div>
+                )
+              } else if (this.state.currentUser.roles[currentUser.roles.length-1]=="ROLE_ADMIN") {
+                return (
+                  <div>
+                     <li className="list-group-item"><b>Core Tools</b></li>
+                     <li className="list-group-item"><b>Resource Management</b></li>
+                  </div>
+                )
+              } 
+            })()}
           </ul>
           </div>
         </div>
