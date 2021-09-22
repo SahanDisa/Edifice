@@ -26,7 +26,7 @@ class CreatePL extends Component {
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeAssignee = this.onChangeAssignee.bind(this);
         this.savePunchListItem = this.savePunchListItem.bind(this);
-        this.buttonChange = this.buttonChange.bind(this);
+        // this.buttonChange = this.buttonChange.bind(this);
 
         this.state = {
             no: null,
@@ -42,7 +42,7 @@ class CreatePL extends Component {
             lastpl:"",
             users: [],
             pltypes: [],
-            buttonChanger: undefined,
+            // buttonChanger: undefined,
             currentUser: AuthService.getCurrentUser(),
             submitted: false
         };
@@ -131,9 +131,9 @@ class CreatePL extends Component {
                 description: this.state.description,
                 projectId: this.props.match.params.id
             };
-            this.setState({
-                buttonChanger: "True"
-            })
+            // this.setState({
+            //     buttonChanger: "True"
+            // })
             PunchlistDataService.create(data)
             .then(response => {
                 this.setState({
@@ -166,13 +166,12 @@ class CreatePL extends Component {
         });
     }
 
-    buttonChange(){
-        console.log("Yes, Linking Button is succesful");
-    }
+    // buttonChange(){
+    //     console.log("Yes, Linking Button is succesful");
+    // }
 
     render() {
-        const {lastpl, pltypes, buttonChanger, projectId, users} = this.state;
-        console.log("lastpl" + lastpl);
+        const {lastpl, pltypes, projectId, users} = this.state;
         return (
         <div className="">
             <div className="">
@@ -183,9 +182,9 @@ class CreatePL extends Component {
                     <Link color="inherit" to={"/punchlist/"+projectId}>Punch List</Link>
                     <Link color="inherit" aria-current="page" className="disabledLink">Add New Punch List</Link>
                 </Breadcrumbs><hr/>
-                <div className="row mb-3">
-                    <div className="col-sm-8">
-                    <h5>Step 1: Basic Details</h5>
+                <div className="">
+                    {/* <div className="col-sm-8"> */}
+                        {/* <h5>Step 1: Basic Details</h5> */}
                         <form>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
@@ -305,24 +304,24 @@ class CreatePL extends Component {
                                 </div>
                             </div>
                             <hr />
-                            {!buttonChanger &&
+                            {/* {!buttonChanger && */}
                                 <button
                                 type="button"
                                 onClick={this.savePunchListItem}
                                 className="btn btn-primary mr-2"
                                 >Save</button>
-                            }{buttonChanger &&
-                                <Link
+                            {/* }{buttonChanger && */}
+                                {/* <Link
                                 to={"/managepunchlist/createaddphoto/" + projectId + "/" + lastpl}
                                 type="button"
                                 onClick={this.buttonChange}
                                 className="btn btn-primary mr-2"
-                                >Next: Link Photos</Link>
-                            }
+                                >Next: Link Photos</Link> */}
+                            {/* // } */}
                             <Link to={"/punchlist/"+projectId} className="">Cancel</Link>
                         </form>
-                    </div>
-                    <div className="col-sm-4">
+                    {/* </div> */}
+                    {/* <div className="col-sm-4">
                         <Timeline>
                             <TimelineItem>
                                 <TimelineSeparator><TimelineDot /><TimelineConnector /></TimelineSeparator>
@@ -331,13 +330,13 @@ class CreatePL extends Component {
                             <TimelineItem>
                             <TimelineSeparator><TimelineDot /></TimelineSeparator>
                                 <TimelineContent><h6><strong>Step 2</strong><br/>Link Photos</h6></TimelineContent>
-                            </TimelineItem>
+                            </TimelineItem> */}
                             {/* <TimelineItem>
                                 <TimelineSeparator><TimelineDot /></TimelineSeparator>
                                 <TimelineContent><h6><strong>Step 2</strong><br/>Add Assignees</h6></TimelineContent>
                             </TimelineItem> */}
-                        </Timeline>
-                    </div>
+                        {/* </Timeline>
+                    </div> */}
                 </div>
             </div>
         {/* )} */}

@@ -231,7 +231,7 @@ class MeetingsHome extends Component {
                                     <td>
                                       {mt.status == "Scheduled"
                                         ? "🟢 - Scheduled"
-                                        : "🔴 - Ended"}
+                                        : "🔴 - End"}
                                     </td>
                                     <td>
                                       {mt.status == "Scheduled" ? (

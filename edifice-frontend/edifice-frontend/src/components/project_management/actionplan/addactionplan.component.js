@@ -16,7 +16,6 @@ export default class AddActionPlan extends Component {
     this.onChangePlanManager = this.onChangePlanManager.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
     this.saveActionPlan = this.saveActionPlan.bind(this);
-    this.viewActionPlan = this.viewActionPlan.bind(this);
 
     this.state = {
       id: null,
@@ -25,7 +24,7 @@ export default class AddActionPlan extends Component {
       actiontype: "",
       location: "",
       description: "",
-      approved: false,
+      isApproved: false,
       projectId: this.props.match.params.id, 
       
       actionplantypes: [],
@@ -106,13 +105,18 @@ export default class AddActionPlan extends Component {
   }
   
   saveActionPlan() {  
+    if (this.state.title != "" &&
+      this.state.planmanager != "" &&
+      this.state.actiontype != "" &&
+      this.state.location != "" &&
+      this.state.description != ""){
     var data = {
-      name: this.state.name,
+      title: this.state.title,
       planmanager:this.state.planmanager,
       actiontype: this.state.actiontype,
       location: this.state.location,
       description: this.state.description,
-      approved: this.state.approved,
+      isApproved: this.state.isApproved,
       projectId: this.state.projectId
     };
 
@@ -120,35 +124,32 @@ export default class AddActionPlan extends Component {
       .then(response => {
         this.setState({
           id: response.data.id,
-          name: response.data.name,
+          title: response.data.title,
           description: response.data.description,
           actiontype: response.data.actiontype,
           location: response.data.location,
           description: response.data.description,
-          approved: response.data.approved,
+          isApproved: response.data.isApproved,
           projectId: response.data.projectId,
 
           submitted: true
         });
         console.log(response.data);
+        cogoToast.success("Meeting Saved Successfully!");
+        this.props.history.push("/actionplan/"+ this.props.match.params.id);
       })
       .catch(e => {
         console.log(e);
       });
-  }
-
-  viewActionPlan(id){
-    this.props.history.push("/actionplan/"+ id);
-    cogoToast.success("Action Plan Saved Successfully!");
+    }else{
+      cogoToast.error("Field/s cannot be empty");            
+    }
   }
 
   render() {
-    const {projectId, currentIndex, actionplantypes, isTitleValid, viewActionPlan, users} = this.state;
+    const {projectId, currentIndex, actionplantypes, isTitleValid, users} = this.state;
     return (
       <div className="container">
-        {this.state.submitted ? (
-          viewActionPlan(projectId)
-        ) : (
           <div class="container">
             <h2>Add New Action Plan</h2>
             <Breadcrumbs aria-label="breadcrumb">
@@ -158,14 +159,14 @@ export default class AddActionPlan extends Component {
               <Link color="inherit" aria-current="page" className="disabledLink">Add New Action Plan</Link>
             </Breadcrumbs><hr/>
             <div className="">
-            <div className="form-row">
+            {/* <div className="form-row">
                 <div className="form-group col-md-12">
                   {this.state.title == "" ? "" : isTitleValid > 0 ? 
                     <Alert variant="danger">Name is already taken</Alert> :
                     <Alert variant="success">Name is avaliable to use</Alert>
                   }
                 </div>
-              </div>
+              </div> */}
               <div className="form-row">
                 <div className="form-group col-md-9">
                   <label htmlFor="title">Name</label>
@@ -181,11 +182,11 @@ export default class AddActionPlan extends Component {
                   />
                 </div>
                 <div className="form-group col-md-3">
-                  <label htmlFor="approved">Status</label>
+                  <label htmlFor="isApproved">Status</label>
                   <input
                     type="text"
                     className="form-control"
-                    value="Not Approved 🔴"
+                    value="Not Approved"
                     readOnly
                   />
                 </div>
@@ -224,6 +225,7 @@ export default class AddActionPlan extends Component {
                     value={this.state.actiontype}
                     onChange={this.onChangeActionType}
                   >
+                    <option value="">Select an Type</option>
                     {actionplantypes && actionplantypes.map((actionplantype, index) => (
                       <option
                         value={actionplantype.title}
@@ -274,7 +276,6 @@ export default class AddActionPlan extends Component {
             <button onClick={this.saveActionPlan} className="btn btn-success mr-2">Create Action Plan</button>
             <a href="/actionplan">Cancel</a>
           </div>
-        )}
       </div>
     );
   }
