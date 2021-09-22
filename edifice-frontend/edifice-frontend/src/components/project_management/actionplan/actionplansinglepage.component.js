@@ -39,7 +39,7 @@ export default class ActionPlanSinglePage extends Component {
         this.getActionPlanSections(this.props.match.params.apid);
         this.getActionPlanDetails(this.props.match.params.apid);
     }
-    
+
     getActionPlanDetails(id){
         ActionPlanService.getOne(id)
         .then(response => {
@@ -52,6 +52,7 @@ export default class ActionPlanSinglePage extends Component {
         console.log(e);
         });
     }
+    
     getActionPlanSections(id){
         ActionPlanSectionService.getAll(id)
         .then(response => {

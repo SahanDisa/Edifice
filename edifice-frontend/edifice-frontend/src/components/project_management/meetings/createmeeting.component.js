@@ -103,6 +103,7 @@ class CreateMeeting extends Component {
             console.log(e);
         });
         this.props.history.push("/meetings/"+ this.props.match.params.id);
+        window.location.reload();
         cogoToast.success("Meeting Saved Successfully!", { position: 'top-right', heading: 'success' });
     }
 
@@ -185,6 +186,7 @@ class CreateMeeting extends Component {
                                 <input
                                     className="form-control"
                                     name="date"
+                                    min="2021-09-23"
                                     value={this.state.date}
                                     onChange={this.onChangeDate}
                                     type="date"
@@ -197,6 +199,8 @@ class CreateMeeting extends Component {
                                     className="form-control"
                                     name="time"
                                     value={this.state.time}
+                                    min="07:00"
+                                    max="22:00"
                                     onChange={this.onChangeTime}
                                     type="time"
                                     required

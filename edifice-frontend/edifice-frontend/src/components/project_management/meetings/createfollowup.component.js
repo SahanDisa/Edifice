@@ -187,6 +187,7 @@ class CreateFollowupMeetings extends Component {
                             <input
                                 className="form-control"
                                 name="date"
+                                min="2021-09-23"
                                 value={meeting.date}
                                 onChange={this.onChangeDate}
                                 type="date"

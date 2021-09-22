@@ -103,7 +103,9 @@ exports.findOne = (req, res) => {
 exports.findAll = (req, res) => {
   Meeting.findAll({ where: { 
     isDeleted: 0
-  }})
+  },
+  order: [['status', 'DESC'], ['date', 'DESC']]
+  })
   .then(data => {
     res.send(data);
   })

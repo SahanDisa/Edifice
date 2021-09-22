@@ -30,18 +30,11 @@ class PLIView extends Component {
                 isDeleted: 0,
                 projectId: this.props.match.params.id
             },
-            // pltype: {
-            //     no: "",
-            //     title: "",
-            //     description: "",
-            //     projectId: this.props.match.params.id
-            // }
         };
     }
   
     componentDidMount() {
         this.retrivePLItemInfo(this.props.match.params.pliid);
-        // this.retriveType(this.props.match.params.pliid, this.props.match.params.id);
     }
 
     retrivePLItemInfo(plid){
@@ -53,15 +46,17 @@ class PLIView extends Component {
         });
     }
 
-    // retriveType(plid, id){
-    //     punchlisttypesService.getType(plid, id)
-    //     .then(response => {
-    //         this.setState({
-    //             pltype: response.data
-    //         });
-    //         console.log(response.data);
-    //     });
-    // }
+    onChangeStatus(e) {
+        const status = e.target.value
+        this.setState(function(prevState){
+            return {
+                plItem: {
+                    ...prevState.plItem,
+                    status: status
+                }
+            }
+        });
+    }
 
     onChangeStatus(e) {
         const status = e.target.value
@@ -124,28 +119,36 @@ class PLIView extends Component {
     }
 
     updatePunchList(){
-        var data = {
-            description: this.state.plItem.description,
-            status: this.state.plItem.status,
-            duedate: this.state.plItem.duedate,
-            location: this.state.plItem.location,
-            projectId: this.state.plItem.projectId
-        };
+        if(this.state.plItem.description != "" &&
+        this.state.plItem.status != "" &&
+        this.state.plItem.duedate != "" &&
+        this.state.plItem.location != "" &&
+        this.state.plItem.projectId != "" ){
+            var data = {
+                description: this.state.plItem.description,
+                status: this.state.plItem.status,
+                duedate: this.state.plItem.duedate,
+                location: this.state.plItem.location,
+                projectId: this.state.plItem.projectId
+            };
 
-        PunchlistDataService.update(this.props.match.params.pliid, data)
-        .then(response => {
-            this.setState(prevState => ({
-                plItem: {
-                    ...prevState.plItem,
-                }
-            }));
-            console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
-        });
-        this.props.history.push("/view/"+ this.props.match.params.id + "/" + this.props.match.params.pliid);
-        cogoToast.success("Punch List updated Successfully!");
+            PunchlistDataService.update(this.props.match.params.pliid, data)
+            .then(response => {
+                this.setState(prevState => ({
+                    plItem: {
+                        ...prevState.plItem,
+                    }
+                }));
+                console.log(response.data);
+                this.props.history.push("/view/"+ this.props.match.params.id + "/" + this.props.match.params.pliid);
+                cogoToast.success("Punch List updated Successfully!");
+            })
+            .catch(e => {
+                console.log(e);
+            });
+        } else {
+            cogoToast.error("Field/s cannot be empty");
+        }
     }
 
     deletePunchList(){

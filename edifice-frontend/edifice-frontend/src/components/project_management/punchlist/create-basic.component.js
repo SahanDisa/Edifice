@@ -12,6 +12,7 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import cogoToast from 'cogo-toast';
+import { TextareaAutosize } from "@material-ui/core";
 
 class CreatePL extends Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class CreatePL extends Component {
         this.onChangeType = this.onChangeType.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
         // this.onChangePunchmanager = this.onChangePunchmanager.bind(this);
-        this.viewPunchList = this.viewPunchList.bind(this);
+        // this.viewPunchList = this.viewPunchList.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeAssignee = this.onChangeAssignee.bind(this);
         this.savePunchListItem = this.savePunchListItem.bind(this);
@@ -40,6 +41,7 @@ class CreatePL extends Component {
             projectId: this.props.match.params.id,
             lastpl:"",
             users: [],
+            pltypes: [],
             buttonChanger: undefined,
             currentUser: AuthService.getCurrentUser(),
             submitted: false
@@ -100,50 +102,59 @@ class CreatePL extends Component {
 
     onChangeAssignee(e) {
         this.setState({
-            description: e.target.value
+            assignee: e.target.value
         });
     }
 
     onChangeDescription(e) {
         this.setState({
-            assignee: e.target.value
+            description: e.target.value
         });
     }
 
     savePunchListItem() {
-        var data = {
-            status: this.state.status,
-            duedate: this.state.duedate,
-            title: this.state.title,
-            type: this.state.type,
-            location: this.state.location,
-            punchmanager: this.state.punchmanager,
-            assignee: this.state.assignee,
-            description: this.state.description,
-            projectId: this.props.match.params.id
-        };
-
-        this.setState({
-            buttonChanger: "True"
-        })
-
-        PunchlistDataService.create(data)
-        .then(response => {
+        if(this.state.status != "" &&
+        this.state.duedate != "" &&
+        this.state.title != "" &&
+        this.state.location != "" &&
+        this.state.type != "" &&
+        this.state.assignee != "" &&
+        this.state.description != "" ){
+            var data = {
+                status: this.state.status,
+                duedate: this.state.duedate,
+                title: this.state.title,
+                type: this.state.type,
+                location: this.state.location,
+                punchmanager: this.state.punchmanager,
+                assignee: this.state.assignee,
+                description: this.state.description,
+                projectId: this.props.match.params.id
+            };
             this.setState({
-                no: response.data.no,
-                status: response.data.status,
-                duedate: response.data.duedate,
-                title: response.data.title,
-                type: response.data.type,
-                location: response.data.location,
-                punchmanager: response.data.punchmanager,
-                assignee: response.data.assignee,
-                description: response.data.description,
-                projectId: response.data.projectId,
+                buttonChanger: "True"
+            })
+            PunchlistDataService.create(data)
+            .then(response => {
+                this.setState({
+                    no: response.data.no,
+                    status: response.data.status,
+                    duedate: response.data.duedate,
+                    title: response.data.title,
+                    type: response.data.type,
+                    location: response.data.location,
+                    punchmanager: response.data.punchmanager,
+                    assignee: response.data.assignee,
+                    description: response.data.description,
+                    projectId: response.data.projectId,
 
-                submitted: true
+                    submitted: true
+                });
+                cogoToast.success("Punch List - Basic Details Saved Successfully!");
             });
-        });
+        }else{
+            cogoToast.error("Field/s cannot be empty");
+        }
     }
 
     getLastPunchListID(){
@@ -159,17 +170,11 @@ class CreatePL extends Component {
         console.log("Yes, Linking Button is succesful");
     }
 
-    viewPunchList(){
-        cogoToast.success("Punch List - Basic Details Saved Successfully!");
-    }
-
     render() {
-        const {lastpl, pltypes, buttonChanger, projectId, projectmanager, currentUser, users, viewPunchList} = this.state;
+        const {lastpl, pltypes, buttonChanger, projectId, users} = this.state;
+        console.log("lastpl" + lastpl);
         return (
         <div className="">
-            {this.state.submitted ? (
-                viewPunchList()
-            ):(
             <div className="">
                 <h2>Add New Punch List Item</h2>
                 <Breadcrumbs aria-label="breadcrumb">
@@ -188,6 +193,7 @@ class CreatePL extends Component {
                                     <input
                                         className="form-control"
                                         name="title"
+                                        placeholder="Enter a punch list title"
                                         value={this.state.title}
                                         onChange={this.onChangeTitle}
                                         type="text"
@@ -240,6 +246,7 @@ class CreatePL extends Component {
                                     <input
                                         className="form-control"
                                         name="location"
+                                        placeholder="Enter the location"
                                         value={this.state.location}
                                         onChange={this.onChangeLocation}
                                         type="text"
@@ -275,10 +282,10 @@ class CreatePL extends Component {
                                     <input
                                         className="form-control"
                                         name="duedate"
+                                        min="2021-09-23"
                                         value={this.state.duedate}
                                         onChange={this.onChangeDuedate}
                                         type="date"
-                                        min=""
                                         required
                                     />
                                 </div>
@@ -286,9 +293,10 @@ class CreatePL extends Component {
                             <div className="form-row">
                                 <div className="form-group col-md-12">
                                     <label htmlFor="">Description</label>
-                                    <textarea
+                                    <TextareaAutosize
                                         className="form-control"
                                         name="description"
+                                        placeholder="Enter a description about the punch list"
                                         value={this.state.description}
                                         onChange={this.onChangeDescription}
                                         type="text"
@@ -305,7 +313,7 @@ class CreatePL extends Component {
                                 >Save</button>
                             }{buttonChanger &&
                                 <Link
-                                to={"/camera/" + projectId}
+                                to={"/managepunchlist/createaddphoto/" + projectId + "/" + lastpl}
                                 type="button"
                                 onClick={this.buttonChange}
                                 className="btn btn-primary mr-2"
@@ -332,7 +340,6 @@ class CreatePL extends Component {
                     </div>
                 </div>
             </div>
-            )}
         {/* )} */}
         </div>
         );

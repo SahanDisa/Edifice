@@ -24,6 +24,7 @@ class ViewMeeting extends Component {
             no: this.props.match.params.mtid,
             category: "",
             name: "",
+            description: "",
             status: "Scheduled",
             date: "",
             time: "",
@@ -58,6 +59,19 @@ class ViewMeeting extends Component {
             meeting: {
               ...prevState.meeting,
               name: name
+            }
+          }
+            
+        });
+    }
+
+    onChangeDescription(e) {
+      const description= e.target.value
+        this.setState(function(prevState){
+          return {
+            meeting: {
+              ...prevState.meeting,
+              description: description
             }
           }
             
@@ -99,7 +113,6 @@ class ViewMeeting extends Component {
               time: time
             }
           }
-            
         });
     }
 
@@ -236,6 +249,19 @@ class ViewMeeting extends Component {
                                     onChange={this.onChangeLocation}
                                     type="text"
                                     required
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-md-12">
+                                <label htmlFor="">Description</label>
+                                <input
+                                  className="form-control"
+                                  name="text"
+                                  value={meeting.description}
+                                  onChange={this.onChangeDescription}
+                                  type="text"
+                                  required
                                 />
                             </div>
                         </div>

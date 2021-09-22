@@ -121,7 +121,6 @@ class MeetingsHome extends Component {
 
     render() {
       const {categories, meeting, searchTitle, projectId} = this.state;
-      console.log(projectId);
       return (
         <div className="">
           <h2>MEETING</h2>
@@ -171,12 +170,12 @@ class MeetingsHome extends Component {
             <form>
               <div className="form-row mt-3">
                 <div class="col-md-12 text-right">
-                  <Link to={"/createmeetings/"+projectId} className="btn btn-primary">+ Create Meeting</Link>
+                  <Link to={"/createmeetings/"+projectId} className="btn btn-primary mb-2">+ Create Meeting</Link>
                 </div>
-                <div className="form-group col-md-4">
+                {/* <div className="form-group col-md-4">
                   <input className="form-control" type="text" placeholder="Search a meeting type..." value={searchTitle} onChange={this.onChangeSearchTitle} />
                 </div>
-                <button href="#" className="btn btn-outline-dark mb-3" onClick={this.searchTitle}>Search</button>
+                <button href="#" className="btn btn-outline-dark mb-3" onClick={this.searchTitle}>Search</button> */}
               </div>
             </form>
             <div class="accordion" id="accordionExample">
@@ -205,7 +204,7 @@ class MeetingsHome extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                              {meeting && meeting.map((mt, index) => ( meeting.category == categories.id ?
+                              {meeting && meeting.map((mt, index) => ( mt.category == cat.id ?
                                 <tr key={mt.id + index}>
                                     <td>{mt.date}</td>
                                     <td>{mt.name}</td>
