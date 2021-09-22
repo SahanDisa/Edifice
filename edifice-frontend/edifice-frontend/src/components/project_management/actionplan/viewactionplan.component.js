@@ -145,7 +145,7 @@ export default class AddActionPlan extends Component {
         console.log(e);
     });
     this.props.history.push("/viewactionplan/"+ this.props.match.params.id + "/" +this.props.match.params.apid);
-    cogoToast.success("Punch List updated Successfully!");
+    cogoToast.success("Action Plan updated Successfully!");
   }
 
   deleteActionPlan(){
@@ -161,7 +161,7 @@ export default class AddActionPlan extends Component {
     });
     this.props.history.push("/actionplan/"+ this.props.match.params.id + "/" +this.props.match.params.apid);
     window.location.reload();
-    cogoToast.success("Punch List Deleted Successfully!");
+    cogoToast.success("Action Plan Deleted Successfully!");
   }
 
   render() {

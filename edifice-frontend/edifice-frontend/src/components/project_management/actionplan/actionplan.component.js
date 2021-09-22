@@ -13,6 +13,8 @@ export default class ActionPlan extends Component {
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.viewActionPlan = this.viewActionPlan.bind(this);
+    this.retrieveAPTypes = this.retrieveAPTypes.bind(this);
+    this.retriveActionPlans = this.retriveActionPlans.bind(this);
     this.saveActionPlanCategory = this.saveActionPlanCategory.bind(this);
     this.state = {
       id: null,
@@ -20,6 +22,7 @@ export default class ActionPlan extends Component {
       description: "",
       projectId: this.props.match.params.id,
       actionplans: [],
+      aptypes: [],
       currentIndex: -1,
       isTitleValid: 0,
 
@@ -28,10 +31,24 @@ export default class ActionPlan extends Component {
   }
   componentDidMount() {
     window.scrollTo(0, 0);
-    this.retriveActionPlanTypes(this.props.match.params.id);
+    this.retriveActionPlans(this.props.match.params.id);
+    this.retrieveAPTypes(this.props.match.params.id);
   }
 
-  retriveActionPlanTypes(id) {
+  retrieveAPTypes(id){
+    ActionPlanTypeDataService.getAll(id)
+    .then(response => {
+        this.setState({
+          aptypes: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
+  retriveActionPlans(id) {
     ActionPlanService.getAll(id)
       .then((response) => {
         this.setState({
@@ -88,17 +105,17 @@ export default class ActionPlan extends Component {
       });
   }
 
-  viewActionPlan(id){
-    this.props.history.push("/actionplan/"+ id);
+  viewActionPlan(){
+    window.location.reload();
     cogoToast.success("Action Plan Type Saved Successfully!");
   }
 
   render() {
-    const { actionplans, currentIndex, projectId, isTitleValid, submitted, viewActionPlan } = this.state;
+    const { actionplans, currentIndex, projectId, isTitleValid, aptypes, viewActionPlan } = this.state;
     return (
       <div>
       {this.state.submitted ? (
-        viewActionPlan(projectId)
+        viewActionPlan()
       ) : (
       <div>
         <h2>ACTION PLAN HOME</h2>
@@ -158,6 +175,36 @@ export default class ActionPlan extends Component {
                 }
               </div>
             </div>
+          </div>
+          <div className="container row">
+            {aptypes && aptypes.map((apt, index) => (
+                <div className={"container col-3" + (index === currentIndex ? "active" : "")} key={index} >
+                  <Link
+                    to={"/viewactionplantype/" + projectId + "/" + apt.title}
+                    style={{ "text-decoration": "none" }}
+                  >
+                    <Card
+                      bg={"light"}
+                      text={"dark"}
+                      style={{ width: "16rem" }}
+                      className="bg-light mb-2"
+                      variant="outline"
+                    >
+                      <Card.Body>
+                        <Card.Title>
+                          <h4>{apt.title}</h4>
+                        </Card.Title>
+                        <Card.Text>
+                          {apt.description == ""
+                            ? "No Description"
+                            : apt.description}
+                        </Card.Text>
+                        <Card.Link variant="primary">Click to view</Card.Link>
+                      </Card.Body>
+                    </Card>
+                  </Link>
+                </div>
+              ))}
           </div>
           <hr />
           <h4>Action Plans</h4>

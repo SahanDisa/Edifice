@@ -12,6 +12,7 @@ export default class AddAPItem extends Component {
         this.onChangeTitle = this.onChangeTitle.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeAssigner = this.onChangeAssigner.bind(this);
+        this.onChangeActionplansectionId = this.onChangeActionplansectionId.bind(this);
         this.viewAPItem = this.viewAPItem.bind(this);
         this.saveAPitem = this.saveAPitem.bind(this);
 
@@ -223,10 +224,10 @@ export default class AddAPItem extends Component {
                             name="description"
                         />
                     </div>
-                </div>
+                </div><hr />
                     <button type="button" className="btn btn-primary mr-2" onClick={this.saveAPitem}>Create Action Plan Item</button>
                     <Link to={"/actionplansingle/" + projectId + "/" + actionplanId}>Cancel</Link>
-                </div> <hr />
+                </div>
             </div>
         )}
         </div>

@@ -83,10 +83,7 @@ class PunchList extends Component {
       console.log(response.data);
     });
     this.props.history.push("/punchlist/" + this.props.match.params.id);
-    cogoToast.success("Punch List Type Added successfully!", {
-      position: "top-right",
-
-    });
+    cogoToast.success("Punch List Type Added successfully!");
   }
 
   retrievePunchListStatus(id) {
