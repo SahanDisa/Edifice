@@ -104,11 +104,12 @@ import ViewRFI from "./components/project_management/rfi/view.component";
 
 import actionplanHome from "./components/project_management/actionplan/actionplan.component";
 import AddActionPlan from "./components/project_management/actionplan/addactionplan.component";
-import ViewAPType from "./components/project_management/actionplan/view-actionplantype.component";
+import ViewAPType from "./components/project_management/actionplan/viewactionplantype.component";
 import ActionPlanSinglePage from "./components/project_management/actionplan/actionplansinglepage.component";
 import AddAPItem from "./components/project_management/actionplan/addapitem.component";
 import AddAPSection from "./components/project_management/actionplan/addapsection.component";
 import ViewActionPlan from "./components/project_management/actionplan/viewactionplan.component";
+import ViewAPSection from "./components/project_management/actionplan/viewactionplansection.component";
 
 import DailyLogHome from "./components/project_management/dailylog/dailylog.component";
 import CreateDCL from "./components/project_management/dailylog/createcalllog.component";
@@ -390,6 +391,7 @@ class App extends Component {
               <Route path="/addactionplanitem/:id/:apid" component={AddAPItem} />
               <Route path="/addactionplansection/:id/:apid" component={AddAPSection} />
               <Route path="/viewactionplantype/:id/:apid" component={ViewAPType} />
+              <Route path="/viewactionplansection/:id/:apid" component={ViewAPSection} />
               <Route exact path="/viewactionplan/:id/:apid" component={ViewActionPlan} />
               {/* Punch List */}
               <Route path="/punchlist/:id" component={punchlistHome} />

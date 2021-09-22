@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ActionPlanSectionDataService from "./../../../services/project_management/actionplansection.service";
-import ActionPlanTypeDataService from "../../../services/project_management/actionplantype.service";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Table from "react-bootstrap/Table";
 import cogoToast from 'cogo-toast';
+import UpdateIcon from '@material-ui/icons/Update';
+import DeleteIcon from "@material-ui/icons/Delete";
 
 export default class AddAPSection extends Component {
   constructor(props) {
@@ -13,6 +15,7 @@ export default class AddAPSection extends Component {
         this.onChangeRefid = this.onChangeRefid.bind(this);
         this.onChangeAcceptance = this.onChangeAcceptance.bind(this);
         this.onChangeDuedate = this.onChangeDuedate.bind(this);
+        this.retrieveAPSection = this.retrieveAPSection.bind(this);
         this.viewAPSection = this.viewAPSection.bind(this);
         this.saveAPsection = this.saveAPsection.bind(this);
 
@@ -23,13 +26,30 @@ export default class AddAPSection extends Component {
             refid: "",
             acceptance: "",
             duedate: "",
-            actionplanId:"",
-            projectId: "",
-            
-            actionplantypes: [],
+            actionplanId: this.props.match.params.apid,
+            projectId: this.props.match.params.id,
+            actionplansections: [],
             currentIndex: -1,
+
             submitted: false,
         };
+    }
+
+    componentDidMount() {
+        this.retrieveAPSection(this.props.match.params.apid);
+    }
+
+    retrieveAPSection(id){
+        ActionPlanSectionDataService.getAll(id)
+        .then(response => {
+            this.setState({
+                actionplansections: response.data
+            });
+            console.log(response.data);
+        })
+        .catch(e => {
+            console.log(e);
+        });
     }
     
     onChangeTitle(e) {
@@ -87,12 +107,26 @@ export default class AddAPSection extends Component {
         })
     }
 
+    deleteWeatherLog(e){
+        console.log(e.target.value);
+        var data = {
+            isDeleted: 1
+        }
+        ActionPlanSectionDataService.update(e.target.value, data)
+        .then(response => {
+            console.log(response.data);
+        })
+        window.location.reload();
+        cogoToast.success("Action Plan Section Deleted Successfully!");
+    }
+
     viewAPSection(){
-        cogoToast.success("Punch List - Basic Details Saved Successfully!");
+        window.location.reload();
+        cogoToast.success("Action Plan Section Saved Successfully!");
     }
 
     render() {
-        const {actionplanId, currentIndex, actionplantypes, projectId, viewAPSection} = this.state;
+        const {actionplanId, currentIndex, projectId, viewAPSection, actionplansections} = this.state;
         return (
             <div className="container">
                 {this.state.submitted ? (
@@ -104,7 +138,7 @@ export default class AddAPSection extends Component {
                         <Link color="inherit" to="/home">Home</Link>
                         <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
                         <Link color="inherit" to={"/actionplan/" + projectId}>Action Plan</Link>
-                        <Link color="inherit" to={"/actionplansinglepage/" + projectId + "/" + actionplanId}>Action Plan Single Page</Link>
+                        <Link color="inherit" to={"/actionplansingle/" + projectId + "/" + actionplanId}>Action Plan Single Page</Link>
                         <Link color="inherit" aria-current="page" className="disabledLink">Add Action Plan Section</Link>
                     </Breadcrumbs><hr/>
                     <div className="">
@@ -149,36 +183,36 @@ export default class AddAPSection extends Component {
                                 />
                             </div>
                         </div>
-                        {/* <div className="form-row">
-                            <div className="form-group col-md-6">
-                            <label htmlFor="reftype">Reference type</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="reftype"
-                                placeholder="Enter what type of files you will be refered to"
-                                required
-                                value={this.state.reftype}
-                                onChange={this.onChangeReftype}
-                                name="reftype"
-                            />
-                            </div>
-                            <div className="form-group col-md-6">
-                                <label htmlFor="refid">Reference Id</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="refid"
-                                    required
-                                    value={this.state.refid}
-                                    onChange={this.onChangeRefid}
-                                    name="refid"
-                                />
-                            </div>
-                        </div> */}
-                    </div><hr />
-                    <button onClick={this.saveActionPlan} className="btn btn-success mr-2">Create Action Plan</button>
-                    <a href="/actionplan">Cancel</a>
+                    </div>
+                    <button onClick={this.saveAPsection} className="btn btn-primary mr-2">Create Action Plan Section</button>
+                    <Link to={"/actionplansingle/" + projectId + "/" + actionplanId}>Cancel</Link>
+                    <hr />
+                    <h4 className="mb-3">Current Action Plan Sections</h4>
+                    <Table striped bordered hover variant="" responsive>
+                    <thead>
+                        <tr>
+                        <th>Title</th>
+                        <th>Acceptance</th>
+                        <th>Due Date</th>
+                        <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {actionplansections && actionplansections.map((aps, index) => (
+                            <tr key={index}>
+                            <td>{aps.title}</td>
+                            <td>{aps.acceptance}</td>
+                            <td>{aps.duedate}</td>
+                            <td>
+                                <Link to={"/deletepl/" + aps.no}>
+                                    <button className="btn btn-success mr-2">Update <UpdateIcon/></button>
+                                </Link>
+                                <button className="btn btn-danger">Delete <DeleteIcon /></button>
+                            </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                    </Table>
                 </div>
                 )}
             </div>

@@ -10,18 +10,16 @@ import cogoToast from 'cogo-toast';
 export default class AddActionPlan extends Component {
   constructor(props) {
     super(props);
-    this.onChangeName = this.onChangeName.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeActionType = this.onChangeActionType.bind(this);
     this.onChangePlanManager = this.onChangePlanManager.bind(this);
+    this.onChangeApproved = this.onChangeApproved.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
-    this.updatePunchList = this.updatePunchList.bind(this);
-    this.deletePunchList = this.deletePunchList.bind(this);
-    this.viewActionPlan = this.viewActionPlan.bind(this);
+    this.updateActionPlan = this.updateActionPlan.bind(this);
+    this.deleteActionPlan = this.deleteActionPlan.bind(this);
 
     this.state = {
         apitem: {
-            id: null,
+            id: this.props.match.params.apid,
             name: "",
             planmanager: "",
             actiontype: "",
@@ -37,11 +35,11 @@ export default class AddActionPlan extends Component {
     };
   }
   componentDidMount() {
-    this.retrieveActionPlanTypeInfo(this.props.match.params.id);
+    this.retriveAPItemInfo(this.props.match.params.apid);
     this.retrieveUsers(this.props.match.params.id)
   }
 
-  retrivePLItemInfo(plid){
+  retriveAPItemInfo(plid){
     ActionPlanDataService.getOne(plid)
     .then(response => {
         this.setState({
@@ -57,49 +55,58 @@ export default class AddActionPlan extends Component {
             users: response.data
         });
     console.log(response.data);
-    console.log("enineer gaththa");
     })
     .catch(e => {
         console.log(e);
     });
   }
 
-  onChangeName(e) {
-    this.setState({
-      name: e.target.value
-    });
-    ActionPlanTypeDataService.findByTitle(e.target.value, this.props.match.params.id)
-    .then((response) => {
-      this.setState({
-        isTitleValid: response.data.length,
-      });
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-  }
-
   onChangeDescription(e) {
-    this.setState({
-      description: e.target.value
-    });
-  }
-
-  onChangeActionType(e) {
-    this.setState({
-      actiontype: e.target.value
+    const description= e.target.value
+    this.setState(function(prevState){
+      return {
+        apitem: {
+          ...prevState.apitem,
+          description: description
+        }
+      }
     });
   }
 
   onChangePlanManager(e) {
-    this.setState({
-      planmanager: e.target.value
+    const planmanager= e.target.value
+    this.setState(function(prevState){
+      return {
+        apitem: {
+          ...prevState.apitem,
+          planmanager: planmanager
+        }
+      }
+    });
+  }
+
+  onChangeApproved(e) {
+    const approved= e.target.value
+    this.setState(function(prevState){
+      return {
+        apitem: {
+          ...prevState.apitem,
+          approved: approved
+        }
+      }
     });
   }
 
   onChangeLocation(e) {
-    this.setState({
-      location: e.target.value
+    const location= e.target.value
+    this.setState(function(prevState){
+      return {
+        apitem: {
+          ...prevState.apitem,
+          location: location
+        }
+      }
+      
     });
   }
 
@@ -115,176 +122,208 @@ export default class AddActionPlan extends Component {
         console.log(e);
       });
   }
-  saveActionPlan() {  
+
+  updateActionPlan(){
     var data = {
-      name: this.state.name,
-      planmanager:this.state.planmanager,
-      actiontype: this.state.actiontype,
-      location: this.state.location,
-      description: this.state.description,
-      approved: this.state.approved,
-      projectId: this.state.projectId
+        description: this.state.apitem.description,
+        planmanager: this.state.apitem.planmanager,
+        location: this.state.apitem.location,
+        approved: this.state.apitem.approved,
+        projectId: this.state.apitem.projectId
     };
 
-    ActionPlanDataService.create(data)
-      .then(response => {
-        this.setState({
-          id: response.data.id,
-          name: response.data.name,
-          description: response.data.description,
-          actiontype: response.data.actiontype,
-          location: response.data.location,
-          description: response.data.description,
-          approved: response.data.approved,
-          projectId: response.data.projectId,
-
-          submitted: true
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
+    ActionPlanDataService.update(this.props.match.params.apid, data)
+    .then(response => {
+      this.setState(prevState => ({
+        apitem: {
+          ...prevState.apitem,
+        }
+      }));
+      console.log(response.data);
+    })
+    .catch(e => {
         console.log(e);
-      });
+    });
+    this.props.history.push("/viewactionplan/"+ this.props.match.params.id + "/" +this.props.match.params.apid);
+    cogoToast.success("Punch List updated Successfully!");
   }
 
-  viewActionPlan(id){
-    this.props.history.push("/actionplan/"+ id);
-    cogoToast.success("Action Plan Saved Successfully!");
+  deleteActionPlan(){
+    var data = {
+        isDeleted: 1
+    }
+    ActionPlanDataService.update(this.props.match.params.apid, data)
+    .then(response => {
+        console.log(response.data);
+    })
+    .catch(e => {
+        console.log(e);
+    });
+    this.props.history.push("/actionplan/"+ this.props.match.params.id + "/" +this.props.match.params.apid);
+    window.location.reload();
+    cogoToast.success("Punch List Deleted Successfully!");
   }
 
   render() {
-    const {projectId, currentIndex, actionplantypes, isTitleValid, viewActionPlan, users} = this.state;
+    const {users, apitem} = this.state;
     return (
       <div className="container">
-        {this.state.submitted ? (
-          viewActionPlan(projectId)
-        ) : (
-          <div class="container">
-            <h2>Update Action Plan</h2>
-            <Breadcrumbs aria-label="breadcrumb">
-              <Link color="inherit" to="/home">Home</Link>
-              <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
-              <Link color="inherit" to={"/actionplan/"+projectId}>Action Plan</Link>
-              <Link color="inherit" aria-current="page" className="disabledLink">Update Action Plan</Link>
-            </Breadcrumbs><hr/>
-            <div className="">
+        <div class="container">
+          <h2>View Action Plan</h2>
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link color="inherit" to="/home">Home</Link>
+            <Link color="inherit" to={"/projectmanagementhome/" + apitem.projectId}>App Dashboard</Link>
+            <Link color="inherit" to={"/actionplan/" + apitem.projectId}>Action Plan</Link>
+            <Link color="inherit" aria-current="page" className="disabledLink">View Action Plan</Link>
+          </Breadcrumbs><hr/>
+          <div className="">
             <div className="form-row">
-                <div className="form-group col-md-12">
-                  {this.state.name == "" ? "" : isTitleValid > 0 ? 
-                    <Alert variant="danger">Name is already taken</Alert> :
-                    <Alert variant="success">Name is avaliable to use</Alert>
-                  }
-                </div>
+              <div className="form-group col-md-8">
+                <label htmlFor="name">Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="name"
+                  value={apitem.title}
+                  name="name"
+                  readOnly
+                />
               </div>
-              <div className="form-row">
-                <div className="form-group col-md-9">
-                  <label htmlFor="name">Name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    required
-                    placeholder="Enter a action plan name"
-                    value={this.state.name}
-                    onChange={this.onChangeName}
-                    name="name"
-                  />
-                </div>
-                <div className="form-group col-md-3">
-                  <label htmlFor="approved">Status</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value="Not Approved 🔴"
-                    readOnly
-                  />
-                </div>
-              </div>
-              <div className="form-row">
-                <div className="form-group col-md-4">
-                  <label htmlFor="planmanager">Plan Manager</label>
-                  <select
-                    type="text"
-                    className="form-control"
-                    id="planmanager"
-                    required
-                    value={this.state.planmanager}
-                    onChange={this.onChangePlanManager}
-                    name="planmanager"
-                  >
-                    <option value="">Select an Assignee</option>
-                      {users && users.map((u, index) => (
-                          <option
-                              value={u.username}
-                              onChange={this.onChangePlanManager}
-                              key={index}
-                          >
-                              {u.username} - {u.position}
-                          </option>
-                      ))}
-                  </select>
-                </div>
-                <div className="form-group col-md-4">
-                  <label htmlFor="type">Action Plan Type</label>
-                  <select 
-                    className="form-control"
-                    id="type"
-                    required
-                    name="type"
-                    value={this.state.actiontype}
-                    onChange={this.onChangeActionType}
-                  >
-                    {actionplantypes && actionplantypes.map((actionplantype, index) => (
-                      <option
-                        value={actionplantype.title}
-                        onChange={this.onChangeActionType}
-                        key={index}
-                      >
-                      {actionplantype.title}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group col-md-4">
-                  <label htmlFor="location">Location</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="location"
-                    placeholder="Enter the location"
-                    required
-                    value={this.state.location}
-                    onChange={this.onChangeLocation}
-                    name="location"
-                    list="suggest"
-                  />
-                  <datalist>
-                    <option value="Floor 1">Floor 1</option>
-                    <option value="Floor 2">Floor 2</option>
-                    <option value="Floor 3">Floor 3</option>
-                  </datalist>
-                </div>
-              </div>
-              <div className="form row">
-                <div className="form-group col-md-12">
-                  <label htmlFor="description">Description</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="description"
-                    placeholder="Enter a description about the action plan"
-                    required
-                    value={this.state.description}
-                    onChange={this.onChangeDescription}
-                    name="description"
-                  />
-                </div>
+              <div className="form-group col-md-4">
+                <label htmlFor="type">Action Plan Type</label>
+                <input 
+                  className="form-control"
+                  id="type"
+                  readOnly
+                  name="type"
+                  value={apitem.actiontype}
+                  onChange={this.onChangeActionType}
+                />
               </div>
             </div>
-            <button onClick={this.saveActionPlan} className="btn btn-success mr-2">Create Action Plan</button>
-            <a href="/actionplan">Cancel</a>
+            <div className="form-row">
+              <div className="form-group col-md-4">
+                <label htmlFor="planmanager">Plan Manager</label>
+                <select
+                  type="text"
+                  className="form-control"
+                  id="planmanager"
+                  required
+                  value={apitem.planmanager}
+                  onChange={this.onChangePlanManager}
+                  name="planmanager"
+                >
+                    {users && users.map((u, index) => (
+                        <option
+                            value={u.username}
+                            onChange={this.onChangePlanManager}
+                            key={index}
+                        >
+                            {u.username} - {u.position}
+                        </option>
+                    ))}
+                </select>
+              </div>
+              <div className="form-group col-md-4">
+                <label htmlFor="location">Location</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="location"
+                  placeholder="Enter the location"
+                  required
+                  value={apitem.location}
+                  onChange={this.onChangeLocation}
+                  name="location"
+                  list="suggest"
+                />
+                <datalist>
+                  <option value="Floor 1">Floor 1</option>
+                  <option value="Floor 2">Floor 2</option>
+                  <option value="Floor 3">Floor 3</option>
+                </datalist>
+              </div>
+              <div className="form-group col-md-4">
+                <label htmlFor="approved">Status</label>
+                {!apitem.approved ?
+                  <div>
+                    <select
+                      type="text"
+                      className="form-control"
+                      required
+                    >
+                      <option value="Not Approved" onChange={this.onChangeApproved}>🔴 Not Approved</option>
+                      <option value="Approved" onChange={this.onChangeApproved}>🟢 Approved</option>
+                    </select>
+                  </div>
+                :
+                  <div>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value="🟢 Approved"
+                      readOnly
+                    />
+                  </div>
+                }
+              </div>
+            </div>
+            <div className="form row">
+              <div className="form-group col-md-12">
+                <label htmlFor="description">Description</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="description"
+                  placeholder="Enter a description about the action plan"
+                  required
+                  value={apitem.description}
+                  onChange={this.onChangeDescription}
+                  name="description"
+                />
+              </div>
+            </div>
           </div>
-        )}
+          <button className="btn btn-primary mr-2" id="updateBtn" data-target="#promptModal" data-toggle="modal" >Update</button>
+          <button className="btn btn-danger mr-2"  id="updateBtn" data-target="#deleteModal" data-toggle="modal">Delete</button>
+          <Link to={"/actionplan/"+apitem.projectId} className="">Cancel</Link>
+        </div>
+        {/* Update modal Starts */}
+        <div className="modal fade" id="promptModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered" role="document">
+                <div className="modal-content">
+                <div className="modal-header">
+                    <p className="modal-title" id="exampleModalCenterTitle">Are you sure you want to update</p>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div className="modal-body">
+                    <a onClick={this.updateActionPlan} className="btn btn-primary pr-3 ml-2 mr-3" data-dismiss="modal"> Yes, Update</a>
+                    <a className="btn btn-secondary ml-6 mr-6 pl-3" data-dismiss="modal"> Cancel</a>
+                </div>
+                </div>
+            </div>
+        </div>
+        {/* Update modal Ends */}
+        {/* Delete modal Starts */}
+        <div className="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered" role="document">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <p className="modal-title" id="exampleModalCenterTitle">Are you sure you want to delete?</p>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div className="modal-body">
+                        <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteActionPlan} data-dismiss="modal"> Yes, Delete</a>
+                        <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {/* Delete modal Ends */}
       </div>
     );
   }

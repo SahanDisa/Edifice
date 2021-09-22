@@ -83,12 +83,11 @@ exports.delete = (req, res) => {
 
 //Find a single drawing by Id
 exports.findOne = (req, res) => {
-  const id = req.params.id;
-  ActionPlanType.findByPk({id}, { where:
-    {
-      isDeleted: 0
-    }
-  })
+  const title = req.params.id;
+  ActionPlanType.findAll({ where: {
+    title: id,
+    isDeleted: 0
+  }})
   .then(data => {
     res.send(data);
   })

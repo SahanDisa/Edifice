@@ -248,7 +248,7 @@ class PunchList extends Component {
                   <div className="container row">
                     <div className="col-9">
                       <Link
-                        to={"/view/" + plti.no}
+                        to={"/view/" + projectId + "/"+ plti.no}
                         style={{ "text-decoration": "none" }}
                       >
                         {plti.no + " - " + plti.title}

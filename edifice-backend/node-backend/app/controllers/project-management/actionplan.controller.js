@@ -116,9 +116,10 @@ exports.findAll = (req, res) => {
 
 // Get action plan for a given projectId
 exports.findAlltype = (req, res) => {
-  const id = req.params.id;
+  const type = req.params.id;
   ActionPlan.findAll({ where: {
-    projectId: id
+    actiontype: type,
+    isDeleted: 0
   }})
   .then(data => {
     res.send(data);

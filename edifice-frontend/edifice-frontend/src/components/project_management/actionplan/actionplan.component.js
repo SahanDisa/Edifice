@@ -94,8 +94,7 @@ export default class ActionPlan extends Component {
   }
 
   render() {
-    const { actionplans, currentIndex, projectId, isTitleValid, submitted, viewActionPlan } =
-      this.state;
+    const { actionplans, currentIndex, projectId, isTitleValid, submitted, viewActionPlan } = this.state;
     return (
       <div>
       {this.state.submitted ? (
@@ -192,9 +191,7 @@ export default class ActionPlan extends Component {
                         </div>
                         <div className="col-3">
                           <Link
-                            to={
-                              "/viewactionplantype/" + projectId + "/" + api.id
-                            }
+                            to={ "/viewactionplantype/" + projectId + "/" + api.actiontype}
                             style={{ "text-decoration": "none" }}
                           >
                             <h6>Action Type: {api.actiontype}</h6>

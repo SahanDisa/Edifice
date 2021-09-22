@@ -20,7 +20,7 @@ export default class AddActionPlan extends Component {
 
     this.state = {
       id: null,
-      name: "",
+      title: "",
       planmanager: "",
       actiontype: "",
       location: "",
@@ -36,8 +36,21 @@ export default class AddActionPlan extends Component {
     };
   }
   componentDidMount() {
-    this.getActionPlanTypes(this.props.match.params.id);
+    this.retrieveActionPlanTypes(this.props.match.params.id);
     this.retrieveUsers(this.props.match.params.id)
+  }
+
+  retrieveActionPlanTypes(id){
+    ActionPlanTypeDataService.getAll(id)
+    .then(response => {
+        this.setState({
+          actionplantypes: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   retrieveUsers(id){
@@ -46,8 +59,7 @@ export default class AddActionPlan extends Component {
         this.setState({
             users: response.data
         });
-    console.log(response.data);
-    console.log("enineer gaththa");
+      console.log(response.data);
     })
     .catch(e => {
         console.log(e);
@@ -56,7 +68,7 @@ export default class AddActionPlan extends Component {
 
   onChangeName(e) {
     this.setState({
-      name: e.target.value
+      title: e.target.value
     });
     ActionPlanTypeDataService.findByTitle(e.target.value, this.props.match.params.id)
     .then((response) => {
@@ -92,19 +104,7 @@ export default class AddActionPlan extends Component {
       location: e.target.value
     });
   }
-
-  getActionPlanTypes(id){
-    ActionPlanTypeDataService.getAll(id)
-    .then(response => {
-        this.setState({
-          actionplantypes: response.data
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
+  
   saveActionPlan() {  
     var data = {
       name: this.state.name,
@@ -160,7 +160,7 @@ export default class AddActionPlan extends Component {
             <div className="">
             <div className="form-row">
                 <div className="form-group col-md-12">
-                  {this.state.name == "" ? "" : isTitleValid > 0 ? 
+                  {this.state.title == "" ? "" : isTitleValid > 0 ? 
                     <Alert variant="danger">Name is already taken</Alert> :
                     <Alert variant="success">Name is avaliable to use</Alert>
                   }
@@ -168,16 +168,16 @@ export default class AddActionPlan extends Component {
               </div>
               <div className="form-row">
                 <div className="form-group col-md-9">
-                  <label htmlFor="name">Name</label>
+                  <label htmlFor="title">Name</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="name"
+                    id="title"
                     required
                     placeholder="Enter a action plan name"
-                    value={this.state.name}
+                    value={this.state.title}
                     onChange={this.onChangeName}
-                    name="name"
+                    name="title"
                   />
                 </div>
                 <div className="form-group col-md-3">
@@ -248,7 +248,7 @@ export default class AddActionPlan extends Component {
                     name="location"
                     list="suggest"
                   />
-                  <datalist>
+                  <datalist id="suggest">
                     <option value="Floor 1">Floor 1</option>
                     <option value="Floor 2">Floor 2</option>
                     <option value="Floor 3">Floor 3</option>

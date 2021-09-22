@@ -160,6 +160,7 @@ class PLIView extends Component {
             console.log(e);
         });
         this.props.history.push("/punchlist/"+ this.props.match.params.id);
+        window.location.reload();
         cogoToast.success("Punch List Deleted Successfully!");
     }
     
@@ -341,7 +342,7 @@ class PLIView extends Component {
                         </div>
                     </div>
                 </div>
-                {/* Delete modal Ends */}       
+                {/* Delete modal Ends */}
             </div>
         );
     }
