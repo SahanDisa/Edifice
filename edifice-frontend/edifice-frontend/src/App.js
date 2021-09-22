@@ -11,7 +11,6 @@ import mainIcon from "././assets/Edifice.png";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import AuthService from "./services/auth.service";
 import ProjectUserService from "./services/projectuser.service";
-import cogoToast from 'cogo-toast';
 
 import Login from "./components/login.component";
 import ForgetPassword from "./components/forgetpassword.component";
@@ -108,11 +107,12 @@ import ViewRFI from "./components/project_management/rfi/view.component";
 
 import actionplanHome from "./components/project_management/actionplan/actionplan.component";
 import AddActionPlan from "./components/project_management/actionplan/addactionplan.component";
-import ViewAPType from "./components/project_management/actionplan/view-actionplantype.component";
+import ViewAPType from "./components/project_management/actionplan/viewactionplantype.component";
 import ActionPlanSinglePage from "./components/project_management/actionplan/actionplansinglepage.component";
 import AddAPItem from "./components/project_management/actionplan/addapitem.component";
 import AddAPSection from "./components/project_management/actionplan/addapsection.component";
 import ViewActionPlan from "./components/project_management/actionplan/viewactionplan.component";
+import ViewAPSection from "./components/project_management/actionplan/viewactionplansection.component";
 
 import DailyLogHome from "./components/project_management/dailylog/dailylog.component";
 import CreateDCL from "./components/project_management/dailylog/createcalllog.component";
@@ -123,11 +123,14 @@ import ViewDCL from "./components/project_management/dailylog/viewcalllog.compon
 import ViewDAL from "./components/project_management/dailylog/viewaccidentlog.component";
 import ViewDGL from "./components/project_management/dailylog/viewgenerallog.component";
 import ViewDWL from "./components/project_management/dailylog/viewweatherlog.component";
+import ViewDCLall from "./components/project_management/dailylog/viewallcall.component";
+import ViewDALall from "./components/project_management/dailylog/viewallaccident.component";
+import ViewDGLall from "./components/project_management/dailylog/viewallgeneral.component";
+import ViewDWLall from "./components/project_management/dailylog/viewallweather.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
 import CreatePL from "./components/project_management/punchlist/create-basic.component";
 import CreatePhotos from "./components/project_management/punchlist/create-addphoto.component";
-import CreateAssignees from "./components/project_management/punchlist/create-addassignee.component";
 import PLTView from "./components/project_management/punchlist/viewtype.component";
 import PLIView from "./components/project_management/punchlist/view.component";
 
@@ -336,8 +339,7 @@ class App extends Component {
             <Route exact path="/logincode" component={ForgetPassword}/>
             <Route path="/camera" component={CameraSinglePage} />
             <Route component={ErrorPage}/>
-          </Switch>  
-
+          </Switch>
         )}
         {currentUser && (
 
@@ -393,14 +395,14 @@ class App extends Component {
               <Route path="/addactionplanitem/:id/:apid" component={AddAPItem} />
               <Route path="/addactionplansection/:id/:apid" component={AddAPSection} />
               <Route path="/viewactionplantype/:id/:apid" component={ViewAPType} />
+              <Route path="/viewactionplansection/:id/:apid" component={ViewAPSection} />
               <Route exact path="/viewactionplan/:id/:apid" component={ViewActionPlan} />
               {/* Punch List */}
               <Route path="/punchlist/:id" component={punchlistHome} />
               <Route path="/managepunchlist/createaddphoto/:id/plid" component={CreatePhotos} />
-              <Route path="/managepunchlist/createaddassignee/:id/plid" component={CreateAssignees} />
               <Route path="/managepunchlist/create/:id" component={CreatePL} />
               <Route path="/viewtype/:pltid" component={PLTView} />
-              <Route path="/view/:pliid" component={PLIView} />
+              <Route path="/view/:id/:pliid" component={PLIView} />
               {/* Daily Logs */}
               <Route path="/dailylogs/:id" component={DailyLogHome} />
               <Route path="/createaccidentlog/:id" component={CreateDAL} />
@@ -411,6 +413,11 @@ class App extends Component {
               <Route path="/viewcalllog/:id/:dlid" component={ViewDCL} />
               <Route path="/viewgenerallog/:id/:dlid" component={ViewDGL} />
               <Route path="/viewweatherlog/:id/:dlid" component={ViewDWL} />
+              <Route path="/viewaccidentall/:id" component={ViewDALall} />
+              <Route path="/viewcallall/:id" component={ViewDCLall} />
+              <Route path="/viewgeneralall/:id" component={ViewDGLall} />
+              <Route path="/viewweatherall/:id" component={ViewDWLall} />
+              
 
               <Route path="/addUser" component={AddEmployee} />
               <Route path="/editUser/:id" component={EditUser} />

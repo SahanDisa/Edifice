@@ -13,6 +13,7 @@ class CreateMeeting extends Component {
         this.onChangeDate = this.onChangeDate.bind(this);
         this.onChangeTime = this.onChangeTime.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
         this.saveMeeting = this.saveMeeting.bind(this);
 
         this.state = {
@@ -24,6 +25,7 @@ class CreateMeeting extends Component {
             date: "",
             time: "",
             location: "",
+            description: "",
             projectId: this.props.match.params.id,
             submitted: false
         };
@@ -54,6 +56,12 @@ class CreateMeeting extends Component {
     onChangeTime(e) {
         this.setState({
             time: e.target.value
+        });
+    }
+
+    onChangeDescription(e) {
+        this.setState({
+            description: e.target.value
         });
     }
 
@@ -95,6 +103,7 @@ class CreateMeeting extends Component {
             console.log(e);
         });
         this.props.history.push("/meetings/"+ this.props.match.params.id);
+        window.location.reload();
         cogoToast.success("Meeting Saved Successfully!", { position: 'top-right', heading: 'success' });
     }
 
@@ -131,6 +140,7 @@ class CreateMeeting extends Component {
                                 <input
                                     className="form-control"
                                     name="name"
+                                    placeholder="Enter a name for the meeting"
                                     value={this.state.name}
                                     onChange={this.onChangeName}
                                     type="text"
@@ -147,6 +157,7 @@ class CreateMeeting extends Component {
                                     type="text"
                                     required
                                 >
+                                    <option value="">Select a meeting category</option>
                                 {categories && categories.map((cat, index) => (
                                     <option
                                         value={cat.id}
@@ -175,6 +186,7 @@ class CreateMeeting extends Component {
                                 <input
                                     className="form-control"
                                     name="date"
+                                    min="2021-09-23"
                                     value={this.state.date}
                                     onChange={this.onChangeDate}
                                     type="date"
@@ -187,19 +199,43 @@ class CreateMeeting extends Component {
                                     className="form-control"
                                     name="time"
                                     value={this.state.time}
+                                    min="07:00"
+                                    max="22:00"
                                     onChange={this.onChangeTime}
                                     type="time"
                                     required
                                 />
                             </div>
                             <div className="form-group col-md-4">
-                                <label htmlFor="">Location</label>
+                                <label htmlFor="">Location / Platform</label>
                                 <input
                                     className="form-control"
                                     name="location"
+                                    placeholder="Enter the location of the meeting"
                                     value={this.state.location}
                                     onChange={this.onChangeLocation}
+                                    list="suggest"
                                     type="text"
+                                    required
+                                />
+                                <datalist id="suggest">
+                                    <option value="ZOOM">ZOOM</option>
+                                    <option value="Microsoft Teams">Microsoft Teams</option>
+                                    <option value="Google Meet">Google Meet</option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-md-12">
+                                <label htmlFor="">Description</label>
+                                <textarea
+                                    rows="2"
+                                    className="form-control"
+                                    name="description"
+                                    placeholder="Any other information"
+                                    value={this.state.description}
+                                    onChange={this.onChangeDescription}
+                                    type="description"
                                     required
                                 />
                             </div>

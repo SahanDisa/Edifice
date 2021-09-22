@@ -113,3 +113,32 @@ exports.findAll = (req, res) => {
         });
     });  
 };
+
+//get the call logs in a week
+exports.findAllweek = (req, res) => {
+    const id = req.params.id;
+    db.sequelize.query('select * FROM dlcall WHERE projectId = '+id+' AND date > date_sub(now(), interval 1 week) AND isDeleted = 0;',
+    { type: db.sequelize.QueryTypes.SELECT})
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+        message: "Error retrieving call logs with id=" + id
+        });
+    });  
+};
+
+exports.findToday = (req, res) => {
+    const id = req.params.id;
+    db.sequelize.query('select * from dlcall where projectId = '+id+' and date=now() AND isDeleted = 0;',
+    { type: db.sequelize.QueryTypes.SELECT})
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+        message: "Error retrieving AccidentLog Drawings with id=" + id
+        });
+    });  
+};
