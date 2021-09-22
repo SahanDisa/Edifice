@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Report from './report/report.component'
 
 import ProgressBar from 'react-customizable-progressbar';
-import {Assessment,HomeWork,LocationOn,Description,SupervisorAccount,Timeline,  Build, Visibility} from '@material-ui/icons';
+import { Assessment, HomeWork, LocationOn, Description, SupervisorAccount, Timeline, Build, Visibility } from '@material-ui/icons';
 
 import UserService from "../services/user.service";
 import EmployeeDataService from "../services/employee.service";
@@ -14,6 +14,7 @@ import SubDataService from "../services/subcontractor.service";
 import CostCodeDataService from "../services/costcode.service";
 import ProjectDataService from "../services/project.service";
 import ProjectUserDataService from "../services/projectuser.service";
+import EquipmentDataService from "../services/equipment.service";
 
 //css styles
 const cardStyle = {
@@ -37,6 +38,7 @@ export default class BoardUser extends Component {
     this.getEmployeeCount = this.getEmployeeCount.bind(this);
     this.getprojectDetails = this.getprojectCount.bind(this);
     this.retrieveProjects = this.retrieveProjects.bind(this);
+    this.equipCount = this.equipCount.bind(this);
     this.state = {
       projects: [],
       content: "",
@@ -44,6 +46,7 @@ export default class BoardUser extends Component {
       vendorCount: 0,
       subCount: 0,
       employeeCount: 0,
+      equipmentCount: 0,
       currProjectId: 0,
       costCodes: [],
       projectUsers: [],
@@ -93,6 +96,20 @@ export default class BoardUser extends Component {
     this.getVendorCount();
     this.getEmployeeCount();
     this.getSubCount();
+    this.equipCount();
+  }
+
+  equipCount() {
+    EquipmentDataService.getAll().then(response => {
+      this.setState({
+        equipmentCount: response.data.length,
+
+      });
+      //console.log(this.employeeCount);
+    })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   getEmployeeCount() {
@@ -100,7 +117,7 @@ export default class BoardUser extends Component {
     EmployeeDataService.getAll().then(response => {
       this.setState({
         employeeCount: response.data.length,
- 
+
       });
       //console.log(this.employeeCount);
     })
@@ -114,13 +131,13 @@ export default class BoardUser extends Component {
     ProjectDataService.getAll().then(response => {
       this.setState({
         projectCount: response.data.length,
-        
+
       });
       //console.log(projectDetails);
     })
-    .catch(e => {
-      console.log(e);
-    });
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   getVendorCount() {
@@ -128,13 +145,13 @@ export default class BoardUser extends Component {
     VendorDataService.getAll().then(response => {
       this.setState({
         vendorCount: response.data.length,
-        
+
       });
       //console.log(projectDetails);
     })
-    .catch(e => {
-      console.log(e);
-    });
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   getSubCount() {
@@ -142,13 +159,13 @@ export default class BoardUser extends Component {
     SubDataService.getAll().then(response => {
       this.setState({
         subCount: response.data.length,
-        
+
       });
       //console.log(projectDetails);
     })
-    .catch(e => {
-      console.log(e);
-    });
+      .catch(e => {
+        console.log(e);
+      });
   }
   //private  var projectDetails=[];
   retrieveProjects() {
@@ -164,35 +181,36 @@ export default class BoardUser extends Component {
       });
   }
 
-  generatePDF(project,noUsers){
-    Report.generatePDF(project,noUsers);
+  generatePDF(project, noUsers) {
+    Report.generatePDF(project, noUsers);
   }
 
-  generateProjectReport(projects,a,b,c){
-    Report.generateProjectReport(projects,a.toString(),b.toString(),c.toString());
+
+  generateProjectReport(projects, a, b, c) {
+    Report.generateProjectReport(projects, a.toString(), b.toString(), c.toString());
   }
-  
+
   createUser(userId) {
     if (typeof userId == 'undefined') {
-      window.location="/register"
-    }else{
-      window.location="/register/"+userId
+      window.location = "/register"
+    } else {
+      window.location = "/register/" + userId
     }
   }
 
-  getProjectUsers(projid){
+  getProjectUsers(projid) {
 
     ProjectUserDataService.getProjectUsers(projid)
-        .then(response => {
+      .then(response => {
         this.setState({
-            projectUsers: response.data.length
+          projectUsers: response.data.length
         });
         console.log(response.data);
         console.log(this.state.projectUsers);
-        })
-        .catch(e => {
+      })
+      .catch(e => {
         console.log(e);
-    });
+      });
     console.log(this.state);
 
     // //get employees per project one by one
@@ -202,48 +220,48 @@ export default class BoardUser extends Component {
     // ))
   }
 
-  getProjectCostCodes(id){
+  getProjectCostCodes(id) {
 
     CostCodeDataService.getAll(id)
-        .then(response => {
+      .then(response => {
         this.setState({
-            costCodes: response.data
+          costCodes: response.data
         })
         console.log(response.data);
         console.log(this.state);
-        })
-        .catch(e => {
+      })
+      .catch(e => {
         console.log(e);
-    });
+      });
     console.log(this.state)
-    const temp=[];
+    const temp = [];
 
-    this.state.costCodes.forEach((item, index)=>{
-        console.log(item.costCode)
-        temp.push(item.costCode)
+    this.state.costCodes.forEach((item, index) => {
+      console.log(item.costCode)
+      temp.push(item.costCode)
     })
-    
+
     console.log(temp);
     return temp;
   }
 
   render() {
-    const { projectDetails,projectCount,vendorCount,subCount,employeeCount,projects } = this.state;
-    
+    const { projectDetails, projectCount, vendorCount, subCount, employeeCount, projects, equipmentCount } = this.state;
+
     var elements = {};
     //this.getprojectDetails(elements);
     console.log(projects);
     const items = []
 
     const today = new Date();
-    
-    const progressInDays = (start,end) => {
+
+    const progressInDays = (start, end) => {
       let date1 = new Date(start);
       let date2 = new Date(end);
       let diffTime = Math.abs(date2 - date1);
       let diffTime2 = Math.abs(date2 - today);
-      let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-      let remainDays = Math.ceil(diffTime2/(1000 * 60 * 60 * 24));
+      let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      let remainDays = Math.ceil(diffTime2 / (1000 * 60 * 60 * 24));
       console.log(diffTime + " milliseconds");
       console.log(diffDays + " days");
       console.log(remainDays + " remain days");
@@ -261,84 +279,84 @@ export default class BoardUser extends Component {
     `,
       <div className="container">
 
-        <h3> <Timeline/> CORE TOOLS HOME</h3>
+        <h3> <Timeline /> CORE TOOLS HOME</h3>
         <p>Current statistics of ongoing projects </p>
         <div className="row">
-            <div className="col-lg-3 col-sm-6 pb-2" id="employeecard">
-              <div className="card card-hover shadow-sm" style={cardStyle}>
-              <a className="d-block nav-heading text-center mt-3" style={linkText}> <Link  style={linkText} to="/employees">
+          <div className="col-lg-3 col-sm-6 pb-2" id="employeecard">
+            <div className="card card-hover shadow-sm" style={cardStyle}>
+              <a className="d-block nav-heading text-center mt-3" style={linkText}> <Link style={linkText} to="/employees">
 
-                <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{employeeCount}</h1>
-                <h5 mb-0> <SupervisorAccount style={{ fontSize:25 }}/>  Employees</h5>
+                <h1 className="nav-heading-title mb-0" style={{ fontSize: 55 }}>{employeeCount}</h1>
+                <h5 mb-0> <SupervisorAccount style={{ fontSize: 25 }} />  Employees</h5>
               </Link></a>
-              </div>
             </div>
+          </div>
 
-            <div className="col-lg-3 col-sm-6 pb-5" id="projectcard">
-              <div className="card card-hover shadow-sm" style={cardStyle}>
-                
+          <div className="col-lg-3 col-sm-6 pb-5" id="projectcard">
+            <div className="card card-hover shadow-sm" style={cardStyle}>
+
               <Link className="d-block nav-heading text-center mt-3" style={linkText} to="/projects">
-                <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
-                <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>
+                <h1 className="nav-heading-title mb-0" style={{ fontSize: 55 }}>{projectCount}</h1>
+                <h5> <HomeWork style={{ fontSize: 25 }} />  Projects</h5>
               </Link>
 
               {/* <Link to={"/projects"}>
-              <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
-                <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>
+          <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
+            <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>
 
-              </Link> */}
-              </div>
+          </Link> */}
             </div>
+          </div>
 
-            <div className="col-lg-3 col-sm-6" id="vendorcard">
-              <div className="card card-hover shadow-sm" style={cardStyle}>
+          <div className="col-lg-3 col-sm-6" id="vendorcard">
+            <div className="card card-hover shadow-sm" style={cardStyle}>
               <a className="d-block nav-heading text-center mt-3" style={linkText}> <Link to="/vendor" style={linkText}>
 
-                <h1 className="nav-heading-title" style={{ fontSize:55 }}>{vendorCount+subCount}</h1>
-                <h6> <HomeWork style={{ fontSize:25 }}/>  Vendors & Subcontractors</h6>
+                <h1 className="nav-heading-title" style={{ fontSize: 55 }}>{vendorCount + subCount}</h1>
+                <h6> <HomeWork style={{ fontSize: 25 }} />  Vendors & Subcontractors</h6>
               </Link></a>
-              </div>
             </div>
+          </div>
 
-            <div className="col-lg-3 col-sm-6" id="equipmentcard">
+          <div className="col-lg-3 col-sm-6" id="equipmentcard">
             <div className="card card-hover shadow-sm" style={cardStyle}>
               <a className="d-block nav-heading text-center mt-3" style={linkText}> <Link to="/equipments" style={linkText}>
-                <h1 className="nav-heading-title" style={{ fontSize: 55 }}>{vendorCount}</h1>
+                <h1 className="nav-heading-title" style={{ fontSize: 55 }}>{equipmentCount}</h1>
                 <h6> <Build style={{ fontSize: 25 }} />  Equipments</h6>
               </Link></a>
             </div>
           </div>
 
           <div className="col-8 mb-4 mr-5">
-            <a onClick={()=>{this.generateProjectReport(this.state.projects,vendorCount,subCount,employeeCount);}} className="btn btn-primary p-2"><Description style={{ fontSize:20 }}/> Report of current projects</a>
+            <a onClick={() => { this.generateProjectReport(this.state.projects, vendorCount, subCount, employeeCount); }} className="btn btn-primary p-2"><Description style={{ fontSize: 20 }} /> Report of current projects</a>
           </div>
-          </div>
-            <div classname-="mb-2 pb-4">
-              <h3> Ongoing Projects:</h3>
-            </div>
-          
-            {projects.map(project =>(
-              <div className="card card-hover shadow-sm card-text-edifice my-3">
-              <div className="row">
-                <div className="col-5 m-2" style={{ textDecoration:'none' }}>
+        </div>
+        <div classname-="mb-2 pb-4">
+          <h3> Ongoing Projects:</h3>
+        </div>
+
+        {projects.map(project => (
+          <div className="card card-hover shadow-sm card-text-edifice my-3">
+            <div className="row">
+              <div className="col-5 m-2" style={{ textDecoration: 'none' }}>
                 <h4>{project.title}</h4>
                 <h6>Description : {project.description}</h6>
-                <h6>Location: {project.location}</h6> 
+                <h6>Location: {project.location}</h6>
                 <h6>From : {project.startdate} to {project.enddate}</h6>
-                
-                <a onClick={()=>{this.getProjectUsers(project.id); this.generatePDF(project,this.state.projectUsers.toString());}} className="btn btn-primary p-2 my-2"><Description style={{ fontSize:20 }}/> Generate Report</a>
-                <Link to={"projectmanagementhome/"+project.id}><a className="btn btn-secondary p-2 ml-4 my-2"><Visibility style={{ fontSize:20 }}/> View</a></Link>
-                
-                </div>
-                <div className="col-4 mt-4">
+
+                <a onClick={() => { this.getProjectUsers(project.id); this.generatePDF(project, this.state.projectUsers.toString()); }} className="btn btn-primary p-2 my-2"><Description style={{ fontSize: 20 }} /> Generate Report</a>
+                <Link to={"projectmanagementhome/" + project.id}><a className="btn btn-secondary p-2 ml-4 my-2"><Visibility style={{ fontSize: 20 }} /> View</a></Link>
+
+              </div>
+              <div className="col-4 mt-4">
                 <center>
-                <h2><b>{progressInDays(project.startdate,project.enddate)}{" "}</b>Days</h2>
-                <h3>Remaining</h3>
+                  <h2><b>{progressInDays(project.startdate, project.enddate)}{" "}</b>Days</h2>
+                  <h3>Remaining</h3>
                 </center>
-                </div>
-                <div className="col-2">
+              </div>
+              <div className="col-2">
                 <center>
-                <ProgressBar
+                  <ProgressBar
                     radius={60}
                     progress={project.progressValue}
                     cut={120}
@@ -352,17 +370,17 @@ export default class BoardUser extends Component {
                     trackTransition="1s ease"
                     pointerRadius={3}
                     pointerStrokeWidth={12}
-                />
-                {/* <h6 className="mb-10"><b>66%</b></h6>  */}
-                </center> 
-                </div>
-                </div>
+                  />
+                  {/* <h6 className="mb-10"><b>66%</b></h6>  */}
+                </center>
               </div>
-            ))}
+            </div>
+          </div>
+        ))}
 
-          
+
         <div className="row">
-          
+
           {/* Admin content */}
           <div className="col-10">
             <div className="tab-content" id="nav-tabContent">
@@ -373,26 +391,26 @@ export default class BoardUser extends Component {
                     <p>Manage Important dates</p>
                     <div class="col text-center">
                       <a href="/dates" className="btn btn-outline-primary"> Go To Dates</a>
-                    </div>  
+                    </div>
                     <p>Manage Deafults</p>
                     <a href="/defaults" className="btn btn-outline-primary"> Go To Defaults</a>
                     <p>Manage Roles</p>
                     <a href="/roles" className="btn btn-outline-primary"> Go To Roles</a>
                   </div>
-                </div>  
+                </div>
               </div>
               {/* Admin project description */}
               <div className="tab-pane fade" id="list-home" role="tabpanel" aria-labelledby="list-profile-list">
-              {/* This is the pre project creation tab  */}
+                {/* This is the pre project creation tab  */}
                 <h2>Project Admin</h2>
-                
+
                 <p>Create a new project inside the system</p>
                 <a href="/addproject" className="btn btn-outline-primary">+ Add New Project</a>
                 <p>List All Project</p>
                 <a href="/projects" className="btn btn-outline-primary">Project Home</a>
               </div>
               <div className="tab-pane fade" id="list-directory" role="tabpanel" aria-labelledby="list-messages-list">
-              <h5>Directory</h5>
+                <h5>Directory</h5>
                 <p>View Employee Directory</p>
                 <a href="/employees" className="btn btn-outline-primary"> Employees</a>
                 <p>View Vendor Directory</p>
@@ -406,9 +424,9 @@ export default class BoardUser extends Component {
                 <p>Manage pre construction level docments</p>
                 <a href="/document" className="btn btn-outline-primary"> Go To a Document</a>
               </div>
-              
+
               <div className="tab-pane fade" id="list-tasks" role="tabpanel" aria-labelledby="list-settings-list">
-                <h5>Tasks</h5><hr/>
+                <h5>Tasks</h5><hr />
                 <a href="/tasksconfiguration" className="btn btn-outline-primary mr-3"> Task Tool Configuration</a>
                 <a href="/managetasks" className="btn btn-outline-primary"> Manage Tasks</a>
               </div>
@@ -417,7 +435,7 @@ export default class BoardUser extends Component {
           </div>
           {/*  debug stuff DELETE*/}
           {/* <div><p>sfdsfds</p></div> */}
-          
+
         </div>
         {/* <Defaults /><Dates /><Roles /> */}
       </div>

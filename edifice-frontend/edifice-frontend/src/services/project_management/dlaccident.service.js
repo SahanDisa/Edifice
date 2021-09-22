@@ -17,8 +17,16 @@ class DLAccidentService {
     return http.get(`/projects/dlaccident/single/${id}`);
   }
 
-  getAll(id) {
+  getAllweek(id) {
     return http.get(`/projects/dlaccident/list/${id}`);
+  }
+
+  getAll(id) {
+    return http.get(`/projects/dlaccident/list/all/${id}`);
+  }
+
+  getToday(id) {
+    return http.get(`/projects/dlaccident/today/${id}`);
   }
 }
 

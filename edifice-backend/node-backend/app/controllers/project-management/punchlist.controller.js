@@ -83,9 +83,11 @@ exports.findOne = (req, res) => {
 };
 
 exports.findLastOne = (req,res) =>{
-    Punchlist.findAll({
-        limit: 1,
-        order: [['id', 'DESC']]
+    Punchlist.findAll({ where: { 
+        isDeleted: 0
+    },
+        order: [['no', 'DESC']],
+        limit: 1
     })
     .then(data => {
         res.send(data);

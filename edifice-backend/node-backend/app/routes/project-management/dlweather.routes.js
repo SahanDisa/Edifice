@@ -16,7 +16,13 @@ module.exports = app => {
     router.get("/single/:id", dlweather.findOne);
   
     // Retrieve all daily log - accident for a project
-    router.get("/:id", dlweather.findAll);
+    router.get("/:id", dlweather.findAllweek);
+
+    // Retrieve all daily log - accident for a project
+    router.get("/all/:id", dlweather.findAll);
+
+    // Retrieve all daily log - accident for a project
+    router.get("/today/:id", dlweather.findToday);
   
     app.use('/api/projects/dlweather', router);
 };

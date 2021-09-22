@@ -1,190 +1,330 @@
 import React, { Component } from "react";
-import ActionPlanDataService from "../../../services/project_management/actionplan.service.js";
+import { Link } from "react-router-dom";
+import ActionPlanDataService from "./../../../services/project_management/actionplan.service";
+import ActionPlanTypeDataService from "../../../services/project_management/actionplantype.service";
+import ProjectUserDataService from "../../../services/projectuser.service.js";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Alert from "react-bootstrap/Alert";
+import cogoToast from 'cogo-toast';
 
-class ViewActionPlan extends Component {
-    constructor(props) {
-        super(props);
-        this.onChangePlanManager = this.onChangePlanManager.bind(this);
-        this.onChangeLocation = this.onChangeLocation.bind(this);
-        this.onChangeDescription = this.onChangeDescription.bind(this);
-        this.retriveAPInfo = this.retriveAPInfo.bind(this);
-        this.updateActionPlan = this.updateActionPlan.bind(this);
-        this.deleteActionPlan = this.deleteActionPlan.bind(this);
-        this.state = {
-            actionplan: {
-                no: this.props.match.params.id,
-                title: "",
-                description: "",
-                location: "",
-                status: "",
-                type: "",
-                projectId: ""
-            }
-        };
-    }
-  
-    componentDidMount() {
-        this.retriveAPInfo(this.props.match.params.id);
-    }
+export default class AddActionPlan extends Component {
+  constructor(props) {
+    super(props);
+    this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onChangePlanManager = this.onChangePlanManager.bind(this);
+    this.onChangeApproved = this.onChangeApproved.bind(this);
+    this.onChangeLocation = this.onChangeLocation.bind(this);
+    this.updateActionPlan = this.updateActionPlan.bind(this);
+    this.deleteActionPlan = this.deleteActionPlan.bind(this);
 
-    retriveAPInfo(id){
-        ActionPlanDataService.getOne(id)
-        .then(response => {
-            this.setState({
-                actionplan: response.data
-            });
+    this.state = {
+        apitem: {
+            id: this.props.match.params.apid,
+            name: "",
+            planmanager: "",
+            actiontype: "",
+            location: "",
+            description: "",
+            approved: false,
+            projectId: this.props.match.params.id,
+        },
+        actionplantypes: [],
+        users: [],
+        currentIndex: -1,
+        submitted: false,
+    };
+  }
+  componentDidMount() {
+    this.retriveAPItemInfo(this.props.match.params.apid);
+    this.retrieveUsers(this.props.match.params.id)
+  }
+
+  retriveAPItemInfo(plid){
+    ActionPlanDataService.getOne(plid)
+    .then(response => {
+        this.setState({
+            apitem: response.data
         });
-    }
+    });
+  }
 
-    onChangePlanManager(e) {
-        const duedate = e.target.value
-        this.setState(function(prevState){
-            return {
-                actionplan: {
-                    ...prevState.actionplan,
-                    duedate: duedate
-                }
-            }
+  retrieveUsers(id){
+    ProjectUserDataService.searchUserDetails(id, "Project Manager")
+    .then(response => {
+        this.setState({
+            users: response.data
         });
-    }
+    console.log(response.data);
+    })
+    .catch(e => {
+        console.log(e);
+    });
+  }
 
-    onChangeLocation(e) {
-        const location = e.target.value
-        this.setState(function(prevState){
-            return {
-                actionplan: {
-                    ...prevState.actionplan,
-                    location: location
-                }
-            }
+  onChangeDescription(e) {
+    const description= e.target.value
+    this.setState(function(prevState){
+      return {
+        apitem: {
+          ...prevState.apitem,
+          description: description
+        }
+      }
+    });
+  }
+
+  onChangePlanManager(e) {
+    const planmanager= e.target.value
+    this.setState(function(prevState){
+      return {
+        apitem: {
+          ...prevState.apitem,
+          planmanager: planmanager
+        }
+      }
+    });
+  }
+
+  onChangeApproved(e) {
+    const approved= e.target.value
+    this.setState(function(prevState){
+      return {
+        apitem: {
+          ...prevState.apitem,
+          approved: approved
+        }
+      }
+    });
+  }
+
+  onChangeLocation(e) {
+    const location= e.target.value
+    this.setState(function(prevState){
+      return {
+        apitem: {
+          ...prevState.apitem,
+          location: location
+        }
+      }
+      
+    });
+  }
+
+  getActionPlanTypes(id){
+    ActionPlanTypeDataService.getAll(id)
+    .then(response => {
+        this.setState({
+          actionplantypes: response.data
         });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
+  updateActionPlan(){
+    var data = {
+        description: this.state.apitem.description,
+        planmanager: this.state.apitem.planmanager,
+        location: this.state.apitem.location,
+        approved: this.state.apitem.approved,
+        projectId: this.state.apitem.projectId
+    };
+
+    ActionPlanDataService.update(this.props.match.params.apid, data)
+    .then(response => {
+      this.setState(prevState => ({
+        apitem: {
+          ...prevState.apitem,
+        }
+      }));
+      console.log(response.data);
+    })
+    .catch(e => {
+        console.log(e);
+    });
+    this.props.history.push("/viewactionplan/"+ this.props.match.params.id + "/" +this.props.match.params.apid);
+    cogoToast.success("Action Plan updated Successfully!");
+  }
+
+  deleteActionPlan(){
+    var data = {
+        isDeleted: 1
     }
+    ActionPlanDataService.update(this.props.match.params.apid, data)
+    .then(response => {
+        console.log(response.data);
+    })
+    .catch(e => {
+        console.log(e);
+    });
+    this.props.history.push("/actionplan/"+ this.props.match.params.id + "/" +this.props.match.params.apid);
+    window.location.reload();
+    cogoToast.success("Action Plan Deleted Successfully!");
+  }
 
-    onChangeDescription(e) {
-        const description = e.target.value
-        this.setState(function(prevState){
-            return {
-                actionplan: {
-                    ...prevState.actionplan,
-                    description: description
-                }
-            }
-        });
-    }
-
-    updateActionPlan(){
-        var data = {
-            description: this.state.actionplan.description,
-            duedate: this.state.actionplan.duedate,
-            location: this.state.actionplan.location,
-            projectId: this.state.actionplan.projectId
-        };
-
-        ActionPlanDataService.update(this.props.match.params.id, data)
-        .then(response => {
-            this.setState(prevState => ({
-                actionplan: {
-                    ...prevState.actionplan,
-                }
-            }));
-            console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
-        });
-        window.location.reload();
-    }
-
-    deleteActionPlan(){
-        ActionPlanDataService.delete(this.props.match.params.code)
-        .then(response => {
-            console.log(response.data);
-            this.props.history.push('/actionplan/1');
-        })
-        .catch(e => {
-            console.log(e);
-        });
-    }
-
-    render() {
-        const { actionplan, projectId } = this.state;
-        return (
-            <div>
-                <h2>Action Plan - {actionplan.title}</h2>
-                <div className="container">
-                    <div className="form-row">
-                        <div className="form-group col-md-6">
-                            <label htmlFor="">Title</label>
-                            <input
-                                className="form-control"
-                                name="title"
-                                value={actionplan.title}
-                                onChange={this.onChangeTitle}
-                                type="text"
-                                readOnly
-                            />
-                        </div>
-                        <div className="form-group col-md-6">
-                            <label htmlFor="">Status</label>
-                            <input
-                                className="form-control"
-                                name="status"
-                                type="text"
-                                value={actionplan.status}
-                                readOnly
-                            />
-                        </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-6">
-                            <label htmlFor="">Location</label>
-                            <input
-                                className="form-control"
-                                name="location"
-                                value={actionplan.location}
-                                onChange={this.onChangeLocation}
-                                type="text"
-                                required
-                            />
-                        </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-9">
-                            <label htmlFor="">Description</label>
-                            <input
-                                className="form-control"
-                                name="description"
-                                value={actionplan.description}
-                                onChange={this.onChangeDescription}
-                                type="text"
-                                required
-                            />
-                        </div>
-                        <div className="form-group col-md-3">
-                            <label htmlFor="">Plan Manager</label>
-                            <input
-                                className="form-control"
-                                name="duedate"
-                                value={actionplan.duedate}
-                                onChange={this.onChangePlanManager}
-                                type="date"
-                                min=""
-                                required
-                            />
-                        </div>
-                    </div>
-                    <hr />
-                    <button
-                        className="btn btn-primary mr-2"
-                        onClick={this.updateActionPlan}>Update</button>
-                    <button
-                        className="btn btn-danger mr-2"
-                        onClick={this.deleteActionPlan}>Delete</button>
-                    <a href="/actionplan/1" className="">Cancel</a>
-                </div>            
+  render() {
+    const {users, apitem} = this.state;
+    return (
+      <div className="container">
+        <div class="container">
+          <h2>View Action Plan</h2>
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link color="inherit" to="/home">Home</Link>
+            <Link color="inherit" to={"/projectmanagementhome/" + apitem.projectId}>App Dashboard</Link>
+            <Link color="inherit" to={"/actionplan/" + apitem.projectId}>Action Plan</Link>
+            <Link color="inherit" aria-current="page" className="disabledLink">View Action Plan</Link>
+          </Breadcrumbs><hr/>
+          <div className="">
+            <div className="form-row">
+              <div className="form-group col-md-8">
+                <label htmlFor="name">Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="name"
+                  value={apitem.title}
+                  name="name"
+                  readOnly
+                />
+              </div>
+              <div className="form-group col-md-4">
+                <label htmlFor="type">Action Plan Type</label>
+                <input 
+                  className="form-control"
+                  id="type"
+                  readOnly
+                  name="type"
+                  value={apitem.actiontype}
+                  onChange={this.onChangeActionType}
+                />
+              </div>
             </div>
-        );
-    }
+            <div className="form-row">
+              <div className="form-group col-md-4">
+                <label htmlFor="planmanager">Plan Manager</label>
+                <select
+                  type="text"
+                  className="form-control"
+                  id="planmanager"
+                  required
+                  value={apitem.planmanager}
+                  onChange={this.onChangePlanManager}
+                  name="planmanager"
+                >
+                    {users && users.map((u, index) => (
+                        <option
+                            value={u.username}
+                            onChange={this.onChangePlanManager}
+                            key={index}
+                        >
+                            {u.username} - {u.position}
+                        </option>
+                    ))}
+                </select>
+              </div>
+              <div className="form-group col-md-4">
+                <label htmlFor="location">Location</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="location"
+                  placeholder="Enter the location"
+                  required
+                  value={apitem.location}
+                  onChange={this.onChangeLocation}
+                  name="location"
+                  list="suggest"
+                />
+                <datalist>
+                  <option value="Floor 1">Floor 1</option>
+                  <option value="Floor 2">Floor 2</option>
+                  <option value="Floor 3">Floor 3</option>
+                </datalist>
+              </div>
+              <div className="form-group col-md-4">
+                <label htmlFor="approved">Status</label>
+                {!apitem.approved ?
+                  <div>
+                    <select
+                      type="text"
+                      className="form-control"
+                      required
+                    >
+                      <option value="Not Approved" onChange={this.onChangeApproved}>🔴 Not Approved</option>
+                      <option value="Approved" onChange={this.onChangeApproved}>🟢 Approved</option>
+                    </select>
+                  </div>
+                :
+                  <div>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value="🟢 Approved"
+                      readOnly
+                    />
+                  </div>
+                }
+              </div>
+            </div>
+            <div className="form row">
+              <div className="form-group col-md-12">
+                <label htmlFor="description">Description</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="description"
+                  placeholder="Enter a description about the action plan"
+                  required
+                  value={apitem.description}
+                  onChange={this.onChangeDescription}
+                  name="description"
+                />
+              </div>
+            </div>
+          </div>
+          <button className="btn btn-primary mr-2" id="updateBtn" data-target="#promptModal" data-toggle="modal" >Update</button>
+          <button className="btn btn-danger mr-2"  id="updateBtn" data-target="#deleteModal" data-toggle="modal">Delete</button>
+          <Link to={"/actionplan/"+apitem.projectId} className="">Cancel</Link>
+        </div>
+        {/* Update modal Starts */}
+        <div className="modal fade" id="promptModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered" role="document">
+                <div className="modal-content">
+                <div className="modal-header">
+                    <p className="modal-title" id="exampleModalCenterTitle">Are you sure you want to update</p>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div className="modal-body">
+                    <a onClick={this.updateActionPlan} className="btn btn-primary pr-3 ml-2 mr-3" data-dismiss="modal"> Yes, Update</a>
+                    <a className="btn btn-secondary ml-6 mr-6 pl-3" data-dismiss="modal"> Cancel</a>
+                </div>
+                </div>
+            </div>
+        </div>
+        {/* Update modal Ends */}
+        {/* Delete modal Starts */}
+        <div className="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered" role="document">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <p className="modal-title" id="exampleModalCenterTitle">Are you sure you want to delete?</p>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div className="modal-body">
+                        <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={this.deleteActionPlan} data-dismiss="modal"> Yes, Delete</a>
+                        <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {/* Delete modal Ends */}
+      </div>
+    );
+  }
 }
-
-export default ViewActionPlan;

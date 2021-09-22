@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import DLAccidentService from "../../../services/project_management/dlaccident.service";
+import cogoToast from 'cogo-toast';
 
 class ViewDAL extends Component {
     constructor(props) {
@@ -88,6 +89,10 @@ class ViewDAL extends Component {
     }
 
     updateAccidentLog() {
+        if (this.state.dlaccident.date != "" &&
+        this.state.dlaccident.time != "" &&
+        this.state.dlaccident.crew != "" &&
+        this.state.dlaccident.description != "") {
         var data = {
             date: this.state.dlaccident.date,
             time: this.state.dlaccident.time,
@@ -104,7 +109,10 @@ class ViewDAL extends Component {
                 }
             }));
         });
-        window.location.reload();
+        cogoToast.success("Accident Log Updated Successfully!");
+    } else {
+        cogoToast.error("Field/s cannot be empty");
+    }
     }
 
     deleteAccidentLog(){
@@ -115,6 +123,7 @@ class ViewDAL extends Component {
         .then(response => {
             console.log(response.data);
             this.props.history.push('/dailylogs/'+ this.props.match.params.id);
+            cogoToast.success("Accident Log Deleted Successfully!");
         })
     }
     

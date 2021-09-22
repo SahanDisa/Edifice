@@ -12,17 +12,17 @@ module.exports = app => {
   // Retrieve all crews for a name
   router.get("/", crews.findAllName);
 
-  // Retrieve a single crew with id
-  /* 
-     router.get("/:id", crew.findOne);
-     // Update a crew with id
-     router.put("/:id", crew.update);
-   
-     // Delete a crew with id
-     router.delete("/:id/", crew.delete);
-   
-     // Delete all crews
-     router.delete("/", crew.deleteAll);
-   */
+  // chedk the crew name availability
+  router.get("/valid", crews.findValidName);
+
+  // Update a crew with id
+  /*     router.put("/:id", crew.update);
+    
+      // Delete a crew with id
+      router.delete("/:id/", crew.delete);
+    
+      // Delete all crews
+      router.delete("/", crew.deleteAll);
+    */
   app.use('/api/crews', router);
 };

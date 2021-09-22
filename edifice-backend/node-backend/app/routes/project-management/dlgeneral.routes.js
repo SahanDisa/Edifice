@@ -16,7 +16,13 @@ module.exports = app => {
     router.get("/single/:id", dlgeneral.findOne);
   
     // Retrieve all daily log - accident for a project
-    router.get("/:id", dlgeneral.findAll);
+    router.get("/:id", dlgeneral.findAllweek);
+
+    // Retrieve all daily log - accident for a project
+    router.get("/all/:id", dlgeneral.findAll);
+
+    // Retrieve all daily log - accident for a project
+    router.get("/today/:id", dlgeneral.findToday);
   
     app.use('/api/projects/dlgeneral', router);
 };

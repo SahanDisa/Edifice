@@ -12,6 +12,9 @@ module.exports = app => {
     // Delete a Action Plan with id
     router.put("/delete/:id", actionplan.delete);
 
+    // Search Action Plan
+    router.get("/search/:id", actionplan.SearchAll);
+
     // Retrieve a single punch list with id
     router.get("/single/:id", actionplan.findOne);
 

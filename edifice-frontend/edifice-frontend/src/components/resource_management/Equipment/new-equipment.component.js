@@ -105,6 +105,7 @@ class NewEquip extends Component {
 
   render() {
     const { categorys } = this.state;
+    var today = new Date().toISOString().split('T')[0];
     return (
       <div>
         <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -156,6 +157,7 @@ class NewEquip extends Component {
                       className="form-control"
                       type="date"
                       id="date"
+                      max={today}
                       value={this.state.date}
                       onChange={this.onChangeDate}
                       name="date" />

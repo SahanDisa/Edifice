@@ -4,6 +4,7 @@ import MeetingDataService from "../../../services/project_management/meeting.ser
 import MeetingCategoryDataService from "../../../services/project_management/meetingcategory.service.js";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import cogoToast from 'cogo-toast';
+import { TextareaAutosize } from "@material-ui/core";
 
 class CreateMeeting extends Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class CreateMeeting extends Component {
         this.onChangeDate = this.onChangeDate.bind(this);
         this.onChangeTime = this.onChangeTime.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
         this.saveMeeting = this.saveMeeting.bind(this);
 
         this.state = {
@@ -24,6 +26,7 @@ class CreateMeeting extends Component {
             date: "",
             time: "",
             location: "",
+            description: "",
             projectId: this.props.match.params.id,
             submitted: false
         };
@@ -57,6 +60,12 @@ class CreateMeeting extends Component {
         });
     }
 
+    onChangeDescription(e) {
+        this.setState({
+            description: e.target.value
+        });
+    }
+
     onChangeLocation(e) {
         this.setState({
             location: e.target.value
@@ -64,38 +73,47 @@ class CreateMeeting extends Component {
     }
 
     saveMeeting() {
-        var data = {
-            name: this.state.name,
-            category: this.state.category,
-            status: this.state.status,
-            date: this.state.date,
-            time: this.state.time,
-            location: this.state.location,
-            projectId: this.props.match.params.id
-        };
+        if (this.state.name != "" &&
+        this.state.category != "" &&
+        this.state.status != "" &&
+        this.state.date != "" &&
+        this.state.time != "" &&
+        this.state.location != "" ) {
+            var data = {
+                name: this.state.name,
+                category: this.state.category,
+                status: this.state.status,
+                date: this.state.date,
+                time: this.state.time,
+                location: this.state.location,
+                projectId: this.props.match.params.id
+            };
 
-        MeetingDataService.create(data)
-        .then(response => {
-            this.setState({
-                id: response.data.id,
-                name: response.data.name,
-                category: response.data.category,
-                status: response.data.status,
-                date: response.data.date,
-                time: response.data.time,
-                location: response.data.location,
-                projectId: response.data.projectId,
+            MeetingDataService.create(data)
+            .then(response => {
+                this.setState({
+                    id: response.data.id,
+                    name: response.data.name,
+                    category: response.data.category,
+                    status: response.data.status,
+                    date: response.data.date,
+                    time: response.data.time,
+                    location: response.data.location,
+                    projectId: response.data.projectId,
 
-                submitted: true
+                    submitted: true
+                });
+                console.log(response.data);
+                this.props.history.push("/meetings/"+ this.props.match.params.id);
+                window.location.reload();
+                cogoToast.success("Meeting Saved Successfully!");
+            })
+            .catch(e => {
+                console.log(e);
             });
-            console.log("save function service ekata enawa");
-            console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
-        });
-        this.props.history.push("/meetings/"+ this.props.match.params.id);
-        cogoToast.success("Meeting Saved Successfully!", { position: 'top-right', heading: 'success' });
+        } else {
+            cogoToast.error("Field/s cannot be empty");
+        }
     }
 
     retrieveCategories(id){
@@ -131,6 +149,7 @@ class CreateMeeting extends Component {
                                 <input
                                     className="form-control"
                                     name="name"
+                                    placeholder="Enter a name for the meeting"
                                     value={this.state.name}
                                     onChange={this.onChangeName}
                                     type="text"
@@ -147,6 +166,7 @@ class CreateMeeting extends Component {
                                     type="text"
                                     required
                                 >
+                                    <option value="">Select a meeting category</option>
                                 {categories && categories.map((cat, index) => (
                                     <option
                                         value={cat.id}
@@ -175,6 +195,7 @@ class CreateMeeting extends Component {
                                 <input
                                     className="form-control"
                                     name="date"
+                                    min="2021-09-23"
                                     value={this.state.date}
                                     onChange={this.onChangeDate}
                                     type="date"
@@ -187,19 +208,43 @@ class CreateMeeting extends Component {
                                     className="form-control"
                                     name="time"
                                     value={this.state.time}
+                                    min="07:00"
+                                    max="22:00"
                                     onChange={this.onChangeTime}
                                     type="time"
                                     required
                                 />
                             </div>
                             <div className="form-group col-md-4">
-                                <label htmlFor="">Location</label>
+                                <label htmlFor="">Location / Platform</label>
                                 <input
                                     className="form-control"
                                     name="location"
+                                    placeholder="Enter the location of the meeting"
                                     value={this.state.location}
                                     onChange={this.onChangeLocation}
+                                    list="suggest"
                                     type="text"
+                                    required
+                                />
+                                <datalist id="suggest">
+                                    <option value="ZOOM">ZOOM</option>
+                                    <option value="Microsoft Teams">Microsoft Teams</option>
+                                    <option value="Google Meet">Google Meet</option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-md-12">
+                                <label htmlFor="">Description</label>
+                                <TextareaAutosize
+                                    rows="2"
+                                    className="form-control"
+                                    name="description"
+                                    placeholder="Any other information"
+                                    value={this.state.description}
+                                    onChange={this.onChangeDescription}
+                                    type="description"
                                     required
                                 />
                             </div>
