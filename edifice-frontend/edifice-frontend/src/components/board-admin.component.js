@@ -186,8 +186,8 @@ export default class BoardUser extends Component {
   }
 
 
-  generateProjectReport(projects,a,b,c){
-    Report.generateProjectReport(projects,a.toString(),b.toString(),c.toString());
+  generateProjectReport(projects, a, b, c) {
+    Report.generateProjectReport(projects, a.toString(), b.toString(), c.toString());
   }
 
   createUser(userId) {
@@ -301,10 +301,10 @@ export default class BoardUser extends Component {
               </Link>
 
               {/* <Link to={"/projects"}>
-              <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
-                <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>
+          <h1 className="nav-heading-title mb-0" style={{ fontSize:55 }}>{projectCount}</h1>
+            <h5> <HomeWork style={{ fontSize:25 }}/>  Projects</h5>
 
-              </Link> */}
+          </Link> */}
             </div>
           </div>
 
@@ -328,10 +328,7 @@ export default class BoardUser extends Component {
           </div>
 
           <div className="col-8 mb-4 mr-5">
-
-            <a onClick={()=>{this.generateProjectReport(this.state.projects,vendorCount,subCount,employeeCount);}} className="btn btn-primary p-2"><Description style={{ fontSize:20 }}/> Report of current projects</a>
-          </div>
-
+            <a onClick={() => { this.generateProjectReport(this.state.projects, vendorCount, subCount, employeeCount); }} className="btn btn-primary p-2"><Description style={{ fontSize: 20 }} /> Report of current projects</a>
           </div>
         </div>
         <div classname-="mb-2 pb-4">
