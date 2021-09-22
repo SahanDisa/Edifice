@@ -79,7 +79,7 @@ class CreateMeeting extends Component {
         var data = {
             title: this.state.name,
             startDate: this.state.date,
-            userId: "2"
+            userId: "4"
         };
 
         ScheduleDataService.create(data)
