@@ -265,7 +265,7 @@ export default class PortfolioHome extends Component {
         });
     }
     retrievePunchListStatus(id){
-      PunchListService.getStatus(id,"Ready to close")
+      PunchListService.getStatus(id,"Completed")
         .then(response => {
           this.setState({
             punchListComplete: response.data.length,
@@ -276,7 +276,7 @@ export default class PortfolioHome extends Component {
         .catch(e => {
           console.log(e);
         });
-        PunchListService.getStatus(id,"Work in Progress")
+        PunchListService.getStatus(id,"WIP")
         .then(response => {
           this.setState({
             punchListPending: response.data.length,
