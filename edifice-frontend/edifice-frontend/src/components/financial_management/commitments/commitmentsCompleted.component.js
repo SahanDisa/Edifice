@@ -298,7 +298,7 @@ export default class Commitments extends Component {
               value={searchContractCompany}
               onChange={this.onChangeSearchContractCompany}
             >
-              <option  selected value="">All Subcontracts</option>
+              <option  value="" selected>All Subcontracts</option>
               {subcontractors &&
                 subcontractors.map((c, index) => (
                 <option

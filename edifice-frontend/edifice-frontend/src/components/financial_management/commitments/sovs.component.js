@@ -20,6 +20,7 @@ const SovList = (props) => {
   const [searchCostCode, setSearchCostCode] = useState("");
   const sovsRef = useRef();
   const [budgets, setBudgets] = useState([]);
+  const [sovTotal,setSovTotal]= useState([]);
 
   const initialCommitmentState = {
     id: null,
@@ -47,6 +48,7 @@ exclusions:"",
     retrieveSovs();
     retrieveBudgets();   
     getCommitment(id);
+    calculateTotalSovs();
   }, []);
 
   const retrieveBudgets = () => {
@@ -58,6 +60,21 @@ exclusions:"",
       .catch((e) => {
         console.log(e);
       });
+  };
+
+ const  calculateTotalSovs=()=>{
+ 
+    SovDataService.getTotalSovByC(pid,id)
+    .then((response) => {
+   
+       setSovTotal(response.data)
+    
+      console.log(response.data);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  
   };
 
   const getCommitment = id => {
@@ -88,6 +105,7 @@ exclusions:"",
 
   const refreshList = () => {
     retrieveSovs();
+    calculateTotalSovs();
   };
 
   const findByCostCode = () => {
@@ -109,6 +127,8 @@ exclusions:"",
 
   //remove item from table
   const updatePublished = (rowIndex) => {
+    const pid = sovsRef.current[rowIndex].projectId;
+    const cid = sovsRef.current[rowIndex].commitmentId;
 
     var data = {
       id:  sovsRef.current[rowIndex].id,
@@ -124,6 +144,7 @@ exclusions:"",
         let newSovs = [...sovsRef.current];
         newSovs.splice(rowIndex, 1);
         setSovs(newSovs);
+        refreshList();
         cogoToast.success("SoV Deleted Successfully!");
       })
       .catch(e => {
@@ -136,15 +157,18 @@ exclusions:"",
 
   const deleteSov = (rowIndex) => {
     const id = sovsRef.current[rowIndex].id;
+    const pid = sovsRef.current[rowIndex].projectId;
+    const cid = sovsRef.current[rowIndex].commitmentId;
 
     SovDataService.remove(id)
       .then((response) => {
         //props.history.push("/sov/1");
-
+        
         let newSovs = [...sovsRef.current];
         newSovs.splice(rowIndex, 1);
 
         setSovs(newSovs);
+        
       })
       .catch((e) => {
         console.log(e);
@@ -243,6 +267,7 @@ updatePublished(rowIdx)
               </Link>
             </Breadcrumbs><br />
             <ul class="nav nav-tabs">
+               
             <li class="nav-item">
             <Link to={"/editcommitment/"+id}  class="nav-link">Sub Contract Details</Link>
                       
@@ -250,13 +275,27 @@ updatePublished(rowIdx)
             <li class="nav-item">
             <Link class="nav-link active" aria-current="page"to={"#"}>SoVs</Link>
             </li>
-          </ul>
+
+          </ul><br />
+         
 
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
-            <Link className="btn btn-primary mr-2" to={"/addsov/"+pid+"/"+id}>
+            <Link className="btn btn-primary mr-2" to={"/addsov/"+pid+"/"+id}  style={{float: "right"}}>
                 <AddIcon/>Create
                 </Link>
+
+            <div className="col-md-3" style={{float: "right"}}>
+         
+         <div className="card card-hover shadow-sm" style={{alignItems: "center"}} >
+               <h3 className="h5 nav-heading-title mb-0">Total Value</h3>
+               <span className="fs-sm fw-normal text-muted">Rs. {isNaN(parseFloat(sovTotal).toFixed(2))? "0.00":parseFloat(sovTotal).toFixed(2)} </span>
+             </div>
+           
+         </div>
+            
+
+            
                 {/* <Link className="btn btn-import mr-2" to={"/adddirectcost/"+1}>
                 <PublishIcon/>&nbsp;Import
                 </Link> */}
