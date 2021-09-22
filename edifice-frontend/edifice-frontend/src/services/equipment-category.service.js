@@ -8,6 +8,10 @@ class EquipmentCategoryDataService {
   create(data) {
     return http.post("/categorys", data);
   }
+
+  findByTitle(title) {
+    return http.get(`/categorys/search?name=${title}`);
+  }
   /*
     update(id, data) {
       return http.put(`/projects/${id}`, data);
@@ -21,9 +25,6 @@ class EquipmentCategoryDataService {
       return http.delete(`/projects`);
     }
   
-    findByTitle(title) {
-      return http.get(`/projects?title=${title}`);
-    }
     userProjects(id){
       return http.get(`/projects/user/list/${id}`);
     }*/

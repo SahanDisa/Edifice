@@ -31,7 +31,7 @@ class CrewDataService {
     }*/
 
   findByTitle(title) {
-    return http.get(`/Crews?name=${title}`);
+    return http.get(`/crews?name=${title}`);
   }
 }
 
