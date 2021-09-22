@@ -167,6 +167,10 @@ export default class BoardUser extends Component {
   generatePDF(project,noUsers){
     Report.generatePDF(project,noUsers);
   }
+
+  generateProjectReport(projects,a,b,c){
+    Report.generateProjectReport(projects,a.toString(),b.toString(),c.toString());
+  }
   
   createUser(userId) {
     if (typeof userId == 'undefined') {
@@ -306,7 +310,7 @@ export default class BoardUser extends Component {
           </div>
 
           <div className="col-8 mb-4 mr-5">
-            <a onClick={()=>{this.generatePDF();}} className="btn btn-primary p-2"><Description style={{ fontSize:20 }}/> Generate Report</a>
+            <a onClick={()=>{this.generateProjectReport(this.state.projects,vendorCount,subCount,employeeCount);}} className="btn btn-primary p-2"><Description style={{ fontSize:20 }}/> Report of current projects</a>
           </div>
           </div>
             <div classname-="mb-2 pb-4">
