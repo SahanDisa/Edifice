@@ -28,6 +28,10 @@ class ActionPlanDataService {
   getApproved(id){
     return http.get(`/projects/actionplan/approved/${id}`);
   }
+
+  findByTitle(name, id) {
+    return http.get(`/projects/actionplan/search/${id}?name=${name}`);
+  }
 }
 
 export default new ActionPlanDataService();

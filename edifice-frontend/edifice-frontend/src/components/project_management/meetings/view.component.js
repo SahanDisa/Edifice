@@ -24,6 +24,7 @@ class ViewMeeting extends Component {
             no: this.props.match.params.mtid,
             category: "",
             name: "",
+            description: "",
             status: "Scheduled",
             date: "",
             time: "",
@@ -39,7 +40,7 @@ class ViewMeeting extends Component {
     }
 
     retrieveMeeting(mtid){
-      MeetingDataService.getAll(mtid)
+      MeetingDataService.get(mtid)
       .then(response => {
           this.setState({
             meeting: response.data
@@ -58,6 +59,19 @@ class ViewMeeting extends Component {
             meeting: {
               ...prevState.meeting,
               name: name
+            }
+          }
+            
+        });
+    }
+
+    onChangeDescription(e) {
+      const description= e.target.value
+        this.setState(function(prevState){
+          return {
+            meeting: {
+              ...prevState.meeting,
+              description: description
             }
           }
             
@@ -99,7 +113,6 @@ class ViewMeeting extends Component {
               time: time
             }
           }
-            
         });
     }
 
@@ -153,9 +166,6 @@ class ViewMeeting extends Component {
           console.log(response.data);
           this.props.history.push("/meetings/"+ this.state.meeting.projectId);
           cogoToast.success("Meeting Deleted Successfully!", { position: 'top-right', heading: 'success' });
-      })
-      .catch(e => {
-          console.log(e);
       });
     }
 
@@ -179,7 +189,7 @@ class ViewMeeting extends Component {
                                 <input
                                     className="form-control"
                                     name="name"
-                                    value={this.state.name}
+                                    value={meeting.name}
                                     onChange={this.onChangeName}
                                     type="text"
                                     required
@@ -213,7 +223,7 @@ class ViewMeeting extends Component {
                                 <input
                                     className="form-control"
                                     name="date"
-                                    value={this.state.date}
+                                    value={meeting.date}
                                     onChange={this.onChangeDate}
                                     type="date"
                                     required
@@ -224,7 +234,7 @@ class ViewMeeting extends Component {
                                 <input
                                     className="form-control"
                                     name="time"
-                                    value={this.state.time}
+                                    value={meeting.time}
                                     onChange={this.onChangeTime}
                                     type="time"
                                     required
@@ -235,10 +245,23 @@ class ViewMeeting extends Component {
                                 <input
                                     className="form-control"
                                     name="location"
-                                    value={this.state.location}
+                                    value={meeting.location}
                                     onChange={this.onChangeLocation}
                                     type="text"
                                     required
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-md-12">
+                                <label htmlFor="">Description</label>
+                                <input
+                                  className="form-control"
+                                  name="text"
+                                  value={meeting.description}
+                                  onChange={this.onChangeDescription}
+                                  type="text"
+                                  required
                                 />
                             </div>
                         </div>

@@ -9,10 +9,13 @@ import Table from 'react-bootstrap/Table';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import meetingService from '../../../services/project_management/meeting.service';
 
 class MeetingsHome extends Component {
   constructor(props) {
       super(props);
+      this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
+      this.searchTitle = this.searchTitle.bind(this);
       this.onChangeOverview = this.onChangeOverview.bind(this);
       this.onChangeDescription = this.onChangeDescription.bind(this);
       this.saveMeetingCategory = this.saveMeetingCategory.bind(this);
@@ -28,7 +31,7 @@ class MeetingsHome extends Component {
         description: "",
         projectId: this.props.match.params.id,
         content: "",
-        currentViewMeeting:"",
+        searchTitle: "",
         currentViewIndex:-1,
 
         submitted: false
@@ -46,10 +49,6 @@ class MeetingsHome extends Component {
           this.setState({
             categories: response.data
           });
-          console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
       });
     }
 
@@ -59,11 +58,28 @@ class MeetingsHome extends Component {
           this.setState({
             meeting: response.data
           });
-          console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
       });
+    }
+
+    onChangeSearchTitle(e) {
+      const searchTitle = e.target.value;
+  
+      this.setState({
+        searchTitle: searchTitle
+      });
+    }
+  
+    searchTitle() {
+      meetingService.findByTitle(this.state.searchTitle)
+        .then(response => {
+          this.setState({
+            categories: response.data
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
 
     onChangeOverview(e) {
@@ -100,15 +116,14 @@ class MeetingsHome extends Component {
       .catch(e => {
         console.log(e);
       });
-      // window.location.reload();
+      window.location.reload();
     }
 
     render() {
-      const {categories, meeting, projectId, currentViewMeeting} = this.state;
-      console.log(projectId);
+      const {categories, meeting, searchTitle, projectId} = this.state;
       return (
         <div className="">
-          <h2>Meetings</h2>
+          <h2>MEETING</h2>
           <Breadcrumbs aria-label="breadcrumb">
             <Link color="inherit" to="/home">Home</Link>
             <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
@@ -155,12 +170,12 @@ class MeetingsHome extends Component {
             <form>
               <div className="form-row mt-3">
                 <div class="col-md-12 text-right">
-                  <Link to={"/createmeetings/"+projectId} className="btn btn-primary">+ Create Meeting</Link>
+                  <Link to={"/createmeetings/"+projectId} className="btn btn-primary mb-2">+ Create Meeting</Link>
                 </div>
-                <div className="form-group col-md-4">
-                  <input className="form-control" type="text" placeholder="Search" />
+                {/* <div className="form-group col-md-4">
+                  <input className="form-control" type="text" placeholder="Search a meeting type..." value={searchTitle} onChange={this.onChangeSearchTitle} />
                 </div>
-                <a href="#" className="btn btn-outline-dark mb-3">Search</a>
+                <button href="#" className="btn btn-outline-dark mb-3" onClick={this.searchTitle}>Search</button> */}
               </div>
             </form>
             <div class="accordion" id="accordionExample">
@@ -189,7 +204,7 @@ class MeetingsHome extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                              {meeting && meeting.map((mt, index) => ( meeting.category == categories.id ?
+                              {meeting && meeting.map((mt, index) => ( mt.category == cat.id ?
                                 <tr key={mt.id + index}>
                                     <td>{mt.date}</td>
                                     <td>{mt.name}</td>

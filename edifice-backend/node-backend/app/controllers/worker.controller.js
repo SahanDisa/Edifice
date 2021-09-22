@@ -52,21 +52,40 @@ exports.findAll = (req, res) => {
       });
     });
 };
-/*
-// Find a single crew with an id
-exports.findOne = (req, res) => {
-    const id = req.params.id;
 
-    crew.findByPk(id)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error retrieving crew with id=" + id
-        });
-      });  
-};*/
+// chedk the worker NIC availability
+exports.findValidNIC = (req, res) => {
+  const wId = req.query.NIC;
+  var condition = wId ? { wId: { [Op.like]: wId } } : null;
+
+  Worker.findAll({ where: condition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving projects."
+      });
+    });
+};
+
+// chedk the worker Mobile availability
+exports.findValidMobile = (req, res) => {
+  const mobile = req.query.Mobile;
+  var condition = mobile ? { mobile: { [Op.like]: mobile } } : null;
+
+  Worker.findAll({ where: condition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving projects."
+      });
+    });
+};
 
 // Update a worker by the id in the request
 exports.update = (req, res) => {

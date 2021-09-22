@@ -17,8 +17,16 @@ class DLCallService {
     return http.get(`/projects/dlcall/single/${id}`);
   }
 
-  getAll(id) {
+  getAllweek(id) {
     return http.get(`/projects/dlcall/${id}`);
+  }
+
+  getAll(id) {
+    return http.get(`/projects/dlcall/all/${id}`);
+  }
+
+  getToday(id) {
+    return http.get(`/projects/dlcall/today/${id}`);
   }
 }
 

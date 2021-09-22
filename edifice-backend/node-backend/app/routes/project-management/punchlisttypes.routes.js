@@ -9,6 +9,9 @@ module.exports = app => {
     // Retrieve all Punch List Type for a project
     router.get("/:id", pltypes.findAll);
 
+    // Retrieve all Punch List Type for a project
+    router.get("/type/:id/:pliid", pltypes.findType);
+
     // Retrive single Punch List Type for a project
     router.get("/single/:id", pltypes.findOne);
   
