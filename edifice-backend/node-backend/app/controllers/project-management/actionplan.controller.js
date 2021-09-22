@@ -116,9 +116,10 @@ exports.findAll = (req, res) => {
 
 // Get action plan for a given projectId
 exports.findAlltype = (req, res) => {
-  const id = req.params.id;
+  const type = req.params.id;
   ActionPlan.findAll({ where: {
-    projectId: id
+    actiontype: type,
+    isDeleted: 0
   }})
   .then(data => {
     res.send(data);
@@ -143,4 +144,21 @@ exports.findAllApproved = (req, res) => {
         err.message || "Some error occurred while retrieving tutorials."
     });
   });
+};
+
+// Search All
+exports.SearchAll = (req, res) => {
+  const name = req.query.name;
+  const id = req.params.id;
+  var condition = name ? { name: { [Op.like]: `%${name}%` }, projectId: id } : null;
+  ActionPlan.findAll({ where: condition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving projects."
+      });
+    });
 };

@@ -24,6 +24,8 @@ module.exports = app => {
   // get all total sovs of a project
   router.get("/:id/total", sov.getTotalSovs);
 
+  router.get("/total/:pid/:id", sov.getTotalSovByC);
+
   // get total according to cost code
   //router.get("/list/:id/:costCode", directcost.getDTotalOfCostCodes);
   router.get("/:id/:costCode/total", sov.getSTotalOfCostCodes);

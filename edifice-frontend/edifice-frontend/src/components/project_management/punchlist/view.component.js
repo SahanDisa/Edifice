@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import PunchlistDataService from "../../../services/project_management/punchlist.service.js";
 import cogoToast from 'cogo-toast';
+import punchlisttypesService from "../../../services/project_management/punchlisttypes.service.js";
 
 class PLIView extends Component {
     constructor(props) {
@@ -12,7 +13,9 @@ class PLIView extends Component {
         // this.onChangeType = this.onChangeType.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.onChangeStatus = this.onChangeStatus.bind(this);
         this.retrivePLItemInfo = this.retrivePLItemInfo.bind(this);
+        // this.retriveType = this.retriveType.bind(this);
         this.updatePunchList = this.updatePunchList.bind(this);
         this.deletePunchList = this.deletePunchList.bind(this);
         this.state = {
@@ -25,8 +28,8 @@ class PLIView extends Component {
                 duedate: "",
                 type: "",
                 isDeleted: 0,
-                projectId: ""
-            }
+                projectId: this.props.match.params.id
+            },
         };
     }
   
@@ -43,6 +46,30 @@ class PLIView extends Component {
         });
     }
 
+    onChangeStatus(e) {
+        const status = e.target.value
+        this.setState(function(prevState){
+            return {
+                plItem: {
+                    ...prevState.plItem,
+                    status: status
+                }
+            }
+        });
+    }
+
+    onChangeStatus(e) {
+        const status = e.target.value
+        this.setState(function(prevState){
+            return {
+                plItem: {
+                    ...prevState.plItem,
+                    status: status
+                }
+            }
+        });
+    }
+    
     onChangeDuedate(e) {
         const duedate = e.target.value
         this.setState(function(prevState){
@@ -79,28 +106,49 @@ class PLIView extends Component {
         });
     }
 
-    updatePunchList(){
-        var data = {
-            description: this.state.plItem.description,
-            duedate: this.state.plItem.duedate,
-            location: this.state.plItem.location,
-            projectId: this.state.plItem.projectId
-        };
-
-        PunchlistDataService.update(this.props.match.params.pliid, data)
-        .then(response => {
-            this.setState(prevState => ({
+    onChangeStatus(e) {
+        const status = e.target.value
+        this.setState(function(prevState){
+            return {
                 plItem: {
                     ...prevState.plItem,
+                    status: status
                 }
-            }));
-            console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
+            }
         });
-        this.props.history.push("/punchlist/"+ this.props.match.params.id);
-        cogoToast.success("Punch List updated Successfully!", { position: 'top-right', heading: 'success' });
+    }
+
+    updatePunchList(){
+        if(this.state.plItem.description != "" &&
+        this.state.plItem.status != "" &&
+        this.state.plItem.duedate != "" &&
+        this.state.plItem.location != "" &&
+        this.state.plItem.projectId != "" ){
+            var data = {
+                description: this.state.plItem.description,
+                status: this.state.plItem.status,
+                duedate: this.state.plItem.duedate,
+                location: this.state.plItem.location,
+                projectId: this.state.plItem.projectId
+            };
+
+            PunchlistDataService.update(this.props.match.params.pliid, data)
+            .then(response => {
+                this.setState(prevState => ({
+                    plItem: {
+                        ...prevState.plItem,
+                    }
+                }));
+                console.log(response.data);
+                this.props.history.push("/view/"+ this.props.match.params.id + "/" + this.props.match.params.pliid);
+                cogoToast.success("Punch List updated Successfully!");
+            })
+            .catch(e => {
+                console.log(e);
+            });
+        } else {
+            cogoToast.error("Field/s cannot be empty");
+        }
     }
 
     deletePunchList(){
@@ -115,7 +163,8 @@ class PLIView extends Component {
             console.log(e);
         });
         this.props.history.push("/punchlist/"+ this.props.match.params.id);
-        cogoToast.success("Punch List Deleted Successfully!", { position: 'top-right', heading: 'success' });
+        window.location.reload();
+        cogoToast.success("Punch List Deleted Successfully!");
     }
     
     render() {
@@ -128,7 +177,7 @@ class PLIView extends Component {
                     <Link color="inherit" to={"/projectmanagementhome/" + plItem.projectId}>App Dashboard</Link>
                     <Link color="inherit" to={"/punchlist/" + plItem.projectId}>Punch List</Link>
                     <Link color="inherit" aria-current="page" className="disabledLink">View Punch List</Link>
-                </Breadcrumbs>
+                </Breadcrumbs><hr />
                 <div className="container">
                     <div className="form-row">
                         <div className="form-group col-md-6">
@@ -137,32 +186,86 @@ class PLIView extends Component {
                                 className="form-control"
                                 name="title"
                                 value={plItem.title}
-                                onChange={this.onChangeTitle}
+                                onChange={this.onChangeStatus}
                                 type="text"
                                 readOnly
                             />
                         </div>
-                        <div className="form-group col-md-6">
-                            <label htmlFor="">Status</label>
-                            <input
-                                className="form-control"
-                                name="status"
-                                type="text"
-                                value={plItem.status}
-                                readOnly
-                            />
-                        </div>
-                    </div>
-                    <div className="form-row">
                         <div className="form-group col-md-6">
                             <label htmlFor="">Type</label>
                             <input
                                 className="form-control"
                                 name="type"
                                 value={plItem.type}
+                                onChange={this.onChangeStatus}
                                 type="text"
                                 readOnly
                             />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
+                            <label htmlFor="">Status</label>
+                            {plItem.status == "Initiated" ?
+                                <select
+                                className="form-control"
+                                name="status"
+                                type="text"
+                                onChange={this.onChangeStatus}
+                                value={plItem.status}
+                                required>
+                                    <option value="Initiated">Initiated</option>
+                                    <option value="WIP">Work in Progress</option>
+                                    <option value="RFR">Ready for Review</option>
+                                    <option value="RTC">Ready to Close</option>
+                                    <option value="WNA">Work not Accepted</option>
+                                </select>
+                            : plItem.status == "WIP" ?
+                                <select
+                                className="form-control"
+                                name="status"
+                                type="text"
+                                onChange={this.onChangeStatus}
+                                value={plItem.status}
+                                required>
+                                    <option value="WIP">Work in Progress</option>
+                                    <option value="RFR">Ready for Review</option>
+                                    <option value="RTC">Ready to Close</option>
+                                    <option value="WNA">Work not Accepted</option>
+                                </select>
+                            : plItem.status == "RFR" ?
+                                <select
+                                className="form-control"
+                                name="status"
+                                type="text"
+                                onChange={this.onChangeStatus}
+                                value={plItem.status}
+                                required>
+                                    <option value="RFR">Ready for Review</option>
+                                    <option value="RTC">Ready to Close</option>
+                                    <option value="WNA">Work not Accepted</option>
+                                </select>
+                            : plItem.status == "RTC" ?
+                                <select
+                                className="form-control"
+                                name="status"
+                                type="text"
+                                value={plItem.status}
+                                required>
+                                    <option value="RFR">Ready to Close</option>
+                                    <option value="WNA">Work not Accepted</option>
+                                </select>
+                            : 
+                                <select
+                                className="form-control"
+                                name="status"
+                                type="text"
+                                value={plItem.status}
+                                required>
+                                    <option value="Initiated">Initiated</option>
+                                    <option value="RFR">Work not Accepted</option>
+                                </select>
+                            }
                         </div>
                         <div className="form-group col-md-6">
                             <label htmlFor="">Location</label>
@@ -242,7 +345,7 @@ class PLIView extends Component {
                         </div>
                     </div>
                 </div>
-                {/* Delete modal Ends */}       
+                {/* Delete modal Ends */}
             </div>
         );
     }

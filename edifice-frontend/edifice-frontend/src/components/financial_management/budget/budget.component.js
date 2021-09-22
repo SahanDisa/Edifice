@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import CostCodeDataService from "./../../../services/costcode.service";
 import BudgetDataService from "./../../../services/budget.service";
 import DirectCostDataService from "./../../../services/directcost.service";
 import SovDataService from "./../../../services/sov.service";
@@ -30,6 +31,7 @@ export default class BudgetList extends Component {
       this.findByCostCode=this.findByCostCode.bind(this);
       this.handleClose=this.handleClose.bind(this);
       this.handleClick=this.handleClick.bind(this);
+      // this.myFunction=this.myFunction.bind(this);
       this.state = {
         id: this.props.match.params.id,
         budgets: [],
@@ -96,6 +98,29 @@ export default class BudgetList extends Component {
           console.log(e);
         });
     }
+
+    // myFunction() {
+    //   // Declare variables
+    
+    //   const input = document.getElementById("myInput");
+    //   const filter = input.value.toUpperCase();
+    //   const table = document.getElementById("myTable");
+    //   const tr = table.getElementsByTagName("tr");
+    //   const i = 0;
+    
+    //   // Loop through all table rows, and hide those who don't match the search query
+    //   for (i = 0; i < tr.length; i++) {
+    //     const td = tr[i].getElementsByTagName("td")[0];
+    //     if (td) {
+    //       const txtValue = td.textContent || td.innerText;
+    //       if (txtValue.toUpperCase().indexOf(filter) > -1) {
+    //         tr[i].style.display = "";
+    //       } else {
+    //         tr[i].style.display = "none";
+    //       }
+    //     }
+    //   }
+    // }
 
     calculateTotalDirectCosts(id){
  
@@ -310,9 +335,11 @@ Financial Management Home
           </div>   
           <hr /> 
           <br />
+          {/* <input type="text" id="myInput" onkeyup={this.myFunction()} placeholder="Search .." /> */}
+          
             
               {/* Drawing List */}
-              <Table  className="table table-striped table-bordered" responsive>
+              <Table  id="myTable" className="table table-striped table-bordered" responsive>
                 <thead className="Table-header">
                   <tr>
                   <th>#</th>
@@ -340,12 +367,12 @@ Financial Management Home
 
 <td>{budget.id}</td>
                     <td>{budget.costCode}</td>
-                    <td>{(budget.btotal !== null) ? budget.btotal:"0.00"}</td>
+                    <td>{(budget.estimatedBudget !== null) ? budget.estimatedBudget:"0.00"}</td>
                     <td>{(budget.dtotal !== null ) ? budget.dtotal:"0.00" }</td>
                     <td>{(budget.stotal !== null ) ? budget.stotal:"0.00" }</td>
                     <td>{(Number(budget.stotal)+Number(budget.dtotal) !== null) ? parseFloat(Number(budget.stotal)+Number(budget.dtotal)).toFixed(2) : "0.00" }</td>
-                    <td>{( Number(Number(budget.stotal)+Number(budget.dtotal))-Number(budget.btotal) !== null) ?  parseFloat(Number(Number(budget.stotal)+Number(budget.dtotal))-Number(budget.btotal)).toFixed(2) : "0.00"}</td> 
-                    <td>{(Number(budget.stotal)+Number(budget.dtotal)) > budget.btotal ? <ArrowUpwardIcon style={{ color: "red" }}/>:(Number(budget.stotal)+Number(budget.dtotal)) < budget.btotal ? <ArrowDownwardIcon style={{ color: "green" }}/>:<CheckIcon/>}</td>    
+                    <td>{( Number(Number(budget.stotal)+Number(budget.dtotal))-Number(budget.estimatedBudget) !== null) ?  parseFloat(Number(Number(budget.stotal)+Number(budget.dtotal))-Number(budget.estimatedBudget)).toFixed(2) : "0.00"}</td> 
+                    <td>{(Number(budget.stotal)+Number(budget.dtotal)) > budget.estimatedBudget ? <ArrowUpwardIcon style={{ color: "red" }}/>:(Number(budget.stotal)+Number(budget.dtotal)) < budget.estimatedBudget ? <ArrowDownwardIcon style={{ color: "green" }}/>:<CheckIcon/>}</td>    
                     </tr>
                     ))}
                 </tbody>

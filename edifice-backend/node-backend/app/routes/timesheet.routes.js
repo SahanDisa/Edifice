@@ -8,10 +8,10 @@ module.exports = app => {
 
   // Retrieve all timesheets
   router.get("/list/:id", timesheets.findAll);
-  /* 
-     // Retrieve all published workers
-     router.get("/published", worker.findAllPublished);
-   */
+
+  // Retrieve all timesheets for a date
+  router.get("/", timesheets.findAllDate);
+
   // Retrieve a single timesheet with id
   router.get("/:id", timesheets.findOne);
 

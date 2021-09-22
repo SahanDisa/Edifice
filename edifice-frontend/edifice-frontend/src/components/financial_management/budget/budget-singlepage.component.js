@@ -92,6 +92,7 @@ const Budget = props => {
       date: currentBudget.date,
       estimatedBudget: currentBudget.estimatedBudget,
     };
+    if(currentBudget.description !== ""){
     BudgetDataService.update(currentBudget.id, data)
       .then(response => {
         setSubmitted(true);
@@ -103,8 +104,7 @@ const Budget = props => {
       .catch(e => {
         console.log(e);
       });
-   
-
+    }
     
   };
 

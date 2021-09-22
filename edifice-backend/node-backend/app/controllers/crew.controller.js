@@ -33,36 +33,56 @@ exports.create = (req, res) => {
 
 // Retrieve all crews from a given project
 exports.findAll = (req, res) => {
-    const id = req.params.id;
-      
-    Crew.findAll({ where: {
-      projectId: id
-    }})
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving data"
-        });
-      });
-};
-/*
-// Find a single crew with an id
-exports.findOne = (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
 
-    crew.findByPk(id)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error retrieving crew with id=" + id
-        });
-      });  
-};*/
+  Crew.findAll({
+    where: {
+      projectId: id
+    }
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving data"
+      });
+    });
+};
+
+exports.findAllName = (req, res) => {
+  const name = req.query.name;
+  var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+
+  Crew.findAll({ where: condition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving projects."
+      });
+    });
+};
+
+exports.findValidName = (req, res) => {
+  const name = req.query.name;
+  var condition = name ? { name: { [Op.like]: name } } : null;
+
+  Crew.findAll({ where: condition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving projects."
+      });
+    });
+};
+
 /*
 // Update a crew by the id in the request
 exports.update = (req, res) => {

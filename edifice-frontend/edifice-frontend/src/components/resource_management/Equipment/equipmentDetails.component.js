@@ -127,30 +127,33 @@ class EquipDetails extends Component {
 
     EquipmentDataService.update(this.props.match.params.code, data)
       .then(response => {
-        cogoToast.success("Equipment updated successfully!");
         this.setState(prevState => ({
           currentEquipment: {
             ...prevState.currentEquipment,
           }
         }));
-
         console.log(response.data);
 
       })
       .catch(e => {
         console.log(e);
       });
+    cogoToast.success("Equipment updated successfully!");
+
+
   }
   deleteEquipment() {
     EquipmentDataService.delete(this.props.match.params.code)
       .then(response => {
         console.log(response.data);
         //this.props.history.push('/equipments');
-        cogoToast.success("Equipment deleted successfully!");
+
       })
       .catch(e => {
         console.log(e);
+
       });
+    cogoToast.success("Equipment deleted successfully!");
   }
 
   render() {

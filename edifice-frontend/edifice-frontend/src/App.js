@@ -11,7 +11,6 @@ import mainIcon from "././assets/Edifice.png";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import AuthService from "./services/auth.service";
 import ProjectUserService from "./services/projectuser.service";
-import cogoToast from 'cogo-toast';
 
 import Login from "./components/login.component";
 import ForgetPassword from "./components/forgetpassword.component";
@@ -71,6 +70,9 @@ import Vendors from "./components/core_tools/edifice-directory/vendors.component
 import Employee from "./components/core_tools/edifice-directory/employees.component";
 import AddVendor from "./components/core_tools/edifice-directory/add-vendor.component";
 import EditVendor from "./components/core_tools/edifice-directory/edit-vendor.component";
+import Subcontractors from "./components/core_tools/edifice-directory/subcontractors.component";
+import AddSub from "./components/core_tools/edifice-directory/add-sub.component";
+import EditSub from "./components/core_tools/edifice-directory/edit-sub.component";
 
 import TaskConfiguration from "./components/core_tools/tasks/configuration.component";
 import ManageTasks from "./components/core_tools/tasks/manage.component";
@@ -105,11 +107,12 @@ import ViewRFI from "./components/project_management/rfi/view.component";
 
 import actionplanHome from "./components/project_management/actionplan/actionplan.component";
 import AddActionPlan from "./components/project_management/actionplan/addactionplan.component";
-import ViewAPType from "./components/project_management/actionplan/view-actionplantype.component";
+import ViewAPType from "./components/project_management/actionplan/viewactionplantype.component";
 import ActionPlanSinglePage from "./components/project_management/actionplan/actionplansinglepage.component";
 import AddAPItem from "./components/project_management/actionplan/addapitem.component";
 import AddAPSection from "./components/project_management/actionplan/addapsection.component";
 import ViewActionPlan from "./components/project_management/actionplan/viewactionplan.component";
+import ViewAPSection from "./components/project_management/actionplan/viewactionplansection.component";
 
 import DailyLogHome from "./components/project_management/dailylog/dailylog.component";
 import CreateDCL from "./components/project_management/dailylog/createcalllog.component";
@@ -120,11 +123,14 @@ import ViewDCL from "./components/project_management/dailylog/viewcalllog.compon
 import ViewDAL from "./components/project_management/dailylog/viewaccidentlog.component";
 import ViewDGL from "./components/project_management/dailylog/viewgenerallog.component";
 import ViewDWL from "./components/project_management/dailylog/viewweatherlog.component";
+import ViewDCLall from "./components/project_management/dailylog/viewallcall.component";
+import ViewDALall from "./components/project_management/dailylog/viewallaccident.component";
+import ViewDGLall from "./components/project_management/dailylog/viewallgeneral.component";
+import ViewDWLall from "./components/project_management/dailylog/viewallweather.component";
 
 import punchlistHome from "./components/project_management/punchlist/punchlist.component";
 import CreatePL from "./components/project_management/punchlist/create-basic.component";
 import CreatePhotos from "./components/project_management/punchlist/create-addphoto.component";
-import CreateAssignees from "./components/project_management/punchlist/create-addassignee.component";
 import PLTView from "./components/project_management/punchlist/viewtype.component";
 import PLIView from "./components/project_management/punchlist/view.component";
 
@@ -138,6 +144,7 @@ import EquipDetails from "./components/resource_management/Equipment/equipmentDe
 import ViewTimesheet from "./components/resource_management/Timesheet/view-timesheet.component";
 import AddWorkers from "./components/resource_management/Timesheet/add-workers.component";
 import AddWorker from "./components/resource_management/Crew/add-worker.component";
+import EquipView from "./components/resource_management/Equipment/equipmentView.component";
 
 import FinancialManagementHome from "./components/financial_management/financial-manage-home.component";
 import AddBudget from "./components/financial_management/budget/addbudget.component";
@@ -163,6 +170,7 @@ import Report from "./components/report/report.component";
 import UploadExcel from "./components/financial_management/direct-costs/excelupload.component";
 import EstimateBudget from "./components/financial_management/budget/budgetestimates.component";
 import BUploadExcel from "./components/financial_management/budget/bexcelupload.component";
+import CommitmentCompletedHome from "./components/financial_management/commitments/commitmentsCompleted.component";
 
 class App extends Component {
   constructor(props) {
@@ -194,36 +202,36 @@ class App extends Component {
       });
       this.retriveUserProjects(user.id);
     }
-    
+
   }
-  retriveUserProjects(id){
+  retriveUserProjects(id) {
     ProjectUserService.getProjectUserProjectDetails(id)
-    .then(response => {
-      this.setState({
-        uprojects: response.data,
-        projectLength: response.data.length,
+      .then(response => {
+        this.setState({
+          uprojects: response.data,
+          projectLength: response.data.length,
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
       });
-      console.log(response.data);
-    })
-    .catch(e => {
-      console.log(e);
-    });
   }
-  shiftProject(e){
+  shiftProject(e) {
     //console.log("Project Id selected is : "+e.target.value);
     // cogoToast.success("Project Changed Successfully!");
   }
-  onChnagePid(e){
+  onChnagePid(e) {
     this.setState({
       projectId: e.target.value
     });
-  } 
+  }
   logOut() {
     AuthService.logout();
   }
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard,projectId,uprojects,projectLength } = this.state;
+    const { currentUser, showModeratorBoard, showAdminBoard, projectId, uprojects, projectLength } = this.state;
 
     return (
       <div>
@@ -251,51 +259,51 @@ class App extends Component {
           {currentUser ? (
             <div className="navbar-nav ml-auto">
               {projectLength > 1 &&
-              <li className="nav-item">
-                <select 
-                  className="form-control"
-                  value={this.state.projectId}
-                  onChange={this.onChnagePid}
-                  style={{'font-weight': 'bold'}}
-                >
-                {uprojects &&
-                  uprojects.map((project, index) => (
-                    <option
-                      style={{'color': 'black','font-weight': 'bold'}}
-                      key={index}
-                      value={project.projectId}
-                      onChange={this.onChangePid}
-                    >
-                    {project.title}
-                    </option> 
-                  ))}
-                </select>
-              </li>
+                <li className="nav-item">
+                  <select
+                    className="form-control"
+                    value={this.state.projectId}
+                    onChange={this.onChnagePid}
+                    style={{ 'font-weight': 'bold' }}
+                  >
+                    {uprojects &&
+                      uprojects.map((project, index) => (
+                        <option
+                          style={{ 'color': 'black', 'font-weight': 'bold' }}
+                          key={index}
+                          value={project.projectId}
+                          onChange={this.onChangePid}
+                        >
+                          {project.title}
+                        </option>
+                      ))}
+                  </select>
+                </li>
               }
               {projectLength > 1 &&
-              <li className="nav-item">
-              <a href={"/projectmanagementhome/"+projectId} style={{'text-decoration':'none'}} className="nav-link mb"
-              onClick={this.shiftProject}>
-                <ArrowForwardIosIcon style={{'fontSize': '25px'}}/>
-              </a>
-              </li>
+                <li className="nav-item">
+                  <a href={"/projectmanagementhome/" + projectId} style={{ 'text-decoration': 'none' }} className="nav-link mb"
+                    onClick={this.shiftProject}>
+                    <ArrowForwardIosIcon style={{ 'fontSize': '25px' }} />
+                  </a>
+                </li>
               }
               {projectLength == 1 &&
-              <li className="nav-item">
-              {uprojects &&
-                  uprojects.map((project, index) => (
-                    <Link className="nav-link"
-                      style={{'color': 'white','font-weight': 'bold'}}
-                      key={index}
-                      value={project.projectId}
-                      onChange={this.onChangePid}
-                      to={"/projectmanagementhome/"+project.projectId}
-                    >
-                    <h6>{project.title}</h6>
-                    </Link> 
-              ))}
-              </li>
-              }  
+                <li className="nav-item">
+                  {uprojects &&
+                    uprojects.map((project, index) => (
+                      <Link className="nav-link"
+                        style={{ 'color': 'white', 'font-weight': 'bold' }}
+                        key={index}
+                        value={project.projectId}
+                        onChange={this.onChangePid}
+                        to={"/projectmanagementhome/" + project.projectId}
+                      >
+                        <h6>{project.title}</h6>
+                      </Link>
+                    ))}
+                </li>
+              }
               <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
                   <h6>Profile</h6>
@@ -329,11 +337,11 @@ class App extends Component {
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/logincode" component={ForgetPassword}/>
+            <Route exact path="/logincode" component={ForgetPassword} />
             <Route path="/camera" component={CameraSinglePage} />
-            <Route component={ErrorPage}/>
-          </Switch>  
 
+            <Route component={ErrorPage}/>
+          </Switch>
         )}
         {currentUser && (
 
@@ -347,7 +355,7 @@ class App extends Component {
               <Route exact path="/profile" component={Profile} />
               <Route path="/projectmanagement" component={BoardUser} />
               <Route path="/adddepartment/:id" component={AddDepartment} />
-              <Route path={"/addcustomdepartment/:id"} component={AddCustomDepartment}/>
+              <Route path={"/addcustomdepartment/:id"} component={AddCustomDepartment} />
               <Route path="/addmilestone/:id" component={AddMilestone} />
               <Route path="/addmilestoneproject/:id" component={AddMilestoneGeneral} />
               <Route path="/assignuser/:id" component={AssignUserProject} />
@@ -389,14 +397,14 @@ class App extends Component {
               <Route path="/addactionplanitem/:id/:apid" component={AddAPItem} />
               <Route path="/addactionplansection/:id/:apid" component={AddAPSection} />
               <Route path="/viewactionplantype/:id/:apid" component={ViewAPType} />
+              <Route path="/viewactionplansection/:id/:apid" component={ViewAPSection} />
               <Route exact path="/viewactionplan/:id/:apid" component={ViewActionPlan} />
               {/* Punch List */}
               <Route path="/punchlist/:id" component={punchlistHome} />
               <Route path="/managepunchlist/createaddphoto/:id/plid" component={CreatePhotos} />
-              <Route path="/managepunchlist/createaddassignee/:id/plid" component={CreateAssignees} />
               <Route path="/managepunchlist/create/:id" component={CreatePL} />
               <Route path="/viewtype/:pltid" component={PLTView} />
-              <Route path="/view/:pliid" component={PLIView} />
+              <Route path="/view/:id/:pliid" component={PLIView} />
               {/* Daily Logs */}
               <Route path="/dailylogs/:id" component={DailyLogHome} />
               <Route path="/createaccidentlog/:id" component={CreateDAL} />
@@ -407,6 +415,11 @@ class App extends Component {
               <Route path="/viewcalllog/:id/:dlid" component={ViewDCL} />
               <Route path="/viewgenerallog/:id/:dlid" component={ViewDGL} />
               <Route path="/viewweatherlog/:id/:dlid" component={ViewDWL} />
+              <Route path="/viewaccidentall/:id" component={ViewDALall} />
+              <Route path="/viewcallall/:id" component={ViewDCLall} />
+              <Route path="/viewgeneralall/:id" component={ViewDGLall} />
+              <Route path="/viewweatherall/:id" component={ViewDWLall} />
+              
 
               <Route path="/addUser" component={AddEmployee} />
               <Route path="/editUser/:id" component={EditUser} />
@@ -414,6 +427,9 @@ class App extends Component {
               <Route path="/employees" component={Employee} />
               <Route path="/addVendor" component={AddVendor} />
               <Route path="/editVendor/:id" component={EditVendor} />
+              <Route path="/subcontractors" component={Subcontractors} />
+              <Route path="/addSub" component={AddSub} />
+              <Route path="/editSub/:id" component={EditSub} />
               {/* Document */}
               <Route path="/directory/:id" component={AddDirectory} />
               <Route path="/document/:id" component={DocumentHome} />
@@ -435,7 +451,7 @@ class App extends Component {
               <Route path="/photos/:id" component={PhotosHome} />
               <Route path="/addphoto/:id" component={AddPhoto} />
               <Route path="/uploadphoto/:name" component={UploadPhotos} />
-              <Route path="/camera/:id" component={CameraSinglePage}/>
+              <Route path="/camera/:id" component={CameraSinglePage} />
               <Route path="/viewalbum/:id" component={ViewSingleAlbum} />
               <Route path="/addalbum/:id" component={AddAlbum} />
               <Route exact path={"/updatealbum/:pid/:id"} component={UpdateAlbum} />
@@ -470,6 +486,8 @@ class App extends Component {
               {/* {/equipment/} */}
               <Route path="/equipments" component={Equipments} />
               <Route path="/equipDetails/:code" component={EquipDetails} />
+              <Route path="/equipView/:id" component={EquipView} />
+
               {/* {/<Route path="/equipDetails/:id/:code" component={EquipDetails} />/} */}
 
               {/*financial management */}
@@ -495,6 +513,7 @@ class App extends Component {
               <Route path="/excelupload/:id" component={UploadExcel} />
               <Route path="/budgetestimates/:id" component={EstimateBudget} />
               <Route path="/bexcelupload/:id" component={BUploadExcel} />
+              <Route path="/commitmentCompleted/:id" component={CommitmentCompletedHome} />
 
               {/*Report and PDF */}
               <Route path="/report/" component={Report} />
@@ -503,9 +522,9 @@ class App extends Component {
           </div>
         )}
         <div className="mt-50">
-          <div style={{'height': '150px'}}></div>
+          <div style={{ 'height': '150px' }}></div>
           <center>
-          <h6>Edifice 2021 © All rights reserved - G42</h6>
+            <h6>Edifice 2021 © All rights reserved - G42</h6>
           </center>
         </div>
       </div>

@@ -5,14 +5,11 @@ class CrewDataService {
     console.log("id")
     return http.get(`/crews/list/${id}`);
   }
-  /*
-   getAll() {
-     return http.get(`/crews/list/`);
-   }
-    get(id) {
-     return http.get(`/projects/${id}`);
-   }
-   */
+
+  findValid(title) {
+    return http.get(`/crews/valid?name=${title}`);
+  }
+
   create(data) {
     return http.post("/crews", data);
 
@@ -31,7 +28,7 @@ class CrewDataService {
     }*/
 
   findByTitle(title) {
-    return http.get(`/Crews?name=${title}`);
+    return http.get(`/crews?name=${title}`);
   }
 }
 
