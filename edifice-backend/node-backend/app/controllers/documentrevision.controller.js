@@ -15,7 +15,7 @@ exports.create = (req, res) => {
   const documentrevision = {
     username: req.body.username,
     description: req.body.description,
-    documenId: req.body.documenId,
+    documentId: req.body.documentId,
   };
 
   // Save DocumentRevision in the database
@@ -36,7 +36,7 @@ exports.findAll = (req, res) => {
   const id = req.params.id;
 
   DocumentRevision.findAll({ where: {
-    documenId: id
+    documentId: id
   }})
     .then(data => {
       res.send(data);
