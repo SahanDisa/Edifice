@@ -70,6 +70,7 @@ import Vendors from "./components/core_tools/edifice-directory/vendors.component
 import Employee from "./components/core_tools/edifice-directory/employees.component";
 import AddVendor from "./components/core_tools/edifice-directory/add-vendor.component";
 import EditVendor from "./components/core_tools/edifice-directory/edit-vendor.component";
+import Subcontractors from "./components/core_tools/edifice-directory/subcontractors.component";
 
 import TaskConfiguration from "./components/core_tools/tasks/configuration.component";
 import ManageTasks from "./components/core_tools/tasks/manage.component";
@@ -166,6 +167,7 @@ import Report from "./components/report/report.component";
 import UploadExcel from "./components/financial_management/direct-costs/excelupload.component";
 import EstimateBudget from "./components/financial_management/budget/budgetestimates.component";
 import BUploadExcel from "./components/financial_management/budget/bexcelupload.component";
+import CommitmentCompletedHome from "./components/financial_management/commitments/commitmentsCompleted.component";
 
 class App extends Component {
   constructor(props) {
@@ -421,6 +423,7 @@ class App extends Component {
               <Route path="/employees" component={Employee} />
               <Route path="/addVendor" component={AddVendor} />
               <Route path="/editVendor/:id" component={EditVendor} />
+              <Route path="/subcontractors" component={Subcontractors} />
               {/* Document */}
               <Route path="/directory/:id" component={AddDirectory} />
               <Route path="/document/:id" component={DocumentHome} />
@@ -489,7 +492,7 @@ class App extends Component {
               {/* {/<Route path="/viewdrawing/:id" component={ViewSingleDrawing} />/} */}
               <Route path="/viewcommitment/:id" component={ViewSingleCommitment} />
               <Route exact path="/addsov/:pid/:id" component={AddSov} />
-              <Route path="/viewdirectcost/:id" component={ViewSingleDirectCost} />
+              <Route path="/viewdirectcost/:pid/:id" component={ViewSingleDirectCost} />
               {/* <Route path="/viewsov/:id" component={ViewSingleSov} />*/}
               <Route exact path="/viewsov/:pid/:id" component={SovHome} />
 
@@ -497,11 +500,12 @@ class App extends Component {
               <Route path="/addpayment/:id" component={AddPayment} />
               <Route path="/viewpayment/:id" component={PaymentHome} />
               <Route path="/editcommitment/:id" component={EditSingleCommitment} />
-              <Route path="/viewsinglesov/:id" component={ViewSingleSov} />
+              <Route path="/viewsinglesov/:pid/:id" component={ViewSingleSov} />
               <Route path="/viewbudget/:id" component={ViewSingleBudget} />
               <Route path="/excelupload/:id" component={UploadExcel} />
               <Route path="/budgetestimates/:id" component={EstimateBudget} />
               <Route path="/bexcelupload/:id" component={BUploadExcel} />
+              <Route path="/commitmentCompleted/:id" component={CommitmentCompletedHome} />
 
               {/*Report and PDF */}
               <Route path="/report/" component={Report} />

@@ -46,6 +46,7 @@ db.photo = require("./photo.model.js")(sequelize, Sequelize);
 // Document component Model Classes
 db.directory = require("./directory.model")(sequelize, Sequelize);
 db.document = require("./document.model")(sequelize, Sequelize);
+db.documentrevision = require("./documentrevision.model")(sequelize, Sequelize);
 // Meeting component Model Classes
 db.meetings = require("./project-management/meeting.model")(sequelize, Sequelize);
 db.meetingcategory = require("./project-management/meetingcategory.model")(sequelize, Sequelize);
@@ -212,6 +213,15 @@ db.projects.hasMany(db.document, {
 db.document.belongsTo(db.projects, {
   foreignKey: "projectId",
   as: "project",
+});
+
+// One drawing has many revision comments add by the users
+db.document.hasMany(db.documentrevision, {
+  as: "documentrevisions"
+});
+db.documentrevision.belongsTo(db.document, {
+  foreignKey: "documentId",
+  as: "docuemnts",
 });
 
 //One project has many biddings

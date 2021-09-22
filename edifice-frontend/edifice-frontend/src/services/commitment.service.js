@@ -25,8 +25,8 @@ class CommitmentDataService {
   //   return http.get(`/projects/commitment/list/${id}/${contractCompany}`);
   // }
 
-  findByTitle(id,title) {
-    return http.get(`/projects/commitment/list/${id}/${title}`);
+  findByTitle(id,title,status) {
+    return http.get(`/projects/commitment/list/${id}/${title}/${status}}`);
   }
 
   findByStatusOngoing(id,status) {

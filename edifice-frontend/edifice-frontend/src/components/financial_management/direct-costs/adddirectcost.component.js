@@ -33,7 +33,7 @@ const AddDirectCost = (props) => {
     .required('Paid Date is required')
     .min(
       Yup.ref('receivedDate'),
-      "Paid Date can't be before Received Date"
+      "Paid Date can't be smaller than Received Date"
     ),
     amount: Yup.number()
     .required('Amount is required')
@@ -135,7 +135,7 @@ const AddDirectCost = (props) => {
       amount: directcost.amount,
       projectId: directcost.projectId,
     };
-
+if(directcost.receivedDate <= directcost.paidDate){
     DirectCostDataService.create(data)
       .then(response => {
         setDirectCost({
@@ -157,6 +157,7 @@ const AddDirectCost = (props) => {
       .catch(e => {
         console.log(e);
       });
+    }
   };
 
   

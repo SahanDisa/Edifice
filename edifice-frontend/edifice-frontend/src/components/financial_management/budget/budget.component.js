@@ -30,6 +30,7 @@ export default class BudgetList extends Component {
       this.findByCostCode=this.findByCostCode.bind(this);
       this.handleClose=this.handleClose.bind(this);
       this.handleClick=this.handleClick.bind(this);
+      // this.myFunction=this.myFunction.bind(this);
       this.state = {
         id: this.props.match.params.id,
         budgets: [],
@@ -96,6 +97,29 @@ export default class BudgetList extends Component {
           console.log(e);
         });
     }
+
+    // myFunction() {
+    //   // Declare variables
+    
+    //   const input = document.getElementById("myInput");
+    //   const filter = input.value.toUpperCase();
+    //   const table = document.getElementById("myTable");
+    //   const tr = table.getElementsByTagName("tr");
+    //   const i = 0;
+    
+    //   // Loop through all table rows, and hide those who don't match the search query
+    //   for (i = 0; i < tr.length; i++) {
+    //     const td = tr[i].getElementsByTagName("td")[0];
+    //     if (td) {
+    //       const txtValue = td.textContent || td.innerText;
+    //       if (txtValue.toUpperCase().indexOf(filter) > -1) {
+    //         tr[i].style.display = "";
+    //       } else {
+    //         tr[i].style.display = "none";
+    //       }
+    //     }
+    //   }
+    // }
 
     calculateTotalDirectCosts(id){
  
@@ -310,9 +334,11 @@ Financial Management Home
           </div>   
           <hr /> 
           <br />
+          {/* <input type="text" id="myInput" onkeyup={this.myFunction()} placeholder="Search .." /> */}
+          
             
               {/* Drawing List */}
-              <Table  className="table table-striped table-bordered" responsive>
+              <Table  id="myTable" className="table table-striped table-bordered" responsive>
                 <thead className="Table-header">
                   <tr>
                   <th>#</th>

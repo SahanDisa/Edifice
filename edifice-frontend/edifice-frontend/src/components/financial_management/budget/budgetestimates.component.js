@@ -10,7 +10,8 @@ import AddIcon from '@material-ui/icons/Add';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import cogoToast from 'cogo-toast';
 import CostCodeDataService from "./../../../services/costcode.service";
-
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import CheckIcon from '@material-ui/icons/Check';
 
 const BudgetEstimates = (props) => {
   const {id}= useParams();
@@ -19,10 +20,14 @@ const BudgetEstimates = (props) => {
   const budgetsRef = useRef();
   budgetsRef.current = budgets;
   const [costcodes, setCostCodes] = useState([]);
+  const [costCodesLength, setCostCodesLength] = useState([]);
+  const [budgetsLength, setBudgetsLength] = useState([]);
+const [budgetTotal, setBudgetTotal]= useState("");
 
   useEffect(() => {
     retrieveBudgets();    
     retrieveCostCodes(); 
+    calculateTotalEstimatedBudget();
 
   }, []);
 
@@ -33,12 +38,27 @@ const BudgetEstimates = (props) => {
     CostCodeDataService.getAll(id)//passing project id as id
       .then((response) => {
         setCostCodes(response.data);
+        setCostCodesLength(response.data.length);
       })
       .catch((e) => {
         console.log(e);
       });
   };
 
+  const calculateTotalEstimatedBudget=()=>{
+   
+    BudgetDataService.getTotalBudget(id)
+    .then((response) => {
+  
+        setBudgetTotal(response.data)
+  
+      console.log(response.data);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  
+  };
 
 
   
@@ -52,6 +72,7 @@ const BudgetEstimates = (props) => {
     BudgetDataService.getAll(id)//passing project id as id
       .then((response) => {
         setBudgets(response.data);
+        setBudgetsLength(response.data.length);
       })
       .catch((e) => {
         console.log(e);
@@ -206,7 +227,23 @@ updatePublished(rowIdx)
               </Link>
             </Breadcrumbs>
                 <hr /><br />
-                
+                <div className="row">
+                <div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2" >
+<div className="card card-hover shadow-sm" style={{alignItems: "center"}} ><br />
+  <h3 className="h6 nav-heading-title mb-0 card-text-edifice"><AttachMoneyIcon/><b> {costCodesLength-budgetsLength}</b>&nbsp;Estimates Remaining.</h3>
+<br />
+</div></div>
+<div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2" >
+<div className="card card-hover shadow-sm" style={{alignItems: "center"}} ><br />
+  <h3 className="h6 nav-heading-title mb-0 card-text-edifice"><CheckIcon/><b> {budgetsLength}</b>&nbsp;Estimates Done.</h3>
+<br />
+</div></div>
+<div className="col-lg-4 col-sm-6 mb-grid-gutter pb-2" >
+<div className="card card-hover shadow-sm" style={{alignItems: "center"}} ><br />
+  <h3 className="h6 nav-heading-title mb-0 card-text-edifice">Total (Rs.) :&nbsp;<b> {parseFloat(budgetTotal).toFixed(2)}</b></h3>
+<br />
+</div></div>
+</div>           
                <div className="form-row mt-3">
             <div className="col-md-12 text-right">
             <Link className="btn btn-primary mr-2" to={"/addbudget/"+id}>{/*check this again*/}

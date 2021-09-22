@@ -25,7 +25,7 @@ class SubDataService {
     return http.get(`/subcontractor?name=${companyName}`);
   }
 
-  findlastVendor(){
+  findlastSub(){
     return http.get(`/subcontractor/app/last`);
   }
 

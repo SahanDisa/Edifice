@@ -28,7 +28,7 @@ module.exports = app => {
     router.delete("/", employee.deleteAll);
 
     // Find Last employee
-    //router.get("/app/last/",employee.findLastOne);
+    router.get("/app/last/",employee.findLastOne);
   
     app.use('/api/employee', router);
   };
