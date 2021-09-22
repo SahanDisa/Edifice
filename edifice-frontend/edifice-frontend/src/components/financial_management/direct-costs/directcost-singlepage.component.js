@@ -142,7 +142,7 @@ const [message, setMessage] = useState("");
 
 
   const updateDirectCost = () => {
-
+    if(currentDirectCost.receivedDate <= currentDirectCost.paidDate && currentDirectCost.description !== "" ){
     DirectCostDataService.update(currentDirectCost.id, currentDirectCost)
       .then(response => {
         console.log(response.data);
@@ -153,6 +153,7 @@ const [message, setMessage] = useState("");
       .catch(e => {
         console.log(e);
       });
+    }
   };
 
   const viewDirectCost = () => {

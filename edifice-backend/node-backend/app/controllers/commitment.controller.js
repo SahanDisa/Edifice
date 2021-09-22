@@ -156,13 +156,15 @@ exports.findByTitle= (req, res) => {
   const id = req.params.id;
   //const costCode = req.query.costCode;
   const title = req.params.title;
+  const status = req.params.status;
     //var condition = costCode ? { costCode: { [Op.like]: `%${costCode}%` } } : null;
 
   Commitment.findAll({ where: {
     projectId: id,
     //condition:condition
    title : title,
-   published:true
+   published:true,
+   status : status
   }})
     .then(data => {
       res.send(data);
