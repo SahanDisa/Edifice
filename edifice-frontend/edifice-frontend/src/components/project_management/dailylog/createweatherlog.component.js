@@ -116,6 +116,8 @@ class CreateDWL extends Component {
                                 name="time"
                                 type="time"
                                 value={this.state.time}
+                                min="07:00"
+                                max="22:00"
                                 onChange={this.onChangeTime}
                                 required
                             />

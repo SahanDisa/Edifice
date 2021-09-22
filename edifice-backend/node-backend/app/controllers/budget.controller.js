@@ -194,7 +194,7 @@ exports.getBudgetOverview = (req,res)=>{
 
   //db.budgets.projectId  = req.params.id;
   
-  db.sequelize.query('SELECT budget.id,budget.costCode, SUM(budget.estimatedBudget) as btotal,SUM(directcost.amount) as dtotal,  SUM(sov.amount) as stotal FROM budget LEFT JOIN directcost ON directcost.costCode=budget.costCode AND directcost.published=:published LEFT JOIN sov   ON sov.costCode=budget.costCode AND sov.published=:published WHERE budget.projectId=:id AND budget.published=:published GROUP BY budget.costCode',
+  db.sequelize.query('SELECT budget.id,budget.costCode, budget.estimatedBudget,SUM(directcost.amount) as dtotal,  SUM(sov.amount) as stotal FROM budget LEFT JOIN directcost ON directcost.costCode=budget.costCode AND directcost.published=:published LEFT JOIN sov   ON sov.costCode=budget.costCode AND sov.published=:published WHERE budget.projectId=:id AND budget.published=:published GROUP BY budget.costCode',
    {  replacements: { id: req.params.id,published:true },type: db.sequelize.QueryTypes.SELECT})
   .then(data => {
       res.send(data);

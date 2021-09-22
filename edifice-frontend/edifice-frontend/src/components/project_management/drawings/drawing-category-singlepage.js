@@ -19,7 +19,7 @@ export default class ViewSingleDrawingCategory extends Component {
         drawings: [],
         title: "",
         description: "", 
-        projectId: "",
+        projectId: this.props.match.params.pid,
         currentUser: AuthService.getCurrentUser(),
         showEngineerBoard: false,
         showManagerBoard: false,
@@ -72,7 +72,7 @@ export default class ViewSingleDrawingCategory extends Component {
         const { id,title,description,drawings,currentIndex,showManagerBoard,projectId,cat } = this.state;
         return (
             <div>
-              <h2>Drawing Category Single Page</h2>
+              <h2>{title} Drawings</h2>
               <Breadcrumbs aria-label="breadcrumb">
               <Link color="inherit" to="/home">
                 Home
@@ -80,7 +80,7 @@ export default class ViewSingleDrawingCategory extends Component {
               <Link color="inherit" to={"/projectmanagementhome/"+projectId}>
                 App Dashboard
               </Link>
-              <Link color="textPrimary" to={"/drawing/"+id} aria-current="page">
+              <Link color="textPrimary" to={"/drawing/"+projectId} aria-current="page">
                 Drawing Home
               </Link>
               <Link color="textPrimary" to={"/viewdrawingcategory/"+id+"/"+cat} aria-current="page">
@@ -98,13 +98,19 @@ export default class ViewSingleDrawingCategory extends Component {
                   <h6>🟡 : Pending</h6>
                   <h6>🟢 : Complete</h6>
                   </div>
-                  { showManagerBoard &&
                   <div className="col-3">
+                  { showManagerBoard &&
+                  <div>
                   <Link className="btn btn-primary" to={"/updatedrawingcategory/"+projectId+"/"+cat} style={{'text-decoration': 'none'}}>
                   ⚙️ Manage
                   </Link>
+                  <br/>
                   </div>
                   }
+                  <Link className="btn btn-primary mt-2" to={"/adddrawing/"+projectId} style={{'text-decoration': 'none'}}>
+                  Add Drawing
+                  </Link>
+                  </div>
                 </div>
               <hr></hr>
               
@@ -141,7 +147,7 @@ export default class ViewSingleDrawingCategory extends Component {
                     <td>{drawing.status == "Not Complete" ? "🔴 NC": drawing.status == "Pending" ? "🟡 Pending": "🟢 Complete"}</td>
                     <td>   
                         {/* Button Group */}
-                        <Link to={"/viewdrawing/"+drawing.id}>
+                        <Link to={"/viewdrawing/"+cat+"/"+drawing.id}>
                         <button className="btn btn-primary">View <VisibilityIcon/> </button>
                         </Link>
                         <Link to={"/updatedrawing/"+drawing.id+"/"+projectId}>

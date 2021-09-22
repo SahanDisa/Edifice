@@ -94,13 +94,18 @@ export default class ViewSingleAlbum extends Component {
                   <h6>Name : {title}</h6>
                   <h6>Description : {description}</h6>
                   </div>
-                  { showManagerBoard &&
                   <div className="col-3">
+                  { showManagerBoard &&
+                  <div>
                   <Link className="btn btn-primary" to={"/updatealbum/"+projectId+"/"+id} style={{'text-decoration': 'none'}}>
                   ⚙️ Manage
                   </Link>
                   </div>
                   }
+                  <Link className="btn btn-primary mt-2" to={"/addphoto/"+projectId} style={{'text-decoration': 'none'}}>
+                  Add a Photo
+                  </Link>
+                  </div>
               </div>
               <hr></hr>
               

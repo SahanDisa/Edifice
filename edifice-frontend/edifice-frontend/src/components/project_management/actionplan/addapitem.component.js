@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import ActionPlanDataService from "./../../../services/project_management/actionplan.service";
-import ActionPlanTypeDataService from "../../../services/project_management/actionplantype.service";
+import ActionPlanItemDataService from "./../../../services/project_management/actionplanitem.service";
+import ActionPlanSectionDataService from "./../../../services/project_management/actionplansection.service";
+import ProjectUserDataService from "../../../services/projectuser.service.js";
 import { Breadcrumbs } from "@material-ui/core";
+import cogoToast from 'cogo-toast';
 
 export default class AddAPItem extends Component {
   constructor(props) {
@@ -10,50 +12,78 @@ export default class AddAPItem extends Component {
         this.onChangeTitle = this.onChangeTitle.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeAssigner = this.onChangeAssigner.bind(this);
-        this.onChangeisCompleted = this.onChangeisCompleted.bind(this);
+        this.onChangeActionplansectionId = this.onChangeActionplansectionId.bind(this);
+        this.viewAPItem = this.viewAPItem.bind(this);
         this.saveAPitem = this.saveAPitem.bind(this);
 
         this.state = {
-        id: this.props.match.params.id,
-        apid: this.props.match.params.apid, 
-        title: "",
-        description: "",
-        assigner: "",
-        isCompleted: 0,
-        actionplanId: this.props.actionplanId,
-        
-        actionplantypes: [],
-        currentIndex: -1,
-        submitted: false,
+            projectId: this.props.match.params.id,
+            actionplanId: this.props.match.params.apid, 
+            title: "",
+            description: "",
+            assigner: "",
+            isCompleted: 0,
+            actionplansectionId: "",
+            
+            actionplansections: [],
+            users: [],
+            currentIndex: -1,
+            submitted: false,
         };
     }
+
+    componentDidMount() {
+        this.getActionPlanSections(this.props.match.params.apid);
+        this.retrieveUsers(this.props.match.params.id);
+    }
+    
+    getActionPlanSections(id){
+        ActionPlanSectionDataService.getAll(id)
+        .then(response => {
+            this.setState({
+                actionplansections: response.data
+            });
+            console.log(response.data);
+        })
+        .catch(e => {
+            console.log(e);
+        });
+    }
+
+    retrieveUsers(id){
+        ProjectUserDataService.searchUserDetails(id, "Engineer")
+        .then(response => {
+            this.setState({
+                users: response.data
+            });
+            console.log(response.data);
+        })
+        .catch(e => {
+            console.log(e);
+        });
+    }
+
     onChangeTitle(e) {
         this.setState({
-        title: e.target.value
+            title: e.target.value
         });
     }
 
     onChangeDescription(e) {
         this.setState({
-        description: e.target.value
+            description: e.target.value
         });
     }
 
     onChangeAssigner(e) {
         this.setState({
-        assigner: e.target.value
+            assigner: e.target.value
         });
     }
 
-    onChangeisCompleted(e) {
+    onChangeActionplansectionId(e) {
         this.setState({
-        planmanager: e.target.value
-        });
-    }
-
-    onChangeLocation(e) {
-        this.setState({
-        location: e.target.value
+            actionplansectionId: e.target.value
         });
     }
     
@@ -66,136 +96,141 @@ export default class AddAPItem extends Component {
             actionplansectionId: this.state.actionplansectionId
         };
 
-        ActionPlanDataService.create(data)
+        ActionPlanItemDataService.create(data)
         .then(response => {
             this.setState({
-            id: response.data.id,
-            title: response.data.title,
-            description: response.data.description,
-            assigner: response.data.assigner,
-            isCompleted: response.data.isCompleted,
-            actionplansectionId: response.data.actionplansectionId,
+                id: response.data.id,
+                title: response.data.title,
+                description: response.data.description,
+                assigner: response.data.assigner,
+                isCompleted: response.data.isCompleted,
+                actionplansectionId: response.data.actionplansectionId,
 
-            submitted: true
-        });
+                submitted: true
+            });
             console.log(response.data);
         })
     }
-  
-    newDrawing() {
-        this.setState({
-            id: null,
-            title: "",
-            description: "",
-            assigner: "",
-            location: "",
-            planmanager: "",
-        //   actionplansectionId: this.props.match.params.id,
-            actionplansectionId: 1,
-            
-            submitted: true
-        });
+
+    viewAPItem(){
+        window.location.reload();
+        cogoToast.success("Action Plan Section Saved Successfully!");
     }
 
   render() {
-    const {actionplansectionId, currentIndex, actionplantypes,actionplanId, id , apid} = this.state;
+    const {actionplansectionId, actionplansections, actionplanId, projectId, users, viewAPItem} = this.state;
     return (
       <div className="container">
+        {this.state.submitted ? (
+            viewAPItem()
+        ):(
         <div class="container">
-        <h3 className="modal-title" id="exampleModalCenterTitle">Add New Action Plan Item {actionplanId}</h3>
-        <Breadcrumbs aria-label="breadcrumb">
-            <Link color="inherit" to="/home">Home</Link>
-            <Link color="inherit" to={"/projectmanagementhome/"+id}>App Dashboard</Link>
-            <Link color="inherit" to={"/actionplan/"+id}>Action Plan</Link>
-            <Link color="inherit" aria-current="page" className="disabledLink">Add Action Plan Item</Link>
-        </Breadcrumbs>
-        <hr/>
-        <div className="container">
-            <div className="form-row">
-                <div className="form-group col-6">
-                    <label htmlFor="title">Title</label>
-                    <input
-                        required
-                        type="text"
-                        className="form-control"
-                        id="title"
-                        required
-                        value={this.state.title}
-                        onChange={this.onChangeTitle}
-                        name="title"
-                    />
+            <h3 className="modal-title" id="exampleModalCenterTitle">Add New Action Plan Item</h3>
+            <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" to="/home">Home</Link>
+                <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
+                <Link color="inherit" to={"/actionplan/"+projectId}>Action Plan</Link>
+                <Link color="inherit" to={"/actionplansingle/" + projectId + "/" + actionplanId}>Action Plan Single Page</Link>
+                <Link color="inherit" aria-current="page" className="disabledLink">Add Action Plan Item</Link>
+            </Breadcrumbs>
+            <hr/>
+            <div className="container">
+                <div className="form-row">
+                    <div className="form-group col-12">
+                        <label htmlFor="title">Title</label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="title"
+                            placeholder="Enter a title for action plan item"
+                            required
+                            value={this.state.title}
+                            onChange={this.onChangeTitle}
+                            name="title"
+                        />
+                    </div>
                 </div>
-                <div className="form-group col-6">
-                    <label htmlFor="title">Section</label>
-                    <input
-                        required
-                        type="text"
-                        className="form-control"
-                        id="section"
-                        required
-                        value={this.state.section}
-                        name="section"
-                    />
+                <div className="form-row">
+                <div className="form-group col-4">
+                        <label htmlFor="title">Section</label>
+                        <select
+                            type="text"
+                            className="form-control"
+                            id="section"
+                            value={this.state.actionplansectionId}
+                            onChange={this.onChangeActionplansectionId}
+                            name="section"
+                            required
+                        >
+                            <option value="">Select a Section</option>
+                            {actionplansections && actionplansections.map((aps, index) => (
+                                <option
+                                    value={aps.id}
+                                    onChange={this.onChangeActionplansectionId}
+                                    key={index}
+                                >
+                                    {aps.title}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="form-group col-4">
+                        <label htmlFor="title">Assignee</label>
+                        <select
+                            required
+                            type="text"
+                            className="form-control"
+                            id="title"
+                            required
+                            value={this.state.assigner}
+                            onChange={this.onChangeAssigner}
+                            name="title"
+                        >
+                            <option value="">Select an Assignee</option>
+                            {users && users.map((u, index) => (
+                                <option
+                                    value={u.username}
+                                    onChange={this.onChangeAssigner}
+                                    key={index}
+                                >
+                                    {u.username} - {u.position}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="form-group col-4">
+                        <label htmlFor="description">Completed</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value="No 🔴"
+                            readOnly
+                        />
+                    </div>
+                </div>
+                <div className="form-row">
+                    <div className="form-group col-12">
+                        <label htmlFor="description">Description</label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="description"
+                            placeholder="Enter a description about the item"
+                            required
+                            value={this.state.description}
+                            onChange={this.onChangeDescription}
+                            name="description"
+                        />
+                    </div>
+                </div><hr />
+                    <button type="button" className="btn btn-primary mr-2" onClick={this.saveAPitem}>Create Action Plan Item</button>
+                    <Link to={"/actionplansingle/" + projectId + "/" + actionplanId}>Cancel</Link>
                 </div>
             </div>
-            <div className="form-row">
-                <div className="form-group col-4">
-                <label htmlFor="title">Location</label>
-                <input
-                    required
-                    type="text"
-                    className="form-control"
-                    id="title"
-                    required
-                    value={this.state.location}
-                    onChange={this.onChangeLocation}
-                    name="title"
-                />
-                </div>
-                <div className="form-group col-4">
-                    <label htmlFor="title">Plan Manager</label>
-                    <input
-                        required
-                        type="text"
-                        className="form-control"
-                        id="title"
-                        required
-                        value={this.state.planmanager}
-                        onChange={this.onChangePlanManager}
-                        name="title"
-                    />
-                </div>
-                <div className="form-group col-4">
-                    <label htmlFor="description">Completed</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value="No 🔴"
-                        readOnly
-                    />
-                </div>
-            </div>
-            <div className="form-row">
-                <div className="form-group col-12">
-                    <label htmlFor="description">Description</label>
-                    <input
-                        required
-                        type="text"
-                        className="form-control"
-                        id="description"
-                        required
-                        value={this.state.description}
-                        onChange={this.onChangeDescription}
-                        name="description"
-                    />
-                </div>
-            </div>
-            {/*  */}
-            <button type="button" className="btn btn-primary"data-dismiss="modal" onClick={this.saveAPitem}>Create</button>
-            {/*  */}
-            </div>  
+        )}
         </div>
-      </div>
     );
   }
 }

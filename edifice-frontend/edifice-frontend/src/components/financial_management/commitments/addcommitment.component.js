@@ -227,7 +227,7 @@ signedContractReceivedDate:response.data.signedContractReceivedDate,
     
               <input
                 type="text"
-            
+            list="suggest"
                 id="title"
                {...register('title')}
                 value={commitment.title}
@@ -235,6 +235,10 @@ signedContractReceivedDate:response.data.signedContractReceivedDate,
                 name="title"
 className={`form-control ${errors.title ? 'is-invalid' : ''}`}
               />
+                          <datalist id="suggest">
+                                            <option value="Concrete Reinforcement, Cast-In-Place Concrete, Slab Foundations">Concrete Reinforcement, Cast-In-Place Concrete, Slab Foundations</option>
+                                            
+                                    </datalist>
 <div className="invalid-feedback">{errors.title?.message}</div>
               </div>
               <div className="form-group">

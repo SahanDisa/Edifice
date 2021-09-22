@@ -5,12 +5,12 @@ const Op = db.Sequelize.Op;
 // Create and Save a new subcontractor
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.companyName) {
-    res.status(400).send({
-      message: "company name can not be empty!",
-    });
-    return;
-  }
+  // if (!req.body.companyName) {
+  //   res.status(400).send({
+  //     message: "company name can not be empty!",
+  //   });
+  //   return;
+  // }
 
   // Create a subcontractor
   const subcontractor = {

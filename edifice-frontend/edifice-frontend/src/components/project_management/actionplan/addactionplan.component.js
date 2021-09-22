@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ActionPlanDataService from "./../../../services/project_management/actionplan.service";
 import ActionPlanTypeDataService from "../../../services/project_management/actionplantype.service";
+import ProjectUserDataService from "../../../services/projectuser.service.js";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Alert from "react-bootstrap/Alert";
+import cogoToast from 'cogo-toast';
 
 export default class AddActionPlan extends Component {
   constructor(props) {
@@ -13,7 +16,7 @@ export default class AddActionPlan extends Component {
     this.onChangePlanManager = this.onChangePlanManager.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
     this.saveActionPlan = this.saveActionPlan.bind(this);
-    this.newDrawing = this.newDrawing.bind(this);
+    this.viewActionPlan = this.viewActionPlan.bind(this);
 
     this.state = {
       id: null,
@@ -26,17 +29,55 @@ export default class AddActionPlan extends Component {
       projectId: this.props.match.params.id, 
       
       actionplantypes: [],
+      users: [],
       currentIndex: -1,
       submitted: false,
 
     };
   }
   componentDidMount() {
-    this.getActionPlanTypes(this.props.match.params.id);
+    this.retrieveActionPlanTypes(this.props.match.params.id);
+    this.retrieveUsers(this.props.match.params.id)
   }
+
+  retrieveActionPlanTypes(id){
+    ActionPlanTypeDataService.getAll(id)
+    .then(response => {
+        this.setState({
+          actionplantypes: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
+  retrieveUsers(id){
+    ProjectUserDataService.searchUserDetails(id, "Project Manager")
+    .then(response => {
+        this.setState({
+            users: response.data
+        });
+      console.log(response.data);
+    })
+    .catch(e => {
+        console.log(e);
+    });
+  }
+
   onChangeName(e) {
     this.setState({
       title: e.target.value
+    });
+    ActionPlanTypeDataService.findByTitle(e.target.value, this.props.match.params.id)
+    .then((response) => {
+      this.setState({
+        isTitleValid: response.data.length,
+      });
+    })
+    .catch((e) => {
+      console.log(e);
     });
   }
 
@@ -63,22 +104,10 @@ export default class AddActionPlan extends Component {
       location: e.target.value
     });
   }
-
-  getActionPlanTypes(id){
-    ActionPlanTypeDataService.getAll(id)
-    .then(response => {
-        this.setState({
-          actionplantypes: response.data
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
+  
   saveActionPlan() {  
     var data = {
-      title: this.state.title,
+      name: this.state.name,
       planmanager:this.state.planmanager,
       actiontype: this.state.actiontype,
       location: this.state.location,
@@ -91,7 +120,7 @@ export default class AddActionPlan extends Component {
       .then(response => {
         this.setState({
           id: response.data.id,
-          title: response.data.title,
+          name: response.data.name,
           description: response.data.description,
           actiontype: response.data.actiontype,
           location: response.data.location,
@@ -107,53 +136,56 @@ export default class AddActionPlan extends Component {
         console.log(e);
       });
   }
-  
-  newDrawing() {
-    this.setState({
-      id: null,
-      title: "",
-      description: "",
-      actiontype: "",
-      location: "",
-      planmanager: "",
-      projectId: this.props.match.params.id,
-      
-      submitted: true
-    });
+
+  viewActionPlan(id){
+    this.props.history.push("/actionplan/"+ id);
+    cogoToast.success("Action Plan Saved Successfully!");
   }
 
   render() {
-    const {projectId, currentIndex, actionplantypes} = this.state;
+    const {projectId, currentIndex, actionplantypes, isTitleValid, viewActionPlan, users} = this.state;
     return (
       <div className="container">
+        {this.state.submitted ? (
+          viewActionPlan(projectId)
+        ) : (
           <div class="container">
             <h2>Add New Action Plan</h2>
             <Breadcrumbs aria-label="breadcrumb">
-            <Link color="inherit" to="/home">Home</Link>
-            <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
-            <Link color="inherit" to={"/actionplan/"+projectId}>Action Plan</Link>
-            <Link color="inherit" aria-current="page" className="disabledLink">Add New Action Plan</Link>
-          </Breadcrumbs><hr/>
+              <Link color="inherit" to="/home">Home</Link>
+              <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
+              <Link color="inherit" to={"/actionplan/"+projectId}>Action Plan</Link>
+              <Link color="inherit" aria-current="page" className="disabledLink">Add New Action Plan</Link>
+            </Breadcrumbs><hr/>
             <div className="">
+            <div className="form-row">
+                <div className="form-group col-md-12">
+                  {this.state.title == "" ? "" : isTitleValid > 0 ? 
+                    <Alert variant="danger">Name is already taken</Alert> :
+                    <Alert variant="success">Name is avaliable to use</Alert>
+                  }
+                </div>
+              </div>
               <div className="form-row">
                 <div className="form-group col-md-9">
-                  <label htmlFor="title">Title</label>
+                  <label htmlFor="title">Name</label>
                   <input
                     type="text"
                     className="form-control"
                     id="title"
                     required
+                    placeholder="Enter a action plan name"
                     value={this.state.title}
                     onChange={this.onChangeName}
                     name="title"
                   />
                 </div>
                 <div className="form-group col-md-3">
-                  <label htmlFor="approved">Approved</label>
+                  <label htmlFor="approved">Status</label>
                   <input
                     type="text"
                     className="form-control"
-                    value="No🔴"
+                    value="Not Approved 🔴"
                     readOnly
                   />
                 </div>
@@ -161,7 +193,7 @@ export default class AddActionPlan extends Component {
               <div className="form-row">
                 <div className="form-group col-md-4">
                   <label htmlFor="planmanager">Plan Manager</label>
-                  <input
+                  <select
                     type="text"
                     className="form-control"
                     id="planmanager"
@@ -169,7 +201,18 @@ export default class AddActionPlan extends Component {
                     value={this.state.planmanager}
                     onChange={this.onChangePlanManager}
                     name="planmanager"
-                  />
+                  >
+                    <option value="">Select an Assignee</option>
+                      {users && users.map((u, index) => (
+                          <option
+                              value={u.username}
+                              onChange={this.onChangePlanManager}
+                              key={index}
+                          >
+                              {u.username} - {u.position}
+                          </option>
+                      ))}
+                  </select>
                 </div>
                 <div className="form-group col-md-4">
                   <label htmlFor="type">Action Plan Type</label>
@@ -198,11 +241,18 @@ export default class AddActionPlan extends Component {
                     type="text"
                     className="form-control"
                     id="location"
+                    placeholder="Enter the location"
                     required
                     value={this.state.location}
                     onChange={this.onChangeLocation}
                     name="location"
+                    list="suggest"
                   />
+                  <datalist id="suggest">
+                    <option value="Floor 1">Floor 1</option>
+                    <option value="Floor 2">Floor 2</option>
+                    <option value="Floor 3">Floor 3</option>
+                  </datalist>
                 </div>
               </div>
               <div className="form row">
@@ -212,6 +262,7 @@ export default class AddActionPlan extends Component {
                     type="text"
                     className="form-control"
                     id="description"
+                    placeholder="Enter a description about the action plan"
                     required
                     value={this.state.description}
                     onChange={this.onChangeDescription}
@@ -223,6 +274,7 @@ export default class AddActionPlan extends Component {
             <button onClick={this.saveActionPlan} className="btn btn-success mr-2">Create Action Plan</button>
             <a href="/actionplan">Cancel</a>
           </div>
+        )}
       </div>
     );
   }

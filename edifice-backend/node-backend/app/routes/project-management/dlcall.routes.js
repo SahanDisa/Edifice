@@ -16,7 +16,13 @@ module.exports = app => {
     router.get("/single/:id", dlcall.findOne);
   
     // Retrieve all daily log - accident for a project
-    router.get("/:id", dlcall.findAll);
+    router.get("/:id", dlcall.findAllweek);
+
+    // Retrieve all daily log - accident for a project
+    router.get("/all/:id", dlcall.findAll);
+
+    // Retrieve all daily log - accident for a project
+    router.get("/today/:id", dlcall.findToday);
   
     app.use('/api/projects/dlcall', router);
 };
