@@ -2,6 +2,7 @@ import React, { Component } from "react";
 // import { Switch, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+
 import UserService from "./../../services/user.service";
 import ProjectDataService from "./../../services/project.service";
 import AuthService from "./../../services/auth.service";
@@ -25,6 +26,8 @@ import costIcon from "././../../assets/FM/cost.png";
 import commitmentsIcon from "././../../assets/FM/commitments.png";
 
 import bulldozerIcon from "././../../assets/066-bulldozer.png";
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 import Card from 'react-bootstrap/Card';
 import cogoToast from "cogo-toast";
@@ -32,7 +35,7 @@ import cogoToast from "cogo-toast";
 export default class BoardUser extends Component {
   constructor(props) {
     super(props);
-    console.log("Super props" + this.props);
+    this.getRate = this.getRate.bind(this);
     this.state = {
       content: "",
       projects: [],
@@ -42,6 +45,8 @@ export default class BoardUser extends Component {
       showEngineerBoard: false,
       showManagerBoard: false,
       showAdminBoard: false,
+      rate: 0,
+      remainDays: 0,
     };
   }
   componentDidMount() {
@@ -83,7 +88,8 @@ export default class BoardUser extends Component {
         this.setState({
           projects: response.data
         });
-        this.updateNavBar(response.data.title, response.data.id);
+        //this.updateNavBar(response.data.title, response.data.id);
+        this.getRate(response.data.startdate,response.data.enddate);
         console.log(response.data);
       })
       .catch(e => {
@@ -91,7 +97,7 @@ export default class BoardUser extends Component {
       });
   }
   updateNavBar(name, pid) {
-    console.log("Navbar ekata yawanne meka" + name + " " + pid);
+    //console.log("Navbar ekata yawanne meka" + name + " " + pid);
     AppService.setProjectName(name, pid);
 
   }
@@ -108,25 +114,32 @@ export default class BoardUser extends Component {
           //   console.log(e);
           // });
         }
-        console.log("Data assigned" + data);
+        console.log("Data assigned : " + data);
         this.setState({
           progress: data
         });
       });
   }
-
-  render() {
-    const { id, showEngineerBoard, showManagerBoard, showAdminBoard, projects, progress } = this.state;
+  getRate(startdate,enddate){
     const today = new Date();
-    const date1 = new Date(projects.startdate);
-    const date2 = new Date(projects.enddate);
+    const date1 = new Date(startdate);
+    const date2 = new Date(enddate);
     const diffTime = Math.abs(date2 - date1);
     const diffTime2 = Math.abs(date2 - today);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    const remainDays = Math.ceil(diffTime2 / (1000 * 60 * 60 * 24));
-    console.log(diffTime + " milliseconds");
-    console.log(diffDays + " days");
-    console.log(remainDays + " remain days");
+    const reDays = Math.ceil(diffTime2 / (1000 * 60 * 60 * 24));
+    console.log("Diff Days: "+diffDays+" Remain Days: "+reDays);
+    const Rate = Math.ceil((reDays/diffDays).toFixed(4)*100);
+    console.log("Rate is "+Rate);
+    this.setState({
+      remainDays: reDays,
+      rate: Rate
+    })
+  }
+
+  render() {
+    const { id, showEngineerBoard, showManagerBoard, showAdminBoard, projects, progress,remainDays,rate } = this.state;
+    
     return (
       <div className="container">
         <h2>APP DASHBOARD</h2>
@@ -156,6 +169,18 @@ export default class BoardUser extends Component {
               <center>
                 <h2><b>{remainDays}{" "}</b>Days</h2>
                 <h3>Remaining</h3>
+                <h6>Progress should be at {rate}%{" "}
+                {projects.progressValue > rate ? 
+                <div>
+                <ArrowDropUpIcon style={{'color':'#28c94b','font-size': '30px'}}/>
+                {(projects.progressValue-rate)}{"%"}
+                </div>
+                :
+                <div> 
+                <ArrowDropDownIcon style={{'color':'#db3254','font-size': '30px'}}/>
+                {(rate-projects.progressValue)}{"%"}
+                </div>}
+                </h6>
               </center>
             </div>
             <div className="col-2">
@@ -232,15 +257,6 @@ export default class BoardUser extends Component {
               </div>
             </div>
             <div className="row">
-              {/* <div className="col-lg-4 mb-grid-gutter pb-2">
-            <div className="card card-hover shadow-sm" title="">
-            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/bidding/" + id} style={{ 'text-decoration': 'none' }}>
-              <img src={biddingIcon} alt="" width="50"/>
-              <h3 className="h5 nav-heading-title mb-0">Biddings</h3>
-              <span className="fs-sm fw-normal text-muted">Manage all the bid packages and bidding proceses</span>
-            </Link>
-            </div>
-          </div> */}
               <div className="col-lg-3 mb-grid-gutter pb-2">
                 <div className="card card-hover shadow-sm" title="Manage meetings">
                   <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/meetings/" + id} style={{ 'text-decoration': 'none' }}>
@@ -382,10 +398,9 @@ export default class BoardUser extends Component {
         {/* Only Enginner has access to project tools */}
         {!showAdminBoard && !showManagerBoard && showEngineerBoard &&
           <div>
-            <h3>Project Tools</h3>
+          <h3 className="mt-2">Project Tools</h3>
             <div className="row">
               <div className="col-lg-3 mb-grid-gutter pb-2">
-
                 <div className="card card-hover shadow-sm" title="Project Detail Specification with Analytics">
                   <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/portfolio/" + id} style={{ 'text-decoration': 'none' }}>
                     <img src={portfolioIcon} alt="" width="50" />
@@ -393,30 +408,8 @@ export default class BoardUser extends Component {
                     {/* <span className="fs-sm fw-normal text-muted">Contains abstract project detail specification with analytics</span> */}
                   </Link>
                 </div>
-
               </div>
-              <div className="col-lg-3 mb-grid-gutter pb-2">
 
-                <div className="card card-hover shadow-sm" title="Manage meetings">
-                  <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/meetings/" + id} style={{ 'text-decoration': 'none' }}>
-                    <img src={meetingIcon} alt="" width="50" />
-                    <h3 className="h5 nav-heading-title mb-0">Meetings</h3>
-                    {/* <span className="fs-sm fw-normal text-muted">Manage all aspects of your project meetings from agenda distribution</span> */}
-                  </Link>
-                </div>
-
-              </div>
-              <div className="col-lg-3 mb-grid-gutter pb-2">
-
-                <div className="card card-hover shadow-sm" title="Organise & define project workflows">
-                  <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/actionplan/" + id} style={{ 'text-decoration': 'none' }}>
-                    <img src={actionplanIcon} alt="" width="50" />
-                    <h3 className="h5 nav-heading-title mb-0">Action Plan</h3>
-                    {/* <span className="fs-sm fw-normal text-muted">Organise & define project workflows</span> */}
-                  </Link>
-                </div>
-
-              </div>
               <div className="col-lg-3 mb-grid-gutter pb-2">
 
                 <div className="card card-hover shadow-sm" title="Manage the project Drawings">
@@ -428,18 +421,6 @@ export default class BoardUser extends Component {
                 </div>
 
               </div>
-            </div>
-            <div className="row">
-              {/* <div className="col-lg-4 mb-grid-gutter pb-2">
-            <div className="card card-hover shadow-sm" title="">
-            <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/bidding/" + id} style={{ 'text-decoration': 'none' }}>
-              <img src={biddingIcon} alt="" width="50"/>
-              <h3 className="h5 nav-heading-title mb-0">Biddings</h3>
-              <span className="fs-sm fw-normal text-muted">Manage all the bid packages and bidding proceses</span>
-            </Link>
-            </div>
-          </div> */}
-
               <div className="col-lg-3 mb-grid-gutter pb-2">
 
                 <div className="card card-hover shadow-sm" title="Manage & Capture Images">
@@ -452,18 +433,38 @@ export default class BoardUser extends Component {
 
               </div>
               <div className="col-lg-3 mb-grid-gutter pb-2">
-
-                <div className="card card-hover shadow-sm" title="Manage Documents">
+                {/* Enginner/Architect doesn't has access to Document */}
+                {/* <div className="card card-hover shadow-sm" title="Manage Documents">
                   <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/document/" + id} style={{ 'text-decoration': 'none' }}>
                     <img src={documentIcon} alt="" width="50" />
                     <h3 className="h5 nav-heading-title mb-0">Documents</h3>
-                    {/* <span className="fs-sm fw-normal text-muted">Manage documents</span> */}
+                    
+                  </Link>
+                </div> */}
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-3 mb-grid-gutter pb-2">
+                <div className="card card-hover shadow-sm" title="Manage meetings">
+                  <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/meetings/" + id} style={{ 'text-decoration': 'none' }}>
+                    <img src={meetingIcon} alt="" width="50" />
+                    <h3 className="h5 nav-heading-title mb-0">Meetings</h3>
+                    {/* <span className="fs-sm fw-normal text-muted">Manage all aspects of your project meetings from agenda distribution</span> */}
+                  </Link>
+                </div>
+              </div>
+              <div className="col-lg-3 mb-grid-gutter pb-2">
+                <div className="card card-hover shadow-sm" title="Organise & define project workflows">
+                  <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/actionplan/" + id} style={{ 'text-decoration': 'none' }}>
+                    <img src={actionplanIcon} alt="" width="50" />
+                    <h3 className="h5 nav-heading-title mb-0">Action Plan</h3>
+                    {/* <span className="fs-sm fw-normal text-muted">Organise & define project workflows</span> */}
                   </Link>
                 </div>
 
               </div>
-              <div className="col-lg-3 mb-grid-gutter pb-2">
 
+              <div className="col-lg-3 mb-grid-gutter pb-2">
                 <div className="card card-hover shadow-sm" title="Manage Punch Items">
                   <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/punchlist/" + id} style={{ 'text-decoration': 'none' }}>
                     <img src={punchlistIcon} alt="" width="50" />
@@ -474,9 +475,8 @@ export default class BoardUser extends Component {
 
               </div>
               <div className="col-lg-3 mb-grid-gutter pb-2">
-
                 <div className="card card-hover shadow-sm" title="Track the details at Site">
-                  <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/managedailylogs/" + id} style={{ 'text-decoration': 'none' }}>
+                  <Link className="d-block nav-heading text-center mb-2 mt-2 card-text-edifice" to={"/dailylogs/" + id} style={{ 'text-decoration': 'none' }}>
                     <img src={dailylogIcon} alt="" width="50" />
                     <h3 className="h5 nav-heading-title mb-0">Daily Log</h3>
                     {/* <span className="fs-sm fw-normal text-muted">Keep track of every detail at job site each and everyday</span> */}
