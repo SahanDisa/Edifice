@@ -1,21 +1,21 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DocumentDataService from "./../../../services/documentfile.service";
-import DrawRevisionService from "../../../services/drawrevision.service";
+import DocumentRevisionService from "../../../services/documentrevision.service";
 import UserService from "./../../../services/user.service";
 import AuthService from "./../../../services/auth.service";
 import { Avatar } from "@material-ui/core";
 import { Breadcrumbs } from "@material-ui/core";
-
+import cogoToast from "cogo-toast";
 import PdfIcon from '@material-ui/icons/PictureAsPdf';
 
 export default  class SingleDocument extends Component {
     constructor(props) {
         super(props);
         this.retrieveDocument = this.retrieveDocument.bind(this);
-        // this.onChangeUserName = this.onChangeUserName.bind(this);
-        // this.onChangeComment = this.onChangeComment.bind(this);
-        // this.saveDocumentRevision = this.saveDocumentRevision.bind(this);
+        this.onChangeUserName = this.onChangeUserName.bind(this);
+        this.onChangeComment = this.onChangeComment.bind(this);
+        this.saveDocumentRevision = this.saveDocumentRevision.bind(this);
       
         this.state = {
           id: this.props.match.params.id,
@@ -27,6 +27,7 @@ export default  class SingleDocument extends Component {
           status: "", 
           projectId: "",
           revisions: [],
+          documentId: this.props.match.params.id,
   
           //revision
           currentUser: AuthService.getCurrentUser(),
@@ -38,6 +39,17 @@ export default  class SingleDocument extends Component {
         window.scrollTo(0, 0);
         this.retrieveDocument(this.props.match.params.id);
         this.getRevisions(this.props.match.params.id);
+      }
+      onChangeUserName(e) {
+        this.setState({
+          username: e.target.value
+        });
+      }
+    
+      onChangeComment(e) {
+        this.setState({
+          comment: e.target.value
+        });
       }
       retrieveDocument(id) {
         DocumentDataService.get(id)
@@ -58,7 +70,7 @@ export default  class SingleDocument extends Component {
           });
       }
       getRevisions(id){
-        DrawRevisionService.getAll(id)
+        DocumentRevisionService.getAll(id)
         .then(response => {
             this.setState({
               revisions: response.data
@@ -69,29 +81,32 @@ export default  class SingleDocument extends Component {
             console.log(e);
           });
       }
-      saveDocumentRevision() { 
+      saveDocumentRevision() {
+        if(this.state.comment != ""){
         var data = {
           username : this.state.currentUser.username,
           description: this.state.comment,
-          documentId: this.state.id
+          documentId: this.state.documentId
         };
-    
-        DrawRevisionService.create(data)
+        cogoToast.success("Revision added to the thread");
+        DocumentRevisionService.create(data)
           .then(response => {
             this.setState({
               id: response.data.id,
               username: response.data.username,
               description: response.data.comment,
               documentId: response.data.documentId,
-    
               // submitted: true
             });
             console.log(response.data);
-            window.location.reload();
+            this.getRevisions(this.state.documentId);
           })
           .catch(e => {
             console.log(e);
           });
+        }else{
+          cogoToast.error("Message body cannot be empty");
+        }
       }
       render() {
           const { id,title,description,category,version,status,url,revisions,currentUser,projectId } = this.state;
@@ -127,7 +142,7 @@ export default  class SingleDocument extends Component {
                     height="700px"
                     width="100%"
                 ></embed>
-                {/* <h3>Revisions</h3>
+                <h3>Revisions</h3>
                 <p>Add specific notes for the document for the future reference</p>
                 <div className="row">
                   <div className="col-sm-6">
@@ -138,7 +153,9 @@ export default  class SingleDocument extends Component {
                             
                             <Avatar>U</Avatar>
                             
-                            {revision.username}{" : "}{revision.description}
+                            <b>{revision.username}</b>{" : "}{revision.description}
+                            <br/>
+                            <p>{revision.createdAt} ✔️sent</p>
                           </li>
                           ))}
                     </ul>
@@ -173,7 +190,7 @@ export default  class SingleDocument extends Component {
                         <button className="btn btn-primary" onClick={this.saveDocumentRevision}>Add Comment</button>
                       </div>
                   </div>
-                </div> */}
+                </div>
                 </div>
                 <div className="col-sm-4">
                   <h3>File details</h3>
