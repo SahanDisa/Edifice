@@ -21,13 +21,13 @@ class CommitmentDataService {
     return http.delete(`/projects/commitment/${id}`);
   }
 
-  // findByContractCompany(id,contractCompany) {
-  //   return http.get(`/projects/commitment/list/${id}/${contractCompany}`);
-  // }
-
-  findByTitle(id,title,status) {
-    return http.get(`/projects/commitment/list/${id}/${title}/${status}}`);
+  findByContractCompany(id,contractCompany,status) {
+    return http.get(`/projects/commitment/list/${id}/${contractCompany}/${status}`);
   }
+
+  // findByTitle(id,title,status) {
+  //   return http.get(`/projects/commitment/list/${id}/${title}/${status}}`);
+  // }
 
   findByStatusOngoing(id,status) {
     return http.get(`/projects/commitment/list/${id}/${status}/status`);

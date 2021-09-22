@@ -10,11 +10,14 @@ import TimesheetDataService from "./../../../services/timesheet.service";
 class Timesheet extends Component {
   constructor(props) {
     super(props);
+    this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
+    this.searchTitle = this.searchTitle.bind(this);
     this.retrieveTimesheet = this.retrieveTimesheet.bind(this);
 
     this.state = {
       name: "",
       timesheets: [],
+      searchTitle: "",
       users: [],
       id: this.props.match.params.id
     };
@@ -37,8 +40,29 @@ class Timesheet extends Component {
       });
   }
 
+  onChangeSearchTitle(e) {
+    const searchTitle = e.target.value;
+
+    this.setState({
+      searchTitle: searchTitle
+    });
+  }
+
+  searchTitle() {
+    TimesheetDataService.findByDate(this.state.searchTitle)
+      .then(response => {
+        this.setState({
+          timesheets: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
   render() {
-    const { id, timesheets } = this.state;
+    const { id, timesheets, searchTitle } = this.state;
     return (
       <div>
         <div className="row">
@@ -60,36 +84,45 @@ class Timesheet extends Component {
         <hr />
         <br />
 
-        <div className="container">
-          <div className="row">
-            <form className="row g-3">
-              <div className="col-auto">
-                <input className="form-control" type="text" placeholder="Search" />
+        <div className="row">
+          <div className="col-md-6">
+            <div className="input-group mb-3">
+              <input
+                type="date"
+                className="form-control"
+                placeholder="Enter Date"
+                value={searchTitle}
+                onChange={this.onChangeSearchTitle}
+              />
+              <div className="input-group-append">
+                <button
+                  className="btn btn-outline-secondary"
+                  type="button"
+                  onClick={this.searchTitle}
+                >
+                  Search
+                </button>
               </div>
-
-              <div className="col-auto">
-                <a href="" className="btn btn-success">Search</a>
-              </div>
-            </form>
-
-            <div className="col-8 align-items-end text-right">
-              <a href="#" className="btn btn-secondary mr-3"> Export PDF</a>
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="text-right">
               <button
                 className="btn btn-primary"
                 data-toggle="modal"
                 data-target="#createNew">
                 Create New
               </button>
-
-
-              {/*------------------------------------ Add Emp Starts------------------------------------------------------------------ */}
-              <div className="modal fade" id="createNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <Create projectId={id} />
-              </div>
-              {/*-------------------------------------Add Emp Ends----------------------------------------------------------------------*/}
             </div>
           </div>
         </div>
+        <br />
+
+        {/*------------------------------------ Add Emp Starts------------------------------------------------------------------ */}
+        <div className="modal fade" id="createNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <Create projectId={id} />
+        </div>
+        {/*-------------------------------------Add Emp Ends----------------------------------------------------------------------*/}
         <hr />
 
         {timesheets && timesheets.map((timesheet, index) => (

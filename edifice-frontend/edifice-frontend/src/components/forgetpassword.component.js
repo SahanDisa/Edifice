@@ -7,6 +7,8 @@ import CheckButton from "react-validation/build/button";
 import mainIcon from "././../assets/logoedifice.png";
 
 import AuthService from "../services/auth.service";
+import cogoToast from "cogo-toast";
+import emailjs from 'emailjs-com';
 
 export default class ForgetPassword extends Component {
   constructor(props) {
@@ -14,6 +16,9 @@ export default class ForgetPassword extends Component {
    
     this.onChangeUserMail = this.onChangeUserMail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeInputCode = this.onChangeInputCode.bind(this);
+    this.onChangeNewPassword = this.onChangeNewPassword.bind(this);
+    this.onChangeConfirmNewPassword = this.onChangeConfirmNewPassword.bind(this);
     this.showCodeArea = this.showCodeArea.bind(this);
     this.isCodeSuccess = this.isCodeSuccess.bind(this);
     this.ChangeToNewPassword = this.ChangeToNewPassword.bind(this);
@@ -25,7 +30,10 @@ export default class ForgetPassword extends Component {
       message: "",
       isCodeSend: false,
       code: 0,
-      isAuthUser: false
+      inputCode: undefined,
+      isAuthUser: false,
+      newpassword: undefined,
+      confirmnewpassword: undefined
     };
   }
 
@@ -40,20 +48,63 @@ export default class ForgetPassword extends Component {
       password: e.target.value
     });
   }
-  
-  showCodeArea(){
-    const min = 100000;
-    const max = 900000;
-    const rand = Math.floor(Math.random() * (max - min + 1)) + min;
-    console.log(rand);
+
+  onChangeInputCode(e) {
     this.setState({
-     isCodeSend: true,
-     code: rand
+      inputCode: e.target.value
     });
   }
 
+  onChangeNewPassword(e) {
+    this.setState({
+      newpassword: e.target.value
+    });
+  }
+
+  onChangeConfirmNewPassword(e) {
+    this.setState({
+      confirmnewpassword: e.target.value
+    });
+  }
+  
+  showCodeArea(){
+    if(this.state.usermail != ""){
+      const validEmail = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.com$');
+      
+      if (validEmail.test(this.state.usermail)){
+        console.log("Valid");
+        const min = 100000;
+        const max = 900000;
+        const rand = Math.floor(Math.random() * (max - min + 1)) + min;
+        //
+        console.log(rand);
+        this.setState({
+          isCodeSend: true,
+          code: rand
+        });
+        //sendmail
+        emailjs.send('service_ufoheny','template_gthofqi',{
+          empname: "Forget Password",
+          username: "By Edifice Admin",
+          password: this.state.code,
+          to_email: this.state.useremail
+        },'user_fvU6SYbToOsc7pAT3U5ZY')
+        .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+        }, function(error) {
+            console.log('FAILED...', error);
+        });
+      }else{
+        cogoToast.error("Input a correct email!");
+      }
+      
+    }else{
+      cogoToast.error("Email cannot be empty or incorrect");
+    }
+  }
+
   isCodeSuccess(){
-    if(this.state.password == this.state.code){
+    if(this.state.inputCode == this.state.code){
         console.log("code is success");
         this.setState({
             isAuthUser: true
@@ -63,7 +114,13 @@ export default class ForgetPassword extends Component {
     }
   }
   ChangeToNewPassword(){
-
+    if(this.state.newpassword == this.state.confirmnewpassword){
+      console.log("Password has changed");
+      cogoToast.success("Successfully chnaged the password!, Go back to Login");
+  }else{
+      console.log("two passwords mismatched");
+      cogoToast.warn("two passwords mismatched");
+  }
   }
 
   render() {
@@ -83,14 +140,13 @@ export default class ForgetPassword extends Component {
           />
          
           <div className="form-group">
-                <label htmlFor="projectID">Email</label>
+                <label htmlFor="projectID">Current Email</label>
                 <input
                     type="email"
                     className="form-control"
                     id="usermail"
                     required
-                    // value={this.state.projectID}
-                    // onChange={this.onChangePosition}
+                    onChange={this.onChangeUserMail}
                     name="usermail"
                     value = {this.state.usermail}
                 />
@@ -111,8 +167,8 @@ export default class ForgetPassword extends Component {
                     className="form-control"
                     id="code"
                     // required
-                    value={this.state.password}
-                    onChange={this.onChangePassword}
+                    value={this.state.inputCode}
+                    onChange={this.onChangeInputCode}
                     name="code"
                 />
           </div>
@@ -151,10 +207,9 @@ export default class ForgetPassword extends Component {
                     className="form-control"
                     id="newpassword"
                     required
-                    // value={this.state.projectID}
-                    // onChange={this.onChangePosition}
+                    value={this.state.newpassword}
+                    onChange={this.onChangeNewPassword}
                     name="newpassword"
-                    //value = {this.state.password}
                 />
           </div>
           <div className="form-group">
@@ -164,9 +219,9 @@ export default class ForgetPassword extends Component {
                     className="form-control"
                     id="code"
                     // required
-                    value={this.state.password}
-                    onChange={this.onChangePassword}
-                    name="code"
+                    value={this.state.confirmnewpassword}
+                    onChange={this.onChangeConfirmNewPassword}
+                    name="confirmnewpassword"
                 />
           </div>
           

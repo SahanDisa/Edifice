@@ -44,21 +44,23 @@ exports.findAll = (req, res) => {
       });
     });
 };
-/*
-// Find a single category with an id
-exports.findOne = (req, res) => {
-    const id = req.params.id;
 
-    category.findByPk(id)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error retrieving category with id=" + id
-        });
+exports.findAllName = (req, res) => {
+  const name = req.query.name;
+  var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+
+  Category.findAll({ where: condition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving projects."
       });
-};*/
+    });
+};
+
 /*
 // Update a category by the id in the request
 exports.update = (req, res) => {

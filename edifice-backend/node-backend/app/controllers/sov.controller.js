@@ -191,3 +191,21 @@ res.status(500).send({
 });  
 }
 
+// total of all sovss according to commitment
+exports.getTotalSovByC = (req,res)=>{
+  const id = req.params.id;
+  const pid = req.params.pid;
+Sov.findAll({
+where: {commitmentId:id,projectId:pid ,published:true},
+attributes: [[sequelize.fn('sum', sequelize.col('amount')), 'total']],
+raw: true,
+}).then(data => {
+res.send(data[0].total);
+//console.log(data[0].total)
+})
+.catch(err => {
+res.status(500).send({
+  message: "Error retrieving total  "
+});
+});  
+}
