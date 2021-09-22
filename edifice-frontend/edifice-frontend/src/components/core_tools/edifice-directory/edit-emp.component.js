@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import EmployeeDataService from "./../../../services/employee.service";
+import { Link } from "react-router-dom";
+import cogoToast from 'cogo-toast';
 import { Breadcrumbs } from "@material-ui/core";
-import DeleteIcon from '@material-ui/icons/Delete';
+import {Edit,Delete} from '@material-ui/icons';
 
 class EditUser extends Component {
 
   constructor(props) {
     super(props);
+    this.displayUpdateSuccess=this.displayUpdateSuccess.bind(this);
+    this.displayDeleteSuccess=this.displayDeleteSuccess.bind(this);
     console.log(this.props.match.params);
     this.state = {
       id: this.props.match.params.id,
@@ -17,6 +21,8 @@ class EditUser extends Component {
       mobile:"",
       projCount:0,
       other:"",
+      updateSuccess: false,
+      deleteSuccess: false,
       disableButton:true
     };
 
@@ -62,9 +68,47 @@ class EditUser extends Component {
     });
   }
 
-  displaySuccess(){
-    
-    window.location.reload();
+  displayDeleteSuccess(name){
+    //this.state.deleteSuccess
+    if(true){
+      cogoToast.success(
+        <div>
+          <div>Employee <b>{name}</b> deleted Successfully</div>
+        </div>
+      );
+    }else{
+      cogoToast.danger(
+        <div>
+          <div>Employee <b>{name}</b>could not be deleted</div>
+        </div>
+      );
+    }
+    this.setState({
+      deleteSuccess: false
+    });
+  }
+
+  displayUpdateSuccess(name){
+
+    console.log("stateupd")
+    console.log(this.state.updateSuccess)
+    //this.state.updateSuccess
+    if(true){
+      cogoToast.success(
+        <div>
+          <div>Employee <b>{name}</b> updated Successfully!</div>
+        </div>
+      );
+    }else{
+      cogoToast.warn(
+        <div>
+          <div>Employee <b>{name}</b> could not be updated</div>
+        </div>
+      );
+    }
+    this.setState({
+      updateSuccess: false
+    });
   }
 
   getEmployee(id){
@@ -108,7 +152,13 @@ class EditUser extends Component {
       //console.log(data);
     });
 
-    this.displaySuccess();
+    this.setState({
+     updateSuccess: true
+    });
+    console.log("stateupd")
+    console.log(this.state.updateSuccess)
+
+    this.displayUpdateSuccess(this.state.name);
   }
 
   deleteEmployee(id){
@@ -122,8 +172,13 @@ class EditUser extends Component {
       console.log(e);
       //console.log(data);
     });
-
-    window.location.href="/employees";
+    
+    this.setState({
+      deleteSuccess: true
+    });
+    
+    this.displayDeleteSuccess(this.state.name);
+    //window.location.href="/employees";
   }
 
   render() {
@@ -132,8 +187,22 @@ class EditUser extends Component {
 
     return (
       <div className="col-auto">
-        <h2>Edit Employee Details</h2><hr/>
-        <div className="">
+        <h2><Edit/> EDIT EMPLOYEE DETAILS</h2><hr/>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link color="inherit" to="/home">
+            Home
+          </Link>
+          <Link color="inherit" to={"/admin"}>
+            Core Dashboard
+          </Link>
+          <Link color="inherit" to={"/employee"}>
+            Employees
+          </Link>
+          <Link color="inherit">
+            Edit: {this.state.id}
+          </Link>
+        </Breadcrumbs>
+        <div className="mt-2">
           <div className="row pl-3" >
             <p>Employee ID:</p>
             <b className="pl-3">{id}</b>
@@ -180,7 +249,7 @@ class EditUser extends Component {
             <a href="/employee" className="btn btn-success">Cancel</a>
             </div>
             <div >
-            <button className="btn btn-danger" id="updateBtn" data-target="#deleteModal" data-toggle="modal" ><DeleteIcon style={{ fontSize:15 }}/> Delete</button>
+            <button className="btn btn-danger" id="updateBtn" data-target="#deleteModal" data-toggle="modal" ><Delete style={{ fontSize:15 }}/> Delete</button>
             </div>
           </div>
           
@@ -191,13 +260,13 @@ class EditUser extends Component {
             <div className="modal-dialog modal-dialog-centered" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <p className="modal-title" id="exampleModalCenterTitle" style={{ fontSize:20 }}>Are you sure you want to update details of Mr.<b>{this.state.name}.</b> </p>
+                  <p className="modal-title" id="exampleModalCenterTitle" style={{ fontSize:20 }}>Are you sure you want to update details of Mr.<b>{this.state.name}?</b> </p>
                   <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div className="modal-body">
-                  <a onClick={() =>{this.updateEmployee(id)}} className="btn btn-primary pr-3 ml-2 mr-3"> Yes, Update</a>
+                  <a onClick={() =>{this.updateEmployee(id)}} className="btn btn-primary pr-3 ml-2 mr-3" data-dismiss="modal"> Yes, Update</a>
                   <a className="btn btn-secondary ml-6 mr-6 pl-3" data-dismiss="modal"> Cancel</a>
                 </div>
               </div>
@@ -217,7 +286,7 @@ class EditUser extends Component {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={() =>{this.deleteEmployee(id)}} > Yes, Delete</a>
+                  <a  className="btn btn-danger pr-3 ml-2 mr-3" onClick={() =>{this.deleteEmployee(id)} } data-dismiss="modal"> Yes, Delete</a>
                   <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
                 </div>
               </div>

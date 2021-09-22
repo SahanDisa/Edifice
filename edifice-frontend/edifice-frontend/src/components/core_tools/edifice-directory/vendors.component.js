@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import cellEditFactory from 'react-bootstrap-table2-editor';
 import VendorDataService from "./../../../services/vendor.service";
+import {Face,Search} from '@material-ui/icons';
+import { Link } from "react-router-dom";
+import { Breadcrumbs } from "@material-ui/core";
 
   const columns = [{
     dataField: 'id',
@@ -41,7 +43,7 @@ import VendorDataService from "./../../../services/vendor.service";
     dataField: 'edit',
     text: '',
     headerStyle: (column, colIndex) => {
-        return { width: '20%', textAlign: 'center' };}
+        return { width: '15%', textAlign: 'center' };}
   }];
 
 
@@ -126,49 +128,47 @@ class Vendors extends Component {
         temp.contactNo=vendor.contactNo,
         temp.email=vendor.email,
         temp.contactPersonName=vendor.contactPersonName,
-        temp.edit=<a href={'/editVendor/'+vendor.id} className="btn btn-primary"> edit</a>,
+        temp.edit=<Link to={'/editVendor/'+vendor.id}><a className="btn btn-primary"> View</a></Link>,
         data1.push(temp)
       )
       )}
     console.log(vendors);
-    
-    const data = [
-      {id: 1, companyName: 'pathirage',type:'', edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
-      {id: 2, companyName: 'liyanage', type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
-      {id: 3, companyName: 'abliyanage', type:'',  edit:<a href="/editVendor" className="btn btn-primary">edit</a>},
-      {id: 4, companyName: 'ldgrefiyanage', type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
-      {id: 5, companyName: 'rte', type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
-      {id: 6, companyName: 'conctr',type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
-      {id: 7, companyName: 'conctr',type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>}
-    ];
 
     return (
       <div>
         
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link" href="/employees">Employees</a>
+            <a class="nav-link active" aria-current="page">Vendors</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Vendors</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/subcontractor">Sub-Contractors</a>
+            <Link to="/subcontractors"><a class="nav-link" style={{textDecoration:'none'}}>Sub-Contractors</a></Link>
           </li>
         </ul>
 
-        <h2>Vendors</h2>
+        <h2 className="mb-2"> <Face/> VENDORS</h2>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link color="inherit" to="/home">
+            Home
+          </Link>
+          <Link color="inherit" to={"/admin"}>
+            Core Dashboard
+          </Link>
+          <Link color="inherit">
+            Vendors
+          </Link>
+        </Breadcrumbs>
 
-        <form className="row g-3">
+        <form className="row g-3 mt-2">
           <div className="col-auto">
             <input className="form-control" type="text" placeholder="Search vendor"/>  
           </div>
 
           <div className="col-auto">
-            <a href="" className="btn btn-success">search</a>
+            <a href="" className="btn btn-success mr-2"><Search/></a>
           </div>
 
-          <p>Group By:</p>
+          {/* <p>Group By:</p>
 
           <div className="col-auto">
             <select className="form-control" name="" id="">
@@ -176,10 +176,10 @@ class Vendors extends Component {
               <option value="role2">Projects</option>
               <option value="role3">contact</option>
             </select><br />
-          </div>
+          </div> */}
 
           <div>
-            <a href="/addVendor" className="btn btn-primary"> +add vendor</a>
+            <Link to="/addVendor"> <a className="ml-5 btn btn-primary"> + Add vendor</a></Link>
           </div>
         </form>
 

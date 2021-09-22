@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import VendorDataService from "./../../../services/vendor.service";
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import { Link } from "react-router-dom";
+import cogoToast from 'cogo-toast';
+import { Breadcrumbs } from "@material-ui/core";
+import {Edit,Delete} from '@material-ui/icons';
 
 class EditVendor extends Component {
 
@@ -16,7 +19,9 @@ class EditVendor extends Component {
       email:"",
       contactPersonName: "",
       disableButton:true,
-      currentIndex: -1
+      currentIndex: -1,
+      updateSuccess: false,
+      deleteSuccess: false
     }
 
       this.getVendor(this.props.match.params.id);
@@ -62,6 +67,49 @@ class EditVendor extends Component {
     window.location.reload();
   }
 
+  displayDeleteSuccess(name){
+    //this.state.deleteSuccess
+    if(true){
+      cogoToast.success(
+        <div>
+          <div>Vendor <b>{name}</b> deleted Successfully</div>
+        </div>
+      );
+    }else{
+      cogoToast.danger(
+        <div>
+          <div>Vendor <b>{name}</b> could not be deleted</div>
+        </div>
+      );
+    }
+    this.setState({
+      deleteSuccess: false
+    });
+  }
+
+  displayUpdateSuccess(name){
+
+    console.log("stateupd")
+    console.log(this.state.updateSuccess)
+    //this.state.updateSuccess
+    if(true){
+      cogoToast.success(
+        <div>
+          <div>Employee <b>{name}</b> updated Successfully!</div>
+        </div>
+      );
+    }else{
+      cogoToast.warn(
+        <div>
+          <div>Employee <b>{name}</b> could not be updated</div>
+        </div>
+      );
+    }
+    this.setState({
+      updateSuccess: false
+    });
+  }
+
   getVendor(id){
     VendorDataService.getOne(id)
     .then(response => {
@@ -99,7 +147,7 @@ class EditVendor extends Component {
       console.log(e);;
     });
 
-    this.displaySuccess();
+    this.displayUpdateSuccess(this.state.name);
   }
 
   deleteVendor(id){
@@ -113,7 +161,7 @@ class EditVendor extends Component {
     });
 
     console.log("Successfully deleted")
-    window.location.href="/vendor";
+    this.displayDeleteSuccess(this.state.name);
   }
 
   render() {
@@ -123,9 +171,22 @@ class EditVendor extends Component {
 
     return (
       <div className="">
-        <h2>New Vendor</h2><hr/>
+        <h2><Edit/> EDIT EMPLOYEE DETAILS</h2><hr/>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link color="inherit" to="/home">
+            Home
+          </Link>
+          <Link color="inherit" to={"/admin"}>
+            Core Dashboard
+          </Link>
+          <Link color="inherit" to={"/vendor"}>
+            Vendors
+          </Link>
+          <Link color="inherit">
+            Edit: {this.state.id}
+          </Link>
+        </Breadcrumbs>
         <div className="">
-          <h5>Enter vendor details</h5>
 
           <p>Vendor ID:</p>
           <b className="pl-3">{id}</b>

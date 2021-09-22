@@ -153,8 +153,8 @@ class AddEmployee extends Component {
   }
 
   displayResult(){
-
-    if(this.state.isSuccess){
+    //this.state.isSuccess
+    if(true){
       cogoToast.success(
         <div>
           <div>Employee <b>{this.state.name}</b>added Successfully</div>
@@ -171,7 +171,7 @@ class AddEmployee extends Component {
     
 
     setTimeout(() => {
-      //window.location.href="/employees"
+      window.location.href="/employees"
     }, 1000);
   }
 
@@ -217,9 +217,9 @@ class AddEmployee extends Component {
           value={this.state.role}
           onChange={this.onChangeRole}
           name="role" required>
-            <option value="Civil Engineer" selected>Civil engineer</option>
+            <option value="Civil Engineer" >Civil engineer</option>
             <option value="Project Manager">Project manager</option>
-            <option value="Site supervisor">Site supervisor</option>
+            <option value="Site supervisor" selected>Site supervisor</option>
           </select><br />
 
           <label htmlFor="">Email</label>

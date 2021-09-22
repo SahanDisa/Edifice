@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import cellEditFactory from 'react-bootstrap-table2-editor';
-//import VendorDataService from "./../../../services/vendor.service";
+import SubDataService from "./../../../services/subcontractor.service";
+import {Face, Search} from '@material-ui/icons';
+import { Link } from "react-router-dom";
+import { Breadcrumbs } from "@material-ui/core";
 
   const columns = [{
     dataField: 'id',
@@ -27,13 +29,13 @@ import cellEditFactory from 'react-bootstrap-table2-editor';
   },
   {
   dataField: 'email',
-  text: 'Email',
+  text: 'E-mail',
   headerStyle: (column, colIndex) => {
       return { width: '20%', textAlign: 'center',  };}
   },
   {
     dataField: 'contactPersonName',
-    text: 'contact person name',
+    text: 'Contact Person Name',
     headerStyle: (column, colIndex) => {
         return { width: '20%', textAlign: 'center' };}
   },
@@ -85,61 +87,79 @@ class Subcontractors extends Component {
     });
   }
 
-  getgetSubs() {
-    console.log("thaama hadana gaman");
+  getSubs() {
+    SubDataService.getAll()
+      .then(response => {
+        this.setState({
+          subs: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   searchName() {
-    console.log("thaama hadana gaman");
+    SubDataService.findByTitle(this.state.searchTitle)
+      .then(response => {
+        this.setState({
+          subs: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
+
   render() {
 
     const {subs, currentSub, currentIndex } = this.state;
 
     //assigning table values
-    // var data1=[];
-    // var temp={};
-    // {subs &&
-    //   vendors.map((vendor, index) => (
-    //     temp={},
-    //     temp.id=vendor.id,
-    //     temp.companyName= vendor.companyName,
-    //     temp.type=vendor.type,
-    //     temp.contactNo=vendor.contactNo,
-    //     temp.email=vendor.email,
-    //     temp.contactPersonName=vendor.contactPersonName,
-    //     temp.edit=<a href={'/editVendor/'+vendor.id} className="btn btn-primary"> edit</a>,
-    //     data1.push(temp)
-    //   )
-    //   )}
-    //console.log(vendors);
-    
-    const data = [
-      {id: 1, companyName: 'pathirage',type:'', edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
-      {id: 2, companyName: 'liyanage', type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
-      {id: 3, companyName: 'abliyanage', type:'',  edit:<a href="/editVendor" className="btn btn-primary">edit</a>},
-      {id: 4, companyName: 'ldgrefiyanage', type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
-      {id: 5, companyName: 'rte', type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
-      {id: 6, companyName: 'conctr',type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>},
-      {id: 7, companyName: 'conctr',type:'',  edit:<a href="/editVendor" className="btn btn-primary"> edit</a>}
-    ];
+    var data1=[];
+    var temp={};
+    {subs &&
+      subs.map((sub, index) => (
+        temp={},
+        temp.id=sub.id,
+        temp.companyName= sub.companyName,
+        temp.type=sub.type,
+        temp.contactNo=sub.contactNo,
+        temp.email=sub.email,
+        temp.contactPersonName=sub.contactPersonName,
+        temp.edit=<Link to={'/editSub/'+sub.id}><a className="btn btn-primary"> View </a></Link> ,
+        data1.push(temp)
+      )
+    )}
+    console.log(subs);
 
     return (
       <div>
         
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link" href="/employees">Employees</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/vendor">Vendors</a>
+          <Link to="/vendor"><a class="nav-link" aria-current="page" >Vendors</a></Link>
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="/#">Sub-Contractors</a>
           </li>
         </ul>
 
-        <h2>Sub-contractors</h2>
+        <h2><Face className="mb-2" /> SUB-CONTRACTORS</h2>
+
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link color="inherit" to="/home">
+            Home
+          </Link>
+          <Link color="inherit" to={"/admin"}>
+            Core Dashboard
+          </Link>
+          <Link color="inherit">
+            Sub-Contractors
+          </Link>
+        </Breadcrumbs>
 
         <form className="row g-3">
           <div className="col-auto">
@@ -147,21 +167,11 @@ class Subcontractors extends Component {
           </div>
 
           <div className="col-auto">
-            <a href="" className="btn btn-success">Search</a>
-          </div>
-
-          <p>Group By:</p>
-
-          <div className="col-auto">
-            <select className="form-control" name="" id="">
-              <option value="role1">date</option>
-              <option value="role2">Projects</option>
-              <option value="role3">contact</option>
-            </select><br />
+            <a href="" className="btn btn-success"><Search/></a>
           </div>
 
           <div>
-            <a href="/addVendor" className="btn btn-primary"> +add Sub-contractor</a>
+            <a href="/addSub" className="btn btn-primary"> + Add Sub-contractor</a>
           </div>
         </form>
 
@@ -174,7 +184,7 @@ class Subcontractors extends Component {
         <BootstrapTable 
               hover
               keyField='id'
-              data={ data }
+              data={ data1 }
               columns={ columns } 
               cellEdit={ false }
 
