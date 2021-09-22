@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import { PieChart, Pie, Sector, Cell, LineChart, Line, Label , XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Link } from "react-router-dom";
 import DrawingDataService from "./../../../services/drawing.service";
+import ProjectUserService from "../../../services/projectuser.service";
 import PortfolioDataService from "../../../services/portfolio.service";
 import ProjectDataService from "./../../../services/project.service";
 import DocumentDataService from "./../../../services/documentfile.service";
 import MilestoneService from "../../../services/milestone.service";
 import PortfolioProgressService from "../../../services/portfolioprogress.service";
+import PunchListService from "../../../services/project_management/punchlist.service";
 
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Typography from '@material-ui/core/Typography';
@@ -19,6 +21,7 @@ import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import AdjustSharpIcon from '@material-ui/icons/AdjustSharp';
+import PersonIcon from '@material-ui/icons/Accessibility';
 import Paper from '@material-ui/core/Paper';
 import { ProgressBar } from "react-bootstrap";
 import { Card } from "react-bootstrap";
@@ -91,6 +94,7 @@ export default class PortfolioHome extends Component {
         drawings: [],
         departments: [],
         milestones: [],
+        projectstaff: [],
         currentIndex: -1,
         content: "",
         milestoneCount: 0,
@@ -102,6 +106,9 @@ export default class PortfolioHome extends Component {
         documentComplete: 0,
         documentPending: 0,
         documentIncomplete: 0,
+        punchListComplete: 0,
+        punchListPending: 0,
+        punchListIncomplete: 0,
         id: this.props.match.params.id,
         projectId: this.props.match.params.id,
 
@@ -119,8 +126,10 @@ export default class PortfolioHome extends Component {
       this.retrieveDepartments(this.props.match.params.id);
       this.retriveMilestones(this.props.match.params.id);
       this.findCompleteCount(this.props.match.params.id);
+      this.retrievePunchListStatus(this.props.match.params.id);
       this.getPoints(this.props.match.params.id);
       this.retrieveProjectDetails(this.state.id);
+      this.getProjectUsers(this.props.match.params.id);
       this.getTimeline();
     }
     retrieveProjectDetails(id) {
@@ -134,6 +143,18 @@ export default class PortfolioHome extends Component {
         .catch(e => {
           console.log(e);
         });
+    }
+    getProjectUsers(id){
+      ProjectUserService.getProjectUsers(id)
+      .then(response => {
+        this.setState({
+          projectstaff: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
     }
     getPoints(id){
       PortfolioProgressService.getAll(id)
@@ -243,6 +264,43 @@ export default class PortfolioHome extends Component {
           console.log(e);
         });
     }
+    retrievePunchListStatus(id){
+      PunchListService.getStatus(id,"Ready to close")
+        .then(response => {
+          this.setState({
+            punchListComplete: response.data.length,
+            // dataPie: response.data.length,
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        PunchListService.getStatus(id,"Work in Progress")
+        .then(response => {
+          this.setState({
+            punchListPending: response.data.length,
+            //dataPie: response.data.length,
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        PunchListService.getStatus(id,"Initiated")
+        .then(response => {
+          this.setState({
+            punchListIncomplete: response.data.length,
+            //dataPie: response.data.length,
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+      
+
+    }
     findCompleteCount(id){
       MilestoneService.findCompleted(id)
         .then(response => {
@@ -340,7 +398,8 @@ export default class PortfolioHome extends Component {
  
     render() {
         const { milestones, departments, currentIndex,id,drawingComplete,drawingPending,drawingIncomplete,
-          documentComplete,documentPending,documentIncomplete,points,project} = this.state;
+          documentComplete,documentPending,documentIncomplete,points,project,projectstaff,
+          punchListComplete,punchListPending,punchListIncomplete} = this.state;
         
         const dataPie = [
             { name: 'Completed', value:  (drawingComplete+documentComplete)},
@@ -456,27 +515,33 @@ export default class PortfolioHome extends Component {
                 </ProgressBar>
                 <h6>Punch List</h6>
                 <ProgressBar>
-                  <ProgressBar variant="primary" now={45} key={1} label="Complete"/>
-                  <ProgressBar variant="success" now={30} key={2} label="Pending" />
-                  <ProgressBar variant="danger" now={25} key={3}  label="Not Complete"/>
+                  <ProgressBar variant="primary" now={(punchListComplete)/(punchListComplete + punchListPending + punchListIncomplete)*100} key={1} label="Complete"/>
+                  <ProgressBar variant="success" now={(punchListPending)/(punchListComplete + punchListPending + punchListIncomplete)*100} key={2} label="Pending" />
+                  <ProgressBar variant="danger" now={(punchListIncomplete)/(punchListComplete + punchListPending + punchListIncomplete)*100} key={3}  label="Not Complete"/>
                 </ProgressBar>
               </div>
             </div>
             <hr></hr>
             <div>
                 <h3>Project Team</h3>
-                <h6>Deatails of the staff members and vendor details</h6>
-                {/* <Card>
-                  <Card.Body>
-                    <Card.Title><h4>{project.title}</h4></Card.Title>
-                    <Card.Text>
-                    <h6>Description : {project.description}</h6>
-                    <h6>Location : {project.location}</h6>
-                    <h6>From <b>{project.startdate}</b> To <b>{project.enddate}</b></h6> 
-                    </Card.Text>
-                  </Card.Body>
-                </Card>  */}
-                <div className="container">
+                <h6>Details of the staff members</h6>
+                <center>
+                  <h6>Project Manager : <PersonIcon style={{'color': '#273F7D', 'font-size': '50px'}}/></h6> 
+                  <h6>Engineer/Architect : <PersonIcon style={{'color': '#6B7BA4', 'font-size': '50px'}}/></h6> 
+                </center>
+                <div className="container row">
+                {projectstaff && projectstaff.map((member,index)=>{
+                  if(member.position == "Project Manager"){
+                  return(
+                    <PersonIcon style={{'color': '#273F7D', 'font-size': '80px'}}/>
+                  )}
+                  if(member.position == "Engineer"){
+                    return(
+                    <PersonIcon style={{'color': '#6B7BA4', 'font-size': '80px'}}/>
+                  )}
+                  })}
+                </div>
+                {/* <div className="container">
                   <h6>Manager - 2</h6>      
                   <ProgressBar variant="primary" now={10} />
                   <h6>Enginners - 10</h6>  
@@ -485,7 +550,7 @@ export default class PortfolioHome extends Component {
                   <ProgressBar variant="warning" now={40} />
                   <h6>Sub contractors/Vendors - 17</h6>
                   <ProgressBar variant="danger" now={72} />
-                </div>
+                </div> */}
             </div>
             <hr></hr>
             <div>
