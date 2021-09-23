@@ -167,11 +167,11 @@ class Subcontractors extends Component {
           </div>
 
           <div className="col-auto">
-            <a href="" className="btn btn-success"><Search/></a>
+            <a href="" className="btn btn-success  mr-2"><Search/></a>
           </div>
 
           <div>
-            <Link to="/addSub"><a className="btn btn-primary"> + Add Sub-contractor</a></Link>
+            <Link to="/addSub"><a className="btn btn-primary ml-5"> + Add Sub-contractor</a></Link>
           </div>
         </form>
 

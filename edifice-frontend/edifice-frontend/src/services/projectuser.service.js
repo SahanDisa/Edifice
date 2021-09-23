@@ -4,6 +4,10 @@ class ProjectUserDataService {
   create(data) {
     return http.post("/projects/user", data);
   }
+  
+  addProjectRole(data){
+    return http.post("/projects/user/role/", data);
+  }
     
   getAll(id) {
     return http.get(`/projects/user/list/${id}`);

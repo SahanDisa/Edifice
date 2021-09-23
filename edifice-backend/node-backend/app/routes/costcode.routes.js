@@ -15,5 +15,8 @@ module.exports = app => {
     // Update a direct cost with id
     router.put("/:id", costcode.update);
 
+    // Retrieve all Budgets
+    router.get("/project/all/", costcode.findEverything);
+
     app.use('/api/projects/costcode', router);
   };
