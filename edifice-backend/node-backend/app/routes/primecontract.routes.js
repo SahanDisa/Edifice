@@ -1,16 +1,16 @@
-module.exports = app => {
-    const primecontract = require("./../controllers/primecontract.controller");
+// module.exports = app => {
+//     const primecontract = require("./../controllers/primecontract.controller");
   
-    var router = require("express").Router();
+//     var router = require("express").Router();
   
-    // Create a new Drawing
-    router.post("/", primecontract.create);
+//     // Create a new Drawing
+//     router.post("/", primecontract.create);
   
-    // Retrieve all Drawings for a project
-    router.get("/list/:id", primecontract.findAll);
+//     // Retrieve all Drawings for a project
+//     router.get("/list/:id", primecontract.findAll);
   
-    // Retrieve a single Drawing with id
-    router.get("/:id", primecontract.findOne);
+//     // Retrieve a single Drawing with id
+//     router.get("/:id", primecontract.findOne);
   
-    app.use('/api/projects/primecontract', router);
-  };
+//     app.use('/api/projects/primecontract', router);
+//   };
