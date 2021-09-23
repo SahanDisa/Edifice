@@ -22,7 +22,7 @@ module.exports = app => {
     router.get("/completed/:id",actionplanitem.findAllCompleted);
 
     // project action plans
-    router.get("/section/:id",actionplansection.findSection);
+    router.get("/section/:id",actionplanitem.findSection);
   
     app.use('/api/projects/actionplanitem', router);
   };
