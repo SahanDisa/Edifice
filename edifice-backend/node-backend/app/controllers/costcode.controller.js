@@ -46,7 +46,7 @@ exports.findAll = (req, res) => {
   const id = req.params.id;
   const published = true;
 
-  CostCode.findAll({attributes: ['id', 'date', 'costCode']},{where: {
+  CostCode.findAll({where: {
     projectId: id,
     published: published
   }}
@@ -101,5 +101,22 @@ exports.update = (req, res) => {
         message: "Error updating Budget Line Item with id=" + id
       });
     });
+};
+
+exports.findEverything = (req, res) => {
+  const published = true;
+
+  CostCode.findAll({where: {
+    published: published
+  }}
+  )
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Project Budget"
+      });
+    });  
 };
 

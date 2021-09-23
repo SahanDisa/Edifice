@@ -155,6 +155,11 @@ export default class ProjectsList extends Component {
     
   }
 
+  VisitCostCode(){
+    let address="/addCostCode/"+this.state.currentProject.id
+    window.open(address)
+  }
+
   render() {
     const { searchTitle, projects, currentProject, currentIndex } = this.state;
 
@@ -276,14 +281,15 @@ export default class ProjectsList extends Component {
               >
                 Edit
               </Link>
+              <Link
+                to={"/addCostCode/"+ currentProject.id}
+              >
               <a
-                onClick={() =>this.getCostCodesForProjects(1)}
-                data-target="#costcodeModal"
-                data-toggle="modal"
                 className="m-1 btn btn-sm btn-secondary"
               >
                 Cost Codes
               </a>
+              </Link>
             </div>
           ) : (
             <div>
@@ -321,11 +327,11 @@ export default class ProjectsList extends Component {
                     />
                   </div>
 
-                  : <b style={{ fontSize:20 },{color: 'red'}}> 
-                    No Cost Codes</b>
+                  : <b className="ml-3 mb-3" style={{ fontSize:20 },{color: 'red'}}> 
+                    No Cost Codes Assigned</b>
                 }
                 </div> 
-                  <a  className="btn btn-primary pr-3 ml-2 mr-3" > + Add Cost code </a>
+                  <Link><a  onClick={()=>this.VisitCostCode()} className="btn btn-primary pr-3 ml-2 mr-3" data-dismiss="modal"> + Add Cost code </a></Link>
                   <a className="btn btn-secondary ml-6 mr-6 pl-3" id ="deleteModalDismiss" data-dismiss="modal"> Cancel</a>
                 </div>
                 </div>

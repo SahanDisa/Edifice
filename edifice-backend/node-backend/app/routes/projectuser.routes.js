@@ -26,6 +26,9 @@ module.exports = app => {
 
     // Update a Tutorial with id
     router.put("/:id", projectuser.update);
+
+    // Insert a Role with id
+    router.post("/role/", projectuser.addProjectRole);
   
     // Delete a Tutorial with id
     router.delete("/:id/", projectuser.delete);

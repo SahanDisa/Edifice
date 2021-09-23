@@ -41,10 +41,10 @@ exports.create = (req, res) => {
 
 // Retrieve all Employees from the database.
 exports.findAll = (req, res) => {
-    //const id = req.query.id;
-    //var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+    const name = req.query.name;
+    var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
   
-    Employee.findAll()
+    Employee.findAll( {where: condition})
       .then(data => {
         res.send(data);
       })
@@ -200,4 +200,3 @@ exports.deleteAll = (req, res) => {
         });
 };
 ///////////////////////////////////
-// Improve for pagination as well

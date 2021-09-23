@@ -177,3 +177,24 @@ exports.searchUser = (req,res)=>{
     });
   });
 };
+
+exports.addProjectRole = (req,res)=>{
+
+  const userId= req.body.userId;
+  const roleId= req.body.roleId;
+  
+  //'insert into  projectuserp.position, u.username FROM  p, users u where p.userId = u.id AND p.projectId = '+id+' AND p.position = "'+position+'";',
+  const queryy="INSERT into  user_roles(createdAt,updatedAt,roleId,userId) VALUES('2021-09-23 12:06:10','2021-09-23 12:06:10',"+roleId+","+userId+")"
+  console.log(queryy);
+  db.sequelize.query(queryy,
+  { type: db.sequelize.QueryTypes.INSERT})
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while inserting project user."
+    });
+  });
+};
