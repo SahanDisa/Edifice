@@ -21,5 +21,8 @@ module.exports = app => {
   // Retrieve all meetings in the category
   router.get("/category/:id", meetings.findMetinCategory);
 
+  // Retrieve all meetings to schedule
+  router.get("/schedule/:id", meetings.getMeetings);
+
   app.use('/api/projects/meetings', router);
 };

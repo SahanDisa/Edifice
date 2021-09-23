@@ -27,7 +27,11 @@ class MeetingDataService {
 
     findByTitle(name) {
         return http.get(`/meetings?name=${name}`);
-      }
+    }
+
+    getMeetings(id) {
+        return http.get(`/projects/meetings/schedule${id}`);
+    }
 }
 
 export default new MeetingDataService();
