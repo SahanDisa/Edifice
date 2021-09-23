@@ -58,7 +58,7 @@ export default class viewAPItem extends Component {
                 <Breadcrumbs aria-label="breadcrumb">
                   <Link color="inherit" to="/home">Home</Link>
                   <Link color="inherit" to={"/projectmanagementhome/" + projectId}>App Dashboard</Link>
-                  <Link color="inherit" to={"/actionplan/" + projectId}>Action Plan</Link>
+                  <Link color="inherit" to={"/actionplan/" + projectId}>Action Plan Home</Link>
                   <Link color="inherit" aria-current="page" className="disabledLink">View Action Plan Item</Link>
                 </Breadcrumbs><hr/>
                 <Table striped bordered hover variant="" responsive>
