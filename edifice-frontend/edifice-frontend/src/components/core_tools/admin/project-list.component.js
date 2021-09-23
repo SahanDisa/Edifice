@@ -281,14 +281,15 @@ export default class ProjectsList extends Component {
               >
                 Edit
               </Link>
+              <Link
+                to={"/addCostCode/"+ currentProject.id}
+              >
               <a
-                onClick={() =>this.getCostCodesForProjects(currentProject.id)}
-                data-target="#costcodeModal"
-                data-toggle="modal"
                 className="m-1 btn btn-sm btn-secondary"
               >
                 Cost Codes
               </a>
+              </Link>
             </div>
           ) : (
             <div>
