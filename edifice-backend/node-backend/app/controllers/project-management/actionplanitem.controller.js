@@ -84,11 +84,7 @@ exports.delete = (req, res) => {
 // Find a single ActionPlanItem with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  ActionPlanItem.findByPk({id}, { where:
-    {
-      isDeleted: 0
-    }
-  })
+  ActionPlanItem.findByPk(id)
   .then(data => {
     res.send(data);
   })
@@ -137,16 +133,14 @@ exports.findAllCompleted = (req, res) => {
 //get the ActionPlanSection action
 exports.findSection= (req, res) => {
   const actionplansectionId = req.params.id;
-  ActionPlanItem.findAll({ where: {
-    actionplansectionId: actionplansectionId,
-    isDeleted: 0
-  }})
+  db.sequelize.query('select * FROM actionplanitem where actionplansectionId = '+actionplansectionId+' and isDeleted=0;',
+  { type: db.sequelize.QueryTypes.SELECT})
   .then(data => {
     res.send(data);
   })
   .catch(err => {
     res.status(500).send({
-      message: "Error retrieving Action Plan Section with id=" + id
+      message: "Error retrieving Action Plan Section with id=" + actionplansectionId
     });
   });  
 };
