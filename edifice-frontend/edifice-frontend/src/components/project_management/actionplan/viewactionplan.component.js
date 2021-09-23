@@ -259,8 +259,8 @@ export default class AddActionPlan extends Component {
                       className="form-control"
                       required
                     >
-                      <option value="Not Approved" onChange={this.onChangeApproved}>🔴 Not Approved</option>
-                      <option value="Approved" onChange={this.onChangeApproved}>🟢 Approved</option>
+                      <option value="0" onChange={this.onChangeApproved}>🔴 Not Approved</option>
+                      <option value="1" onChange={this.onChangeApproved}>🟢 Approved</option>
                     </select>
                   </div>
                 :

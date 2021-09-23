@@ -112,6 +112,7 @@ class CreateDWL extends Component {
                             <input
                                 className="form-control"
                                 name="title"
+                                placeholder="Enter the date"
                                 value={this.state.date}
                                 onChange={this.onChangeDate}
                                 max="2021-09-23"
@@ -125,6 +126,7 @@ class CreateDWL extends Component {
                                 className="form-control"
                                 name="time"
                                 type="time"
+                                placeholder="Enter the time"
                                 value={this.state.time}
                                 min="07:00"
                                 max="22:00"
@@ -137,6 +139,7 @@ class CreateDWL extends Component {
                             <input
                                 className="form-control"
                                 type="temperature"
+                                placeholder="Enter the Temperature"
                                 e={this.state.temperature}
                                 onChange={this.onChangeTemperature}
                                 type="number"
@@ -149,6 +152,7 @@ class CreateDWL extends Component {
                             <input
                                 className="form-control"
                                 name="weather"
+                                placeholder="Enter the Weather"
                                 value={this.state.weather}
                                 onChange={this.onChangeWeather}
                                 type="text"

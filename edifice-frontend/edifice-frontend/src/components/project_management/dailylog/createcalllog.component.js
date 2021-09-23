@@ -163,6 +163,7 @@ class CreateDCL extends Component {
                             <input
                                 className="form-control"
                                 name="callfrom"
+                                placeholder="Enter the name of callee"
                                 type="text"
                                 value={this.state.callfrom}
                                 onChange={this.onChangeCallfrom}
@@ -174,6 +175,7 @@ class CreateDCL extends Component {
                             <input
                                 className="form-control"
                                 name="callto"
+                                placeholder="Enter the name of caller"
                                 value={this.state.callto}
                                 onChange={this.onChangeCallto}
                                 type="text"
@@ -185,6 +187,7 @@ class CreateDCL extends Component {
                             <input
                                 className="form-control"
                                 name="reason"
+                                placeholder="Enter the reason"
                                 value={this.state.reason}
                                 onChange={this.onChangeReason}
                                 type="text"

@@ -4,6 +4,7 @@ import ActionPlanItemDataService from "../../../services/project_management/acti
 import Table from 'react-bootstrap/Table';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import VisibilityIcon from "@material-ui/icons/Visibility";
 import cogoToast from 'cogo-toast';
 
 export default class viewAPItem extends Component {
@@ -12,11 +13,9 @@ export default class viewAPItem extends Component {
       this.retrieveItemAP = this.retrieveItemAP.bind(this);
       this.deleteAPItems = this.deleteAPItems.bind(this);
       this.state = {
-        id: "",
-        actionplanId: this.props.match.params.apid,
+        actionplansectionId: this.props.match.params.apid,
         projectId: this.props.match.params.id,
-        actionplansection: [],
-        description: ""
+        actionplansection: []
       };
     }
   
@@ -51,7 +50,8 @@ export default class viewAPItem extends Component {
     }
 
     render() {
-        const { projectId, actionplansection } = this.state;
+        const { projectId, actionplansection, actionplansectionId } = this.state;
+        console.log(actionplansectionId);
         return (
             <div>
                 <h2>Action Plan Item</h2>
@@ -68,7 +68,7 @@ export default class viewAPItem extends Component {
                         <th>Description</th>
                         <th>Assignee</th>
                         <th>Status</th>
-                        <th>Section</th>
+                        {/* <th>Section</th> */}
                         <th></th>
                       </tr>
                     </thead>
@@ -79,9 +79,10 @@ export default class viewAPItem extends Component {
                           <td>{aps.description}</td>
                           <td>{aps.assigner}</td>
                           <td>{aps.isCompleted == 0 ? "🔴 Not Completed": "🟢 Completed"}</td>
-                          <td>{aps.actionplansectionId}</td>
+                          {/* <td>{aps.actionplansectionId}</td> */}
                           <td>
-                            <button className="btn btn-danger" value={aps.id} onClick={this.deleteAPItems}>Delete <DeleteIcon/> </button>
+                          <Link to={"/viewapitemsingle/" + projectId + "/" + aps.id}><button className="btn btn-success mr-2">View <VisibilityIcon /></button></Link>
+                          <button className="btn btn-danger" value={aps.id} onClick={this.deleteAPItems}>Delete <DeleteIcon/> </button>
                           </td>    
                         </tr>
                       ))}

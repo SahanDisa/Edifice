@@ -165,8 +165,7 @@ class ViewMeeting extends Component {
                   ...prevState.meeting,
                 }
             }));
-            // this.props.history.push("/meetings/"+ this.props.match.params.id);
-            // cogoToast.success("Meeting Updated Successfully!");
+            cogoToast.success("Meeting Updated Successfully!");
             console.log(response.data);
         })
         .catch(e => {
