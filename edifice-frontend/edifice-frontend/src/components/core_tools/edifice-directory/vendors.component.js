@@ -179,7 +179,7 @@ class Vendors extends Component {
           </div> */}
 
           <div>
-            <Link to="/addVendor"> <a className="ml-5 btn btn-primary"> + Add vendor</a></Link>
+            <Link to="/addVendor"> <a className="ml-5 btn btn-primary"> + Add Vendor</a></Link>
           </div>
         </form>
 

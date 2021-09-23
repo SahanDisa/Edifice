@@ -53,22 +53,25 @@ class Employee extends Component {
   constructor(props) {
     super(props);
     this.getEmployees = this.getEmployees.bind(this);
+    this.onChangeSearchName = this.onChangeSearchName.bind(this);
+    this.searchEmpName = this.searchEmpName.bind(this);
+    this.refreshList = this.refreshList.bind(this);
     console.log(this.getEmployee);
     this.state = {
       currentEmployee: {
         employees: [],
         currentEmployee: null,
         currentId: -1,
-        searchName: ""
         
       },
       message: "",
-      temp: this.props.match.params.id
+      temp: this.props.match.params.id,
+      searchName: ""
     };
   }
 
   componentDidMount() {
-    this.getEmployees(this.props.match.params.id);
+    this.getEmployees();
   }
 
   onChangeSearchName(e) {
@@ -77,12 +80,14 @@ class Employee extends Component {
     this.setState({
       searchName: searchName
     });
+
+    console.log(this.state.searchName)
   }
 
   refreshList() {
     this.getEmployees();
     this.setState({
-      currentEmployeet: null,
+      currentEmployee: null,
       currentIndex: -1,
       searchName: ""
     });
@@ -101,8 +106,17 @@ class Employee extends Component {
       });
   }
 
-  searchName() {
-    //console.log("meka hadala daamu")
+  searchEmpName() {
+    EmployeeDataService.findByName(this.state.searchName)
+      .then(response => {
+        this.setState({
+          employees: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   render() {
@@ -146,11 +160,13 @@ class Employee extends Component {
 
           <form className="row g-3 mt-2">
             <div className="col-auto">
-              <input className="form-control" type="text" placeholder="Search employee"/>  
+              <input className="form-control" type="text" 
+                onChange={this.onChangeSearchName}
+                placeholder="Search employee"/>  
             </div>
 
             <div className="col-auto">
-              <a href="" className="btn btn-success"><Search/> </a>
+              <a onClick={this.searchEmpName} className="btn btn-success"><Search/> </a>
             </div>
 
             <div>
