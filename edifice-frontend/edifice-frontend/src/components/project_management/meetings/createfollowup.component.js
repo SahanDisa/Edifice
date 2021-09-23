@@ -4,6 +4,7 @@ import MeetingDataService from "../../../services/project_management/meeting.ser
 import MeetingCategoryDataService from "../../../services/project_management/meetingcategory.service.js";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import cogoToast from 'cogo-toast';
+import { TextareaAutosize } from "@material-ui/core";
 
 class CreateFollowupMeetings extends Component {
     constructor(props) {
@@ -102,8 +103,6 @@ class CreateFollowupMeetings extends Component {
 
     saveMeeting() {
         if (this.state.name != "" &&
-        this.state.category != "" &&
-        this.state.status != "" &&
         this.state.date != "" &&
         this.state.time != "" &&
         this.state.location != "" ) {
@@ -222,6 +221,7 @@ class CreateFollowupMeetings extends Component {
                                 value={meeting.location}
                                 onChange={this.onChangeLocation}
                                 type="text"
+                                list="suggest"
                                 required
                             />
                             <datalist id="suggest">
@@ -234,7 +234,7 @@ class CreateFollowupMeetings extends Component {
                     <div className="form-row">
                         <div className="form-group col-md-12">
                             <label htmlFor="">Description</label>
-                            <textarea
+                            <TextareaAutosize
                                 rows="2"
                                 className="form-control"
                                 name="description"

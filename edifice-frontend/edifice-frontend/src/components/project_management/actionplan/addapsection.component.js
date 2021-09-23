@@ -11,19 +11,18 @@ export default class AddAPSection extends Component {
   constructor(props) {
         super(props);
         this.onChangeTitle = this.onChangeTitle.bind(this);
-        this.onChangeReftype = this.onChangeReftype.bind(this);
-        this.onChangeRefid = this.onChangeRefid.bind(this);
+        // this.onChangeReftype = this.onChangeReftype.bind(this);
+        // this.onChangeRefid = this.onChangeRefid.bind(this);
         this.onChangeAcceptance = this.onChangeAcceptance.bind(this);
         this.onChangeDuedate = this.onChangeDuedate.bind(this);
         this.retrieveAPSection = this.retrieveAPSection.bind(this);
-        this.viewAPSection = this.viewAPSection.bind(this);
         this.saveAPsection = this.saveAPsection.bind(this);
 
         this.state = {
             id: null,
             title: "",
-            reftype: "",
-            refid: "",
+            // reftype: "",
+            // refid: "",
             acceptance: "",
             duedate: "",
             actionplanId: this.props.match.params.apid,
@@ -70,22 +69,26 @@ export default class AddAPSection extends Component {
         });
     }
 
-    onChangeRefid(e) {
-        this.setState({
-            refid: e.target.value
-        });
-    }
+    // onChangeRefid(e) {
+    //     this.setState({
+    //         refid: e.target.value
+    //     });
+    // }
 
-    onChangeReftype(e) {
-        this.setState({
-            reftype: e.target.value
-        });
-    }
+    // onChangeReftype(e) {
+    //     this.setState({
+    //         reftype: e.target.value
+    //     });
+    // }
     
     saveAPsection() {  
+        if (this.state.acceptance != "" &&
+            this.state.duedate != "" &&
+            this.state.title != "") {
         var data = {
-            reftype: this.state.reftype,
-            refid: this.state.refid,
+            // reftype: this.state.reftype,
+            // refid: this.state.refid,
+            title: this.state.title,
             acceptance: this.state.acceptance,
             duedate: this.state.duedate,
             actionplanId: this.state.actionplanId,
@@ -94,9 +97,9 @@ export default class AddAPSection extends Component {
         ActionPlanSectionDataService.create(data)
         .then(response => {
             this.setState({
-            id: response.data.id,
-            reftype: response.data.reftype,
-            refid: response.data.refid,
+            id: response.data.title,
+            // reftype: response.data.reftype,
+            // refid: response.data.refid,
             acceptance: response.data.acceptance,
             duedate: response.data.duedate,
             actionplanId: this.props.match.params.apid,
@@ -104,7 +107,12 @@ export default class AddAPSection extends Component {
             submitted: true
         });
             console.log(response.data);
+            cogoToast.success("Meeting Saved Successfully!");
+            this.props.history.push("/actionplansingle/" + this.props.match.params.id + "/" + this.props.match.params.apid);
         })
+    } else {
+        cogoToast.error("Field/s cannot be empty");
+    }
     }
 
     deleteWeatherLog(e){
@@ -120,18 +128,10 @@ export default class AddAPSection extends Component {
         cogoToast.success("Action Plan Section Deleted Successfully!");
     }
 
-    viewAPSection(){
-        window.location.reload();
-        cogoToast.success("Action Plan Section Saved Successfully!");
-    }
-
     render() {
-        const {actionplanId, currentIndex, projectId, viewAPSection, actionplansections} = this.state;
+        const {actionplanId, projectId, actionplansections} = this.state;
         return (
             <div className="container">
-                {this.state.submitted ? (
-                    viewAPSection()
-                ):(
                 <div class="container">
                     <h2>Add New Action Plan Section</h2>
                     <Breadcrumbs aria-label="breadcrumb">
@@ -178,7 +178,7 @@ export default class AddAPSection extends Component {
                                     value={this.state.duedate}
                                     onChange={this.onChangeDuedate}
                                     type="date"
-                                    min=""
+                                    min="2021-09-23"
                                     required
                                 />
                             </div>
@@ -204,17 +204,16 @@ export default class AddAPSection extends Component {
                             <td>{aps.acceptance}</td>
                             <td>{aps.duedate}</td>
                             <td>
-                                <Link to={"/deletepl/" + aps.no}>
+                                <Link to={"/viewactionplansection/" + projectId +"/" + aps.id}>
                                     <button className="btn btn-success mr-2">Update <UpdateIcon/></button>
                                 </Link>
-                                <button className="btn btn-danger">Delete <DeleteIcon /></button>
+                                <button className="btn btn-danger" >Delete <DeleteIcon /></button>
                             </td>
                             </tr>
                         ))}
                     </tbody>
                     </Table>
                 </div>
-                )}
             </div>
         );
     }

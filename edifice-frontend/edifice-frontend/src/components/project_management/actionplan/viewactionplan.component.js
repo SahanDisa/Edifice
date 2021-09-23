@@ -25,7 +25,7 @@ export default class AddActionPlan extends Component {
             actiontype: "",
             location: "",
             description: "",
-            approved: false,
+            isApproved: false,
             projectId: this.props.match.params.id,
         },
         actionplantypes: [],
@@ -86,12 +86,12 @@ export default class AddActionPlan extends Component {
   }
 
   onChangeApproved(e) {
-    const approved= e.target.value
+    const isApproved= e.target.value
     this.setState(function(prevState){
       return {
         apitem: {
           ...prevState.apitem,
-          approved: approved
+          isApproved: isApproved
         }
       }
     });
@@ -124,11 +124,15 @@ export default class AddActionPlan extends Component {
   }
 
   updateActionPlan(){
+    if (this.state.apitem.description != "" &&
+      this.state.apitem.planmanager != "" &&
+      this.state.apitem.location != "" &&
+      this.state.apitem.isApproved != "") {
     var data = {
         description: this.state.apitem.description,
         planmanager: this.state.apitem.planmanager,
         location: this.state.apitem.location,
-        approved: this.state.apitem.approved,
+        isApproved: this.state.apitem.isApproved,
         projectId: this.state.apitem.projectId
     };
 
@@ -139,13 +143,15 @@ export default class AddActionPlan extends Component {
           ...prevState.apitem,
         }
       }));
+      cogoToast.success("Action Plan updated Successfully!");
       console.log(response.data);
     })
     .catch(e => {
         console.log(e);
     });
-    this.props.history.push("/viewactionplan/"+ this.props.match.params.id + "/" +this.props.match.params.apid);
-    cogoToast.success("Action Plan updated Successfully!");
+  } else {
+    cogoToast.error("Field/s cannot be empty");
+  }
   }
 
   deleteActionPlan(){
@@ -244,11 +250,12 @@ export default class AddActionPlan extends Component {
                 </datalist>
               </div>
               <div className="form-group col-md-4">
-                <label htmlFor="approved">Status</label>
-                {!apitem.approved ?
+                <label htmlFor="isApproved">Status</label>
+                {!apitem.isApproved ?
                   <div>
                     <select
                       type="text"
+                      onChange={this.onChangeApproved}
                       className="form-control"
                       required
                     >
@@ -261,7 +268,7 @@ export default class AddActionPlan extends Component {
                     <input
                       type="text"
                       className="form-control"
-                      value="🟢 Approved"
+                      value="Approved"
                       readOnly
                     />
                   </div>

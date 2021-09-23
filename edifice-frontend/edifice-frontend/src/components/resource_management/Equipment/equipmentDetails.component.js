@@ -170,7 +170,7 @@ class EquipDetails extends Component {
               <Link color="inherit" to={"/projectmanagementhome/" + id}>
                 Core Dashboard
               </Link>
-              <Link color="textPrimary" to={"/admin"} aria-current="page">
+              <Link color="textPrimary" to={"/equipments/"} aria-current="page">
                 Equipments
               </Link>
               <Link color="textPrimary" to={"/equipDetails/" + equipCode} aria-current="page">

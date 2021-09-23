@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import MeetingDataService from "../../../services/project_management/meeting.service.js";
+import ScheduleDataService from "./../../../services/schedule.service";
 import MeetingCategoryDataService from "../../../services/project_management/meetingcategory.service.js";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import cogoToast from 'cogo-toast';
@@ -16,6 +17,7 @@ class CreateMeeting extends Component {
         this.onChangeLocation = this.onChangeLocation.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.saveMeeting = this.saveMeeting.bind(this);
+        this.saveSchedule = this.saveSchedule.bind(this);
 
         this.state = {
             categories: [],
@@ -72,13 +74,49 @@ class CreateMeeting extends Component {
         });
     }
 
+    saveSchedule() {
+
+        var data = {
+            title: this.state.name,
+            startDate: this.state.date,
+            userId: "4"
+        };
+
+        ScheduleDataService.create(data)
+            .then(response => {
+                this.setState({
+                    title: response.dataSend.title,
+                    startDate: response.dataSend.startDate,
+                    userId: response.dataSend.userId,
+                });
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
+
+    retrieveCategories(id) {
+        MeetingCategoryDataService.getAll(id)
+            .then(response => {
+                this.setState({
+                    categories: response.data
+                });
+                console.log(response.data);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
+
+
+
     saveMeeting() {
         if (this.state.name != "" &&
-        this.state.category != "" &&
-        this.state.status != "" &&
-        this.state.date != "" &&
-        this.state.time != "" &&
-        this.state.location != "" ) {
+            this.state.category != "" &&
+            this.state.status != "" &&
+            this.state.date != "" &&
+            this.state.time != "" &&
+            this.state.location != "") {
             var data = {
                 name: this.state.name,
                 category: this.state.category,
@@ -90,58 +128,58 @@ class CreateMeeting extends Component {
             };
 
             MeetingDataService.create(data)
-            .then(response => {
-                this.setState({
-                    id: response.data.id,
-                    name: response.data.name,
-                    category: response.data.category,
-                    status: response.data.status,
-                    date: response.data.date,
-                    time: response.data.time,
-                    location: response.data.location,
-                    projectId: response.data.projectId,
+                .then(response => {
+                    this.setState({
+                        id: response.data.id,
+                        name: response.data.name,
+                        category: response.data.category,
+                        status: response.data.status,
+                        date: response.data.date,
+                        time: response.data.time,
+                        location: response.data.location,
+                        projectId: response.data.projectId,
 
-                    submitted: true
+                        submitted: true
+                    });
+                    console.log(response.data);
+                    this.props.history.push("/meetings/" + this.props.match.params.id);
+                    window.location.reload();
+                    cogoToast.success("Meeting Saved Successfully!");
+                })
+                .catch(e => {
+                    console.log(e);
                 });
-                console.log(response.data);
-                this.props.history.push("/meetings/"+ this.props.match.params.id);
-                window.location.reload();
-                cogoToast.success("Meeting Saved Successfully!");
-            })
-            .catch(e => {
-                console.log(e);
-            });
         } else {
             cogoToast.error("Field/s cannot be empty");
         }
     }
 
-    retrieveCategories(id){
+    retrieveCategories(id) {
         MeetingCategoryDataService.getAll(id)
-        .then(response => {
-            this.setState({
-                categories: response.data
+            .then(response => {
+                this.setState({
+                    categories: response.data
+                });
+                console.log(response.data);
+            })
+            .catch(e => {
+                console.log(e);
             });
-        console.log(response.data);
-        })
-        .catch(e => {
-            console.log(e);
-        });
     }
 
     render() {
-        const {categories, projectId} = this.state;
+        const { categories, projectId } = this.state;
         return (
-        <div className="">
             <div className="">
-                <h2>Add New Meeting</h2>
-                <Breadcrumbs aria-label="breadcrumb">
-                    <Link color="inherit" to="/home">Home</Link>
-                    <Link color="inherit" to={"/projectmanagementhome/"+projectId}>App Dashboard</Link>
-                    <Link color="inherit" to={"/meetings/"+projectId}>Meetings</Link>
-                    <Link color="inherit" aria-current="page" className="disabledLink">Add New Meetings</Link>
-                </Breadcrumbs><hr/>
-                {/* <div className="row mb-3"> */}
+                <div className="">
+                    <h2>Add New Meeting</h2>
+                    <Breadcrumbs aria-label="breadcrumb">
+                        <Link color="inherit" to="/home">Home</Link>
+                        <Link color="inherit" to={"/projectmanagementhome/" + projectId}>App Dashboard</Link>
+                        <Link color="inherit" to={"/meetings/" + projectId}>Meetings</Link>
+                        <Link color="inherit" aria-current="page" className="disabledLink">Add New Meetings</Link>
+                    </Breadcrumbs><hr />
+                    {/* <div className="row mb-3"> */}
                     <div>
                         <div className="form-row">
                             <div className="form-group col-md-5">
@@ -167,15 +205,15 @@ class CreateMeeting extends Component {
                                     required
                                 >
                                     <option value="">Select a meeting category</option>
-                                {categories && categories.map((cat, index) => (
-                                    <option
-                                        value={cat.id}
-                                        onChange={this.onChangeCategory}
-                                        key={index}
-                                    >
-                                        {cat.overview}
-                                    </option>
-                                ))}
+                                    {categories && categories.map((cat, index) => (
+                                        <option
+                                            value={cat.id}
+                                            onChange={this.onChangeCategory}
+                                            key={index}
+                                        >
+                                            {cat.overview}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                             <div className="form-group col-md-3">
@@ -251,16 +289,16 @@ class CreateMeeting extends Component {
                         </div>
                         <hr />
                         <button
-                        type="button"
-                        onClick={this.saveMeeting}
-                        className="btn btn-primary mr-2"
+                            type="button"
+                            onClick={() => { this.saveMeeting(); this.saveSchedule(); }}
+                            className="btn btn-primary mr-2"
                         >Save</button>
-                        <Link to={"/meeting/"+projectId} className="">Cancel</Link>
+                        <Link to={"/meeting/" + projectId} className="">Cancel</Link>
                     </div>
-                {/* </div> */}
-            </div>
-        {/* )} */}
-        </div>
+                    {/* </div> */}
+                </div>
+                {/* )} */}
+            </div >
         );
     }
 }
