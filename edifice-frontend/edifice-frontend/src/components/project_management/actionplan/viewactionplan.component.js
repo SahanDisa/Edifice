@@ -179,7 +179,7 @@ export default class AddActionPlan extends Component {
           <Breadcrumbs aria-label="breadcrumb">
             <Link color="inherit" to="/home">Home</Link>
             <Link color="inherit" to={"/projectmanagementhome/" + apitem.projectId}>App Dashboard</Link>
-            <Link color="inherit" to={"/actionplan/" + apitem.projectId}>Action Plan</Link>
+            <Link color="inherit" to={"/actionplansingle/" + apitem.projectId + "/" + apitem.id}>Action Plan Single Page</Link>
             <Link color="inherit" aria-current="page" className="disabledLink">View Action Plan</Link>
           </Breadcrumbs><hr/>
           <div className="">
@@ -259,8 +259,8 @@ export default class AddActionPlan extends Component {
                       className="form-control"
                       required
                     >
-                      <option value="Not Approved" onChange={this.onChangeApproved}>🔴 Not Approved</option>
-                      <option value="Approved" onChange={this.onChangeApproved}>🟢 Approved</option>
+                      <option value="0" onChange={this.onChangeApproved}>🔴 Not Approved</option>
+                      <option value="1" onChange={this.onChangeApproved}>🟢 Approved</option>
                     </select>
                   </div>
                 :

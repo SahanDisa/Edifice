@@ -124,6 +124,7 @@ class CreateDAL extends Component {
                             <input
                                 className="form-control"
                                 name="crew"
+                                placeholder="Enter the Crew"
                                 value={this.state.crew}
                                 onChange={this.onChangeCrew}
                                 type="text"
@@ -135,6 +136,7 @@ class CreateDAL extends Component {
                             <input
                                 className="form-control"
                                 name="description"
+                                placeholder="Enter a description"
                                 value={this.state.description}
                                 onChange={this.onChangeDescription}
                                 type="text"

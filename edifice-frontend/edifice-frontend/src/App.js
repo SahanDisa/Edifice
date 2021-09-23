@@ -115,6 +115,7 @@ import AddAPSection from "./components/project_management/actionplan/addapsectio
 import ViewActionPlan from "./components/project_management/actionplan/viewactionplan.component";
 import ViewAPSection from "./components/project_management/actionplan/viewactionplansection.component";
 import ViewAPItems from "./components/project_management/actionplan/viewactionplanitems.component";
+import ViewAPItem from "./components/project_management/actionplan/viewoneapitem.component";
 
 import DailyLogHome from "./components/project_management/dailylog/dailylog.component";
 import CreateDCL from "./components/project_management/dailylog/createcalllog.component";
@@ -401,6 +402,7 @@ class App extends Component {
               <Route path="/viewactionplantype/:id/:apid" component={ViewAPType} />
               <Route path="/viewactionplansection/:id/:apid" component={ViewAPSection} />
               <Route path="/viewactionplanitems/:id/:apid" component={ViewAPItems} />
+              <Route path="/viewapitemsingle/:id/:apid" component={ViewAPItem} />
               <Route exact path="/viewactionplan/:id/:apid" component={ViewActionPlan} />
               {/* Punch List */}
               <Route path="/punchlist/:id" component={punchlistHome} />
