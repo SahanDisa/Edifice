@@ -6,7 +6,7 @@ class ActionPlanSectionDataService {
   }
 
   update(id, data) {
-    return http.put(`/projects/actionplansection/${id}`, data);
+    return http.put(`/projects/actionplansection/update/${id}`, data);
   }
 
   delete(id) {

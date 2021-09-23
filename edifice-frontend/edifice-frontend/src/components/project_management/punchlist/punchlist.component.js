@@ -105,10 +105,10 @@ class PunchList extends Component {
             punchlistRFR: response.data.length,
         });
     });
-    PunchlistDataService.getStatus(id, "RTC")
+    PunchlistDataService.getStatus(id, "Completed")
     .then((response) => {
         this.setState({
-            punchlistRTC: response.data.length,
+          punchlistRTCL: response.data.length,
         });
     });
   }
@@ -153,7 +153,7 @@ class PunchList extends Component {
             <div className="col-lg-3 mb-grid-gutter pb-2 card-text-edifice">
               <div className="card card-hover shadow-sm">
                 <h1 className="text-center">{punchlistRTCL}</h1>
-                <h3 className="h5 nav-heading-title text-center">Ready to Close</h3>
+                <h3 className="h5 nav-heading-title text-center">Completed</h3>
                 </div>
             </div>
           </div>

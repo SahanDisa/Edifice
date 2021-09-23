@@ -13,7 +13,6 @@ export default class AddAPItem extends Component {
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeAssigner = this.onChangeAssigner.bind(this);
         this.onChangeActionplansectionId = this.onChangeActionplansectionId.bind(this);
-        this.viewAPItem = this.viewAPItem.bind(this);
         this.saveAPitem = this.saveAPitem.bind(this);
 
         this.state = {
@@ -88,42 +87,40 @@ export default class AddAPItem extends Component {
     }
     
     saveAPitem() {  
-        var data = {
-            title: this.state.title,
-            description: this.state.description,
-            assigner: this.state.assigner,
-            isCompleted: this.state.isCompleted,
-            actionplansectionId: this.state.actionplansectionId
-        };
+        if (this.state.title != "" &&
+        this.state.description != "" &&
+        this.state.assigner != "") {
+            var data = {
+                title: this.state.title,
+                description: this.state.description,
+                assigner: this.state.assigner,
+                actionplansectionId: this.state.actionplansectionId
+            };
 
-        ActionPlanItemDataService.create(data)
-        .then(response => {
-            this.setState({
-                id: response.data.id,
-                title: response.data.title,
-                description: response.data.description,
-                assigner: response.data.assigner,
-                isCompleted: response.data.isCompleted,
-                actionplansectionId: response.data.actionplansectionId,
-
-                submitted: true
-            });
-            console.log(response.data);
-        })
-    }
-
-    viewAPItem(){
-        window.location.reload();
-        cogoToast.success("Action Plan Section Saved Successfully!");
+            ActionPlanItemDataService.create(data)
+            .then(response => {
+                this.setState({
+                    id: response.data.id,
+                    title: response.data.title,
+                    description: response.data.description,
+                    assigner: response.data.assigner,
+                    isCompleted: response.data.isCompleted,
+                    actionplansectionId: response.data.actionplansectionId,
+                    submitted: true
+                });
+                console.log(response.data);
+                cogoToast.success("Action Plan Item Saved Successfully!");
+                this.props.history.push("/actionplansingle/" + this.props.match.params.id + "/" + this.props.match.params.apid);
+            })
+        } else {
+            cogoToast.error("Field/s cannot be empty");
+        }
     }
 
   render() {
-    const {actionplansectionId, actionplansections, actionplanId, projectId, users, viewAPItem} = this.state;
+    const {actionplansections, actionplanId, projectId, users} = this.state;
     return (
       <div className="container">
-        {this.state.submitted ? (
-            viewAPItem()
-        ):(
         <div class="container">
             <h3 className="modal-title" id="exampleModalCenterTitle">Add New Action Plan Item</h3>
             <Breadcrumbs aria-label="breadcrumb">
@@ -229,8 +226,6 @@ export default class AddAPItem extends Component {
                     <Link to={"/actionplansingle/" + projectId + "/" + actionplanId}>Cancel</Link>
                 </div>
             </div>
-        )}
         </div>
-    );
-  }
+    );}
 }
