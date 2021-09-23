@@ -21,6 +21,10 @@ class ActionPlanItemDataService {
     return http.get(`/projects/actionplanitem/all/${id}`);
   }
 
+  getSection(id) {
+    return http.get(`/projects/actionplanitem/section/${id}`);
+  }
+
   Completed(id){
     return http.get(`/projects/actionplanitem/completed/${id}`);
   }

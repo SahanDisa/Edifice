@@ -14,6 +14,7 @@ class ViewMeeting extends Component {
         this.onChangeTime = this.onChangeTime.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.onChangeStatus = this.onChangeStatus.bind(this);
         this.retrieveMeeting = this.retrieveMeeting.bind(this);
         this.updateMeeting = this.updateMeeting.bind(this);
         this.deleteMeeting = this.deleteMeeting.bind(this);
@@ -74,8 +75,7 @@ class ViewMeeting extends Component {
               ...prevState.meeting,
               description: description
             }
-          }
-            
+          } 
         });
     }
 
@@ -130,9 +130,20 @@ class ViewMeeting extends Component {
         });
     }
 
+    onChangeStatus(e) {
+      const status= e.target.value
+        this.setState(function(prevState){
+          return {
+            meeting: {
+              ...prevState.meeting,
+              status: status
+            }
+          }
+      });
+    }
+
     updateMeeting() {
       if (this.state.meeting.name != "" &&
-      this.state.meeting.category != "" &&
       this.state.meeting.status != "" &&
       this.state.meeting.date != "" &&
       this.state.meeting.time != "" &&
@@ -154,8 +165,8 @@ class ViewMeeting extends Component {
                   ...prevState.meeting,
                 }
             }));
-            this.props.history.push("/meetings/"+ this.props.match.params.id);
-            cogoToast.success("Meeting Updated Successfully!");
+            // this.props.history.push("/meetings/"+ this.props.match.params.id);
+            // cogoToast.success("Meeting Updated Successfully!");
             console.log(response.data);
         })
         .catch(e => {
@@ -183,7 +194,7 @@ class ViewMeeting extends Component {
         return (
         <div className="">
             <div className="">
-                <h2>Add New Meeting</h2>
+                <h2>View Meeting</h2>
                 <Breadcrumbs aria-label="breadcrumb">
                     <Link color="inherit" to="/home">Home</Link>
                     <Link color="inherit" to={"/projectmanagementhome/"+meeting.projectId}>App Dashboard</Link>
@@ -213,8 +224,8 @@ class ViewMeeting extends Component {
                                       className="form-control"
                                       required
                                     >
-                                      <option value="Scheduled" onChange={this.onChangeApproved}>Scheduled</option>
-                                      <option value="Ended" onChange={this.onChangeApproved}>Ended</option>
+                                      <option value="Scheduled" onChange={this.onChangeStatus}>Scheduled</option>
+                                      <option value="End" onChange={this.onChangeStatus}>End</option>
                                     </select>
                                   </div>
                                 :
@@ -222,7 +233,7 @@ class ViewMeeting extends Component {
                                     <input
                                       type="text"
                                       className="form-control"
-                                      value="Ended"
+                                      value="End"
                                       readOnly
                                     />
                                   </div>

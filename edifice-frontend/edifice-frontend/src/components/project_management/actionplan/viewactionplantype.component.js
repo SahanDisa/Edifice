@@ -6,11 +6,13 @@ import Table from 'react-bootstrap/Table';
 import DeleteIcon from '@material-ui/icons/Delete';
 import UpdateIcon from '@material-ui/icons/Update';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import cogoToast from 'cogo-toast';
 
 export default class viewAPType extends Component {
     constructor(props) {
       super(props);
       this.retrieveCategoryAP = this.retrieveCategoryAP.bind(this);
+      this.deleteActionPlan = this.deleteActionPlan.bind(this);
       this.state = {
         id: "",
         title: this.props.match.params.apid,
@@ -32,6 +34,22 @@ export default class viewAPType extends Component {
         });
         console.log(response.data);
       })
+    }
+
+    deleteActionPlan(e){
+      var data = {
+          isDeleted: 1
+      }
+      ActionPlanDataService.update(e.target.value, data)
+      .then(response => {
+          console.log(response.data);
+      })
+      .catch(e => {
+          console.log(e);
+      });
+      this.props.history.push("/actionplan/"+ this.props.match.params.id + "/" + this.props.match.params.apid);
+      window.location.reload();
+      cogoToast.success("Action Plan Deleted Successfully!");
     }
 
     render() {
@@ -69,12 +87,10 @@ export default class viewAPType extends Component {
                           <td>{api.location}</td>
                           <td>{api.isapprove == 0 ? "🔴 Not Approved": "🟢 Approved"}</td>
                           <td>
-                            <Link to={"/viewactionplan/" + api.id}>
+                            <Link to={"/viewactionplan/" + projectId + "/" + api.id}>
                               <button className="btn btn-success mr-2">Update <UpdateIcon/> </button>
                             </Link>
-                            <Link to={"/viewdrawing/" + api.id}>
-                              <button className="btn btn-danger">Delete <DeleteIcon/> </button>
-                            </Link>
+                            <button className="btn btn-danger" value={api.id} onClick={this.deleteActionPlan}>Delete <DeleteIcon/> </button>
                           </td>    
                         </tr>
                       ))}

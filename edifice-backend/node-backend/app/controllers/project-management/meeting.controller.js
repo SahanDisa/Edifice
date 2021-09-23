@@ -18,6 +18,7 @@ exports.create = (req, res) => {
     date: req.body.date,
     time: req.body.time,
     location: req.body.location,
+    description: req.body.description,
     status: req.body.status,
     isDeleted: req.body.isDeleted ? req.body.isDeleted : false,
     projectId: req.body.projectId

@@ -7,7 +7,7 @@ import cogoToast from 'cogo-toast';
 import UpdateIcon from '@material-ui/icons/Update';
 import DeleteIcon from "@material-ui/icons/Delete";
 
-export default class viewAPSection extends Component {
+export default class ViewAPSection extends Component {
   constructor(props) {
     super(props);
     // this.onChangeReftype = this.onChangeReftype.bind(this);
@@ -19,11 +19,11 @@ export default class viewAPSection extends Component {
     this.deleteActionPlan = this.deleteActionPlan.bind(this);
     this.state = {
       apsection: {
-        id: null,
+        id: this.props.match.params.apid,
         title: "",
         acceptance: "",
         duedate: "",
-        actionplanId: this.props.match.params.apid,
+        actionplanId: "",
       },
       projectId: this.props.match.params.id,
       currentIndex: -1,
@@ -74,8 +74,9 @@ export default class viewAPSection extends Component {
   }
 
   updateActionPlan(){
+    if (this.state.apsection.acceptance != "" &&
+      this.state.apsection.duedate != ""){
     var data = {
-        title: this.state.apsection.title,
         acceptance: this.state.apsection.acceptance,
         duedate: this.state.apsection.duedate,
         actionplanId: this.state.apsection.actionplanId
@@ -89,12 +90,14 @@ export default class viewAPSection extends Component {
         }
       }));
       console.log(response.data);
+      cogoToast.success("Action Plan Section updated Successfully!");
     })
     .catch(e => {
         console.log(e);
     });
-    this.props.history.push("/viewactionplansection/"+ this.props.match.params.id + "/" +this.props.match.params.apid);
-    cogoToast.success("Action Plan Section updated Successfully!");
+  } else {
+    cogoToast.error("Field/s cannot be empty");
+  }
   }
 
   deleteActionPlan(){
