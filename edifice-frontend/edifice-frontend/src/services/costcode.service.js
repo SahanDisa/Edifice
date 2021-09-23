@@ -5,6 +5,10 @@ class CostCodeDataService {
     return http.get(`/projects/costcode/list/${id}`);
   }
 
+  getEverything() {
+    return http.get(`/projects/costcode//project/all`);
+  }
+
   get(id) {
     return http.get(`/projects/costcode/${id}`);
   }

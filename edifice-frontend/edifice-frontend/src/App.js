@@ -73,6 +73,7 @@ import EditVendor from "./components/core_tools/edifice-directory/edit-vendor.co
 import Subcontractors from "./components/core_tools/edifice-directory/subcontractors.component";
 import AddSub from "./components/core_tools/edifice-directory/add-sub.component";
 import EditSub from "./components/core_tools/edifice-directory/edit-sub.component";
+import AddCostCodes from "./components/core_tools/edifice-directory/add-costcode.component";
 
 import TaskConfiguration from "./components/core_tools/tasks/configuration.component";
 import ManageTasks from "./components/core_tools/tasks/manage.component";
@@ -420,7 +421,7 @@ class App extends Component {
               <Route path="/viewgeneralall/:id" component={ViewDGLall} />
               <Route path="/viewweatherall/:id" component={ViewDWLall} />
               
-
+              <Route path="/addCostCode/:id" component={AddCostCodes} />
               <Route path="/addUser" component={AddEmployee} />
               <Route path="/editUser/:id" component={EditUser} />
               <Route path="/vendor" component={Vendors} />
